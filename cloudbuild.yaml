@@ -4,13 +4,13 @@ steps:
   args: ['install']
 - id: scan
   name: 'gcr.io/cloud-builders/npm'
-  args: ['scan']
+  args: ['run', 'scan']
 - id: build
   name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:0.1.0', '.']
 - id: test-e2e
   name: 'gcr.io/cloud-builders/npm'
-  args: ['test-e2e']
+  args: ['run', 'test-e2e']
 images: [
   'eu.gcr.io/$PROJECT_ID/$REPO_NAME:0.1.0'
 ]

@@ -5,9 +5,8 @@
   "scripts": {
     "clean": "docker build --no-cache -t taito .",
     "scan": "echo 'TODO lint'",
-    "test-e2e": "(cd test; ./all.sh)",
-    "verify": "npm-run-all --parallel lint test",
-    "deploy": "docker build -t eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli:0.1.0 .; gcloud docker -- push eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli:0.1.0"
+    "test-e2e": "echo 'TODO (cd test; ./all.sh)'",
+    "verify": "npm-run-all --parallel lint test"
   },
   "pre-commit": [
     "taito-lint"
