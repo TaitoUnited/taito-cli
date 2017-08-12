@@ -1,0 +1,11 @@
+TEMPLATE COMMANDS
+-----------------
+
+template-create TEMPLATE
+  Create a new project using a template.
+
+template-migrate TEMPLATE
+  Migrate an old project to use the given template.
+
+template-upgrade
+  Upgrade current project to the latest version of the project template.
