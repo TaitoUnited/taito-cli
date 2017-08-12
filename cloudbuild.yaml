@@ -7,10 +7,10 @@ steps:
   args: ['run', 'scan']
 - id: build
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:0.1.0', '.']
+  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.']
 - id: test-e2e
   name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'test-e2e']
 images: [
-  'eu.gcr.io/$PROJECT_ID/$REPO_NAME:0.1.0'
+  'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
 ]
