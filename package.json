@@ -3,11 +3,11 @@
   "description": "Taito command line interface",
   "private": false,
   "scripts": {
-    "taito-clean": "docker build --no-cache -t taito .",
-    "taito-scan": "echo 'TODO lint'",
-    "taito-test": "(cd test; ./all.sh)",
-    "taito-verify": "npm-run-all --parallel lint test",
-    "taito-deploy": "docker build -t eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli/taito-cli:0.1.1 .; gcloud docker -- push eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli/taito-cli:0.1.1"
+    "clean": "docker build --no-cache -t taito .",
+    "scan": "echo 'TODO lint'",
+    "test-e2e": "(cd test; ./all.sh)",
+    "verify": "npm-run-all --parallel lint test",
+    "deploy": "docker build -t eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli/taito-cli:0.1.1 .; gcloud docker -- push eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli/taito-cli:0.1.1"
   },
   "pre-commit": [
     "taito-lint"
