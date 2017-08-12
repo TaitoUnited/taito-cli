@@ -1,0 +1,42 @@
+{
+  "name": "taito-cli",
+  "description": "Taito command line interface",
+  "private": false,
+  "scripts": {
+    "taito-clean": "docker build --no-cache -t taito .",
+    "taito-scan": "echo 'TODO lint'",
+    "taito-test": "(cd test; ./all.sh)",
+    "taito-verify": "npm-run-all --parallel lint test",
+    "taito-deploy": "docker build -t eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli/taito-cli:0.1.1 .; gcloud docker -- push eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli/taito-cli:0.1.1"
+  },
+  "pre-commit": [
+    "taito-lint"
+  ],
+  "pre-push": [
+    "taito-verify"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:TaitoUnited/taito-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TaitoUnited/taito-cli/issues"
+  },
+  "keywords": [
+    "kubernetes",
+    "docker",
+    "gcloud",
+    "aws",
+    "azure",
+    "cli"
+  ],
+  "author": "Taito United Oy <support@taitounited.fi>",
+  "license": "MIT",
+  "homepage": "https://github.com/TaitoUnited/taito-cli#readme",
+  "devDependencies": {
+    "last-release-git": "0.0.3",
+    "npm-run-all": "^4.0.2",
+    "pre-commit": "^1.2.2",
+    "pre-push": "^0.1.1"
+  }
+}

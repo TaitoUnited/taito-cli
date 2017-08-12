@@ -1,0 +1,195 @@
+#!/bin/bash
+
+# Contain pwd change in a subshell
+if ! (
+
+  # Determine parameters
+  if [[ "${1}" == "-dev" ]]; then
+    mode=dev
+    params=(${@:2})
+  elif [[ "${1}" == "-local" ]]; then
+    mode=local
+    params=(${@:2})
+  else
+    mode=normal
+    params=(${@:1})
+  fi
+
+  # Determine entrypoint
+  entrypoint="taito"
+  if [[ "${1}" == "--login" ]]; then
+    entrypoint="/bin/bash"
+    params=()
+  elif [[ "${2}" == "--login" ]]; then
+    entrypoint="/bin/bash"
+    params=()
+  elif [[ "${1}" == "--" ]]; then
+    entrypoint="${2}"
+    params=(${@:3})
+  elif [[ "${2}" == "--" ]]; then
+    entrypoint="${3}"
+    params=(${@:4})
+  fi
+
+  # Resolve project root folder by the location of taito-config.sh
+  # Use project root dir as current working directory
+  # TODO duplicate code with taito_impl.sh
+  current_path="${PWD}"
+  while [[ "${PWD}" != "/" ]]; do
+    ls | grep taito-config.sh > /dev/null && break; cd ..;
+  done
+  if [[ ${PWD} == "/" ]]; then
+    cd "${current_path}" || exit 1
+  fi
+
+  # Resolve taito-cli location
+  # TODO duplicate code with taito_impl.sh
+  source="${BASH_SOURCE[0]}"
+  while [[ -h "${source}" ]]; do # resolve until the file is no longer a symlink
+    dir="$( cd -P "$( dirname "${source}" )" && pwd )"
+    source=$(readlink "${source}")
+    # if $SOURCE was a relative symlink, we need to resolve it relative
+    # to the path where the symlink file was located
+    [[ "${source}" != /* ]] && source="${cli_path}/${source}"
+  done
+  dir_name=$(dirname "${source}")
+  cli_path="$( cd -P "${dir_name}" && pwd )"
+
+  # Read taito-config.sh files from all locations
+  # TODO duplicate code with taito_impl.sh
+  if [[ -f "${HOME}/.taito/taito-config.sh" ]]; then
+    # Personal config
+    # shellcheck disable=SC1090
+    . "${HOME}/.taito/taito-config.sh"
+  fi
+  if [[ -f ./taito-config.sh ]]; then
+    # Project specific config
+    # shellcheck disable=SC1091
+    . ./taito-config.sh
+  fi
+
+  # Determine enabled extensions
+  extensions_local_mode=""
+  extension_paths=""
+  extension_mount_flags=""
+  exts=("${taito_extensions} ${taito_global_extensions}")
+  for extension in ${exts[@]}
+  do
+    if [[ ${extension} == "git@"* ]]; then
+      # Git url e.g. git@github.com:TaitoUnited/webapp-template.git/my-extension
+      temp=${extension#*\/}
+      repo_url=${extension%.git*}.git # git@github.com:TaitoUnited/webapp-template.git
+      repo_name=${temp%.git*} # webapp-template
+      repo_dir=${temp#*.git} # /my-extension
+      repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
+      if [[ -d "${repo_local_path}" ]]; then
+        # TODO performance: pull only sometimes
+        # (cd ${repo_local_path}; git pull)
+        echo &> /dev/null
+      else
+        (cd ~/.taito; git clone "${repo_url}"; cd "${repo_name}"; git checkout)
+      fi
+      extension_paths="${extension_paths} /root/.taito/${repo_name}${repo_dir}"
+      extensions_local_mode="${extensions_local_mode} ${HOME}/.taito/${repo_name}${repo_dir}"
+    else
+      # Local url
+      docker_path="${extension/\~//root}"
+      local_path="${extension/\~/${HOME}}"
+      extension_paths="${extension_paths} ${docker_path}"
+      extension_mount_flags="${extension_mount_flags} -v ${local_path}:${docker_path}"
+      extensions_local_mode="${extensions_local_mode} ${local_path}"
+    fi
+  done
+
+  # Start a background process that will run commands on host when requested
+  # TODO implement a network based solution or at least generate taito_run env
+  # variable by random
+  # "${cli_path}/taito_executor.sh" "${log_file}" &
+  export taito_run="@asd!fef@"
+  log_file=$(mktemp /tmp/taito-cli.XXXXXX)
+  (
+    echo "-" > "${log_file}"
+    tail -f "${log_file}" | while read -r line; do
+      command=$(echo "${line}" | grep "${taito_run}" \
+        | sed "s/^.*${taito_run}\(.*\)${taito_run}.*$/\1/")
+      if [[ ${command} != "" ]]; then
+        # TODO confirm?
+        eval "${command}"
+      fi
+    done
+  ) &
+
+  # Export some variables to be used by various commands
+  export taito_host_uname
+  taito_host_uname="$(uname)"
+
+  # Link database container if env is local and command uses database
+  # TODO: this is a quick hack
+  command="${params[0]}"
+  if ( [[ ${command} == ":local" ]] || [[ ${command} != *":"* ]] ) && ( [[ ${command} == db* ]] || [[ ${command} == init ]] ) && [[ ${command} != db-add ]]; then
+    if [[ ${mode} != "local" ]]; then
+      link_flags="--link ${taito_project}-database:${taito_project}-database"
+    else
+      # Running taito-cli directly on host -> use 127.0.0.1
+      echo asflajsdflksj
+      export postgres_host_overwrite="127.0.0.1"
+    fi
+  fi
+
+  # Forward output to less in case command is `help`, `trouble` or `readme`.
+  # We need to also filter some control characters for a cleaner output.
+  output=""
+  if [[ ${command} == "help"* ]] || [[ ${command} == "trouble"* ]] || [[ ${command} == "readme"* ]]; then
+    output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | tr '\275\276' '\r\n' | tail -n +8 | less"
+  fi
+
+  if [[ "${mode}" == "local" ]]; then
+    # Mode: run directly on host
+    export taito_enabled_extensions="${extensions_local_mode}"
+    eval "${cli_path}/taito_impl.sh ${params[@]} | tee ${log_file} ${output}"
+  else
+    # Mode: run on docker container
+    export taito_image_name
+    taito_image_name="${taito_images}:${taito_version:-latest}"
+    image_flag="--rm ${taito_image_name}"
+    if [[ "${mode}" == "dev" ]]; then
+      extension_mount_flags="${extension_mount_flags} \
+        -v ${cli_path}:/taito-cli"
+    fi
+
+    # Expose ports so that host can access db proxy running on container
+    proxy_flags=""
+    if [[ "${gcloud_sql_proxy_port:-}" != "" ]]; then
+      proxy_flags="\
+        --expose=${gcloud_sql_proxy_port} \
+        -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"
+    fi
+
+    # Run on docker
+    # shellcheck disable=SC2086
+    eval "docker run -it \
+      -v \"${HOME}/.taito:/root/.taito\" \
+      -v \"$(pwd):/project\" \
+      -w /project \
+      ${proxy_flags} \
+      ${extension_mount_flags} \
+      ${link_flags} \
+      -e taito_enabled_extensions=\"${extension_paths}\" \
+      -e taito_run=${taito_run} \
+      -e taito_host_uname=\"${taito_host_uname}\" \
+      -e taito_mode=\"${mode}\" \
+      -e taito_docker=\"true\" \
+      -e taito_image_name=\"${taito_image_name}\" \
+      --entrypoint ${entrypoint} \
+      ${image_flag} \
+      ${params[@]} | tee \"${log_file}\" ${output}"
+  fi
+
+  # Kill background processes
+  pgrep -f "${log_file}" | xargs kill &> /dev/null
+  # TODO Suppress 'terminated' output of process
+  rm -f "${log_file}" &> /dev/null
+
+); then
+  exit 1
+fi
