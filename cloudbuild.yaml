@@ -5,7 +5,7 @@ steps:
 - id: scan
   name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'scan']
-- id: prepare:gcloud
+- id: secrets
   waitFor: ['-']
   name: 'gcr.io/cloud-builders/kubectl'
   entrypoint: 'bash'
@@ -22,6 +22,7 @@ steps:
       grep SECRET | sed -e "s/^.*: //" | base64 --decode > github-token.tmp
 
 - id: release-pre
+  waitFor: ['secrets']
   name: 'gcr.io/cloud-builders/npm'
   entrypoint: 'bash'
   args:
