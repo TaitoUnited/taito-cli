@@ -7,7 +7,7 @@
     "scan": "echo 'TODO lint'",
     "test-e2e": "(cd test; ./all.sh)",
     "verify": "npm-run-all --parallel lint test",
-    "deploy": "docker build -t eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli:0.1.1 .; gcloud docker -- push eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli:0.1.1"
+    "deploy": "docker build -t eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli:0.1.0 .; gcloud docker -- push eu.gcr.io/gcloud-temp1/github-taitounited-taito-cli:0.1.0"
   },
   "pre-commit": [
     "taito-lint"
