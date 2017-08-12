@@ -1,0 +1,306 @@
+----------------------
+### TAITO-CLI HELP ###
+----------------------
+
+ARGUMENTS
+---------
+
+ENV
+  Environment: 'local', 'feature', 'dev', 'test', 'staging' or 'prod'.
+  Environment is 'local' by default. For mobile projects ENV can also be
+  'ios' or 'android'.
+
+POD
+  Depending on the plugin, may reference to a Kubernetes pod, a Docker
+  container or a function.
+
+
+BASIC COMMANDS
+--------------
+
+help
+  Show help.txt of current project and a list of all taito-cli commands.
+
+readme
+  Show README.md of both current project and taito-cli.
+
+trouble
+  Show trouble.txt of both current project and taito-cli.
+
+auth:ENV [TYPE]
+  Authenticate in the context of the given environment. With the optional
+  type argument you can specify which authentication you would like execute.
+
+
+ADVANCED COMMANDS
+-----------------
+
+--
+  Execute any command inside taito-cli container e.g.
+  'taito -- kubectl get pods'.
+
+--login
+  Login to taito-cli container e.g. `taito taito`.
+
+
+PROJECT: BASIC
+--------------
+
+install
+  Install everything that needs to installed locally, e.g. linter libraries.
+  TIP: Enable the npm plugin at it will call `npm install` automatically.
+
+compile
+  Compile (for projects that need to be compiled). TIP: Enable the npm plugin
+  and implement compile script in your package.json.
+
+start[:ENV] [--clean]
+  Start.
+
+run[:ENV]
+  Run on device (ios/android)
+
+init
+  Make sure that everything has been initialized (database, etc.).
+
+open[:ENV]
+  Open user interface.
+
+stop[:ENV]
+  Stop.
+
+users[:ENV]
+  Show user accounts that you can use to log in. Hard coded user accounts
+  for local, dev and test environments suffice. Usually not implemented for
+  staging and production environments. TIP: Enable the npm plugin and
+  implement users[:ENV] script in your package.json.
+
+db-add NAME [-r REQUIRES] [-n DESCRIPTION]
+  Add a new change to migration plan. Run db-add without arguments to get help.
+  Example: taito db-add order.table -r user.table -n 'Table for orders.'
+  You can run the change to local database by running `taito db:deploy`.
+
+db-proxy:ENV
+  Create a proxy for accessing a remote database with your database GUI tool.
+  If you don't have a personal account for the database, you may (or may not)
+  get a working username and password by running `taito secrets:ENV`. Note that
+  passwords are rotated once in a while, thus, if you get an authentication
+  error, run `taito secrets:ENV` again.
+
+db-open[:ENV] [USERNAME]
+  Access database from command line. DB proxy is started automatically if
+  required. NOTE: If you want to access database using a GUI tool, use the
+  db-proxy:ENV command instead.
+
+db-dump[:ENV]
+  Take dump of a database. DB proxy is started automatically if
+  required.
+
+db-import[:ENV] FILE
+  Import file to database. DB proxy is started automatically if
+  required.
+
+db-copy:ENV DEST_ENV
+  Copy database from one environment to another. For example
+  `db-copy:prod staging` or `db-copy:dev local`. If you do not have enough
+  rights, ask devops personnel to do this for you. DB proxy is started
+  automatically if required.
+
+db-copyquick:ENV DEST_ENV
+  Copy database quickly from one environent to another. NOTE: Locks source
+  database from other users until copy is finished. Also requires that both
+  databases are located on the same database cluster. Do not use this for
+  production database unless you are sure nobody is using the system.
+  DB proxy is started automatically if required.
+
+canary
+  Releases the current staging version to production as a canary release.
+  NOTE: Currently you can make canary release only if database changes of
+  the new canary release are compatible with the current production version.
+
+status[:ENV]
+  Show status summary of environment (status of services, pods, etc.).
+
+log[:ENV] POD [CONTAINER]
+  See logs of a pod. Run status:ENV first to get the pod name and status.
+  Example: taito log:dev myapp-dev-client-3034393823-2f5jf
+
+login[:ENV] POD [CONTAINER]
+  Login to pod. Run status:ENV first to get the pod name and status.
+  Example: taito login:dev myapp-dev-client-3034393823-2f5jf
+
+exec[:ENV] POD CONTAINER COMMAND
+  Execute command on pod. Give - as container if it should be determined
+  automatically by pod name.
+  Example: taito exec:dev myapp-dev-client-3034393823-2f5jf - echo "taito!"
+
+kill[:ENV] POD
+  Kill pod.
+
+clean [data | build]
+  Clean.
+
+
+PROJECT: CONFIG
+---------------
+
+config
+  Configure project.
+
+create:ENV [GIT_BRANCH]
+  Create environment. Creates build trigger for the given branch if branch
+  was given as argument. Otherwise uses default branch determined by ENV.
+
+update:ENV
+  Update environment.
+
+delete:ENV
+  Delete environment.
+
+rotate:ENV
+  Rotate secrets for the environment.
+
+cert[:ENV] DOMAIN
+  Add a custom certificate instead of automatically generated.
+
+
+PROJECT: CI/CD
+--------------
+
+This section provides commands for CI/CD and also additional commands that
+can be used to revert changes changes manually.
+
+db-deploy[:ENV]
+  Deploy changes to database. DB proxy is started automatically if required.
+
+db-log[:ENV]
+  View change log of database. DB proxy is started automatically if required.
+
+db-revert[:ENV] [CHANGE]
+  Revert database changes. DB proxy is started automatically if required.
+  Revert the previous migration batch by running `taito db-revert[:ENV]`. If
+  you would like to revert to a specific revision instead, view the change log
+  first with `taito db-log[:ENV]` and then run `taito db-revert[:ENV] CHANGE`.
+  TODO currently always requires CHANGE param.
+
+db-recreate[:ENV]
+  Recreates the database. Thus on next deployment, all database migrations
+  will be run from the beginning.
+
+build CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
+  Builds image if no image already exists with the given tag.
+  Example: 'build:dev client test1'
+
+deploy[:ENV] [IMAGE_TAG] [--dry-run]
+  Deploy the application either by using IMAGE_TAG given as parameter or
+  using the latest image found for the environment in question. Use dry-run
+  switch to execute a dry run. Example: 'deploy:dev client test1'
+
+revision:ENV
+  Show current revision.
+
+revert:ENV [REVISION]
+  Reverts application to another revision. Reverts to the previous version
+  if revision has not been given as argument. You can see current revision
+  number by running `taito revision[:ENV]`. NOTE: This command does not revert
+  database changes. Use 'db-revert[:ENV]' for that.
+
+deployment-wait[:ENV]
+  Waits until application has been succesfully deployed to server.
+  For example polls the app url until version number changes to something else.
+  This is used by CI/CD scripts to wait deployment before running the api
+  and e2e tests.
+
+deployment-verify[:ENV]
+  Verifies that everyting went ok e.g. by checking test results. If something
+  went wrong and auto-revert is enabled for the environment, runs
+  `taito db-revert[:ENV]` and `taito revert[:ENV]`.
+
+docs
+  Generate docs e.g. API docs from API definitions and PDF files from
+  markdown documentation. TIP: Enable the npm plugin and implement docs script
+  in your package.json.
+
+scan
+  Lint code, scan for vulnerabilities, etc. TIP: Enable the npm plugin and
+  implement lint script in your package.json and your code will be linted.
+
+test-unit
+  Run all unit tests. TIP: Enable the npm plugin and implement test:unit script
+  in your package.json.
+
+test-api[:ENV]
+  Run all api tests. TIP: Enable the npm plugin and implement test:api script
+  in your package.json. You can configure test users and passwords for each
+  environment in taito-config.sh as those settings are available to your npm
+  script as environment variables.
+
+test-e2e[:ENV]
+  Run all e2e tests. TIP: Enable the npm plugin and implement test:e2e script
+  in your package.json. You can configure test users and passwords for each
+  environment in taito-config.sh as those settings are available to your
+  npm script as environment variables.
+
+publish
+  Publishes build artifacts (e.g. docs, test reports)
+  to a central location.
+
+release-pre:ENV
+release-post:ENV
+  Release pre and post handling. These commands usually generate release notes
+  automatically and tag the git repository with a new version number.
+  TIP: Enable the npm plugin and implement release:pre:prod and
+  release:post:prod scripts in your package.json.
+
+cancel:ENV [IGNORE_BUILD_ID]
+  Cancel an ongoing build (but ignore the given build id). CI/CD scripts may use
+  this to, for example, cancel an ongoing build when a new build is started.
+  It may also be handy in case somebody pushes something to a wrong branch
+  accidentally.
+
+secrets[:ENV] [--save-as-taito-secrets]
+  Retrieves all secrets that might be needed by the CI/CD build or developer.
+  If the --save-as-taito-secrets flag is given, the command saves the secrets
+  as a taito-secrets.sh file, that taito-cli will read the next time it is
+  executed. NOTE: taito-secrets.sh should be used only in a temporary CI/CD
+  workspace.
+
+
+PROJECT: SUPPORT
+---------------
+
+support-incident
+  List contacts that should be notified of an incident. May be a hard coded
+  list or generated from user database. TIP: Enable the npm plugin and
+  implement email:incident script in your package.json.
+
+support-maintenance
+  List contacts that should be notified of a maintenance break. May be a hard
+  coded list or generated from user database. TIP: Enable the npm plugin and
+  implement email:maintenance script in your package.json.
+
+
+ZONE COMMANDS
+-------------
+NOTE: These commands are for devops personnel.
+
+zone-install [TYPE]
+  Interactive command for installing resources (taito zones, kubernetes
+  clusters, database clusters, apps) by using taito conventions.
+
+zone-upgrage TAITO_ZONE
+  Interactive command for executing upgrades to a zone: kubernetes nodes,
+  helm tiller, kube-lego, nginx ingress controller, apps, etc.
+
+zone-uninstall TAITO_ZONE [NAME]
+  Interactive command for deleting resources (taito zones, kubernetes clusters,
+  database clusters, apps).
+
+zone-status TAITO_ZONE
+  Shows status and some basic info about TAITO_ZONE.
+
+zone-doctor TAITO_ZONE
+  Lists possible problems in TAITO_ZONE.
+
+zone-rotate TAITO_ZONE [NAMESPACE]
+  Interactive command for rotating secrets of given TAITO_ZONE and NAMESPACE.
