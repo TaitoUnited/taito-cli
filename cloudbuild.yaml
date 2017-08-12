@@ -13,8 +13,7 @@ steps:
   - '-c'
   - |
     echo "# Get gcloud credentials"
-    gcloud container clusters get-credentials "kube1" --zone "europe-west1-c"
-    if [[ $$? -gt 0 ]]; then
+    if ! gcloud container clusters get-credentials "kube1" --zone "europe-west1-c"; then
       exit 1
     fi
 
@@ -76,9 +75,7 @@ steps:
   - |
     echo "# Running semantic-release post"
     github_token=$$(cat github-token.tmp)
-    if ! NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post; then
-      exit 1
-    fi
+    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post
 
 - id: push
   name: 'gcr.io/cloud-builders/docker'
