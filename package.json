@@ -9,11 +9,18 @@
     "verify": "npm-run-all --parallel lint test"
   },
   "pre-commit": [
-    "taito-lint"
+    "scan"
   ],
   "pre-push": [
-    "taito-verify"
+    "verify"
   ],
+  "release": {
+    "getLastRelease": "last-release-git",
+    "debug": false,
+    "verifyConditions": {
+      "path": "./node_modules/semantic-release/src/lib/plugin-noop.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:TaitoUnited/taito-cli.git"
@@ -36,6 +43,7 @@
     "last-release-git": "0.0.3",
     "npm-run-all": "^4.0.2",
     "pre-commit": "^1.2.2",
-    "pre-push": "^0.1.1"
+    "pre-push": "^0.1.1",
+    "semantic-release": "^6.3.6"
   }
 }

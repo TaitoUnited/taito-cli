@@ -5,12 +5,79 @@ steps:
 - id: scan
   name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'scan']
+- id: prepare:gcloud
+  waitFor: ['-']
+  name: 'gcr.io/cloud-builders/kubectl'
+  entrypoint: 'bash'
+  env:
+    - branch_name=$BRANCH_NAME
+    - commit_sha=$COMMIT_SHA
+    - build_id=$BUILD_ID
+    - full_repo_name=$REPO_NAME
+    - image_path=eu.gcr.io/$PROJECT_ID/$REPO_NAME/client:$COMMIT_SHA
+  args:
+  - '-c'
+  - |
+    echo "# Get gcloud credentials"
+    gcloud container clusters get-credentials "kube1" --zone "europe-west1-c"
+    if [[ $$? -gt 0 ]]; then
+      exit 1
+    fi
+
+    # Get github token from Kubernetes secrets
+    kubectl --namespace "devops" get secret "ext.github.build" -o yaml | \
+      grep SECRET | sed -e "s/^.*: //" | base64 --decode > github.token.tmp
+
+- id: release-pre
+  name: 'gcr.io/cloud-builders/npm'
+  entrypoint: 'bash'
+  env:
+    - branch_name=$BRANCH_NAME
+  args:
+  - '-c'
+  - |
+    github_token=$(cat github.token.tmp)
+
+    echo "# Cloning git repo to release directory as google container builder"
+    echo "# workspace does not point to the original repository"
+    if ! git clone "https://${github_token}@github.com/TaitoUnited/taito-cli.git" release; then
+      exit 1
+    fi
+    cd release
+    if ! git checkout master; then # TODO checkout ${commit_sha}, not master?
+      exit 1
+    fi
+    if ! npm install; then
+      exit 1
+    fi
+
+    echo "# Running semantic-release pre"
+    if ! NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-pre; then
+      exit 1
+    fi
+    rm -f .npmrc
+
+    echo "# Copying package.json with a new version number"
+    cp package.json ..
+
 - id: build
   name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.']
 - id: test-e2e
   name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'test-e2e']
+- id: release-post
+  name: 'gcr.io/cloud-builders/npm'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "# Running semantic-release post"
+    github_token=$(cat github.token.tmp)
+    if ! NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post; then
+      exit 1
+    fi
+
 images: [
   'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
 ]
