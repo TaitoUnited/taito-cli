@@ -11,7 +11,7 @@ ENV
   'ios' or 'android'.
 
 POD
-  Depending on the plugin, may reference to a Kubernetes pod, a Docker
+  Depending on the plugin, POD may reference to a Kubernetes pod, a Docker
   container or a function.
 
 
@@ -27,28 +27,29 @@ readme
 trouble
   Show trouble.txt of both current project and taito-cli.
 
-auth:ENV [TYPE]
-  Authenticate in the context of the given environment. With the optional
-  type argument you can specify which authentication you would like execute.
+auth:ENV
+  Authenticate in the context of the given environment.
 
 
 ADVANCED COMMANDS
 -----------------
 
 --
-  Execute any command inside taito-cli container e.g.
-  'taito -- kubectl get pods'.
+  Execute any command inside the taito-cli container e.g.
+  'taito -- kubectl get pods'. This means that taito-cli may provide
+  almost all the tools that you need to do your work.
 
 --login
-  Login to taito-cli container e.g. `taito taito`.
+  Login to the taito-cli container.
 
 
 PROJECT: BASIC
 --------------
 
 install
-  Install everything that needs to installed locally, e.g. linter libraries.
-  TIP: Enable the npm plugin at it will call `npm install` automatically.
+  Install everything that needs to installed locally, e.g. linter libraries
+  to be used by your editor. TIP: Enable the npm plugin as it will call
+  `npm install` automatically.
 
 compile
   Compile (for projects that need to be compiled). TIP: Enable the npm plugin
@@ -108,11 +109,11 @@ db-copy:ENV DEST_ENV
   secrets are handled automatically.
 
 db-copyquick:ENV DEST_ENV
-  Copy database quickly from one environent to another. NOTE: Locks source
-  database from other users until copy is finished. Also requires that both
-  databases are located on the same database cluster. Do not use this for
-  production database unless you are sure nobody is using the system.
-  DB proxy connection and secrets are handled automatically.
+  Copy database quickly from one environent to another. DB proxy connection
+  and secrets are handled automatically. NOTE: The command locks source
+  database from other users until copying is finished. It also requires
+  that both databases are located on the same database cluster. Do not use this
+  for production database unless you are sure nobody is using the system.
 
 canary
   Releases the current staging version to production as a canary release.
@@ -270,15 +271,18 @@ secrets[:ENV] [--save-as-taito-secrets]
   workspace.
 
 
-PROJECT: SUPPORT
----------------
+PROJECT: CONTACTS
+-----------------
 
-support-incident
-  List contacts that should be notified of an incident. May be a hard coded
-  list or generated from user database. TIP: Enable the npm plugin and
-  implement email:incident script in your package.json.
+contacts-development
+  List of contacts required for development. TIP: Enable the npm plugin and
+  implement contacts-development script in your package.json.
 
-support-maintenance
-  List contacts that should be notified of a maintenance break. May be a hard
-  coded list or generated from user database. TIP: Enable the npm plugin and
-  implement email:maintenance script in your package.json.
+contacts-maintenance
+  List contacts that should be notified of a maintenance break, incident or
+  some other problems. TIP: Enable the npm plugin and implement
+  contacts-maintenance script in your package.json.
+
+contacts-users [TYPE]
+  TODO optional command for listing users that should be notified of incidents,
+  etc? Generated from user database?
