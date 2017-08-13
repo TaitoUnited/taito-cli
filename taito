@@ -91,6 +91,16 @@ if ! (
       fi
       extension_paths="${extension_paths} /root/.taito/${repo_name}${repo_dir}"
       extensions_local_mode="${extensions_local_mode} ${HOME}/.taito/${repo_name}${repo_dir}"
+    elif [[ ${extension} == *"gz" ]]; then
+      # Archive link e.g. my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
+      folder_name=${extension%=*}
+      url=${extension##*=}
+      if [[ ! -d "${HOME}/.taito/${folder_name}" ]]; then
+        echo "Downloading extension ${folder_name} from ${url}"
+        ( curl -sL "${url}" | tar zxv -C ~/.taito )
+      fi
+      extension_paths="${extension_paths} /root/.taito/${repo_name}"
+      extensions_local_mode="${extensions_local_mode} ${HOME}/.taito/${repo_name}"
     else
       # Local url
       docker_path="${extension/\~//root}"
@@ -150,7 +160,7 @@ if ! (
   else
     # Mode: run on docker container
     export taito_image_name
-    taito_image_name="${taito_images}:${taito_version:-latest}"
+    taito_image_name="${taito_image}"
     image_flag="--rm ${taito_image_name}"
     if [[ "${mode}" == "dev" ]]; then
       extension_mount_flags="${extension_mount_flags} \
