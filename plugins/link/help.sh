@@ -10,11 +10,11 @@ echo
 links=("${link_urls}")
 for link in ${links[@]}
 do
-  prefix="$( cut -d ':' -f 1 <<< "$link" )";
-  command=${prefix%=*}
-  name=${prefix##*=}
+  prefix="$( cut -d '=' -f 1 <<< "$link" )";
+  command_prototype=${prefix%#*}
+  name=${prefix##*#}
 
-  echo "${command}[:ENV]"
+  echo "${command_prototype}"
   echo "  Opens ${name} in browser."
   echo
 done

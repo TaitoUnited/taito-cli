@@ -11,11 +11,13 @@ if [[ ${found} != "" ]]; then
   links=("${link_urls}")
   for link in ${links[@]}
   do
-    prefix="$( cut -d ':' -f 1 <<< "$link" )";
-    command=${prefix%=*}
+    prefix="$( cut -d '=' -f 1 <<< "$link" )";
+    command_prototype=${prefix%#*}
+    command=${command_prototype%:*}
+    command=${command%[*}
     if [[ "${command}" == "${taito_command}" ]]; then
-      name=${prefix##*=}
-      url="$( cut -d ':' -f 2- <<< "$link" )"
+      name=${prefix##*#}
+      url="$( cut -d '=' -f 2- <<< "$link" )"
       echo
       echo "### link - pre: Opening ${name} ###"
       echo
