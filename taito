@@ -140,7 +140,7 @@ if ! (
   # We need to also filter some control characters for a cleaner output.
   output=""
   if [[ ${command} == "help"* ]] || [[ ${command} == "trouble"* ]] || [[ ${command} == "readme"* ]]; then
-    output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | tr '\275\276' '\r\n' | tail -n +8 | less"
+    output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | tr '\275\276' '\r\n' | tail -n +7 | less"
   fi
 
   if [[ "${mode}" == "local" ]]; then

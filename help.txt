@@ -61,7 +61,8 @@ run[:ENV]
   Run on device (ios/android)
 
 init
-  Make sure that everything has been initialized (database, etc.).
+  Make sure that everything has been initialized (database, etc.). The init
+  command is used in local environment only.
 
 open[:ENV]
   Open user interface.
@@ -82,36 +83,36 @@ db-add NAME [-r REQUIRES] [-n DESCRIPTION]
 
 db-proxy:ENV
   Create a proxy for accessing a remote database with your database GUI tool.
-  If you don't have a personal account for the database, you may (or may not)
-  get a working username and password by running `taito secrets:ENV`. Note that
-  passwords are rotated once in a while, thus, if you get an authentication
-  error, run `taito secrets:ENV` again.
+  If you don't have a personal account for the database, you can get a working
+  username and password by running `taito secrets:ENV`. Note that passwords are
+  rotated once in a while, thus, if you get an authentication error, retrieve
+  new secrets by running `taito secrets:ENV` again.
 
 db-open[:ENV] [USERNAME]
-  Access database from command line. DB proxy is started automatically if
-  required. NOTE: If you want to access database using a GUI tool, use the
-  db-proxy:ENV command instead.
+  Access database from command line. DB proxy connection and secrets are
+  handled automatically. NOTE: If you want to access database using a GUI tool,
+  use the db-proxy:ENV command instead.
 
 db-dump[:ENV]
-  Take dump of a database. DB proxy is started automatically if
-  required.
+  Take dump of a database. DB proxy connection and secrets are
+  handled automatically.
 
 db-import[:ENV] FILE
-  Import file to database. DB proxy is started automatically if
-  required.
+  Import file to database. DB proxy connection and secrets are
+  handled automatically.
 
 db-copy:ENV DEST_ENV
   Copy database from one environment to another. For example
   `db-copy:prod staging` or `db-copy:dev local`. If you do not have enough
-  rights, ask devops personnel to do this for you. DB proxy is started
-  automatically if required.
+  rights, ask devops personnel to do this for you. DB proxy connection and
+  secrets are handled automatically.
 
 db-copyquick:ENV DEST_ENV
   Copy database quickly from one environent to another. NOTE: Locks source
   database from other users until copy is finished. Also requires that both
   databases are located on the same database cluster. Do not use this for
   production database unless you are sure nobody is using the system.
-  DB proxy is started automatically if required.
+  DB proxy connection and secrets are handled automatically.
 
 canary
   Releases the current staging version to production as a canary release.
@@ -171,21 +172,24 @@ This section provides commands for CI/CD and also additional commands that
 can be used to revert changes changes manually.
 
 db-deploy[:ENV]
-  Deploy changes to database. DB proxy is started automatically if required.
+  Deploy changes to database. DB proxy connection and secrets are handled
+  automatically.
 
 db-log[:ENV]
-  View change log of database. DB proxy is started automatically if required.
+  View change log of database. DB proxy connection and secrets are handled
+  automatically.
 
 db-revert[:ENV] [CHANGE]
-  Revert database changes. DB proxy is started automatically if required.
-  Revert the previous migration batch by running `taito db-revert[:ENV]`. If
-  you would like to revert to a specific revision instead, view the change log
-  first with `taito db-log[:ENV]` and then run `taito db-revert[:ENV] CHANGE`.
-  TODO currently always requires CHANGE param.
+  Revert database changes. DB proxy connection and secrets are
+  handled automatically. Revert the previous migration batch by running
+  `taito db-revert[:ENV]`. If you would like to revert to a specific revision
+  instead, view the change log first with `taito db-log[:ENV]` and then run
+  `taito db-revert[:ENV] CHANGE`. TODO currently always requires CHANGE param.
 
 db-recreate[:ENV]
   Recreates the database. Thus on next deployment, all database migrations
-  will be run from the beginning.
+  will be run from the beginning. DB proxy connection and secrets are handled
+  automatically.
 
 build CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
   Builds image if no image already exists with the given tag.
@@ -254,14 +258,14 @@ release-post:ENV
 
 cancel:ENV [IGNORE_BUILD_ID]
   Cancel an ongoing build (but ignore the given build id). CI/CD scripts may use
-  this to, for example, cancel an ongoing build when a new build is started.
+  this, for example, to cancel an ongoing build when a new build is started.
   It may also be handy in case somebody pushes something to a wrong branch
   accidentally.
 
 secrets[:ENV] [--save-as-taito-secrets]
   Retrieves all secrets that might be needed by the CI/CD build or developer.
   If the --save-as-taito-secrets flag is given, the command saves the secrets
-  as a taito-secrets.sh file, that taito-cli will read the next time it is
+  as a taito-secrets.sh file that taito-cli will read the next time it is
   executed. NOTE: taito-secrets.sh should be used only in a temporary CI/CD
   workspace.
 
