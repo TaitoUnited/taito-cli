@@ -1,5 +1,5 @@
-TEMPLATE COMMANDS
------------------
+TEMPLATE
+--------
 
 template-create TEMPLATE
   Create a new project using a template.

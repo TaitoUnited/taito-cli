@@ -31,7 +31,7 @@ fi
 
 # Create initial tag
 git tag v0.0.0
-git push --tags
+git push origin v0.0.0
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

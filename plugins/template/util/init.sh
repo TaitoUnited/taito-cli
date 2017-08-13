@@ -63,12 +63,13 @@ if [[ ${mode} == "create" ]]; then
   if ! git remote add origin "${template_dest_git_url}/${repo_name}.git"; then
     exit 1
   fi
-  git push -u origin master
+  if ! git push -u origin master; then
+    exit 1
+  fi
 
   # Create initial tag
   git tag v0.0.0
   git push origin v0.0.0
-  # git push --tags
 
   # Create dev branch
   git checkout -b dev
