@@ -282,29 +282,3 @@ support-maintenance
   List contacts that should be notified of a maintenance break. May be a hard
   coded list or generated from user database. TIP: Enable the npm plugin and
   implement email:maintenance script in your package.json.
-
-
-ZONE COMMANDS
--------------
-NOTE: These commands are for devops personnel.
-
-zone-install [TYPE]
-  Interactive command for installing resources (taito zones, kubernetes
-  clusters, database clusters, apps) by using taito conventions.
-
-zone-upgrage TAITO_ZONE
-  Interactive command for executing upgrades to a zone: kubernetes nodes,
-  helm tiller, kube-lego, nginx ingress controller, apps, etc.
-
-zone-uninstall TAITO_ZONE [NAME]
-  Interactive command for deleting resources (taito zones, kubernetes clusters,
-  database clusters, apps).
-
-zone-status TAITO_ZONE
-  Shows status and some basic info about TAITO_ZONE.
-
-zone-doctor TAITO_ZONE
-  Lists possible problems in TAITO_ZONE.
-
-zone-rotate TAITO_ZONE [NAMESPACE]
-  Interactive command for rotating secrets of given TAITO_ZONE and NAMESPACE.
