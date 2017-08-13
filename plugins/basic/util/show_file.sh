@@ -16,7 +16,7 @@ fi
 c=$(cat "${taito_cli_path}/${filename}")
 content="${content}\n\n\n${c}"
 
-plugins=("${taito_plugins}")
+plugins=("${taito_enabled_plugins}")
 for plugin in ${plugins[@]}
 do
   # Check plugin commands only if plugin is enabled for this environment:
