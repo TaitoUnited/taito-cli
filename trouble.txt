@@ -1,0 +1,21 @@
+---------------------------------
+### TAITO-CLI TROUBLESHOOTING ###
+---------------------------------
+
+My application does not work
+  Try clean start by running 'taito start clean' and then 'taito init'
+
+Authentication error using taito-cli
+  If you run into an authentication error during command execution,
+  the command probably requires authentication and you either have not
+  authenticated or your authentication has expired. In such case, run
+  'taito auth:ENV' to authenticate in the context of currently enabled plugins.
+
+Taito-cli says: command not found
+  Did you remember to give the correct environment as argument? Commands
+  always use local by default, and not all commands support local environment.
+
+  Check your plugin configuration in your taito-config.sh files.
+
+  Make sure that you have set all the environment variables correctly:
+  TODO
