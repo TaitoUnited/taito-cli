@@ -5,8 +5,7 @@
 : "${link_urls:?}"
 
 exit_code=0
-
-found=$(echo "${link_urls}" | grep "${taito_command}[=:]")
+found=$(echo "${link_urls}" | grep "${taito_command}[\[\:\=\#]")
 if [[ ${found} != "" ]]; then
   links=("${link_urls}")
   for link in ${links[@]}
