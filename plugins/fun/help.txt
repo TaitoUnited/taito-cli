@@ -1,0 +1,8 @@
+JUST FOR FUN
+------------
+
+fun-starwars
+  Watch some Star Wars on command line.
+
+fun-bofh
+  Bastard Operator from Hell!
