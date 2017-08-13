@@ -119,6 +119,7 @@ canary
   Releases the current staging version to production as a canary release.
   NOTE: Currently you can make canary release only if database changes of
   the new canary release are compatible with the current production version.
+  TODO Not implemented yet.
 
 status[:ENV]
   Show status summary of environment (status of services, pods, etc.).
