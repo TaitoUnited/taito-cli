@@ -14,7 +14,7 @@ else
 fi
 
 echo
-echo "### gcloud - cancel: Cancel all previous ongoing builds targetting branch ${branch_name} ###"
+echo "### gcloud-builder - cancel: Cancel all previous ongoing builds targetting branch ${branch_name} ###"
 echo
 
 gcloud beta container builds list --ongoing | \

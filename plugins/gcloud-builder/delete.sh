@@ -3,16 +3,9 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### gcloud - delete: Deleting environment ###"
+echo "### gcloud-builder - delete: Deleting trigger ###"
 echo
-echo "TODO not implemented"
-echo
-echo "Delete these manually:"
-echo "- Build trigger"
-echo "- DNS settings"
-echo "- Custom SSL certificate"
-echo "- Uptime check"
-echo "- Log alert rules"
+echo "TODO not implemented. Delete trigger manually."
 echo
 echo "Press enter when done"
 read -r

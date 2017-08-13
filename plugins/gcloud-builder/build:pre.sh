@@ -13,7 +13,7 @@ if [[ "${image_path}" == "" ]]; then
 fi
 
 echo
-echo "### gcloud - build:pre: Checking if image exists already in the container registry ###"
+echo "### gcloud-builder - build:pre: Checking if image exists already in the container registry ###"
 echo
 echo "TODO check from container registry instead as there might be manual builds also"
 

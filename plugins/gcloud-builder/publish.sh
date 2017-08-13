@@ -3,7 +3,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### gcloud - publish: Publishing artifacts ###"
+echo "### gcloud-builder - publish: Publishing artifacts ###"
 echo
 
 echo "TODO implement"

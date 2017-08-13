@@ -16,7 +16,7 @@ fi
 version="x.x.x"
 
 echo
-echo "### gcloud - build: Building ${name} ###"
+echo "### gcloud-builder - build: Building ${name} ###"
 echo
 
 if [[ ${taito_image_exists} == false ]]; then
