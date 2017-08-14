@@ -1,5 +1,7 @@
 #!/bin/bash
 
+: "${taito_image:?}"
+
 # Contain pwd change in a subshell
 if ! (
 
@@ -57,6 +59,7 @@ if ! (
 
   # Read taito-config.sh files from all locations
   # TODO duplicate code with taito_impl.sh
+  export taito_env="local"
   if [[ -f "${HOME}/.taito/taito-config.sh" ]]; then
     # Personal config
     # shellcheck disable=SC1090
@@ -78,7 +81,7 @@ if ! (
     if [[ ${extension} == "git@"* ]]; then
       # Git url e.g. git@github.com:TaitoUnited/webapp-template.git/my-extension
       temp=${extension#*\/}
-      repo_url=${extension%.git*}.git # git@github.com:TaitoUnited/webapp-template.git
+      repo_url=${extension%.git*}.git # git@github.com:xxx/webapp-template.git
       repo_name=${temp%.git*} # webapp-template
       repo_dir=${temp#*.git} # /my-extension
       repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
@@ -90,9 +93,11 @@ if ! (
         (cd ~/.taito; git clone "${repo_url}"; cd "${repo_name}"; git checkout)
       fi
       extension_paths="${extension_paths} /root/.taito/${repo_name}${repo_dir}"
-      extensions_local_mode="${extensions_local_mode} ${HOME}/.taito/${repo_name}${repo_dir}"
+      extensions_local_mode="${extensions_local_mode} \
+        ${HOME}/.taito/${repo_name}${repo_dir}"
     elif [[ ${extension} == *"gz" ]]; then
-      # Archive link e.g. my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
+      # Archive link e.g.
+      # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
       folder_name=${extension%=*}
       url=${extension##*=}
       if [[ ! -d "${HOME}/.taito/${folder_name}" ]]; then
@@ -100,13 +105,15 @@ if ! (
         ( curl -sL "${url}" | tar zxv -C ~/.taito )
       fi
       extension_paths="${extension_paths} /root/.taito/${repo_name}"
-      extensions_local_mode="${extensions_local_mode} ${HOME}/.taito/${repo_name}"
+      extensions_local_mode="${extensions_local_mode} \
+        ${HOME}/.taito/${repo_name}"
     else
       # Local url
       docker_path="${extension/\~//root}"
       local_path="${extension/\~/${HOME}}"
       extension_paths="${extension_paths} ${docker_path}"
-      extension_mount_flags="${extension_mount_flags} -v ${local_path}:${docker_path}"
+      extension_mount_flags="${extension_mount_flags} \
+        -v ${local_path}:${docker_path}"
       extensions_local_mode="${extensions_local_mode} ${local_path}"
     fi
   done
@@ -136,7 +143,9 @@ if ! (
   # Link database container if env is local and command uses database
   # TODO: this is a quick hack
   command="${params[0]}"
-  if ( [[ ${command} == ":local" ]] || [[ ${command} != *":"* ]] ) && ( [[ ${command} == db* ]] || [[ ${command} == init ]] ) && [[ ${command} != db-add ]]; then
+  if ( [[ ${command} == ":local" ]] || [[ ${command} != *":"* ]] ) && \
+     ( [[ ${command} == db* ]] || [[ ${command} == init ]] ) && \
+     [[ ${command} != db-add ]]; then
     if [[ ${mode} != "local" ]]; then
       link_flags="--link ${taito_project}-database:${taito_project}-database"
     else
@@ -149,8 +158,10 @@ if ! (
   # Forward output to less in case command is `help`, `trouble` or `readme`.
   # We need to also filter some control characters for a cleaner output.
   output=""
-  if [[ ${command} == "help"* ]] || [[ ${command} == "trouble"* ]] || [[ ${command} == "readme"* ]]; then
-    output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | tr '\275\276' '\r\n' | tail -n +7 | less"
+  if [[ ${command} == "help"* ]] || [[ ${command} == "trouble"* ]] || \
+     [[ ${command} == "readme"* ]]; then
+    output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
+      tr '\275\276' '\r\n' | tail -n +7 | less"
   fi
 
   if [[ "${mode}" == "local" ]]; then

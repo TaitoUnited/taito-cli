@@ -82,8 +82,8 @@ if ! (
 
   # Use overwrites defined by caller
   # TODO this is a quick hack
-  if [[ ${postgres_host_overwrite} != "" ]]; then
-    postgres_host=${postgres_host_overwrite}
+  if [[ ${postgres_host_overwrite:-} != "" ]]; then
+    export postgres_host=${postgres_host_overwrite}
   fi
 
   # Create environment variables for secrets
@@ -101,12 +101,15 @@ if ! (
     if [[ "${secret_suffix}" == *"/"* ]]; then
       secret_namespace="${secret_suffix##*/}"
     else
-      secret_namespace="${taito_namespace}"
+      secret_namespace="${taito_namespace:?}"
     fi
     taito_secret_names="${taito_secret_names} ${secret_name}"
-    secret_exports="${secret_exports}export secret_name_${secret_index}='${secret_name}'; "
-    secret_exports="${secret_exports}export secret_method_${secret_index}='${secret_method}'; "
-    secret_exports="${secret_exports}export secret_namespace_${secret_index}='${secret_namespace}'; "
+    secret_exports="${secret_exports}export \
+      secret_name_${secret_index}='${secret_name}'; "
+    secret_exports="${secret_exports}export \
+      secret_method_${secret_index}='${secret_method}'; "
+    secret_exports="${secret_exports}export \
+      secret_namespace_${secret_index}='${secret_namespace}'; "
     secret_index=$((${secret_index}+1))
   done
 
@@ -216,8 +219,9 @@ if ! (
       fi
     else
       # Command not found
-      echo "Unknown command: ${command}. Did you specify the correct environment?"
-      echo "Some of the plugins might not be enabled in '${taito_env}' environment."
+      echo "Unknown command: ${command}. Did you specify the correct"
+      echo "environment? Some of the plugins might not be enabled in"
+      echo "'${taito_env}' environment."
       exit_code=1
     fi
   fi
