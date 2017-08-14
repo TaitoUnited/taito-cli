@@ -68,6 +68,7 @@ steps:
 - id: test-e2e
   name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'test-e2e']
+
 - id: release-post
   name: 'gcr.io/cloud-builders/npm'
   entrypoint: 'bash'
@@ -75,6 +76,7 @@ steps:
   - '-c'
   - |
     echo "# Running semantic-release post"
+    cd release
     github_token=$$(cat github-token.tmp)
     NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post
 
