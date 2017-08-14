@@ -76,8 +76,8 @@ steps:
   - '-c'
   - |
     echo "# Running semantic-release post"
-    cd release
     github_token=$$(cat github-token.tmp)
+    cd release
     NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post
 
 - id: push
