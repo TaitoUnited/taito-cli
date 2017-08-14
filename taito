@@ -1,7 +1,5 @@
 #!/bin/bash
 
-: "${taito_image:?}"
-
 # Contain pwd change in a subshell
 if ! (
 
@@ -171,7 +169,7 @@ if ! (
   else
     # Mode: run on docker container
     export taito_image_name
-    taito_image_name="${taito_image}"
+    taito_image_name="${taito_image:?}"
     image_flag="--rm ${taito_image_name}"
     if [[ "${mode}" == "dev" ]]; then
       extension_mount_flags="${extension_mount_flags} \
