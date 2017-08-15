@@ -5,7 +5,7 @@
 pod="${1}"
 
 echo
-echo "### docker - log: Showing some logs ###"
+echo "### docker - logs: Showing some logs ###"
 echo
 
 if [[ -z "${pod}" ]]; then

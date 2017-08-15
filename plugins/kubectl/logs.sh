@@ -8,7 +8,7 @@ pod="${1}"
 container_name="${2}"
 
 echo
-echo "### kubectl - log: Showing logs of ${pod} ###"
+echo "### kubectl - logs: Showing logs of ${pod} ###"
 echo
 
 # Change namespace

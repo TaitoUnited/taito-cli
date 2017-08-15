@@ -4,7 +4,7 @@
 : "${taito_plugin_path:?}"
 
 echo
-echo "### secrets - create:pre: Creating secrets ###"
+echo "### secrets - env-create:pre: Creating secrets ###"
 echo
 
 # shellcheck disable=SC1090

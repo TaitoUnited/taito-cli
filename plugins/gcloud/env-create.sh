@@ -6,7 +6,7 @@
 branch="${1}"
 
 echo
-echo "### gcloud - create: Creating environment ###"
+echo "### gcloud - env-create: Creating environment ###"
 echo
 
 # Determine branch

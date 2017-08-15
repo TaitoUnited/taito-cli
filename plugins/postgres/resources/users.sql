@@ -4,10 +4,10 @@
 \set qpasswordbuild '\'' :passwordbuild '\''
 
 -- make sure common roles exist
-CREATE ROLE admin;
-CREATE ROLE developer;
-CREATE ROLE mgr;
-CREATE ROLE app;
+-- CREATE ROLE admin;
+-- CREATE ROLE developer;
+-- CREATE ROLE mgr;
+-- CREATE ROLE app;
 
 CREATE USER :dbuserapp WITH ROLE app PASSWORD :qpasswordapp
   NOSUPERUSER NOCREATEDB NOCREATEROLE CONNECTION LIMIT 20;

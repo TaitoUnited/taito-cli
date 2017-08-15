@@ -72,10 +72,10 @@ stop[:ENV]
   Stop.
 
 users[:ENV]
-  Show user accounts that you can use to log in. Hard coded user accounts
+  Show user accounts that you can use to log in. TIP: Enable the npm plugin and
+  implement users[:ENV] script in your package.json. Hard coded user accounts
   for local, dev and test environments suffice. Usually not implemented for
-  staging and production environments. TIP: Enable the npm plugin and
-  implement users[:ENV] script in your package.json.
+  staging and production environments.
 
 db-add NAME [-r REQUIRES] [-n DESCRIPTION]
   Add a new change to migration plan. Run db-add without arguments to get help.
@@ -124,7 +124,7 @@ canary
 status[:ENV]
   Show status summary of environment (status of services, pods, etc.).
 
-log[:ENV] POD [CONTAINER]
+logs[:ENV] POD [CONTAINER]
   See logs of a pod. Run status:ENV first to get the pod name and status.
   Example: taito log:dev myapp-dev-client-3034393823-2f5jf
 
@@ -150,20 +150,20 @@ PROJECT: CONFIG
 config
   Configure project.
 
-create:ENV [GIT_BRANCH]
+env-create:ENV [GIT_BRANCH]
   Create environment. Creates build trigger for the given branch if branch
   was given as argument. Otherwise uses default branch determined by ENV.
 
-update:ENV
+env-update:ENV
   Update environment.
 
-delete:ENV
+env-delete:ENV
   Delete environment.
 
-rotate:ENV
+env-rotate:ENV
   Rotate secrets for the environment.
 
-cert[:ENV] DOMAIN
+env-cert[:ENV] DOMAIN
   Add a custom certificate instead of automatically generated.
 
 
@@ -255,8 +255,8 @@ release-pre:ENV
 release-post:ENV
   Release pre and post handling. These commands usually generate release notes
   automatically and tag the git repository with a new version number.
-  TIP: Enable the npm plugin and implement release:pre:prod and
-  release:post:prod scripts in your package.json.
+  TIP: Enable the npm plugin and implement release-pre:prod and
+  release-post:prod scripts in your package.json.
 
 cancel:ENV [IGNORE_BUILD_ID]
   Cancel an ongoing build (but ignore the given build id). CI/CD scripts may use

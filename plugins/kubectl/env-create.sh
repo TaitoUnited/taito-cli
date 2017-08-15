@@ -6,7 +6,7 @@
 : "${taito_env:?}"
 
 echo
-echo "### kubectl - create: Saving new secrets to Kubernetes ###"
+echo "### kubectl - env-create: Saving new secrets to Kubernetes ###"
 echo
 
 # Change namespace

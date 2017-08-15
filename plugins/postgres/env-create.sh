@@ -6,7 +6,7 @@
 # Create a subshell to contain password
 if ! (
   echo
-  echo "### postgres - create: Creating database ###"
+  echo "### postgres - env-create: Creating database ###"
   echo
   export postgres_username=postgres
   . "${taito_plugin_path}/util/ask-password.sh"

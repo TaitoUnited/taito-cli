@@ -4,7 +4,7 @@
 : "${taito_plugin_path:?}"
 
 echo
-echo "### postgres - rotate: Creating users / altering passwords for ${taito_env} ###"
+echo "### postgres - env-rotate: Creating users / altering passwords for ${taito_env} ###"
 echo
 
 export postgres_username=postgres

@@ -6,7 +6,7 @@
 branch="${1}"
 
 echo
-echo "### namecheap - create: Adding a SSL certificate ###"
+echo "### namecheap - env-create: Adding a SSL certificate ###"
 echo
 
 if [[ "${taito_env}" == "prod" ]] || [[ "${branch}" == "master" ]]; then

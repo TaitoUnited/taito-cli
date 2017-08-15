@@ -3,7 +3,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### gcloud - delete: Deleting environment ###"
+echo "### gcloud - env-delete: Deleting environment ###"
 echo
 echo "TODO not implemented"
 echo

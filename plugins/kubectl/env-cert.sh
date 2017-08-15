@@ -5,7 +5,7 @@
 : "${taito_env:?}"
 
 echo
-echo "### kubectl - cert: Adding certificate ###"
+echo "### kubectl - env-cert: Adding certificate ###"
 echo
 
 # Change namespace

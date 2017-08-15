@@ -6,16 +6,13 @@
 : "${taito_env:?}"
 
 echo
-echo "### kubectl - rotate: Saving new secrets to Kubernetes ###"
+echo "### kubectl - env-delete: Deleting secrets from Kubernetes ###"
 echo
-
-# Ensure that namespace exists
-kubectl create namespace "${taito_customer}-${taito_env}" 2> /dev/null
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
-if ! "${taito_plugin_path}/util/save-secrets.sh"; then
+if ! "${taito_plugin_path}/util/delete-secrets.sh"; then
   exit 1
 fi
 

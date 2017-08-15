@@ -3,7 +3,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### gcloud-builder - delete: Deleting trigger ###"
+echo "### gcloud-builder - env-delete: Deleting trigger ###"
 echo
 echo "TODO not implemented. Delete trigger manually."
 echo
