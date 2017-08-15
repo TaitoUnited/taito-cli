@@ -36,7 +36,7 @@ if [[ ${mode} == "create" ]]; then
   echo "with the following settings:"
   echo "- Private, README.md not initialized"
   echo "- Default branch: dev"
-  echo "- Protected branch: master (require pull request)"
+  echo "- Protected branch: master (require pull request, include admins)"
   echo "- Developers team: write permission"
   echo "- Admins team: admin permission"
   echo

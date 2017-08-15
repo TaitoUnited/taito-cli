@@ -63,7 +63,7 @@ steps:
   - |
     # Read version number that semantic-release wrote on the package.json
     tag=$$(grep "version" package.json | grep -o "[0-9].[0-9].[0-9]")
-    docker build -t eu.gcr.io/$${project_id}/$${repo_name}:$${tag} .
+    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} .
 
 - id: test-e2e
   name: 'gcr.io/cloud-builders/npm'
@@ -91,6 +91,6 @@ steps:
   - |
     # Read version number that semantic-release wrote on the package.json
     tag=$$(grep "version" package.json | grep -o "[0-9].[0-9].[0-9]")
-    docker push eu.gcr.io/$${project_id}/$${repo_name}:$${tag}
+    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
 
 timeout: 720s

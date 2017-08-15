@@ -9,5 +9,6 @@ echo
 echo "### Taito-cli running on host: ${commands} ###"
 echo
 echo "${taito_run}${commands}${taito_run}"
+echo
 
-sleep ${sleep_seconds:-1}
+sleep ${sleep_seconds:-2}
