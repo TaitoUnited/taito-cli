@@ -6,7 +6,7 @@ echo
 echo "### docker - stop: Stopping ###"
 echo
 
-if ! "${taito_cli_path}/util/execute-on-host.sh" "docker-compose down"; then
+if ! "${taito_cli_path}/util/execute-on-host.sh" "docker-compose down" 6; then
   exit 1
 fi
 
