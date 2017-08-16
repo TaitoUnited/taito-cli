@@ -35,22 +35,21 @@ if [[ "${taito_env}" == "prod" ]]; then
   echo
   echo "gcloud: Adding a uptime check for ${taito_env}"
   echo
-  echo "Create an uptime with these settings:"
+  echo "Create two uptime checks with these settings:"
   echo "- Title: ${taito_project}-${taito_env}"
   echo "- Type: HTTPS"
   echo "- Hostname: ${taito_app_url}"
-  echo "- Path: /statusz"
+  echo "- Path: / and /api/uptimez"
   echo "- Check every: 5 minutes"
   echo
   echo "Press enter to open the uptime check management"
   read -r
-  echo "Press enter when ready"
-  read -r
-  echo
-
   if ! "${taito_cli_path}/util/browser.sh" "https://app.google.stackdriver.com/uptime?project=${taito_zone}"; then
     exit 1
   fi
+  echo "Press enter when ready"
+  read -r
+  echo
 
   echo
   echo "gcloud: Adding a log alerts for ${taito_env}"
@@ -59,13 +58,13 @@ if [[ "${taito_env}" == "prod" ]]; then
   echo
   echo "Press enter to open logs"
   read -r
+  if ! "${taito_cli_path}/util/browser.sh" "https://console.cloud.google.com/logs/viewer?project=${taito_zone}&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F${kubectl_name}%2Fnamespace_id%2F${taito_namespace}"; then
+    exit 1
+  fi
   echo "Press enter when ready"
   read -r
   echo
 
-  if ! "${taito_cli_path}/util/browser.sh" "${link_logs_url_prefix}-${taito_env}"; then
-    exit 1
-  fi
 fi
 
 # Call next command on command chain
