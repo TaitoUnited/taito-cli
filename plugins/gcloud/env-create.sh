@@ -40,7 +40,7 @@ if [[ "${taito_env}" == "prod" ]]; then
   echo "- Type: HTTPS"
   echo "- Hostname: ${taito_app_url}"
   echo "- Path: / and /api/uptimez"
-  echo "- Check every: 5 minutes"
+  echo "- Check every: 1 minute"
   echo
   echo "Press enter to open the uptime check management"
   read -r
