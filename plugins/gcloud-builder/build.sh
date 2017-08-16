@@ -13,7 +13,7 @@ if [[ "${image_path}" == "" ]]; then
 fi
 
 # Read version number that semantic-release wrote on the package.json
-version=$(grep "version" package.json | grep -o "[0-9].[0-9].[0-9]")
+version=$(grep "version" "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
 
 echo
 echo "### gcloud-builder - build: Building ${name} ###"

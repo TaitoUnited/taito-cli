@@ -29,11 +29,6 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
       exit 1
     fi
 
-    version1=$(grep "version" "${taito_project_path}/release/package.json" | grep -o "[0-9].[0-9].[0-9]")
-    version2=$(grep "version" "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
-    echo "- 1 ./release/package.json version ${version1}"
-    echo "- 1 ./package.json version ${version2}"
-
     echo "- Running semantic-release"
     if ! NPM_TOKEN=none GH_TOKEN=${secret_value_ext_github_build} npm run "${command}" -- "${@}"; then
       exit 1
@@ -44,10 +39,8 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     rm -f "${taito_project_path}/package.json"
     yes | cp package.json "${taito_project_path}/package.json"
 
-    version1=$(grep "version" "${taito_project_path}/release/package.json" | grep -o "[0-9].[0-9].[0-9]")
-    version2=$(grep "version" "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
-    echo "- 2 ./release/package.json version ${version1}"
-    echo "- 2 ./package.json version ${version2}"
+    version=$(grep "version" "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
+    echo "- New version in ./package.json: ${version}"
   ); then
     exit 1
   fi
