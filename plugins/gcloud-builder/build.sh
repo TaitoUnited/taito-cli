@@ -12,8 +12,8 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
-# TODO read BUILD_VERSION from package.json
-version="x.x.x"
+# Read version number that semantic-release wrote on the package.json
+version=$(grep "version" package.json | grep -o "[0-9].[0-9].[0-9]")
 
 echo
 echo "### gcloud-builder - build: Building ${name} ###"
