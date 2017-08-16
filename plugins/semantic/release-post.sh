@@ -3,6 +3,7 @@
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 : "${secret_value_ext_github_build:?}"
+: "${taito_project_path:?}"
 
 command=release-post:${taito_env}
 
@@ -13,7 +14,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     echo
     echo "### npm - release-post: Finalizing release ###"
     echo
-    cd release || exit 1
+    cd "${taito_project_path}/release" || exit 1
     if ! NPM_TOKEN=none GH_TOKEN=${secret_value_ext_github_build} npm run "${command}" -- "${@}"; then
       exit 1
     fi
