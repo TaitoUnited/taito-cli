@@ -35,7 +35,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     rm -f .npmrc
 
     echo "- Copying package.json with a new version number"
-    cp package.json ..
+    yes | cp package.json ..
   ); then
     exit 1
   fi
