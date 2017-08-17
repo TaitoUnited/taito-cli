@@ -7,7 +7,7 @@ if [[ "${requested_name}" == "" ]] || \
    [[ "${requested_name}" == "${current_name}" ]]; then
   echo "Execute ${current_name} (Y/n)?"
   read -r confirm
-  if [[ ${confirm} == "Y" ]]; then
+  if [[ ${confirm} =~ ^[Yy]$ ]]; then
     exit 0
   fi
 fi

@@ -19,7 +19,7 @@ echo "WARNING! This operation will disconnect all db connections! Continue (Y/n)
 read -r confirm
 echo
 
-if [[ ${confirm} == 'Y' ]]; then
+if [[ ${confirm} =~ ^[Yy]$ ]]; then
   db_prefix=${postgres_database%_*}
 
   flags="-f ${taito_plugin_path}/resources/copyquick.sql \

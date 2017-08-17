@@ -9,8 +9,8 @@
 
 echo "--- Deleting database ${postgres_database} ---"
 echo "Are you sure you want to drop database ${postgres_database} (Y/n)?"
-read -r drop
-if [[ "${drop}" == "Y" ]]; then
+read -r confirm
+if [[ ${confirm} =~ ^[Yy]$ ]]; then
   echo "- import drop.sql:"
   psql -h "${postgres_host}" \
     -p "${postgres_port}" \
