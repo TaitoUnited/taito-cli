@@ -41,7 +41,7 @@ if [[ "${taito_env}" == "prod" ]]; then
   echo "- Hostname: ${taito_app_url}"
   echo "- Path: / and /api/uptimez"
   echo "- Check every: 1 minute"
-  echo
+  echo "- Do not create a new policy. Add to the existing 'Uptime Check Policy' instead."
   echo "Press enter to open the uptime check management"
   read -r
   if ! "${taito_cli_path}/util/browser.sh" "https://app.google.stackdriver.com/uptime?project=${taito_zone}"; then
