@@ -147,7 +147,7 @@ clean [data | build]
 PROJECT: CONFIG
 ---------------
 
-config
+env-config
   Configure project.
 
 env-create:ENV [GIT_BRANCH]
