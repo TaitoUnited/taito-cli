@@ -68,14 +68,14 @@ init
 open[:ENV]
   Open user interface.
 
-stop[:ENV]
-  Stop.
-
 users[:ENV]
   Show user accounts that you can use to log in. TIP: Enable the npm plugin and
   implement users[:ENV] script in your package.json. Hard coded user accounts
   for local, dev and test environments suffice. Usually not implemented for
   staging and production environments.
+
+stop[:ENV]
+  Stop.
 
 db-add NAME [-r REQUIRES] [-n DESCRIPTION]
   Add a new change to migration plan. Run db-add without arguments to get help.
@@ -114,6 +114,10 @@ db-copyquick:ENV DEST_ENV
   database from other users until copying is finished. It also requires
   that both databases are located on the same database cluster. Do not use this
   for production database unless you are sure nobody is using the system.
+
+libs-lock
+  Lock all libraries e.g. by generating new package.lock files to should be
+  committed to git repository. TODO not implemented.
 
 canary
   Releases the current staging version to production as a canary release.
