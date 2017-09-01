@@ -2,10 +2,9 @@
 
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
-: "${taito_image_exists:?}"
 
 name=${1}
-image_tag=${2}
+image_tag=${2:-dry-run}
 image_path=${3}
 
 if [[ "${image_path}" == "" ]]; then
@@ -19,7 +18,7 @@ echo
 echo "### gcloud-builder - build: Building ${name} ###"
 echo
 
-if [[ ${taito_image_exists} == false ]]; then
+if [[ ${taito_image_exists:-false} == false ]]; then
   echo "- Building image"
   docker build -f "./${name}/Dockerfile.build" \
     --build-arg BUILD_VERSION="${version}" \
@@ -27,6 +26,9 @@ if [[ ${taito_image_exists} == false ]]; then
     -t "${image_path}/${name}:${image_tag}" "./${name}"
   if [[ $? -gt 0 ]]; then
     exit 1
+  fi
+  if [[ ${image_tag} == 'dry-run' ]]; then
+    exit 0
   fi
   echo "- Pushing image"
   if ! docker push "${image_path}/${name}:${image_tag}"; then
