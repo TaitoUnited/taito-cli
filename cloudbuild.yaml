@@ -4,7 +4,7 @@ steps:
   args: ['install']
 - id: scan
   name: 'gcr.io/cloud-builders/npm'
-  args: ['run', 'scan']
+  args: ['run', 'ci-scan']
 - id: secrets
   waitFor: ['-']
   name: 'gcr.io/cloud-builders/kubectl'
@@ -44,7 +44,7 @@ steps:
     fi
 
     echo "# Running semantic-release pre"
-    if ! NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-pre; then
+    if ! NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-pre; then
       exit 1
     fi
     rm -f .npmrc
@@ -67,7 +67,7 @@ steps:
 
 - id: test-e2e
   name: 'gcr.io/cloud-builders/npm'
-  args: ['run', 'test-e2e']
+  args: ['run', 'ci-test-e2e']
 
 - id: release-post
   name: 'gcr.io/cloud-builders/npm'
@@ -78,7 +78,7 @@ steps:
     echo "# Running semantic-release post"
     github_token=$$(cat github-token.tmp)
     cd release
-    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post
+    NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-post
 
 - id: push
   name: 'gcr.io/cloud-builders/docker'
@@ -91,6 +91,11 @@ steps:
   - |
     # Read version number that semantic-release wrote on the package.json
     tag=$$(grep "version" package.json | grep -o "[0-9].[0-9].[0-9]")
-    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
 
-timeout: 720s
+    # Push image using version and 'latest' as tags
+    docker image eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} \
+      tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest
+    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
+    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest
+
+timeout: 900s

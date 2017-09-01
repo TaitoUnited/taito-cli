@@ -4,14 +4,14 @@
   "private": false,
   "scripts": {
     "clean": "docker build --no-cache -t taito .",
-    "scan": "echo 'TODO lint'",
-    "test-e2e": "echo 'TODO (cd test; ./all.sh)'",
     "verify": "npm-run-all --parallel lint test",
-    "release-pre": "semantic-release pre",
-    "release-post": "semantic-release post"
+    "ci-scan": "echo 'TODO lint'",
+    "ci-test-e2e": "echo 'TODO (cd test; ./all.sh)'",
+    "ci-release-pre": "semantic-release pre",
+    "ci-release-post": "semantic-release post"
   },
   "pre-commit": [
-    "scan"
+    "ci-scan"
   ],
   "pre-push": [
     "verify"

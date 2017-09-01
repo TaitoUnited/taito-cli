@@ -5,7 +5,7 @@
 : "${secret_value_ext_github_build:?}"
 : "${taito_project_path:?}"
 
-command=release-post:${taito_env}
+command=ci-release-post:${taito_env}
 
 # Run the command only if it exists
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
