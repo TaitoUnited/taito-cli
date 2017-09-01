@@ -193,9 +193,10 @@ ci-canary
   the new canary release are compatible with the current production version.
   TODO Not implemented yet.
 
-ci-build CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
-  Builds image if no image already exists with the given tag.
-  Example: 'build:dev client test1'
+ci-build CONTAINER_NAME [IMAGE_TAG] [PROJECT_REPOSITORY]
+  Builds image and pushes it to image registry if no image already exists with
+  the given tag. Example: 'build:dev client test1'. Executes a dry run
+  (does not push) if image tag has not been given.
 
 ci-deploy[:ENV] [IMAGE_TAG] [--dry-run]
   Deploy the application either by using IMAGE_TAG given as parameter or
