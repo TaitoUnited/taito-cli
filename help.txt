@@ -116,8 +116,8 @@ db-copyquick:ENV DEST_ENV
   for production database unless you are sure nobody is using the system.
 
 libs-lock
-  Lock all libraries e.g. by generating new package.lock files to should be
-  committed to git repository. TODO not implemented.
+  Lock all libraries e.g. by generating package.lock files to be committed
+  to git repository. TODO not implemented.
 
 canary
   Releases the current staging version to production as a canary release.
@@ -175,7 +175,7 @@ PROJECT: CI/CD
 --------------
 
 This section provides commands for CI/CD and also additional commands that
-can be used to revert changes changes manually.
+can be used to revert changes manually.
 
 db-deploy[:ENV]
   Deploy changes to database. DB proxy connection and secrets are handled
@@ -193,7 +193,7 @@ db-revert[:ENV] [CHANGE]
   `taito db-revert[:ENV] CHANGE`. TODO currently always requires CHANGE param.
 
 db-recreate[:ENV]
-  Recreates the database. Thus on next deployment, all database migrations
+  Recreates the database. Thus, on next deployment, all database migrations
   will be run from the beginning. DB proxy connection and secrets are handled
   automatically.
 

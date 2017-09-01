@@ -14,7 +14,7 @@ if [[ -f "${taito_project_path}/${filename}" ]]; then
 fi
 
 c=$(cat "${taito_cli_path}/${filename}")
-content="${content}\n\n\n${c}"
+content="${content}${c}\n\n\n"
 
 plugins=("${taito_enabled_plugins}")
 for plugin in ${plugins[@]}
