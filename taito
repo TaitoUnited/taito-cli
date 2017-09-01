@@ -16,6 +16,7 @@ if ! (
   fi
 
   # Determine entrypoint
+  # TODO this is a quick hack
   entrypoint="taito"
   if [[ "${1}" == "--login" ]]; then
     entrypoint="/bin/bash"
@@ -182,6 +183,11 @@ if ! (
       proxy_flags="\
         --expose=${gcloud_sql_proxy_port} \
         -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"
+    fi
+
+    # Randomly check if taito-cli image has been updated
+    if (( RANDOM % 10 == 0 )); then
+      docker pull "${taito_image_name}"
     fi
 
     # Run on docker
