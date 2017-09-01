@@ -2,16 +2,19 @@
 
 # TODO implement a dynamic script
 
-_arguments "1: :(help readme trouble auth: -- --login install compile \
-  start: run: init open: stop: users: db-add db-proxy: db-open: db-dump: \
-  db-import: db-copy: db-copyquick: status: logs: login: exec: kill: \
-  clean env-config env-create: env-update: env-delete: env-rotate: env-cert: \
-  ci-db-deploy: ci-db-log: ci-db-revert: ci-db-recreate: ci-canary \
-  ci-build ci-deploy: ci-revision: ci-revert: ci-wait: ci-verify: ci-docs \
-  ci-scan ci-test-unit ci-test-api: ci-test-e2e: ci-publish ci-release-pre: \
-  ci-release-post: ci-cancel: ci-secrets: contacts-development \
-  contacts-maintenance open-boards open-issues open-builds open-artifacts \
+_arguments "1: :(b-help b-readme b-trouble b-auth: -- --login \
+  o-install o-compile o-start: o-run: o-init open: o-stop: o-users: \
+  o-status: o-logs: o-login: o-exec: o-kill: o-clean \
+  db-add db-proxy: db-open: db-dump: db-import: \
+  db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \
+  ci-build ci-deploy: ci-canary ci-revision: ci-revert: \
+  ci-wait: ci-verify: ci-docs ci-scan ci-test-unit ci-test-api: ci-test-e2e: \
+  ci-publish ci-release-pre: ci-release-post: ci-cancel: ci-secrets: \
+  env-config env-create: env-update: env-delete: env-rotate: env-cert: \
+  contacts-development contacts-maintenance contacts-users \
+  open-boards open-issues open-builds open-artifacts \
   open-logs: open-errors: open-uptime open-performance open-feedback \
-  fun-bofh fun-starwars template-create template-migrate template-upgrade \
+  fun-bofh fun-starwars \
+  template-create template-migrate template-upgrade \
   zone-install zone-maintenance zone-uninstall zone-status zone-doctor \
   zone-rotate)"

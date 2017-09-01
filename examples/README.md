@@ -24,11 +24,11 @@
 
     * TODO...
 
-3. Run `taito config` in the project directory. This will create a new Sentry project for you.
+3. Run `taito env-config` in the project directory. This will create a new Sentry project for you.
 
-4. Create dev and prod environments for the project by running `taito create:dev` and `taito create:prod` in the project directory. This will TODO:
+4. Create dev and prod environments for the project by running `taito env-create:dev` and `taito env-create:prod` in the project directory. This will TODO:
 
-5. Start local development by running: `taito install`, `taito start`, `taito init` and `taito open`.
+5. Start local development by running: `taito o-install`, `taito o-start`, `taito o-init` and `taito open`.
 
 6. Push a change in the dev branch and it will be deployed on your Kubernetes cluster running on Google Cloud as a development version.
 
@@ -48,4 +48,4 @@ TODO instructions
 
 ## Miscellaneous tips
 
-See taito-cli commands by running `taito help`.
+See taito-cli commands by running `taito b-help`.

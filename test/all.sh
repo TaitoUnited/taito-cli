@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Runs all integration test suites
 
 suites_success=false

@@ -11,23 +11,23 @@ ENV
   'ios' or 'android'.
 
 POD
-  Depending on the plugin, POD may reference to a Kubernetes pod, a Docker
-  container or a function.
+  Depending on the environment, POD may reference to a Kubernetes pod,
+  a Docker container or a function.
 
 
 BASIC COMMANDS
 --------------
 
-help
+b-help
   Show help.txt of current project and a list of all taito-cli commands.
 
-readme
-  Show README.md of both current project and taito-cli.
-
-trouble
+b-trouble
   Show trouble.txt of both current project and taito-cli.
 
-auth:ENV
+b-readme
+  Show README.md of both current project and taito-cli.
+
+b-auth:ENV
   Authenticate in the context of the given environment.
 
 
@@ -36,46 +36,71 @@ ADVANCED COMMANDS
 
 --
   Execute any command inside the taito-cli container e.g.
-  'taito -- kubectl get pods'. This means that taito-cli may provide
-  almost all the tools that you need to do your work.
+  'taito -- kubectl get pods'.
 
 --login
   Login to the taito-cli container.
 
 
-PROJECT: BASIC
---------------
+PROJECT: BASIC OPERATIONS
+-------------------------
 
-install
+o-install
   Install everything that needs to installed locally, e.g. linter libraries
   to be used by your editor. TIP: Enable the npm plugin as it will call
   `npm install` automatically.
 
-compile
+o-compile
   Compile (for projects that need to be compiled). TIP: Enable the npm plugin
-  and implement compile script in your package.json.
+  and implement o-compile script in your package.json.
 
-start[:ENV] [--clean]
+o-start[:ENV] [--clean]
   Start.
 
-run[:ENV]
+o-run[:ENV]
   Run on device (ios/android)
 
-init
+o-init
   Make sure that everything has been initialized (database, etc.). The init
   command is used in local environment only.
 
 open[:ENV]
   Open user interface.
 
-stop[:ENV]
+o-stop[:ENV]
   Stop.
 
-users[:ENV]
+o-users[:ENV]
   Show user accounts that you can use to log in. TIP: Enable the npm plugin and
-  implement users[:ENV] script in your package.json. Hard coded user accounts
+  implement o-users[:ENV] script in your package.json. Hard coded user accounts
   for local, dev and test environments suffice. Usually not implemented for
   staging and production environments.
+
+o-status[:ENV]
+  Show status summary of environment (status of services, pods, etc.).
+
+o-logs[:ENV] POD [CONTAINER]
+  See logs of a pod. Run status:ENV first to get the pod name and status.
+  Example: taito o-logs:dev myapp-dev-client-3034393823-2f5jf
+
+o-login[:ENV] POD [CONTAINER]
+  Login to pod. Run status:ENV first to get the pod name and status.
+  Example: taito o-login:dev myapp-dev-client-3034393823-2f5jf
+
+o-exec[:ENV] POD CONTAINER COMMAND
+  Execute command on pod. Give - as container if it should be determined
+  automatically by pod name.
+  Example: taito o-exec:dev myapp-dev-client-3034393823-2f5jf - echo "taito!"
+
+o-kill[:ENV] POD
+  Kill pod.
+
+o-clean [data | build]
+  Clean.
+
+
+PROJECT: DATABASE OPERATIONS
+----------------------------
 
 db-add NAME [-r REQUIRES] [-n DESCRIPTION]
   Add a new change to migration plan. Run db-add without arguments to get help.
@@ -102,6 +127,26 @@ db-import[:ENV] FILE
   Import file to database. DB proxy connection and secrets are
   handled automatically.
 
+db-deploy[:ENV]
+  Deploy changes to database. DB proxy connection and secrets are handled
+  automatically.
+
+db-log[:ENV]
+  View change log of database. DB proxy connection and secrets are handled
+  automatically.
+
+db-revert[:ENV] [CHANGE]
+  Revert database changes. DB proxy connection and secrets are
+  handled automatically. Revert the previous migration batch by running
+  `taito db-revert[:ENV]`. If you would like to revert to a specific revision
+  instead, view the change log first with `taito db-log[:ENV]` and then run
+  `taito db-revert[:ENV] CHANGE`. TODO currently always requires CHANGE param.
+
+db-recreate[:ENV]
+  Recreates the database. Thus on next deployment, all database migrations
+  will be run from the beginning. DB proxy connection and secrets are handled
+  automatically.
+
 db-copy:ENV DEST_ENV
   Copy database from one environment to another. For example
   `db-copy:prod staging` or `db-copy:dev local`. If you do not have enough
@@ -115,31 +160,102 @@ db-copyquick:ENV DEST_ENV
   that both databases are located on the same database cluster. Do not use this
   for production database unless you are sure nobody is using the system.
 
-status[:ENV]
-  Show status summary of environment (status of services, pods, etc.).
 
-logs[:ENV] POD [CONTAINER]
-  See logs of a pod. Run status:ENV first to get the pod name and status.
-  Example: taito log:dev myapp-dev-client-3034393823-2f5jf
+PROJECT: CI/CD OPERATIONS
+-------------------------
 
-login[:ENV] POD [CONTAINER]
-  Login to pod. Run status:ENV first to get the pod name and status.
-  Example: taito login:dev myapp-dev-client-3034393823-2f5jf
+This section provides commands for CI/CD and also additional commands that
+are related to deployments one way or another. Note that all db related
+operations are listed in db section.
 
-exec[:ENV] POD CONTAINER COMMAND
-  Execute command on pod. Give - as container if it should be determined
-  automatically by pod name.
-  Example: taito exec:dev myapp-dev-client-3034393823-2f5jf - echo "taito!"
+ci-build CONTAINER_NAME [IMAGE_TAG] [PROJECT_REPOSITORY]
+  Builds image and pushes it to image registry if no image already exists with
+  the given tag. Example: 'taito ci-build:dev client test1'. The command
+  executes a dry run (does not push) if image tag has not been given as
+  argument.
 
-kill[:ENV] POD
-  Kill pod.
+ci-deploy[:ENV] [IMAGE_TAG] [--dry-run]
+  Deploy the application either by using IMAGE_TAG given as parameter or
+  using the latest image found for the environment in question. Use dry-run
+  switch to execute a dry run. Example: 'taito ci-deploy:dev client test1'
 
-clean [data | build]
-  Clean.
+ci-canary
+  Releases the current staging version to production as a canary release.
+  NOTE: Currently you can make canary release only if database changes of
+  the new canary release are compatible with the current production version.
+  TODO Not implemented yet.
+
+ci-revision:ENV
+  Show current revision.
+
+ci-revert:ENV [REVISION]
+  Reverts application to another revision. Reverts to the previous version
+  if revision has not been given as argument. You can see current revision
+  number by running `taito ci-revision[:ENV]`. NOTE: This command does not
+  revert database changes. Use 'db-revert[:ENV]' for that.
+
+ci-wait[:ENV]
+  Waits until application has been succesfully deployed to server.
+  For example polls the app url until version number changes to something else.
+  This is used by CI/CD scripts to wait deployment before running the api
+  and e2e tests.
+
+ci-verify[:ENV]
+  Verifies that everyting went ok e.g. by checking test results. If something
+  went wrong and auto-revert is enabled for the environment, runs
+  `taito db-revert[:ENV]` and `taito ci-revert[:ENV]`.
+
+ci-docs
+  Generate docs e.g. API docs from API definitions and PDF files from
+  markdown documentation. TIP: Enable the npm plugin and implement ci-docs
+  script in your package.json.
+
+ci-scan
+  Lint code, scan for vulnerabilities, etc. TIP: Enable the npm plugin and
+  implement ci-scan script in your package.json and your code will be scanned.
+
+ci-test-unit
+  Run all unit tests. TIP: Enable the npm plugin and implement ci-test-unit
+  script in your package.json.
+
+ci-test-api[:ENV]
+  Run all api tests. TIP: Enable the npm plugin and implement ci-test-api
+  script in your package.json. You can configure test users and passwords for
+  each environment in taito-config.sh as those settings are available to your
+  npm script as environment variables.
+
+ci-test-e2e[:ENV]
+  Run all e2e tests. TIP: Enable the npm plugin and implement ci-test-e2e
+  script in your package.json. You can configure test users and passwords for
+  each environment in taito-config.sh as those settings are available to your
+  npm script as environment variables.
+
+ci-publish
+  Publishes build artifacts (e.g. docs, test reports) to a central location.
+
+ci-release-pre:ENV
+ci-release-post:ENV
+  Release pre and post handling. These commands usually generate release notes
+  automatically and tag the git repository with a new version number.
+  TIP: Enable the npm plugin and implement ci-release-pre:prod and
+  ci-release-post:prod scripts in your package.json.
+
+ci-cancel:ENV [IGNORE_BUILD_ID]
+  Cancel an ongoing build (but ignore the given build id). CI/CD scripts may use
+  this, for example, to cancel an ongoing build when a new build is started.
+  It may also be handy in case somebody pushes something to a wrong branch
+  accidentally.
+
+ci-secrets[:ENV] [--save-as-taito-secrets]
+  Retrieves all secrets that might be needed by the CI/CD build or developer.
+  If the --save-as-taito-secrets flag is given, the command saves the secrets
+  as a taito-secrets.sh file that taito-cli will read the next time it is
+  executed. NOTE: taito-secrets.sh should be used only in a temporary CI/CD
+  workspace.
 
 
-PROJECT: CONFIG
----------------
+PROJECT: ENVIRONMENT SETUP
+--------------------------
 
 env-config
   Configure project.
@@ -159,118 +275,6 @@ env-rotate:ENV
 
 env-cert[:ENV] DOMAIN
   Add a custom certificate instead of automatically generated.
-
-
-PROJECT: CI/CD
---------------
-
-This section provides commands for CI/CD and also additional commands that
-can be used to revert changes changes manually.
-
-ci-db-deploy[:ENV]
-  Deploy changes to database. DB proxy connection and secrets are handled
-  automatically.
-
-ci-db-log[:ENV]
-  View change log of database. DB proxy connection and secrets are handled
-  automatically.
-
-ci-db-revert[:ENV] [CHANGE]
-  Revert database changes. DB proxy connection and secrets are
-  handled automatically. Revert the previous migration batch by running
-  `taito db-revert[:ENV]`. If you would like to revert to a specific revision
-  instead, view the change log first with `taito db-log[:ENV]` and then run
-  `taito db-revert[:ENV] CHANGE`. TODO currently always requires CHANGE param.
-
-ci-db-recreate[:ENV]
-  Recreates the database. Thus on next deployment, all database migrations
-  will be run from the beginning. DB proxy connection and secrets are handled
-  automatically.
-
-ci-canary
-  Releases the current staging version to production as a canary release.
-  NOTE: Currently you can make canary release only if database changes of
-  the new canary release are compatible with the current production version.
-  TODO Not implemented yet.
-
-ci-build CONTAINER_NAME [IMAGE_TAG] [PROJECT_REPOSITORY]
-  Builds image and pushes it to image registry if no image already exists with
-  the given tag. Example: 'build:dev client test1'. Executes a dry run
-  (does not push) if image tag has not been given.
-
-ci-deploy[:ENV] [IMAGE_TAG] [--dry-run]
-  Deploy the application either by using IMAGE_TAG given as parameter or
-  using the latest image found for the environment in question. Use dry-run
-  switch to execute a dry run. Example: 'deploy:dev client test1'
-
-ci-revision:ENV
-  Show current revision.
-
-ci-revert:ENV [REVISION]
-  Reverts application to another revision. Reverts to the previous version
-  if revision has not been given as argument. You can see current revision
-  number by running `taito revision[:ENV]`. NOTE: This command does not revert
-  database changes. Use 'db-revert[:ENV]' for that.
-
-ci-wait[:ENV]
-  Waits until application has been succesfully deployed to server.
-  For example polls the app url until version number changes to something else.
-  This is used by CI/CD scripts to wait deployment before running the api
-  and e2e tests.
-
-ci-verify[:ENV]
-  Verifies that everyting went ok e.g. by checking test results. If something
-  went wrong and auto-revert is enabled for the environment, runs
-  `taito db-revert[:ENV]` and `taito revert[:ENV]`.
-
-ci-docs
-  Generate docs e.g. API docs from API definitions and PDF files from
-  markdown documentation. TIP: Enable the npm plugin and implement docs script
-  in your package.json.
-
-ci-scan
-  Lint code, scan for vulnerabilities, etc. TIP: Enable the npm plugin and
-  implement lint script in your package.json and your code will be linted.
-
-ci-test-unit
-  Run all unit tests. TIP: Enable the npm plugin and implement test:unit script
-  in your package.json.
-
-ci-test-api[:ENV]
-  Run all api tests. TIP: Enable the npm plugin and implement test:api script
-  in your package.json. You can configure test users and passwords for each
-  environment in taito-config.sh as those settings are available to your npm
-  script as environment variables.
-
-ci-test-e2e[:ENV]
-  Run all e2e tests. TIP: Enable the npm plugin and implement test:e2e script
-  in your package.json. You can configure test users and passwords for each
-  environment in taito-config.sh as those settings are available to your
-  npm script as environment variables.
-
-ci-publish
-  Publishes build artifacts (e.g. docs, test reports)
-  to a central location.
-
-ci-release-pre:ENV
-ci-release-post:ENV
-  Release pre and post handling. These commands usually generate release notes
-  automatically and tag the git repository with a new version number.
-  TIP: Enable the npm plugin and implement release-pre:prod and
-  release-post:prod scripts in your package.json.
-
-ci-cancel:ENV [IGNORE_BUILD_ID]
-  Cancel an ongoing build (but ignore the given build id). CI/CD scripts may use
-  this, for example, to cancel an ongoing build when a new build is started.
-  It may also be handy in case somebody pushes something to a wrong branch
-  accidentally.
-
-ci-secrets[:ENV] [--save-as-taito-secrets]
-  Retrieves all secrets that might be needed by the CI/CD build or developer.
-  If the --save-as-taito-secrets flag is given, the command saves the secrets
-  as a taito-secrets.sh file that taito-cli will read the next time it is
-  executed. NOTE: taito-secrets.sh should be used only in a temporary CI/CD
-  workspace.
 
 
 PROJECT: CONTACTS

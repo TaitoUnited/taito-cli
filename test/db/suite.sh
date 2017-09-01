@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Integration test suite for config commands
+# NOTE: You should also provide some more fine grained tests for each plugin.
+
+export tests="\
+taito db-proxy:dev;\
+taito db-add test.table -n 'Test table';\
+taito db-open;\
+taito db-open:dev;\
+taito db-dump;\
+taito db-dump:dev;\
+taito db-import import.sql;\
+taito db-import:dev import.sql;\
+taito db-copy:test dev;\
+taito db-copyquick:test dev;\
+taito db-deploy;\
+taito db-deploy:dev;\
+taito db-log;\
+taito db-log:dev;\
+taito db-revert;\
+taito db-revert:dev;\
+"
+
+if ! ../util/verify.sh; then
+  exit 1
+fi

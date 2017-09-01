@@ -1,16 +1,15 @@
 #!/bin/bash
 
-
 # Integration test suite for config commands
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
-taito config;\
-taito create:dev;\
-taito update:dev;\
-taito delete:dev;\
-taito rotate:dev;\
-taito cert:dev;\
+taito env-config;\
+taito env-create:dev;\
+taito env-update:dev;\
+taito env-delete:dev;\
+taito env-rotate:dev;\
+taito env-cert:dev;\
 "
 
 if ! ../util/verify.sh; then
