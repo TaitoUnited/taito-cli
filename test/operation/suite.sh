@@ -12,8 +12,6 @@ taito o-start:dev;\
 taito o-run:ios;\
 taito o-run:android;\
 taito o-init;\
-taito open;\
-taito open:dev;\
 taito o-stop;\
 taito o-stop:dev;\
 taito o-users;\

@@ -1,10 +1,14 @@
 #!/bin/bash
 
 branch=${1}
+checkout=${2}
 
 echo "Delete branch ${branch} (Y/n)?"
 read -r confirm
 if [[ ${confirm} =~ ^[Yy]$ ]]; then
+  if ! git checkout "${checkout}"; then
+    exit 1
+  fi
   if ! git branch -d "${branch}"; then
     exit 1
   fi

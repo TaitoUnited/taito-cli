@@ -1,11 +1,12 @@
 #!/bin/bash
 
-# Integration test suite for zone commands
+# Integration test suite for git commands
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
-npm db-open:dev;\
-npm custom;\
+taito git-merge-env;\
+taito git-merge-feat;\
+taito git-rebase-feat;\
 "
 
 if ! ../util/verify.sh; then

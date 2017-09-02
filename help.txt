@@ -290,7 +290,7 @@ env-create:ENV [GIT_BRANCH]
   was given as argument. Otherwise uses default branch determined by ENV.
 
 env-update:ENV
-  Update environment.
+  Update environment. NOTE: not implemented
 
 env-delete:ENV
   Delete environment.

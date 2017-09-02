@@ -19,7 +19,7 @@ fi
 if ! git commit -v; then
   exit 1
 fi
-if ! "${taito_plugin_path}/util/delete-branch.sh" "${source}"; then
+if ! "${taito_plugin_path}/util/delete-branch.sh" "${source}" "${dest}"; then
   exit 1
 fi
 

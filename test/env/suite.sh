@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Integration test suite for config commands
+# Integration test suite for env commands
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
