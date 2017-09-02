@@ -12,10 +12,9 @@ steps:
   args:
   - '-c'
   - |
-    echo "# Get gcloud credentials"
-    if ! gcloud container clusters get-credentials "kube1" --zone "europe-west1-c"; then
-      exit 1
-    fi
+    echo "# Get credentials" && \
+    gcloud container clusters get-credentials "kube1" \
+      --zone "europe-west1-c" && \
 
     # Get github token from Kubernetes secrets
     kubectl --namespace "devops" get secret "ext.github.build" -o yaml | \
@@ -28,28 +27,21 @@ steps:
   args:
   - '-c'
   - |
-    github_token=$$(cat github-token.tmp)
+    github_token=$$(cat github-token.tmp) && \
 
-    echo "# Cloning git repo to release directory as google container builder"
-    echo "# workspace does not point to the original repository"
-    if ! git clone "https://${github_token}@github.com/TaitoUnited/taito-cli.git" release; then
-      exit 1
-    fi
-    cd release
-    if ! git checkout master; then # TODO checkout $${commit_sha}, not master?
-      exit 1
-    fi
-    if ! npm install; then
-      exit 1
-    fi
+    echo "# Cloning git repo to release directory as google container" && \
+    echo "# builder workspace does not point to the original repository" && \
+    git clone "https://${github_token}@github.com/TaitoUnited/taito-cli.git" \
+      release && \
+    cd release && \
+    git checkout master && \
+    npm install && \
 
-    echo "# Running semantic-release pre"
-    if ! NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-pre; then
-      exit 1
-    fi
-    rm -f .npmrc
+    echo "# Running semantic-release pre" && \
+    NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-pre && \
+    rm -f .npmrc && \
 
-    echo "# Copying package.json with a new version number"
+    echo "# Copying package.json with a new version number" && \
     cp package.json ..
 
 - id: build
@@ -61,9 +53,7 @@ steps:
   args:
   - '-c'
   - |
-    # Read version number that semantic-release wrote on the package.json
-    tag=$$(grep "version" package.json | grep -o "[0-9].[0-9].[0-9]")
-    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} .
+    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:latest .
 
 - id: test-e2e
   name: 'gcr.io/cloud-builders/npm'
@@ -75,9 +65,9 @@ steps:
   args:
   - '-c'
   - |
-    echo "# Running semantic-release post"
-    github_token=$$(cat github-token.tmp)
-    cd release
+    echo "# Running semantic-release post" && \
+    github_token=$$(cat github-token.tmp) && \
+    cd release && \
     NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-post
 
 - id: push
@@ -90,12 +80,11 @@ steps:
   - '-c'
   - |
     # Read version number that semantic-release wrote on the package.json
-    tag=$$(grep "version" package.json | grep -o "[0-9].[0-9].[0-9]")
-
-    # Push image using version and 'latest' as tags
-    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} \
-      eu.gcr.io/$${project_id}/$${repo_name}/cli:latest
+    # and tag image with it
+    tag=$$(grep "version" package.json | grep -o "[0-9].[0-9].[0-9]") && \
+    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
+      eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} && \
+    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest && \
     docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
-    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest
 
 timeout: 900s
