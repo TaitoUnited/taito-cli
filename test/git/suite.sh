@@ -6,7 +6,7 @@
 export tests="\
 taito git-merge-env;\
 taito git-merge-feat;\
-taito git-rebase-feat;\
+taito git-squash-feat;\
 "
 
 if ! ../util/verify.sh; then

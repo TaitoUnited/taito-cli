@@ -112,16 +112,17 @@ git-merge-env SOURCE DEST
   are merged.
 
 git-merge-feat SOURCE [DEST]
-  Merges a feature branch to a destination branch using squash to clean up
-  commits. Use this command to merge a small cohesive set of changes. Dev
-  branch is used as default if destination is omitted.
+  Merges a feature branch to a destination branch. Dev branch is used as
+  default if destination is omitted. The command ask you to rebase the feature
+  branch if it hasn't already been rebased. With rebase you can clean up commit
+  history of a feature branch e.g. by reordering commits and selectively
+  squashing some of them together.
 
-git-rebase-feat SOURCE [DEST]
-  Merges a feature branch to a destination branch using rebase interactive
-  mode to clean up commits. This way you can reorder commits and selectively
-  squash some of them by changing 'pick' to 'squash'. Use this command to merge
-  a large set of incohesive changes. Dev branch is used as default if
-  destination is omitted.
+git-squash-feat SOURCE [DEST]
+  Merges a feature branch to a destination branch as a single squashed commit
+  and deletes the feature branch. Dev branch is used as default if destination
+  is omitted. Use this command only for a short-lived feature branch with a
+  cohesive set of changes.
 
 
 PROJECT: DATABASE OPERATIONS
