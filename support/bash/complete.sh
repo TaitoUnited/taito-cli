@@ -12,8 +12,9 @@ _taito ()
     *)
     COMPREPLY=( $( compgen -W '\
     b-help b-readme b-trouble b-auth: -- --login \
-    o-install o-compile o-start: o-run: o-init open: o-stop: o-users: \
+    o-install o-compile o-start: o-run: o-init open-app: o-stop: o-users: \
     o-status: o-logs: o-login: o-exec: o-kill: o-clean \
+    git-merge-env git-merge-feat git-rebase-feat \
     db-add db-proxy: db-open: db-dump: db-import: \
     db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \
     ci-build ci-deploy: ci-canary ci-revision: ci-revert: \

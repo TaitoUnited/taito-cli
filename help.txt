@@ -64,8 +64,8 @@ o-init
   Make sure that everything has been initialized (database, etc.). The init
   command is used in local environment only.
 
-open[:ENV]
-  Open user interface.
+open-app[:ENV]
+  Open application user interface.
 
 o-stop[:ENV]
   Stop.
@@ -97,6 +97,31 @@ o-kill[:ENV] POD
 
 o-clean [data | build]
   Clean.
+
+
+PROJECT: GIT OPERATIONS
+-----------------------
+
+git-merge-env SOURCE DEST
+  Merges remote source branch to destination branch using fast-forward and
+  pushes changes to remote repository without making changes to the current
+  local git workspace. The command fails if fast-forward is not possible. Merge
+  operations between environment branches should always be fast-forwarded so
+  that a container is first built for dev environment and then the same
+  container is deployed to other environments as well once environment branches
+  are merged.
+
+git-merge-feat SOURCE [DEST]
+  Merges a feature branch to a destination branch using squash to clean up
+  commits. Use this command to merge a small cohesive set of changes. Dev
+  branch is used as default if destination is omitted.
+
+git-rebase-feat SOURCE [DEST]
+  Merges a feature branch to a destination branch using rebase interactive
+  mode to clean up commits. This way you can reorder commits and selectively
+  squash some of them by changing 'pick' to 'squash'. Use this command to merge
+  a large set of incohesive changes. Dev branch is used as default if
+  destination is omitted.
 
 
 PROJECT: DATABASE OPERATIONS

@@ -2,8 +2,13 @@
 ### TAITO-CLI TROUBLESHOOTING ###
 ---------------------------------
 
-My application does not work
+My application does not work locally
   Try clean start by running 'taito o-start clean' and then 'taito o-init'
+
+CI/CD builds fails but everything works locally
+  You can debug container builds locally by running `taito ci-build [NAME]`
+  e.g. `taito ci-build client`. You can also run any ci/cd step locally
+  by using taito-cli.
 
 Authentication error using taito-cli
   If you run into an authentication error during command execution,
@@ -12,7 +17,7 @@ Authentication error using taito-cli
   'taito b-auth:ENV' to authenticate in the context of currently enabled
   plugins.
 
-Taito-cli says: command not found
+Taito-cli says: 'command not found'
   Did you remember to give the correct environment as argument? Commands
   always use local by default, and not all commands support local environment.
 
