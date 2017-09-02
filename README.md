@@ -229,9 +229,9 @@ Taito-cli also provides a lightweight abstraction on top of infrastructure and c
 
 If you enable the npm plugin, you can run any npm script defined in your project root *package.json* with taito-cli. Just add a script to package.json and then you can run it.
 
-You can also override any existing taito-cli command in your *package.json* by using `taito-` as prefix. For example the following script shows the canary.txt file before releasing a canary release to production, and shows an additional message after the canary has been released. The `-s` flag means that override is skipped when the npm script calls taito-cli.
+You can also override any existing taito-cli command in your *package.json* by using `taito-` as script name prefix. For example the following script shows the canary.txt file before releasing a canary release to production. It also shows an additional message after the canary has been released. The `-s` flag means that override is skipped when the npm script calls taito-cli.
 
-    "taito-ci-canary:prod": "less canary.txt; taito -s ci-canary:prod; echo Canary released!"
+    "taito-ci-canary": "less canary.txt; taito -s ci-canary; echo Canary released!"
 
 You can use *taito-cli* with any project, even those that use technologies that are not supported by any of the plugins. Just add commands to your package.json and add a `taito-config.sh` file with the npm plugin enabled to the project root directory. You can use the optional *taito* prefix to avoid conflicts with existing npm script names. For example:
 
@@ -250,9 +250,11 @@ You can use *taito-cli* with any project, even those that use technologies that 
 
 Alternatively you can also implement a set of taito-cli plugins for the infrastructure in question (see the next chapter).
 
-> NOTE: When adding commands to your package.json, you are encouraged to follow the predefined command set that is shown by running `taito b-help`. The main idea behind `taito-cli` is that the same predefined command set works from project to project, no matter the technology or infrastructure.
+> NOTE: When adding commands to your package.json, you are encouraged to follow the predefined command set that is shown by running `taito b-help`. The main idea behind *taito-cli* is that the same predefined command set works from project to project, no matter the technology or infrastructure.
 
 ## Custom plugins
+
+### The basics
 
 This is how you implement your own custom plugin.
 
@@ -305,26 +307,11 @@ Note that you can also add a project specific extension to your project subdirec
     export taito_plugins="my-plugin"
     ```
 
-More information about plugin development and command chaining in the next chapter.
-
-TODO implement the git url support.
-
-## Development
-
-Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-dev` flag (e.g. `taito -dev b-help`). In the development mode your local taito-cli directory is mounted on the container. You can also run taito-cli locally without Docker using the `-local` flag, but note that in that case taito-cli will save credentials on host if you authenticate. You can delete your gcloud and kubernetes credentials by deleting the `~/.config/gcloud` and `~/.kube` directories.
-
-1. Start a new feature branch.
-2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. If you are using a compiled language, add a compilation script and use `.x` as a file extension for the executable (it will be ignored by git). Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
-3. Add description of your implementation in your plugin README.md. Concentrate on explaining how your plugin is designed to work with other plugins, e.g. which environent variables it expects and which it exports for others to use.
-4. If you did not implement any of the predefined commands, add your command usage description in plugin help.txt file.
-5. Add some integration or unit tests for your command.
-6. Make a pull request.
-
 NOTE: Always remember to call the next command of the command chain at some point during command execution (usually at the end) unless you want to stop the command chain execution:
 
     "${taito_cli_path}/util/call-next.sh" "${@}"
 
-NOTE: Do not call another command directly from another. It's error prone; you'll easily mess up the command chain execution, and clarity of user friendly info messages. Place the common logic shared by multiple commands in a separate util instead.
+NOTE: Do not call another command directly from another. It's error prone; you'll easily mess up the command chain execution, and also clarity of user friendly info messages. Place the common logic shared by multiple commands in a separate util instead.
 
 ### Running commands on host
 
@@ -333,10 +320,6 @@ If your command needs to run some command on host machine, execute `"${taito_cli
 ### Committing changes to the taito-cli container image
 
 If your command needs to save some data permanently on the container image, execute `"${taito_cli_path}/util/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
-
-### Pre and post hooks
-
-These are explained in the [custom plugins](#custom-plugins) chapter.
 
 ### Command chains and passing data
 
@@ -377,3 +360,14 @@ These variable names are meant for communication between plugins.
 Secrets:
 
 TODO add documentation
+
+## Taito-cli development
+
+Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-dev` flag (e.g. `taito -dev b-help`). In the development mode your local taito-cli directory is mounted on the container. You can also run taito-cli locally without Docker using the `-local` flag, but note that in that case taito-cli will save credentials on host if you authenticate. You can delete your gcloud and kubernetes credentials by deleting the `~/.config/gcloud` and `~/.kube` directories.
+
+1. Start a new feature branch.
+2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. If you are using a compiled language, add a compilation script and use `.x` as a file extension for the executable (it will be ignored by git). Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
+3. Add description of your implementation in your plugin README.md. Concentrate on explaining how your plugin is designed to work with other plugins, e.g. which environent variables it expects and which it exports for others to use.
+4. If you did not implement any of the predefined commands, add your command usage description in plugin help.txt file.
+5. Add some integration or unit tests for your command.
+6. Make a pull request.
