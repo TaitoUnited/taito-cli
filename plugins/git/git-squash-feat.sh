@@ -10,12 +10,15 @@ echo
 echo "### git - git-squash-feat: Squash merging ${source} to ${dest} ###"
 echo
 
-if ! "${taito_plugin_path}/util/merge-branch.sh" "${source}" "${dest}" --squash; then
-  exit 1
-fi
-if ! "${taito_plugin_path}/util/delete-branch.sh" "${source}" "${dest}" "true"; then
-  exit 1
-fi
+"${taito_cli_path}/util/execute-on-host.sh" "\
+  git checkout ${dest} && \
+  git pull && \
+  git merge --squash ${source} && \
+  git commit -v && \
+  git push && \
+  git branch -d ${source}; \
+  git push origin --delete ${source} &> /dev/null; \
+  "
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

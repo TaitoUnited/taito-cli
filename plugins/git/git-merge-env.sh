@@ -10,12 +10,10 @@ echo
 echo "### git - git-merge-env: Merging ${source} to ${dest} ###"
 echo
 
-if ! git fetch origin "${source}:${dest}"; then
-  exit 1
-fi
-if ! git push origin "${dest}"; then
-  exit 1
-fi
+"${taito_cli_path}/util/execute-on-host.sh" "\
+  git fetch origin ${source}:${dest} && \
+  git push origin ${dest}; \
+  "
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

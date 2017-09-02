@@ -26,7 +26,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
     #!/bin/bash
 
     export taito_image="taitounited/taito-cli:latest"
-    export taito_global_plugins="fun template"
+    export taito_global_plugins="git fun template"
     ```
 
 3. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
@@ -50,7 +50,7 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     # taito-cli default settings
     export taito_image="taitounited/taito-cli:latest"
     export taito_global_extensions="~/my-extension git@github.com:MyOrganization/another-extension.git"
-    export taito_global_plugins="fun template myplugin another"
+    export taito_global_plugins="git fun template myplugin another"
 
     # template plugin default settings
     export template_source_git_url="git@github.com:TaitoUnited"

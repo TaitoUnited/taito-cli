@@ -11,17 +11,27 @@ echo
 echo "### git - git-merge-feat: Merging ${source} to ${dest} ###"
 echo
 
-if [[ ! -f "${taito_project_path}/.git/rebase-merge" ]]; then
-  if ! "${taito_plugin_path}/util/rebase-branch.sh" "${source}" "${dest}"; then
-    exit 1
-  fi
-fi
-if ! "${taito_plugin_path}/util/merge-branch.sh" "${source}" "${dest}"; then
-  exit 1
-fi
-if ! "${taito_plugin_path}/util/delete-branch.sh" "${source}" "${dest}"; then
-  exit 1
-fi
+echo "Rebase branch ${source} before merge (Y/n)?"
+read -r rebase
+
+echo "Delete branch ${source} after merge (Y/n)?"
+read -r del
+
+"${taito_cli_path}/util/execute-on-host.sh" "\
+  if [[ ${rebase} =~ ^[Yy]$ ]]; then \
+    git checkout ${source} && git rebase -i ${dest} && git checkout -; \
+  fi; \
+  git checkout ${dest} && \
+  git pull && \
+  git merge ${source} && \
+  git commit -v && \
+  git push && \
+  if [[ ${del} =~ ^[Yy]$ ]]; then \
+    git branch -d ${source}; git push origin --delete ${source} &> /dev/null; \
+  else \
+    git checkout -; \
+  fi; \
+  "
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
