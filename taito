@@ -85,9 +85,10 @@ if ! (
       repo_dir=${temp#*.git} # /my-extension
       repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
       if [[ -d "${repo_local_path}" ]]; then
-        # TODO performance: pull only sometimes
-        # (cd ${repo_local_path}; git pull)
-        echo &> /dev/null
+        # Randomly pull the latest version
+        if (( RANDOM % 20 == 0 )); then
+          (cd "${repo_local_path}"; git pull &> /dev/null)
+        fi
       else
         (cd ~/.taito; git clone "${repo_url}"; cd "${repo_name}"; git checkout)
       fi
