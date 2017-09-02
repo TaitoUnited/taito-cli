@@ -94,7 +94,7 @@ steps:
 
     # Push image using version and 'latest' as tags
     docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} \
-      tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest
+      eu.gcr.io/$${project_id}/$${repo_name}/cli:latest
     docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
     docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest
 
