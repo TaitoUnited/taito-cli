@@ -102,7 +102,7 @@ o-clean [data | build]
 PROJECT: GIT OPERATIONS
 -----------------------
 
-git-merge-env SOURCE DEST
+git-env-merge SOURCE DEST
   Merges remote source branch to destination branch using fast-forward and
   pushes changes to remote repository without making changes to the current
   local git workspace. The command fails if fast-forward is not possible. Merge
@@ -111,18 +111,27 @@ git-merge-env SOURCE DEST
   container is deployed to other environments as well once environment branches
   are merged.
 
-git-merge-feat SOURCE [DEST]
-  Merges a feature branch to a destination branch. Dev branch is used as
-  default if destination is omitted. The command suggests rebase before merge
-  and delete feature branch after. With rebase you can clean up commit
-  history before merge e.g. by reordering commits and selectively squashing
-  some of them together.
+git-feat FEATURE_NAME [ORIGINAL_BRANCH]
+  Creates a new branch for a feature. Dev branch is used as the original source
+  branch if the original branch is omitted.
 
-git-squash-feat SOURCE [DEST]
-  Merges a feature branch to a destination branch as a single squashed commit
-  and deletes the feature branch. Dev branch is used as default if destination
-  is omitted. Use this command only for a short-lived feature branch with a
-  cohesive set of changes.
+git-feat-squash FEATURE_NAME [DEST]
+  Merges a feature to a destination branch as a single squashed commit and
+  deletes the feature branch. Dev branch is used as default if destination
+  is omitted. Use this command for a short-lived feature branch with a cohesive
+  set of changes.
+
+git-feat-merge FEATURE_NAME [DEST]
+  Merges a feature to a destination branch. Dev branch is used as default if
+  destination is omitted. The command suggests rebase before merge and delete
+  branch after. With rebase you can clean up commit history before merge e.g.
+  by reordering commits and selectively squashing some of them together.
+
+git-feat-pr FEATURE_NAME [DEST]
+  Creates a pull request for a feature. Dev branch is used as default if
+  destination is omitted. The command suggests rebase before
+  making a pull request. With rebase you can clean up commit history by
+  reordering commits and selectively squashing some of them together.
 
 
 PROJECT: DATABASE OPERATIONS

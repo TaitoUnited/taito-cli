@@ -33,7 +33,7 @@ if ! (
   fi
 
   # Resolve project root folder by the location of taito-config.sh
-  # Use project root dir as current working directory
+  # Use project root dir as the current working directory
   # TODO duplicate code with taito_impl.sh
   current_path="${PWD}"
   while [[ "${PWD}" != "/" ]]; do
@@ -118,31 +118,38 @@ if ! (
     fi
   done
 
-  # Start a background process that will run commands on host when requested
-  # TODO implement a network based solution or at least generate taito_run env
-  # variable by random
-  # "${cli_path}/taito_executor.sh" "${log_file}" &
+  command="${params[0]}"
+
   export taito_run="@asd!fef@"
   log_file=$(mktemp /tmp/taito-cli.XXXXXX)
-  (
-    echo "-" > "${log_file}"
-    tail -f "${log_file}" | while read -r line; do
-      command=$(echo "${line}" | grep "${taito_run}" \
-        | sed "s/^.*${taito_run}\(.*\)${taito_run}.*$/\1/")
-      if [[ ${command} != "" ]]; then
-        # TODO confirm?
-        eval "${command}"
-      fi
-    done
-  ) &
+  echo "-" > "${log_file}"
+  if [[ "${command}" =~ ^auth ]]; then
+    # Command will execute 'docker commit' -> Start a background process
+    # that will run commands on host in the background while the container
+    # is still running
+    # TODO is background process really necessary?
+    (
+      # Read commands from log file and execute them
+      tail -f "${log_file}" | tr -cd '\11\12\15\40-\176' | while read -r line; do
+        c=$(echo "${line}" | grep "${taito_run}" \
+          | sed "s/^.*${taito_run}\(.*\)${taito_run}.*$/\1/")
+        if [[ ${c} != "" ]]; then
+          # TODO confirm execution?
+          eval "${c}"
+        fi
+      done
+    ) &
+  else
+    # Host commands will be run on foreground after the docker process has ended
+    execute_foreground="true"
+  fi
 
   # Export some variables to be used by various commands
   export taito_host_uname
   taito_host_uname="$(uname)"
 
-  # Link database container if env is local and command uses database
+  # Link database container if env is local and the command uses database
   # TODO: this is a quick hack
-  command="${params[0]}"
   if ( [[ ${command} == ":local" ]] || [[ ${command} != *":"* ]] ) && \
      ( [[ ${command} == db* ]] || [[ ${command} == init ]] ) && \
      [[ ${command} != db-add ]]; then
@@ -150,13 +157,13 @@ if ! (
       link_flags="--link ${taito_project}-database:${taito_project}-database"
     else
       # Running taito-cli directly on host -> use 127.0.0.1
-      echo asflajsdflksj
       export postgres_host_overwrite="127.0.0.1"
     fi
   fi
 
-  # Forward output to less in case command is `help`, `trouble` or `readme`.
-  # We need to also filter some control characters for a cleaner output.
+  # Forward output to 'less' in case the command is `help`, `trouble` or
+  # `readme`. We need to also filter some control characters for a cleaner
+  # output.
   output=""
   if [[ ${command} == "help"* ]] || [[ ${command} == "trouble"* ]] || \
      [[ ${command} == "readme"* ]]; then
@@ -211,10 +218,25 @@ if ! (
       ${params[@]} | tee \"${log_file}\" ${output}"
   fi
 
-  # Kill background processes
-  pgrep -f "${log_file}" | xargs kill &> /dev/null
-  # TODO Suppress 'terminated' output of process
-  rm -f "${log_file}" &> /dev/null
+  if [[ ${execute_foreground} ]]; then
+    # Execute host commands on foreground. Commands are read from log file.
+    # TODO this is duplicate code
+    cat "${log_file}" | tr -cd '\11\12\15\40-\176' | while read -r line; do
+      c=$(echo "${line}" | grep "${taito_run}" \
+        | sed "s/^.*${taito_run}\(.*\)${taito_run}.*$/\1/")
+      if [[ ${c} != "" ]]; then
+        # TODO confirm execution?
+        if ! eval "${c}"; then
+          exit 1
+        fi
+      fi
+    done
+  else
+    # Kill background execution process
+    pgrep -f "${log_file}" | xargs kill &> /dev/null
+    # TODO Suppress 'terminated' output of process
+    rm -f "${log_file}" &> /dev/null
+  fi
 
 ); then
   exit 1

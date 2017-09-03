@@ -4,9 +4,11 @@
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
-taito git-merge-env;\
-taito git-merge-feat;\
-taito git-squash-feat;\
+taito git-env-merge;\
+taito git-feat;\
+taito git-feat-squash;\
+taito git-feat-merge;\
+taito git-feat-pr;\
 "
 
 if ! ../util/verify.sh; then

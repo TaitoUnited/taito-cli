@@ -3,11 +3,11 @@
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 
-source=${1}
-dest=${2}
+source="${1:?Source branch name not given}"
+dest="${2:?Destination branch name not given}"
 
 echo
-echo "### git - git-merge-env: Merging ${source} to ${dest} ###"
+echo "### git - git-env-merge: Merging ${source} to ${dest} ###"
 echo
 
 "${taito_cli_path}/util/execute-on-host.sh" "\
