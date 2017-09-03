@@ -6,14 +6,15 @@
 : "${taito_env:?}"
 
 echo
-echo "### kubectl - db-recreate:pre: Getting current db password from Kubernetes ###"
+echo "### kubectl - db-recreate:pre: Getting current db password from \
+Kubernetes ###"
 echo
 
 # Change namespace
-"${taito_plugin_path}/util/use-context.sh"
+"${taito_plugin_path}/util/use-context.sh" && \
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/get-secrets.sh"
+. "${taito_plugin_path}/util/get-secrets.sh" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

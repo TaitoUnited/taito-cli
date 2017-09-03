@@ -3,11 +3,10 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### fission - stop: Stopping ###"
+echo "### fission - o-stop: Stopping ###"
 echo
-echo TODO
 
-exit 1
+echo "TODO implement" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

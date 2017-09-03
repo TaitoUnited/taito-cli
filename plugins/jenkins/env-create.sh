@@ -18,8 +18,7 @@ if [[ -z "${branch}" ]]; then
   fi
 fi
 
-echo "TODO create jenkins trigger"
-exit 1
+echo "TODO create jenkins trigger" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

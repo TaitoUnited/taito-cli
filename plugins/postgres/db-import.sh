@@ -7,7 +7,7 @@
 : "${postgres_host:?}"
 : "${postgres_port:?}"
 
-filename="${1}"
+filename="${1:?Filename not given}"
 username="${2}"
 
 echo
@@ -16,15 +16,11 @@ echo
 echo "host: ${postgres_host} port:${postgres_port}"
 echo
 
-if ! (
+(
   cd "${taito_current_path}"
   flags="-f ${filename}"
-  if ! "${taito_plugin_path}/util/psql.sh" "'${username}'" "'${flags}'"; then
-    exit 1
-  fi
-); then
-  exit 1
-fi
+  "${taito_plugin_path}/util/psql.sh" "'${username}'" "'${flags}'"
+) && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -22,10 +22,3 @@ PGPASSWORD="${postgres_password}" ${command} -h "${postgres_host}" \
   -d "${postgres_database}" \
   -U "${postgres_username}" \
   ${flags}
-# shellcheck disable=SC2181
-if [[ $? -gt 0 ]]; then
-  exit 1
-fi
-
-# Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"

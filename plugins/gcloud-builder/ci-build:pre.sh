@@ -4,7 +4,7 @@
 : "${taito_env:?}"
 : "${taito_repo_name:?}"
 
-name=${1}
+name=${1:?Name not given}
 image_tag=${2}
 image_path=${3}
 
@@ -13,9 +13,11 @@ if [[ "${image_path}" == "" ]]; then
 fi
 
 echo
-echo "### gcloud-builder - build:pre: Checking if image exists already in the container registry ###"
+echo "### gcloud-builder - ci-build:pre: Checking if image exists already \
+in the container registry ###"
 echo
-echo "TODO check from container registry instead as there might be manual builds also"
+echo "TODO check from container registry instead as there might be manual \
+builds also"
 
 check=$(gcloud beta container builds list --limit=1 \
   --filter="STATUS=SUCCESS AND IMAGES=${image_path}/${name}:${image_tag}" \

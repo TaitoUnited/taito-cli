@@ -1,9 +1,11 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
+: "${taito_project_path:?}"
+: "${taito_registry:?}"
 : "${taito_env:?}"
 
-name=${1}
+name=${1:?Name not given}
 image_tag=${2:-dry-run}
 image_path=${3}
 
@@ -12,10 +14,11 @@ if [[ "${image_path}" == "" ]]; then
 fi
 
 # Read version number that semantic-release wrote on the package.json
-version=$(grep "version" "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
+version=$(grep "version" "${taito_project_path}/package.json" | \
+  grep -o "[0-9].[0-9].[0-9]")
 
 echo
-echo "### gcloud-builder - build: Building ${name} ###"
+echo "### gcloud-builder - ci-build: Building ${name} ###"
 echo
 
 if [[ ${taito_image_exists:-false} == false ]]; then
@@ -23,24 +26,16 @@ if [[ ${taito_image_exists:-false} == false ]]; then
   docker build -f "./${name}/Dockerfile.build" \
     --build-arg BUILD_VERSION="${version}" \
     --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-    -t "${image_path}/${name}:${image_tag}" "./${name}"
-  if [[ $? -gt 0 ]]; then
-    exit 1
-  fi
-  if [[ ${image_tag} == 'dry-run' ]]; then
-    exit 0
-  fi
-  echo "- Pushing image"
-  if ! docker push "${image_path}/${name}:${image_tag}"; then
-    exit 1
+    -t "${image_path}/${name}:${image_tag}" "./${name}" && \
+  if [[ ${image_tag} != 'dry-run' ]]; then
+    echo "- Pushing image"
+    docker push "${image_path}/${name}:${image_tag}"
   fi
 else
   echo "- Image ${image_tag} already exists. Pulling the existing image."
   # We have pull the image so that it exists at the end
-  if ! docker pull "${image_path}/${name}:${image_tag}"; then
-    exit 1
-  fi
-fi
+  docker pull "${image_path}/${name}:${image_tag}"
+fi && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

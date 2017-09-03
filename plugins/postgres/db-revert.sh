@@ -4,7 +4,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
-change="${1}"
+change="${1:?Change not given}"
 
 echo
 echo "### postgres - db-revert: Reverting database changes of ${taito_env} ###"
@@ -14,16 +14,8 @@ echo
 # TODO only revert the "previous batch" of changes when CHANGE is not given
 # as argument
 
-if [[ -z "${change}" ]]; then
-  echo "Please supply CHANGE as argument"
-else
-  "${taito_plugin_path}/util/sqitch.sh" revert "${change}" \
-    --set env="'${taito_env}'"
-  # shellcheck disable=SC2181
-  if [[ $? -gt 0 ]]; then
-    exit 1
-  fi
-fi
+"${taito_plugin_path}/util/sqitch.sh" revert "${change}" \
+  --set env="'${taito_env}'" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

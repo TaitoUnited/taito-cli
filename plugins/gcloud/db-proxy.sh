@@ -18,13 +18,8 @@ echo
 echo "Connect using your personal user account or"
 echo "${postgres_database} as username"
 
-if ! "${taito_plugin_path}/util/db-proxy-start.sh"; then
-  exit 1
-fi
-
-if ! "${taito_plugin_path}/util/db-proxy-stop.sh"; then
-  exit 1
-fi
+"${taito_plugin_path}/util/db-proxy-start.sh" && \
+"${taito_plugin_path}/util/db-proxy-stop.sh" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

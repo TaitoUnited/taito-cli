@@ -123,11 +123,13 @@ if ! (
   export taito_run="@asd!fef@"
   log_file=$(mktemp /tmp/taito-cli.XXXXXX)
   echo "-" > "${log_file}"
-  if [[ "${command}" =~ ^auth ]]; then
+  if [[ "${command}" =~ ^git- ]]; then
+    # Host commands will be run on foreground after the docker process has ended
+    execute_foreground="true"
+  else
     # Command will execute 'docker commit' -> Start a background process
     # that will run commands on host in the background while the container
     # is still running
-    # TODO is background process really necessary?
     (
       # Read commands from log file and execute them
       tail -f "${log_file}" | tr -cd '\11\12\15\40-\176' | while read -r line; do
@@ -139,9 +141,6 @@ if ! (
         fi
       done
     ) &
-  else
-    # Host commands will be run on foreground after the docker process has ended
-    execute_foreground="true"
   fi
 
   # Export some variables to be used by various commands

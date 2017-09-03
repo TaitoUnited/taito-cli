@@ -2,10 +2,10 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### bare - auth:pre: Authenticating ###"
+echo "### bare - b-auth:pre: Authenticating ###"
 echo
 
-echo "TODO implement"
+echo "TODO implement" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

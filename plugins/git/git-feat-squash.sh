@@ -19,7 +19,7 @@ echo
   git push && \
   git branch -D ${feature} && \
   (git push origin --delete ${feature} &> /dev/null || :) \
-  "
+  " && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

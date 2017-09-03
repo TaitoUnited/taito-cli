@@ -13,7 +13,7 @@ echo
 "${taito_cli_path}/util/execute-on-host.sh" "\
   git fetch origin ${source}:${dest} && \
   git push origin ${dest}; \
-  "
+  " && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

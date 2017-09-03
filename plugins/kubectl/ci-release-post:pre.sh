@@ -6,16 +6,14 @@
 : "${taito_env:?}"
 
 echo
-echo "### kubectl - release-post:pre: Getting secrets from Kubernetes ###"
+echo "### kubectl - ci-release-post:pre: Getting secrets from Kubernetes ###"
 echo
 
 # Change namespace
-if ! "${taito_plugin_path}/util/use-context.sh"; then
-  exit 1
-fi
+"${taito_plugin_path}/util/use-context.sh" && \
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/get-secrets.sh"
+. "${taito_plugin_path}/util/get-secrets.sh" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

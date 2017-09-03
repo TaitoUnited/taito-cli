@@ -7,15 +7,17 @@
 : "${postgres_port:?}"
 
 source="${taito_env}"
-dest="${1}"
+dest="${1:?Destination not given}"
 username="${2}"
 
 echo
-echo "### postgres - db-copyquick: Copying database from ${source} to ${dest} ###"
+echo "### postgres - db-copyquick: Copying database from ${source} \
+to ${dest} ###"
 echo
-echo "NOTE: This works only if both databases are located in the same database cluster."
+echo "NOTE: This works only if both databases are located in the same \
+database cluster."
 echo "WARNING! THIS HAS NOT BEEN TESTED AT ALL YET! Use db-copy:ENV instead!"
-echo "WARNING! This operation will disconnect all db connections! Continue (Y/n)?"
+echo "WARNING! This operation will disconnect all connections! Continue (Y/n)?"
 read -r confirm
 echo
 
@@ -27,10 +29,8 @@ if [[ ${confirm} =~ ^[Yy]$ ]]; then
     -v dest=${db_prefix}_${dest} \
     -v dest_old=${db_prefix}_${dest}_old" \
     -v dest_app=${db_prefix}_${dest}_app"
-  if ! "${taito_plugin_path}/util/psql.sh" "${username}" "${flags}"; then
-    exit 1
-  fi
-fi
+  "${taito_plugin_path}/util/psql.sh" "${username}" "${flags}"
+fi && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

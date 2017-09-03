@@ -6,7 +6,7 @@
 : "${taito_project_path:?}"
 
 echo
-echo "### sentry - config: Creating a new project ###"
+echo "### sentry - env-config: Creating a new project ###"
 echo
 echo "Create a new Sentry project with these settings:"
 echo "- Name: ${taito_repo_name}"
@@ -17,9 +17,8 @@ echo
 echo "Press enter to open Sentry"
 read -r
 
-if ! "${taito_cli_path}/util/browser.sh" "https://sentry.io/organizations/${sentry_organization}/projects/new/"; then
-  exit 1
-fi
+"${taito_cli_path}/util/browser.sh" \
+  "https://sentry.io/organizations/${sentry_organization}/projects/new/"
 
 echo "Press enter when ready"
 read -r
@@ -41,7 +40,8 @@ if [[ -f "${taito_project_path}/scripts/helm.yaml" ]]; then
     echo "sentryPublicDSN: ${dsn_public}"
     sed -n -e '/# SENTRY END/,$p' "${taito_project_path}/scripts/helm.yaml"
   } >> "${taito_project_path}/scripts/helm.yaml.tmp"
-  mv -f "${taito_project_path}/scripts/helm.yaml.tmp" "${taito_project_path}/scripts/helm.yaml"
+  mv -f "${taito_project_path}/scripts/helm.yaml.tmp" \
+    "${taito_project_path}/scripts/helm.yaml"
 fi
 
 if [[ -f "${taito_project_path}/client/Dockerfile.build" ]]; then
@@ -50,7 +50,8 @@ if [[ -f "${taito_project_path}/client/Dockerfile.build" ]]; then
     echo "ENV APP_SENTRY_PUBLIC_DSN  ${dsn_public}"
     sed -n -e '/# SENTRY END/,$p' "${taito_project_path}/client/Dockerfile.build"
   } >> "${taito_project_path}/client/Dockerfile.build.tmp"
-  mv -f "${taito_project_path}/client/Dockerfile.build.tmp" "${taito_project_path}/client/Dockerfile.build"
+  mv -f "${taito_project_path}/client/Dockerfile.build.tmp" \
+    "${taito_project_path}/client/Dockerfile.build"
 fi
 
 if [[ -f "${taito_project_path}/admin/Dockerfile.build" ]]; then
@@ -59,7 +60,8 @@ if [[ -f "${taito_project_path}/admin/Dockerfile.build" ]]; then
     echo "ENV APP_SENTRY_PUBLIC_DSN  ${dsn_public}"
     sed -n -e '/# SENTRY END/,$p' "${taito_project_path}/admin/Dockerfile.build"
   } >> "${taito_project_path}/admin/Dockerfile.build.tmp"
-  mv -f "${taito_project_path}/admin/Dockerfile.build.tmp" "${taito_project_path}/admin/Dockerfile.build"
+  mv -f "${taito_project_path}/admin/Dockerfile.build.tmp" \
+    "${taito_project_path}/admin/Dockerfile.build"
 fi
 
 

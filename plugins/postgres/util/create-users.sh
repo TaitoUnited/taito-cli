@@ -32,7 +32,3 @@ psql -h "${postgres_host}" -p "${postgres_port}" \
   -v "dbuserapp=${postgres_database}_app" \
   -v "passwordapp=${postgres_app_password}" \
   -v "passwordbuild=${postgres_build_password}"
-# shellcheck disable=SC2181
-if [[ $? -gt 0 ]]; then
-  exit 1
-fi

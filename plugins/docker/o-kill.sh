@@ -2,15 +2,13 @@
 
 : "${taito_cli_path:?}"
 
-pod="${1}"
+pod="${1:?Pod name not given}"
 
 echo
-echo "### docker - kill: Killing in the name of ###"
+echo "### docker - o-kill: Killing in the name of ${pod} ###"
 echo
 
-if ! "${taito_cli_path}/util/execute-on-host.sh" "docker kill ${pod}"; then
-  exit 1
-fi
+"${taito_cli_path}/util/execute-on-host.sh" "docker kill ${pod}" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -15,9 +15,7 @@ echo
 # Make sure that namespace exists
 kubectl create namespace "${taito_customer}-${taito_env}" &> /dev/null
 
-if ! "${taito_plugin_path}/util/save-secrets.sh"; then
-  exit 1
-fi
+"${taito_plugin_path}/util/save-secrets.sh" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

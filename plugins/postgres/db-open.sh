@@ -15,9 +15,7 @@ echo
 echo "host: ${postgres_host} port:${postgres_port}"
 echo
 
-if ! "${taito_plugin_path}/util/psql.sh" "${username}"; then
-  exit 1
-fi
+"${taito_plugin_path}/util/psql.sh" "${username}" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

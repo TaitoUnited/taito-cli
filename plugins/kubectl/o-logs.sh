@@ -4,11 +4,11 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-pod="${1}"
+pod="${1:?Pod name not given}"
 container_name="${2}"
 
 echo
-echo "### kubectl - logs: Showing logs of ${pod} ###"
+echo "### kubectl - o-logs: Showing logs of ${pod} ###"
 echo
 
 # Change namespace
@@ -31,7 +31,7 @@ else
   echo
   echo
   echo "--- kubectl: Logs ---"
-  if ! kubectl logs "${1}" "${container_name}"; then
+  if ! kubectl logs "${pod}" "${container_name}"; then
     exit 1
   fi
 fi

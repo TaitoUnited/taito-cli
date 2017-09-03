@@ -2,12 +2,10 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### gcloud - auth:pre: Authenticating ###"
+echo "### gcloud - b-auth:pre: Authenticating ###"
 echo
 
-if ! "${taito_plugin_path}/util/auth.sh" "${@}"; then
-  exit 1
-fi
+"${taito_plugin_path}/util/auth.sh" "${@}" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

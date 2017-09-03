@@ -6,20 +6,15 @@
 : "${taito_project:?}"
 
 echo
-echo "### kubectl - revert: Reverting application in ${taito_env} ###"
+echo "### kubectl - ci-revert: Reverting application in ${taito_env} ###"
 echo
 
-revision="${1}"
-if [[ "${revision}" == "" ]]; then
-  revision=0
-fi
+revision="${1:-0}"
 
 # Change namespace
-"${taito_plugin_path}/util/use-context.sh"
+"${taito_plugin_path}/util/use-context.sh" && \
 
-if ! helm rollback "${taito_project_env}" "${revision}"; then
-  exit 1
-fi
+helm rollback "${taito_project_env}" "${revision}" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -8,9 +8,7 @@ echo
 
 # TODO open db proxy connection to machine?
 
-if ! echo "TODO not implemented"; then
-  exit 1
-fi
+echo "TODO implement" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

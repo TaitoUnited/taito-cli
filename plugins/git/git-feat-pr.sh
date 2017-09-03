@@ -8,7 +8,8 @@ feature="feature/${1:?Feature name not given}"
 dest="${2:-dev}"
 
 echo
-echo "### git - git-feat-pr: Making a pull request for merging ${feature} to ${dest} ###"
+echo "### git - git-feat-pr: Making a pull request for merging ${feature} \
+to ${dest} ###"
 echo
 
 echo "Rebase branch ${feature} before making the pull request (Y/n)?"
@@ -27,7 +28,7 @@ read -r rebase
   echo 'Make the pull request on GitHub. Press enter to continue.' && \
   read -r && \
   taito open-git
-  "
+  " && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -9,8 +9,8 @@ if [[ -z "${pod}" ]]; then
   echo
   echo "Please give pod name as argument:"
   echo
+  exit 1
 else
-  if ! "${taito_cli_path}/util/execute-on-host.sh" "docker exec -it ${pod} ${command[@]}"; then
-    exit 1
-  fi
+  "${taito_cli_path}/util/execute-on-host.sh" \
+    "docker exec -it ${pod} ${command[@]}"
 fi

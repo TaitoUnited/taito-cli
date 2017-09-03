@@ -11,9 +11,7 @@ echo
 echo "Connect using your personal user account or"
 echo "${postgres_database} as username"
 
-if ! echo "TODO not implemented"; then
-  exit 1
-fi
+echo "TODO implement" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

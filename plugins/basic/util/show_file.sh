@@ -2,8 +2,8 @@
 : "${taito_cli_path:?}"
 : "${taito_project_path:?}"
 
-filename="${1}"
-command="${2}"
+filename="${1:?}"
+command="${2:?}"
 
 content=""
 

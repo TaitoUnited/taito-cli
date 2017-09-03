@@ -18,8 +18,4 @@ if [[ ${confirm} =~ ^[Yy]$ ]]; then
     -f "${taito_plugin_path}/resources/drop.sql" \
     -v "database=${postgres_database}" \
     -v "databaseold=${postgres_database}_old"
-  # shellcheck disable=SC2181
-  if [[ $? -gt 0 ]]; then
-    exit 1
-  fi
 fi

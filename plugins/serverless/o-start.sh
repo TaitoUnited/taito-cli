@@ -3,10 +3,10 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### serverless - start: Starting ###"
+echo "### serverless - o-start: Starting ###"
 echo
 
-exit 1
+echo "TODO implement" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -15,7 +15,7 @@ do
     exit 1
   fi
   secret_index=$((${secret_index}+1))
-done
+done && \
 
 # Save secret values
 secret_index=0
@@ -46,7 +46,7 @@ do
     echo "- ${secret_name} saved"
     secret_index=$((${secret_index}+1))
   fi
-done
+done && \
 
 # TODO remove this
 # Copy all common secrets from common namespace
@@ -57,7 +57,7 @@ done
 #   jq ".items[].metadata.namespace = \"${taito_namespace}\"" \
 #   | kubectl create -f  -
 
-echo
-echo "--- kubectl: Restarting pods ---"
-echo "TODO rolling update instead of delete?"
+echo && \
+echo "--- kubectl: Restarting pods ---" && \
+echo "TODO rolling update instead of delete?" && \
 kubectl delete --all pods --namespace="${taito_customer}-${taito_env}"

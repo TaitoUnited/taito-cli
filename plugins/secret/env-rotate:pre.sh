@@ -8,7 +8,7 @@ echo "### secrets - env-rotate:pre: Creating secrets ###"
 echo
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/create.sh"
+. "${taito_plugin_path}/util/create.sh" && \
 
 # Call next command on command chain. Exported variables:
 "${taito_cli_path}/util/call-next.sh" "${@}"

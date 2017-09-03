@@ -4,12 +4,10 @@
 : "${taito_plugin_path:?}"
 
 echo
-echo "### docker - exec: Executing ###"
+echo "### docker - o-exec: Executing ###"
 echo
 
-if ! "${taito_plugin_path}/util/exec.sh" "${@}"; then
-  exit 1
-fi
+"${taito_plugin_path}/util/exec.sh" "${@}"  && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

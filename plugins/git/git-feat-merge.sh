@@ -33,7 +33,7 @@ read -r del
   else \
     git checkout -; \
   fi; \
-  "
+  " && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

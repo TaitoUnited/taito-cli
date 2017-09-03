@@ -3,7 +3,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### basic - readme: Showing README.md of taito-cli ###"
+echo "### basic - b-readme: Showing README.md of taito-cli ###"
 echo
 
 content=$(cat "${taito_project_path}/README.md")

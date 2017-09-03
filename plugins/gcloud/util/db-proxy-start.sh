@@ -17,5 +17,6 @@ else
 
   echo "BIND ADDRESS: ${bind_address}"
 
-  cloud_sql_proxy "-instances=${postgres_id}=tcp:${bind_address}:${gcloud_sql_proxy_port}"
+  cloud_sql_proxy \
+    "-instances=${postgres_id}=tcp:${bind_address}:${gcloud_sql_proxy_port}"
 fi

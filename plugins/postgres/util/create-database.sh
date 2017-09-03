@@ -14,26 +14,18 @@ PGPASSWORD="${PGPASSWORD}" psql -h "${postgres_host}" \
   -p "${postgres_port}" -U "${postgres_username}" \
   -f "${taito_plugin_path}/resources/create.sql" \
   -v "database=${postgres_database}" \
-  -v "dbuserapp=${postgres_database}_app"
-# shellcheck disable=SC2181
-if [[ $? -gt 0 ]]; then
-  exit 1
-fi
+  -v "dbuserapp=${postgres_database}_app" && \
 
 echo
 echo "- import ./database/init.sql"
 PGPASSWORD="${PGPASSWORD}" psql -h "${postgres_host}" \
   -p "${postgres_port}" -d "${postgres_database}" \
-   -U "${postgres_username}" < ./database/init.sql
-# shellcheck disable=SC2181
-if [[ $? -gt 0 ]]; then
-  exit 1
-fi
+   -U "${postgres_username}" < ./database/init.sql && \
 
-. "${taito_plugin_path}/util/postgres-username-password.sh"
+. "${taito_plugin_path}/util/postgres-username-password.sh" && \
 
-echo
-echo "- import grant.sql"
+echo && \
+echo "- import grant.sql" && \
 PGPASSWORD="${secret_value}" \
   psql -h "${postgres_host}" -p "${postgres_port}" \
   -d "${postgres_database}" \
@@ -41,7 +33,3 @@ PGPASSWORD="${secret_value}" \
   -f "${taito_plugin_path}/resources/grant.sql" \
   -v "database=${postgres_database}" \
   -v "dbuserapp=${postgres_database}_app"
-# shellcheck disable=SC2181
-if [[ $? -gt 0 ]]; then
-  exit 1
-fi

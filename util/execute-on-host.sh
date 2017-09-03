@@ -2,7 +2,7 @@
 
 # Executes the given shell commands on host
 
-commands="${1}"
+commands="${1:?}"
 sleep_seconds="${2}"
 
 echo

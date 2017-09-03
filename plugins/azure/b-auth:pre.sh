@@ -2,10 +2,10 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### azure - auth:pre: Authenticating ###"
+echo "### azure - b-auth:pre: Authenticating ###"
 echo
 
-echo "TODO implement"
+echo "TODO implement" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

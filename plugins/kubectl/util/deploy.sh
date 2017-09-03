@@ -7,14 +7,15 @@
 : "${taito_project:?}"
 : "${taito_repo_name:?}"
 
-image="${1}"
+image="${1:?}"
 options=("${@:2}")
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
 # Read version number that semantic-release wrote on the package.json
-version=$(grep "version" "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
+version=$(grep "version" "${taito_project_path}/package.json" | \
+  grep -o "[0-9].[0-9].[0-9]")
 
 # Determine image
 if [[ ${image} == "--dry-run" ]]; then
@@ -49,7 +50,3 @@ helm upgrade "${options[@]}" --debug --install \
   --set build.commit="TODO" \
   -f scripts/helm.yaml ${override_file} \
   "${taito_project_env}" "./scripts/${taito_project}"
-# shellcheck disable=SC2181
-if [[ $? -gt 0 ]]; then
-  exit 1
-fi

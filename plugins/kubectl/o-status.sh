@@ -5,7 +5,7 @@
 : "${taito_env:?}"
 
 echo
-echo "### kubectl - status: Showing status of ${taito_env} ###"
+echo "### kubectl - o-status: Showing status of ${taito_env} ###"
 echo
 
 # Change namespace

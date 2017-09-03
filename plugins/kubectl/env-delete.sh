@@ -10,11 +10,9 @@ echo "### kubectl - env-delete: Deleting secrets from Kubernetes ###"
 echo
 
 # Change namespace
-"${taito_plugin_path}/util/use-context.sh"
+"${taito_plugin_path}/util/use-context.sh" && \
 
-if ! "${taito_plugin_path}/util/delete-secrets.sh"; then
-  exit 1
-fi
+"${taito_plugin_path}/util/delete-secrets.sh" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

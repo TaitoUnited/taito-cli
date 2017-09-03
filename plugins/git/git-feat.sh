@@ -14,7 +14,7 @@ echo
   git checkout ${orig} && \
   git pull && \
   git checkout -b ${feature}
-  "
+  " && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

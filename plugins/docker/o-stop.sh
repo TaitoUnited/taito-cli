@@ -3,12 +3,10 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### docker - stop: Stopping ###"
+echo "### docker - o-stop: Stopping ###"
 echo
 
-if ! "${taito_cli_path}/util/execute-on-host.sh" "docker-compose down"; then
-  exit 1
-fi
+"${taito_cli_path}/util/execute-on-host.sh" "docker-compose down" 6 && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

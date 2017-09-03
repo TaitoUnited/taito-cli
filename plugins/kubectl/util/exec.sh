@@ -4,7 +4,7 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-pod="${1}"
+pod="${1:?}"
 container="${2}"
 command=("${@:3}")
 
@@ -22,7 +22,5 @@ if [[ -z "${pod}" ]]; then
   kubectl get pods
 else
   # Kubernetes
-  if ! kubectl exec -it "${pod}" -c "${container}" -- "${command[@]}"; then
-    exit 1
-  fi
+  kubectl exec -it "${pod}" -c "${container}" -- "${command[@]}"
 fi

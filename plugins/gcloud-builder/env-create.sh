@@ -2,6 +2,9 @@
 
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
+: "${taito_zone:?}"
+: "${taito_repo_name:?}"
+: "${taito_project:?}"
 
 branch="${1}"
 
@@ -33,12 +36,11 @@ echo
 echo "Press enter to open build trigger management"
 read -r
 
-if ! "${taito_cli_path}/util/browser.sh" "https://console.cloud.google.com/gcr/triggers/add?project=${taito_zone}"; then
-  exit 1
-fi
+"${taito_cli_path}/util/browser.sh" \
+  "https://console.cloud.google.com/gcr/triggers/add?project=${taito_zone}" && \
 
-echo "Press enter when ready"
-read -r
+echo "Press enter when ready" && \
+read -r && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

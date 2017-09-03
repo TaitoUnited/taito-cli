@@ -18,6 +18,6 @@ do
   fi
   exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
   secret_index=$((${secret_index}+1))
-done
+done && \
 
 eval "$exports"
