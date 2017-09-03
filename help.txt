@@ -111,27 +111,27 @@ git-env-merge SOURCE DEST
   container is deployed to other environments as well once environment branches
   are merged.
 
-git-feat FEATURE_NAME [ORIGINAL_BRANCH]
-  Creates a new branch for a feature. Dev branch is used as the original source
-  branch if the original branch is omitted.
+git-feat FEATURE_NAME [SOURCE_BRANCH]
+  Creates a new branch for a feature. The dev branch is used as a default
+  source branch.
 
 git-feat-squash FEATURE_NAME [DEST]
   Merges a feature to a destination branch as a single squashed commit and
-  deletes the feature branch. Dev branch is used as default if destination
-  is omitted. Use this command for a short-lived feature branch with a cohesive
-  set of changes.
+  deletes the feature branch. The dev branch is used as default destination.
+  Use this command for a short-lived feature branch with a cohesive set of
+  changes.
 
 git-feat-merge FEATURE_NAME [DEST]
-  Merges a feature to a destination branch. Dev branch is used as default if
-  destination is omitted. The command suggests rebase before merge and delete
-  branch after. With rebase you can clean up commit history before merge e.g.
-  by reordering commits and selectively squashing some of them together.
+  Merges a feature to a destination branch. The dev branch is used as default
+  destination. The command suggests rebase before merge and delete feature
+  after merge. With rebase you can clean up commit history before merge
+  e.g. by reordering commits and selectively squashing some of them together.
 
 git-feat-pr FEATURE_NAME [DEST]
-  Creates a pull request for a feature. Dev branch is used as default if
-  destination is omitted. The command suggests rebase before
-  making a pull request. With rebase you can clean up commit history by
-  reordering commits and selectively squashing some of them together.
+  Creates a pull request for a feature. The dev branch is used as default
+  destination. The command suggests rebase before making the pull request. With
+  rebase you can clean up commit history by reordering commits and selectively
+  squashing some of them together.
 
 
 PROJECT: DATABASE OPERATIONS
