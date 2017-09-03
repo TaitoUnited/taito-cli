@@ -29,7 +29,7 @@ read -r del
   git push && \
   if [[ ${del} =~ ^[Yy]$ ]]; then \
     git push origin --delete ${feature} &> /dev/null; \
-    git branch -D ${feature}; \
+    git branch -d ${feature}; \
   else \
     git checkout -; \
   fi; \
