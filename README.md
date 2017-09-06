@@ -72,7 +72,7 @@ And here is an example of a project specific `taito-config.sh`:
     # - 'docker:local' means that docker is used only in local environment
     # - 'kubectl:-local' means that kubernetes is used in all other environments
     export taito_plugins=" \
-      npm postgres link docker:local kubectl:-local gcloud:-local
+      postgres link docker:local npm kubectl:-local gcloud:-local
       gcloud-builder:-local sentry secret:-local semantic"
 
     # common settings for all plugins
@@ -158,7 +158,7 @@ And here is an example of a project specific `taito-config.sh`:
 
     # Link plugin
     export link_urls="\
-      open[:ENV]#app=${taito_app_url} \
+      open-app[:ENV]#app=${taito_app_url} \
       open-boards=https://github.com/${taito_organization}/${taito_repo_name}/projects \
       open-issues=https://github.com/${taito_organization}/${taito_repo_name}/issues \
       open-builds=https://console.cloud.google.com/gcr/builds?project=${taito_zone}&query=source.repo_source.repo_name%3D%22${taito_repo_location}-${taito_repo_name}%22 \
@@ -194,7 +194,7 @@ Responsibilities of the current default plugins:
 
 ## Continuous integration and delivery
 
-Taito-cli is designed so that in most cases your CI/CD tool needs only to execute a bunch of taito-cli commands without any arguments to get the job done. Everything is already configured in taito-config.sh and taito-cli provides support for various infrastructures by plugins. You can also run any of the steps manually from command line using *taito-cli*. A typical CI/CD process would consist of the following steps, many of which can be run parallel.
+Taito-cli is designed so that in most cases your CI/CD tool needs only to execute a bunch of taito-cli commands without any arguments to get the job done. Everything is already configured in taito-config.sh, and taito-cli provides support for various infrastructures by plugins. You can also run any of the steps manually from command line using *taito-cli*. A typical CI/CD process would consist of the following steps, many of which can be run parallel.
 
 * `taito b-auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
 * `taito ci-cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
@@ -205,17 +205,18 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito ci-scan`: Lint code, scan for code smells and vulnerabilities, etc.
 * `taito ci-docs`: Generate docs.
 * `taito ci-build`: Build containers, functions, etc (separate build step for each)
+* `taito ci-test-api`: Run local api tests.
+* `taito ci-test-e2e`: Run local e2e tests.
 * `taito db-deploy`: Deploy database changes.
 * `taito ci-deploy`: Deploy the application.
-* `taito ci-wait`: Wait for application to restart.
-* `taito ci-test-api`: Run api tests.
-* `taito ci-test-e2e`: Run e2e tests.
-* `taito ci-publish`: Publish build artifacts to a central location (e.g. container images, docs, test results, code coverage reports).
+* `taito ci-wait`: Optional: Wait for application to restart in the target environment.
+* `taito ci-test-api:ENV`: Optional: Run api tests for the target environment.
+* `taito ci-test-e2e:ENV`: Optional: Run e2e tests for the target environment.
+* `taito ci-verify[:ENV]`: Optional: Verifies that api and e2e tests went ok for the target environment. If tests failed and autorevert is enabled for the target environment, executes `taito db-revert` and `taito ci-revert`.
+* `taito ci-publish`: Publish all artifacts to a central location (e.g. container images, libraries, docs, test results, test coverage reports, code quality reports).
 * `taito ci-release-post`: Typically generates release notes from git commits or issues, and tags the git repository with the new version number.
 
-In case CI/CD process fails after the deployment steps have already been executed, changes can be reverted by running `taito db-revert` and `taito ci-revert`.
-
-See [cloudbuild.yaml](https://github.com/TaitoUnited/server-template/blob/master/cloudbuild.yaml) of server-template as an example. TODO: add reverts to script.
+See [cloudbuild.yaml](https://github.com/TaitoUnited/server-template/blob/master/cloudbuild.yaml) of server-template as an example. TODO: add local testing env and reverts to the script.
 
 ## ChatOps
 
@@ -320,6 +321,10 @@ If your command needs to run some command on host machine, execute `"${taito_cli
 ### Committing changes to the taito-cli container image
 
 If your command needs to save some data permanently on the container image, execute `"${taito_cli_path}/util/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
+
+### Overriding commands
+
+TODO
 
 ### Command chains and passing data
 

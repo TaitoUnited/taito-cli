@@ -237,7 +237,7 @@ ci-wait[:ENV]
 
 ci-verify[:ENV]
   Verifies that everyting went ok e.g. by checking test results. If something
-  went wrong and auto-revert is enabled for the environment, runs
+  went wrong and autorevert is enabled for the environment, runs
   `taito db-revert[:ENV]` and `taito ci-revert[:ENV]`.
 
 ci-docs
@@ -254,16 +254,18 @@ ci-test-unit
   script in your package.json.
 
 ci-test-api[:ENV]
-  Run all api tests. TIP: Enable the npm plugin and implement ci-test-api
+  Run all api tests. TIP: Enable the npm plugin and implement ci-test-api:ENV
   script in your package.json. You can configure test users and passwords for
   each environment in taito-config.sh as those settings are available to your
-  npm script as environment variables.
+  npm script as environment variables. At least implement tests for local
+  environment (other target environments are optional).
 
 ci-test-e2e[:ENV]
-  Run all e2e tests. TIP: Enable the npm plugin and implement ci-test-e2e
+  Run all e2e tests. TIP: Enable the npm plugin and implement ci-test-e2e:ENV
   script in your package.json. You can configure test users and passwords for
   each environment in taito-config.sh as those settings are available to your
-  npm script as environment variables.
+  npm script as environment variables. At least implement tests for local
+  environment (other target environments are optional).
 
 ci-publish
   Publishes build artifacts (e.g. docs, test reports) to a central location.
