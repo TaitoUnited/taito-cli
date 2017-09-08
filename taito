@@ -125,6 +125,8 @@ if ! (
   echo "-" > "${log_file}"
   if [[ "${command}" =~ ^git- ]]; then
     # Host commands will be run on foreground after the docker process has ended
+    # TODO offer both "run on host background" and "run on host foreground"
+    # for plugins
     execute_foreground="true"
   else
     # Command will execute 'docker commit' -> Start a background process

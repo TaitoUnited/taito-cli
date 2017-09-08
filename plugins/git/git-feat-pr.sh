@@ -12,18 +12,17 @@ echo "### git - git-feat-pr: Making a pull request for merging ${feature} \
 to ${dest} ###"
 echo
 
-echo "Rebase branch ${feature} before making the pull request (Y/n)?"
-read -r rebase
-
 "${taito_cli_path}/util/execute-on-host.sh" "\
+  echo Rebase branch ${feature} before making the pull request (Y/n)? && \
+  read -r rebase && \
   git checkout ${feature} && \
-  if [[ ${rebase} =~ ^[Yy]$ ]]; then \
+  if [[ \${rebase} =~ ^[Yy]$ ]]; then \
      git rebase -i ${dest}; \
   fi && \
   git push -u origin ${feature} && \
   git checkout - && \
   echo && \
-  echo 'TODO: implement PR using GitHub API.' && \
+  echo 'TODO: implement PR using the hub cli.' && \
   echo && \
   echo 'Make the pull request on GitHub. Press enter to continue.' && \
   read -r && \
