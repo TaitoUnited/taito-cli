@@ -33,3 +33,7 @@ options="${@:2}"
     -d "${postgres_database}" \
     -u "${database_user}" "${command}" "${@:2}"
 )
+# shellcheck disable=SC2181
+if [[ $? -gt 0 ]]; then
+  exit 1
+fi
