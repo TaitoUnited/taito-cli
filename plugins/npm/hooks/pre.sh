@@ -7,7 +7,9 @@
 
 exit_code=0
 
-if [[ -f "./package.json" ]]; then
+if [[ -f "./package.json" ]] && \
+   [[ ${taito_command} != "ci-test-api" ]] && \
+   [[ ${taito_command} != "ci-test-e2e" ]]; then
   # Read command names from package.json
   commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 
