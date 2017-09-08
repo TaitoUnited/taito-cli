@@ -1,6 +1,7 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
+: "${taito_project:?}"
 : "${taito_project_path:?}"
 : "${taito_registry:?}"
 : "${taito_env:?}"
@@ -27,6 +28,11 @@ if [[ ${taito_image_exists:-false} == false ]]; then
     --build-arg BUILD_VERSION="${version}" \
     --build-arg BUILD_IMAGE_TAG="${image_tag}" \
     -t "${image_path}/${name}:${image_tag}" "./${name}" && \
+  if [[ "${taito_mode:-}" == "ci" ]]; then
+    # Tag so that CI will not rebuild image when running docker-compose
+    docker image tag "${image_path}/${name}:${image_tag}" \
+      "${taito_project//-/}_${taito_project}-${name}"
+  fi && \
   if [[ ${image_tag} != 'dry-run' ]]; then
     echo "- Pushing image"
     docker push "${image_path}/${name}:${image_tag}"

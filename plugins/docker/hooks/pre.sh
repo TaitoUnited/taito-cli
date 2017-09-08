@@ -21,12 +21,18 @@ if ([[ "${taito_mode:-}" != "ci" ]] \
      file="${taito_project_path}/docker-test.yaml"
    fi
 
-   "${taito_cli_path}/util/execute-on-host.sh" \
-     "docker-compose -f ${file} up" && \
+   # TODO use minikube instead for CI testing
+   if [[ "${taito_mode:-}" == "ci" ]]; then \
+     "${taito_cli_path}/util/execute-on-host.sh" \
+       "docker-compose -f ${file} up --no-build"
+   else
+     "${taito_cli_path}/util/execute-on-host.sh" \
+       "docker-compose -f ${file} up"
+   fi
 
    echo "Waiting for docker to start..." && \
    echo "TODO check status instead of hardcoded long wait." && \
-   sleep 20
+   sleep 300
 fi && \
 
 # Call next command on command chain
