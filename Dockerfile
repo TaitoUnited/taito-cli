@@ -3,6 +3,7 @@ FROM docteurklein/sqitch:pgsql
 MAINTAINER Taito United <support@taitounited.fi>
 
 # Install docker (required for executing CI/CD builds on container)
+# TODO replace with a moby based docker alternative?
 RUN apt-get -y update && \
     apt-get -y install apt-transport-https ca-certificates curl gnupg2 \
     software-properties-common
@@ -13,6 +14,11 @@ RUN add-apt-repository \
       stable"
 RUN apt-get -y update && \
     apt-get -y install docker-ce
+
+# Install docker-compose for local api/e2e testing
+# TODO replace with minikube?
+RUN curl -L https://github.com/docker/compose/releases/download/1.15.0/docker-compose-`uname -s`-`uname -m` \
+  -o /usr/local/bin/docker-compose
 
 # Install gcloud: gcr.io/cloud-builders/gcloud --> modified for jessie
 RUN mkdir /builder
