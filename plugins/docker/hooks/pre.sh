@@ -5,8 +5,10 @@
 : "${taito_project_path:?}"
 : "${taito_command:?}"
 
-if [[ "${taito_command}" = "ci-test-api" ]] ||
-   [[ "${taito_command}" = "ci-test-e2e" ]]; then
+if ([[ "${taito_mode:-}" != "ci" ]] \
+     || [[ "${ci_test_env:-}" == "true" ]]) && \
+   ([[ "${taito_command}" == "ci-test-api" ]] \
+     || [[ "${taito_command}" == "ci-test-e2e" ]]); then
    echo
    echo "### docker - pre: Starting ###"
    echo
