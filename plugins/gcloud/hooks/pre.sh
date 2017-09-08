@@ -3,11 +3,11 @@
 : "${taito_env:?}"
 : "${taito_command:?}"
 : "${taito_mode:?}"
-: "${taito_command_chain:?}"
 : "${taito_plugin_path:?}"
 : "${gcloud_sql_proxy_port:?}"
 
-if [[ "${taito_mode}" == "ci" ]] && [[ ${taito_command_chain} == *"kubectl/"* ]]; then
+if [[ "${taito_mode}" == "ci" ]] && \
+   [[ ${taito_command_chain:-} == *"kubectl/"* ]]; then
   echo
   echo "### gcloud - pre: Getting credentials for kubernetes ###"
   echo
@@ -15,7 +15,7 @@ if [[ "${taito_mode}" == "ci" ]] && [[ ${taito_command_chain} == *"kubectl/"* ]]
 fi && \
 
 if [[ ${taito_env} != "local" ]] && \
-   [[ ${taito_command_chain} == *"postgres/"* ]] && \
+   [[ ${taito_command_chain:-} == *"postgres/"* ]] && \
    [[ ${taito_command} != "ci-test-"* ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
   if [[ "${proxy_running}" == "" ]]; then

@@ -3,7 +3,11 @@ FROM docteurklein/sqitch:pgsql
 MAINTAINER Taito United <support@taitounited.fi>
 
 # Install docker (required for executing CI/CD builds on container)
-# TODO replace with a moby based docker alternative?
+# TODO replace with the docker version used by google? or even older version
+# used by kubernetes?
+# - https://github.com/GoogleCloudPlatform/cloud-builders/blob/master/docker/Dockerfile
+# - https://stackoverflow.com/questions/44657320/which-docker-versions-will-k8s-1-7-support
+# TODO later replace with a moby based docker alternative?
 RUN apt-get -y update && \
     apt-get -y install apt-transport-https ca-certificates curl gnupg2 \
     software-properties-common

@@ -184,6 +184,7 @@ if ! (
   # Export some variables to be used in command execution
   export taito_command_exists="${command_exists}"
   export taito_command_chain="${command_chain[@]}"
+  export taito_original_command_chain="${command_chain[@]}"
   export taito_enabled_plugins="${enabled_plugins}"
 
   # Print command chain
