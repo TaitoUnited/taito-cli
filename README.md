@@ -88,6 +88,9 @@ And here is an example of a project specific `taito-config.sh`:
     export taito_registry="domain.com/${taito_zone}/${taito_repo_name}"
     export taito_autorevert=false
 
+    # Settings for ci builds
+    export ci_test_env=false
+
     # gcloud plugin
     export gcloud_region="europe-west1"
     export gcloud_zone="europe-west1-c"
@@ -113,7 +116,7 @@ And here is an example of a project specific `taito-config.sh`:
     export template_source_git_url="git@github.com:TaitoUnited"
     export template_dest_git_url="git@github.com:${taito_organization}"
 
-    # npm plugin: to be used by npm scripts
+    # misc settings for npm scripts
     export test_api_user="test"
     export test_api_password="password"
     export test_e2e_user="test"
@@ -146,6 +149,7 @@ And here is an example of a project specific `taito-config.sh`:
         ;;
       local)
         # Overrides for local environment
+        export ci_test_env=true
         export taito_app_url="http://localhost:3333"
         export postgres_host="${taito_project}-database"
         export postgres_port="5432"
@@ -230,13 +234,13 @@ Taito-cli also provides a lightweight abstraction on top of infrastructure and c
 
 If you enable the npm plugin, you can run any npm script defined in your project root *package.json* with taito-cli. Just add a script to package.json and then you can run it.
 
-You can also override any existing taito-cli command in your *package.json* by using `taito-` as script name prefix. For example the following script shows the canary.txt file before releasing a canary release to production. It also shows an additional message after the canary has been released. The `-s` flag means that override is skipped when the npm script calls taito-cli.
+You can also override any existing taito-cli command in your *package.json* by using `taito-` as script name prefix. For example the following script shows the init.txt file before running initialization. The `-s` flag means that override is skipped when the npm script calls taito-cli.
 
-    "taito-ci-canary": "less canary.txt; taito -s ci-canary; echo Canary released!"
+    "taito-o-init": "less init.txt; taito -s o-init"
 
 You can use *taito-cli* with any project, even those that use technologies that are not supported by any of the plugins. Just add commands to your package.json and add a `taito-config.sh` file with the npm plugin enabled to the project root directory. You can use the optional *taito* prefix to avoid conflicts with existing npm script names. For example:
 
-    "o-install": "npm install; ant retrieve",
+    "taito-o-install": "npm install; ant retrieve",
     "o-start": "java -cp . com.domain.app.MyServer",
     "o-init", "host=localhost npm run _db -- < dev-data.sql",
     "taito-open", "taito browser http://localhost:8080",
@@ -324,7 +328,10 @@ If your command needs to save some data permanently on the container image, exec
 
 ### Overriding commands
 
-TODO
+You can override a single command without disabling the whole plugin:
+
+* Create a plugin that provides an alternative implementation for the command
+* Create a pre hook that removes the original command from command chain
 
 ### Command chains and passing data
 

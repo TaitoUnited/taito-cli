@@ -103,17 +103,16 @@ PROJECT: GIT OPERATIONS
 -----------------------
 
 git-env-merge SOURCE DEST
-  Merges remote source branch to destination branch using fast-forward and
-  pushes changes to remote repository without making changes to the current
-  local git workspace. The command fails if fast-forward is not possible. Merge
-  operations between environment branches should always be fast-forwarded so
-  that a container is first built for dev environment and then the same
-  container is deployed to other environments as well once environment branches
-  are merged.
+  Merges source environment branch to destination branch without making changes
+  to the current local git workspace. The command fails if fast-forward is not
+  possible. Merge operations between environment branches should always be
+  fast-forwarded so that a container is first built for dev environment and
+  then the same container is deployed to other environments as well once
+  environment branches are merged.
 
 git-feat FEATURE_NAME [SOURCE_BRANCH]
-  Creates a new branch for a feature. The dev branch is used as a default
-  source branch.
+  Creates a new local branch for a feature or does a checkout if the branch
+  already exists. The dev branch is used as a default source branch.
 
 git-feat-squash FEATURE_NAME [DEST]
   Merges a feature to a destination branch as a single squashed commit and
@@ -298,20 +297,31 @@ env-config
   Configure project.
 
 env-create:ENV [GIT_BRANCH]
-  Create environment. Creates build trigger for the given branch if branch
+  Create an environment. Creates build trigger for the given branch if branch
   was given as argument. Otherwise uses default branch determined by ENV.
 
-env-update:ENV
-  Update environment. NOTE: not implemented
-
 env-delete:ENV
-  Delete environment.
+  Delete an environment.
 
 env-rotate:ENV
-  Rotate secrets for the environment.
+  Rotate secrets for an environment.
 
 env-cert[:ENV] DOMAIN
-  Add a custom certificate instead of automatically generated.
+  Add a custom certificate.
+
+
+PROJECT: ALTERNATE ENVIRONMENTS
+-------------------------------
+
+An alternate environment uses the same database as the main environment, but
+containers are built from an alternate branch. You can use alternate
+environments for canary releases, A/B testing, etc.
+
+env-alt-create:ENV [NAME] [GIT_BRANCH]
+  Create an alternate environment. TODO not implemented.
+
+env-alt-delete:ENV [NAME]
+  Delete alternate environment. TODO not implemented.
 
 
 PROJECT: CONTACTS
