@@ -19,7 +19,8 @@ if ([[ "${taito_mode:-}" != "ci" ]] \
    fi
 
    "${taito_cli_path}/util/execute-on-host.sh" \
-     "docker-compose -f ${file} down"
+     "docker-compose --project-name test -f ${file} down"
+
 fi && \
 
 # Call next command on command chain

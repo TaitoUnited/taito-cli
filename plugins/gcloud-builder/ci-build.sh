@@ -32,7 +32,7 @@ if [[ ${taito_image_exists:-false} == false ]]; then
     # Tag so that CI will not rebuild image when running docker-compose
     echo "tag for ci-test: ${taito_project//-/}_${taito_project}-${name}:latest"
     docker image tag "${image_path}/${name}:${image_tag}" \
-      "${taito_project//-/}_${taito_project}-${name}:latest"
+      "test_${taito_project}-${name}:latest"
   fi && \
   if [[ ${image_tag} != 'dry-run' ]]; then
     echo "- Pushing image"
