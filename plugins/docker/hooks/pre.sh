@@ -23,9 +23,10 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
    fi
 
    # TODO use minikube instead for CI testing
-   if [[ "${taito_mode:-}" == "ci" ]]; then \
+   if [[ "${taito_mode:-}" == "ci" ]]; then
+     # TODO enable --no-build
      "${taito_cli_path}/util/execute-on-host.sh" \
-       "docker-compose -f ${file} up --no-build"
+       "docker-compose -f ${file} up"
    else
      "${taito_cli_path}/util/execute-on-host.sh" \
        "docker-compose -f ${file} up"
