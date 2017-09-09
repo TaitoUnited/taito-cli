@@ -20,7 +20,7 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
    fi
 
    "${taito_cli_path}/util/execute-on-host.sh" \
-     "docker-compose --project-name test -f ${file} down"
+     "docker-compose -f ${file} down"
 
 fi && \
 

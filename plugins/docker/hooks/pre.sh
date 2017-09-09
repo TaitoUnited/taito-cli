@@ -24,22 +24,23 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
 
    # TODO use minikube instead for CI testing
    if [[ "${taito_mode:-}" == "ci" ]]; then \
-     # TODO --no-build
      "${taito_cli_path}/util/execute-on-host.sh" \
-       "docker-compose --project-name test -f ${file} up"
+       "docker-compose -f ${file} up --no-build"
    else
      "${taito_cli_path}/util/execute-on-host.sh" \
-       "docker-compose --project-name test -f ${file} up"
+       "docker-compose -f ${file} up"
    fi
 
    echo "Waiting for docker to start..." && \
-   counter=1
-   up=""
-   while [[ $counter -le 60 ]] && [[ ! ${up} ]]
+   counter=1 && \
+   up="" && \
+   while [[ $counter -le 10 ]] && [[ ! ${up} ]]
    do
-     echo "Waiting ${counter}..."
-     up=$(docker-compose ps | grep " Up ")
-     ((counter++))
+     echo "Waiting ${counter}..." && \
+     docker-compose ps && \
+     up=$(docker-compose ps | grep " Up ") && \
+     ((counter++)) && \
+     echo && \
      sleep 5
    done
 fi &&
