@@ -45,6 +45,7 @@ fi && \
 if [[ "${taito_mode:-}" == "ci" ]]; then
   echo "tag for ci-test: ${taito_project//-/}_${taito_project}-${name}:latest" && \
   echo "pwd: ${PWD}" && \
+  echo "project path: ${taito_project_path}" && \
   docker image tag "${image_path}/${name}:${image_tag}" \
     "${taito_project//-/}_${taito_project}-${name}:latest"
   docker image tag "${image_path}/${name}:${image_tag}" \
