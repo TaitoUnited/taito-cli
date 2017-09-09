@@ -214,6 +214,12 @@ This section provides commands for CI/CD and also additional commands that
 are related to deployments one way or another. Note that all db related
 operations are listed in db section.
 
+ci-prepare
+  Set ci flags by status check. The ci flags are used to control the following
+  ci steps. For example if taitoflag_images_exist is set, many of the ci steps
+  will be skipped since all images have already been built and tested
+  by some previous CI build.
+
 ci-build CONTAINER_NAME [IMAGE_TAG] [PROJECT_REPOSITORY]
   Builds image and pushes it to image registry if no image already exists with
   the given tag. Example: 'taito ci-build:dev client test1'. The command

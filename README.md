@@ -203,7 +203,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 
 * `taito b-auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
 * `taito ci-cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
-* `taito ci-check`: Set flags by status check. Flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since images have already been built and tested.
+* `taito ci-prepare`: Set ci flags by status check. The ci flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since all images have already been built and tested by some previous CI build.
 * `taito o-install`: Install required libraries.
 * `taito ci-secrets`: Fetch secrets that are required by the following CI/CD steps.
 * `taito ci-release-pre`: Make some preparations for the release if required. Typically this step determines the new version number for the release by the type of commits (feature, fix, etc).
@@ -211,14 +211,17 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito ci-scan`: Lint code, scan for code smells and vulnerabilities, etc. Currently sonarqube is shipped with the taito-cli container.
 * `taito ci-docs`: Generate docs.
 * `taito ci-build`: Build containers, functions, etc (separate build step for each)
-* `taito ci-test-api`: Run local api tests.
-* `taito ci-test-e2e`: Run local e2e tests.
+* `taito o-start:local`: Start local environment
+* `taito ci-wai:localt`: Wait for local environemnt to start
+* `taito ci-test-api:local`: Run local api tests.
+* `taito ci-test-e2e:local`: Run local e2e tests.
+* `taito o-stop:local`: Stop local environment
 * `taito db-deploy`: Deploy database changes.
 * `taito ci-deploy`: Deploy the application.
 * `taito ci-wait`: Optional: Wait for application to restart in the target environment.
-* `taito ci-test-api:ENV`: Optional: Run api tests for the target environment.
-* `taito ci-test-e2e:ENV`: Optional: Run e2e tests for the target environment.
-* `taito ci-verify[:ENV]`: Optional: Verifies that api and e2e tests went ok for the target environment. If tests failed and autorevert is enabled for the target environment, executes `taito db-revert` and `taito ci-revert`.
+* `taito ci-test-api`: Optional: Run api tests for the target environment.
+* `taito ci-test-e2e`: Optional: Run e2e tests for the target environment.
+* `taito ci-verify`: Optional: Verifies that api and e2e tests went ok for the target environment. If tests failed and autorevert is enabled for the target environment, executes `taito db-revert` and `taito ci-revert`.
 * `taito ci-publish`: Publish all artifacts to a central location (e.g. container images, libraries, docs, test results, test coverage reports, code quality reports).
 * `taito ci-release-post`: Typically generates release notes from git commits or issues, and tags the git repository with the new version number.
 
