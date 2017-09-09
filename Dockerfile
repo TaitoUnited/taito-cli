@@ -2,6 +2,46 @@
 FROM docteurklein/sqitch:pgsql
 MAINTAINER Taito United <support@taitounited.fi>
 
+# Install openjdk (required by sonarqube, useful for java projects also)
+RUN echo "deb http://http.debian.net/debian jessie-backports main" >> \
+  /etc/apt/sources.list
+RUN apt-get -y update && apt-get -y install -t jessie-backports openjdk-8-jdk
+
+# Install sonarqube
+# https://github.com/SonarSource/docker-sonarqube/
+ENV SONAR_VERSION=6.5 \
+    SONARQUBE_HOME=/opt/sonarqube \
+    # Database configuration
+    # Defaults to using H2
+    SONARQUBE_JDBC_USERNAME=sonar \
+    SONARQUBE_JDBC_PASSWORD=sonar \
+    SONARQUBE_JDBC_URL=
+
+# Http port
+# EXPOSE 9000
+
+RUN set -x \
+
+    # pub   2048R/D26468DE 2015-05-25
+    #       Key fingerprint = F118 2E81 C792 9289 21DB  CAB4 CFCA 4A29 D264 68DE
+    # uid                  sonarsource_deployer (Sonarsource Deployer) <infra@sonarsource.com>
+    # sub   2048R/06855C1D 2015-05-25
+    && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys F1182E81C792928921DBCAB4CFCA4A29D26468DE \
+
+    && cd /opt \
+    && curl -o sonarqube.zip -fSL https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
+    && curl -o sonarqube.zip.asc -fSL https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
+    && gpg --batch --verify sonarqube.zip.asc sonarqube.zip \
+    && unzip sonarqube.zip \
+    && mv sonarqube-$SONAR_VERSION sonarqube \
+    && rm sonarqube.zip* \
+    && rm -rf $SONARQUBE_HOME/bin/*
+
+VOLUME "$SONARQUBE_HOME/data"
+
+WORKDIR $SONARQUBE_HOME
+COPY run.sh $SONARQUBE_HOME/bin/
+
 # Install docker (required for executing CI/CD builds on container)
 # TODO replace with the docker version used by google? or even older version
 # used by kubernetes?
@@ -13,9 +53,9 @@ RUN apt-get -y update && \
     software-properties-common
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 RUN add-apt-repository \
-      "deb [arch=amd64] https://download.docker.com/linux/debian \
-      $(lsb_release -cs) \
-      stable"
+    "deb [arch=amd64] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) \
+    stable"
 RUN apt-get -y update && \
     apt-get -y install docker-ce
 
@@ -80,7 +120,7 @@ RUN curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get \
 RUN chmod 700 get_helm.sh
 RUN ./get_helm.sh
 
-# Install sql proxy
+# Install gcloud sql proxy
 RUN curl https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 \
   > cloud_sql_proxy
 RUN chmod +x cloud_sql_proxy
@@ -94,6 +134,6 @@ COPY . /taito-cli
 WORKDIR /taito-cli
 RUN ln -s /taito-cli/taito_impl.sh /usr/local/bin/taito
 
+# Finish
 EXPOSE 5000-6000
-
 ENTRYPOINT ["taito"]
