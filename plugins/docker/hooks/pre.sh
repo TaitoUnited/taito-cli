@@ -36,12 +36,12 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
    up="" && \
    while [[ $counter -le 10 ]] && [[ ! ${up} ]]
    do
-     echo "Waiting ${counter}..." && \
-     docker-compose ps && \
-     up=$(docker-compose ps | grep " Up ") && \
-     ((counter++)) && \
-     echo && \
+     echo "Waiting ${counter}..."
+     docker-compose ps
+     up=$(docker-compose ps | grep " Up ")
+     echo
      sleep 5
+     ((counter++))
    done
 fi &&
 
