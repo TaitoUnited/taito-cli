@@ -121,29 +121,23 @@ if ! (
   command="${params[0]}"
 
   export taito_run="@asd!fef@"
+  export taito_run_fg="@asd!fg!fef@"
   log_file=$(mktemp /tmp/taito-cli.XXXXXX)
   echo "-" > "${log_file}"
-  if [[ "${command}" =~ ^git- ]]; then
-    # Host commands will be run on foreground after the docker process has ended
-    # TODO offer both "run on host background" and "run on host foreground"
-    # for plugins
-    execute_foreground="true"
-  else
-    # Command will execute 'docker commit' -> Start a background process
-    # that will run commands on host in the background while the container
-    # is still running
-    (
-      # Read commands from log file and execute them
-      tail -f "${log_file}" | tr -cd '\11\12\15\40-\176' | while read -r line; do
-        c=$(echo "${line}" | grep "${taito_run}" \
-          | sed "s/^.*${taito_run}\(.*\)${taito_run}.*$/\1/")
-        if [[ ${c} != "" ]]; then
-          # TODO confirm execution?
-          eval "${c}"
-        fi
-      done
-    ) &
-  fi
+  # Command will execute 'docker commit' -> Start a background process
+  # that will run commands on host in the background while the container
+  # is still running
+  (
+    # Read commands from log file and execute them
+    tail -f "${log_file}" | tr -cd '\11\12\15\40-\176' | while read -r line; do
+      c=$(echo "${line}" | grep "${taito_run}" \
+        | sed "s/^.*${taito_run}\(.*\)${taito_run}.*$/\1/")
+      if [[ ${c} != "" ]]; then
+        # TODO confirm execution?
+        eval "${c}"
+      fi
+    done
+  ) &
 
   # Export some variables to be used by various commands
   export taito_host_uname
@@ -210,6 +204,7 @@ if ! (
       ${link_flags} \
       -e taito_enabled_extensions=\"${extension_paths}\" \
       -e taito_run=${taito_run} \
+      -e taito_run_fg=${taito_run_fg} \
       -e taito_host_uname=\"${taito_host_uname}\" \
       -e taito_mode=\"${mode}\" \
       -e taito_docker=\"true\" \
@@ -219,25 +214,23 @@ if ! (
       ${params[@]} | tee \"${log_file}\" ${output}"
   fi
 
-  if [[ ${execute_foreground} ]]; then
-    # Execute host commands on foreground. Commands are read from log file.
-    # TODO this is duplicate code
-    cat "${log_file}" | tr -cd '\11\12\15\40-\176' | while read -r line; do
-      c=$(echo "${line}" | grep "${taito_run}" \
-        | sed "s/^.*${taito_run}\(.*\)${taito_run}.*$/\1/")
-      if [[ ${c} != "" ]]; then
-        # TODO confirm execution?
-        if ! eval "${c}"; then
-          exit 1
-        fi
+  # Execute host commands on foreground. Commands are read from log file.
+  # TODO this is duplicate code
+  cat "${log_file}" | tr -cd '\11\12\15\40-\176' | while read -r line; do
+    c=$(echo "${line}" | grep "${taito_run_fg}" \
+      | sed "s/^.*${taito_run_fg}\(.*\)${taito_run_fg}.*$/\1/")
+    if [[ ${c} != "" ]]; then
+      # TODO confirm execution?
+      if ! eval "${c}"; then
+        exit 1
       fi
-    done
-  else
-    # Kill background execution process
-    pgrep -f "${log_file}" | xargs kill &> /dev/null
-    # TODO Suppress 'terminated' output of process
-    rm -f "${log_file}" &> /dev/null
-  fi
+    fi
+  done
+
+  # Kill background execution process
+  pgrep -f "${log_file}" | xargs kill &> /dev/null
+  # TODO Suppress 'terminated' output of process
+  rm -f "${log_file}" &> /dev/null
 
 ); then
   exit 1

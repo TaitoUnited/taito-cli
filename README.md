@@ -322,7 +322,9 @@ NOTE: Do not call another command directly from another. It's error prone; you'l
 
 ### Running commands on host
 
-If your command needs to run some command on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS`. Currently this mechanism is used  e.g. for executing docker commands and launching browser on host.
+If your command needs to run some command on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS [SLEEP_SECONDS]` to run it immediately in the background. Alternatively you can use the `"${taito_cli_path}/util/execute-on-host-fg.sh" COMMANDS` to run commands on foreground after the taito container has exited.
+
+Currently this mechanism is used  e.g. for executing docker commands and launching browser on host.
 
 ### Committing changes to the taito-cli container image
 
@@ -333,7 +335,7 @@ If your command needs to save some data permanently on the container image, exec
 You can override a single command without disabling the whole plugin:
 
 * Create a plugin that provides an alternative implementation for the command
-* Create a pre hook that removes the original command from command chain
+* Create a pre hook that removes the original command from command chain (TODO reusable script for this)
 
 ### Command chains and passing data
 

@@ -11,7 +11,7 @@ echo "### git - git-env-merge: Merging ${source} to ${dest} ###"
 echo
 
 # TODO execute remote merge using hub cli?
-"${taito_cli_path}/util/execute-on-host.sh" "\
+"${taito_cli_path}/util/execute-on-host-fg.sh" "\
   git fetch origin ${source}:${dest} && \
   git push origin ${dest}; \
   " && \

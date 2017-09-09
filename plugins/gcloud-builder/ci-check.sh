@@ -26,8 +26,10 @@ check=$(gcloud beta container builds list --limit=1 \
 
 export taito_images_exist
 if [[ ${check} == "" ]]; then
+  echo "Image does not exist"
   taito_images_exist=false
 else
+  echo "Image exists"
   taito_images_exist=true
   cat "exist" > ./taitoflag_images_exist
 fi

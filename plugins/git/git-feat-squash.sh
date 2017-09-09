@@ -10,7 +10,7 @@ echo
 echo "### git - git-feat-squash: Squash merging ${feature} to ${dest} ###"
 echo
 
-"${taito_cli_path}/util/execute-on-host.sh" "\
+"${taito_cli_path}/util/execute-on-host-fg.sh" "\
   git checkout ${dest} && \
   git pull && \
   git merge --squash ${feature} && \

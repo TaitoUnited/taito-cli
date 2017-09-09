@@ -12,7 +12,7 @@ echo "### git - git-feat-pr: Making a pull request for merging ${feature} \
 to ${dest} ###"
 echo
 
-"${taito_cli_path}/util/execute-on-host.sh" "\
+"${taito_cli_path}/util/execute-on-host-fg.sh" "\
   echo Rebase branch ${feature} before making the pull request (Y/n)? && \
   read -r rebase && \
   git checkout ${feature} && \
