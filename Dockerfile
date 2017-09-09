@@ -35,6 +35,8 @@ RUN apt-get -y update && apt-get -y install -t jessie-backports openjdk-8-jdk
 # Install sonarqube
 # https://github.com/SonarSource/docker-sonarqube/
 # TODO install sonarqube server on kubernetes cluster instead?
+RUN apt-get -y update && \
+    apt-get -y install unzip
 ENV SONAR_VERSION=6.5 \
     SONARQUBE_HOME=/opt/sonarqube \
     # Database configuration
@@ -57,8 +59,8 @@ RUN set -x \
     && gpg --batch --verify sonarqube.zip.asc sonarqube.zip \
     && unzip sonarqube.zip \
     && mv sonarqube-$SONAR_VERSION sonarqube \
-    && rm sonarqube.zip* \
-    && rm -rf $SONARQUBE_HOME/bin/*
+    && rm sonarqube.zip*
+    # && rm -rf $SONARQUBE_HOME/bin/*
 VOLUME "$SONARQUBE_HOME/data"
 WORKDIR $SONARQUBE_HOME
 COPY run.sh $SONARQUBE_HOME/bin/
