@@ -28,12 +28,6 @@ if [[ ${taito_image_exists:-false} == false ]]; then
     --build-arg BUILD_VERSION="${version}" \
     --build-arg BUILD_IMAGE_TAG="${image_tag}" \
     -t "${image_path}/${name}:${image_tag}" "./${name}" && \
-  if [[ "${taito_mode:-}" == "ci" ]]; then
-    # Tag so that CI will not rebuild image when running docker-compose
-    echo "tag for ci-test: ${taito_project//-/}_${taito_project}-${name}:latest"
-    docker image tag "${image_path}/${name}:${image_tag}" \
-      "test_${taito_project}-${name}:latest"
-  fi && \
   if [[ ${image_tag} != 'dry-run' ]]; then
     echo "- Pushing image"
     docker push "${image_path}/${name}:${image_tag}"
@@ -42,6 +36,13 @@ else
   echo "- Image ${image_tag} already exists. Pulling the existing image."
   # We have pull the image so that it exists at the end
   docker pull "${image_path}/${name}:${image_tag}"
+fi && \
+
+# Tag so that CI will not rebuild image when running docker-compose
+if [[ "${taito_mode:-}" == "ci" ]]; then
+  echo "tag for ci-test: ${taito_project//-/}_${taito_project}-${name}:latest" && \
+  docker image tag "${image_path}/${name}:${image_tag}" \
+    "test_${taito_project}-${name}:latest"
 fi && \
 
 # Call next command on command chain
