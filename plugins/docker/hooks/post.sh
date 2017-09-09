@@ -10,7 +10,7 @@ if ([[ "${taito_mode:-}" != "ci" ]] \
    ([[ "${taito_command}" == "ci-test-api" ]] \
      || [[ "${taito_command}" == "ci-test-e2e" ]]); then
    echo
-   echo "### docker - post: Stopping ###"
+   echo "### docker - post: Stopping docker-compose used for ci-testing ###"
    echo
 
    file="${taito_project_path}/docker-compose.yaml"
