@@ -9,8 +9,9 @@ sleep_seconds="${2}"
 if [[ "${taito_mode:-}" == "ci" ]]; then
   echo
   echo "### Taito-cli running on container ###"
+  echo "${commands}"
   echo
-  eval "${commands}" &
+  eval "${commands}"
 else
   echo
   echo "### Taito-cli running on host ###"
