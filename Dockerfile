@@ -2,46 +2,6 @@
 FROM docteurklein/sqitch:pgsql
 MAINTAINER Taito United <support@taitounited.fi>
 
-# Install openjdk (required by sonarqube, useful for java projects also)
-RUN echo "deb http://http.debian.net/debian jessie-backports main" >> \
-  /etc/apt/sources.list
-RUN apt-get -y update && apt-get -y install -t jessie-backports openjdk-8-jdk
-
-# Install sonarqube
-# https://github.com/SonarSource/docker-sonarqube/
-ENV SONAR_VERSION=6.5 \
-    SONARQUBE_HOME=/opt/sonarqube \
-    # Database configuration
-    # Defaults to using H2
-    SONARQUBE_JDBC_USERNAME=sonar \
-    SONARQUBE_JDBC_PASSWORD=sonar \
-    SONARQUBE_JDBC_URL=
-
-# Http port
-# EXPOSE 9000
-
-RUN set -x \
-
-    # pub   2048R/D26468DE 2015-05-25
-    #       Key fingerprint = F118 2E81 C792 9289 21DB  CAB4 CFCA 4A29 D264 68DE
-    # uid                  sonarsource_deployer (Sonarsource Deployer) <infra@sonarsource.com>
-    # sub   2048R/06855C1D 2015-05-25
-    && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys F1182E81C792928921DBCAB4CFCA4A29D26468DE \
-
-    && cd /opt \
-    && curl -o sonarqube.zip -fSL https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
-    && curl -o sonarqube.zip.asc -fSL https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
-    && gpg --batch --verify sonarqube.zip.asc sonarqube.zip \
-    && unzip sonarqube.zip \
-    && mv sonarqube-$SONAR_VERSION sonarqube \
-    && rm sonarqube.zip* \
-    && rm -rf $SONARQUBE_HOME/bin/*
-
-VOLUME "$SONARQUBE_HOME/data"
-
-WORKDIR $SONARQUBE_HOME
-COPY run.sh $SONARQUBE_HOME/bin/
-
 # Install docker (required for executing CI/CD builds on container)
 # TODO replace with the docker version used by google? or even older version
 # used by kubernetes?
@@ -64,6 +24,68 @@ RUN apt-get -y update && \
 RUN curl -L https://github.com/docker/compose/releases/download/1.15.0/docker-compose-`uname -s`-`uname -m` \
   -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
+
+# Install openjdk (required by sonarqube, useful for java projects also)
+# TODO install sonarqube on kubernetes cluster instead? jre is shipped with
+# sonarqube scanner so jdk is required only for developing java projects.
+RUN echo "deb http://http.debian.net/debian jessie-backports main" >> \
+  /etc/apt/sources.list
+RUN apt-get -y update && apt-get -y install -t jessie-backports openjdk-8-jdk
+
+# Install sonarqube
+# https://github.com/SonarSource/docker-sonarqube/
+# TODO install sonarqube server on kubernetes cluster instead?
+ENV SONAR_VERSION=6.5 \
+    SONARQUBE_HOME=/opt/sonarqube \
+    # Database configuration
+    # Defaults to using H2
+    SONARQUBE_JDBC_USERNAME=sonar \
+    SONARQUBE_JDBC_PASSWORD=sonar \
+    SONARQUBE_JDBC_URL=
+# Http port
+# EXPOSE 9000
+RUN set -x \
+    # pub   2048R/D26468DE 2015-05-25
+    #       Key fingerprint = F118 2E81 C792 9289 21DB  CAB4 CFCA 4A29 D264 68DE
+    # uid                  sonarsource_deployer (Sonarsource Deployer) <infra@sonarsource.com>
+    # sub   2048R/06855C1D 2015-05-25
+    && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys F1182E81C792928921DBCAB4CFCA4A29D26468DE \
+
+    && cd /opt \
+    && curl -o sonarqube.zip -fSL https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
+    && curl -o sonarqube.zip.asc -fSL https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
+    && gpg --batch --verify sonarqube.zip.asc sonarqube.zip \
+    && unzip sonarqube.zip \
+    && mv sonarqube-$SONAR_VERSION sonarqube \
+    && rm sonarqube.zip* \
+    && rm -rf $SONARQUBE_HOME/bin/*
+VOLUME "$SONARQUBE_HOME/data"
+WORKDIR $SONARQUBE_HOME
+COPY run.sh $SONARQUBE_HOME/bin/
+# ENTRYPOINT ["./bin/run.sh"]
+RUN ln -s $SONARQUBE_HOME/bin/run.sh /usr/local/bin/sonar_run.sh
+RUN ln -s $SONARQUBE_HOME/bin/sonar.sh /usr/local/bin/sonar.sh
+
+# Install some sonarqube plugins
+# TODO install sonarqube server on kubernetes cluster instead?
+# TODO verify downloaded packages?
+RUN set -x && \
+    curl -o $SONARQUBE_HOME/extensions/plugins/sonar-javascript.jar -fSL \
+      https://sonarsource.bintray.com/Distribution/sonar-javascript-plugin/sonar-javascript-plugin-3.1.1.5128.jar
+
+# Install sonarqube scanner
+# TODO verify downloaded packages?
+ENV SONAR_SCANNER_VERSION=3.0.3.778
+RUN set -x && \
+    cd /opt && \
+    curl -o sonar-scanner.zip -fSL https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip && \
+    unzip sonar-scanner.zip && \
+    mv sonar-scanner-$SONAR_SCANNER_VERSION-linux /sonar-scanner && \
+    echo "sonar.host.url=http://localhost:9000" >> \
+      /sonar-scanner/conf/sonar-scanner.properties && \
+    echo "sonar.sourceEncoding=UTF-8" >> \
+      /sonar-scanner/conf/sonar-scanner.properties
+ENV PATH=/sonar-scanner/bin/:$PATH
 
 # Install gcloud: gcr.io/cloud-builders/gcloud --> modified for jessie
 RUN mkdir /builder
