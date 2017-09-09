@@ -27,11 +27,7 @@ if [[ ! -f ./taitoflag_images_exist ]]; then
   docker build -f "./${name}/Dockerfile.build" \
     --build-arg BUILD_VERSION="${version}" \
     --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-    -t "${image_path}/${name}:${image_tag}" "./${name}" && \
-  if [[ ${image_tag} != 'dry-run' ]]; then
-    echo "- Pushing image"
-    docker push "${image_path}/${name}:${image_tag}"
-  fi
+    -t "${image_path}/${name}:${image_tag}" "./${name}"
 else
   echo "- Image ${image_tag} already exists. Pulling the existing image."
   # We have pull the image so that it exists at the end

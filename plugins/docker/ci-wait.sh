@@ -10,7 +10,7 @@ counter=1 && \
 up="" && \
 while [[ ${counter} -le 120 ]] && [[ ! ${up} ]]
 do
-  if [[ ${counter} -gt 25 ]]; then
+  if [[ ${counter} -gt 50 ]]; then
     echo "Waiting for docker to start ${counter}..."
     docker-compose ps
   fi

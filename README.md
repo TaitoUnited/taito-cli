@@ -211,6 +211,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito ci-scan`: Lint code, scan for code smells and vulnerabilities, etc. Currently sonarqube is shipped with the taito-cli container.
 * `taito ci-docs`: Generate docs.
 * `taito ci-build`: Build containers, functions, etc (separate build step for each)
+* `taito ci-push`: Push containers, functions, etc to registry (separate build step for each)
 * `taito o-start:local`: Start local environment
 * `taito ci-wai:localt`: Wait for local environemnt to start
 * `taito ci-test-api:local`: Run local api tests.

@@ -220,22 +220,21 @@ ci-prepare
   will be skipped since all images have already been built and tested
   by some previous CI build.
 
-ci-build CONTAINER_NAME [IMAGE_TAG] [PROJECT_REPOSITORY]
-  Builds image and pushes it to image registry if no image already exists with
-  the given tag. Example: 'taito ci-build:dev client test1'. The command
-  executes a dry run (does not push) if image tag has not been given as
-  argument.
+ci-build CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
+  Builds image. Example: 'taito ci-build:dev client test1'.
+
+ci-push CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
+  Pushes image to image registry. Example: 'taito ci-push:dev client test1'.
 
 ci-deploy[:ENV] [IMAGE_TAG] [--dry-run]
   Deploy the application either by using IMAGE_TAG given as parameter or
   using the latest image found for the environment in question. Use dry-run
-  switch to execute a dry run. Example: 'taito ci-deploy:dev client test1'
+  switch to execute a dry run. Example: 'taito ci-deploy:dev test1'
 
-ci-canary
-  Releases the current staging version to production as a canary release.
-  NOTE: Currently you can make canary release only if database changes of
-  the new canary release are compatible with the current production version.
-  TODO Not implemented yet.
+ci-quickdeploy[:ENV] CONTAINER_NAME
+  Build, push and deploy a container to server. Use this when you need to
+  deploy quick changes to some environment. Example:
+  'taito ci-quickdeploy:dev server'. TODO not implemented yet.
 
 ci-revision:ENV
   Show current revision.
