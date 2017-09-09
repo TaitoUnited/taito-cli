@@ -39,11 +39,13 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
    do
      echo "Waiting ${counter}..."
      docker-compose ps
-     up=$(docker-compose ps | grep " Up ")
+     up=$(docker-compose --project-name workspace ps | grep " Up " | grep -E "\-server|\-client")
      echo
      sleep 5
      ((counter++))
    done
+   # TODO remove
+   sleep 30
 fi &&
 
 # Call next command on command chain

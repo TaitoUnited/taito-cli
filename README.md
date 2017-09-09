@@ -56,9 +56,10 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     export template_source_git_url="git@github.com:TaitoUnited"
     export template_dest_git_url="git@github.com:MyOrganization"
 
+    # TODO a list of plugins that are allowed to run commands on host?
+
     # TODO implement a setting for confirming an execution if it contains
-    # a command outside of preconfirmed extensions???
-    export taito_preconfirmed_extensions=""
+    # a command outside of preconfirmed plugins/extensions???
 
 And here is an example of a project specific `taito-config.sh`:
 

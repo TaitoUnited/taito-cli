@@ -99,6 +99,18 @@ o-clean [data | build]
   Clean.
 
 
+WORKSPACE OPERATIONS
+--------------------
+
+workspace-clean
+  Clean your workspace e.g. by deleting all docker container images and volumes
+  that you haven't used for a while. TODO implement.
+
+workspace-kill
+  Kill all running processes (e.g. kill all docker processes to free reserved
+  ports). TODO implement
+
+
 PROJECT: GIT OPERATIONS
 -----------------------
 
