@@ -8,7 +8,7 @@ if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_test_env:-}" == "true" ]]; then
   echo "### basic - ci-verify: Verifying deployment ###"
   echo
 
-  if [[ -f ./ci_test_env_failed ]]; then
+  if [[ -f ./taitoflag_test_env_failed ]]; then
     echo "Tests failed"
     if [[ ${taito_autorevert:-} == "true" ]]; then
       echo "Reverting deployment"

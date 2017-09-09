@@ -1,6 +1,7 @@
 node_modules
 tmp
 .DS_Store
+taitoflag_*
 *.x
 *.log
 *.tmp

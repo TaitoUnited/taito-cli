@@ -4,7 +4,8 @@
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
-if [[ "${taito_env}" == "local" ]]; then
+if [[ "${taito_env}" == "local" ]] && \
+   [[ ! -f ./taitoflag_image_pulled ]]; then
   echo
   echo "### postgres - ci-test-e2e: Deploying changes to database ${taito_env} ###"
   echo

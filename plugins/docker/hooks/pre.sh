@@ -5,10 +5,11 @@
 : "${taito_project_path:?}"
 : "${taito_command:?}"
 
-if ([[ "${taito_mode:-}" != "ci" ]] \
-     || [[ "${ci_test_env:-}" == "true" ]]) && \
-   ([[ "${taito_command}" == "ci-test-api" ]] \
-     || [[ "${taito_command}" == "ci-test-e2e" ]]); then
+if ([[ "${taito_command}" == "ci-test-api" ]] || \
+      [[ "${taito_command}" == "ci-test-e2e" ]]) && \
+   ([[ "${taito_mode:-}" != "ci" ]] || \
+      [[ "${ci_test_env:-}" == "true" ]]) && \
+   [[ ! -f ./taitoflag_image_pulled ]]; then
    echo
    echo "### docker - pre: Starting docker-compose for ci-testing purposes ###"
    echo
@@ -33,17 +34,14 @@ if ([[ "${taito_mode:-}" != "ci" ]] \
 
    echo "Waiting for docker to start..." && \
    counter=1
-   while [[ $counter -le 120 ]] || [[ ! ${up} ]]
+   up=""
+   while [[ $counter -le 60 ]] && [[ ! ${up} ]]
    do
-     sleep 5
      echo "Waiting ${counter}..."
      up=$(docker-compose ps | grep " Up ")
      ((counter++))
+     sleep 5
    done
-
-   echo "TODO check status instead of hardcoded long wait." && \
-   sleep 300
-   # TODO test with: docker-compose ps --> grep Up and then sleep for a while
 fi &&
 
 # Call next command on command chain

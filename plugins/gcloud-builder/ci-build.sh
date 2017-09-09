@@ -36,6 +36,9 @@ else
   echo "- Image ${image_tag} already exists. Pulling the existing image."
   # We have pull the image so that it exists at the end
   docker pull "${image_path}/${name}:${image_tag}"
+  if [[ "${taito_mode:-}" == "ci" ]]; then
+    cat "pulled" > ./taitoflag_image_pulled
+  fi
 fi && \
 
 # Tag so that CI will not rebuild image when running docker-compose
