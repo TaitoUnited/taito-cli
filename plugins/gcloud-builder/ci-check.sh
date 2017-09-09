@@ -3,6 +3,7 @@
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 : "${taito_repo_name:?}"
+: "${taito_registry:?}"
 
 name=${1:?Name not given}
 image_tag=${2}
@@ -13,7 +14,7 @@ if [[ "${image_path}" == "" ]]; then
 fi
 
 echo
-echo "### gcloud-builder - ci-build:pre: Checking if image exists already \
+echo "### gcloud-builder - ci-check: Checking if image already exists \
 in the container registry ###"
 echo
 echo "TODO check from container registry instead as there might be manual \
@@ -23,11 +24,12 @@ check=$(gcloud beta container builds list --limit=1 \
   --filter="STATUS=SUCCESS AND IMAGES=${image_path}/${name}:${image_tag}" \
   | grep "${image_tag}")
 
-export taito_image_exists
+export taito_images_exist
 if [[ ${check} == "" ]]; then
-  taito_image_exists=false
+  taito_images_exist=false
 else
-  taito_image_exists=true
+  taito_images_exist=true
+  cat "exist" > ./taitoflag_images_exist
 fi
 
 # Call next command on command chain

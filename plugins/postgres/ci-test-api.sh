@@ -4,14 +4,13 @@
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
-if [[ "${taito_env}" == "local" ]] && \
-   [[ ! -f ./taitoflag_image_pulled ]]; then
+if [[ "${taito_env}" == "local" ]]; then
   echo
   echo "### postgres - ci-test-api: Deploying changes to database ${taito_env} ###"
   echo
 
-  # TODO use test port
-  "${taito_plugin_path}/util/deploy-changes.sh"
+  echo "TODO why connection fails?"
+  # "${taito_plugin_path}/util/deploy-changes.sh"
 fi && \
 
 # Call next command on command chain

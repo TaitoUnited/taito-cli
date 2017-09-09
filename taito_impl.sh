@@ -66,6 +66,15 @@ if ! (
   export taito_cli_path="${cli_path}"
   export taito_current_path="${current_path}"
 
+  if ([[ " ci-test-unit ci-scan ci-docs publish " == *"${taito_command}"* ]] || \
+        [[ " ci-test-api:local ci-test-e2e:local " == *"${taito_command}:${taito_env}"* ]]) && \
+     [[ -f ./taitoflag_images_exist ]]; then
+    echo
+    echo "### Skipping ${taito_command}. Image already exists."
+    echo
+    exit 0
+  fi
+
   # Read taito-config.sh files from all locations
   if [[ -f "${HOME}/.taito/taito-config.sh" ]]; then
     # Personal config

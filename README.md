@@ -203,6 +203,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 
 * `taito b-auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
 * `taito ci-cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
+* `taito ci-check`: Set flags by status check. Flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since images have already been built and tested.
 * `taito o-install`: Install required libraries.
 * `taito ci-secrets`: Fetch secrets that are required by the following CI/CD steps.
 * `taito ci-release-pre`: Make some preparations for the release if required. Typically this step determines the new version number for the release by the type of commits (feature, fix, etc).

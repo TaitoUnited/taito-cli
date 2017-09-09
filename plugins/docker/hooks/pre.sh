@@ -8,8 +8,7 @@
 if ([[ "${taito_command}" == "ci-test-api" ]] || \
       [[ "${taito_command}" == "ci-test-e2e" ]]) && \
    ([[ "${taito_mode:-}" != "ci" ]] || \
-      [[ "${ci_test_env:-}" == "true" ]]) && \
-   [[ ! -f ./taitoflag_image_pulled ]]; then
+      [[ "${ci_test_env:-}" == "true" ]]); then
    echo
    echo "### docker - pre: Starting docker-compose for ci-testing purposes ###"
    echo
@@ -24,9 +23,8 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
 
    # TODO use minikube instead for CI testing
    if [[ "${taito_mode:-}" == "ci" ]]; then
-     # TODO enable --no-build
      "${taito_cli_path}/util/execute-on-host.sh" \
-       "docker-compose --project-name workspace -f ${file} up"
+       "docker-compose -f ${file} up --no-build"
    else
      "${taito_cli_path}/util/execute-on-host.sh" \
        "docker-compose -f ${file} up"
@@ -39,13 +37,12 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
    do
      echo "Waiting ${counter}..."
      docker-compose ps
-     up=$(docker-compose --project-name workspace ps | grep " Up " | grep -E "\-server|\-client")
+     up=$(docker-compose ps | grep " Up " | grep -E "\-server|\-client")
      echo
      sleep 5
      ((counter++))
    done
-   # TODO remove
-   sleep 30
+   sleep 5
 fi &&
 
 # Call next command on command chain

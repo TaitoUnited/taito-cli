@@ -22,7 +22,7 @@ echo
 echo "### gcloud-builder - ci-build: Building ${name} ###"
 echo
 
-if [[ ${taito_image_exists:-false} == false ]]; then
+if [[ ! -f ./taitoflag_images_exist ]]; then
   echo "- Building image"
   docker build -f "./${name}/Dockerfile.build" \
     --build-arg BUILD_VERSION="${version}" \
@@ -36,9 +36,6 @@ else
   echo "- Image ${image_tag} already exists. Pulling the existing image."
   # We have pull the image so that it exists at the end
   docker pull "${image_path}/${name}:${image_tag}"
-  if [[ "${taito_mode:-}" == "ci" ]]; then
-    cat "pulled" > ./taitoflag_image_pulled
-  fi
 fi && \
 
 # Tag so that CI will not rebuild image when running docker-compose

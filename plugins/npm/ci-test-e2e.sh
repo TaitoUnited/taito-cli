@@ -13,9 +13,7 @@ if ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_test_env:-}" == "true" ]]) &&
   echo "### npm - ci-test-e2e: Testing e2e ###"
   echo
 
-  if [[ ! -f ./taitoflag_image_pulled ]]; then
-    echo "Image was pulled. Skipping tests..."
-  elif ! npm run "ci-test-e2e:${taito_env}"; then
+  if ! npm run "ci-test-e2e:${taito_env}"; then
     if [[ "${taito_mode:-}" == "ci" ]] && [[ "${taito_env}" != "local" ]]; then
       # In CI mode we notify the verify step so that it can revert the changes
       cat "failed" > ./taitoflag_test_env_failed
