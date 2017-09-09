@@ -7,7 +7,7 @@ MAINTAINER Taito United <support@taitounited.fi>
 # used by kubernetes?
 # - https://github.com/GoogleCloudPlatform/cloud-builders/blob/master/docker/Dockerfile
 # - https://stackoverflow.com/questions/44657320/which-docker-versions-will-k8s-1-7-support
-# TODO later replace with a moby based docker alternative?
+# TODO later replace with a moby based docker alternative or rkt?
 RUN apt-get -y update && \
     apt-get -y install apt-transport-https ca-certificates curl gnupg2 \
     software-properties-common
@@ -63,9 +63,9 @@ RUN set -x \
     # && rm -rf $SONARQUBE_HOME/bin/*
 VOLUME "$SONARQUBE_HOME/data"
 WORKDIR $SONARQUBE_HOME
-COPY run.sh $SONARQUBE_HOME/bin/
+# COPY run.sh $SONARQUBE_HOME/bin/
 # ENTRYPOINT ["./bin/run.sh"]
-RUN ln -s $SONARQUBE_HOME/bin/run.sh /usr/local/bin/sonar_run.sh
+# RUN ln -s $SONARQUBE_HOME/bin/run.sh /usr/local/bin/sonar_run.sh
 RUN ln -s $SONARQUBE_HOME/bin/sonar.sh /usr/local/bin/sonar.sh
 
 # Install some sonarqube plugins
