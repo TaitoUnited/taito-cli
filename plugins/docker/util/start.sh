@@ -4,7 +4,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 
-command="${1:?}"
+command="${1}"
 
 if [[ "${command}" == "--clean" ]]; then
   "${taito_plugin_path}/util/clean.sh" && \
