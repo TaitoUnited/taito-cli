@@ -87,7 +87,8 @@ steps:
     # docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
     #   eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} && \
     echo "Pushing latest" && \
-    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest && \
+    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest
+    # && \
     # echo "Pushing $${tag}" && \
     # docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
 
