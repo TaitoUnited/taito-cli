@@ -45,7 +45,7 @@ fi && \
 if [[ "${taito_mode:-}" == "ci" ]]; then
   echo "tag for ci-test: ${taito_project//-/}_${taito_project}-${name}:latest" && \
   docker image tag "${image_path}/${name}:${image_tag}" \
-    "test_${taito_project}-${name}:latest"
+    "${taito_project//-/}_${taito_project}-${name}:latest"
 fi && \
 
 # Call next command on command chain
