@@ -19,8 +19,13 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
      file="${taito_project_path}/docker-test.yaml"
    fi
 
-   "${taito_cli_path}/util/execute-on-host.sh" \
-     "docker-compose -f ${file} down"
+   if [[ "${taito_mode:-}" == "ci" ]]; then
+     "${taito_cli_path}/util/execute-on-host.sh" \
+       "docker-compose --project-name workspace -f ${file} down"
+   else
+     "${taito_cli_path}/util/execute-on-host.sh" \
+       "docker-compose -f ${file} down"
+   fi
 
 fi && \
 

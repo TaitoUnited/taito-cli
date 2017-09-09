@@ -26,7 +26,7 @@ if ([[ "${taito_command}" == "ci-test-api" ]] || \
    if [[ "${taito_mode:-}" == "ci" ]]; then
      # TODO enable --no-build
      "${taito_cli_path}/util/execute-on-host.sh" \
-       "docker-compose -f ${file} up"
+       "docker-compose --project-name workspace -f ${file} up"
    else
      "${taito_cli_path}/util/execute-on-host.sh" \
        "docker-compose -f ${file} up"

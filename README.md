@@ -206,7 +206,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito ci-secrets`: Fetch secrets that are required by the following CI/CD steps.
 * `taito ci-release-pre`: Make some preparations for the release if required. Typically this step determines the new version number for the release by the type of commits (feature, fix, etc).
 * `taito ci-test-unit`: Run unit tests.
-* `taito ci-scan`: Lint code, scan for code smells and vulnerabilities, etc.
+* `taito ci-scan`: Lint code, scan for code smells and vulnerabilities, etc. Currently sonarqube is shipped with the taito-cli container.
 * `taito ci-docs`: Generate docs.
 * `taito ci-build`: Build containers, functions, etc (separate build step for each)
 * `taito ci-test-api`: Run local api tests.
