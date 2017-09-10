@@ -6,7 +6,7 @@ echo
 echo "### docker - o-stop: Stopping ###"
 echo
 
-"${taito_cli_path}/util/execute-on-host.sh" "docker-compose down" 6 && \
+"${taito_cli_path}/util/execute-on-host-fg.sh" "docker-compose down" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

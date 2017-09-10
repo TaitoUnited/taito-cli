@@ -8,8 +8,8 @@ command="${1}"
 
 if [[ "${command}" == "--clean" ]]; then
   "${taito_plugin_path}/util/clean.sh" && \
-  "${taito_cli_path}/util/execute-on-host.sh" \
-    "docker-compose up --force-recreate --build" 15
+  "${taito_cli_path}/util/execute-on-host-fg.sh" \
+    "docker-compose up --force-recreate --build"
 else
-  "${taito_cli_path}/util/execute-on-host.sh" "docker-compose up" 15
+  "${taito_cli_path}/util/execute-on-host-fg.sh" "docker-compose up"
 fi

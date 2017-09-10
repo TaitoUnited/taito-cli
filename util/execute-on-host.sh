@@ -6,9 +6,10 @@
 commands="${1:?}"
 sleep_seconds="${2}"
 
-if [[ "${taito_mode:-}" == "ci" ]]; then
+if [[ "${taito_mode:-}" == "ci" ]] || \
+   [[ "${taito_mode:-}" == "local" ]]; then
   echo
-  echo "### Taito-cli running on container ###"
+  echo "### Taito-cli running locally ###"
   echo "${commands}"
   echo
   eval "${commands}"

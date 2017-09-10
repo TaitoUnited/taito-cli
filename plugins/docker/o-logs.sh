@@ -14,7 +14,7 @@ if [[ -z "${pod}" ]]; then
   echo
   exit 1
 else
-  "${taito_cli_path}/util/execute-on-host.sh" "docker logs --tail 400 ${pod}"
+  "${taito_cli_path}/util/execute-on-host-fg.sh" "docker logs --tail 400 ${pod}"
 fi && \
 
 # Call next command on command chain

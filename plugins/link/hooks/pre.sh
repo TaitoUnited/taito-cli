@@ -21,7 +21,7 @@ if [[ ${found} != "" ]]; then
       echo "### link - pre: Opening ${name} ###"
       echo
 
-      if ! "${taito_cli_path}/util/browser.sh" "${url}"; then
+      if ! "${taito_cli_path}/util/browser-fg.sh" "${url}"; then
         exit 1
       fi
       exit_code=2

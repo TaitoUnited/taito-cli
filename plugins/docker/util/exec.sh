@@ -11,6 +11,6 @@ if [[ -z "${pod}" ]]; then
   echo
   exit 1
 else
-  "${taito_cli_path}/util/execute-on-host.sh" \
+  "${taito_cli_path}/util/execute-on-host-fg.sh" \
     "docker exec -it ${pod} ${command[@]}"
 fi

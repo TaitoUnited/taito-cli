@@ -1,8 +1,8 @@
 # taito-cli
 
-Taito-cli is an extensible toolkit for developers, devops personnel and build automation. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that are implemented by various plugins e.g. *npm*, *pip*, *docker*, *kubernetes*, *aws*, *gcloud*, *serverless*, *fission*, *postgres* and *mysql*. Thus, developers and devops personnel may always run the same familiar set of simple commands from project to project, old and new, no matter the technology or infrastructure. Plugins may also provide additional commands outside the taito-cli predefined set. And developers can easily implement their own custom plugins, or implement taito-cli commands in their package.json by using the npm plugin. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
+Taito-cli is an extensible toolkit for developers, devops personnel and build automation. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that are implemented by various plugins. Thus, developers and devops personnel may always run the same familiar set of simple commands from project to project, old and new, no matter the technology or infrastructure. And CI tools may use the same commands also. You can also easily extend the predefined command set with your own custom commands. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
-Taito-cli also decouples CI/CD build tools from the rest of the infrastructure. Any combination of CI/CD tools and cloud service providers are easy to set up as CI/CD steps are implemented with *taito-cli*. This makes CI/CD scripts clean and reusable as they no longer include so much infrastructure and project specific logic. And you can also easily execute any CI/CD step manually with *taito-cli* in case of trouble.
+Taito-cli decouples CI/CD build tools from the rest of the infrastructure. Any combination of CI/CD tools and cloud service providers are easy to set up as CI/CD steps are implemented with *taito-cli*. This makes CI/CD scripts clean and reusable as they no longer include so much infrastructure and project specific logic. And you can also easily execute any CI/CD step manually on command line with *taito-cli* in case of trouble.
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
@@ -212,11 +212,11 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito ci-docs`: Generate docs.
 * `taito ci-build`: Build containers, functions, etc (separate build step for each)
 * `taito ci-push`: Push containers, functions, etc to registry (separate build step for each)
-* `taito o-start:local`: Start local environment
-* `taito ci-wai:localt`: Wait for local environemnt to start
+* `taito o-start:local`: Start the local testing environment
+* `taito ci-wai:localt`: Wait for local testing environemnt to start
 * `taito ci-test-api:local`: Run local api tests.
 * `taito ci-test-e2e:local`: Run local e2e tests.
-* `taito o-stop:local`: Stop local environment
+* `taito o-stop:local`: Stop the local testing environment
 * `taito db-deploy`: Deploy database changes.
 * `taito ci-deploy`: Deploy the application.
 * `taito ci-wait`: Optional: Wait for application to restart in the target environment.
@@ -334,13 +334,6 @@ Currently this mechanism is used  e.g. for executing docker commands and launchi
 
 If your command needs to save some data permanently on the container image, execute `"${taito_cli_path}/util/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
 
-### Overriding commands
-
-You can override a single command without disabling the whole plugin:
-
-* Create a plugin that provides an alternative implementation for the command
-* Create a pre hook that removes the original command from command chain (TODO reusable script for this)
-
 ### Command chains and passing data
 
 When a given command name matches to multiple commands, all commands are chained in series so that each command calls the next. Command execution is ordered primarily by the execution phase (pre, command, post) and secondarily by the order of the plugins in *taito-config.sh*.
@@ -353,6 +346,13 @@ Here is an example how chaining could be used e.g. to implement secret rotation 
 2. A database plugin deploys the new database passwords to database.
 3. The kubectl plugin deploys the secrets to Kubernetes and executes a rolling restart for the pods that use them.
 4. Post-hook of the secret manager plugin stores the new secrets to a secure location using some form of encryption, or just updates the secret timestamps if the secrets need not be stored.
+
+### Overriding existing commands
+
+You can override a single command without disabling the whole plugin:
+
+* Create a plugin that provides an alternative implementation for the command
+* Create a pre command that removes the original command from command chain (TODO reusable script for this)
 
 ### Environment variables
 
