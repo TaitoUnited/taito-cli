@@ -2,6 +2,8 @@
 FROM docteurklein/sqitch:pgsql
 MAINTAINER Taito United <support@taitounited.fi>
 
+RUN apt-get clean
+
 # Install docker (required for executing CI/CD builds on container)
 # TODO replace with the docker version used by google? or even older version
 # used by kubernetes?
@@ -158,6 +160,7 @@ RUN mv cloud_sql_proxy /usr/local/bin
 # RUN dpkg -i ../docker-gc_0.1.0_all.deb
 
 # Install some misc stuff required by plugins
+RUN apt-get clean
 RUN apt-get -y update && apt-get -y install less telnet jq
 
 # Install taito-cli
