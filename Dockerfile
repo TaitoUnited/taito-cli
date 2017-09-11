@@ -151,11 +151,11 @@ RUN chmod +x cloud_sql_proxy
 RUN mv cloud_sql_proxy /usr/local/bin
 
 # Install docker gc
-RUN apt-get -y update && apt-get -y install git devscripts debhelper build-essential dh-make
-RUN git clone https://github.com/spotify/docker-gc.git
-RUN cd docker-gc
-RUN debuild --no-lintian -us -uc -b
-RUN dpkg -i ../docker-gc_0.1.0_all.deb
+# RUN apt-get -y update && apt-get -y install git devscripts debhelper build-essential dh-make
+# RUN git clone https://github.com/spotify/docker-gc.git
+# RUN cd docker-gc
+# RUN debuild --no-lintian -us -uc -b
+# RUN dpkg -i ../docker-gc_0.1.0_all.deb
 
 # Install some misc stuff required by plugins
 RUN apt-get -y update && apt-get -y install less telnet jq
