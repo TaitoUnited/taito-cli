@@ -154,7 +154,7 @@ RUN mv cloud_sql_proxy /usr/local/bin
 RUN apt-get -y update && apt-get -y install git devscripts debhelper build-essential dh-make
 RUN git clone https://github.com/spotify/docker-gc.git
 RUN cd docker-gc
-RUN debuild -us -uc -b
+RUN debuild --no-lintian -us -uc -b
 RUN dpkg -i ../docker-gc_0.1.0_all.deb
 
 # Install some misc stuff required by plugins
