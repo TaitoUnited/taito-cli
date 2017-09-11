@@ -4,7 +4,6 @@
 
 echo
 echo "### fun - fun-starwars: Star Wars ###"
-echo
 
 telnet towel.blinkenlights.nl 23 && \
 

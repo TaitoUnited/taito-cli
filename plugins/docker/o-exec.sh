@@ -5,7 +5,6 @@
 
 echo
 echo "### docker - o-exec: Executing ###"
-echo
 
 "${taito_plugin_path}/util/exec.sh" "${@}"  && \
 

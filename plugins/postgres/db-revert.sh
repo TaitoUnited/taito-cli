@@ -8,7 +8,6 @@ change="${1:?Change not given}"
 
 echo
 echo "### postgres - db-revert: Reverting database changes of ${taito_env} ###"
-echo
 
 # To avoid accidents, we always require CHANGE as argument
 # TODO only revert the "previous batch" of changes when CHANGE is not given

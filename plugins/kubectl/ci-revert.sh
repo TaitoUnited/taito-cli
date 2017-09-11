@@ -7,7 +7,6 @@
 
 echo
 echo "### kubectl - ci-revert: Reverting application in ${taito_env} ###"
-echo
 
 revision="${1:-0}"
 

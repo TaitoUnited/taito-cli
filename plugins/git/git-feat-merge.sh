@@ -9,7 +9,6 @@ dest="${2:-dev}"
 
 echo
 echo "### git - git-feat-merge: Merging ${feature} to ${dest} ###"
-echo
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   echo Rebase branch ${feature} before merge (Y/n)? && \

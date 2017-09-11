@@ -13,13 +13,11 @@ username="${2}"
 echo
 echo "### postgres - db-copyquick: Copying database from ${source} \
 to ${dest} ###"
-echo
 echo "NOTE: This works only if both databases are located in the same \
 database cluster."
 echo "WARNING! THIS HAS NOT BEEN TESTED AT ALL YET! Use db-copy:ENV instead!"
 echo "WARNING! This operation will disconnect all connections! Continue (Y/n)?"
 read -r confirm
-echo
 
 if [[ ${confirm} =~ ^[Yy]$ ]]; then
   db_prefix=${postgres_database%_*}

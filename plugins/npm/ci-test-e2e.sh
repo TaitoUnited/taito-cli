@@ -11,7 +11,6 @@ if ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_test_env:-}" == "true" ]]) &&
    [[ $(echo "${commands}" | grep "^ci-test-e2e:${taito_env}$") != "" ]]; then
   echo
   echo "### npm - ci-test-e2e: Testing e2e ###"
-  echo
 
   if ! npm run "ci-test-e2e:${taito_env}"; then
     if [[ "${taito_mode:-}" == "ci" ]] && [[ "${taito_env}" != "local" ]]; then

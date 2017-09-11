@@ -4,7 +4,6 @@
 
 echo
 echo "### npm - o-install: Installing ###"
-echo
 
 npm install && \
 

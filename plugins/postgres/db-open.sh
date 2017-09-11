@@ -11,9 +11,7 @@ username="${1}"
 
 echo
 echo "### postgres - db-open: Connecting to database ${postgres_database} ###"
-echo
 echo "host: ${postgres_host} port:${postgres_port}"
-echo
 
 "${taito_plugin_path}/util/psql.sh" "${username}" && \
 

@@ -5,7 +5,8 @@
 : "${taito_project_path:?}"
 : "${taito_command:?}"
 
-echo "Waiting for docker to start..." && \
+echo && \
+echo "### docker - ci-wait: Waiting for docker to start..." && \
 counter=1 && \
 up="" && \
 while [[ ${counter} -le 120 ]] && [[ ! ${up} ]]

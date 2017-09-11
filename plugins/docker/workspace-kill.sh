@@ -3,9 +3,9 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### fission - o-start: Starting ###"
+echo "### docker - workspace-kill: Killing all containers ###"
 
-echo "TODO implement" && \
+docker kill $(docker ps -q) && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

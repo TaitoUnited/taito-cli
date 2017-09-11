@@ -5,7 +5,6 @@
 
 echo
 echo "### postgres - db-add: Adding new step to migration plan ###"
-echo
 
 "${taito_plugin_path}/util/sqitch.sh" add "${@:1}" && \
 

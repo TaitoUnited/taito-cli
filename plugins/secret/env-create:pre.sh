@@ -5,7 +5,6 @@
 
 echo
 echo "### secrets - env-create:pre: Creating secrets ###"
-echo
 
 # shellcheck disable=SC1090
 . "${taito_plugin_path}/util/create.sh" && \

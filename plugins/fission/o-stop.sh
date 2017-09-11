@@ -4,7 +4,6 @@
 
 echo
 echo "### fission - o-stop: Stopping ###"
-echo
 
 echo "TODO implement" && \
 

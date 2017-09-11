@@ -7,7 +7,6 @@ pod="${1:?Pod name not given}"
 
 echo
 echo "### docker - o-login: Loggin in to ${pod} ###"
-echo
 
 "${taito_plugin_path}/util/exec.sh" "${1}" "${2:--}" "/bin/bash" && \
 

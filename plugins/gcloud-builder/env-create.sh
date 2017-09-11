@@ -10,7 +10,6 @@ branch="${1}"
 
 echo
 echo "### gcloud - env-create: Creating environment ###"
-echo
 
 # Determine branch
 if [[ -z "${branch}" ]]; then
@@ -21,9 +20,7 @@ if [[ -z "${branch}" ]]; then
   fi
 fi
 
-echo
 echo "gcloud-builder: Adding a build trigger for ${taito_env}"
-echo
 echo "Create a new build trigger with these settings:"
 echo "- Source: GitHub"
 echo "- Repository: ${taito_repo_name}"

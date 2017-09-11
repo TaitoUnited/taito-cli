@@ -7,7 +7,6 @@ branch="${1}"
 
 echo
 echo "### gcloud - env-create: Creating environment ###"
-echo
 
 # Determine branch
 if [[ -z "${branch}" ]]; then

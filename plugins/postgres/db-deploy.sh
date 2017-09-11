@@ -6,7 +6,6 @@
 
 echo
 echo "### postgres - db-deploy: Deploying database changes to ${taito_env} ###"
-echo
 
 "${taito_plugin_path}/util/deploy-changes.sh" "${@}" && \
 

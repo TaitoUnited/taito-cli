@@ -5,7 +5,6 @@
 
 echo
 echo "### docker - o-start: Starting ###"
-echo
 
 "${taito_plugin_path}/util/start.sh" "${@}" && \
 

@@ -4,7 +4,6 @@
 
 echo
 echo "### gcloud-builder - ci-publish: Publishing artifacts ###"
-echo
 
 echo "TODO implement" && \
 

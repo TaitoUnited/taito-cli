@@ -9,7 +9,6 @@ flag=${1}
 
 echo
 echo "### kubectl - ci-secrets: Fetching secrets saved on Kubernetes ###"
-echo
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

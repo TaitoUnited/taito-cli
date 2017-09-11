@@ -7,7 +7,6 @@
 
 echo
 echo "### sentry - env-config: Creating a new project ###"
-echo
 echo "Create a new Sentry project with these settings:"
 echo "- Name: ${taito_repo_name}"
 echo "- Default environment: prod"
@@ -29,7 +28,6 @@ read -r dsn
 echo "Sentry public DSN key?"
 read -r dsn_public
 
-echo
 echo "Replacing Sentry DSN keys in heml.yaml and Dockerfile.build"
 echo
 

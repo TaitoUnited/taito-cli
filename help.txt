@@ -156,9 +156,9 @@ db-add NAME [-r REQUIRES] [-n DESCRIPTION]
 db-proxy:ENV
   Create a proxy for accessing a remote database with your database GUI tool.
   If you don't have a personal account for the database, you can get a working
-  username and password by running `taito secrets:ENV`. Note that passwords are
+  username and password by running `taito ci-secrets:ENV`. Note that passwords are
   rotated once in a while, thus, if you get an authentication error, retrieve
-  new secrets by running `taito secrets:ENV` again.
+  new secrets by running `taito ci-secrets:ENV` again.
 
 db-open[:ENV] [USERNAME]
   Access database from command line. DB proxy connection and secrets are

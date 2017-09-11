@@ -4,7 +4,6 @@
 
 echo
 echo "### basic - b-readme: Showing README.md of taito-cli ###"
-echo
 
 content=$(cat "${taito_project_path}/README.md")
 

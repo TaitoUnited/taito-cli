@@ -4,7 +4,6 @@
 
 echo
 echo "### serverless - ci-deploy: Deploying ###"
-echo
 
 echo "TODO deploy aws/azure/gcloud function using serverless.com" && \
 

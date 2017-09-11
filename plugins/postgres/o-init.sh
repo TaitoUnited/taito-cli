@@ -5,7 +5,6 @@
 
 echo
 echo "### postgres - o-init: Deploying changes to database ${taito_env} ###"
-echo
 
 "${taito_plugin_path}/util/deploy-changes.sh" && \
 

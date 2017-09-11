@@ -3,7 +3,6 @@
 
 echo
 echo "### azure - b-auth:pre: Authenticating ###"
-echo
 
 echo "TODO implement" && \
 

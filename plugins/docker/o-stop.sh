@@ -4,7 +4,6 @@
 
 echo
 echo "### docker - o-stop: Stopping ###"
-echo
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "docker-compose down" && \
 

@@ -3,7 +3,6 @@
 
 echo
 echo "### aws - b-auth:pre: Authenticating ###"
-echo
 
 echo "TODO implement" && \
 

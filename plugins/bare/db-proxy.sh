@@ -4,7 +4,6 @@
 
 echo
 echo "### bare - db-proxy: Starting db proxy ###"
-echo
 
 # TODO open db proxy connection to machine?
 

@@ -3,7 +3,6 @@
 
 echo
 echo "### bare - b-auth:pre: Authenticating ###"
-echo
 
 echo "TODO implement" && \
 

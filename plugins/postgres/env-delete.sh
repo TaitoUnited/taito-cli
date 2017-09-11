@@ -7,7 +7,6 @@
 (
   echo
   echo "### postgres - env-delete: Dropping database and users ###"
-  echo
   export postgres_username=postgres
   . "${taito_plugin_path}/util/ask-password.sh"
   "${taito_plugin_path}/util/drop-database.sh"

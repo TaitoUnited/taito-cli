@@ -5,7 +5,6 @@
 
 echo
 echo "### basic - b-help: Showing help files ###"
-echo
 
 "${taito_plugin_path}/util/show_file.sh" help.txt cat && \
 echo && \

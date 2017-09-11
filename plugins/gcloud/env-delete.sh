@@ -4,9 +4,7 @@
 
 echo
 echo "### gcloud - env-delete: Deleting environment ###"
-echo
 echo "TODO not implemented"
-echo
 echo "Delete these manually:"
 echo "- DNS settings"
 echo "- Uptime check"

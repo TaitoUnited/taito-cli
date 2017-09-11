@@ -13,7 +13,6 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
   (
     echo
     echo "### npm - ci-release-post: Finalizing release ###"
-    echo
     cd "${taito_project_path}/release" || exit 1
     NPM_TOKEN=none GH_TOKEN=${secret_value_ext_github_build} \
       npm run "${command}" -- "${@}" && \

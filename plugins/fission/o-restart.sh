@@ -4,7 +4,6 @@
 
 echo
 echo "### fission - o-restart: Restarting ###"
-echo
 
 echo "TODO implement" && \
 

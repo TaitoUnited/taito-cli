@@ -7,7 +7,6 @@
 (
   echo
   echo "### postgres - db-recreate: Recreating database ###"
-  echo
   export postgres_username=postgres
   . "${taito_plugin_path}/util/ask-password.sh"
   "${taito_plugin_path}/util/delete-database.sh"

@@ -12,9 +12,7 @@ username="${2}"
 
 echo
 echo "### postgres - db-open: Connecting to database ${postgres_database} ###"
-echo
 echo "host: ${postgres_host} port:${postgres_port}"
-echo
 
 (
   cd "${taito_current_path}"

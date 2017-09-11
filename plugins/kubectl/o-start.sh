@@ -7,7 +7,6 @@
 
 echo
 echo "### kubectl - o-start: Starting application on ${taito_env} ###"
-echo
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

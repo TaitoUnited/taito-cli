@@ -4,8 +4,6 @@
 
 echo
 echo "### fission - ci-revert: Reverting ###"
-echo
-echo TODO
 
 revision="${1:-0}"
 

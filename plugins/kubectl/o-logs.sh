@@ -9,7 +9,6 @@ container_name="${2}"
 
 echo
 echo "### kubectl - o-logs: Showing logs of ${pod} ###"
-echo
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"

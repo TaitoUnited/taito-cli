@@ -7,7 +7,6 @@
 
 echo
 echo "### kubectl - env-delete: Deleting secrets from Kubernetes ###"
-echo
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

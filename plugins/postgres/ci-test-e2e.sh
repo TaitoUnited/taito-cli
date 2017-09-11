@@ -7,7 +7,6 @@
 if [[ "${taito_env}" == "local" ]]; then
   echo
   echo "### postgres - ci-test-e2e: Deploying changes to database ${taito_env} ###"
-  echo
 
   echo "TODO why connection fails?"
   # "${taito_plugin_path}/util/deploy-changes.sh"

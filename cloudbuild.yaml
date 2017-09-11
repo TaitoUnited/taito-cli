@@ -20,29 +20,29 @@ steps:
     kubectl --namespace "devops" get secret "ext.github.build" -o yaml | \
       grep SECRET | sed -e "s/^.*: //" | base64 --decode > github-token.tmp
 
-# - id: release-pre
-#   waitFor: ['secrets']
-#   name: 'gcr.io/cloud-builders/npm'
-#   entrypoint: 'bash'
-#   args:
-#   - '-c'
-#   - |
-#     github_token=$$(cat github-token.tmp)
-#
-#     echo "# Cloning git repo to release directory as google container"
-#     echo "# builder workspace does not point to the original repository"
-#     git clone "https://${github_token}@github.com/TaitoUnited/taito-cli.git" \
-#       release && \
-#     cd release && \
-#     git checkout master && \
-#     npm install && \
-#
-#     echo "# Running semantic-release pre" && \
-#     NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-pre && \
-#     rm -f .npmrc && \
-#
-#     echo "# Copying package.json with a new version number" && \
-#     cp package.json ..
+- id: release-pre
+  waitFor: ['secrets']
+  name: 'gcr.io/cloud-builders/npm'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    github_token=$$(cat github-token.tmp)
+
+    echo "# Cloning git repo to release directory as google container"
+    echo "# builder workspace does not point to the original repository"
+    git clone "https://${github_token}@github.com/TaitoUnited/taito-cli.git" \
+      release && \
+    cd release && \
+    git checkout master && \
+    npm install && \
+
+    echo "# Running semantic-release pre" && \
+    NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-pre && \
+    rm -f .npmrc && \
+
+    echo "# Copying package.json with a new version number" && \
+    cp package.json ..
 
 - id: build
   name: 'gcr.io/cloud-builders/docker'
@@ -59,16 +59,16 @@ steps:
   name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'ci-test-e2e']
 
-# - id: release-post
-#   name: 'gcr.io/cloud-builders/npm'
-#   entrypoint: 'bash'
-#   args:
-#   - '-c'
-#   - |
-#     echo "# Running semantic-release post" && \
-#     github_token=$$(cat github-token.tmp) && \
-#     cd release && \
-#     NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-post
+- id: release-post
+  name: 'gcr.io/cloud-builders/npm'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "# Running semantic-release post" && \
+    github_token=$$(cat github-token.tmp) && \
+    cd release && \
+    NPM_TOKEN=none GH_TOKEN=${github_token} npm run ci-release-post
 
 - id: push
   name: 'gcr.io/cloud-builders/docker'

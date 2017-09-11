@@ -13,7 +13,6 @@ username="${2:-postgres}"
 
 echo
 echo "### postgres - db-copy: Copying database from ${source} to ${dest} ###"
-echo
 
 db_prefix=${postgres_database%_*}
 db_dest=${postgres_database%_*}_${dest}

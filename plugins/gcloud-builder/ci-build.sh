@@ -20,7 +20,6 @@ version=$(grep "version" "${taito_project_path}/package.json" | \
 
 echo
 echo "### gcloud-builder - ci-build: Building ${name} ###"
-echo
 
 if [[ ! -f ./taitoflag_images_exist ]]; then
   echo "- Building image"

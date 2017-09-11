@@ -6,7 +6,6 @@
 
 echo
 echo "### basic - b-trouble: Showing troubleshooting files ###"
-echo
 
 "${taito_plugin_path}/util/show_file.sh" trouble.txt cat && \
 echo && \

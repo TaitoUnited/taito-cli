@@ -18,7 +18,6 @@ fi
 if [[ -z "${pod}" ]]; then
   echo
   echo "kubectl: Please give pod name as argument:"
-  echo
   kubectl get pods
 else
   # Kubernetes

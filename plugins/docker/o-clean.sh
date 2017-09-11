@@ -5,7 +5,6 @@
 
 echo
 echo "### docker - o-clean: Cleaning ###"
-echo
 
 "${taito_plugin_path}/util/clean.sh" "${@}"  && \
 

@@ -11,7 +11,6 @@ export template_project_path="${PWD}"
 echo
 echo "### template - template-migrate: Migrating existing project to \
 template ${template} ###"
-echo
 
 mkdir "$HOME/tmp" 2> /dev/null
 rm -rf "$HOME/tmp/${template}"

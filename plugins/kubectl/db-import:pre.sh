@@ -8,7 +8,6 @@
 echo
 echo "### kubectl - db-import:pre: Getting current db password from \
 Kubernetes ###"
-echo
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

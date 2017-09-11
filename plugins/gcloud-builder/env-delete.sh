@@ -4,9 +4,7 @@
 
 echo
 echo "### gcloud-builder - env-delete: Deleting trigger ###"
-echo
 echo "TODO not implemented. Delete trigger manually."
-echo
 echo "Press enter when done"
 read -r && \
 

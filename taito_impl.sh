@@ -200,7 +200,6 @@ if ! (
   if [[ ${skip_override} == false ]] && [[ ${command_exists} == true ]]; then
     echo "### Taito-cli: Executing on ${taito_customer:-}-${taito_env} environment: ###"
     echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
-    echo
   fi
 
   # Control flow flags
@@ -251,11 +250,11 @@ if ! (
     fi
   done
 
-  echo
-  if [[ ${taito_skip_override} == false ]]; then
-    echo "### taito-cli: DONE! ###"
-  fi
-  echo
+  # echo
+  # if [[ ${taito_skip_override} == false ]]; then
+  #   echo "### taito-cli: DONE! ###"
+  # fi
+  # echo
 
   exit ${exit_code}
 

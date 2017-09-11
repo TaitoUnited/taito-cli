@@ -7,7 +7,6 @@
 
 echo
 echo "### kubectl - o-exec: Executing command on Kubernetes pod ###"
-echo
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

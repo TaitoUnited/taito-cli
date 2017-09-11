@@ -4,7 +4,6 @@
 
 echo
 echo "### fun - fun-bofh: Bastard Operator from Hell! ###"
-echo
 
 telnet towel.blinkenlights.nl 666 && \
 

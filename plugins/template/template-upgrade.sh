@@ -12,7 +12,6 @@ export template_project_path="${PWD}"
 echo
 echo "### template - template-upgrade: upgrading to the latest version of \
 template ${template} ###"
-echo
 
 mkdir "$HOME/tmp" 2> /dev/null
 rm -rf "$HOME/tmp/${template}"

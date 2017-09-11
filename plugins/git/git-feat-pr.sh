@@ -10,7 +10,6 @@ dest="${2:-dev}"
 echo
 echo "### git - git-feat-pr: Making a pull request for merging ${feature} \
 to ${dest} ###"
-echo
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   echo Rebase branch ${feature} before making the pull request (Y/n)? && \
@@ -21,9 +20,7 @@ echo
   fi && \
   git push -u origin ${feature} && \
   git checkout - && \
-  echo && \
   echo 'TODO: implement PR using the hub cli.' && \
-  echo && \
   echo 'Make the pull request on GitHub. Press enter to continue.' && \
   read -r && \
   taito open-git

@@ -16,7 +16,6 @@ fi
 echo
 echo "### gcloud-builder - ci-cancel: Cancel all previous ongoing builds \
 targetting branch ${branch_name} ###"
-echo
 
 gcloud beta container builds list --ongoing | \
   grep "${full_repo_name}@${branch_name}" | \
@@ -24,7 +23,6 @@ gcloud beta container builds list --ongoing | \
   cut -d ' ' -f 1 | \
   xargs -L1 gcloud container builds cancel
 
-echo
 echo "NOTE: All fails on cancel operation are intentionally ignored. Perhaps \
 nothing to cancel, and cancelling is not that important anyway."
 

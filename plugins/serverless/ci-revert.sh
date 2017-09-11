@@ -4,7 +4,6 @@
 
 echo
 echo "### serverless - ci-revert: Reverting ###"
-echo
 
 revision="${1:-0}"
 

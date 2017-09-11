@@ -16,7 +16,6 @@ fi
 
 echo
 echo "### gcloud-builder - ci-push: Pushing ${name} ###"
-echo
 
 if [[ ! -f ./taitoflag_images_exist ]]; then
   docker push "${image_path}/${name}:${image_tag}"

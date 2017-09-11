@@ -6,7 +6,6 @@
 
 echo
 echo "### kubectl - o-status: Showing status of ${taito_env} ###"
-echo
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"

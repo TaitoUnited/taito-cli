@@ -4,8 +4,6 @@
 
 echo
 echo "### fission - ci-deploy: Deploying ###"
-echo
-echo TODO
 
 # TODO serverless.com support for fission?
 echo "TODO deploy fission function" && \

@@ -4,7 +4,6 @@
 
 echo
 echo "### serverless - o-stop: Stopping ###"
-echo
 
 echo "TODO implement" && \
 

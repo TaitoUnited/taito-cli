@@ -6,7 +6,6 @@
 
 echo
 echo "### postgres - db-log: Showing db migration log of ${taito_env} ###"
-echo
 
 "${taito_plugin_path}/util/sqitch.sh" log && \
 
