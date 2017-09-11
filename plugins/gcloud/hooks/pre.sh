@@ -2,11 +2,9 @@
 
 : "${taito_env:?}"
 : "${taito_command:?}"
-: "${taito_mode:?}"
 : "${taito_plugin_path:?}"
-: "${gcloud_sql_proxy_port:?}"
 
-if [[ "${taito_mode}" == "ci" ]] && \
+if [[ "${taito_mode:-}" == "ci" ]] && \
    [[ ${taito_command_chain:-} == *"kubectl/"* ]]; then
   echo
   echo "### gcloud - pre: Getting credentials for kubernetes ###"
