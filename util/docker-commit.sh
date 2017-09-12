@@ -1,9 +1,13 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
+: "${taito_image_name:?}"
 
 # Asks host to commit changes to the container image
 
-echo "TODO more checks so that only the correct container is committed"
-# ${taito_cli_path}/util/execute-on-host.sh "container_id=$(docker ps | grep 'taito ' | cut -d ' ' -f1); docker commit \${container_id} ${taito_image_name}" 1
-
-${taito_cli_path}/util/execute-on-host.sh "docker commit ${HOSTNAME} ${taito_image_name}" 1
+sleep 1
+# ${taito_cli_path}/util/execute-on-host.sh \
+#   "docker ps; docker commit ${HOSTNAME} ${taito_image_name}" 5
+"${taito_cli_path}/util/execute-on-host.sh" \
+  "docker ps; docker commit taito ${taito_image_name}save" 5
+"${taito_cli_path}/util/execute-on-host-fg.sh" \
+  "docker image tag ${taito_image_name}save ${taito_image_name}"

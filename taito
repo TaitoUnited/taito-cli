@@ -191,12 +191,19 @@ if ! (
 
     # Randomly check if taito-cli image has been updated
     if (( RANDOM % 10 == 0 )); then
+      SECONDS=0
       docker pull "${taito_image_name}"
+      if [[ ${SECONDS} -lt 5 ]]; then
+        echo "Image was not pulled. Using the old image with saved credentials."
+        docker image tag "${taito_image_name}save" \
+          "${taito_image_name}" &> /dev/null
+      fi
     fi
 
     # Run on docker
     # shellcheck disable=SC2086
     eval "docker run -it \
+      --name taito \
       -v \"${HOME}/.taito:/root/.taito\" \
       -v \"$(pwd):/project\" \
       -w /project \
