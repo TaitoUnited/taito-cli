@@ -161,7 +161,7 @@ RUN mv cloud_sql_proxy /usr/local/bin
 
 # Install some misc stuff required by plugins
 RUN apt-get clean
-RUN apt-get -y update && apt-get -y install less telnet jq
+RUN apt-get -y update && apt-get -y install less telnet jq apache2-utils
 
 # Install taito-cli
 COPY . /taito-cli

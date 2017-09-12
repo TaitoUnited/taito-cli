@@ -17,7 +17,7 @@ echo "host: ${postgres_host} port:${postgres_port}"
 (
   cd "${taito_current_path}"
   flags="-f ${filename}"
-  "${taito_plugin_path}/util/psql.sh" "'${username}'" "'${flags}'"
+  "${taito_plugin_path}/util/psql.sh" "${username}" "${flags}"
 ) && \
 
 # Call next command on command chain

@@ -133,9 +133,6 @@ And here is an example of a project specific `taito-config.sh`:
         export taito_zone="acme-restricted1"
         export gcloud_region="europe-west2"
         export gcloud_zone="europe-west2-a"
-        export gcloud_dns_enabled=true
-        export gcloud_monitoring_enabled=true
-        export gcloud_log_alerts_enabled=true
         export kubernetes_name="acme-kubernetes"
         export postgres_name="acme-postgres"
         ;;

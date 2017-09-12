@@ -26,12 +26,11 @@ fi
 repo_name_alt="${repo_name//-/_}"
 
 if [[ ${mode} == "create" ]]; then
-  git clone "${template_source_git_url}/${template}.git" "${repo_name}"
-  cd "${repo_name}" || exit
-  git checkout master
-  rm -rf .git
-  export template_project_path="${PWD}"
-
+  "${taito_cli_path}/util/execute-on-host.sh" "\
+    git clone ${template_source_git_url}/${template}.git ${repo_name} && \
+    cd ${repo_name} && \
+    git checkout master && \
+    rm -rf .git" 7
   echo "Create GitHub repository \'${template_dest_git_url}/${repo_name}\'"
   echo "with the following settings:"
   echo "- Private, README.md not initialized"
@@ -42,6 +41,8 @@ if [[ ${mode} == "create" ]]; then
   echo
   echo "Press enter when ready"
   read -r
+  cd "${repo_name}"
+  export template_project_path="${PWD}"
 fi
 
 # Call create/migrate/upgrade script implemented in template
@@ -55,26 +56,18 @@ if ! "./scripts/template/${mode}.sh"; then
   exit 1
 fi
 
+rm -rf ./scripts/template
+
 if [[ ${mode} == "create" ]]; then
   echo "--- Pushing to GitHub ---"
-  git init
-  git add .
-  git commit -m "First commit"
-  if ! git remote add origin "${template_dest_git_url}/${repo_name}.git"; then
-    exit 1
-  fi
-  if ! git push -u origin master; then
-    exit 1
-  fi
-
-  # Create initial tag
-  git tag v0.0.0
-  git push origin v0.0.0
-
-  # Create dev branch
-  git checkout -b dev
-  git push -u origin dev
+  "${taito_cli_path}/util/execute-on-host.sh" "\
+    git init && \
+    git add . && \
+    git commit -m 'First commit' && \
+    git remote add origin ${template_dest_git_url}/${repo_name}.git && \
+    git push -u origin master && \
+    git tag v0.0.0 && \
+    git push origin v0.0.0 && \
+    git checkout -b dev && \
+    git push -u origin dev"
 fi
-
-rm -f TEMPLATE.md
-rm -rf /scripts/template
