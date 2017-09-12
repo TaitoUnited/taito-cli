@@ -67,6 +67,9 @@ o-init
 open-app[:ENV]
   Open application user interface.
 
+open-admin[:ENV]
+  Open admin user interface.
+
 o-stop[:ENV]
   Stop.
 
@@ -111,8 +114,8 @@ workspace-kill
   ports).
 
 
-PROJECT: GIT OPERATIONS
------------------------
+GIT OPERATIONS
+--------------
 
 git-env-merge SOURCE DEST
   Merges source environment branch to destination branch without making changes
@@ -123,8 +126,9 @@ git-env-merge SOURCE DEST
   environment branches are merged.
 
 git-feat FEATURE_NAME [SOURCE_BRANCH]
-  Creates a new local branch for a feature or does a checkout if the branch
-  already exists. The dev branch is used as a default source branch.
+  Creates a new local branch for a feature or executes a normal branch checkout
+  if the branch already exists. The dev branch is used as a default source
+  branch.
 
 git-feat-squash FEATURE_NAME [DEST]
   Merges a feature to a destination branch as a single squashed commit and
@@ -327,18 +331,18 @@ env-cert[:ENV] DOMAIN
   Add a custom certificate.
 
 
-PROJECT: ALTERNATE ENVIRONMENTS
--------------------------------
+PROJECT: ALTERNATIVE ENVIRONMENTS
+---------------------------------
 
-An alternate environment uses the same database as the main environment, but
-containers are built from an alternate branch. You can use alternate
+An alternative environment uses the same database as the main environment, but
+containers are built from an alternative branch. You can use alternative
 environments for canary releases, A/B testing, etc.
 
 env-alt-create:ENV [NAME] [GIT_BRANCH]
-  Create an alternate environment. TODO not implemented.
+  Create an alternative environment. TODO not implemented.
 
 env-alt-delete:ENV [NAME]
-  Delete alternate environment. TODO not implemented.
+  Delete alternative environment. TODO not implemented.
 
 
 PROJECT: CONTACTS
