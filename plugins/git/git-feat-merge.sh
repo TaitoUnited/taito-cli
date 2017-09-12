@@ -10,8 +10,9 @@ dest="${2:-dev}"
 echo
 echo "### git - git-feat-merge: Merging ${feature} to ${dest} ###"
 
+# diff-index -> Commit only if there is something to commit
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-  echo Rebase branch ${feature} before merge (Y/n)? && \
+  echo 'Rebase branch ${feature} before merge (Y/n)?' && \
   read -r rebase && \
   if [[ \${rebase} =~ ^[Yy]$ ]]; then \
     git checkout ${feature} && git rebase -i ${dest} && git checkout -; \
@@ -19,10 +20,9 @@ echo "### git - git-feat-merge: Merging ${feature} to ${dest} ###"
   git checkout ${dest} && \
   git pull && \
   git merge ${feature} && \
-  # Commit only if there is something to commit
   (git diff-index --quiet HEAD || git commit -v) && \
   git push && \
-  echo Delete branch ${feature} after merge (Y/n)? && \
+  echo 'Delete branch ${feature} after merge (Y/n)?' && \
   read -r del && \
   if [[ \${del} =~ ^[Yy]$ ]]; then \
     git push origin --delete ${feature} &> /dev/null; \

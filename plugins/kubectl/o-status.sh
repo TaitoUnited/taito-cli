@@ -11,6 +11,9 @@ echo "### kubectl - o-status: Showing status of ${taito_env} ###"
 "${taito_plugin_path}/util/use-context.sh"
 
 echo
+echo "--- Nodes ---"
+kubectl describe nodes
+echo
 echo "--- Ingress ---"
 kubectl get ingress "${@}"
 echo

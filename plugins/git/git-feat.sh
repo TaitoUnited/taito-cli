@@ -11,9 +11,11 @@ echo "### git - git-feat: Creating ${feature} for ${orig} ###"
 echo
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-  git checkout ${orig} && \
-  git pull && \
-  git checkout -b ${feature}
+  if ! git checkout ${feature}; then \
+    git checkout ${orig} && \
+    git pull && \
+    git checkout -b ${feature}; \
+  fi \
   " && \
 
 # Call next command on command chain

@@ -10,11 +10,11 @@ echo
 echo "### git - git-feat-squash: Squash merging ${feature} to ${dest} ###"
 echo
 
+# diff-index -> Commit only if there is something to commit
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   git checkout ${dest} && \
   git pull && \
   git merge --squash ${feature} && \
-  # Commit only if there is something to commit
   (git diff-index --quiet HEAD || git commit -v) && \
   git push && \
   git branch -D ${feature} && \

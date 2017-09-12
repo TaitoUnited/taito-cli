@@ -4,7 +4,7 @@
 : "${taito_env:?}"
 : "${taito_repo_name:?}"
 
-ignore_build_id=${1:?Ignore build id not given}
+ignore_build_id=${1}
 
 full_repo_name="github-taitounited-${taito_repo_name}"
 if [[ ${taito_env} == "prod" ]]; then

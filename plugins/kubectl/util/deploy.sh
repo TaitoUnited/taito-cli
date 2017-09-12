@@ -7,7 +7,7 @@
 : "${taito_project:?}"
 : "${taito_repo_name:?}"
 
-image="${1:?}"
+image="${1}"
 options=("${@:2}")
 
 # Change namespace

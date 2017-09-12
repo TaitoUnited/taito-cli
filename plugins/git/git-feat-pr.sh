@@ -12,18 +12,18 @@ echo "### git - git-feat-pr: Making a pull request for merging ${feature} \
 to ${dest} ###"
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-  echo Rebase branch ${feature} before making the pull request (Y/n)? && \
+  echo 'Rebase branch ${feature} before making the pull request (Y/n)?' && \
   read -r rebase && \
   git checkout ${feature} && \
   if [[ \${rebase} =~ ^[Yy]$ ]]; then \
-     git rebase -i ${dest}; \
+    git rebase -i ${dest}; \
   fi && \
   git push -u origin ${feature} && \
   git checkout - && \
   echo 'TODO: implement PR using the hub cli.' && \
   echo 'Make the pull request on GitHub. Press enter to continue.' && \
   read -r && \
-  taito open-git
+  taito open-git \
   " && \
 
 # Call next command on command chain
