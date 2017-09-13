@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Taito-cli settings
-export taito_image="taitounited/taito-cli:0.2.0"
+export taito_image="taitounited/taito-cli:latest"
 export taito_extensions=""
 export taito_plugins="npm link"
 

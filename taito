@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO split into multiple bash functions and re-use some code in taito_impl.sh
+
 # Contain pwd change in a subshell
 if ! (
 
@@ -198,8 +200,21 @@ if ! (
         docker image tag "${taito_image_name}save" \
           "${taito_image_name}" &> /dev/null
       else
-        # Image was not pulled. Remove the old image with saved credentials.
-        docker image rm "${taito_image_name}save" &> /dev/null
+        # Image was pulled
+        docker rm taito-save taito-new &> /dev/null
+        if docker create --name taito-save "${taito_image_name}save"; then
+          echo "Copying credentials from the old image."
+          docker create --name taito-new "${taito_image_name}"
+          mkdir -p ~/.taito/save &> /dev/null
+          docker cp taito-save:/root/.config ~/.taito/save
+          docker cp taito-save:/root/.kube ~/.taito/save
+          docker cp ~/.taito/save/.config taito-new:/root
+          docker cp ~/.taito/save/.kube taito-new:/root
+          docker commit taito-new "${taito_image_name}"
+          docker image tag "${taito_image_name}" "${taito_image_name}save"
+          rm -rf ~/.taito/save
+          docker rm taito-save taito-new &> /dev/null
+        fi
       fi
     fi
 

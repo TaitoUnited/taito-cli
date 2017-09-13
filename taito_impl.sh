@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO split into multiple bash functions and re-use some code in taito
+
 # Contain pwd change in a subshell
 if ! (
 
