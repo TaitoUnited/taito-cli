@@ -193,10 +193,13 @@ if ! (
     if (( RANDOM % 10 == 0 )); then
       SECONDS=0
       docker pull "${taito_image_name}"
-      if [[ ${SECONDS} -lt 5 ]]; then
-        echo "Image was not pulled. Using the old image with saved credentials."
+      if [[ ${SECONDS} -lt 12 ]]; then
+        # Image was not pulled. Using the old image with saved credentials.
         docker image tag "${taito_image_name}save" \
           "${taito_image_name}" &> /dev/null
+      else
+        # Image was not pulled. Remove the old image with saved credentials.
+        docker image rm "${taito_image_name}save" &> /dev/null
       fi
     fi
 
