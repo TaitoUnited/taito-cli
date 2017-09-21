@@ -19,7 +19,7 @@ echo "### kubectl - ci-secrets: Fetching secrets saved on Kubernetes ###"
 # Print secret values
 echo && \
 echo && \
-rm taito-secrets.sh &> /dev/null && \
+rm taito-secrets.sh &> /dev/null || : && \
 secret_index=0 && \
 secret_names=(${taito_secret_names}) && \
 for secret_name in "${secret_names[@]}"
