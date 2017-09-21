@@ -10,7 +10,7 @@ _arguments "*: :(b-help b-readme b-trouble b-auth: -- --login \
   db-add db-proxy: db-open: db-dump: db-import: \
   db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \
   ci-prepare: \
-  ci-build ci-push ci-deploy: ci-quickdeploy: ci-revision: ci-revert: \
+  ci-build ci-push ci-deploy: ci-deployquick: ci-revision: ci-revert: \
   ci-wait: ci-verify: ci-docs ci-scan ci-test-unit ci-test-api: ci-test-e2e: \
   ci-publish ci-release-pre: ci-release-post: ci-cancel: ci-secrets: \
   env-config env-create: env-update: env-delete: env-rotate: env-cert: \

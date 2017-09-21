@@ -181,6 +181,9 @@ db-deploy[:ENV]
   Deploy changes to database. DB proxy connection and secrets are handled
   automatically.
 
+db-compare[:ENV] [OTHER_ENV]
+  Compare database schemas of environments. TODO not implemented.
+
 db-log[:ENV]
   View change log of database. DB proxy connection and secrets are handled
   automatically.
@@ -235,10 +238,10 @@ ci-deploy[:ENV] [IMAGE_TAG] [--dry-run]
   using the latest image found for the environment in question. Use dry-run
   switch to execute a dry run. Example: 'taito ci-deploy:dev test1'
 
-ci-quickdeploy[:ENV] CONTAINER_NAME
+ci-deployquick[:ENV] CONTAINER_NAME
   Build, push and deploy a container to server. Use this when you need to
   deploy quick changes to some environment. Example:
-  'taito ci-quickdeploy:dev server'. TODO not implemented yet.
+  'taito ci-deployquick:dev server'. TODO not implemented yet.
 
 ci-revision:ENV
   Show current revision.

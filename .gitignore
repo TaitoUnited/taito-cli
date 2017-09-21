@@ -4,6 +4,7 @@ tmp
 taitoflag_*
 *.x
 *.log
+*.log.*
 *.tmp
 *.pyc
 *~
