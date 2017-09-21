@@ -202,7 +202,7 @@ if ! (
       else
         # Image was pulled
         docker rm taito-save taito-new &> /dev/null
-        if docker create --name taito-save "${taito_image_name}save"; then
+        if docker create --name taito-save "${taito_image_name}save" &> /dev/null; then
           echo "Copying credentials from the old image."
           docker create --name taito-new "${taito_image_name}"
           mkdir -p ~/.taito/save &> /dev/null
