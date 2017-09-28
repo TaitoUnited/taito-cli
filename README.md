@@ -19,7 +19,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 ## Installation
 
-1. Copy or symlink the file named `taito` to your path (e.g. `/usr/local/bin/taito`). It's a simple bash script that runs taito-cli as a Docker container.
+1. Copy or symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a simple bash script that runs taito-cli as a Docker container.
 
 2. Configure your personal settings in `~/.taito/taito-config.sh`. For example:
     ```

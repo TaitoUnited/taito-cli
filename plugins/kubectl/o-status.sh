@@ -4,15 +4,19 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
+switch="@{1}"
+
 echo
 echo "### kubectl - o-status: Showing status of ${taito_env} ###"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
-echo
-echo "--- Nodes ---"
-kubectl describe nodes
+if [[ "${switch}" == "--all" ]]; then
+  echo
+  echo "--- Nodes ---"
+  kubectl describe nodes
+fi
 echo
 echo "--- Ingress ---"
 kubectl get ingress "${@}"
