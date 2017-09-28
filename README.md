@@ -173,7 +173,7 @@ And here is an example of a project specific `taito-config.sh`:
       open-feedback=https://TODO-NOT-IMPLEMENTED
       "
 
-    # NOTE: Secret naming convention: generation_method:type.target_of_type.purpose[/namespace]
+    # NOTE: Secret naming convention: type.target_of_type.purpose[/namespace]:generation_method
     export taito_secrets="
       random:db.${postgres_database}.app
       random:db.${postgres_database}.build/devops
@@ -181,13 +181,13 @@ And here is an example of a project specific `taito-config.sh`:
 
 ## Secret management
 
-Plugins require secrets to perform some of the operations. Secret naming convention is *generation_method:type.target_of_type.purpose[/namespace]*. For example:
+Plugins require secrets to perform some of the operations. Secret naming convention is *type.target_of_type.purpose[/namespace]:generation_method*. For example:
 
-* *random:db.silicon_valley_prod.app*: A randomly generated database password for silicon valley production database to be used by application.
-* *random:db.silicon_valley_prod.build/devops*: A randomly generated database password for silicon valley production database to be used by CI/CD build. It is saved to devops namespace as it is not required by the application.
-* *manual:ext.twilio.messaging*: A token for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.
-* *copy/devops:ext.google-cloudsql.proxy*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
-* *read/devops:ext.github.build*: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
+* *db.silicon_valley_prod.app:random*: A randomly generated database password for silicon valley production database to be used by application.
+* *db.silicon_valley_prod.build/devops:random*: A randomly generated database password for silicon valley production database to be used by CI/CD build. It is saved to devops namespace as it is not required by the application.
+* *ext.twilio.messaging:manual*: A token for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.
+* *ext.google-cloudsql.proxy:copy/devops*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
+* *ext.github.build:read/devops*: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
 
 Responsibilities of the current default plugins:
 

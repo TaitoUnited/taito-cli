@@ -4,8 +4,8 @@
 : "${taito_plugin_path:?}"
 : "${taito_project_path:?}"
 
+dest="${taito_branch:-dev}"
 feature="feature/${1:?Feature name not given}"
-dest="${2:-dev}"
 
 echo
 echo "### git - git-feat-pr: Making a pull request for merging ${feature} \

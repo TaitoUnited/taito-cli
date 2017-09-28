@@ -1,10 +1,9 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
-: "${taito_env:?}"
 
+dest="${taito_branch:?Destination branch name not given}"
 source="${1:?Source branch name not given}"
-dest="${2:?Destination branch name not given}"
 
 echo
 echo "### git - git-env-merge: Merging ${source} to ${dest} ###"

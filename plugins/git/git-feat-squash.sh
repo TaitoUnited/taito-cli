@@ -3,8 +3,8 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
+dest="${taito_branch:-dev}"
 feature="feature/${1:?Feature name not given}"
-dest="${2:-dev}"
 
 echo
 echo "### git - git-feat-squash: Squash merging ${feature} to ${dest} ###"

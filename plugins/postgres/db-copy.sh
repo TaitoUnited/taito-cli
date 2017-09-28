@@ -7,8 +7,8 @@
 : "${postgres_host:?}"
 : "${postgres_port:?}"
 
-source="${taito_env}"
-dest="${1:?Destination not given}"
+dest="${taito_env}"
+source="${1:?Source not given}"
 username="${2:-postgres}"
 
 echo

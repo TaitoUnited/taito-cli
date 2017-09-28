@@ -21,5 +21,8 @@ if [[ -z "${pod}" ]]; then
   kubectl get pods
 else
   # Kubernetes
+  echo
+  echo "-------------------------------------------------------------------"
+  echo
   kubectl exec -it "${pod}" -c "${container}" -- "${command[@]}"
 fi

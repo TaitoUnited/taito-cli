@@ -15,7 +15,7 @@ _taito ()
     o-install o-compile o-start: o-run: o-init open-app: open-admin: o-stop: \
     o-users: o-status: o-logs: o-login: o-exec: o-kill: o-clean \
     workspace-clean workspace-kill \
-    git-env-merge git-feat git-feat-squash git-feat-merge git-feat-pr \
+    git-env-merge: git-feat git-feat-squash git-feat-merge git-feat-pr \
     db-add db-proxy: db-open: db-dump: db-import: \
     db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \
     ci-prepare: \

@@ -117,36 +117,37 @@ workspace-kill
 GIT OPERATIONS
 --------------
 
-git-env-merge SOURCE DEST
-  Merges source environment branch to destination branch without making changes
+git-env-merge:ENV SOURCE_BRANCH
+  Merges source env branch to destination env branch without making changes
   to the current local git workspace. The command fails if fast-forward is not
   possible. Merge operations between environment branches should always be
   fast-forwarded so that a container is first built for dev environment and
   then the same container is deployed to other environments as well once
   environment branches are merged.
 
-git-feat FEATURE_NAME [SOURCE_BRANCH]
+git-feat[:ENV] FEATURE_NAME
   Creates a new local branch for a feature or executes a normal branch checkout
-  if the branch already exists. The dev branch is used as a default source
-  branch.
+  if the branch already exists. The dev branch is used as a default env
+  branch (source branch).
 
-git-feat-squash FEATURE_NAME [DEST]
+git-feat-squash[:ENV] FEATURE_NAME
   Merges a feature to a destination branch as a single squashed commit and
-  deletes the feature branch. The dev branch is used as default destination.
-  Use this command for a short-lived feature branch with a cohesive set of
-  changes.
+  deletes the feature branch. The dev branch is used as a default env
+  branch (destination for merge). Use this command for a short-lived feature
+  branch with a cohesive set of changes.
 
-git-feat-merge FEATURE_NAME [DEST]
-  Merges a feature to a destination branch. The dev branch is used as default
-  destination. The command suggests rebase before merge and delete feature
-  after merge. With rebase you can clean up commit history before merge
-  e.g. by reordering commits and selectively squashing some of them together.
+git-feat-merge[:ENV] FEATURE_NAME
+  Merges a feature to a destination branch. The dev branch is used as a default
+  env branch (destination for merge). The command suggests rebase before merge
+  and delete feature after merge. With rebase you can clean up commit history
+  before merge e.g. by reordering commits and selectively squashing some of
+  them together.
 
-git-feat-pr FEATURE_NAME [DEST]
-  Creates a pull request for a feature. The dev branch is used as default
-  destination. The command suggests rebase before making the pull request. With
-  rebase you can clean up commit history by reordering commits and selectively
-  squashing some of them together.
+git-feat-pr[:ENV] FEATURE_NAME
+  Creates a pull request for a feature. The dev branch is used as a default
+  env branch (destination for merge). The command suggests rebase before making
+  the pull request. With rebase you can clean up commit history by reordering
+  commits and selectively squashing some of them together.
 
 
 PROJECT: DATABASE OPERATIONS
@@ -200,13 +201,13 @@ db-recreate[:ENV]
   will be run from the beginning. DB proxy connection and secrets are handled
   automatically.
 
-db-copy:ENV DEST_ENV
+db-copy:ENV SOURCE_ENV
   Copy database from one environment to another. For example
-  `db-copy:prod staging` or `db-copy:dev local`. If you do not have enough
+  `db-copy:staging prod` or `db-copy:local dev`. If you do not have enough
   rights, ask devops personnel to do this for you. DB proxy connection and
   secrets are handled automatically.
 
-db-copyquick:ENV DEST_ENV
+db-copyquick:ENV SOURCE_ENV
   Copy database quickly from one environent to another. DB proxy connection
   and secrets are handled automatically. NOTE: The command locks source
   database from other users until copying is finished. It also requires
@@ -327,7 +328,7 @@ env-create:ENV [GIT_BRANCH]
 env-delete:ENV
   Delete an environment.
 
-env-rotate:ENV
+env-rotate:ENV [NAME_FILTER]
   Rotate secrets for an environment.
 
 env-cert[:ENV] DOMAIN
