@@ -3,6 +3,8 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
+name_filter="${1}"
+
 echo
 echo "### secrets - env-rotate:pre: Creating secrets ###"
 

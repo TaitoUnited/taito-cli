@@ -2,4 +2,4 @@
 
 # kill cloud_sql_proxy
 pgrep cloud_sql_proxy | xargs kill
-echo "- killed"
+echo "- proxy stopped"

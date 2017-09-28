@@ -30,11 +30,18 @@ if ! (
   fi
 
   # CI/CD may give branch name as argument instead of environment name
-  # -> Map master/feature branches to env
   if [[ "${env}" == "master" ]]; then
     env="prod"
   elif [[ "${env}" == "f"* ]]; then
     env="feature"
+  fi
+
+  # Branch is determined by the env
+  branch="${env}"
+  if [[ "${branch}" == "prod" ]]; then
+    branch="master"
+  elif [[ "${branch}" == "local" ]]; then
+    branch=""
   fi
 
   # Resolve project root folder by the location of taito-config.sh
@@ -64,6 +71,7 @@ if ! (
   export taito_skip_override="${skip_override}"
   export taito_command="${command}"
   export taito_env="${env}"
+  export taito_branch="${branch}"
   export taito_project_path="${project_path}"
   export taito_cli_path="${cli_path}"
   export taito_current_path="${current_path}"
@@ -107,6 +115,14 @@ if ! (
   secrets=("${taito_secrets}")
   for secret in ${secrets[@]}
   do
+    # NOTE: A quick fix to support the new naming convention in which
+    # method is given as suffix, not prefix
+    fix_suffix="${secret##*:}"
+    fix_prefix="${secret%:*}"
+    if [[ ${#fix_suffix} -lt ${#fix_prefix} ]]; then
+      secret="${fix_suffix}:${fix_prefix}"
+    fi
+
     # Create env var name by replacing illegal characters
     secret_suffix="${secret##*:}"
     secret_name="${secret_suffix%/*}"
