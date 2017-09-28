@@ -54,8 +54,9 @@ o-compile
   Compile (for projects that need to be compiled). TIP: Enable the npm plugin
   and implement o-compile script in your package.json.
 
-o-start[:ENV] [--clean]
-  Start.
+o-start[:ENV] [--clean] [--prod]
+  Start. Use the 'clean' switch to clean all before start. Use the 'prod'
+  switch to use production containers in local development environment.
 
 o-run[:ENV]
   Run on device (ios/android)
