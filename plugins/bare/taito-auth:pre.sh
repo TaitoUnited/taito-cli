@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### bare - b-auth:pre: Authenticating ###"
+echo "### bare - taito-auth:pre: Authenticating ###"
 
 echo "TODO implement" && \
 

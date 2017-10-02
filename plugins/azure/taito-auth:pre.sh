@@ -2,10 +2,9 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### gcloud - b-auth:pre: Authenticating ###"
-echo
+echo "### azure - taito-auth:pre: Authenticating ###"
 
-"${taito_plugin_path}/util/auth.sh" "${@}" && \
+echo "TODO implement" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

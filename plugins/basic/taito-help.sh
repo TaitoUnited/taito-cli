@@ -4,7 +4,7 @@
 : "${taito_plugin_path:?}"
 
 echo
-echo "### basic - b-help: Showing help files ###"
+echo "### basic - taito-help: Showing help files ###"
 
 "${taito_plugin_path}/util/show_file.sh" help.txt cat && \
 echo && \

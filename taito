@@ -90,7 +90,7 @@ if ! (
       repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
       if [[ -d "${repo_local_path}" ]]; then
         # Pull the latest version
-        if [[ "${command}" == "b-upgrade" ]]; then
+        if [[ "${command}" == "taito-upgrade" ]]; then
           echo "Pulling ${repo_local_path}..."
           (cd "${repo_local_path}"; git pull &> /dev/null)
         fi
@@ -123,7 +123,7 @@ if ! (
     fi
   done
 
-  if [[ "${command}" == "b-upgrade" ]]; then
+  if [[ "${command}" == "taito-upgrade" ]]; then
     # Check if taito-cli image has been updated and then exit
     SECONDS=0
     docker pull "${taito_image:?}"
@@ -191,8 +191,8 @@ if ! (
   # `readme`. We need to also filter some control characters for a cleaner
   # output.
   output=""
-  if [[ ${command} == "b-help"* ]] || [[ ${command} == "b-trouble"* ]] || \
-     [[ ${command} == "b-readme"* ]]; then
+  if [[ ${command} == "taito-help"* ]] || [[ ${command} == "taito-trouble"* ]] || \
+     [[ ${command} == "taito-readme"* ]]; then
     output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
       tr '\275\276' '\r\n' | tail -n +7 | less"
   fi

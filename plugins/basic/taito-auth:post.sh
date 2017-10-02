@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### basic - b-auth:post: Asking host to commit new credentials to \
+echo "### basic - taito-auth:post: Asking host to commit new credentials to \
 Docker container image ###"
 echo "NOTE: Your credentials are saved to the taito container image."
 

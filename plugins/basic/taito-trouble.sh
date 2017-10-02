@@ -5,7 +5,7 @@
 : "${taito_skip_override:?}"
 
 echo
-echo "### basic - b-trouble: Showing troubleshooting files ###"
+echo "### basic - taito-trouble: Showing troubleshooting files ###"
 
 "${taito_plugin_path}/util/show_file.sh" trouble.txt cat && \
 echo && \

@@ -14,7 +14,7 @@ Authentication error using taito-cli
   If you run into an authentication error during command execution,
   the command probably requires authentication and you either have not
   authenticated or your authentication has expired. In such case, run
-  'taito b-auth:ENV' to authenticate in the context of currently enabled
+  'taito taito-auth:ENV' to authenticate in the context of currently enabled
   plugins.
 
 Taito-cli says: 'command not found'

@@ -18,19 +18,19 @@ POD
 BASIC COMMANDS
 --------------
 
-b-help
+taito-help
   Show help.txt of current project and a list of all taito-cli commands.
 
-b-trouble
+taito-trouble
   Show trouble.txt of both current project and taito-cli.
 
-b-readme
+taito-readme
   Show README.md of both current project and taito-cli.
 
-b-auth:ENV
+taito-auth:ENV
   Authenticate in the context of the given environment.
 
-b-upgrade
+taito-upgrade
   Upgrade taito-cli and its extensions to the latest version.
 
 
