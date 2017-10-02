@@ -72,6 +72,8 @@ if ! (
     . ./taito-config.sh
   fi
 
+  command="${params[0]}"
+
   # Determine enabled extensions
   extensions_local_mode=""
   extension_paths=""
@@ -87,8 +89,9 @@ if ! (
       repo_dir=${temp#*.git} # /my-extension
       repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
       if [[ -d "${repo_local_path}" ]]; then
-        # Randomly pull the latest version
-        if (( RANDOM % 20 == 0 )); then
+        # Pull the latest version
+        if [[ "${command}" == "b-upgrade" ]]; then
+          echo "Pulling ${repo_local_path}..."
           (cd "${repo_local_path}"; git pull &> /dev/null)
         fi
       else
@@ -120,7 +123,33 @@ if ! (
     fi
   done
 
-  command="${params[0]}"
+  if [[ "${command}" == "b-upgrade" ]]; then
+    # Check if taito-cli image has been updated and then exit
+    SECONDS=0
+    docker pull "${taito_image:?}"
+    if [[ ${SECONDS} -lt 12 ]]; then
+      # Image was not pulled. Using the old image with saved credentials.
+      docker image tag "${taito_image}save" \
+        "${taito_image}" &> /dev/null
+    else
+      # Image was pulled
+      docker rm taito-save taito-new &> /dev/null
+      if docker create --name taito-save "${taito_image}save" &> /dev/null; then
+        echo "Copying credentials from the old image."
+        docker create --name taito-new "${taito_image}"
+        mkdir -p ~/.taito/save &> /dev/null
+        docker cp taito-save:/root/.config ~/.taito/save
+        docker cp taito-save:/root/.kube ~/.taito/save
+        docker cp ~/.taito/save/.config taito-new:/root
+        docker cp ~/.taito/save/.kube taito-new:/root
+        docker commit taito-new "${taito_image}"
+        docker image tag "${taito_image}" "${taito_image}save"
+        rm -rf ~/.taito/save
+        docker rm taito-save taito-new &> /dev/null
+      fi
+    fi
+    exit 0
+  fi
 
   export taito_run=".fj45jgnv."
   export taito_run_fg=".fekfj56hk."
@@ -189,33 +218,6 @@ if ! (
       proxy_flags="\
         --expose=${gcloud_sql_proxy_port} \
         -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"
-    fi
-
-    # Randomly check if taito-cli image has been updated
-    if (( RANDOM % 10 == 0 )); then
-      SECONDS=0
-      docker pull "${taito_image_name}"
-      if [[ ${SECONDS} -lt 12 ]]; then
-        # Image was not pulled. Using the old image with saved credentials.
-        docker image tag "${taito_image_name}save" \
-          "${taito_image_name}" &> /dev/null
-      else
-        # Image was pulled
-        docker rm taito-save taito-new &> /dev/null
-        if docker create --name taito-save "${taito_image_name}save" &> /dev/null; then
-          echo "Copying credentials from the old image."
-          docker create --name taito-new "${taito_image_name}"
-          mkdir -p ~/.taito/save &> /dev/null
-          docker cp taito-save:/root/.config ~/.taito/save
-          docker cp taito-save:/root/.kube ~/.taito/save
-          docker cp ~/.taito/save/.config taito-new:/root
-          docker cp ~/.taito/save/.kube taito-new:/root
-          docker commit taito-new "${taito_image_name}"
-          docker image tag "${taito_image_name}" "${taito_image_name}save"
-          rm -rf ~/.taito/save
-          docker rm taito-save taito-new &> /dev/null
-        fi
-      fi
     fi
 
     # Run on docker

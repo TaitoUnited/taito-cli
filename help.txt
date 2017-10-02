@@ -30,6 +30,9 @@ b-readme
 b-auth:ENV
   Authenticate in the context of the given environment.
 
+b-upgrade
+  Upgrade taito-cli and its extensions to the latest version.
+
 
 ADVANCED COMMANDS
 -----------------
