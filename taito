@@ -21,10 +21,10 @@ if ! (
   # Determine docker entrypoint
   # TODO this is a quick hack
   entrypoint="taito"
-  if [[ "${1}" == "--login" ]]; then
+  if [[ "${1}" == "--shell" ]]; then
     entrypoint="/bin/bash"
     params=()
-  elif [[ "${2}" == "--login" ]]; then
+  elif [[ "${2}" == "--shell" ]]; then
     entrypoint="/bin/bash"
     params=()
   elif [[ "${1}" == "--" ]]; then
@@ -92,7 +92,7 @@ if ! (
       repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
       if [[ -d "${repo_local_path}" ]]; then
         # Pull the latest version
-        if [[ "${command}" == "taito-upgrade" ]]; then
+        if [[ "${command}" == "--upgrade" ]]; then
           echo "Pulling ${repo_local_path}..."
           (cd "${repo_local_path}"; git pull &> /dev/null)
         fi
@@ -126,7 +126,7 @@ if ! (
   done
 
   # Handle taito upgrades
-  if [[ "${command}" == "taito-upgrade" ]]; then
+  if [[ "${command}" == "--upgrade" ]]; then
     # Check if taito-cli image has been updated and then exit
     SECONDS=0
     docker pull "${taito_image:?}"
@@ -180,7 +180,7 @@ if ! (
 
   # Link database container if env is local and the command uses database
   # TODO: this is a quick hack
-  if ( [[ ${command} == ":local" ]] || [[ ${command} != *":"* ]] ) && \
+  if ( [[ ${command} == *":local" ]] || [[ ${command} != *":"* ]] ) && \
      ( [[ ${command} == db* ]] || [[ ${command} == o-init ]] ) && \
      [[ ${command} != db-add ]]; then
     if [[ ${mode} != "local" ]]; then
@@ -195,9 +195,9 @@ if ! (
   # `readme`. We need to also filter some control characters for a cleaner
   # output.
   output=""
-  if [[ ${command} == "taito-help"* ]] || \
-     [[ ${command} == "taito-trouble"* ]] || \
-     [[ ${command} == "taito-readme"* ]]; then
+  if [[ ${command} == "--help"* ]] || \
+     [[ ${command} == "--trouble"* ]] || \
+     [[ ${command} == "--readme"* ]]; then
     output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
       tr '\275\276' '\r\n' | tail -n +7 | less"
   fi

@@ -15,38 +15,36 @@ POD
   a Docker container or a function.
 
 
-BASIC COMMANDS
---------------
+OPTIONS
+-------
 
-taito-help
+--help
   Show help.txt of current project and a list of all taito-cli commands.
 
-taito-trouble
+--trouble
   Show trouble.txt of both current project and taito-cli.
 
-taito-readme
+--readme
   Show README.md of both current project and taito-cli.
 
-taito-auth:ENV
-  Authenticate in the context of the given environment.
-
-taito-upgrade
+--upgrade
   Upgrade taito-cli and its extensions to the latest version.
 
-
-ADVANCED COMMANDS
------------------
+--auth:ENV
+  Authenticate in the context of the given environment.
 
 --
   Execute any command inside the taito-cli container e.g.
   'taito -- kubectl get pods'.
 
---login
-  Login to the taito-cli container.
+--shell
+  Start interactive shell on the taito-cli container.
 
 
 PROJECT: BASIC OPERATIONS
 -------------------------
+
+NOTE: Prefix 'operation' is shorted to 'o' just for your convenience.
 
 o-install
   Install everything that needs to installed locally, e.g. linter libraries

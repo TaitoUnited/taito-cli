@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### aws - taito-auth:pre: Authenticating ###"
+echo "### aws - --auth:pre: Authenticating ###"
 
 echo "TODO implement" && \
 

@@ -4,9 +4,9 @@
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
-taito taito-help;\
-taito taito-readme;\
-taito taito-trouble;\
+taito --help;\
+taito --readme;\
+taito --trouble;\
 "
 
 if ! ../util/verify.sh; then

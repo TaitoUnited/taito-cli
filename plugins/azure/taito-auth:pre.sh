@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### azure - taito-auth:pre: Authenticating ###"
+echo "### azure - --auth:pre: Authenticating ###"
 
 echo "TODO implement" && \
 

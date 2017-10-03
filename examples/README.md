@@ -48,4 +48,4 @@ TODO instructions
 
 ## Miscellaneous tips
 
-See taito-cli commands by running `taito taito-help`.
+See taito-cli commands by running `taito --help`.

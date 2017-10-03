@@ -24,6 +24,11 @@ if ! (
     command=${orig_command}
   fi
 
+  # Replace -- with __ at the beginning
+  if [[ "${command}" == "--"* ]]; then
+    command="__${command#--}"
+  fi
+
   if [[ "${env}" == "" ]]; then
     # Env not given. Using local as default.
     env="local"
@@ -251,7 +256,7 @@ if ! (
       # Command not found
       echo "Unknown command: ${command}. Did you specify the correct"
       echo "environment? Some of the plugins might not be enabled in"
-      echo "'${taito_env}' environment. Run 'taito taito-help' to get help."
+      echo "'${taito_env}' environment. Run 'taito --help' to get help."
       exit_code=1
     fi
   fi

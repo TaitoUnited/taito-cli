@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### gcloud - taito-auth:pre: Authenticating ###"
+echo "### gcloud - --auth:pre: Authenticating ###"
 echo
 
 "${taito_plugin_path}/util/auth.sh" "${@}" && \

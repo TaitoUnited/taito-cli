@@ -2,12 +2,11 @@
 
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${taito_skip_override:?}"
 
 echo
-echo "### basic - taito-trouble: Showing troubleshooting files ###"
+echo "### basic - --help: Showing help files ###"
 
-"${taito_plugin_path}/util/show_file.sh" trouble.txt cat && \
+"${taito_plugin_path}/util/show_file.sh" help.txt cat && \
 echo && \
 
 # Call next command on command chain

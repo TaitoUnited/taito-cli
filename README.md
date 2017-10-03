@@ -33,13 +33,13 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 ## Usage
 
-Run `taito taito-help` to show a list of all predefined commands of taito-cli, and all custom commands of currently enabled plugins. Write `taito ` and hit tab, and you'll get autocompletion for all commands that are currently enabled (TODO dynamic autocomplete instead of static). Some of the plugins require authentication. If you encounter an authorization error, run `taito taito-auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying around on your host file system anymore.
+Run `taito --help` to show a list of all predefined commands of taito-cli, and all custom commands of currently enabled plugins. Write `taito ` and hit tab, and you'll get autocompletion for all commands that are currently enabled (TODO dynamic autocomplete instead of static). Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying around on your host file system anymore.
 
 *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun-starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctlr`+`å` for us scandinavians) and type `close`.*
 
 See the [README.md](https://github.com/TaitoUnited/server-template#readme) of server-template as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
-> Advanced usage: With the `-v` flag (verbose) you can see all the commands that plugins run during the command execution (TODO monitor child process tree to a certain level and filter irrelevant commands?). You can also easily run any shell command inside the taito-cli container e.g. `taito -- kubectl get pods`, or log in to container: `taito --login`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
+> Advanced usage: With the `-v` flag (verbose) you can see all the commands that plugins run during the command execution (TODO monitor child process tree to a certain level and filter irrelevant commands?). You can also easily run any shell command inside the taito-cli container e.g. `taito -- kubectl get pods`, or log in to container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
 
 ## Configuration
 
@@ -198,7 +198,7 @@ Responsibilities of the current default plugins:
 
 Taito-cli is designed so that in most cases your CI/CD tool needs only to execute a bunch of taito-cli commands without any arguments to get the job done. Everything is already configured in taito-config.sh, and taito-cli provides support for various infrastructures by plugins. You can also run any of the steps manually from command line using *taito-cli*. A typical CI/CD process would consist of the following steps, many of which can be run parallel.
 
-* `taito taito-auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
+* `taito --auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
 * `taito ci-cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
 * `taito ci-prepare`: Set ci flags by status check. The ci flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since all images have already been built and tested by some previous CI build.
 * `taito o-install`: Install required libraries.
@@ -258,7 +258,7 @@ You can use *taito-cli* with any project, even those that use technologies that 
 
 Alternatively you can also implement a set of taito-cli plugins for the infrastructure in question (see the next chapter).
 
-> NOTE: When adding commands to your package.json, you are encouraged to follow the predefined command set that is shown by running `taito taito-help`. The main idea behind *taito-cli* is that the same predefined command set works from project to project, no matter the technology or infrastructure.
+> NOTE: When adding commands to your package.json, you are encouraged to follow the predefined command set that is shown by running `taito --help`. The main idea behind *taito-cli* is that the same predefined command set works from project to project, no matter the technology or infrastructure.
 
 ## Custom plugins
 
@@ -380,7 +380,7 @@ TODO add documentation
 
 ## Taito-cli development
 
-Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-dev` flag (e.g. `taito -dev taito-help`). In the development mode your local taito-cli directory is mounted on the container. You can also run taito-cli locally without Docker using the `-local` flag, but note that in that case taito-cli will save credentials on host if you authenticate. You can delete your gcloud and kubernetes credentials by deleting the `~/.config/gcloud` and `~/.kube` directories.
+Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-dev` flag (e.g. `taito -dev --help`). In the development mode your local taito-cli directory is mounted on the container. You can also run taito-cli locally without Docker using the `-local` flag, but note that in that case taito-cli will save credentials on host if you authenticate. You can delete your gcloud and kubernetes credentials by deleting the `~/.config/gcloud` and `~/.kube` directories.
 
 1. Start a new feature branch.
 2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. If you are using a compiled language, add a compilation script and use `.x` as a file extension for the executable (it will be ignored by git). Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
