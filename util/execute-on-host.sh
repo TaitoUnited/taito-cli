@@ -11,7 +11,6 @@ if [[ "${taito_mode:-}" == "ci" ]] || \
   eval "${commands}"
   echo
 else
-  echo "${taito_run:?}${commands}${taito_run:?}"
-  echo
+  echo "${commands}" >> ${taito_run:?}
   sleep "${sleep_seconds:-2}"
 fi

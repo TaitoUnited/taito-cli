@@ -6,6 +6,7 @@
 if ! (
 
   # Determine parameters
+  # TODO this is a quick hack
   if [[ "${1}" == "-dev" ]]; then
     mode=dev
     params=(${@:2})
@@ -17,7 +18,7 @@ if ! (
     params=(${@:1})
   fi
 
-  # Determine entrypoint
+  # Determine docker entrypoint
   # TODO this is a quick hack
   entrypoint="taito"
   if [[ "${1}" == "--login" ]]; then
@@ -72,6 +73,7 @@ if ! (
     . ./taito-config.sh
   fi
 
+  # Determine command to be executed
   command="${params[0]}"
 
   # Determine enabled extensions
@@ -123,6 +125,7 @@ if ! (
     fi
   done
 
+  # Handle taito upgrades
   if [[ "${command}" == "taito-upgrade" ]]; then
     # Check if taito-cli image has been updated and then exit
     SECONDS=0
@@ -151,28 +154,29 @@ if ! (
     exit 0
   fi
 
-  export taito_run=".fj45jgnv."
-  export taito_run_fg=".fekfj56hk."
-  log_file=$(mktemp /tmp/taito-cli.XXXXXX)
-  echo "-" > "${log_file}"
-  # Command will execute 'docker commit' -> Start a background process
-  # that will run commands on host in the background while the container
-  # is still running
-  (
-    # Read commands from log file and execute them
-    tail -f "${log_file}" | tr -cdu '\11\12\15\40-\176' | while read -r line; do
-      c=$(echo "${line}" | grep "${taito_run}" \
-        | sed "s/^.*${taito_run}\(.*\)${taito_run}.*$/\1/")
-      if [[ ${c} != "" ]]; then
-        # TODO confirm execution?
-        eval "${c}"
-      fi
-    done
-  ) &
+  # Prepare execution log files
+  mkdir -p "${HOME}/.taito/tmp" &> /dev/null
+  log_file=$(mktemp "${HOME}/.taito/tmp/taito-cli.XXXXXX")
+  log_file_fg=$(mktemp "${HOME}/.taito/tmp/taito-cli.XXXXXX")
+  touch "${log_file}"
+  touch "${log_file_fg}"
 
-  # Export some variables to be used by various commands
+  # Export some variables to be used by various taito commands
   export taito_host_uname
   taito_host_uname="$(uname)"
+  export taito_run="${log_file/${HOME}/\/root}"
+  export taito_run_fg="${log_file_fg/${HOME}/\/root}"
+
+  # Start a background process that will run commands on host in the
+  # background while the container is still running
+  # Commands are read from a log file.
+  (
+    # Read commands from log file and execute them
+    tail -f "${log_file}" | while read -r line; do
+      # TODO confirm execution?
+      eval "${line}"
+    done
+  ) &
 
   # Link database container if env is local and the command uses database
   # TODO: this is a quick hack
@@ -191,17 +195,19 @@ if ! (
   # `readme`. We need to also filter some control characters for a cleaner
   # output.
   output=""
-  if [[ ${command} == "taito-help"* ]] || [[ ${command} == "taito-trouble"* ]] || \
+  if [[ ${command} == "taito-help"* ]] || \
+     [[ ${command} == "taito-trouble"* ]] || \
      [[ ${command} == "taito-readme"* ]]; then
     output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
       tr '\275\276' '\r\n' | tail -n +7 | less"
   fi
 
+  # Execute command
   if [[ "${mode}" == "local" ]]; then
     # Mode: run directly on host
     export taito_mode="${mode}"
     export taito_enabled_extensions="${extensions_local_mode}"
-    eval "${cli_path}/taito_impl.sh ${params[@]} | tee ${log_file} ${output}"
+    eval "${cli_path}/taito_impl.sh ${params[@]} ${output}"
   else
     # Mode: run on docker container
     export taito_image_name
@@ -239,28 +245,27 @@ if ! (
       -e taito_image_name=\"${taito_image_name}\" \
       --entrypoint ${entrypoint} \
       ${image_flag} \
-      ${params[@]} | tee \"${log_file}\" ${output}"
+      ${params[@]} ${output}"
   fi
 
-  # Execute host commands on foreground. Commands are read from log file.
-  c=$(cat "${log_file}" | grep "${taito_run_fg}" | \
-    sed "s/^.*${taito_run_fg}\(.*\)${taito_run_fg}.*$/\1/")
-  if [[ ${c} != "" ]]; then
+  # Execute requested commands on foreground after container has exited.
+  cat "${log_file_fg}" | while read -r line; do
     # TODO confirm execution?
     echo
     echo "------------------------------------------------------------------------------"
     echo
-    if ! eval "${c}"; then
-      echo "ERROR!"
-      exit 1
-    fi
-  fi
+    eval "${line}"
+  done
 
-  # Kill background execution process
-  pgrep -f "${log_file}" | xargs kill &> /dev/null
-  # TODO Suppress 'terminated' output of process
+  # Kill the background execution process
+  pkill -f "${log_file}"
+
+  # Cleanup
   rm -f "${log_file}" &> /dev/null
+  rm -f "${log_file_fg}" &> /dev/null
 
 ); then
   exit 1
 fi
+
+exit 0

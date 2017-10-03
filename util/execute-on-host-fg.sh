@@ -10,6 +10,5 @@ if [[ "${taito_mode:-}" == "ci" ]] || \
   eval "${commands}"
   echo
 else
-  echo "${taito_run_fg:?}${commands}${taito_run_fg:?}"
-  echo
+  echo "${commands}" >> ${taito_run_fg:?}
 fi
