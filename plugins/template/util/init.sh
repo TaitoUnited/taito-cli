@@ -6,15 +6,15 @@
 
 export mode=${1}
 
-echo "Short name of customer (one word)?"
+echo "Short name of customer or product family (one word)?"
 read -r customer
 
 echo
-echo "Short name of project (one word)?"
+echo "Short name of project or product (one word)?"
 read -r project
 
 echo
-echo "Suffix for project e.g (gui, api, etc)?"
+echo "Additional suffix for this repository e.g (gui, api, etc)?"
 echo "NOTE: Suffix is optional. You can usually leave it empty."
 read -r project_suffix
 
