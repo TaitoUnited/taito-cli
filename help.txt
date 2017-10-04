@@ -88,9 +88,9 @@ o-logs[:ENV] POD [CONTAINER]
   See logs of a pod. Run status:ENV first to get the pod name and status.
   Example: taito o-logs:dev myapp-dev-client-3034393823-2f5jf
 
-o-login[:ENV] POD [CONTAINER]
+o-shell[:ENV] POD [CONTAINER]
   Login to pod. Run status:ENV first to get the pod name and status.
-  Example: taito o-login:dev myapp-dev-client-3034393823-2f5jf
+  Example: taito o-shell:dev myapp-dev-client-3034393823-2f5jf
 
 o-exec[:ENV] POD CONTAINER COMMAND
   Execute command on pod. Give - as container if it should be determined

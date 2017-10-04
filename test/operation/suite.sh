@@ -20,8 +20,8 @@ taito o-status;\
 taito o-status:dev;\
 taito o-log customer-app-server;\
 taito o-log:dev customer-app-server;\
-taito o-login customer-app-server;\
-taito o-login:dev customer-app-server;\
+taito o-shell customer-app-server;\
+taito o-shell:dev customer-app-server;\
 taito o-exec customer-app-server - ls;\
 taito o-exec:dev customer-app-server - ls;\
 taito o-kill customer-app-server;\
