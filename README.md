@@ -323,7 +323,7 @@ NOTE: Do not call another command directly from another. It's error prone; you'l
 
 ### Running commands on host
 
-If your command needs to run some command on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS [SLEEP_SECONDS]` to run it immediately in the background. Alternatively you can use the `"${taito_cli_path}/util/execute-on-host-fg.sh" COMMANDS` to run commands on foreground after the taito container has exited.
+If your command needs to run some command on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS` to run it immediately in the background. Alternatively you can use the `"${taito_cli_path}/util/execute-on-host-fg.sh" COMMANDS` to run commands on foreground after the taito container has exited.
 
 Currently this mechanism is used  e.g. for executing docker commands and launching browser on host.
 

@@ -19,9 +19,10 @@ mkdir "${template_project_path}/template-tmp"
 "${taito_cli_path}/util/execute-on-host.sh" "\
   git clone ${template_source_git_url}/${template}.git ./template-tmp/${template} && \
   (cd ./template-tmp/${template} && git checkout master) && \
-  echo 'Please wait...'" 15 && \
-echo
-echo
+  echo 'Please wait...'" && \
+  sleep 15 && \
+echo && \
+echo && \
 
 (
   cd "${template_project_path}/template-tmp/${template}" && \

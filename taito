@@ -127,15 +127,18 @@ if ! (
 
   # Handle taito upgrades
   if [[ "${command}" == "--upgrade" ]]; then
-    # Check if taito-cli image has been updated and then exit
+    # Pull latest version of taito bash script
+    (cd "${cli_path}"; git pull)
+
+    # Check if taito-cli image has been updated
     SECONDS=0
     docker pull "${taito_image:?}"
     if [[ ${SECONDS} -lt 12 ]]; then
-      # Image was not pulled. Using the old image with saved credentials.
+      # Image was not pulled. Using the old image.
       docker image tag "${taito_image}save" \
         "${taito_image}" &> /dev/null
     else
-      # Image was pulled
+      # Image was pulled -> copy credentials.
       docker rm taito-save taito-new &> /dev/null
       if docker create --name taito-save "${taito_image}save" &> /dev/null; then
         echo "Copying credentials from the old image."

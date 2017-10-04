@@ -30,7 +30,8 @@ if [[ ${mode} == "create" ]]; then
     git clone ${template_source_git_url}/${template}.git ${repo_name} && \
     cd ${repo_name} && \
     git checkout master && \
-    rm -rf .git" 7
+    rm -rf .git"
+  sleep 7
   echo "Create GitHub repository \'${template_dest_git_url}/${repo_name}\'"
   echo "with the following settings:"
   echo "- Private, README.md not initialized"
