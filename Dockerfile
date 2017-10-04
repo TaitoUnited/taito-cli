@@ -158,6 +158,10 @@ RUN mv cloud_sql_proxy /usr/local/bin
 # RUN cd docker-gc
 # RUN debuild --no-lintian -us -uc -b
 # RUN dpkg -i ../docker-gc_0.1.0_all.deb
+RUN git clone https://github.com/spotify/docker-gc.git /docker-gc
+RUN echo "taitounited/taito-cli:latest" >> /etc/docker-gc-exclude
+RUN echo "taitounited/taito-cli:latestsave" >> /etc/docker-gc-exclude
+VOLUME /var/lib/docker-gc
 
 # Install some misc stuff required by plugins
 RUN apt-get clean
