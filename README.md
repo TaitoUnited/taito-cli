@@ -13,9 +13,8 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 ## Prerequisites
 
 * Docker
+* Git
 * Bash
-
-> NOTE: You can get bash also for Windows by installing the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about).
 
 ## Installation
 
@@ -30,6 +29,8 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
     ```
 
 3. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
+
+> NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. However, for basic usage you can alternatively use the `taito.bat` instead of `taito` bash script.
 
 ## Upgrade
 
