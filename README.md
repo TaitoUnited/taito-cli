@@ -19,7 +19,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 ## Installation
 
-1. Copy or symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a simple bash script that runs taito-cli as a Docker container.
+1. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a simple bash script that runs taito-cli as a Docker container.
 
 2. Configure your personal settings in `~/.taito/taito-config.sh`. For example:
     ```
@@ -31,6 +31,10 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 3. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
 
+## Upgrade
+
+You can upgrade by running `taito --upgrade`.
+
 ## Usage
 
 Run `taito --help` to show a list of all predefined commands of taito-cli, and all custom commands of currently enabled plugins. Write `taito ` and hit tab, and you'll get autocompletion for all commands that are currently enabled (TODO dynamic autocomplete instead of static). Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying around on your host file system anymore.
@@ -39,7 +43,7 @@ Run `taito --help` to show a list of all predefined commands of taito-cli, and a
 
 See the [README.md](https://github.com/TaitoUnited/server-template#readme) of server-template as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
-> Advanced usage: With the `-v` flag (verbose) you can see all the commands that plugins run during the command execution (TODO monitor child process tree to a certain level and filter irrelevant commands?). You can also easily run any shell command inside the taito-cli container e.g. `taito -- kubectl get pods`, or log in to container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
+> Advanced usage: With the `-v` flag (verbose) you can see all the commands that plugins run during the command execution (TODO monitor child process tree to a certain level and filter irrelevant commands?). You can also easily run any shell command inside the taito-cli container e.g. `taito -- kubectl get pods`, or start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
 
 ## Configuration
 
