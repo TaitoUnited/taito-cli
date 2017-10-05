@@ -21,6 +21,8 @@ OPTIONS
 --help
   Show help.txt of current project and a list of all taito-cli commands.
 
+  TODO: implement support for command specific help (taito COMMAND --help)
+
 --trouble
   Show trouble.txt of both current project and taito-cli.
 
@@ -44,16 +46,19 @@ OPTIONS
 PROJECT: BASIC OPERATIONS
 -------------------------
 
-NOTE: Prefix 'operation' is shorted to 'o' just for your convenience.
+NOTE: Prefix 'operation' has been shortened to 'o' just for your convenience.
 
 o-install
   Install everything that needs to installed locally, e.g. linter libraries
-  to be used by your editor. TIP: Enable the npm plugin as it will call
-  `npm install` automatically.
+  to be used by your editor.
+
+  TIP: Enable the npm plugin as it will call `npm install` automatically.
 
 o-compile
-  Compile (for projects that need to be compiled). TIP: Enable the npm plugin
-  and implement o-compile script in your package.json.
+  Compile (for projects that need to be compiled).
+
+  TIP: Enable the npm plugin and implement o-compile script in your
+  package.json.
 
 o-start[:ENV] [--clean] [--prod]
   Start. Use the 'clean' switch to clean all before start. Use the 'prod'
@@ -76,10 +81,11 @@ o-stop[:ENV]
   Stop.
 
 o-users[:ENV]
-  Show user accounts that you can use to log in. TIP: Enable the npm plugin and
-  implement o-users[:ENV] script in your package.json. Hard coded user accounts
-  for local, dev and test environments suffice. Usually not implemented for
-  staging and production environments.
+  Show user accounts that you can use to log in.
+
+  TIP: Enable the npm plugin and implement o-users[:ENV] script in your
+  package.json. Hard coded user accounts for local, dev and test environments
+  suffice. Usually not implemented for staging and production environments.
 
 o-status[:ENV]
   Show status summary of environment (status of services, pods, etc.).
@@ -268,30 +274,39 @@ ci-verify[:ENV]
 
 ci-docs
   Generate docs e.g. API docs from API definitions and PDF files from
-  markdown documentation. TIP: Enable the npm plugin and implement ci-docs
-  script in your package.json.
+  markdown documentation.
+
+  TIP: Enable the npm plugin and implement ci-docs script in your package.json.
 
 ci-scan
-  Lint code, scan for vulnerabilities, etc. TIP: Enable the npm plugin and
-  implement ci-scan script in your package.json and your code will be scanned.
+  Lint code, scan for vulnerabilities, etc.
+
+  TIP: Enable the npm plugin and implement ci-scan script in your package.json
+  and your code will be scanned.
 
 ci-test-unit
-  Run all unit tests. TIP: Enable the npm plugin and implement ci-test-unit
-  script in your package.json.
+  Run all unit tests.
+
+  TIP: Enable the npm plugin and implement ci-test-unit script in your
+  package.json.
 
 ci-test-api[:ENV]
-  Run all api tests. TIP: Enable the npm plugin and implement ci-test-api:ENV
-  script in your package.json. You can configure test users and passwords for
-  each environment in taito-config.sh as those settings are available to your
-  npm script as environment variables. At least implement tests for local
-  environment (other target environments are optional).
+  Run all api tests.
+
+  TIP: Enable the npm plugin and implement ci-test-api:ENV script in your
+  package.json. You can configure test users and passwords for each environment
+  in taito-config.sh as those settings are available to your npm script as
+  environment variables. At least implement tests for local environment
+  (other target environments are optional).
 
 ci-test-e2e[:ENV]
-  Run all e2e tests. TIP: Enable the npm plugin and implement ci-test-e2e:ENV
-  script in your package.json. You can configure test users and passwords for
-  each environment in taito-config.sh as those settings are available to your
-  npm script as environment variables. At least implement tests for local
-  environment (other target environments are optional).
+  Run all e2e tests.
+
+  TIP: Enable the npm plugin and implement ci-test-e2e:ENV script in your
+  package.json. You can configure test users and passwords for each environment
+  in taito-config.sh as those settings are available to your npm script as
+  environment variables. At least implement tests for local environment
+  (other target environments are optional).
 
 ci-publish
   Publishes build artifacts (e.g. docs, test reports) to a central location.
@@ -300,6 +315,7 @@ ci-release-pre:ENV
 ci-release-post:ENV
   Release pre and post handling. These commands usually generate release notes
   automatically and tag the git repository with a new version number.
+
   TIP: Enable the npm plugin and implement ci-release-pre:prod and
   ci-release-post:prod scripts in your package.json.
 
@@ -355,13 +371,17 @@ PROJECT: CONTACTS
 -----------------
 
 contacts-development
-  List of contacts required for development. TIP: Enable the npm plugin and
-  implement contacts-development script in your package.json.
+  List of contacts required for development.
+
+  TIP: Enable the npm plugin and implement contacts-development script in your
+  package.json.
 
 contacts-maintenance
   List contacts that should be notified of a maintenance break, incident or
-  some other problems. TIP: Enable the npm plugin and implement
-  contacts-maintenance script in your package.json.
+  some other problems.
+
+  TIP: Enable the npm plugin and implement contacts-maintenance script in your
+  package.json.
 
 contacts-users [TYPE]
   TODO optional command for listing users that should be notified of incidents,

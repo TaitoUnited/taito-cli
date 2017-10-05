@@ -38,7 +38,7 @@ if [[ "${taito_env}" == "prod" ]]; then
   echo "- Title: ${taito_project}-${taito_env}"
   echo "- Type: HTTPS"
   echo "- Hostname: ${taito_app_url}"
-  echo "- Path: / and /api/uptimez"
+  echo "- Path: /uptimez and /api/uptimez"
   echo "- Check every: 1 minute"
   echo "- Do not create a new policy. Add to the existing 'Uptime Check Policy' instead."
   echo "Press enter to open the uptime check management"
