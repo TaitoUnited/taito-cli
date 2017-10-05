@@ -20,13 +20,13 @@ OPTIONS
 
 --help
   Show help.txt of current project and a list of all taito-cli commands.
-  TODO: implement support for command specific help (taito COMMAND --help)
+  Run 'taito COMMAND --help' to get help for a specific command.
 
 --trouble
-  Show trouble.txt of both current project and taito-cli.
+  Show trouble.txt of current project and taito-cli.
 
 --readme
-  Show README.md of both current project and taito-cli.
+  Show README.md of current project and taito-cli.
 
 --upgrade
   Upgrade taito-cli and its extensions to the latest version.
