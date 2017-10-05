@@ -266,6 +266,13 @@ if ! (
       echo "is the one you meant to run. Run 'taito --help' to get more help."
       export taito_plugin_path="${cli_path}/plugins/basic"
       "${cli_path}/plugins/basic/__help.sh" "${command}"
+
+      # Call also help of link plugin as it defined commands dynamically
+      # TODO This is a hack
+      if [[ "${taito_enabled_plugins}" == *" link "* ]]; then
+        "${cli_path}/plugins/link/__help.sh" "${command}"
+      fi
+
       exit_code=1
     fi
   fi
