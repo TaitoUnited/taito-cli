@@ -24,6 +24,12 @@ if ! (
     command=${orig_command}
   fi
 
+  # Handle 'taito COMMAND --help'
+  if [[ "${params[@]}" == *"--help"* ]]; then
+    params=(${command})
+    command="--help"
+  fi
+
   # Replace -- with __ at the beginning
   if [[ "${command}" == "--"* ]]; then
     command="__${command#--}"

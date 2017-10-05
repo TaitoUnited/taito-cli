@@ -202,7 +202,9 @@ if ! (
      [[ ${command} == "--trouble"* ]] || \
      [[ ${command} == "--readme"* ]]; then
     output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
-      tr '\275\276' '\r\n' | tail -n +7 | less"
+      tr '\275\276' '\r\n' | tail -n +5 | less"
+  elif [[ ${params[@]} == *"--help"* ]]; then
+    output="| tail -n +5"
   fi
 
   # Execute command
