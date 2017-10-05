@@ -204,7 +204,7 @@ if ! (
     output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
       tr '\275\276' '\r\n' | tail -n +5 | less"
   elif [[ ${params[@]} == *"--help"* ]]; then
-    output="| tail -n +5"
+    output="| tail -n +3"
   fi
 
   # Execute command

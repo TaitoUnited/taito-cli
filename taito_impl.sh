@@ -262,7 +262,10 @@ if ! (
       # Command not found
       echo "Unknown command: ${command}. Did you specify the correct"
       echo "environment? Some of the plugins might not be enabled in"
-      echo "'${taito_env}' environment. Run 'taito --help' to get help."
+      echo "'${taito_env}' environment. Perhaps one of the following commands"
+      echo "is the one you meant to run. Run 'taito --help' to get more help."
+      export taito_plugin_path="${cli_path}/plugins/basic"
+      "${cli_path}/plugins/basic/__help.sh" "${command}"
       exit_code=1
     fi
   fi

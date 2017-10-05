@@ -5,8 +5,10 @@
 
 filter=${1}
 
-echo
-echo "### basic - --help: Showing help files ###"
+if [[ -z "${filter}" ]]; then
+  echo
+  echo "### basic - --help: Showing help files ###"
+fi
 echo
 
 "${taito_plugin_path}/util/show_file.sh" help.txt cat "${filter}" && \
