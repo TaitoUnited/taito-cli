@@ -1,8 +1,6 @@
 # taito-cli
 
-Taito-cli is an extensible toolkit for developers, devops personnel and build automation. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that are implemented by various plugins. Thus, developers and devops personnel may always run the same familiar set of simple commands from project to project, old and new, no matter the technology or infrastructure. And CI tools may use the same commands also. You can also easily extend the predefined command set with your own custom commands. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
-
-Taito-cli decouples CI/CD build tools from the rest of the infrastructure. Any combination of CI/CD tools and cloud service providers are easy to set up as CI/CD steps are implemented with *taito-cli*. This makes CI/CD scripts clean and reusable as they no longer include so much infrastructure and project specific logic. And you can also easily execute any CI/CD step manually on command line with *taito-cli* in case of trouble.
+Taito-cli is an extensible toolkit for developers, devops personnel and build automation tools. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. Thus, developers, devops personnel and CI build scripts may always run the same familiar set of simple commands from project to project. You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
@@ -32,19 +30,21 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 > NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. However, for basic usage you can alternatively use the `taito.bat` instead of `taito` bash script.
 
-## Upgrade
+## Upgrading
 
-You can upgrade by running `taito --upgrade`.
+You can upgrade taito-cli and it's extensions by running `taito --upgrade`.
 
 ## Usage
 
-Run `taito --help` to show a list of all predefined commands of taito-cli, and all custom commands of currently enabled plugins. Write `taito ` and hit tab, and you'll get autocompletion for all commands that are currently enabled (TODO dynamic autocomplete instead of static). Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying around on your host file system anymore.
+Run `taito --help` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Write `taito ` and hit tab, and you'll get autocompletion for all commands that are currently enabled (TODO dynamic autocomplete instead of static). Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying around on your host file system anymore.
 
 *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun-starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctlr`+`å` for us scandinavians) and type `close`.*
 
 See the [README.md](https://github.com/TaitoUnited/server-template#readme) of server-template as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
-> Advanced usage: With the `-v` flag (verbose) you can see all the commands that plugins run during the command execution (TODO monitor child process tree to a certain level and filter irrelevant commands?). You can also easily run any shell command inside the taito-cli container e.g. `taito -- kubectl get pods`, or start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
+> Advanced usage: You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
+
+TODO: With the `-v` flag (verbose) you can see all the commands that plugins run during the command execution.
 
 ## Configuration
 
@@ -55,7 +55,7 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     # taito-cli default settings
     export taito_image="taitounited/taito-cli:latest"
     export taito_global_extensions="~/my-extension git@github.com:MyOrganization/another-extension.git"
-    export taito_global_plugins="git fun template myplugin another"
+    export taito_global_plugins="git fun template myplugin anotherplugin"
 
     # template plugin default settings
     export template_source_git_url="git@github.com:TaitoUnited"
@@ -180,9 +180,9 @@ And here is an example of a project specific `taito-config.sh`:
 
     # NOTE: Secret naming convention: type.target_of_type.purpose[/namespace]:generation_method
     export taito_secrets="
-      random:db.${postgres_database}.app
-      random:db.${postgres_database}.build/devops
-      copy/devops:ext.cloudsql.proxy"
+      db.${postgres_database}.app:random
+      db.${postgres_database}.build/devops:random
+      ext.cloudsql.proxy:copy/devops"
 
 ## Secret management
 
