@@ -20,7 +20,8 @@ OPTIONS
 
 --help
   Show help.txt of current project and a list of all taito-cli commands.
-  Run 'taito COMMAND --help' to get help for a specific command.
+  Run 'taito COMMAND --help' to get help for a specific command or
+  'taito PREFIX --help' to get help for a specific set of commands.
 
 --trouble
   Show trouble.txt of current project and taito-cli.
@@ -44,7 +45,7 @@ OPTIONS
 
 PROJECT: BASIC OPERATIONS
 -------------------------
-NOTE: Prefix 'operation' has been shortened to 'o' just for your convenience.
+> Prefix 'operation' has been shortened to 'o' just for your convenience.
 
 o-install
   Install everything that needs to installed locally, e.g. linter libraries
@@ -220,10 +221,9 @@ db-copyquick:ENV SOURCE_ENV
 
 PROJECT: CI/CD OPERATIONS
 -------------------------
-
-This section provides commands for CI/CD and also additional commands that
-are related to deployments one way or another. Note that all db related
-operations are listed in db section.
+> This section provides commands for CI/CD and also additional commands that
+> are related to deployments one way or another. Note that all db related
+> operations are listed in db section.
 
 ci-prepare
   Set ci flags by status check. The ci flags are used to control the following
@@ -344,10 +344,9 @@ env-cert[:ENV] DOMAIN
 
 PROJECT: ALTERNATIVE ENVIRONMENTS
 ---------------------------------
-
-An alternative environment uses the same database as the main environment, but
-containers are built from an alternative branch. You can use alternative
-environments for canary releases, A/B testing, etc.
+> An alternative environment uses the same database as the main environment,
+> but containers are built from an alternative branch. You can use alternative
+> environments for canary releases, A/B testing, etc.
 
 env-alt-create:ENV [NAME] [GIT_BRANCH]
   Create an alternative environment. TODO not implemented.

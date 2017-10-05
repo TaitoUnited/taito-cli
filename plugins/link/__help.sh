@@ -9,20 +9,24 @@ if [[ -z "${filter}" ]]; then
   echo "LINKS"
   echo "-----"
   echo
+fi
 
-  links=("${link_urls}")
-  for link in ${links[@]}
-  do
-    prefix="$( cut -d '=' -f 1 <<< "$link" )";
-    command_prototype=${prefix%#*}
-    name=${prefix##*#}
+links=("${link_urls}")
+for link in ${links[@]}
+do
+  prefix="$( cut -d '=' -f 1 <<< "$link" )";
+  command_prototype=${prefix%#*}
+  name=${prefix##*#}
 
+  if [[ -z "${filter}" ]] || [[ "${command_prototype}" == "${filter}"* ]]; then
     echo "${command_prototype}"
     echo "  Opens ${name} in browser."
     echo
-  done
+  fi
+done
 
-  echo
+if [[ -z "${filter}" ]]; then
+ echo
 fi
 
 # Call next command on command chain

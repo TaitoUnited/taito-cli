@@ -36,7 +36,7 @@ do
 done
 
 if [[ -n ${filter} ]]; then
-  echo -e "${content}" | awk "/${filter}/,/^$/" | "${command}"
+  echo -e "${content}" | awk "/^${filter}/,/^$/" | "${command}"
 else
   echo -e "${content}" | "${command}"
 fi
