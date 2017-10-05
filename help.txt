@@ -18,10 +18,10 @@ POD
 OPTIONS
 -------
 
---help
+--help, -h
   Show help.txt of current project and a list of all taito-cli commands.
-  Run 'taito COMMAND --help' to get help for a specific command or
-  'taito PREFIX --help' to get help for a specific set of commands.
+  Run 'taito COMMAND -h' to get help for a specific command or
+  'taito PREFIX -h' to get help for a specific set of commands.
 
 --trouble
   Show trouble.txt of current project and taito-cli.

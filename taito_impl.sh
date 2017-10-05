@@ -24,17 +24,6 @@ if ! (
     command=${orig_command}
   fi
 
-  # Handle 'taito COMMAND --help'
-  if [[ "${params[@]}" == *"--help"* ]]; then
-    params=(${command})
-    command="--help"
-  fi
-
-  # Replace -- with __ at the beginning
-  if [[ "${command}" == "--"* ]]; then
-    command="__${command#--}"
-  fi
-
   if [[ "${env}" == "" ]]; then
     # Env not given. Using local as default.
     env="local"
@@ -53,6 +42,23 @@ if ! (
     branch="master"
   elif [[ "${branch}" == "local" ]]; then
     branch=""
+  fi
+
+  # Handle 'taito -h'
+  if [[ "${command}" == "-h" ]]; then
+    command="--help"
+  fi
+
+  # Handle 'taito COMMAND --help'
+  if [[ " ${params[@]} " == *" -h "* ]] || \
+     [[ " ${params[@]} " == *" --help "* ]]; then
+    params=(${command})
+    command="--help"
+  fi
+
+  # Replace -- with __ at the beginning to match command filename naming
+  if [[ "${command}" == "--"* ]]; then
+    command="__${command#--}"
   fi
 
   # Resolve project root folder by the location of taito-config.sh

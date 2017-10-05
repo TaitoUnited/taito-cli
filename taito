@@ -198,12 +198,14 @@ if ! (
   # `readme`. We need to also filter some control characters for a cleaner
   # output.
   output=""
-  if [[ ${command} == "--help"* ]] || \
+  if [[ ${command} == "-h"* ]] || \
+     [[ ${command} == "--help"* ]] || \
      [[ ${command} == "--trouble"* ]] || \
      [[ ${command} == "--readme"* ]]; then
     output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
       tr '\275\276' '\r\n' | tail -n +5 | less"
-  elif [[ ${params[@]} == *"--help"* ]]; then
+  elif [[ " ${params[@]} " == *" -h "* ]] || \
+       [[ " ${params[@]} " == *" --help "* ]]; then
     output="| tail -n +3"
   fi
 
