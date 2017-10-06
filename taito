@@ -255,13 +255,7 @@ if ! (
   fi
 
   # Execute requested commands on foreground after container has exited.
-  cat "${log_file_fg}" | while read -r line; do
-    # TODO confirm execution?
-    echo
-    echo "------------------------------------------------------------------------------"
-    echo
-    eval "${line}"
-  done
+  eval "$(cat "${log_file_fg}")"
 
   # Kill the background execution process
   pkill -f "${log_file}"
