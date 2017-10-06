@@ -183,9 +183,11 @@ if ! (
 
   # Link database container if env is local and the command uses database
   # TODO: this is a quick hack
-  if ( [[ ${command} == *":local" ]] || [[ ${command} != *":"* ]] ) && \
-     ( [[ ${command} == "db-"* ]] || [[ ${command} == o-init ]] ) && \
-     [[ ${command} != db-add ]]; then
+  if ( [[ ${command} =~ db-.+ ]] || [[ ${command} == o-init ]] ) && \
+     ( [[ ${command} == *":local" ]] || [[ ${command} != *":"* ]] ) && \
+     [[ ${command} != db-add ]] && \
+     [[ " ${params[@]} " != *" -h "* ]] && \
+     [[ " ${params[@]} " != *" --help "* ]]; then
     if [[ ${mode} != "local" ]]; then
       link_flags="--link ${taito_project}-database:${taito_project}-database"
     else
