@@ -11,7 +11,7 @@ _taito ()
   case "$cur" in
     *)
     COMPREPLY=( $( compgen -W '\
-    --help --readme --trouble --auth: --upgrade -- --shell \
+    -h --help --readme --trouble --auth: --upgrade -- --shell \
     o-install o-compile o-start: o-run: o-init open-app: open-admin: o-stop: \
     o-users: o-status: o-logs: o-shell: o-exec: o-kill: o-clean \
     workspace-clean workspace-kill \

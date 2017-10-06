@@ -56,6 +56,11 @@ if ! (
     command="--help"
   fi
 
+  # Handle 'taito' without arguments
+  if [[ -z "${command}" ]]; then
+    command=" "
+  fi
+
   # Replace -- with __ at the beginning to match command filename naming
   if [[ "${command}" == "--"* ]]; then
     command="__${command#--}"
@@ -232,7 +237,9 @@ if ! (
   export taito_enabled_plugins="${enabled_plugins}"
 
   # Print command chain
-  if [[ ${skip_override} == false ]] && [[ ${command_exists} == true ]]; then
+  if [[ ${skip_override} == false ]] && \
+     [[ ${command_exists} == true ]] && \
+     [[ ${command} != "__"* ]]; then
     echo "### Taito-cli: Executing on ${taito_customer:-}-${taito_env} environment: ###"
     echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
   fi
@@ -266,19 +273,22 @@ if ! (
       fi
     else
       # Command not found
-      echo "Unknown command: ${command}. Did you specify the correct"
-      echo "environment? Some of the plugins might not be enabled in"
-      echo "'${taito_env}' environment. Perhaps one of the following commands"
-      echo "is the one you meant to run. Run 'taito --help' to get more help."
-      export taito_plugin_path="${cli_path}/plugins/basic"
-      "${cli_path}/plugins/basic/__help.sh" "${command}"
+      echo "Unknown command: '${command}'. Did you specify the correct ENV?"
+      echo "Some of the plugins might not be enabled in '${taito_env}' environment."
 
-      # Call also help of link plugin as it defined commands dynamically
-      # TODO This is a hack
-      if [[ "${taito_enabled_plugins}" == *" link "* ]]; then
-        "${cli_path}/plugins/link/__help.sh" "${command}"
+      # Show matching commands
+      if [[ "${command}" != " " ]]; then
+        echo "Perhaps one of the following commands is the one you meant to run."
+        echo "Run 'taito --help' to get more help."
+        export taito_plugin_path="${cli_path}/plugins/basic"
+        "${cli_path}/plugins/basic/__help.sh" "${command}"
+
+        # Call also help of link plugin as it defined commands dynamically
+        # TODO This is a hack
+        if [[ "${taito_enabled_plugins}" == *" link "* ]]; then
+          "${cli_path}/plugins/link/__help.sh" "${command}"
+        fi
       fi
-
       exit_code=1
     fi
   fi

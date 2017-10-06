@@ -184,7 +184,7 @@ if ! (
   # Link database container if env is local and the command uses database
   # TODO: this is a quick hack
   if ( [[ ${command} == *":local" ]] || [[ ${command} != *":"* ]] ) && \
-     ( [[ ${command} == db* ]] || [[ ${command} == o-init ]] ) && \
+     ( [[ ${command} == "db-"* ]] || [[ ${command} == o-init ]] ) && \
      [[ ${command} != db-add ]]; then
     if [[ ${mode} != "local" ]]; then
       link_flags="--link ${taito_project}-database:${taito_project}-database"
@@ -203,10 +203,7 @@ if ! (
      [[ ${command} == "--trouble"* ]] || \
      [[ ${command} == "--readme"* ]]; then
     output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
-      tr '\275\276' '\r\n' | tail -n +5 | less"
-  elif [[ " ${params[@]} " == *" -h "* ]] || \
-       [[ " ${params[@]} " == *" --help "* ]]; then
-    output="| tail -n +3"
+      tr '\275\276' '\r\n' | tail -n +3 | less"
   fi
 
   # Execute command

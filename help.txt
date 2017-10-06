@@ -68,12 +68,6 @@ o-init
   Make sure that everything has been initialized (database, etc.). The init
   command is used in local environment only.
 
-open-app[:ENV]
-  Open application user interface.
-
-open-admin[:ENV]
-  Open admin user interface.
-
 o-stop[:ENV]
   Stop.
 
