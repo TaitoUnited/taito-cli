@@ -271,6 +271,9 @@ if ! (
          >&2 echo ERROR!
         exit_code=1
       fi
+    elif [[ "${command}" == "o-init" ]]; then
+      # Note of the plugins has implemented o-init
+      echo "Nothing to initialize"
     else
       # Command not found
       echo "Unknown command: '${command}'. Did you specify the correct ENV?"

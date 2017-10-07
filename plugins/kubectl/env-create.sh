@@ -14,6 +14,7 @@ echo "### kubectl - env-create: Saving new secrets to Kubernetes ###"
 # Make sure that namespace exists
 kubectl create namespace "${taito_customer}-${taito_env}" &> /dev/null
 
+export kubectl_skip_restart="true";
 "${taito_plugin_path}/util/save-secrets.sh" && \
 
 # Call next command on command chain

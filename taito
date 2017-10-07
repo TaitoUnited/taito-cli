@@ -186,6 +186,7 @@ if ! (
   if ( [[ ${command} =~ db-.+ ]] || [[ ${command} == o-init ]] ) && \
      ( [[ ${command} == *":local" ]] || [[ ${command} != *":"* ]] ) && \
      [[ ${command} != db-add ]] && \
+     [[ ${taito_plugins} == *"postgres"* ]] && \
      [[ " ${params[@]} " != *" -h "* ]] && \
      [[ " ${params[@]} " != *" --help "* ]]; then
     if [[ ${mode} != "local" ]]; then

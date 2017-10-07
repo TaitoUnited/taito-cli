@@ -3,6 +3,8 @@
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_project:?}"
+: "${taito_customer:?}"
+: "${kubectl_skip_restart:-}"
 
 name_filter="${1}"
 
@@ -63,7 +65,11 @@ done && \
 #   jq ".items[].metadata.namespace = \"${taito_namespace}\"" \
 #   | kubectl create -f  -
 
-echo && \
-echo "--- kubectl: Restarting pods ---" && \
-echo "TODO rolling update instead of delete?" && \
-kubectl delete --all pods --namespace="${taito_customer}-${taito_env}"
+if [[ ${kubectl_skip_restart:-} != "true" ]]; then
+  echo && \
+  echo "--- kubectl: Restarting pods ---" && \
+  echo "TODO rolling update instead of delete?" && \
+  kubectl delete --all pods --namespace="${taito_customer}-${taito_env}"
+else
+  echo "--- NOTE: Skipping pod restart for refreshing secrets ---"
+fi
