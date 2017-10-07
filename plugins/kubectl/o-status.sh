@@ -13,25 +13,36 @@ fi
 
 echo
 echo "### kubectl - o-status: Showing status of ${taito_env} ###"
+echo
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
 if [[ "${switch}" == "--all" ]]; then
   switch=
-  echo
-  echo "--- Nodes ---"
+  echo "--- Node details ---"
   kubectl describe nodes
+  echo
+  echo
 fi
-echo
-echo "--- Ingress ---"
-kubectl get ingress "${params[@]}"
-echo
-echo
-echo "--- Services ---"
-kubectl get services "${params[@]}"
+
+echo "--- Nodes ---"
+kubectl top nodes
 echo
 echo
+
+if [[ "${switch}" == "--all" ]]; then
+  echo "--- Ingress ---"
+  kubectl get ingress "${params[@]}"
+  echo
+  echo
+
+  echo "--- Services ---"
+  kubectl get services "${params[@]}"
+  echo
+  echo
+fi
+
 echo "--- Pods ---"
 kubectl get pods "${params[@]}"
 

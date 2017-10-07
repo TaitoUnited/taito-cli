@@ -228,7 +228,11 @@ ci-prepare
   will be skipped since all images have already been built and tested
   by some previous CI build.
 
-ci-build CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
+ci-lock[:ENV] CONTAINER_NAME
+  Locks libraries according to image deployed to environment. Example:
+  'taito ci-lock:dev client'. TODO implement.
+
+ci-build[:ENV] CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
   Builds image. Example: 'taito ci-build:dev client test1'.
 
 ci-push CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
