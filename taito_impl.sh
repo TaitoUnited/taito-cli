@@ -58,7 +58,7 @@ if ! (
   # Handle 'taito COMMAND --help'
   if [[ " ${params[@]} " == *" -h "* ]] || \
      [[ " ${params[@]} " == *" --help "* ]]; then
-    params=(${command})
+    params=(${orig_command})
     command="--help"
   fi
 
