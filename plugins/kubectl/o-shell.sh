@@ -4,6 +4,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_customer:?}"
 : "${taito_env:?}"
+: "${taito_project:?}"
 
 pod="${1:?Pod name not given}"
 

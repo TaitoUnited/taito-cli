@@ -82,22 +82,28 @@ o-status[:ENV]
 
 o-logs[:ENV] POD [CONTAINER]
   See logs of a pod. Run o-status[:ENV] first to get the pod name and status.
-  Example: taito o-logs my-app-client
-  Example: taito o-logs:dev my-app-dev-client-3034393823-2f5jf
+  Example: taito o-logs client
+  Example: taito o-logs:dev client
+  Example: taito o-logs:dev my-app-client-3034393823-2f5jf
 
 o-shell[:ENV] POD [CONTAINER]
   Login to pod. Run o-status[:ENV] first to get the pod name and status.
-  Example: taito o-shell my-app-client
-  Example: taito o-shell:dev my-app-dev-client-3034393823-2f5jf
+  Example: taito o-shell client
+  Example: taito o-shell:dev client
+  Example: taito o-shell:dev my-app-client-3034393823-2f5jf
 
 o-exec[:ENV] POD CONTAINER COMMAND
   Execute command in pod. Run o-status[:ENV] first to get the pod name and
   status. Give - as container if it should be determined automatically.
-  Example: taito o-exec my-app-client - echo "taito!"
-  Example: taito o-exec:dev myapp-dev-client-3034393823-2f5jf - echo "taito!"
+  Example: taito o-exec client - echo "taito!"
+  Example: taito o-exec:dev client - echo "taito!"
+  Example: taito o-exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
 
 o-kill[:ENV] POD
   Kill pod.
+  Example: taito o-kill client
+  Example: taito o-kill:dev client
+  Example: taito o-kill:dev my-app-client-3034393823-2f5jf
 
 o-clean [data | build]
   Clean.
