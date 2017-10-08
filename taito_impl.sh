@@ -274,8 +274,9 @@ if ! (
     if [[ ${command_exists} == true ]]; then
       # Call first command of the command chain
       if ! "${cli_path}/util/call-next.sh" "${params[@]}"; then
-        echo ERROR!
         echo
+        echo "ERROR! Command failed. Usage:"
+        export taito_command_chain=""
         export taito_plugin_path="${cli_path}/plugins/basic"
         "${cli_path}/plugins/basic/__help.sh" "${command}"
         exit_code=1
@@ -292,6 +293,7 @@ if ! (
       if [[ "${orig_command}" != " " ]]; then
         echo "Perhaps one of the following commands is the one you meant to run."
         echo "Run 'taito --help' to get more help."
+        export taito_command_chain=""
         export taito_plugin_path="${cli_path}/plugins/basic"
         "${cli_path}/plugins/basic/__help.sh" "${orig_command}"
       fi
