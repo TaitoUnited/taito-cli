@@ -1,8 +1,8 @@
 # taito-cli
 
-Taito-cli is an extensible toolkit for developers, devops personnel and build automation tools. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. Thus, developers, devops personnel and build scripts may always run the same familiar set of simple commands from project to project.
+Taito-cli is an extensible toolkit for developers, devops personnel and build automation tools. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure, as commands are implemented by plugins. Thus, developers, devops personnel and build scripts may always run the same familiar set of simple commands from project to project. You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
-You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
+Taito-cli is designed so that plugins execute a single command together in co-operation. For example running a remote database operation usually involves also additional steps like pinpointing the correct database, authentication, secret handling and secure connection handling. Taito-cli executes all this for you with a single command.
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
