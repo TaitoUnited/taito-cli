@@ -183,8 +183,15 @@ if ! (
 
   # Link database container if env is local and the command uses database
   # TODO: this is a quick hack
-  if ( [[ ${command} =~ db-.+ ]] || [[ ${command} == o-init ]] ) && \
-     ( [[ ${command} == *":local" ]] || [[ ${command} != *":"* ]] ) && \
+  if ( \
+       [[ ${command} =~ db-.+ ]] || \
+       [[ ${command} == "o-init" ]] || \
+       [[ "${command}" == "init" ]] \
+     ) && \
+     (
+       [[ ${command} == *":local" ]] || \
+       [[ ${command} != *":"* ]] \
+     ) && \
      [[ ${command} != db-add ]] && \
      [[ ${taito_plugins} == *"postgres"* ]] && \
      [[ " ${params[@]} " != *" -h "* ]] && \

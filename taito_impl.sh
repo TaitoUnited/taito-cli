@@ -8,20 +8,26 @@ if ! (
   # Determine parameters
   if [[ "${1}" == "-s" ]]; then
     skip_override=true
-    orig_command="${2}"
+    env_command="${2}"
     params=(${@:3})
   else
     skip_override=false
-    orig_command="${1}"
+    env_command="${1}"
     params=(${@:2})
   fi
 
-  # Determine command and env from orig_command given as argument
-  if [[ "${orig_command}" == *":"* ]]; then
-    command=${orig_command%:*}
-    env=${orig_command##*:}
+  # Determine command and env from env_command given as argument
+  if [[ "${env_command}" == *":"* ]]; then
+    command=${env_command%:*}
+    env=${env_command##*:}
   else
-    command=${orig_command}
+    command=${env_command}
+  fi
+
+  # Use 'o-' as a default command prefix
+  orig_command=${command}
+  if [[ "${command}" != *"-"* ]]; then
+    command="o-${command}"
   fi
 
   if [[ "${env}" == "" ]]; then
@@ -268,7 +274,10 @@ if ! (
     if [[ ${command_exists} == true ]]; then
       # Call first command of the command chain
       if ! "${cli_path}/util/call-next.sh" "${params[@]}"; then
-         >&2 echo ERROR!
+        echo ERROR!
+        echo
+        export taito_plugin_path="${cli_path}/plugins/basic"
+        "${cli_path}/plugins/basic/__help.sh" "${command}"
         exit_code=1
       fi
     elif [[ "${command}" == "o-init" ]]; then
@@ -276,15 +285,15 @@ if ! (
       echo "Nothing to initialize"
     else
       # Command not found
-      echo "Unknown command: '${command}'. Did you specify the correct ENV?"
+      echo "Unknown command: '${orig_command}'. Did you specify the correct ENV?"
       echo "Some of the plugins might not be enabled in '${taito_env}' environment."
 
       # Show matching commands
-      if [[ "${command}" != " " ]]; then
+      if [[ "${orig_command}" != " " ]]; then
         echo "Perhaps one of the following commands is the one you meant to run."
         echo "Run 'taito --help' to get more help."
         export taito_plugin_path="${cli_path}/plugins/basic"
-        "${cli_path}/plugins/basic/__help.sh" "${command}"
+        "${cli_path}/plugins/basic/__help.sh" "${orig_command}"
       fi
       exit_code=1
     fi
@@ -301,12 +310,6 @@ if ! (
       exit_code=1
     fi
   done
-
-  # echo
-  # if [[ ${taito_skip_override} == false ]]; then
-  #   echo "### taito-cli: DONE! ###"
-  # fi
-  # echo
 
   exit ${exit_code}
 

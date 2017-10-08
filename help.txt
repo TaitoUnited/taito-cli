@@ -45,7 +45,8 @@ OPTIONS
 
 PROJECT: BASIC OPERATIONS
 -------------------------
-> Prefix 'operation' has been shortened to 'o' just for your convenience.
+> Grouping prefix 'operation' has been shortened to 'o' just for your convenience.
+> The 'o-' prefix is used as a default, so you can also leave it out.
 
 o-install
   Install everything that needs to installed locally, e.g. linter libraries
