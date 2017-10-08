@@ -1,6 +1,7 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 : "${taito_customer:?}"
 : "${taito_env:?}"
 : "${taito_project:?}"
@@ -13,7 +14,8 @@ command=("${@:3}")
 "${taito_plugin_path}/util/use-context.sh"
 
 if [[ ${pod} != *"-"* ]]; then
-  pod=$(kubectl get pods | grep server | head -n1 | awk '{print $1;}')
+  pod=$(kubectl get pods | grep "${taito_project}" | grep "${pod}" | \
+    head -n1 | awk '{print $1;}')
 fi
 
 if [[ "${container}" == "--" ]] || [[ "${container}" == "-" ]]; then

@@ -14,7 +14,8 @@ echo "### kubectl - o-kill: Killing pod ${pod} ###"
 "${taito_plugin_path}/util/use-context.sh" && \
 
 if [[ ${pod} != *"-"* ]]; then
-  pod=$(kubectl get pods | grep server | head -n1 | awk '{print $1;}')
+  pod=$(kubectl get pods | grep "${taito_project}" | grep "${pod}" | \
+    head -n1 | awk '{print $1;}')
 fi
 
 kubectl delete pod "${pod}" && \

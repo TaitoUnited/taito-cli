@@ -15,7 +15,8 @@ echo "### kubectl - o-logs: Showing logs of ${pod} ###"
 "${taito_plugin_path}/util/use-context.sh"
 
 if [[ ${pod} != *"-"* ]]; then
-  pod=$(kubectl get pods | grep server | head -n1 | awk '{print $1;}')
+  pod=$(kubectl get pods | grep "${taito_project}" | grep "${pod}" | \
+    head -n1 | awk '{print $1;}')
 fi
 
 if [[ -z "${container_name}" ]]; then
