@@ -18,21 +18,31 @@ if ! (
     params=(${@:1})
   fi
 
+  # Determine command to be executed
+  command="${params[0]}"
+  if [[ -z "${command}" ]]; then
+    command="--help"
+  fi
+
   # Determine docker entrypoint
   # TODO this is a quick hack
   entrypoint="taito"
   if [[ "${1}" == "--shell" ]]; then
     entrypoint="/bin/bash"
     params=()
+    command=""
   elif [[ "${2}" == "--shell" ]]; then
     entrypoint="/bin/bash"
     params=()
+    command=""
   elif [[ "${1}" == "--" ]]; then
     entrypoint="${2}"
     params=(${@:3})
+    command="${params[0]}"
   elif [[ "${2}" == "--" ]]; then
     entrypoint="${3}"
     params=(${@:4})
+    command="${params[0]}"
   fi
 
   # Resolve project root folder by the location of taito-config.sh
@@ -72,9 +82,6 @@ if ! (
     # shellcheck disable=SC1091
     . ./taito-config.sh
   fi
-
-  # Determine command to be executed
-  command="${params[0]}"
 
   # Determine enabled extensions
   extensions_local_mode=""
