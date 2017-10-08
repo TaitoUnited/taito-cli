@@ -26,7 +26,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
     export taito_image="taitounited/taito-cli:latest"
     export taito_zone="my-default-zone"
-    export taito_global_plugins="git fun template"
+    export taito_global_plugins="git fun template docker-global"
     ```
 
 3. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).

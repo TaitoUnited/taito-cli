@@ -3,7 +3,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### docker - workspace-clean: Cleaning old images ###"
+echo "### docker-global - workspace-clean: Cleaning old images ###"
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" \
   "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc:ro --entrypoint /docker-gc/docker-gc --rm ${taito_image_name}"
