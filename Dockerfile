@@ -137,7 +137,7 @@ ENV PATH=/builder/google-cloud-sdk/bin/:$PATH
 COPY vendor/kubectl.bash /builder/kubectl.bash
 
 # Install node.js
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get -y update && apt-get -y install nodejs build-essential
 
 # Install helm
