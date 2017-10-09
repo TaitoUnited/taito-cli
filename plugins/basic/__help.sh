@@ -21,7 +21,7 @@ if [[ -z "${filter}" ]]; then
 else
   "${taito_plugin_path}/util/show_file.sh" help.txt | \
     sed -e "s|PROJECT: DATABASE OPERATIONS|${links}\nPROJECT: DATABASE OPERATIONS|" | \
-    awk "/^[^ ]*${filter}/,/^$/"
+    awk "/^[a-z]+.*${filter}/,/^$/"
 fi && \
 
 # Call next command on command chain
