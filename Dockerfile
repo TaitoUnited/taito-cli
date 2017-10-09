@@ -23,7 +23,7 @@ RUN apt-get -y update && \
 
 # Install docker-compose for local api/e2e testing
 # TODO replace with minikube?
-RUN curl -L https://github.com/docker/compose/releases/download/1.15.0/docker-compose-`uname -s`-`uname -m` \
+RUN curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` \
   -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
 
