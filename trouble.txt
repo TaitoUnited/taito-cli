@@ -1,27 +1,26 @@
----------------------------------
-### TAITO-CLI TROUBLESHOOTING ###
----------------------------------
+TAITO-CLI TROUBLESHOOTING
 
-My application does not work locally
-  Try clean start by running 'taito oper-start clean' and then 'taito oper-init'
+  My application does not work locally
+    Try clean start by running 'taito oper-start clean' and then
+    'taito oper-init'
 
-CI/CD builds fails but everything works locally
-  You can debug container builds locally by running `taito ci-build [NAME]`
-  e.g. `taito ci-build client`. You can also run any ci/cd step locally
-  by using taito-cli.
+  CI/CD builds fails but everything works locally
+    You can debug container builds locally by running `taito ci-build [NAME]`
+    e.g. `taito ci-build client`. You can also run any ci/cd step locally
+    by using taito-cli.
 
-Authentication error using taito-cli
-  If you run into an authentication error during command execution,
-  the command probably requires authentication and you either have not
-  authenticated or your authentication has expired. In such case, run
-  'taito --auth:ENV' to authenticate in the context of currently enabled
-  plugins.
+  Authentication error using taito-cli
+    If you run into an authentication error during command execution,
+    the command probably requires authentication and you either have not
+    authenticated or your authentication has expired. In such case, run
+    'taito --auth:ENV' to authenticate in the context of currently enabled
+    plugins.
 
-Taito-cli says: 'command not found'
-  Did you remember to give the correct environment as argument? Commands
-  always use local by default, and not all commands support local environment.
+  Taito-cli says: 'command not found'
+    Did you remember to give the correct environment as argument? Commands
+    always use local by default, and not all commands support local environment.
 
-  Check your plugin configuration in your taito-config.sh files.
+    Check your plugin configuration in your taito-config.sh files.
 
-  Make sure that you have set all the environment variables correctly:
-  TODO
+    Make sure that you have set all the environment variables correctly:
+    TODO

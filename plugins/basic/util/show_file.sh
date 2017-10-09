@@ -9,11 +9,11 @@ content=""
 # Add also file from project root
 if [[ -f "${taito_project_path}/${filename}" ]]; then
   c=$(cat "${taito_project_path}/${filename}")
-  content="${content}${c}\n\n\n"
+  content="${content}${c}\n\n"
 fi
 
 c=$(cat "${taito_cli_path}/${filename}")
-content="${content}${c}\n\n\n"
+content="${content}${c}\n\n"
 
 # Check plugin commands only if plugin is enabled for this environment:
 # e.g. docker:local kubectl:-local
@@ -28,7 +28,7 @@ do
     file_path="${extension}/${plugin_name}/${filename}"
     if [[ -f "${file_path}" ]]; then
       c=$(cat "${file_path}")
-      content="${content}${c}\n\n\n"
+      content="${content}${c}\n\n"
     fi
   done
 done
