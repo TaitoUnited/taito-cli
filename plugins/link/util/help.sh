@@ -1,12 +1,11 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
-: "${link_urls:?}"
 
 echo "PROJECT: LINKS"
 echo
 
-links=("${link_urls}")
+links=("${link_urls:-}")
 for link in ${links[@]}
 do
   prefix="$( cut -d '=' -f 1 <<< "$link" )";
