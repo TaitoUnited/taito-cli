@@ -28,7 +28,7 @@
 
 4. Create dev and prod environments for the project by running `taito env-create:dev` and `taito env-create:prod` in the project directory. This will TODO:
 
-5. Start local development by running: `taito o-install`, `taito o-start`, `taito o-init` and `taito open`.
+5. Start local development by running: `taito oper-install`, `taito oper-start`, `taito oper-init` and `taito open`.
 
 6. Push a change in the dev branch and it will be deployed on your Kubernetes cluster running on Google Cloud as a development version.
 

@@ -10,7 +10,7 @@ if [[ ${pod} != *"-"* ]]; then
 fi
 
 echo
-echo "### docker - o-kill: Killing in the name of ${pod} ###"
+echo "### docker - oper-kill: Killing in the name of ${pod} ###"
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "docker kill ${pod}" && \
 

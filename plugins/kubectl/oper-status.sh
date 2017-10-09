@@ -12,7 +12,7 @@ else
 fi
 
 echo
-echo "### kubectl - o-status: Showing status of ${taito_env} ###"
+echo "### kubectl - oper-status: Showing status of ${taito_env} ###"
 echo
 
 # Change namespace

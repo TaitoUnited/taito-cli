@@ -10,7 +10,7 @@ if [[ ${pod} != *"-"* ]]; then
 fi
 
 echo
-echo "### docker - o-logs: Showing some logs ###"
+echo "### docker - oper-logs: Showing some logs ###"
 
 if [[ -z "${pod}" ]]; then
   echo "Please give pod name as argument:"

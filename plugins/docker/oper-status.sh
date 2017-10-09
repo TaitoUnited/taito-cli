@@ -3,9 +3,9 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### npm - o-install: Installing ###"
+echo "### docker - oper-status: Showing status ###"
 
-npm install && \
+"${taito_cli_path}/util/execute-on-host-fg.sh" "docker-compose ps" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

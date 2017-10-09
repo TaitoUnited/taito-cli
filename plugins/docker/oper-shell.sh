@@ -11,7 +11,7 @@ if [[ ${pod} != *"-"* ]]; then
 fi
 
 echo
-echo "### docker - o-shell: Opening shell on ${pod} ###"
+echo "### docker - oper-shell: Opening shell on ${pod} ###"
 
 "${taito_plugin_path}/util/exec.sh" "${pod}" "${2:--}" "/bin/sh" && \
 

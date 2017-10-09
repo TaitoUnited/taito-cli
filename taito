@@ -192,7 +192,7 @@ if ! (
   # TODO: this is a quick hack
   if ( \
        [[ ${command} =~ db-.+ ]] || \
-       [[ ${command} == "o-init" ]] || \
+       [[ ${command} == "oper-init" ]] || \
        [[ "${command}" == "init" ]] \
      ) && \
      (

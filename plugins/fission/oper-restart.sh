@@ -3,7 +3,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### fission - o-start: Starting ###"
+echo "### fission - oper-restart: Restarting ###"
 
 echo "TODO implement" && \
 

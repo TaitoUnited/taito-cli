@@ -1,12 +1,11 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
-: "${taito_plugin_path:?}"
 
 echo
-echo "### docker - o-clean: Cleaning ###"
+echo "### fission - oper-start: Starting ###"
 
-"${taito_plugin_path}/util/clean.sh" "${@}"  && \
+echo "TODO implement" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

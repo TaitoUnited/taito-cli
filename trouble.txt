@@ -3,7 +3,7 @@
 ---------------------------------
 
 My application does not work locally
-  Try clean start by running 'taito o-start clean' and then 'taito o-init'
+  Try clean start by running 'taito oper-start clean' and then 'taito oper-init'
 
 CI/CD builds fails but everything works locally
   You can debug container builds locally by running `taito ci-build [NAME]`

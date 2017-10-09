@@ -1,11 +1,12 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 
 echo
-echo "### docker - o-status: Showing status ###"
+echo "### docker - oper-exec: Executing ###"
 
-"${taito_cli_path}/util/execute-on-host-fg.sh" "docker-compose ps" && \
+"${taito_plugin_path}/util/exec.sh" "${@}"  && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

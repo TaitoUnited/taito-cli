@@ -39,11 +39,11 @@ You can upgrade taito-cli and it's extensions by running `taito --upgrade`.
 
 ## Usage
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito log -h` and `taito clean -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands (TODO autocomplete only currently enabled commands).
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito log -h` or `taito clean -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands (TODO autocomplete only currently enabled commands).
 
 *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun-starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctlr`+`å` for us scandinavians) and type `close`.*
 
-Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying around on your host file system anymore.
+Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
 See the [README.md](https://github.com/TaitoUnited/server-template#readme) of server-template as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
@@ -213,7 +213,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito --auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
 * `taito ci-cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
 * `taito ci-prepare`: Set ci flags by status check. The ci flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since all images have already been built and tested by some previous CI build.
-* `taito o-install`: Install required libraries.
+* `taito oper-install`: Install required libraries.
 * `taito ci-secrets`: Fetch secrets that are required by the following CI/CD steps.
 * `taito ci-release-pre`: Make some preparations for the release if required. Typically this step determines the new version number for the release by the type of commits (feature, fix, etc).
 * `taito ci-test-unit`: Run unit tests.
@@ -221,11 +221,11 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito ci-docs`: Generate docs.
 * `taito ci-build`: Build containers, functions, etc (separate build step for each)
 * `taito ci-push`: Push containers, functions, etc to registry (separate build step for each)
-* `taito o-start:local`: Start the local testing environment
+* `taito oper-start:local`: Start the local testing environment
 * `taito ci-wai:localt`: Wait for local testing environemnt to start
 * `taito ci-test-api:local`: Run local api tests.
 * `taito ci-test-e2e:local`: Run local e2e tests.
-* `taito o-stop:local`: Stop the local testing environment
+* `taito oper-stop:local`: Stop the local testing environment
 * `taito db-deploy`: Deploy database changes.
 * `taito ci-deploy`: Deploy the application.
 * `taito ci-wait`: Optional: Wait for application to restart in the target environment.
@@ -251,16 +251,16 @@ If you enable the npm plugin, you can run any npm script defined in your project
 
 You can also override any existing taito-cli command in your *package.json* by using `taito-` as script name prefix. For example the following script shows the init.txt file before running initialization. The `-s` flag means that override is skipped when the npm script calls taito-cli.
 
-    "taito-o-init": "less init.txt; taito -s o-init"
+    "taito-oper-init": "less init.txt; taito -s oper-init"
 
 You can use *taito-cli* with any project, even those that use technologies that are not supported by any of the plugins. Just add commands to your package.json and add a `taito-config.sh` file with the npm plugin enabled to the project root directory. You can use the optional *taito* prefix to avoid conflicts with existing npm script names. For example:
 
     "taito-o-install": "npm install; ant retrieve",
-    "o-start": "java -cp . com.domain.app.MyServer",
-    "o-init", "host=localhost npm run _db -- < dev-data.sql",
+    "oper-start": "java -cp . com.domain.app.MyServer",
+    "oper-init", "host=localhost npm run _db -- < dev-data.sql",
     "taito-open", "taito browser http://localhost:8080",
     "taito-open:dev", "taito browser http://mydomain-dev:8080",
-    "o-users", "echo admin/password, user/password",
+    "oper-users", "echo admin/password, user/password",
     "db-open", "host=localhost npm run _db"
     "db-open:dev", "host=mydomain-dev npm run _db"
     "db-open:test", "host=mydomain-test npm run _db"

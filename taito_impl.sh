@@ -24,10 +24,10 @@ if ! (
     command=${env_command}
   fi
 
-  # Use 'o-' as a default command prefix
+  # Use 'oper-' as a default command prefix
   orig_command=${command}
   if [[ "${command}" != *"-"* ]]; then
-    command="o-${command}"
+    command="oper-${command}"
   fi
 
   if [[ "${env}" == "" ]]; then
@@ -281,8 +281,8 @@ if ! (
         "${cli_path}/plugins/basic/__help.sh" "${command}"
         exit_code=1
       fi
-    elif [[ "${command}" == "o-init" ]]; then
-      # Note of the plugins has implemented o-init
+    elif [[ "${command}" == "oper-init" ]]; then
+      # Note of the plugins has implemented oper-init
       echo "Nothing to initialize"
     else
       # Command not found

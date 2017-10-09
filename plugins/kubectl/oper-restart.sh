@@ -5,7 +5,7 @@
 : "${taito_env:?}"
 
 echo
-echo "### kubectl - o-restart: Restarting all pods in ${taito_env} ###"
+echo "### kubectl - oper-restart: Restarting all pods in ${taito_env} ###"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

@@ -6,12 +6,12 @@
 : "${taito_env:?}"
 
 echo
-echo "### kubectl - o-start: Starting application on ${taito_env} ###"
+echo "### kubectl - oper-exec: Executing command on Kubernetes pod ###"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 
-"${taito_plugin_path}/util/deploy.sh" && \
+"${taito_plugin_path}/util/exec.sh" "${@}" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

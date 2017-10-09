@@ -45,68 +45,68 @@ OPTIONS
 
 PROJECT: BASIC OPERATIONS
 -------------------------
-> Grouping prefix 'operation' has been shortened to 'o' just for your convenience.
-> The 'o-' prefix is used as a default, so you can also leave it out.
+> The 'oper-' grouping prefix is used as a default. You can leave it out
+> if you like.
 
-o-install
+oper-install
   Install everything that needs to installed locally, e.g. linter libraries
   to be used by your editor.
   TIP: Enable the npm plugin as it will call `npm install` automatically.
 
-o-compile
+oper-compile
   Compile (for projects that need to be compiled).
-  TIP: Enable the npm plugin and implement o-compile script in your
+  TIP: Enable the npm plugin and implement oper-compile script in your
   package.json.
 
-o-start[:ENV] [--clean] [--prod]
+oper-start[:ENV] [--clean] [--prod]
   Start. Use the 'clean' switch to clean all before start. Use the 'prod'
   switch to use production containers in local development environment.
 
-o-run[:ENV]
+oper-run[:ENV]
   Run on device (ios/android)
 
-o-init
+oper-init
   Make sure that everything has been initialized (database, etc.). The init
   command is used in local environment only.
 
-o-stop[:ENV]
+oper-stop[:ENV]
   Stop.
 
-o-users[:ENV]
+oper-users[:ENV]
   Show user accounts that you can use to log in.
-  TIP: Enable the npm plugin and implement o-users[:ENV] script in your
+  TIP: Enable the npm plugin and implement oper-users[:ENV] script in your
   package.json. Hard coded user accounts for local, dev and test environments
   suffice. Usually not implemented for staging and production environments.
 
-o-status[:ENV]
+oper-status[:ENV]
   Show status summary of environment (status of services, pods, etc.).
 
-o-logs[:ENV] POD [CONTAINER]
-  See logs of a pod. Run o-status[:ENV] first to get the pod name and status.
-  Example: taito o-logs client
-  Example: taito o-logs:dev client
-  Example: taito o-logs:dev my-app-client-3034393823-2f5jf
+oper-logs[:ENV] POD [CONTAINER]
+  See logs of a pod. Run oper-status[:ENV] first to get the pod name and status.
+  Example: taito oper-logs client
+  Example: taito oper-logs:dev client
+  Example: taito oper-logs:dev my-app-client-3034393823-2f5jf
 
-o-shell[:ENV] POD [CONTAINER]
-  Login to pod. Run o-status[:ENV] first to get the pod name and status.
-  Example: taito o-shell client
-  Example: taito o-shell:dev client
-  Example: taito o-shell:dev my-app-client-3034393823-2f5jf
+oper-shell[:ENV] POD [CONTAINER]
+  Login to pod. Run oper-status[:ENV] first to get the pod name and status.
+  Example: taito oper-shell client
+  Example: taito oper-shell:dev client
+  Example: taito oper-shell:dev my-app-client-3034393823-2f5jf
 
-o-exec[:ENV] POD CONTAINER COMMAND
-  Execute command in pod. Run o-status[:ENV] first to get the pod name and
+oper-exec[:ENV] POD CONTAINER COMMAND
+  Execute command in pod. Run oper-status[:ENV] first to get the pod name and
   status. Give - as container if it should be determined automatically.
-  Example: taito o-exec client - echo "taito!"
-  Example: taito o-exec:dev client - echo "taito!"
-  Example: taito o-exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
+  Example: taito oper-exec client - echo "taito!"
+  Example: taito oper-exec:dev client - echo "taito!"
+  Example: taito oper-exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
 
-o-kill[:ENV] POD
+oper-kill[:ENV] POD
   Kill pod.
-  Example: taito o-kill client
-  Example: taito o-kill:dev client
-  Example: taito o-kill:dev my-app-client-3034393823-2f5jf
+  Example: taito oper-kill client
+  Example: taito oper-kill:dev client
+  Example: taito oper-kill:dev my-app-client-3034393823-2f5jf
 
-o-clean [data | build]
+oper-clean [data | build]
   Clean.
 
 
@@ -184,14 +184,16 @@ db-dump[:ENV]
 
 db-import[:ENV] FILE
   Import file to database. DB proxy connection and secrets are
-  handled automatically.
+  handled automatically. Always give file path relative to the project root.
+  Example: taito db-import:dev ./database/my-file.sql
 
 db-deploy[:ENV]
   Deploy changes to database. DB proxy connection and secrets are handled
   automatically.
 
-db-compare[:ENV] [OTHER_ENV]
-  Compare database schemas of environments. TODO not implemented.
+db-diff[:ENV] [OTHER_ENV]
+  Compare database schemas of two environments. DB proxy connection and secrets
+  are handled automatically. TODO implement.
 
 db-log[:ENV]
   View change log of database. DB proxy connection and secrets are handled
@@ -250,10 +252,10 @@ ci-deploy[:ENV] [IMAGE_TAG] [--dry-run]
   using the latest image found for the environment in question. Use dry-run
   switch to execute a dry run. Example: 'taito ci-deploy:dev test1'
 
-ci-deployquick[:ENV] CONTAINER_NAME
+ci-fulldeploy[:ENV] CONTAINER_NAME
   Build, push and deploy a container to server. Use this when you need to
-  deploy quick changes to some environment. Example:
-  'taito ci-deployquick:dev server'. TODO not implemented yet.
+  deploy manual changes to some environment. TODO not implemented yet.
+  Example: taito ci-fulldeploy:dev server
 
 ci-revision:ENV
   Show current revision.

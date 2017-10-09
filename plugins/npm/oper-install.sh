@@ -3,9 +3,9 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### fission - o-restart: Restarting ###"
+echo "### npm - oper-install: Installing ###"
 
-echo "TODO implement" && \
+npm install && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

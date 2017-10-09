@@ -3,9 +3,9 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### serverless - o-start: Starting ###"
+echo "### docker - oper-stop: Stopping ###"
 
-echo "TODO implement" && \
+"${taito_cli_path}/util/execute-on-host-fg.sh" "docker-compose down" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

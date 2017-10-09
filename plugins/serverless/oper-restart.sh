@@ -3,7 +3,7 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### serverless - o-restart: Restarting ###"
+echo "### serverless - oper-restart: Restarting ###"
 
 echo "TODO implement" && \
 

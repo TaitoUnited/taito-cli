@@ -6,9 +6,9 @@ _arguments "*: :(\
   -h --help --readme --trouble --auth: --upgrade -- --shell \
   install compile start: run: init stop: \
   users: status: logs: shell: exec: kill: clean \
-  o-install o-compile o-start: o-run: o-init o-stop: \
-  o-users: o-status: o-logs: o-shell: o-exec: o-kill: o-clean \
-  workspace-clean workspace-kill \
+  oper-install oper-compile oper-start: oper-run: oper-init oper-stop: \
+  oper-users: oper-status: oper-logs: oper-shell: oper-exec: oper-kill: \
+  oper-clean workspace-clean workspace-kill \
   git-env-merge: git-feat git-feat-squash git-feat-merge git-feat-pr \
   db-add db-proxy: db-open: db-dump: db-import: \
   db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \

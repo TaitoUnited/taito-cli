@@ -1,6 +1,7 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 : "${taito_customer:?}"
 : "${taito_env:?}"
 : "${taito_project:?}"
@@ -8,17 +9,12 @@
 pod="${1:?Pod name not given}"
 
 echo
-echo "### kubectl - o-kill: Killing pod ${pod} ###"
+echo "### kubectl - oper-shell: Opening shell on ${pod} ###"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 
-if [[ ${pod} != *"-"* ]]; then
-  pod=$(kubectl get pods | grep "${taito_project}" | grep "${pod}" | \
-    head -n1 | awk '{print $1;}')
-fi
-
-kubectl delete pod "${pod}" && \
+"${taito_plugin_path}/util/exec.sh" "${pod}" "${2:--}" /bin/sh && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

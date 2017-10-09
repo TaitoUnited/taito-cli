@@ -5,14 +5,20 @@
 : "${taito_env:?}"
 : "${taito_project:?}"
 
+pod="${1:?Pod name not given}"
+
 echo
-echo "### kubectl - o-stop: Stopping application on ${taito_env} ###"
+echo "### kubectl - oper-kill: Killing pod ${pod} ###"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 
-echo "TODO scale replicas to 0 instead of deleting" && \
-helm delete --purge "${taito_project_env}" && \
+if [[ ${pod} != *"-"* ]]; then
+  pod=$(kubectl get pods | grep "${taito_project}" | grep "${pod}" | \
+    head -n1 | awk '{print $1;}')
+fi
+
+kubectl delete pod "${pod}" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

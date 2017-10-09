@@ -4,9 +4,9 @@
 : "${taito_plugin_path:?}"
 
 echo
-echo "### postgres - o-init: Deploying changes to database ${taito_env} ###"
+echo "### docker - oper-clean: Cleaning ###"
 
-"${taito_plugin_path}/util/deploy-changes.sh" && \
+"${taito_plugin_path}/util/clean.sh" "${@}"  && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
