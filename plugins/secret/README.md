@@ -2,10 +2,10 @@
 
 Provides both randomly and manually generated secrets. Configuration:
 
-    # NOTE: Secret naming is generation_method:type.target_of_type.namespace.purpose
+    # NOTE: Secret naming is type.target_of_type.namespace.purpose:generation_method
     export taito_secrets="
-      random:db.${postgres_database}.app
-      random:db.${postgres_database}.build
-      manual:ext.twilio.sms"
+      db.${postgres_database}.app:random
+      db.${postgres_database}.build:random
+      ext.twilio.sms:manual"
 
 # TODO add support for reading file contents also?

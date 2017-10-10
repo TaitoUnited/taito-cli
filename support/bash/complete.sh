@@ -16,8 +16,8 @@ _taito ()
     users: status: logs: shell: exec: kill: clean \
     oper-install oper-compile oper-start: oper-run: oper-init oper-stop: \
     oper-users: oper-status: oper-logs: oper-shell: oper-exec: oper-kill: \
-    oper-clean workspace-clean workspace-kill \
-    git-env-merge: git-feat git-feat-squash git-feat-merge git-feat-pr \
+    oper-clean workspace-clean workspace-kill git-env-list git-env-merge: \
+    git-feat-list git-feat git-feat-squash git-feat-merge git-feat-pr \
     db-add db-proxy: db-open: db-dump: db-import: \
     db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \
     ci-prepare: \

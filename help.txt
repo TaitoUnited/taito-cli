@@ -117,6 +117,9 @@ WORKSPACE OPERATIONS
 
 GIT OPERATIONS
 
+  git-env-list
+    List all environment branches.
+
   git-env-merge:ENV SOURCE_BRANCH
     Merges source env branch to destination env branch without making changes
     to the current local git workspace. The command fails if fast-forward is not
@@ -124,6 +127,9 @@ GIT OPERATIONS
     fast-forwarded so that a container is first built for dev environment and
     then the same container is deployed to other environments as well once
     environment branches are merged.
+
+  git-feat-list
+    List all feature branches.
 
   git-feat[:ENV] FEATURE_NAME
     Creates a new local branch for a feature or executes a normal branch
