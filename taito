@@ -137,29 +137,23 @@ if ! (
     # Pull latest version of taito bash script
     (cd "${cli_path}"; git pull)
 
-    # Check if taito-cli image has been updated
-    SECONDS=0
+    # Pull taito-cli docker image
     docker pull "${taito_image:?}"
-    if [[ ${SECONDS} -lt 12 ]]; then
-      # Image was not pulled. Using the old image.
-      docker image tag "${taito_image}save" \
-        "${taito_image}" &> /dev/null
-    else
-      # Image was pulled -> copy credentials.
+
+    # Copy credentials from old image
+    docker rm taito-save taito-new &> /dev/null
+    if docker create --name taito-save "${taito_image}save" &> /dev/null; then
+      echo "Copying credentials from the old image."
+      docker create --name taito-new "${taito_image}"
+      mkdir -p ~/.taito/save &> /dev/null
+      docker cp taito-save:/root/.config ~/.taito/save
+      docker cp taito-save:/root/.kube ~/.taito/save
+      docker cp ~/.taito/save/.config taito-new:/root
+      docker cp ~/.taito/save/.kube taito-new:/root
+      docker commit taito-new "${taito_image}"
+      docker image tag "${taito_image}" "${taito_image}save"
+      rm -rf ~/.taito/save
       docker rm taito-save taito-new &> /dev/null
-      if docker create --name taito-save "${taito_image}save" &> /dev/null; then
-        echo "Copying credentials from the old image."
-        docker create --name taito-new "${taito_image}"
-        mkdir -p ~/.taito/save &> /dev/null
-        docker cp taito-save:/root/.config ~/.taito/save
-        docker cp taito-save:/root/.kube ~/.taito/save
-        docker cp ~/.taito/save/.config taito-new:/root
-        docker cp ~/.taito/save/.kube taito-new:/root
-        docker commit taito-new "${taito_image}"
-        docker image tag "${taito_image}" "${taito_image}save"
-        rm -rf ~/.taito/save
-        docker rm taito-save taito-new &> /dev/null
-      fi
     fi
     exit 0
   fi
