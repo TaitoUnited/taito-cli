@@ -214,12 +214,17 @@ if ! (
   # Forward output to 'less' in case the command is `help`, `trouble` or
   # `readme`. We need to also filter some control characters for a cleaner
   # output.
+  if [[ "${taito_host_uname}" == "Darwin" ]]; then
+    ctrl_filter=" tr -d '[:cntrl:]' "
+  else
+    ctrl_filter=" grep -axv '.*' "
+  fi
   output=""
   if [[ ${command} == "-h"* ]] || \
      [[ ${command} == "--help"* ]] || \
      [[ ${command} == "--trouble"* ]] || \
      [[ ${command} == "--readme"* ]]; then
-    output="| tr '\r\n' '\275\276' | tr -d '[:cntrl:]' | \
+    output="| tr '\r\n' '\275\276' | ${ctrl_filter} | \
       tr '\275\276' '\r\n' | tail -n +3 | less"
   fi
 
