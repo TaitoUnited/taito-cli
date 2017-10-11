@@ -286,13 +286,15 @@ if ! (
       echo "Nothing to initialize"
     else
       # Command not found
-      echo "Unknown command: '${orig_command}'. Did you specify the correct ENV?"
-      echo "Some of the plugins might not be enabled in '${taito_env}' environment."
+      echo "Unknown command: '${orig_command//-/ }'. Did you remember to give ':' before "
+      echo "command arguments? Did you specify the correct ENV? Some of the plugins might"
+      echo "not be enabled in '${taito_env}' environment."
 
       # Show matching commands
       if [[ "${orig_command}" != " " ]]; then
+        echo
         echo "Perhaps one of the following commands is the one you meant to run."
-        echo "Run 'taito --help' to get more help."
+        echo "Run 'taito -h' to get more help."
         export taito_command_chain=""
         export taito_plugin_path="${cli_path}/plugins/basic"
         "${cli_path}/plugins/basic/__help.sh" "${orig_command}"
