@@ -1,6 +1,8 @@
 # taito-cli
 
-Taito-cli is an extensible toolkit for developers, devops personnel and build automation tools. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure, as commands are implemented by plugins. Thus, developers, devops personnel and build scripts may always run the same familiar set of simple commands from project to project. Taito-cli is designed so that plugins execute a single command together in co-operation. For example running a remote database operation usually involves also additional steps like pinpointing the correct database, authentication, secret handling and secure connection handling. Taito-cli executes all this for you with a single command.
+Taito-cli is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. This is made possible by implementing commands with plugins and defining all settings in a configuration file. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. And build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+
+Taito-cli is designed so that plugins execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authentication. Taito-cli executes all this for you with a single command.
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
@@ -41,7 +43,7 @@ You can upgrade taito-cli and it's extensions by running `taito --upgrade`.
 
 Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito log -h` or `taito clean -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands (TODO autocomplete only currently enabled commands).
 
-*But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun-starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctlr`+`å` for us scandinavians) and type `close`.*
+*But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctlr`+`å` for us scandinavians) and type `close`.*
 
 Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 

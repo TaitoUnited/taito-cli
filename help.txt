@@ -1,16 +1,27 @@
 TAITO-CLI
 ---------
 
-ARGUMENTS
+SYNTAX ALTERNATIVES
 
-  ENV
-    Environment: 'local', 'feature', 'dev', 'test', 'staging' or 'prod'.
-    Environment is 'local' by default. For mobile projects ENV can also be
-    'ios' or 'android'.
+  SPACE SYNTAX
+    taito workspace clean
+    taito open app:dev
+    taito logs:dev client
+    taito git feat squash: myfeature
 
-  POD
-    Depending on the environment, POD may reference to a Kubernetes pod,
-    a Docker container or a function.
+  HYPHEN SYNTAX
+    taito workspace-clean
+    taito open-app:dev
+    taito logs:dev client
+    taito git-feat-squash myfeature
+
+  When using the space syntax, you must always give ':' in your command
+  if it contains arguments. For example: 'taito git feat squash: myfeature'
+  NOTE: Autocomplete does not support the space syntax yet.
+
+  You should use the internal hyphen syntax when defining build targets
+  as some build tools do not support (or recommend) spaces in build target
+  names.
 
 OPTIONS
 
@@ -32,95 +43,106 @@ OPTIONS
     Authenticate in the context of the given environment.
 
   --
-    Execute any command inside the taito-cli container e.g.
-    'taito -- kubectl get pods'.
+    Execute any command inside the taito-cli container. Example:
+    taito -- kubectl get pods
 
   --shell
     Start interactive shell on the taito-cli container.
 
+ARGUMENTS
+
+  ENV
+    Environment: 'local', 'feature', 'dev', 'test', 'staging' or 'prod'.
+    Environment is 'local' by default. For mobile projects ENV can also be
+    'ios' or 'android'.
+
+  POD
+    Depending on the environment, POD may reference to a Kubernetes pod,
+    a Docker container or a function.
+
 PROJECT: BASIC OPERATIONS
 
-  > The 'oper-' grouping prefix is used as a default. You can leave it out
+  > The 'oper' grouping prefix is used as a default. You can leave it out
   > if you like.
 
-  oper-install
+  oper install
     Install everything that needs to installed locally, e.g. linter libraries
     to be used by your editor.
     TIP: Enable the npm plugin as it will call `npm install` automatically.
 
-  oper-compile
+  oper compile
     Compile (for projects that need to be compiled).
     TIP: Enable the npm plugin and implement oper-compile script in your
     package.json.
 
-  oper-start[:ENV] [--clean] [--prod]
+  oper start[:ENV] [--clean] [--prod]
     Start. Use the 'clean' switch to clean all before start. Use the 'prod'
     switch to use production containers in local development environment.
 
-  oper-run[:ENV]
+  oper run[:ENV]
     Run on device (ios/android)
 
-  oper-init
+  oper init
     Make sure that everything has been initialized (database, etc.). The init
     command is used in local environment only.
 
-  oper-stop[:ENV]
+  oper stop[:ENV]
     Stop.
 
-  oper-users[:ENV]
+  oper users[:ENV]
     Show user accounts that you can use to log in.
     TIP: Enable the npm plugin and implement oper-users[:ENV] script in your
     package.json. Hard coded user accounts for local, dev and test environments
     suffice. Usually not implemented for staging and production environments.
 
-  oper-status[:ENV]
+  oper status[:ENV]
     Show status summary of environment (status of services, pods, etc.).
 
-  oper-logs[:ENV] POD [CONTAINER]
-    See logs of a pod. Run oper-status[:ENV] first to get the pod name and
+  oper logs[:ENV] POD [CONTAINER]
+    See logs of a pod. Run 'taito status[:ENV]' first to get the pod name and
     status.
-    Example: taito oper-logs client
-    Example: taito oper-logs:dev client
-    Example: taito oper-logs:dev my-app-client-3034393823-2f5jf
+    Example: taito logs: client
+    Example: taito logs:dev client
+    Example: taito logs:dev my-app-client-3034393823-2f5jf
 
-  oper-shell[:ENV] POD [CONTAINER]
-    Login to pod. Run oper-status[:ENV] first to get the pod name and status.
-    Example: taito oper-shell client
-    Example: taito oper-shell:dev client
-    Example: taito oper-shell:dev my-app-client-3034393823-2f5jf
+  oper shell[:ENV] POD [CONTAINER]
+    Login to pod. Run 'taito status[:ENV]' first to get the pod name and status.
+    Example: taito shell: client
+    Example: taito shell:dev client
+    Example: taito shell:dev my-app-client-3034393823-2f5jf
 
-  oper-exec[:ENV] POD CONTAINER COMMAND
-    Execute command in pod. Run oper-status[:ENV] first to get the pod name and
-    status. Give - as container if it should be determined automatically.
-    Example: taito oper-exec client - echo "taito!"
-    Example: taito oper-exec:dev client - echo "taito!"
-    Example: taito oper-exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
+  oper exec[:ENV] POD CONTAINER COMMAND
+    Execute command in pod. Run 'taito status[:ENV]' first to get the pod name
+    and status. Give - as container if it should be determined automatically.
+    Example: taito exec: client - echo "taito!"
+    Example: taito exec:dev client - echo "taito!"
+    Example: taito exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
 
-  oper-kill[:ENV] POD
+  oper kill[:ENV] POD
     Kill pod.
-    Example: taito oper-kill client
-    Example: taito oper-kill:dev client
-    Example: taito oper-kill:dev my-app-client-3034393823-2f5jf
+    Example: taito kill: client
+    Example: taito kill:dev client
+    Example: taito kill:dev my-app-client-3034393823-2f5jf
 
-  oper-clean [data | build]
+  oper clean [data | build]
     Clean.
 
 WORKSPACE OPERATIONS
 
-  workspace-clean
+  workspace clean
     Clean your workspace e.g. by deleting all docker container images and
     volumes that you haven't used for a while.
 
-  workspace-kill
+  workspace kill
     Kill all running processes (e.g. kill all docker processes to free reserved
     ports).
 
 GIT OPERATIONS
 
-  git-env-list
+  git env list
     List all environment branches.
 
-  git-env-merge:ENV SOURCE_BRANCH
+  git env merge:ENV SOURCE_BRANCH
     Merges source env branch to destination env branch without making changes
     to the current local git workspace. The command fails if fast-forward is not
     possible. Merge operations between environment branches should always be
@@ -128,28 +150,28 @@ GIT OPERATIONS
     then the same container is deployed to other environments as well once
     environment branches are merged.
 
-  git-feat-list
+  git feat list
     List all feature branches.
 
-  git-feat[:ENV] FEATURE_NAME
+  git feat:[ENV] FEATURE_NAME
     Creates a new local branch for a feature or executes a normal branch
     checkout if the branch already exists. The dev branch is used as a default
     env branch (source branch).
 
-  git-feat-squash[:ENV] FEATURE_NAME
+  git feat squash:[ENV] FEATURE_NAME
     Merges a feature to a destination branch as a single squashed commit and
     deletes the feature branch. The dev branch is used as a default env
     branch (destination for merge). Use this command for a short-lived feature
     branch with a cohesive set of changes.
 
-  git-feat-merge[:ENV] FEATURE_NAME
+  git feat merge:[ENV] FEATURE_NAME
     Merges a feature to a destination branch. The dev branch is used as a
     default env branch (destination for merge). The command suggests rebase
     before merge and delete feature after merge. With rebase you can clean up
     commit history before merge e.g. by reordering commits and selectively
     squashing some of them together.
 
-  git-feat-pr[:ENV] FEATURE_NAME
+  git feat pr:[ENV] FEATURE_NAME
     Creates a pull request for a feature. The dev branch is used as a default
     env branch (destination for merge). The command suggests rebase before
     making the pull request. With rebase you can clean up commit history by
@@ -157,63 +179,64 @@ GIT OPERATIONS
 
 PROJECT: DATABASE OPERATIONS
 
-  db-add NAME [-r REQUIRES] [-n DESCRIPTION]
-    Add a new change to migration plan. Run db-add without arguments to get
-    help. Example: taito db-add order.table -r user.table -n 'Table for orders.'
-    You can run the change to local database by running `taito db:deploy`.
+  db add: NAME [-r REQUIRES] [-n DESCRIPTION]
+    Add a new change to migration plan. Run 'db add' without arguments to get
+    help. You can run the change to local database by running `taito db:deploy`.
+    Example: 'taito db add order.table -r user.table -n 'Table for orders.'
 
-  db-proxy:ENV
+  db proxy:ENV
     Create a proxy for accessing a remote database with your database GUI tool.
     If you don't have a personal account for the database, you can get a working
-    username and password by running `taito ci-secrets:ENV`. Note that passwords
+    username and password by running `taito ci secrets:ENV`. Note that passwords
     are rotated once in a while, thus, if you get an authentication error,
-    retrieve new secrets by running `taito ci-secrets:ENV` again.
+    retrieve new secrets by running `taito ci secrets:ENV` again.
 
-  db-open[:ENV] [USERNAME]
+  db open[:ENV] [USERNAME]
     Access database from command line. DB proxy connection and secrets are
     handled automatically. NOTE: If you want to access database using a GUI
-    tool, use the db-proxy:ENV command instead.
+    tool, use the db proxy:ENV command instead.
 
-  db-dump[:ENV]
+  db dump[:ENV]
     Take dump of a database. DB proxy connection and secrets are
     handled automatically.
 
-  db-import[:ENV] FILE
+  db import:[ENV] FILE
     Import file to database. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
-    Example: taito db-import:dev ./database/my-file.sql
+    Example: taito db import:dev ./database/my-file.sql
 
-  db-deploy[:ENV]
+  db deploy[:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled
     automatically.
 
-  db-diff[:ENV] [OTHER_ENV]
+  db diff:[ENV] [OTHER_ENV]
     Compare database schemas of two environments. DB proxy connection and
     secrets are handled automatically. TODO implement.
 
-  db-log[:ENV]
+  db log[:ENV]
     View change log of database. DB proxy connection and secrets are handled
     automatically.
 
-  db-revert[:ENV] [CHANGE]
+  db revert:[ENV] [CHANGE]
     Revert database changes. DB proxy connection and secrets are
     handled automatically. Revert the previous migration batch by running
-    `taito db-revert[:ENV]`. If you would like to revert to a specific revision
-    instead, view the change log first with `taito db-log[:ENV]` and then run
-    `taito db-revert[:ENV] CHANGE`. TODO currently always requires CHANGE param.
+    `taito db revert[:ENV]`. If you would like to revert to a specific revision
+    instead, view the change log first with `taito db log[:ENV]` and then run
+    `taito db revert[:ENV] CHANGE`. TODO currently always requires CHANGE
+    param.
 
-  db-recreate[:ENV]
+  db recreate[:ENV]
     Recreates the database. Thus on next deployment, all database migrations
     will be run from the beginning. DB proxy connection and secrets are handled
     automatically.
 
-  db-copy:ENV SOURCE_ENV
+  db copy:ENV SOURCE_ENV
     Copy database from one environment to another. For example
-    `db-copy:staging prod` or `db-copy:local dev`. If you do not have enough
+    `db copy:staging prod` or `db copy:local dev`. If you do not have enough
     rights, ask devops personnel to do this for you. DB proxy connection and
     secrets are handled automatically.
 
-  db-copyquick:ENV SOURCE_ENV
+  db copyquick:ENV SOURCE_ENV
     Copy database quickly from one environent to another. DB proxy connection
     and secrets are handled automatically. NOTE: The command locks source
     database from other users until copying is finished. It also requires
@@ -226,69 +249,69 @@ PROJECT: CI/CD OPERATIONS
   > are related to deployments one way or another. Note that all db related
   > operations are listed in db section.
 
-  ci-prepare
+  ci prepare
     Set ci flags by status check. The ci flags are used to control the following
     ci steps. For example if taitoflag_images_exist is set, many of the ci steps
     will be skipped since all images have already been built and tested
     by some previous CI build.
 
-  ci-lock[:ENV] CONTAINER_NAME
+  ci lock:[ENV] CONTAINER_NAME
     Locks libraries according to image deployed to environment. Example:
-    'taito ci-lock:dev client'. TODO implement.
+    'taito ci lock:dev client'. TODO implement.
 
-  ci-build[:ENV] CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
-    Builds image. Example: 'taito ci-build:dev client test1'.
+  ci build:[ENV] CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
+    Builds image. Example: 'taito ci build:dev client test1'.
 
-  ci-push CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
-    Pushes image to image registry. Example: 'taito ci-push:dev client test1'.
+  ci push: CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
+    Pushes image to image registry. Example: 'taito ci push:dev client test1'.
 
-  ci-deploy[:ENV] [IMAGE_TAG] [--dry-run]
+  ci deploy[:ENV] [IMAGE_TAG] [--dry-run]
     Deploy the application either by using IMAGE_TAG given as parameter or
     using the latest image found for the environment in question. Use dry-run
-    switch to execute a dry run. Example: 'taito ci-deploy:dev test1'
+    switch to execute a dry run. Example: 'taito ci deploy:dev test1'
 
-  ci-fulldeploy[:ENV] CONTAINER_NAME
+  ci fulldeploy:[ENV] CONTAINER_NAME
     Build, push and deploy a container to server. Use this when you need to
     deploy manual changes to some environment. TODO not implemented yet.
-    Example: taito ci-fulldeploy:dev server
+    Example: taito ci fulldeploy:dev server
 
-  ci-revision:ENV
+  ci revision[:ENV]
     Show current revision.
 
-  ci-revert:ENV [REVISION]
+  ci revert[:ENV] [REVISION]
     Reverts application to another revision. Reverts to the previous version
     if revision has not been given as argument. You can see current revision
-    number by running `taito ci-revision[:ENV]`. NOTE: This command does not
-    revert database changes. Use 'db-revert[:ENV]' for that.
+    number by running `taito ci revision[:ENV]`. NOTE: This command does not
+    revert database changes. Use 'db revert[:ENV]' for that.
 
-  ci-wait[:ENV]
+  ci wait[:ENV]
     Waits until application has been succesfully deployed to server.
     For example polls the app url until version number changes to something
     else. This is used by CI/CD scripts to wait deployment before running the
     api and e2e tests.
 
-  ci-verify[:ENV]
+  ci verify[:ENV]
     Verifies that everyting went ok e.g. by checking test results. If something
     went wrong and autorevert is enabled for the environment, runs
-    `taito db-revert[:ENV]` and `taito ci-revert[:ENV]`.
+    `taito db revert[:ENV]` and `taito ci revert[:ENV]`.
 
-  ci-docs
+  ci docs
     Generate docs e.g. API docs from API definitions and PDF files from
     markdown documentation.
     TIP: Enable the npm plugin and implement ci-docs script in your
     package.json.
 
-  ci-scan
+  ci scan
     Lint code, scan for vulnerabilities, etc.
     TIP: Enable the npm plugin and implement ci-scan script in your package.json
     and your code will be scanned.
 
-  ci-test-unit
+  ci test unit
     Run all unit tests.
     TIP: Enable the npm plugin and implement ci-test-unit script in your
     package.json.
 
-  ci-test-api[:ENV]
+  ci test api[:ENV]
     Run all api tests.
     TIP: Enable the npm plugin and implement ci-test-api:ENV script in your
     package.json. You can configure test users and passwords for each
@@ -296,7 +319,7 @@ PROJECT: CI/CD OPERATIONS
     script as environment variables. At least implement tests for local
     environment (other target environments are optional).
 
-  ci-test-e2e[:ENV]
+  ci test e2e[:ENV]
     Run all e2e tests.
     TIP: Enable the npm plugin and implement ci-test-e2e:ENV script in your
     package.json. You can configure test users and passwords for each
@@ -304,23 +327,23 @@ PROJECT: CI/CD OPERATIONS
     script as environment variables. At least implement tests for local
     environment (other target environments are optional).
 
-  ci-publish
+  ci publish
     Publishes build artifacts (e.g. docs, test reports) to a central location.
 
-  ci-release-pre:ENV
-  ci-release-post:ENV
+  ci release pre:ENV
+  ci release post:ENV
     Release pre and post handling. These commands usually generate release notes
     automatically and tag the git repository with a new version number.
     TIP: Enable the npm plugin and implement ci-release-pre:prod and
     ci-release-post:prod scripts in your package.json.
 
-  ci-cancel:ENV [IGNORE_BUILD_ID]
+  ci cancel:ENV [IGNORE_BUILD_ID]
     Cancel an ongoing build (but ignore the given build id). CI/CD scripts may
     use this, for example, to cancel an ongoing build when a new build is
     started. It may also be handy in case somebody pushes something to a wrong
     branch accidentally.
 
-  ci-secrets[:ENV] [--save-as-taito-secrets]
+  ci secrets[:ENV] [--save-as-taito-secrets]
     Retrieves all secrets that might be needed by the CI/CD build or developer.
     If the --save-as-taito-secrets flag is given, the command saves the secrets
     as a taito-secrets.sh file that taito-cli will read the next time it is
@@ -329,20 +352,20 @@ PROJECT: CI/CD OPERATIONS
 
 PROJECT: ENVIRONMENT SETUP
 
-  env-config
+  env config
     Configure project.
 
-  env-create:ENV [GIT_BRANCH]
+  env create:ENV [GIT_BRANCH]
     Create an environment. Creates build trigger for the given branch if branch
     was given as argument. Otherwise uses default branch determined by ENV.
 
-  env-delete:ENV
+  env delete:ENV
     Delete an environment.
 
-  env-rotate:ENV [NAME_FILTER]
+  env rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.
 
-  env-cert[:ENV] DOMAIN
+  env cert[:ENV] DOMAIN
     Add a custom certificate.
 
 PROJECT: ALTERNATIVE ENVIRONMENTS
@@ -351,25 +374,25 @@ PROJECT: ALTERNATIVE ENVIRONMENTS
   > but containers are built from an alternative branch. You can use alternative
   > environments for canary releases, A/B testing, etc.
 
-  env-alt-create:ENV [NAME] [GIT_BRANCH]
+  env alt create:ENV [NAME] [GIT_BRANCH]
     Create an alternative environment. TODO not implemented.
 
-  env-alt-delete:ENV [NAME]
+  env alt delete:ENV [NAME]
     Delete alternative environment. TODO not implemented.
 
 PROJECT: CONTACTS
 
-  contacts-development
+  contacts development
     List of contacts required for development.
     TIP: Enable the npm plugin and implement contacts-development script in your
     package.json.
 
-  contacts-maintenance
+  contacts maintenance
     List contacts that should be notified of a maintenance break, incident or
     some other problems.
     TIP: Enable the npm plugin and implement contacts-maintenance script in your
     package.json.
 
-  contacts-users [TYPE]
+  contacts users [TYPE]
     TODO optional command for listing users that should be notified of
     incidents, etc? Generated from user database?

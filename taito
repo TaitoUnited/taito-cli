@@ -5,46 +5,6 @@
 # Contain pwd change in a subshell
 if ! (
 
-  # Determine parameters
-  # TODO this is a quick hack
-  if [[ "${1}" == "-dev" ]]; then
-    mode=dev
-    params=(${@:2})
-  elif [[ "${1}" == "-local" ]]; then
-    mode=local
-    params=(${@:2})
-  else
-    mode=normal
-    params=(${@:1})
-  fi
-
-  # Determine command to be executed
-  command="${params[0]}"
-  if [[ -z "${command}" ]]; then
-    command="--help"
-  fi
-
-  # Determine docker entrypoint
-  # TODO this is a quick hack
-  entrypoint="taito"
-  if [[ "${1}" == "--shell" ]]; then
-    entrypoint="/bin/bash"
-    params=()
-    command=""
-  elif [[ "${2}" == "--shell" ]]; then
-    entrypoint="/bin/bash"
-    params=()
-    command=""
-  elif [[ "${1}" == "--" ]]; then
-    entrypoint="${2}"
-    params=(${@:3})
-    command="${params[0]}"
-  elif [[ "${2}" == "--" ]]; then
-    entrypoint="${3}"
-    params=(${@:4})
-    command="${params[0]}"
-  fi
-
   # Resolve project root folder by the location of taito-config.sh
   # Use project root dir as the current working directory
   # TODO duplicate code with taito_impl.sh
@@ -81,6 +41,52 @@ if ! (
     # Project specific config
     # shellcheck disable=SC1091
     . ./taito-config.sh
+  fi
+
+  # Determine mode by mode switch
+  if [[ "${1}" == "-dev" ]] || [[ "${1}" == "-local" ]]; then
+    mode="${1#-}"
+    args=(${@:2})
+  else
+    mode=normal
+    args=(${@:1})
+  fi
+
+  # Convert space syntax to internal hyphen syntax
+  if [[ "${args[0]}" != *"-"* ]]; then
+    space_cmd=()
+    space_args=()
+    mark_found="false"
+    for arg in "${args[@]}"
+    do
+      if [[ "${arg}" == "-"* ]] || [[ ${mark_found} == "true" ]]; then
+        mark_found="true"
+        space_args+=(${arg})
+      elif [[ "${arg}" == *":"* ]] && [[ ${mark_found} == "false" ]]; then
+        mark_found="true"
+        space_cmd+=(${arg})
+      elif [[ ${mark_found} == "false" ]]; then
+        space_cmd+=(${arg})
+      fi
+    done
+    space_cmd="${space_cmd[@]}"
+    args=("${space_cmd// /-}" ${space_args[@]})
+  fi
+
+  # Determine docker entrypoint, taito command and command parameters
+  entrypoint="taito"
+  command="${args[0]}"
+  params=(${args[@]})
+  if [[ -z "${command}" ]]; then
+    command="--help"
+  elif [[ "${command}" == "--shell" ]]; then
+    entrypoint="/bin/bash"
+    command=""
+    params=()
+  elif [[ "${command}" == "--" ]]; then
+    entrypoint="${args[1]}"
+    command=""
+    params=(${args[@]:2})
   fi
 
   # Determine enabled extensions

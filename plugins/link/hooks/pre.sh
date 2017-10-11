@@ -13,7 +13,7 @@ if [[ ${found} != "" ]]; then
     command_prototype=${prefix%#*}
     command=${command_prototype%:*}
     command=${command%[*}
-    if [[ "${command}" == "${taito_command}" ]]; then
+    if [[ "${command// /-}" == "${taito_command}" ]]; then
       name=${prefix##*#}
       url="$( cut -d '=' -f 2- <<< "$link" )"
       echo

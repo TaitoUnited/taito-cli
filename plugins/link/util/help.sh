@@ -12,7 +12,7 @@ do
   command_prototype=${prefix%#*}
   name=${prefix##*#}
 
-  echo "  ${command_prototype}"
+  echo "  ${command_prototype//-/ }"
   echo "    Opens ${name} in browser."
   echo
 done
