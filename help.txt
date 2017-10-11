@@ -184,9 +184,9 @@ PROJECT: DATABASE OPERATIONS
     help. You can run the change to local database by running `taito db:deploy`.
     Example: 'taito db add order.table -r user.table -n 'Table for orders.'
 
-  db proxy:ENV
-    Create a proxy for accessing a remote database with your database GUI tool.
-    If you don't have a personal account for the database, you can get a working
+  db proxy[:ENV]
+    Create a proxy for accessing a database with your database GUI tool. If you
+    don't have a personal account for the database, you can get a working
     username and password by running `taito ci secrets:ENV`. Note that passwords
     are rotated once in a while, thus, if you get an authentication error,
     retrieve new secrets by running `taito ci secrets:ENV` again.
