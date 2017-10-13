@@ -155,8 +155,10 @@ if ! (
       mkdir -p ~/.taito/save &> /dev/null
       docker cp taito-save:/root/.config ~/.taito/save
       docker cp taito-save:/root/.kube ~/.taito/save
+      docker cp taito-save:/root/admin_creds.enc ~/.taito/save
       docker cp ~/.taito/save/.config taito-new:/root
       docker cp ~/.taito/save/.kube taito-new:/root
+      docker cp ~/.taito/save/admin_creds.enc taito-new:/root
       docker commit taito-new "${taito_image}"
       docker image tag "${taito_image}" "${taito_image}save"
       rm -rf ~/.taito/save
