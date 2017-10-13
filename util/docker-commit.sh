@@ -4,9 +4,14 @@
 
 # Asks host to commit changes to the container image
 
-sleep 1
-"${taito_cli_path}/util/execute-on-host.sh" \
-  "docker ps; docker commit taito ${taito_image_name}save"
-"${taito_cli_path}/util/execute-on-host-fg.sh" \
-  "docker image tag ${taito_image_name}save ${taito_image_name}"
-sleep 2
+if [[ -z "${taito_admin_key}" ]]; then
+  sleep 1
+  "${taito_cli_path}/util/execute-on-host.sh" \
+    "docker ps; docker commit ${HOSTNAME} ${taito_image_name}save"
+  "${taito_cli_path}/util/execute-on-host-fg.sh" \
+    "docker image tag ${taito_image_name}save ${taito_image_name}"
+  sleep 2
+else
+  echo "ERROR: Docker commit is not allowed when executing as admin!"
+  exit 1
+fi

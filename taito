@@ -5,17 +5,6 @@
 # Contain pwd change in a subshell
 if ! (
 
-  # Resolve project root folder by the location of taito-config.sh
-  # Use project root dir as the current working directory
-  # TODO duplicate code with taito_impl.sh
-  current_path="${PWD}"
-  while [[ "${PWD}" != "/" ]]; do
-    ls | grep taito-config.sh > /dev/null && break; cd ..;
-  done
-  if [[ ${PWD} == "/" ]]; then
-    cd "${current_path}" || exit 1
-  fi
-
   # Resolve taito-cli location
   # TODO duplicate code with taito_impl.sh
   source="${BASH_SOURCE[0]}"
@@ -28,6 +17,17 @@ if ! (
   done
   dir_name=$(dirname "${source}")
   cli_path="$( cd -P "${dir_name}" && pwd )"
+
+  # Resolve project root folder by the location of taito-config.sh
+  # Use project root dir as the current working directory
+  # TODO duplicate code with taito_impl.sh
+  current_path="${PWD}"
+  while [[ "${PWD}" != "/" ]]; do
+    ls | grep taito-config.sh > /dev/null && break; cd ..;
+  done
+  if [[ ${PWD} == "/" ]]; then
+    cd "${current_path}" || exit 1
+  fi
 
   # Read taito-config.sh files from all locations
   # TODO duplicate code with taito_impl.sh
@@ -43,13 +43,23 @@ if ! (
     . ./taito-config.sh
   fi
 
-  # Determine mode by mode switch
+  # Determine mode
   if [[ "${1}" == "-dev" ]] || [[ "${1}" == "-local" ]]; then
     mode="${1#-}"
     args=(${@:2})
   else
     mode=normal
     args=(${@:1})
+  fi
+
+  # Determine admin option value
+  # TODO a quick hack -> refactor option handling
+  if [[ "${args[0]}" == "-a" ]] || [[ "${args[0]}" == "--admin" ]]; then
+    admin=true
+    args=(${args[@]:1})
+  elif [[ "${args[1]}" == "-a" ]] || [[ "${args[1]}" == "--admin" ]]; then
+    admin=true
+    args=(${args[0]} ${args[@]:2})
   fi
 
   # Convert space syntax to internal hyphen syntax
@@ -73,20 +83,11 @@ if ! (
     args=("${space_cmd// /-}" ${space_args[@]})
   fi
 
-  # Determine docker entrypoint, taito command and command parameters
-  entrypoint="taito"
+  # Determine taito command and command parameters
   command="${args[0]}"
   params=(${args[@]})
   if [[ -z "${command}" ]]; then
     command="--help"
-  elif [[ "${command}" == "--shell" ]]; then
-    entrypoint="/bin/bash"
-    command=""
-    params=()
-  elif [[ "${command}" == "--" ]]; then
-    entrypoint="${args[1]}"
-    command=""
-    params=(${args[@]:2})
   fi
 
   # Determine enabled extensions
@@ -252,10 +253,22 @@ if ! (
         -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"
     fi
 
+    # Ask for admin encryption key
+    if [[ ${admin} == true ]]; then
+      echo "Admin encryption/decryption key:"
+      read -s admin_key
+      if [[ ${#admin_key} -lt 16 ]]; then
+        echo "ERROR: Encyption key must be at least 16 characters long"
+        exit 1
+      fi
+    fi
+
+    # TODO do not pass taito_admin_key as command line argument
+
     # Run on docker
     # shellcheck disable=SC2086
+    # --name taito \
     eval "docker run -it \
-      --name taito \
       -v \"${HOME}/.taito:/root/.taito\" \
       -v \"$(pwd):/project\" \
       -w /project \
@@ -269,7 +282,8 @@ if ! (
       -e taito_mode=\"${mode}\" \
       -e taito_docker=\"true\" \
       -e taito_image_name=\"${taito_image_name}\" \
-      --entrypoint ${entrypoint} \
+      -e taito_admin_key=\"${admin_key}\" \
+      --entrypoint taito \
       ${image_flag} \
       ${params[@]} ${output}"
   fi

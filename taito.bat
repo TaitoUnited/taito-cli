@@ -16,7 +16,6 @@ IF "%taito_command%"=="--upgrade" (
   docker pull "%taito_image%"
 ) ELSE (
   docker run -it ^
-    --name taito ^
     -v "%taito_config_path%:/root/.taito" ^
     -v "%taito_project_path%:/project" ^
     -w /project ^

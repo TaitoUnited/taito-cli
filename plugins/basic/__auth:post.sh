@@ -2,10 +2,22 @@
 : "${taito_cli_path:?}"
 
 echo
-echo "### basic - --auth:post: Asking host to commit new credentials to \
-Docker container image ###"
-echo "NOTE: Your credentials are saved to the taito container image."
+echo "### basic - --auth:post: Auth post handling ###"
 
+if [[ -n "${taito_admin_key}" ]]; then
+  echo "- Encrypting admin credentials" && \
+  (cd ~ && tar -zcvf admin_creds.tar.gz .config .kube) && \
+  openssl aes-256-cbc -salt -in ~/admin_creds.tar.gz -out ~/admin_creds.enc \
+    -pass env:taito_admin_key && \
+  rm -rf ~/admin_creds.tar.gz ~/.config ~/.kube && \
+
+  echo "- Restoring normal user credentials" && \
+  mv ~/.config_normal ~/.config && \
+  mv ~/.kube_normal ~/.kube
+fi && \
+
+echo "- Asking host to commit credentials to Docker container image" && \
+export taito_admin_key="" && \
 "${taito_cli_path}/util/docker-commit.sh" && \
 
 # Call next command on command chain

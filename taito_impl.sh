@@ -250,70 +250,135 @@ if ! (
     echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
   fi
 
+  # Admin credentials pre-handling
+  if [[ -n "${taito_admin_key}" ]]; then
+    if [[ ${#taito_admin_key} -lt 16 ]]; then
+      echo "ERROR: Encyption key must be at least 16 characters long"
+      exit 1
+    fi
+
+    if [[ ! -f ~/admin_creds.enc ]] && [[ "${command}" != "__auth" ]]; then
+      echo "ERROR: Admin credentials file missing. Authenticate as admin first."
+      exit 1
+    fi
+
+    # Move normal user credentials elsewehere
+    mv ~/.config ~/.config_normal
+    mv ~/.kube ~/.kube_normal
+
+    if [[ "${command}" != "__auth" ]]; then
+      # Decrypt admin credentials
+      # TODO use something else than openssl:
+      # https://cryptosense.com/weak-key-derivation-in-openssl/
+      if ! openssl aes-256-cbc -d -salt -in ~/admin_creds.enc \
+        -out ~/admin_creds.tar.gz -pass env:taito_admin_key; then
+        echo "ERROR: Decrypting admin credentials failed"
+        exit 1
+      fi
+      (cd ~ && tar -xf admin_creds.tar.gz)
+      rm -f ~/admin_creds.tar.gz
+      echo "Decrypted admin credentials"
+      echo "---------------- ADMIN START ----------------"
+      echo
+    fi
+  fi
+
+  # Auth command pre-handling
+  if [[ "${command}" == "__auth" ]]; then
+    echo "- Deleting old credentials"
+    rm -rf ~/.config ~/.kube
+  fi
+
   # Control flow flags
   exit_code=0
   skip_commands=false
 
-  # Call pre-handers
-  for handler in "${pre_handlers[@]}"
-  do
-    # shellcheck disable=SC1090
-    . "${cli_path}/util/set-taito-plugin-path.sh" "${handler%hooks\/*}"
-    "${handler}" "${params[@]}"
-    ecode=${?}
-    if [[ ${ecode} == 1 ]]; then
-      >&2 echo ERROR!
-      skip_commands=true
-      exit_code=1
-    elif [[ ${ecode} -gt 1 ]]; then
-      skip_commands=true
-    fi
-  done
+  if [[ "${command}" == "__shell" ]]; then
+    # Start interactive shell
+    /bin/bash
+    exit_code=${?}
+  elif [[ "${command}" == "__" ]]; then
+    # Execute shell command given as argument
+    eval "${params[@]}"
+    exit_code=${?}
+  else
+    # Execute taito-cli command
 
-  if [[ ${skip_commands} == false ]]; then
-    if [[ ${command_exists} == true ]]; then
-      # Call first command of the command chain
-      if ! "${cli_path}/util/call-next.sh" "${params[@]}"; then
-        echo
-        echo "ERROR! Command failed. Usage:"
-        export taito_command_chain=""
-        export taito_plugin_path="${cli_path}/plugins/basic"
-        "${cli_path}/plugins/basic/__help.sh" "${command}"
+    # Call pre-handers
+    for handler in "${pre_handlers[@]}"
+    do
+      # shellcheck disable=SC1090
+      . "${cli_path}/util/set-taito-plugin-path.sh" "${handler%hooks\/*}"
+      "${handler}" "${params[@]}"
+      ecode=${?}
+      if [[ ${ecode} == 1 ]]; then
+        >&2 echo ERROR!
+        skip_commands=true
+        exit_code=1
+      elif [[ ${ecode} -gt 1 ]]; then
+        skip_commands=true
+      fi
+    done
+
+    # Call command
+    if [[ ${skip_commands} == false ]]; then
+      if [[ ${command_exists} == true ]]; then
+        # Call first command of the command chain
+        if ! "${cli_path}/util/call-next.sh" "${params[@]}"; then
+          echo
+          echo "ERROR! Command failed. Usage:"
+          export taito_command_chain=""
+          export taito_plugin_path="${cli_path}/plugins/basic"
+          "${cli_path}/plugins/basic/__help.sh" "${command}"
+          exit_code=1
+        fi
+      elif [[ "${command}" == "oper-init" ]]; then
+        # Note of the plugins has implemented oper-init
+        echo "Nothing to initialize"
+      else
+        # Command not found
+        echo "Unknown command: '${orig_command//-/ }'. Did you remember to give ':' before "
+        echo "command arguments? Did you specify the correct ENV? Some of the plugins might"
+        echo "not be enabled in '${taito_env}' environment."
+
+        # Show matching commands
+        if [[ "${orig_command}" != " " ]]; then
+          echo
+          echo "Perhaps one of the following commands is the one you meant to run."
+          echo "Run 'taito -h' to get more help."
+          export taito_command_chain=""
+          export taito_plugin_path="${cli_path}/plugins/basic"
+          "${cli_path}/plugins/basic/__help.sh" "${orig_command}"
+        fi
         exit_code=1
       fi
-    elif [[ "${command}" == "oper-init" ]]; then
-      # Note of the plugins has implemented oper-init
-      echo "Nothing to initialize"
-    else
-      # Command not found
-      echo "Unknown command: '${orig_command//-/ }'. Did you remember to give ':' before "
-      echo "command arguments? Did you specify the correct ENV? Some of the plugins might"
-      echo "not be enabled in '${taito_env}' environment."
-
-      # Show matching commands
-      if [[ "${orig_command}" != " " ]]; then
-        echo
-        echo "Perhaps one of the following commands is the one you meant to run."
-        echo "Run 'taito -h' to get more help."
-        export taito_command_chain=""
-        export taito_plugin_path="${cli_path}/plugins/basic"
-        "${cli_path}/plugins/basic/__help.sh" "${orig_command}"
-      fi
-      exit_code=1
     fi
+
+    # Call post-handers
+    for handler in "${post_handlers[@]}"
+    do
+      # shellcheck disable=SC1090
+      . "${cli_path}/util/set-taito-plugin-path.sh" "${handler%hooks\/*}"
+      "${handler}" "${params[@]}"
+      if [[ ${?} == 1 ]]; then
+        >&2 echo ERROR!
+        exit_code=1
+      fi
+    done
   fi
 
-  # Call post-handers
-  for handler in "${post_handlers[@]}"
-  do
-    # shellcheck disable=SC1090
-    . "${cli_path}/util/set-taito-plugin-path.sh" "${handler%hooks\/*}"
-    "${handler}" "${params[@]}"
-    if [[ ${?} == 1 ]]; then
-      >&2 echo ERROR!
-      exit_code=1
-    fi
-  done
+  # Admin post-handling (just in case)
+  # NOTE: In case of auth command this was already run before docker commit
+  if [[ -n "${taito_admin_key}" ]] && [[ "${command}" != "__auth" ]]; then
+    # Delete admin credentials
+    rm -rf ~/.config ~/.kube
+    # Move normal user credentials back
+    mv ~/.config_normal ~/.config
+    mv ~/.kube_normal ~/.kube
+    echo
+    echo "---------------- ADMIN END ----------------"
+    echo "Normal user credentials restored"
+  fi
 
   exit ${exit_code}
 

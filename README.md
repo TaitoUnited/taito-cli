@@ -49,11 +49,19 @@ Some of the plugins require authentication. If you encounter an authorization er
 
 See the [README.md](https://github.com/TaitoUnited/server-template#readme) of server-template as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
-## Advanced usage
+### Advanced usage
 
 You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
 
 > TODO: With the `-v` flag (verbose) you can see all the commands that plugins run during the command execution.
+
+### Admin credentials
+
+Many tools require you to authenticate only once and then you can run any command without ever supplying your password again. For this reason taito-cli supports a separate admin account for accessing critical resources.
+
+With the `--admin` (or `-a`) option you specify that you would like to run the given command as admin. Your admin credentials are stored in taito-cli container image using `aes-256-cbc` encryption and you need to enter the decryption key everytime you execute a command as admin. Keep the decryption key in a safe place (password manager for example).
+
+TODO support for U2F/YubiKey?
 
 ## Configuration
 

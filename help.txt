@@ -15,13 +15,13 @@ SYNTAX ALTERNATIVES
     taito logs:dev client
     taito git-feat-squash myfeature
 
-  When using the space syntax, you must always give ':' in your command
-  if it contains arguments. For example: 'taito git feat squash: myfeature'
-  NOTE: Autocomplete does not support the space syntax yet.
+  > When using the space syntax, you must always give ':' in your command
+  > if it contains arguments. For example: 'taito git feat squash: myfeature'
+  > NOTE: Autocomplete does not support the space syntax yet.
 
-  You should use the internal hyphen syntax when defining build targets
-  as some build tools do not support (or recommend) spaces in build target
-  names.
+  > You should use the internal hyphen syntax when defining build targets
+  > as some build tools do not support (or recommend) spaces in build target
+  > names.
 
 OPTIONS
 
@@ -48,6 +48,9 @@ OPTIONS
 
   --shell
     Start interactive shell on the taito-cli container.
+
+  --admin, -a
+    Execute as admin.
 
 ARGUMENTS
 
@@ -143,7 +146,7 @@ GIT OPERATIONS
     List all environment branches.
 
   git env merge:ENV SOURCE_BRANCH
-    Merges source env branch to destination env branch without making changes
+    Merges source env branch to target env branch without making changes
     to the current local git workspace. The command fails if fast-forward is not
     possible. Merge operations between environment branches should always be
     fast-forwarded so that a container is first built for dev environment and
@@ -159,13 +162,13 @@ GIT OPERATIONS
     env branch (source branch).
 
   git feat squash:[ENV] FEATURE_NAME
-    Merges a feature to a destination branch as a single squashed commit and
+    Merges a feature to a target branch as a single squashed commit and
     deletes the feature branch. The dev branch is used as a default env
     branch (destination for merge). Use this command for a short-lived feature
     branch with a cohesive set of changes.
 
   git feat merge:[ENV] FEATURE_NAME
-    Merges a feature to a destination branch. The dev branch is used as a
+    Merges a feature to a target branch. The dev branch is used as a
     default env branch (destination for merge). The command suggests rebase
     before merge and delete feature after merge. With rebase you can clean up
     commit history before merge e.g. by reordering commits and selectively
