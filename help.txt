@@ -30,6 +30,10 @@ OPTIONS
     Run 'taito COMMAND -h' to get help for a specific command or
     'taito PREFIX -h' to get help for a specific set of commands.
 
+  --search, -s
+    Same as '--help' but includes also command descriptions in command search.
+    TODO implement
+
   --trouble
     Show trouble.txt of current project and taito-cli.
 
@@ -129,6 +133,12 @@ PROJECT: BASIC OPERATIONS
 
   oper clean [data | build]
     Clean.
+
+  oper analyze
+    Analyzes implementation and gives you feedback accordingly (webpack
+    bundle analysis for example).
+    TIP: Enable the npm plugin and implement oper-analyze script in your
+    package.json
 
 WORKSPACE OPERATIONS
 

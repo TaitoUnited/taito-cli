@@ -1,6 +1,6 @@
 # taito-cli
 
-Taito-cli is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. This is made possible by implementing the commands with plugins and defining all settings in a configuration file. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. And build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+Taito-cli is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. This is made possible by defining all settings in a project specific configuration file and implementing the commands with plugins. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. And build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
 Taito-cli is designed so that plugins execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authentication. Taito-cli executes all this for you with a single command.
 
@@ -259,18 +259,18 @@ Taito-cli also provides a lightweight abstraction on top of infrastructure and c
 
 If you enable the npm plugin, you can run any npm script defined in your project root *package.json* with taito-cli. Just add a script to package.json and then you can run it.
 
-You can also override any existing taito-cli command in your *package.json* by using `taito-` as script name prefix. For example the following script shows the init.txt file before running initialization. The `-s` flag means that override is skipped when the npm script calls taito-cli.
+You can also override any existing taito-cli command in your *package.json* by using `taito-` as script name prefix. For example the following script shows the init.txt file before running initialization. The `-z` flag means that override is skipped when the npm script calls taito-cli.
 
-    "taito-oper-init": "less init.txt; taito -s oper-init"
+    "taito-oper-init": "less init.txt; taito -z oper-init"
 
 You can use *taito-cli* with any project, even those that use technologies that are not supported by any of the plugins. Just add commands to your package.json and add a `taito-config.sh` file with the npm plugin enabled to the project root directory. You can use the optional *taito* prefix to avoid conflicts with existing npm script names. For example:
 
-    "taito-o-install": "npm install; ant retrieve",
-    "oper-start": "java -cp . com.domain.app.MyServer",
-    "oper-init", "host=localhost npm run _db -- < dev-data.sql",
-    "taito-open", "taito browser http://localhost:8080",
-    "taito-open:dev", "taito browser http://mydomain-dev:8080",
-    "oper-users", "echo admin/password, user/password",
+    "taito-install": "npm install; ant retrieve",
+    "start": "java -cp . com.domain.app.MyServer",
+    "init", "host=localhost npm run _db -- < dev-data.sql",
+    "open-app", "taito browser http://localhost:8080",
+    "open-app:dev", "taito browser http://mydomain-dev:8080",
+    "users", "echo admin/password, user/password",
     "db-open", "host=localhost npm run _db"
     "db-open:dev", "host=mydomain-dev npm run _db"
     "db-open:test", "host=mydomain-test npm run _db"

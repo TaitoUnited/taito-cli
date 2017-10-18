@@ -6,7 +6,7 @@
 if ! (
 
   # Determine parameters
-  if [[ "${1}" == "-s" ]]; then
+  if [[ "${1}" == "-z" ]]; then
     skip_override=true
     env_command="${2}"
     params=(${@:3})
@@ -281,6 +281,11 @@ if ! (
       echo "---------------- ADMIN START ----------------"
       echo
     fi
+
+    # Hide admin key from plugins
+    taito_admin_key_orig="${taito_admin_key}"
+    export taito_admin_key="-"
+    export taito_is_admin=true
   fi
 
   # Auth command pre-handling
@@ -324,7 +329,13 @@ if ! (
     if [[ ${skip_commands} == false ]]; then
       if [[ ${command_exists} == true ]]; then
         # Call first command of the command chain
-        if ! "${cli_path}/util/call-next.sh" "${params[@]}"; then
+        "${cli_path}/util/call-next.sh" "${params[@]}"
+        ecode=${?}
+        if [[ ${ecode} == 130 ]]; then
+          echo
+          echo "Cancelled"
+          exit_code=130
+        elif [[ ${ecode} -gt 1 ]]; then
           echo
           echo "ERROR! Command failed. Usage:"
           export taito_command_chain=""
@@ -369,7 +380,7 @@ if ! (
 
   # Admin post-handling (just in case)
   # NOTE: In case of auth command this was already run before docker commit
-  if [[ -n "${taito_admin_key}" ]] && [[ "${command}" != "__auth" ]]; then
+  if [[ -n "${taito_admin_key_orig}" ]] && [[ "${command}" != "__auth" ]]; then
     # Delete admin credentials
     rm -rf ~/.config ~/.kube
     # Move normal user credentials back
