@@ -113,7 +113,7 @@ if ! (
       else
         (cd ~/.taito; git clone "${repo_url}"; cd "${repo_name}"; git checkout)
       fi
-      extension_paths="${extension_paths} /root/.taito/${repo_name}${repo_dir}"
+      extension_paths="${extension_paths} /home/taito/.taito/${repo_name}${repo_dir}"
       extensions_local_mode="${extensions_local_mode} \
         ${HOME}/.taito/${repo_name}${repo_dir}"
     elif [[ ${extension} == *"gz" ]]; then
@@ -125,12 +125,12 @@ if ! (
         echo "Downloading extension ${folder_name} from ${url}"
         ( curl -sL "${url}" | tar zxv -C ~/.taito )
       fi
-      extension_paths="${extension_paths} /root/.taito/${repo_name}"
+      extension_paths="${extension_paths} /home/taito/.taito/${repo_name}"
       extensions_local_mode="${extensions_local_mode} \
         ${HOME}/.taito/${repo_name}"
     else
       # Local url
-      docker_path="${extension/\~//root}"
+      docker_path="${extension/\~//home/taito}"
       local_path="${extension/\~/${HOME}}"
       extension_paths="${extension_paths} ${docker_path}"
       extension_mount_flags="${extension_mount_flags} \
@@ -153,12 +153,12 @@ if ! (
       docker create --name taito-new "${taito_image}"
       echo "Copying credentials from the old image."
       mkdir -p ~/.taito/save &> /dev/null
-      docker cp taito-save:/root/.config ~/.taito/save
-      docker cp taito-save:/root/.kube ~/.taito/save
-      docker cp taito-save:/root/admin_creds.enc ~/.taito/save &> /dev/null
-      docker cp ~/.taito/save/.config taito-new:/root
-      docker cp ~/.taito/save/.kube taito-new:/root
-      docker cp ~/.taito/save/admin_creds.enc taito-new:/root &> /dev/null
+      docker cp taito-save:/home/taito/.config ~/.taito/save
+      docker cp taito-save:/home/taito/.kube ~/.taito/save
+      docker cp taito-save:/home/taito/admin_creds.enc ~/.taito/save &> /dev/null
+      docker cp ~/.taito/save/.config taito-new:/home/taito
+      docker cp ~/.taito/save/.kube taito-new:/home/taito
+      docker cp ~/.taito/save/admin_creds.enc taito-new:/home/taito &> /dev/null
       docker commit taito-new "${taito_image}" &> /dev/null
       docker image tag "${taito_image}" "${taito_image}save"
       rm -rf ~/.taito/save
@@ -178,8 +178,8 @@ if ! (
   # Export some variables to be used by various taito commands
   export taito_host_uname
   taito_host_uname="$(uname)"
-  export taito_run="${log_file/${HOME}/\/root}"
-  export taito_run_fg="${log_file_fg/${HOME}/\/root}"
+  export taito_run="${log_file/${HOME}/\/home/taito}"
+  export taito_run_fg="${log_file_fg/${HOME}/\/home/taito}"
 
   # Start a background process that will run commands on host in the
   # background while the container is still running
@@ -272,7 +272,7 @@ if ! (
     # shellcheck disable=SC2086
     # --name taito \
     eval "docker run -it \
-      -v \"${HOME}/.taito:/root/.taito\" \
+      -v \"${HOME}/.taito:/home/taito/.taito\" \
       -v \"$(pwd):/project\" \
       -w /project \
       ${proxy_flags} \
