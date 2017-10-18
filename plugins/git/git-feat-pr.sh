@@ -10,6 +10,14 @@ feature="feature/${1:?Feature name not given}"
 echo
 echo "### git - git-feat-pr: Making a pull request for merging ${feature} \
 to ${dest} ###"
+echo
+
+echo "Making a pull request for merging ${feature} \
+to ${dest}. Do you want to continue (Y/n)?"
+read -r confirm
+if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+  exit 130
+fi
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   echo 'Rebase branch ${feature} before making the pull request (Y/n)?' && \

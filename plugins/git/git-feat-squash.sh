@@ -10,6 +10,12 @@ echo
 echo "### git - git-feat-squash: Squash merging ${feature} to ${dest} ###"
 echo
 
+echo "Squashing ${feature} to ${dest}. Do you want to continue (Y/n)?"
+read -r confirm
+if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+  exit 130
+fi
+
 # diff-index -> Commit only if there is something to commit
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   git checkout ${dest} && \

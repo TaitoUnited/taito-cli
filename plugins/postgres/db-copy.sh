@@ -13,6 +13,13 @@ username="${2:-postgres}"
 
 echo
 echo "### postgres - db-copy: Copying database from ${source} to ${dest} ###"
+echo
+
+echo "Copying ${source} to ${dest}. Do you want to continue (Y/n)?"
+read -r confirm
+if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+  exit 130
+fi
 
 db_prefix=${postgres_database%_*}
 db_dest=${postgres_database%_*}_${dest}
@@ -25,6 +32,7 @@ rm -f "${dump_file}" &> /dev/null
 "${taito_plugin_path}/util/psql.sh" "" "-f ${dump_file}" "pg_dump" && \
 
 echo "- 2. Rename the old database" && \
+postgres_username=postgres && \
 . "${taito_plugin_path}/util/ask-password.sh" && \ # TODO Does not work. Why?
 flags="-f ${taito_plugin_path}/resources/rename-db.sql -v database=${db_dest} \
   -v database_new=${db_dest}_old" && \

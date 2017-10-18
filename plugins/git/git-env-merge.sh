@@ -8,6 +8,12 @@ source="${1:?Source branch name not given}"
 echo
 echo "### git - git-env-merge: Merging ${source} to ${dest} ###"
 
+echo "Merging ${source} to ${dest}. Do you want to continue (Y/n)?"
+read -r confirm
+if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+  exit 130
+fi
+
 # TODO execute remote merge using hub cli?
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   git fetch origin ${source}:${dest} && \
