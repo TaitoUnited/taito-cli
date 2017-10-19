@@ -153,12 +153,24 @@ if ! (
       docker create --name taito-new "${taito_image}"
       echo "Copying credentials from the old image."
       mkdir -p ~/.taito/save &> /dev/null
+
+      # TODO remove: was reuiqred for copying credentials root -> taito
+      docker cp taito-save:/home/root/.config ~/.taito/save &> /dev/null
+      docker cp taito-save:/home/root/.kube ~/.taito/save &> /dev/null
+      docker cp taito-save:/home/root/admin_creds.enc ~/.taito/save &> /dev/null
+
       docker cp taito-save:/home/taito/.config ~/.taito/save
       docker cp taito-save:/home/taito/.kube ~/.taito/save
       docker cp taito-save:/home/taito/admin_creds.enc ~/.taito/save &> /dev/null
       docker cp ~/.taito/save/.config taito-new:/home/taito
       docker cp ~/.taito/save/.kube taito-new:/home/taito
       docker cp ~/.taito/save/admin_creds.enc taito-new:/home/taito &> /dev/null
+
+      # 'docker cp' permissions fix (docker bug?)
+      docker start taito-new
+      docker exec -u root -d taito-new chown -R taito:taito /home/taito
+      docker stop taito-new
+
       docker commit taito-new "${taito_image}" &> /dev/null
       docker image tag "${taito_image}" "${taito_image}save"
       rm -rf ~/.taito/save
