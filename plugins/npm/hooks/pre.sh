@@ -5,6 +5,7 @@
 : "${taito_command:?}"
 : "${taito_env:?}"
 
+command_short="${taito_command#oper-}"
 exit_code=0
 
 if [[ -f "./package.json" ]] && \
@@ -29,6 +30,14 @@ if [[ -f "./package.json" ]] && \
        [[ $(echo "${commands}" | grep "^${taito_command}$") != "" ]]; then
     # Use normal command from package.json without enviroment suffix
     npm_command="${taito_command}"
+  elif [[ ${taito_command_exists} == false ]] && \
+       [[ $(echo "${commands}" | grep "^${command_short}:${taito_env}$") != "" ]]; then
+    # Use normal command from package.json
+    npm_command="${command_short}:${taito_env}"
+  elif [[ ${taito_command_exists} == false ]] && \
+       [[ $(echo "${commands}" | grep "^${command_short}$") != "" ]]; then
+    # Use normal command from package.json without enviroment suffix
+    npm_command="${command_short}"
   fi
 
   if [[ "${npm_command}" != "" ]]; then

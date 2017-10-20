@@ -15,13 +15,14 @@ SYNTAX ALTERNATIVES
     taito logs:dev client
     taito git-feat-squash myfeature
 
-  > When using the space syntax, you must always give ':' in your command
-  > if it contains arguments. For example: 'taito git feat squash: myfeature'
+  > When using the space syntax, you must add an environment definition or
+  > use plain ':' to separate the command from arguments. Examples:
+  > $ taito logs:dev client
+  > $ taito git feat squash: myfeature
   > NOTE: Autocomplete does not support the space syntax yet.
 
-  > You should use the internal hyphen syntax when defining build targets
-  > as some build tools do not support (or recommend) spaces in build target
-  > names.
+  > You should always use the internal hyphen syntax when defining build
+  > targets as some build tools do not support spaces in build target names.
 
 OPTIONS
 
@@ -106,30 +107,30 @@ PROJECT: BASIC OPERATIONS
     Show status summary of environment (status of services, pods, etc.).
 
   oper logs[:ENV] POD [CONTAINER]
-    See logs of a pod. Run 'taito status[:ENV]' first to get the pod name and
-    status.
-    Example: taito logs: client
-    Example: taito logs:dev client
-    Example: taito logs:dev my-app-client-3034393823-2f5jf
+    Follow logs of a pod. Examples:
+    $ taito logs: client
+    $ taito logs:dev client
+    $ taito logs:dev my-app-client-3034393823-2f5jf
 
   oper shell[:ENV] POD [CONTAINER]
-    Login to pod. Run 'taito status[:ENV]' first to get the pod name and status.
-    Example: taito shell: client
-    Example: taito shell:dev client
-    Example: taito shell:dev my-app-client-3034393823-2f5jf
+    Start shell on pod. Examples:
+    $ taito shell: client
+    $ taito shell:dev client
+    $ taito shell:dev my-app-client-3034393823-2f5jf
 
   oper exec[:ENV] POD CONTAINER COMMAND
     Execute command in pod. Run 'taito status[:ENV]' first to get the pod name
     and status. Give - as container if it should be determined automatically.
-    Example: taito exec: client - echo "taito!"
-    Example: taito exec:dev client - echo "taito!"
-    Example: taito exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
+    Examples:
+    $ taito exec: client - echo "taito!"
+    $ taito exec:dev client - echo "taito!"
+    $ taito exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
 
   oper kill[:ENV] POD
-    Kill pod.
-    Example: taito kill: client
-    Example: taito kill:dev client
-    Example: taito kill:dev my-app-client-3034393823-2f5jf
+    Kill pod. Examples:
+    $ taito kill: client
+    $ taito kill:dev client
+    $ taito kill:dev my-app-client-3034393823-2f5jf
 
   oper clean [data | build]
     Clean.
