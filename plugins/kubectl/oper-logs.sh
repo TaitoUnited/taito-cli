@@ -23,6 +23,9 @@ if [[ -z "${container_name}" ]]; then
   container_name=$(echo "${pod}" | sed -e 's/\([^0-9]*\)*/\1/;s/-[0-9].*$//')
 fi
 
+echo ${pod}
+echo ${container_name}
+
 if [[ -z "${pod}" ]]; then
   echo
   echo "kubectl: Please give pod name as argument:"
@@ -36,7 +39,7 @@ else
   echo
   echo
   echo "--- kubectl: Logs ---"
-  if ! kubectl logs "${pod}" "${container_name}"; then
+  if ! kubectl logs -f --tail=400 "${pod}" "${container_name}"; then
     exit 1
   fi
 fi
