@@ -19,7 +19,6 @@ echo
 "${taito_plugin_path}/util/use-context.sh"
 
 if [[ "${switch}" == "--all" ]]; then
-  switch=
   echo "--- Node details ---"
   kubectl describe nodes
   echo

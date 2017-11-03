@@ -6,7 +6,7 @@ echo
 echo "### docker-global - workspace-clean: Cleaning old images ###"
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" \
-  "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc:ro -u root --entrypoint /docker-gc/docker-gc --rm ${taito_image_name}"
+  "docker system prune -a --filter 'label!=fi.taitounited.taito-cli'"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
