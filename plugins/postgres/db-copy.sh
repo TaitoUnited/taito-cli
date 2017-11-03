@@ -29,6 +29,8 @@ echo "- 1. Dump data"
 dump_file="${taito_project_path}/tmp/dump.sql"
 mkdir -p "${taito_project_path}/tmp" &> /dev/null
 rm -f "${dump_file}" &> /dev/null
+echo "TODO implement: set user/password/database/host/port for source database"
+exit 1
 "${taito_plugin_path}/util/psql.sh" "" "-f ${dump_file}" "pg_dump" && \
 
 echo "- 2. Rename the old database" && \
@@ -47,6 +49,8 @@ postgres_username=${username} postgres_database=${db_prefix}_${dest} \
   "${taito_plugin_path}/util/create-database.sh" && \
 
 echo "- 4. Import dump with a new build username" && \
+echo "TODO replace table ownerships in dump e.g xxx_test --> xxx_prod"
+exit 1
 sed -e "s/${db_source}/${db_dest}/g" \
   "${dump_file}" > \
   "${taito_project_path}/tmp/dump-mod.sql" && \

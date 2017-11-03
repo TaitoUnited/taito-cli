@@ -30,6 +30,8 @@ flags="-f ${taito_plugin_path}/resources/copyquick.sql \
   -v dest=${db_prefix}_${dest} \
   -v dest_old=${db_prefix}_${dest}_old" \
   -v dest_app=${db_prefix}_${dest}_app"
+echo 'TODO implement: dest is ${postgres_database}, source is something else'
+exit 1
 "${taito_plugin_path}/util/psql.sh" "${username}" "${flags}"
 
 # Call next command on command chain
