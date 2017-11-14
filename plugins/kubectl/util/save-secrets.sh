@@ -19,8 +19,8 @@ do
       echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
       exit 1
     fi
-    secret_index=$((${secret_index}+1))
   fi
+  secret_index=$((${secret_index}+1))
 done && \
 
 # Save secret values
@@ -51,9 +51,9 @@ do
        exit 1
       fi
       echo "- ${secret_name} saved"
-      secret_index=$((${secret_index}+1))
     fi
   fi
+  secret_index=$((${secret_index}+1))
 done && \
 
 # TODO remove this

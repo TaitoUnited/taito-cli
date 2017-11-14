@@ -12,14 +12,14 @@ do
       read -r -s secret_value
     elif [[ "${secret_method}" == "random" ]]; then
       # TODO better tool for this?
-      secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]/a/g')
+      secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
       echo "- ${secret_name}: random value generated"
     else
       echo "- skipping ${secret_name}. Method ${secret_method} not supported!"
     fi
     exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
-    secret_index=$((${secret_index}+1))
   fi
+  secret_index=$((${secret_index}+1))
 done && \
 
 eval "$exports"
