@@ -24,8 +24,9 @@ _taito ()
     ci-build ci-push ci-deploy: ci-deployquick: ci-revision: ci-revert: \
     ci-wait: ci-verify: ci-docs ci-scan ci-test-unit ci-test-api: ci-test-e2e: \
     ci-publish ci-release-pre: ci-release-post: ci-cancel: ci-secrets: \
-    env-config env-create: env-update: env-delete: env-rotate: env-cert: \
-    env-alt-create: env-alt-delete: \
+    env-config env-create: env-migrate: env-delete: env-rotate: env-cert: \
+    env-alt-create: env-alt-migrate: env-alt-delete: \
+    env-alt-rotate: env-alt-cert: \
     contacts-development contacts-maintenance contacts-users \
     open-app: open-admin: open-boards open-bucket open-issues open-builds \
     open-artifacts open-logs: open-errors: open-uptime open-performance \

@@ -374,6 +374,10 @@ PROJECT: ENVIRONMENT SETUP
     Create an environment. Creates build trigger for the given branch if branch
     was given as argument. Otherwise uses default branch determined by ENV.
 
+  env migrate:ENV
+    Migrate environment to the latest configuration.
+    TODO implement using terraform
+
   env delete:ENV
     Delete an environment.
 
@@ -392,8 +396,18 @@ PROJECT: ALTERNATIVE ENVIRONMENTS
   env alt create:ENV [NAME] [GIT_BRANCH]
     Create an alternative environment. TODO not implemented.
 
+  env alt migrate:ENV
+    Migrate environment to the latest configuration.
+    TODO implement using terraform
+
   env alt delete:ENV [NAME]
     Delete alternative environment. TODO not implemented.
+
+  env alt rotate:ENV [NAME_FILTER]
+    Rotate secrets for an environment.
+
+  env alt cert[:ENV] DOMAIN
+    Add a custom certificate.
 
 PROJECT: CONTACTS
 
