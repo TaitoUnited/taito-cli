@@ -22,7 +22,8 @@ SYNTAX ALTERNATIVES
   > NOTE: Autocomplete does not support the space syntax yet.
 
   > You should always use the internal hyphen syntax when defining build
-  > targets as some build tools do not support spaces in build target names.
+  > targets (e.g. npm scripts) as some build tools do not support spaces in
+  > build target names.
 
 OPTIONS
 

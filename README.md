@@ -20,9 +20,11 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 ## Installation
 
-1. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a simple bash script that runs taito-cli as a Docker container.
+1. Clone this repository and checkout the master branch.
 
-2. Configure your personal settings in `~/.taito/taito-config.sh`. For example:
+2. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a simple bash script that runs taito-cli as a Docker container.
+
+3. Configure your personal settings in `~/.taito/taito-config.sh`. For example:
     ```
     #!/bin/bash
 
@@ -31,7 +33,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
     export taito_global_plugins="git fun template docker-global"
     ```
 
-3. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
+4. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
 
 > NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. However, for basic usage you can alternatively use the `taito.bat` instead of `taito` bash script.
 
