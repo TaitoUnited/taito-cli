@@ -79,17 +79,17 @@ PROJECT: BASIC OPERATIONS
     to be used by your editor.
     TIP: Enable the npm plugin as it will call `npm install` automatically.
 
-  oper compile
-    Compile (for projects that need to be compiled).
-    TIP: Enable the npm plugin and implement oper-compile script in your
+  oper build
+    Builds a project (if project needs to be compiled or built before starting).
+    TIP: Enable the npm plugin and implement oper-build script in your
     package.json.
 
-  oper start[:ENV] [--clean] [--prod]
+  oper start[:ENV] [POD] [--clean] [--prod]
     Start. Use the 'clean' switch to clean all before start. Use the 'prod'
     switch to use production containers in local development environment.
 
   oper run[:ENV]
-    Run on device (ios/android)
+    Run on a real device (ios/android)
 
   oper init
     Make sure that everything has been initialized (database, etc.). The init
@@ -113,8 +113,9 @@ PROJECT: BASIC OPERATIONS
     $ taito logs:dev client
     $ taito logs:dev my-app-client-3034393823-2f5jf
 
-  oper shell[:ENV] POD [CONTAINER]
-    Start shell on pod. Examples:
+  oper shell[:ENV] [POD] [CONTAINER]
+    Start a shell on a pod. Examples:
+    $ taito shell
     $ taito shell: client
     $ taito shell:dev client
     $ taito shell:dev my-app-client-3034393823-2f5jf
@@ -127,8 +128,9 @@ PROJECT: BASIC OPERATIONS
     $ taito exec:dev client - echo "taito!"
     $ taito exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
 
-  oper kill[:ENV] POD
-    Kill pod. Examples:
+  oper kill[:ENV] [POD]
+    Kill a pod. Examples:
+    $ taito kill
     $ taito kill: client
     $ taito kill:dev client
     $ taito kill:dev my-app-client-3034393823-2f5jf

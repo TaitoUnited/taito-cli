@@ -1,9 +1,10 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 : "${taito_customer:?}"
 : "${taito_env:?}"
-: "${taito_project:?}"
+: "${taito_project_env:?}"
 
 echo
 echo "### kubectl - ci-revert: Reverting application in ${taito_env} ###"

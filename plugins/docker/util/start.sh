@@ -11,10 +11,21 @@ if [[ "${switches}" == *"--prod"* ]]; then
   setenv="dockerfile=Dockerfile.build "
 fi
 
+compose_cmd="up"
+if [[ -n "${1}" ]] && [[ "${1}" != "--"* ]]; then
+  docker_run="${1}"
+fi
+if [[ -n "${docker_run:-}" ]]; then
+  # shellcheck disable=SC1090
+  . "${taito_plugin_path}/util/determine-pod.sh" "${docker_run}" && \
+  compose_cmd="run ${pod:?}"
+fi
+
 if [[ "${switches}" == *"--clean"* ]]; then
   "${taito_plugin_path}/util/clean.sh" && \
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
-    "${setenv}docker-compose up --force-recreate --build"
+    "${setenv}docker-compose ${compose_cmd} --force-recreate --build"
 else
-  "${taito_cli_path}/util/execute-on-host-fg.sh" "${setenv}docker-compose up"
+  "${taito_cli_path}/util/execute-on-host-fg.sh" \
+    "${setenv}docker-compose ${compose_cmd}"
 fi

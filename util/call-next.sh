@@ -1,6 +1,7 @@
 #!/bin/bash
-
 # Calls the next command in the command chain and passes all arguments to it
+
+: "${taito_cli_path:?}"
 
 chain=(${taito_command_chain[@]})
 next="${chain[0]}"

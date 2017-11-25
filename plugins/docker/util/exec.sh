@@ -1,19 +1,19 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 : "${taito_project:?}"
 
 pod="${1}"
 command="${*:3}"
 
-if [[ ${pod} != *"-"* ]]; then
-  pod="${taito_project}-${pod}"
-fi
+# shellcheck disable=SC1090
+. "${taito_plugin_path}/util/determine-pod.sh" "${pod}" && \
 
-if [[ -z "${pod}" ]]; then
-  echo "Please give pod name as argument:"
-  exit 1
-else
-  "${taito_cli_path}/util/execute-on-host-fg.sh" \
-    "docker exec -it ${pod} ${command}"
-fi
+compose_cmd="docker exec -it ${pod} ${command}" && \
+if [[ -n "${docker_run:-}" ]]; then
+  # Using run mode instead of up
+  compose_cmd="docker-compose run --entrypoint '${command}' ${pod}"
+fi && \
+
+"${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_cmd}"

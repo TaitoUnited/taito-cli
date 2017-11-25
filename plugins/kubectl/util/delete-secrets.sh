@@ -1,7 +1,8 @@
 #!/bin/bash
 
-: "${taito_project:?}"
+: "${taito_cli_path:?}"
 : "${taito_env:?}"
+: "${taito_project_env:?}"
 
 echo "- ${taito_project_env}-bucket"
 kubectl delete secret "${taito_project_env}-bucket" 2> /dev/null

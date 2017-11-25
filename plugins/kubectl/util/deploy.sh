@@ -4,7 +4,10 @@
 : "${taito_plugin_path:?}"
 : "${taito_customer:?}"
 : "${taito_env:?}"
+: "${taito_branch:?}"
 : "${taito_project:?}"
+: "${taito_project_path:?}"
+: "${taito_project_env:?}"
 : "${taito_repo_name:?}"
 
 image="${1}"
