@@ -94,8 +94,7 @@ PROJECT: BASIC OPERATIONS
     switch to use production containers in local development environment.
 
   oper init
-    Make sure that everything has been initialized (database, etc.). The init
-    command is used in local environment only.
+    Make sure that everything has been initialized after start (database, etc.).
 
   oper stop[:ENV]
     Stop.
@@ -276,10 +275,6 @@ PROJECT: CI/CD OPERATIONS
     ci steps. For example if taitoflag_images_exist is set, many of the ci steps
     will be skipped since all images have already been built and tested
     by some previous CI build.
-
-  ci lock:[ENV] CONTAINER_NAME
-    Locks libraries according to image deployed to environment. Example:
-    'taito ci lock:dev client'. TODO implement.
 
   ci build:[ENV] CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
     Builds image. Example: 'taito ci build:dev client test1'.
