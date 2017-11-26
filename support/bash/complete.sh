@@ -14,7 +14,7 @@ _taito ()
     -h --help --readme --trouble --auth: --upgrade -- --shell \
     install compile start: run: init stop: \
     users: status: logs: shell: exec: kill: clean \
-    oper-install open-env oper-build oper-start: oper-init oper-stop: \
+    oper-install oper-env oper-build oper-start: oper-init oper-stop: \
     oper-users: oper-status: oper-logs: oper-shell: oper-exec: oper-kill: \
     oper-clean workspace-clean workspace-kill git-env-list git-env-merge: \
     git-feat-list git-feat git-feat-squash git-feat-merge git-feat-pr \
