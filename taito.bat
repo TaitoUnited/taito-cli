@@ -1,5 +1,9 @@
 @echo off
 
+echo taito-cli Copyright (C) 2017 Taito United
+echo This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE.
+echo:
+
 set taito_image="taitounited/taito-cli:latest"
 set taito_command=%1
 set taito_project_path=%cd%

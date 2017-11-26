@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "taito-cli Copyright (C) 2017 Taito United"
+echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
+echo
+
 # TODO split into multiple bash functions and re-use some code in taito_impl.sh
 
 # Contain pwd change in a subshell
