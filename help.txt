@@ -75,21 +75,23 @@ PROJECT: BASIC OPERATIONS
   > if you like.
 
   oper install
-    Install everything that needs to installed locally, e.g. linter libraries
-    to be used by your editor.
-    TIP: Enable the npm plugin as it will call `npm install` automatically.
+    Install everything that needs to installed locally on host (e.g. libraries
+    for linting and autocompletion purposes)
+    TIP: Enable the npm and/or pipenv plugin.
+
+  oper env
+    Initialize the development environment (for projects that require
+    project specific environment variables to be set).
 
   oper build
-    Builds a project (if project needs to be compiled or built before starting).
+    Builds a project (for projects that need to be compiled or built before
+    starting).
     TIP: Enable the npm plugin and implement oper-build script in your
     package.json.
 
-  oper start[:ENV] [POD] [--clean] [--prod]
+  oper start[:ENV] [POD] [--clean] [--prod] [--device]
     Start. Use the 'clean' switch to clean all before start. Use the 'prod'
     switch to use production containers in local development environment.
-
-  oper run[:ENV]
-    Run on a real device (ios/android)
 
   oper init
     Make sure that everything has been initialized (database, etc.). The init
@@ -138,9 +140,12 @@ PROJECT: BASIC OPERATIONS
   oper clean [data | build]
     Clean.
 
+  oper lock
+    Creates lock files that lock library versions.
+
   oper analyze
     Analyzes implementation and gives you feedback accordingly (webpack
-    bundle analysis for example).
+    bundle analysis, security analysis of libraries, etc).
     TIP: Enable the npm plugin and implement oper-analyze script in your
     package.json
 
