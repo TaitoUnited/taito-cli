@@ -2,8 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### gcloud - env-delete: Deleting environment ###"
 echo "TODO not implemented"
 echo "Delete these manually:"
 echo "- DNS settings"

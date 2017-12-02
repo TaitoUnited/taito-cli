@@ -10,8 +10,6 @@
 filename="${1:?Filename not given}"
 username="${2}"
 
-echo
-echo "### postgres - db-open: Connecting to database ${postgres_database} ###"
 echo "host: ${postgres_host} port:${postgres_port}"
 
 (

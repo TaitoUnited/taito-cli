@@ -1,9 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 
-echo
-echo "### basic - --auth:post: Auth post handling ###"
-
 if [[ -n "${taito_admin_key}" ]]; then
   echo "- Encrypting admin credentials" && \
   (cd ~ && tar -zcvf admin_creds.tar.gz .config .kube) && \

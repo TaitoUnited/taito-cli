@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### pipenv - oper-lock: Locking packages ###"
-
 "${taito_cli_path}/util/execute-on-host-fg.sh" \
   "pipenv lock"
 

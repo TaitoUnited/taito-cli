@@ -7,8 +7,7 @@
 
 name_filter="${1}"
 
-echo
-echo "### kubectl - env-rotate: Saving new secrets to Kubernetes ###"
+echo "Saving secrets to Kubernetes"
 
 # Ensure that namespace exists
 kubectl create namespace "${taito_customer}-${taito_env}" 2> /dev/null

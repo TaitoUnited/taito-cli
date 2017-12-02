@@ -1,9 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 
-echo
-echo "### azure - --auth:pre: Authenticating ###"
-
 echo "TODO implement" && \
 
 # Call next command on command chain

@@ -4,9 +4,6 @@
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 
-echo
-echo "### docker - oper-shell: Opening shell ###"
-
 "${taito_plugin_path}/util/exec.sh" "${1}" "${2:--}" "/bin/sh" && \
 
 # Call next command on command chain

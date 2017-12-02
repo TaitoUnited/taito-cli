@@ -7,9 +7,6 @@
 dest="${taito_branch:-dev}"
 feature="feature/${1:?Feature name not given}"
 
-echo
-echo "### git - git-feat-merge: Merging ${feature} to ${dest} ###"
-
 echo "Merging ${feature} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
 if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then

@@ -7,11 +7,6 @@
 dest="${taito_branch:-dev}"
 feature="feature/${1:?Feature name not given}"
 
-echo
-echo "### git - git-feat-pr: Making a pull request for merging ${feature} \
-to ${dest} ###"
-echo
-
 echo "Making a pull request for merging ${feature} \
 to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm

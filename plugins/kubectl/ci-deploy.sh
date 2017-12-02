@@ -5,9 +5,6 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-echo
-echo "### kubectl - ci-deploy: Deploying application to Kubernetes ###"
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 

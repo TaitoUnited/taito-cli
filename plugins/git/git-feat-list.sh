@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### git - git-env-list: Listing environment branches ###"
-
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   git branch -a | grep feature/ " && \
 

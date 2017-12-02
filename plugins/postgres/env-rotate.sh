@@ -7,9 +7,7 @@
 . "${taito_plugin_path}/util/postgres-username-password.sh"
 
 if [[ -n ${postgres_build_password:-} ]] && [[ -n ${postgres_app_password:-} ]]; then
-  echo
-  echo "### postgres - env-rotate: Creating users / altering passwords for \
-  ${taito_env} ###"
+  echo "Creating users / altering passwords for ${taito_env}"
 
   export postgres_username=postgres
   "${taito_plugin_path}/util/create-users.sh"

@@ -25,9 +25,6 @@ fi
 version=$(grep "version" "${taito_project_path}/package.json" | \
   grep -o "[0-9].[0-9].[0-9]")
 
-echo
-echo "### gcloud-builder - ci-build: Building ${name} ###"
-
 if [[ ! -f ./taitoflag_images_exist ]]; then
   echo "- Building image"
   docker build -f "./${name}/Dockerfile.build" \

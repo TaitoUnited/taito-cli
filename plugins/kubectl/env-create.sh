@@ -5,8 +5,7 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-echo
-echo "### kubectl - env-create: Saving new secrets to Kubernetes ###"
+echo "Saving secrets to Kubernetes"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"

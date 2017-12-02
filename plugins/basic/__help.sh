@@ -5,10 +5,6 @@
 
 filter=${1}
 
-if [[ -z "${filter}" ]]; then
-  echo
-  echo "### basic - --help: Showing help files ###"
-fi
 echo
 
 # Hack: Show dynamic links of link plugin in the correct place

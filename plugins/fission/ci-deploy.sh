@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### fission - ci-deploy: Deploying ###"
-
 # TODO serverless.com support for fission?
 echo "TODO deploy fission function" && \
 

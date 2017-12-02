@@ -5,9 +5,6 @@
 
 branch="${1}"
 
-echo
-echo "### namecheap - env-create: Adding a SSL certificate ###"
-
 if [[ "${taito_env}" == "prod" ]] || [[ "${branch}" == "master" ]]; then
   echo "TODO implement: Certificate process between namecheap and"
   echo "kubectl plugins by passing secrets in environment variables."

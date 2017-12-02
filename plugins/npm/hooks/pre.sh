@@ -43,7 +43,7 @@ if [[ -f "./package.json" ]] && \
   if [[ "${npm_command}" != "" ]]; then
     # Run it
     echo
-    echo "### npm - pre: Running npm script ${npm_command} ###"
+    echo "### npm/pre: Running script '${npm_command}'"
     if ! npm run -s "${npm_command}" -- "${@}"; then
       exit_code=1
     else

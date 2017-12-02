@@ -3,9 +3,6 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-echo
-echo "### pipenv - oper-env: Initializing environment ###"
-
 "${taito_cli_path}/util/execute-on-host-fg.sh" \
   "pipenv shell"
 

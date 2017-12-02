@@ -242,22 +242,25 @@ if ! (
   export taito_original_command_chain="${command_chain[@]}"
   export taito_enabled_plugins="${enabled_plugins}"
 
-  # Print command chain
-  if [[ ${skip_override} == false ]] && \
-     [[ ${command_exists} == true ]] && \
-     [[ ${command} != "__"* ]]; then
-    echo "### Taito-cli: Executing on ${taito_customer:-}-${taito_env} environment: ###"
-    echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
-  fi
+  # TODO Print command chain in verbose mode
+  # if [[ ${skip_override} == false ]] && \
+  #    [[ ${command_exists} == true ]] && \
+  #    [[ ${command} != "__"* ]]; then
+  #   echo
+  #   echo "### Taito-cli: Executing on ${taito_customer:-}-${taito_env} environment:"
+  #   echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
+  # fi
 
   # Admin credentials pre-handling
   if [[ -n "${taito_admin_key}" ]]; then
     if [[ ${#taito_admin_key} -lt 16 ]]; then
+      echo
       echo "ERROR: Encyption key must be at least 16 characters long"
       exit 1
     fi
 
     if [[ ! -f ~/admin_creds.enc ]] && [[ "${command}" != "__auth" ]]; then
+      echo
       echo "ERROR: Admin credentials file missing. Authenticate as admin first."
       exit 1
     fi
@@ -272,11 +275,13 @@ if ! (
       # https://cryptosense.com/weak-key-derivation-in-openssl/
       if ! openssl aes-256-cbc -d -salt -in ~/admin_creds.enc \
         -out ~/admin_creds.tar.gz -pass env:taito_admin_key; then
+        echo
         echo "ERROR: Decrypting admin credentials failed"
         exit 1
       fi
       (cd ~ && tar -xf admin_creds.tar.gz)
       rm -f ~/admin_creds.tar.gz
+      echo
       echo "Decrypted admin credentials"
       echo "---------------- ADMIN START ----------------"
       echo
@@ -290,6 +295,7 @@ if ! (
 
   # Auth command pre-handling
   if [[ "${command}" == "__auth" ]]; then
+    echo
     echo "- Deleting old credentials"
     rm -rf ~/.config ~/.kube
   fi
@@ -332,11 +338,9 @@ if ! (
         "${cli_path}/util/call-next.sh" "${params[@]}"
         ecode=${?}
         if [[ ${ecode} == 130 ]]; then
-          echo
           echo "Cancelled"
           exit_code=130
         elif [[ ${ecode} -gt 1 ]]; then
-          echo
           echo "ERROR! Command failed. Usage:"
           export taito_command_chain=""
           export taito_plugin_path="${cli_path}/plugins/basic"
@@ -348,18 +352,16 @@ if ! (
         echo "Nothing to initialize"
       else
         # Command not found
-        echo "Unknown command: '${orig_command//-/ }'. Did you remember to give ':' before "
-        echo "command arguments? Did you specify the correct ENV? Some of the plugins might"
-        echo "not be enabled in '${taito_env}' environment."
-
-        # Show matching commands
+        echo
         if [[ "${orig_command}" != " " ]]; then
-          echo
-          echo "Perhaps one of the following commands is the one you meant to run."
-          echo "Run 'taito -h' to get more help."
+          # Show matching commands
+          echo "Unknown command: '${orig_command//-/ }'. Perhaps one of the following commands is the one"
+          echo "you meant to run. Run 'taito -h' to get more help."
           export taito_command_chain=""
           export taito_plugin_path="${cli_path}/plugins/basic"
           "${cli_path}/plugins/basic/__help.sh" "${orig_command}"
+        else
+          echo "Unknown command"
         fi
         exit_code=1
       fi

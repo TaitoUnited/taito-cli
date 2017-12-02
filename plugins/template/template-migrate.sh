@@ -8,10 +8,6 @@ export template="${1:?Template not given}"
 export template_name="${template}"
 export template_project_path="${PWD}"
 
-echo
-echo "### template - template-migrate: Migrating existing project to \
-template ${template} ###"
-
 rm -rf "${template_project_path}/template-tmp"
 mkdir "${template_project_path}/template-tmp"
 

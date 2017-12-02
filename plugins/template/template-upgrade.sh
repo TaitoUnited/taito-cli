@@ -9,10 +9,6 @@
 export template="${template_name}"
 export template_project_path="${PWD}"
 
-echo
-echo "### template - template-upgrade: upgrading to the latest version of \
-template ${template} ###"
-
 rm -rf "${template_project_path}/template-tmp"
 mkdir "${template_project_path}/template-tmp"
 

@@ -5,9 +5,6 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-echo
-echo "### kubectl - oper-exec: Executing command on Kubernetes pod ###"
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 

@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### bare - db-proxy: Starting db proxy ###"
-
 # TODO open db proxy connection to machine?
 
 echo "TODO implement" && \

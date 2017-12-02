@@ -6,10 +6,6 @@
 export template="${1:?Template not given}"
 export template_name="${template}"
 
-echo
-echo "### template - template-create: Creating new project from template \
-${template} ###"
-
 "${taito_plugin_path}/util/init.sh" "create" && \
 
 # Call next command on command chain

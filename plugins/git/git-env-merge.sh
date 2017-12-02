@@ -5,9 +5,6 @@
 dest="${taito_branch:?Destination branch name not given}"
 source="${1:?Source branch name not given}"
 
-echo
-echo "### git - git-env-merge: Merging ${source} to ${dest} ###"
-
 echo "Merging ${source} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
 if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then

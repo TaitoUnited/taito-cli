@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### serverless - oper-stop: Stopping ###"
-
 echo "TODO implement" && \
 
 # Call next command on command chain

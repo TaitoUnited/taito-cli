@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### fission - ci-revert: Reverting ###"
-
 revision="${1:-0}"
 
 # TODO serverless.com support for fission?

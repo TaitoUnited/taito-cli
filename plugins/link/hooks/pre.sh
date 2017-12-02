@@ -17,8 +17,7 @@ if [[ ${found} != "" ]]; then
       name=${prefix##*#}
       url="$( cut -d '=' -f 2- <<< "$link" )"
       echo
-      echo "### link - pre: Opening ${name} ###"
-      echo
+      echo "### link/pre: Opening ${name}"
 
       if ! "${taito_cli_path}/util/browser-fg.sh" "${url}"; then
         exit 1

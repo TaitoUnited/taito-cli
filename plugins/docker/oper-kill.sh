@@ -4,9 +4,6 @@
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 
-echo
-echo "### docker - oper-kill: Killing ###"
-
 # shellcheck disable=SC1090
 . "${taito_plugin_path}/util/determine-pod.sh" "${@}" && \
 

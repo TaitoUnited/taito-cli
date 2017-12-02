@@ -11,10 +11,6 @@ else
   params=("${@:1}")
 fi
 
-echo
-echo "### kubectl - oper-status: Showing status of ${taito_env} ###"
-echo
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 

@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### serverless - ci-revert: Reverting ###"
-
 revision="${1:-0}"
 
 echo "TODO revert aws/azure/gcloud function using serverless.com" && \

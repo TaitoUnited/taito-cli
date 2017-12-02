@@ -4,9 +4,6 @@
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
-echo
-echo "### postgres - db-deploy: Deploying database changes to ${taito_env} ###"
-
 "${taito_plugin_path}/util/deploy-changes.sh" "${@}" && \
 
 # Call next command on command chain

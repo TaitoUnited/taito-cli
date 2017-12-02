@@ -13,9 +13,7 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
-echo
-echo "### gcloud-builder - ci-prepare: Checking if image already exists \
-in the container registry ###"
+echo "Checking if image already exists in the container registry"
 echo "TODO check from container registry instead as there might be manual \
 builds also"
 

@@ -6,8 +6,7 @@
 
 if [[ "${taito_mode:-}" == "ci" ]] && \
    [[ ${taito_command_chain:-} == *"kubectl/"* ]]; then
-  echo
-  echo "### azure - pre: Getting credentials for kubernetes ###"
+  echo "### azure/pre: Getting credentials for kubernetes"
   echo "TODO implement"
 fi && \
 
@@ -16,11 +15,9 @@ if [[ ${taito_env} != "local" ]] && \
    [[ ${taito_command} != "ci-test-"* ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
   if [[ "${proxy_running}" == "" ]]; then
-    echo
-    echo "### azure - pre: Starting db proxy ###"
+    echo "### azure/pre: Starting db proxy"
     echo "TODO implement"
   else
-    echo
-    echo "### azure - pre: Not Starting db proxy. It is already running ###"
+    echo "### azure/pre: Not Starting db proxy. It is already running."
   fi
 fi

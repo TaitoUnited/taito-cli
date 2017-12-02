@@ -11,8 +11,7 @@ command=ci-release-post:${taito_env}
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
   (
-    echo
-    echo "### npm - ci-release-post: Finalizing release ###"
+    echo "Finalizing release"
     cd "${taito_project_path}/release" || exit 1
     NPM_TOKEN=none GH_TOKEN=${secret_value_ext_github_build} \
       npm run "${command}" -- "${@}" && \

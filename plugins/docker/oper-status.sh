@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### docker - oper-status: Showing status ###"
-
 "${taito_cli_path}/util/execute-on-host-fg.sh" "docker-compose ps" && \
 
 # Call next command on command chain

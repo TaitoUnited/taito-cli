@@ -13,9 +13,7 @@ else
   branch_name=${taito_env}
 fi
 
-echo
-echo "### gcloud-builder - ci-cancel: Cancel all previous ongoing builds \
-targetting branch ${branch_name} ###"
+echo "Canceling all previous ongoing builds targetting branch ${branch_name}"
 
 gcloud beta container builds list --ongoing | \
   grep "${full_repo_name}@${branch_name}" | \

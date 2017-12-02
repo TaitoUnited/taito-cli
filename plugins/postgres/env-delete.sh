@@ -5,8 +5,7 @@
 
 # Create a subshell to contain password
 (
-  echo
-  echo "### postgres - env-delete: Dropping database and users ###"
+  echo "Dropping database and users"
   export postgres_username=postgres
   . "${taito_plugin_path}/util/ask-password.sh"
   "${taito_plugin_path}/util/drop-database.sh"

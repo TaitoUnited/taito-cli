@@ -11,10 +11,6 @@ dest="${taito_env}"
 source="${1:?Source not given}"
 username="${2:-postgres}"
 
-echo
-echo "### postgres - db-copy: Copying database from ${source} to ${dest} ###"
-echo
-
 echo "Copying ${source} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
 if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then

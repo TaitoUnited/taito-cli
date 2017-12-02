@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### azure - db-proxy: Starting db proxy ###"
-
 echo "host=0.0.0.0, port=TODO"
 echo "Connect using your personal user account or"
 echo "${postgres_database} as username"

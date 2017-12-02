@@ -8,9 +8,6 @@ commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 
 if ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_test_env:-}" == "true" ]]) &&
    [[ $(echo "${commands}" | grep "^ci-test-api:${taito_env}$") != "" ]]; then
-  echo
-  echo "### npm - ci-test-api: Testing api ###"
-
   if ! npm run "ci-test-api:${taito_env}"; then
     if [[ "${taito_mode:-}" == "ci" ]] && [[ "${taito_env}" != "local" ]]; then
       # In CI mode we notify the verify step so that it can revert the changes

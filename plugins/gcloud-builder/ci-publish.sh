@@ -2,9 +2,6 @@
 
 : "${taito_cli_path:?}"
 
-echo
-echo "### gcloud-builder - ci-publish: Publishing artifacts ###"
-
 echo "TODO implement" && \
 
 # Call next command on command chain

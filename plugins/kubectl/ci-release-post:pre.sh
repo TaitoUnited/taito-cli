@@ -5,8 +5,7 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-echo
-echo "### kubectl - ci-release-post:pre: Getting secrets from Kubernetes ###"
+echo "Getting secrets from Kubernetes"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

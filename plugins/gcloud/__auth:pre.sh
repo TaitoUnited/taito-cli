@@ -1,10 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 
-echo
-echo "### gcloud - --auth:pre: Authenticating ###"
-echo
-
 "${taito_plugin_path}/util/auth.sh" "${@}" && \
 
 # Call next command on command chain

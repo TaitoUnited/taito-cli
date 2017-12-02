@@ -12,8 +12,7 @@ command=ci-release-pre:${taito_env}
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
   (
-    echo
-    echo "### npm - ci-release-pre: Preparing release ###"
+    echo "Preparing release"
 
     echo "- Cloning git repo to release directory as google container builder"
     echo "workspace does not point to the original repository"

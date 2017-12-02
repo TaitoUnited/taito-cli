@@ -5,9 +5,6 @@
 : "${taito_env:?}"
 : "${taito_customer:?}"
 
-echo
-echo "### kubectl - ci-canary: Releasing canary release ###"
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 

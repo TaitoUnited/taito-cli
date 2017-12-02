@@ -6,10 +6,6 @@
 dest="${taito_branch:-dev}"
 feature="feature/${1:?Feature name not given}"
 
-echo
-echo "### git - git-feat-squash: Squash merging ${feature} to ${dest} ###"
-echo
-
 echo "Squashing ${feature} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
 if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then

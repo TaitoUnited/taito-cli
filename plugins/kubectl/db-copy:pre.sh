@@ -5,8 +5,7 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-echo
-echo "### kubectl - db-open:pre: Getting current db password from Kubernetes ###"
+echo "Getting current db password from Kubernetes"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

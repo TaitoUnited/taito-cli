@@ -7,9 +7,6 @@
 : "${postgres_external_port:?}"
 : "${postgres_database:?}"
 
-echo
-echo "### docker - db-proxy: Displaying database info ###"
-echo
 echo "No database proxy required. Just connect with the following details:"
 echo "- host: 127.0.0.1"
 echo "- port: ${postgres_external_port}"

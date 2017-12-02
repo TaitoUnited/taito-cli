@@ -9,8 +9,6 @@
 
 username="${1}"
 
-echo
-echo "### postgres - db-dump: Dumping database ${postgres_database} ###"
 echo "host: ${postgres_host} port:${postgres_port}"
 
 dump_file="${taito_project_path}/tmp/dump.sql"

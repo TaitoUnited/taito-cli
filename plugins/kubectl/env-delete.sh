@@ -5,8 +5,7 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-echo
-echo "### kubectl - env-delete: Deleting secrets from Kubernetes ###"
+echo "Deleting secrets from Kubernetes"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \

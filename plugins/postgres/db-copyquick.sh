@@ -10,9 +10,6 @@ dest="${taito_env}"
 source="${1:?Source not given}"
 username="${2}"
 
-echo
-echo "### postgres - db-copyquick: Copying database from ${source} \
-to ${dest} ###"
 echo "NOTE: This works only if both databases are located in the same \
 database cluster."
 echo "WARNING! THIS HAS NOT BEEN TESTED AT ALL YET! Use db-copy:ENV instead!"

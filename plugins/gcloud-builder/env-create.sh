@@ -8,9 +8,6 @@
 
 branch="${1}"
 
-echo
-echo "### gcloud - env-create: Creating environment ###"
-
 # Determine branch
 if [[ -z "${branch}" ]]; then
   if [[ "${taito_env}" == "prod" ]]; then

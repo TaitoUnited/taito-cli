@@ -6,7 +6,7 @@
 name_filter="${1}"
 
 echo
-echo "### secrets - env-rotate:pre: Creating secrets ###"
+echo "Creating secrets"
 
 # shellcheck disable=SC1090
 . "${taito_plugin_path}/util/create.sh" && \

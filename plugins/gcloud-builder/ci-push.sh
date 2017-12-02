@@ -19,9 +19,6 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
-echo
-echo "### gcloud-builder - ci-push: Pushing ${name} ###"
-
 if [[ ! -f ./taitoflag_images_exist ]]; then
   docker push "${image_path}${path_suffix}:${image_tag}"
 else

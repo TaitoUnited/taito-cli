@@ -5,9 +5,6 @@
 
 branch="${1}"
 
-echo
-echo "### jenkins - env-create: Creating a build trigger ###"
-
 # Determine branch
 if [[ -z "${branch}" ]]; then
   if [[ "${taito_env}" == "prod" ]]; then

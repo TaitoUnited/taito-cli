@@ -7,9 +7,6 @@
 
 pod="${1:?Pod name not given}"
 
-echo
-echo "### kubectl - oper-kill: Killing pod ${pod} ###"
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 

@@ -4,9 +4,6 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-echo
-echo "### kubectl - env-cert: Adding certificate ###"
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 

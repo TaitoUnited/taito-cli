@@ -5,8 +5,6 @@
 : "${sentry_organization:?}"
 : "${taito_project_path:?}"
 
-echo
-echo "### sentry - env-config: Creating a new project ###"
 echo "Create a new Sentry project with these settings:"
 echo "- Name: ${taito_repo_name}"
 echo "- Default environment: prod"

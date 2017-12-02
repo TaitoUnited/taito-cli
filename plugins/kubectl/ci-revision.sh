@@ -6,9 +6,6 @@
 : "${taito_env:?}"
 : "${taito_project_env:?}"
 
-echo
-echo "### kubectl - ci-revision: Showing current revision of ${taito_env} ###"
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 

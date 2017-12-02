@@ -3,8 +3,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-echo
-echo "### postgres - oper-init: Deploying changes to database ${taito_env} ###"
+echo "Deploying changes to database ${taito_env}"
 
 "${taito_plugin_path}/util/deploy-changes.sh" && \
 

@@ -3,9 +3,6 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-echo
-echo "### docker - oper-clean: Cleaning ###"
-
 "${taito_plugin_path}/util/clean.sh" "${@}"  && \
 
 # Call next command on command chain

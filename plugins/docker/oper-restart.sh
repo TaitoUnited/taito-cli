@@ -3,9 +3,6 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-echo
-echo "### docker - oper-restart: Restarting ###"
-
 "${taito_cli_path}/util/execute-on-host-fg.sh" \
   "docker-compose down" && \
 "${taito_cli_path}/util/execute-on-host-fg.sh" \

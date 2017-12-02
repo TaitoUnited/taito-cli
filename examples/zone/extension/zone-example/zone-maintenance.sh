@@ -5,9 +5,6 @@
 name=${1}
 
 if "${taito_cli_path}/util/confirm-execution.sh" "${name}" "zone-example"; then
-  echo
-  echo "### example - zone-maintenance: Maintencance example ###"
-  echo
   echo "Doing some maintenance..."
   echo "DONE!"
 fi

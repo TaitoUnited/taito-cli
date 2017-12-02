@@ -5,9 +5,6 @@
 : "${taito_customer:?}"
 : "${taito_env:?}"
 
-echo
-echo "### kubectl - oper-start: Starting application on ${taito_env} ###"
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 

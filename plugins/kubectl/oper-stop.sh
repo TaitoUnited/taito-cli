@@ -5,9 +5,6 @@
 : "${taito_env:?}"
 : "${taito_project:?}"
 
-echo
-echo "### kubectl - oper-stop: Stopping application on ${taito_env} ###"
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 

@@ -6,9 +6,6 @@
 : "${taito_env:?}"
 : "${taito_project_env:?}"
 
-echo
-echo "### kubectl - ci-revert: Reverting application in ${taito_env} ###"
-
 revision="${1:-0}"
 
 # Change namespace
