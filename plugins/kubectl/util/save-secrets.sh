@@ -15,7 +15,7 @@ for secret_name in "${secret_names[@]}"
 do
   if [[ -z "${name_filter}" ]] || [[ ${secret_name} == *"${name_filter}"* ]]; then
     . "${taito_cli_path}/util/secret-by-index.sh"
-    if [[ ${#secret_value} -lt 20 ]] && [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
+    if [[ ${#secret_value} -lt 8 ]] && [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
       echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
       exit 1
     fi
