@@ -8,8 +8,15 @@ do
   if [[ -z "${name_filter}" ]] || [[ ${secret_name} == *"${name_filter}"* ]]; then
     . "${taito_cli_path}/util/secret-by-index.sh"
     if [[ "${secret_method}" == "manual" ]]; then
+      echo
       echo "New secret for ${secret_name}:"
       read -r -s secret_value
+      echo "New secret for ${secret_name} again:"
+      read -r -s secret_value2
+      if [[ "${secret_value}" != "${secret_value2}" ]]; then
+        echo "ERROR: Passwords do not match!"
+        exit 1
+      fi
     elif [[ "${secret_method}" == "random" ]]; then
       # TODO better tool for this?
       secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
