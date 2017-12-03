@@ -307,6 +307,7 @@ if ! (
   fi
 
   # Execute requested commands on foreground after container has exited.
+  echo
   eval "$(cat "${log_file_fg}")"
 
   # Kill the background execution process
