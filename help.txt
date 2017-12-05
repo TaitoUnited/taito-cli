@@ -77,17 +77,18 @@ PROJECT: BASIC OPERATIONS
   oper install
     Install everything that needs to installed locally on host (e.g. libraries
     for linting and autocompletion purposes)
-    TIP: Enable the npm and/or pipenv plugin.
+    TIP: Enable the 'make', 'npm' or 'pipenv' plugin.
 
   oper env
-    Initialize the development environment (for projects that require
-    project specific environment variables to be set).
+    Initialize the development environment. This command is for non-dockerized
+    projects that require project specific environment variables to be set.
+    For example the 'pipenv' plugin uses this command to initialize the python
+    virtualenv.
 
   oper build
-    Builds a project (for projects that need to be compiled or built before
-    starting).
-    TIP: Enable the npm plugin and implement oper-build script in your
-    package.json.
+    Builds a project. This command is for non-dockerized projects that need to
+    be compiled or built before application can be started.
+    TIP: Enable the 'make' plugin and implement the script in your makefile.
 
   oper start[:ENV] [POD] [--clean] [--prod] [--device]
     Start. Use the 'clean' switch to clean all before start. Use the 'prod'
@@ -101,9 +102,13 @@ PROJECT: BASIC OPERATIONS
 
   oper users[:ENV]
     Show user accounts that you can use to log in.
-    TIP: Enable the npm plugin and implement oper-users[:ENV] script in your
-    package.json. Hard coded user accounts for local, dev and test environments
-    suffice. Usually not implemented for staging and production environments.
+    TIP: Enable the 'make' or 'npm' plugin and implement oper-users[:ENV] script
+    in your makefile/package.json. Hard coded user accounts for local, dev and
+    test environments suffice. Usually not implemented for staging and
+    production environments.
+
+  oper secrets[:ENV]
+    Retrieves all secrets that might be needed by a developer or CI/CD build.
 
   oper status[:ENV]
     Show status summary of environment (status of services, pods, etc.).
@@ -144,9 +149,9 @@ PROJECT: BASIC OPERATIONS
 
   oper analyze
     Analyzes implementation and gives you feedback accordingly (webpack
-    bundle analysis, security analysis of libraries, etc).
-    TIP: Enable the npm plugin and implement oper-analyze script in your
-    package.json
+    bundle analysis, code quality analysis, vulnerability analysis, etc.)
+    TIP: Enable the 'make' or 'npm' plugin and implement oper-analyze script
+    in your makefile/package.json
 
 WORKSPACE OPERATIONS
 
@@ -162,6 +167,11 @@ GIT OPERATIONS
 
   git env list
     List all environment branches.
+
+  git env:ENV [SOURCE_BRANCH]
+    Creates a new environment branch or executes a normal branch checkout if
+    the branch already exists. The dev branch is used as a default source
+    branch.
 
   git env merge:ENV SOURCE_BRANCH
     Merges source env branch to target env branch without making changes
@@ -208,9 +218,9 @@ PROJECT: DATABASE OPERATIONS
   db proxy[:ENV]
     Create a proxy for accessing a database with your database GUI tool. If you
     don't have a personal account for the database, you can get a working
-    username and password by running `taito ci secrets:ENV`. Note that passwords
+    username and password by running `taito oper secrets:ENV`. Note that passwords
     are rotated once in a while, thus, if you get an authentication error,
-    retrieve new secrets by running `taito ci secrets:ENV` again.
+    retrieve new secrets by running `taito oper secrets:ENV` again.
 
   db open[:ENV] [USERNAME]
     Access database from command line. DB proxy connection and secrets are
@@ -228,7 +238,7 @@ PROJECT: DATABASE OPERATIONS
 
   db deploy[:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled
-    automatically.
+    automatically. NOTE: Usually there is no need to run this command manually.
 
   db diff:[ENV] [OTHER_ENV]
     Compare database schemas of two environments. DB proxy connection and
@@ -264,17 +274,55 @@ PROJECT: DATABASE OPERATIONS
     that both databases are located on the same database cluster. Do not use
     this for production database unless you are sure nobody is using the system.
 
-PROJECT: CI/CD OPERATIONS
+PROJECT: MANUAL DEPLOYMENT OPERATIONS
 
-  > This section provides commands for CI/CD and also additional commands that
-  > are related to deployments one way or another. Note that all db related
-  > operations are listed in db section.
+  manual cancel:ENV [IGNORE_BUILD_ID]
+    Cancel an ongoing build (but ignore the given build id). CI/CD scripts may
+    use this, for example, to cancel an ongoing build when a new build is
+    started. It may also be handy in case somebody pushes something to a wrong
+    branch accidentally.
+
+  manual deploy:ENV TAG|COMMIT
+    Deploys a prebuilt version to an environment. TODO implement
+
+  manual build deploy:[ENV] CONTAINER_NAME
+    Build, push and deploy a container to server. Use this when you need to
+    quickly deploy manual changes to some environment. NOTE: The command
+    does not run any automatic tests and therefore should not be used in
+    a production environment. TODO not implemented yet.
+    Example: taito manual build deploy:dev server
+
+  manual revision[:ENV]
+    Show current revision.
+
+  manual revert[:ENV] [REVISION]
+    Reverts application to another revision. Reverts to the previous version
+    if revision has not been given as argument. You can see current revision
+    number by running `taito manual revision[:ENV]`.
+
+PROJECT: AUTOMATIC CI/CD OPERATIONS
 
   ci prepare
     Set ci flags by status check. The ci flags are used to control the following
     ci steps. For example if taitoflag_images_exist is set, many of the ci steps
     will be skipped since all images have already been built and tested
     by some previous CI build.
+
+  ci test unit
+    Run all unit tests.
+    TIP: Enable the 'make' or 'npm' plugin and implement ci-test-unit script
+    in your makefile/package.json.
+
+  ci scan
+    Lint code, scan for vulnerabilities, etc.
+    TIP: Enable the 'make' or 'npm' plugin and implement ci-scan script in your
+    makefile/package.json.
+
+  ci docs
+    Generate docs e.g. API docs from API definitions and PDF files from
+    markdown documentation.
+    TIP: Enable the 'make' or 'npm' plugin and implement ci-docs script in your
+    makefile/package.json.
 
   ci build:[ENV] CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
     Builds image. Example: 'taito ci build:dev client test1'.
@@ -285,21 +333,8 @@ PROJECT: CI/CD OPERATIONS
   ci deploy[:ENV] [IMAGE_TAG] [--dry-run]
     Deploy the application either by using IMAGE_TAG given as parameter or
     using the latest image found for the environment in question. Use dry-run
-    switch to execute a dry run. Example: 'taito ci deploy:dev test1'
-
-  ci fulldeploy:[ENV] CONTAINER_NAME
-    Build, push and deploy a container to server. Use this when you need to
-    deploy manual changes to some environment. TODO not implemented yet.
-    Example: taito ci fulldeploy:dev server
-
-  ci revision[:ENV]
-    Show current revision.
-
-  ci revert[:ENV] [REVISION]
-    Reverts application to another revision. Reverts to the previous version
-    if revision has not been given as argument. You can see current revision
-    number by running `taito ci revision[:ENV]`. NOTE: This command does not
-    revert database changes. Use 'db revert[:ENV]' for that.
+    switch to execute a dry run. Example: 'taito ci deploy:dev test1'.
+    NOTE: Does not deploy database changes (TIP: 'taito db deploy[:ENV]')
 
   ci wait[:ENV]
     Waits until application has been succesfully deployed to server.
@@ -307,42 +342,26 @@ PROJECT: CI/CD OPERATIONS
     else. This is used by CI/CD scripts to wait deployment before running the
     api and e2e tests.
 
-  ci verify[:ENV]
-    Verifies that everyting went ok e.g. by checking test results. If something
-    went wrong and autorevert is enabled for the environment, runs
-    `taito db revert[:ENV]` and `taito ci revert[:ENV]`.
-
-  ci docs
-    Generate docs e.g. API docs from API definitions and PDF files from
-    markdown documentation.
-    TIP: Enable the npm plugin and implement ci-docs script in your
-    package.json.
-
-  ci scan
-    Lint code, scan for vulnerabilities, etc.
-    TIP: Enable the npm plugin and implement ci-scan script in your package.json
-    and your code will be scanned.
-
-  ci test unit
-    Run all unit tests.
-    TIP: Enable the npm plugin and implement ci-test-unit script in your
-    package.json.
-
   ci test api[:ENV]
     Run all api tests.
-    TIP: Enable the npm plugin and implement ci-test-api:ENV script in your
-    package.json. You can configure test users and passwords for each
-    environment in taito-config.sh as those settings are available to your npm
-    script as environment variables. At least implement tests for local
+    TIP: Enable the 'make' or 'npm' plugin and implement ci-test-api:ENV script
+    in your makefile/package.json. You can configure test users and passwords
+    for each environment in taito-config.sh as those settings are available to
+    your script as environment variables. At least implement tests for local
     environment (other target environments are optional).
 
   ci test e2e[:ENV]
     Run all e2e tests.
-    TIP: Enable the npm plugin and implement ci-test-e2e:ENV script in your
-    package.json. You can configure test users and passwords for each
-    environment in taito-config.sh as those settings are available to your npm
-    script as environment variables. At least implement tests for local
+    TIP: Enable the 'make' or 'npm' plugin and implement ci-test-e2e:ENV script
+    in your makefile/package.json. You can configure test users and passwords
+    for each environment in taito-config.sh as those settings are available to
+    your script as environment variables. At least implement tests for local
     environment (other target environments are optional).
+
+  ci verify[:ENV]
+    Verifies that everything went ok e.g. by checking test results. If something
+    went wrong and autorevert is enabled for the environment, runs
+    `taito db revert[:ENV]` and `taito manual revert[:ENV]`.
 
   ci publish
     Publishes build artifacts (e.g. docs, test reports) to a central location.
@@ -351,25 +370,12 @@ PROJECT: CI/CD OPERATIONS
   ci release post:ENV
     Release pre and post handling. These commands usually generate release notes
     automatically and tag the git repository with a new version number.
-    TIP: Enable the npm plugin and implement ci-release-pre:prod and
-    ci-release-post:prod scripts in your package.json.
+    TIP: Enable the 'make' or 'npm' plugin and implement ci-release-pre:prod and
+    ci-release-post:prod scripts in your makefile/package.json.
 
-  ci cancel:ENV [IGNORE_BUILD_ID]
-    Cancel an ongoing build (but ignore the given build id). CI/CD scripts may
-    use this, for example, to cancel an ongoing build when a new build is
-    started. It may also be handy in case somebody pushes something to a wrong
-    branch accidentally.
+PROJECT: BASIC SETUP
 
-  ci secrets[:ENV] [--save-as-taito-secrets]
-    Retrieves all secrets that might be needed by the CI/CD build or developer.
-    If the --save-as-taito-secrets flag is given, the command saves the secrets
-    as a taito-secrets.sh file that taito-cli will read the next time it is
-    executed. NOTE: taito-secrets.sh should be used only in a temporary CI/CD
-    workspace.
-
-PROJECT: ENVIRONMENT SETUP
-
-  env config
+  project config
     Configure project.
 
   env create:ENV [GIT_BRANCH]
@@ -389,7 +395,7 @@ PROJECT: ENVIRONMENT SETUP
   env cert[:ENV] DOMAIN
     Add a custom certificate.
 
-PROJECT: ALTERNATIVE ENVIRONMENTS
+PROJECT: ALTERNATIVE ENVIRONMENT SETUP
 
   > An alternative environment uses the same database as the main environment,
   > but containers are built from an alternative branch. You can use alternative
@@ -415,15 +421,20 @@ PROJECT: CONTACTS
 
   contacts development
     List of contacts required for development.
-    TIP: Enable the npm plugin and implement contacts-development script in your
-    package.json.
+    TIP: Enable the 'make' or 'npm' plugin and implement contacts-development
+    script in your makefile/package.json.
 
   contacts maintenance
     List contacts that should be notified of a maintenance break, incident or
     some other problems.
-    TIP: Enable the npm plugin and implement contacts-maintenance script in your
-    package.json.
+    TIP: Enable the 'make' or 'npm' plugin and implement contacts-maintenance
+    script in your makefile/package.json.
 
   contacts users [TYPE]
     TODO optional command for listing users that should be notified of
     incidents, etc? Generated from user database?
+
+UTILS
+
+  util browser: URL
+    Open the given url in a web browser.

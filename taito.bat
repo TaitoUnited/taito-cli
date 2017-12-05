@@ -1,6 +1,6 @@
 @echo off
 
-echo taito-cli Copyright (C) 2017 Taito United
+echo Taito-cli Copyright (C) 2017 Taito United
 echo This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE.
 echo:
 

@@ -24,7 +24,7 @@
 
     * TODO...
 
-3. Run `taito env-config` in the project directory. This will create a new Sentry project for you.
+3. Run `taito project-config` in the project directory. This will create a new Sentry project for you.
 
 4. Create dev and prod environments for the project by running `taito env-create:dev` and `taito env-create:prod` in the project directory. This will TODO:
 
