@@ -14,7 +14,7 @@ flag=${1}
 . "${taito_plugin_path}/util/get-secrets.sh" && \
 
 # Print secret values
-echo && \
+echo 'Showing secrets from Kubernetes:' && \
 echo && \
 rm taito-secrets.sh &> /dev/null || : && \
 secret_index=0 && \

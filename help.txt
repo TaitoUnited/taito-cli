@@ -90,15 +90,22 @@ PROJECT: BASIC OPERATIONS
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.
 
-  oper start[:ENV] [POD] [--clean] [--prod] [--device]
-    Start. Use the 'clean' switch to clean all before start. Use the 'prod'
-    switch to use production containers in local development environment.
+  oper start[:ENV] [POD] [--clean] [--prod] [--device] [-- ARGS]
+    Starts the application in the defined environment e.g 'taito start'
+    or 'taito start:dev'. Optional arguments for local usage:
+    .
+    POD: Start only the given pod/container/module
+    --clean: Clean everything before start.
+    --prod: Run production build instead of development build.
+    --device: Run on device instead of emulator.
+    -- ARGS: Arguments for the application.
 
   oper init
     Make sure that everything has been initialized after start (database, etc.).
 
   oper stop[:ENV]
-    Stop.
+    Stop. Stops the application in the defined environment e.g 'taito stop'
+    or 'taito stop:dev'.
 
   oper users[:ENV]
     Show user accounts that you can use to log in.

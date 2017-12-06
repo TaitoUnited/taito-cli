@@ -43,7 +43,7 @@ You can upgrade taito-cli and it's extensions by running `taito --upgrade`.
 
 ## Usage
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito log -h` or `taito clean -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands (TODO autocomplete only currently enabled commands).
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito db -h` or `taito clean -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands (TODO autocomplete only currently enabled commands).
 
 *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctlr`+`å` for us scandinavians) and type `close`.*
 
