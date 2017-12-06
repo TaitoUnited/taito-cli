@@ -9,7 +9,7 @@ _arguments "*: :(\
   oper-install oper-env oper-build oper-start: oper-init oper-stop: \
   oper-users: oper-secrets: oper-status: oper-logs: oper-shell: oper-exec: \
   oper-kill: oper-clean oper-lock oper-analyze  \
-  workspace-clean workspace-kill git-env-list git-env-merge: \
+  workspace-clean workspace-kill git-env-list git-env: git-env-merge: \
   git-feat-list git-feat git-feat-squash git-feat-merge git-feat-pr \
   db-add db-proxy: db-open: db-dump: db-import: \
   db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \
