@@ -2,8 +2,7 @@
 
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${taito_customer:?}"
-: "${taito_env:?}"
+: "${taito_namespace:?}"
 
 echo "Saving secrets to Kubernetes"
 
@@ -11,7 +10,7 @@ echo "Saving secrets to Kubernetes"
 "${taito_plugin_path}/util/use-context.sh"
 
 # Make sure that namespace exists
-kubectl create namespace "${taito_customer}-${taito_env}" &> /dev/null
+kubectl create namespace "${taito_namespace}" &> /dev/null
 
 export kubectl_skip_restart="true";
 "${taito_plugin_path}/util/save-secrets.sh" && \

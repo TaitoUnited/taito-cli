@@ -2,14 +2,14 @@
 
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${taito_customer:?}"
+: "${taito_namespace:?}"
+: "${taito_project:?}"
 : "${taito_env:?}"
-: "${taito_project_env:?}"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
 
-helm list | grep "${taito_project_env}" && \
+helm list | grep "${taito_project}-${taito_env}" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

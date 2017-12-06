@@ -1,8 +1,8 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
-: "${taito_customer:?}"
-: "${taito_env:?}"
+: "${taito_plugin_path:?}"
+: "${taito_namespace:?}"
 : "${taito_project:?}"
 
 pod="${1:?Pod name not given}"
@@ -20,8 +20,8 @@ if [[ -z "${container_name}" ]]; then
   container_name=$(echo "${pod}" | sed -e 's/\([^0-9]*\)*/\1/;s/-[0-9].*$//')
 fi
 
-echo ${pod}
-echo ${container_name}
+echo "${pod}"
+echo "${container_name}"
 
 if [[ -z "${pod}" ]]; then
   echo

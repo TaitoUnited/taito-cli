@@ -247,7 +247,7 @@ if ! (
   #    [[ ${command_exists} == true ]] && \
   #    [[ ${command} != "__"* ]]; then
   #   echo
-  #   echo "### Taito-cli: Executing on ${taito_customer:-}-${taito_env} environment:"
+  #   echo "### Taito-cli: Executing on ${taito_namespace:-} environment:"
   #   echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
   # fi
 

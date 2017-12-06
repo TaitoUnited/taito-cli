@@ -107,9 +107,8 @@ And here is an example of a project specific `taito-config.sh`:
     export taito_repo_name="acme-analytics"
     export taito_customer="acme"
     export taito_project="acme-analytics"
-    export taito_project_env="${taito_project}-${taito_env}"
-    export taito_namespace="${taito_customer}-${taito_env}"
-    export taito_app_url="https://${taito_project_env}.acme.com"
+    export taito_namespace="${taito_project}-${taito_env}"
+    export taito_app_url="https://${taito_project}-${taito_env}.acme.com"
     export taito_registry="domain.com/${taito_zone}/${taito_repo_name}"
 
     # Settings for ci builds
@@ -165,7 +164,7 @@ And here is an example of a project specific `taito-config.sh`:
         ;;
       staging)
         # Overrides for staging environment
-        export taito_app_url="https://${taito_project_env}.myapp.com"
+        export taito_app_url="https://${taito_project}-${taito_env}.myapp.com"
         export taito_zone="acme-restricted1"
         export gcloud_region="europe-west2"
         export gcloud_zone="europe-west2-a"
@@ -192,7 +191,7 @@ And here is an example of a project specific `taito-config.sh`:
       open-issues=https://github.com/${taito_organization}/${taito_repo_name}/issues \
       open-builds=https://console.cloud.google.com/gcr/builds?project=${taito_zone}&query=source.repo_source.repo_name%3D%22${taito_repo_location}-${taito_repo_name}%22 \
       open-artifacts=https://console.cloud.google.com/gcr/images/${taito_zone}/EU/${taito_repo_location}-${taito_repo_name}?project=${taito_zone} \
-      open-bucket=https://storage.googleapis.com/${taito_project_env} \
+      open-bucket=https://storage.googleapis.com/${taito_project}-${taito_env} \
       open-logs:ENV=https://console.cloud.google.com/logs/viewer?project=${taito_zone}&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F${kubectl_name}%2Fnamespace_id%2F${taito_namespace} \
       open-errors:ENV=https://sentry.io/${taito_organization}/${taito_project}/ \
       open-uptime=https://app.google.stackdriver.com/uptime?project=${taito_zone} \

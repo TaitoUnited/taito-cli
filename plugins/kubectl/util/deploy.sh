@@ -2,12 +2,11 @@
 
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${taito_customer:?}"
+: "${taito_namespace:?}"
 : "${taito_env:?}"
 : "${taito_branch:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
-: "${taito_project_env:?}"
 : "${taito_repo_name:?}"
 
 image="${1}"
@@ -27,7 +26,7 @@ if [[ ${image} == "--dry-run" ]]; then
   image="DRY_RUN"
 elif [[ -z "${image}" ]]; then
   # Image not given as param
-  echo "--- Determining the latest image tag for ${taito_project_env} ---"
+  echo "--- Determining the latest image tag for ${taito_project}-${taito_env} ---"
   image=$(gcloud container builds list --limit=100 --filter='STATUS=SUCCESS' | \
     grep "${taito_repo_name}@${taito_branch}" | \
     sed 's/.*:\(.*\).*/\1 /g' | \
@@ -47,26 +46,26 @@ if [[ -f "scripts/helm-${taito_env}.yaml" ]]; then
   override_file="-f scripts/helm-${taito_env}.yaml"
 fi
 
-echo "- Deploying ${image} of ${taito_project_env} using Helm"
+echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
 
 echo "helm upgrade \"${options[@]}\" --debug --install \
   --namespace \"${taito_namespace}\" \
   --set env=\"${taito_env}\" \
   --set project.name=\"${taito_project}\" \
-  --set project.customer=\"${taito_customer}\" \
+  --set project.customer=\"${taito_customer:-}\" \
   --set build.imageTag=\"${image}\" \
   --set build.version=\"${version}\" \
   --set build.commit=\"TODO\" \
   -f scripts/helm.yaml ${override_file} \
-  \"${taito_project_env}\" \"./scripts/${taito_project}\" "
+  \"${taito_project}-${taito_env}\" \"./scripts/${taito_project}\" "
 
 helm upgrade "${options[@]}" --debug --install \
   --namespace "${taito_namespace}" \
   --set env="${taito_env}" \
   --set project.name="${taito_project}" \
-  --set project.customer="${taito_customer}" \
+  --set project.customer="${taito_customer:-}" \
   --set build.imageTag="${image}" \
   --set build.version="${version}" \
   --set build.commit="TODO" \
   -f scripts/helm.yaml ${override_file} \
-  "${taito_project_env}" "./scripts/${taito_project}"
+  "${taito_project}-${taito_env}" "./scripts/${taito_project}"

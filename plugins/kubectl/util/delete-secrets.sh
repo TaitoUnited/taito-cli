@@ -2,13 +2,14 @@
 
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
-: "${taito_project_env:?}"
+: "${taito_project:?}"
+: "${taito_env:?}"
 
-echo "- ${taito_project_env}-bucket"
-kubectl delete secret "${taito_project_env}-bucket" 2> /dev/null
+echo "- ${taito_project}-${taito_env}-bucket"
+kubectl delete secret "${taito_project}-${taito_env}-bucket" 2> /dev/null
 
-echo "- ${taito_project_env}-basic-auth"
-kubectl delete secret "${taito_project_env}-basic-auth" 2> /dev/null
+echo "- ${taito_project}-${taito_env}-basic-auth"
+kubectl delete secret "${taito_project}-${taito_env}-basic-auth" 2> /dev/null
 
 secret_index=0
 secret_names=(${taito_secret_names})

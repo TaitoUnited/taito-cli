@@ -1,8 +1,8 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
-: "${taito_customer:?}"
-: "${taito_env:?}"
+: "${taito_plugin_path:?}"
+: "${taito_namespace:?}"
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh" && \
