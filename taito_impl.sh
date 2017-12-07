@@ -322,33 +322,29 @@ if ! (
       . "${cli_path}/util/set-taito-plugin-path.sh" "${handler%hooks\/*}"
       "${handler}" "${params[@]}"
       ecode=${?}
-      if [[ ${ecode} == 1 ]]; then
+      if [[ ${ecode} == 66 ]]; then
+        # exit code 66: no error, but skip the following commands
+        skip_commands=true
+      elif [[ ${ecode} -gt 0 ]]; then
         >&2 echo ERROR!
         skip_commands=true
-        exit_code=1
-      elif [[ ${ecode} -gt 1 ]]; then
-        skip_commands=true
+        exit_code=${ecode}
       fi
     done
 
     # Call command
     if [[ ${skip_commands} == false ]]; then
       if [[ ${command_exists} == true ]]; then
-        # Call first command of the command chain
+        # Call the first command on the command chain
         "${cli_path}/util/call-next.sh" "${params[@]}"
-        ecode=${?}
-        if [[ ${ecode} == 130 ]]; then
+        exit_code=${?}
+        if [[ ${exit_code} == 130 ]]; then
           echo "Cancelled"
-          exit_code=130
-        elif [[ ${ecode} -gt 1 ]]; then
-          echo "ERROR! Command failed. Usage:"
-          export taito_command_chain=""
-          export taito_plugin_path="${cli_path}/plugins/basic"
-          "${cli_path}/plugins/basic/__help.sh" "${command}"
-          exit_code=1
+        elif [[ ${exit_code} -gt 0 ]]; then
+          echo "ERROR! Command failed."
         fi
       elif [[ "${command}" == "oper-init" ]]; then
-        # Note of the plugins has implemented oper-init
+        # None of the enabled plugins has implemented oper-init
         echo "Nothing to initialize"
       else
         # Command not found
@@ -373,9 +369,10 @@ if ! (
       # shellcheck disable=SC1090
       . "${cli_path}/util/set-taito-plugin-path.sh" "${handler%hooks\/*}"
       "${handler}" "${params[@]}"
-      if [[ ${?} == 1 ]]; then
+      ecode=${?}
+      if [[ ${ecode} -gt 0 ]] && [[ ${ecode} != 66 ]]; then
         >&2 echo ERROR!
-        exit_code=1
+        exit_code=${ecode}
       fi
     done
   fi

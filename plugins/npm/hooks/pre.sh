@@ -47,7 +47,7 @@ if [[ -f "./package.json" ]] && \
     if ! npm run -s "${npm_command}" -- "${@}"; then
       exit_code=1
     else
-      exit_code=2
+      exit_code=66
     fi
   fi
 fi
