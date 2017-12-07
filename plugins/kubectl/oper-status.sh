@@ -19,14 +19,17 @@ if [[ "${switch}" == "--all" ]]; then
   kubectl describe nodes
   echo
   echo
-fi
 
-echo "--- Nodes ---"
-kubectl top nodes
-echo
-echo
+  echo "--- Nodes ---"
+  kubectl top nodes
+  echo
+  echo
 
-if [[ "${switch}" == "--all" ]]; then
+  echo "--- Helm ---"
+  helm list --namespace "${taito_namespace}"
+  echo
+  echo
+
   echo "--- Ingress ---"
   kubectl get ingress "${params[@]}"
   echo
