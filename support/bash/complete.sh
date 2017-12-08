@@ -34,7 +34,8 @@ _taito ()
     open-feedback fun-bofh fun-starwars \
     template-create template-migrate template-upgrade \
     zone-install zone-maintenance zone-uninstall zone-status zone-doctor \
-    zone-rotate' -- $cur ) );;
+    zone-rotate \
+    passwd-share passwd-list passwd-get passwd-set passwd-rotate' -- $cur ) );;
   esac
 
   return 0

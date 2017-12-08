@@ -29,8 +29,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
     #!/bin/bash
 
     export taito_image="taitounited/taito-cli:latest"
-    export taito_zone="my-default-zone"
-    export taito_global_plugins="git fun template docker-global"
+    export taito_global_plugins="docker-global fun-global git-global gcloud-global template-global"
     ```
 
 4. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
@@ -43,7 +42,7 @@ You can upgrade taito-cli and it's extensions by running `taito --upgrade`.
 
 ## Usage
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito db -h` or `taito clean -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands (TODO autocomplete only currently enabled commands).
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito db -h` or `taito clean -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands.
 
 *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctlr`+`å` for us scandinavians) and type `close`.*
 
@@ -55,7 +54,7 @@ See the [README.md](https://github.com/TaitoUnited/server-template#readme) of se
 
 You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
 
-> TODO: With the `-v` flag (verbose) you can see all the commands that plugins run during the command execution.
+> TODO: With the `-v` or `--verbose` flag you can see all the commands that plugins run during the command execution.
 
 ### Admin credentials
 
@@ -74,7 +73,7 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     # taito-cli default settings
     export taito_image="taitounited/taito-cli:latest"
     export taito_global_extensions="~/my-extension git@github.com:MyOrganization/another-extension.git"
-    export taito_global_plugins="git fun template myplugin anotherplugin"
+    export taito_global_plugins="git-global template-global myplugin-global anotherplugin-global"
 
     # template plugin default settings
     export template_source_git_url="git@github.com:TaitoUnited"
@@ -228,7 +227,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito manual cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
 * `taito ci prepare`: Set ci flags by status check. The ci flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since all images have already been built and tested by some previous CI build.
 * `taito install`: Install required libraries.
-* `taito oper secrets`: Fetch secrets that are required by the following CI/CD steps.
+* `taito secrets`: Fetch secrets that are required by the following CI/CD steps.
 * `taito ci release pre`: Make some preparations for the release if required. Typically this step determines the new version number for the release by the type of commits (feature, fix, etc).
 * `taito ci test unit`: Run unit tests.
 * `taito ci scan`: Lint code, scan for code smells and vulnerabilities, etc. (TODO ship code climate with taito container?)
