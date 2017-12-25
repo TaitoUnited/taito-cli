@@ -174,13 +174,9 @@ if ! (
   eval "$secret_exports"
 
   # Determine enabled plugins
-  # TODO remove duplicate plugins
   enabled_plugins=""
-  plugins_string=" ${taito_plugins:-} ${taito_global_plugins:-} "
-  if [[ "${plugins_string}" != *"basic"* ]]; then
-    # The basic plugin is always enabled
-    plugins_string="basic ${plugins_string}"
-  fi
+  plugins_string=$(echo basic "${taito_plugins:-}" "${taito_global_plugins:-}" \
+    | awk '{for (i=1;i<=NF;i++) if (!a[$i]++) printf("%s%s",$i,FS)}{printf("\n")}')
   plugins=("${plugins_string}")
 
   # Find matching plugin commands and assemble chains
