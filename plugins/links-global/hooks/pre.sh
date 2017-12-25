@@ -4,9 +4,9 @@
 : "${taito_command:?}"
 
 exit_code=0
-found=$(echo "${link_urls:-}" | grep "${taito_command}[\[\:\=\#]")
+found=$(echo "${link_global_urls:-}${link_urls:-}" | grep "${taito_command}[\[\:\=\#]")
 if [[ ${found} != "" ]]; then
-  links=("${link_urls}")
+  links=("${link_global_urls:-}" "${link_urls}")
   for link in ${links[@]}
   do
     prefix="$( cut -d '=' -f 1 <<< "$link" )";
@@ -17,7 +17,7 @@ if [[ ${found} != "" ]]; then
       name=${prefix##*#}
       url="$( cut -d '=' -f 2- <<< "$link" )"
       echo
-      echo "### link/pre: Opening ${name}"
+      echo "### links/pre: Opening ${name}"
 
       if ! "${taito_cli_path}/util/browser-fg.sh" "${url}"; then
         exit 1

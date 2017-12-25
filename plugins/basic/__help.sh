@@ -8,7 +8,7 @@ filter=${1}
 echo
 
 # Hack: Show dynamic links of link plugin in the correct place
-links=$("${taito_cli_path}/plugins/link/util/help.sh" | \
+links=$("${taito_cli_path}/plugins/links-global/util/help.sh" | \
   sed ':a $!{N; ba}; s/\n/\\n/g') && \
 
 if [[ -z "${filter}" ]]; then
