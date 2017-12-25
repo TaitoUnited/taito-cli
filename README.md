@@ -104,7 +104,7 @@ And here is an example of a project specific `taito-config.sh`:
     # - 'docker:local' means that docker is used only in local environment
     # - 'kubectl:-local' means that kubernetes is used in all other environments
     export taito_plugins=" \
-      postgres link docker:local npm kubectl:-local gcloud:-local
+      postgres links-global docker:local npm kubectl:-local gcloud:-local
       gcloud-builder:-local sentry secret:-local semantic"
 
     # common settings for all plugins
@@ -191,7 +191,7 @@ And here is an example of a project specific `taito-config.sh`:
 
     export gcloud_project="${taito_zone}"
 
-    # Link plugin
+    # Links-global plugin
     export link_urls="\
       open-app[:ENV]#app=${taito_app_url} \
       open-boards=https://github.com/${taito_organization}/${taito_repo_name}/projects \
