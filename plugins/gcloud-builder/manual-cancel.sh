@@ -19,10 +19,9 @@ gcloud beta container builds list --ongoing | \
   grep "${full_repo_name}@${branch_name}" | \
   grep -v "${ignore_build_id}" | \
   cut -d ' ' -f 1 | \
-  xargs -L1 gcloud container builds cancel
+  xargs -L1 gcloud container builds cancel 2> /dev/null
 
-echo "NOTE: All fails on cancel operation are intentionally ignored. Perhaps \
-nothing to cancel, and cancelling is not that important anyway."
+echo "NOTE: All fails on cancel operation are intentionally ignored."
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

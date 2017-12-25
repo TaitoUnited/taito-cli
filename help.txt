@@ -72,73 +72,72 @@ ARGUMENTS
 
   POD
     Depending on the environment, POD may reference to a Kubernetes pod,
-    a Docker container or a function.
+    a Docker container, a function or some other deployable module.
 
 PROJECT: BASIC OPERATIONS
 
-  > The 'oper' grouping prefix is used as a default. You can leave it out
-  > if you like.
+  > All basic operation commands use 'oper' as a command grouping prefix but
+  > you can leave it out if you like.
 
-  oper install
+  install
     Install everything that needs to installed locally on host (e.g. libraries
     for linting and autocompletion purposes)
     TIP: Enable the 'make', 'npm' or 'pipenv' plugin.
 
-  oper env
+  env
     Initialize the development environment. This command is for non-dockerized
     projects that require project specific environment variables to be set.
     For example the 'pipenv' plugin uses this command to initialize the python
     virtualenv.
 
-  oper build
+  build
     Builds a project. This command is for non-dockerized projects that need to
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.
 
-  oper start[:ENV] [POD] [--clean] [--prod] [--device] [-- ARGS]
+  start[:ENV] [POD] [--clean] [--prod] [--device] [-- ARGS]
     Starts the application in the defined environment e.g 'taito start'
-    or 'taito start:dev'. Optional arguments for local usage:
+    or 'taito start:dev'. Optional arguments for running in local environment:
     .
-    POD: Start only the given pod/container/module
+    POD: Start only the given pod/container/function/module
     --clean: Clean everything before start.
     --prod: Run production build instead of development build.
     --device: Run on device instead of emulator.
     -- ARGS: Arguments for the application.
 
-  oper init
+  init
     Make sure that everything has been initialized after start (database, etc.).
 
-  oper stop[:ENV]
+  stop[:ENV]
     Stop. Stops the application in the defined environment e.g 'taito stop'
     or 'taito stop:dev'.
 
-  oper users[:ENV]
-    Show user accounts that you can use to log in.
-    TIP: Enable the 'make' or 'npm' plugin and implement oper-users[:ENV] script
-    in your makefile/package.json. Hard coded user accounts for local, dev and
-    test environments suffice. Usually not implemented for staging and
-    production environments.
+  info[:ENV]
+    Show some useful information about the environment (e.g. shared user
+    accounts that you can use to log in).
+    TIP: Enable the 'make' or 'npm' plugin and implement oper-info[:ENV] script
+    in your makefile/package.json.
 
-  oper secrets[:ENV]
+  secrets[:ENV]
     Retrieves all secrets that might be needed by a developer or CI/CD build.
 
-  oper status[:ENV]
+  status[:ENV]
     Show status summary of environment (status of services, pods, etc.).
 
-  oper logs[:ENV] POD [CONTAINER]
+  logs[:ENV] POD [CONTAINER]
     Follow logs of a pod. Examples:
     $ taito logs: client
     $ taito logs:dev client
     $ taito logs:dev my-app-client-3034393823-2f5jf
 
-  oper shell[:ENV] [POD] [CONTAINER]
+  shell[:ENV] [POD] [CONTAINER]
     Start a shell on a pod. Examples:
     $ taito shell
     $ taito shell: client
     $ taito shell:dev client
     $ taito shell:dev my-app-client-3034393823-2f5jf
 
-  oper exec[:ENV] POD CONTAINER COMMAND
+  exec[:ENV] POD CONTAINER COMMAND
     Execute command in pod. Run 'taito status[:ENV]' first to get the pod name
     and status. Give - as container if it should be determined automatically.
     Examples:
@@ -146,24 +145,44 @@ PROJECT: BASIC OPERATIONS
     $ taito exec:dev client - echo "taito!"
     $ taito exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
 
-  oper kill[:ENV] [POD]
+  kill[:ENV] [POD]
     Kill a pod. Examples:
     $ taito kill
     $ taito kill: client
     $ taito kill:dev client
     $ taito kill:dev my-app-client-3034393823-2f5jf
 
-  oper clean [data | build]
+  clean [data | build]
     Clean.
 
-  oper lock
+  lock
     Creates lock files that lock library versions.
 
-  oper analyze
+  analyze
     Analyzes implementation and gives you feedback accordingly (webpack
     bundle analysis, code quality analysis, vulnerability analysis, etc.)
     TIP: Enable the 'make' or 'npm' plugin and implement oper-analyze script
     in your makefile/package.json
+
+PROJECT: LINKS
+
+  > You can specify project specific browser links with the links plugin.
+  > Here are some recommended link names that are also included in the
+  > taito-cli autocomplete scripts:
+  >
+  > open app[:ENV] - GUI of app
+  > open admin[:ENV] - GUI of application admin tool
+  > open bucket - Storage bucket used by the app
+  > open docs - Built docs
+  > open boards - Project kanban/scrum boards (e.g. Github projects, Trello)
+  > open issues - Project issues (e.g. GitHub issues, Trello)
+  > open repo - Project version control repository (e.g. GitHub)
+  > open builds - List of builds (e.g. Jenkins, Google container builder)
+  > open errors:ENV - Error Tracking (e.g. Sentry)
+  > open logs:ENV - Logs (e.g. Stackdriver)
+  > open uptime - Uptime monitoring (e.g. Stackdriver)
+  > open performance - Performace monitoring (e.g. New Relic)
+  > open feedback - User feedback management
 
 GLOBAL: WORKSPACE OPERATIONS
 
@@ -281,28 +300,23 @@ PROJECT: DATABASE OPERATIONS
 
   db copyquick:ENV SOURCE_ENV
     Copy database quickly from one environent to another. DB proxy connection
-    and secrets are handled automatically. NOTE: The command locks source
-    database from other users until copying is finished. It also requires
-    that both databases are located on the same database cluster. Do not use
-    this for production database unless you are sure nobody is using the system.
+    and secrets are handled automatically. NOTE: The command requires
+    that both databases are located on the same database cluster. The command
+    might also do some quirky things to make copying quicker so it might not
+    be safe to use it with a live production database.
 
 PROJECT: MANUAL DEPLOYMENT OPERATIONS
 
   manual cancel:ENV [IGNORE_BUILD_ID]
-    Cancel an ongoing build (but ignore the given build id). CI/CD scripts may
-    use this, for example, to cancel an ongoing build when a new build is
-    started. It may also be handy in case somebody pushes something to a wrong
-    branch accidentally.
+    Cancel an ongoing build, but ignore the given build id.
 
   manual deploy:ENV TAG|COMMIT
     Deploys a prebuilt version to an environment. TODO implement
 
-  manual build deploy:[ENV] CONTAINER_NAME
-    Build, push and deploy a container to server. Use this when you need to
-    quickly deploy manual changes to some environment. NOTE: The command
-    does not run any automatic tests and therefore should not be used in
-    a production environment. TODO not implemented yet.
-    Example: taito manual build deploy:dev server
+  manual build deploy:[ENV] NAME
+    Build, push and deploy a container or some other deployable module to
+    server. Use this when you need to quickly deploy manual changes to some
+    environment. Example: taito manual build deploy:dev server
 
   manual revision[:ENV]
     Show current revision.
@@ -474,4 +488,5 @@ GLOBAL: PASSWORDS
 GLOBAL: UTILS
 
   util browser: URL
-    Open the given url in a web browser. You can use this in your build scripts.
+    Opens the given url in default web browser. You can use this command in
+    your build scripts.

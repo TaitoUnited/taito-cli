@@ -5,9 +5,9 @@
 _arguments "*: :(\
   -h --help --readme --trouble --auth: --upgrade -- --shell \
   install compile start: run: init stop: \
-  users: status: logs: shell: exec: kill: clean \
+  info: status: logs: shell: exec: kill: clean \
   oper-install oper-env oper-build oper-start: oper-init oper-stop: \
-  oper-users: oper-secrets: oper-status: oper-logs: oper-shell: oper-exec: \
+  oper-info: oper-secrets: oper-status: oper-logs: oper-shell: oper-exec: \
   oper-kill: oper-clean oper-lock oper-analyze  \
   workspace-clean workspace-kill git-env-list git-env: git-env-merge: \
   git-feat-list git-feat git-feat-squash git-feat-merge git-feat-pr \
@@ -22,7 +22,7 @@ _arguments "*: :(\
   env-alt-rotate: env-alt-cert: \
   contacts-development contacts-maintenance contacts-users \
   open-app: open-admin: open-boards open-bucket open-issues open-builds \
-  open-artifacts open-logs: open-errors: open-uptime open-performance \
+  open-repo open-docs open-logs: open-errors: open-uptime open-performance \
   open-feedback fun-bofh fun-starwars \
   template-create template-migrate template-upgrade \
   zone-install zone-maintenance zone-uninstall zone-status zone-doctor \

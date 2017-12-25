@@ -14,8 +14,8 @@ taito oper-run:android;\
 taito oper-init;\
 taito oper-stop;\
 taito oper-stop:dev;\
-taito oper-users;\
-taito oper-users:dev;\
+taito oper-info;\
+taito oper-info:dev;\
 taito oper-status;\
 taito oper-status:dev;\
 taito oper-log customer-app-server;\

@@ -1,6 +1,6 @@
 # Taito-cli
 
-Taito-cli is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. This is made possible by defining all settings in a project specific configuration file and implementing the commands with plugins. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. And build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+Taito-cli is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. This is made possible by defining all settings in a project specific configuration file and implementing the commands with plugins. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
 Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authenticating with the retrieved secrets. Taito-cli executes all this for you with a single command.
 
@@ -29,7 +29,15 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
     #!/bin/bash
 
     export taito_image="taitounited/taito-cli:latest"
-    export taito_global_plugins="docker-global fun-global git-global gcloud-global template-global"
+    export taito_global_plugins="docker-global fun-global git-global \
+      gcloud-global links-global template-global"
+
+    # template plugin default settings
+    export template_source_git_url="git@github.com:TaitoUnited"
+    export template_dest_git_url="git@github.com:MyOrganization"
+
+    # links
+    export link_global_urls="open-intra#intranet=https://intra.mydomain.com"
     ```
 
 4. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
@@ -42,9 +50,9 @@ You can upgrade taito-cli and it's extensions by running `taito --upgrade`.
 
 ## Usage
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito db -h` or `taito clean -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands.
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands.
 
-*But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctlr`+`å` for us scandinavians) and type `close`.*
+*But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctrl`+`å` for us scandinavians) and type `close`.*
 
 Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
@@ -270,7 +278,7 @@ You can run any script defined in your project root *package.json* or *makefile*
     "init", "host=localhost npm run _db -- < dev-data.sql",
     "open-app", "taito util-browser: http://localhost:8080",
     "open-app:dev", "taito util-browser: http://mydomain-dev:8080",
-    "users", "echo admin/password, user/password",
+    "info", "echo admin/password, user/password",
     "db-open", "host=localhost npm run _db"
     "db-open:dev", "host=mydomain-dev npm run _db"
     "db-open:test", "host=mydomain-test npm run _db"
@@ -347,13 +355,13 @@ NOTE: Do not call another command directly from another. It's error prone; you'l
 
 ### Running commands on host
 
-If your command needs to run some command on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS` to run it immediately in the background. Alternatively you can use the `"${taito_cli_path}/util/execute-on-host-fg.sh" COMMANDS` to run commands on foreground after the taito container has exited.
+If your plugin needs to run some command on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS` to run it immediately in the background. Alternatively you can use the `"${taito_cli_path}/util/execute-on-host-fg.sh" COMMANDS` to run commands on foreground after the taito container has exited.
 
 Currently this mechanism is used  e.g. for executing docker commands and launching browser on host.
 
 ### Committing changes to the taito-cli container image
 
-If your command needs to save some data permanently on the container image, execute `"${taito_cli_path}/util/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
+If your plugin needs to save some data permanently on the container image, execute `"${taito_cli_path}/util/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
 
 ### Command chains and passing data
 
