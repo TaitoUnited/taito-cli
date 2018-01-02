@@ -194,7 +194,7 @@ GLOBAL: WORKSPACE OPERATIONS
     Kill all running processes (e.g. kill all docker processes to free reserved
     ports).
 
-GLOBAL: GIT OPERATIONS
+PROJECT: GIT OPERATIONS
 
   git env list
     List all environment branches.

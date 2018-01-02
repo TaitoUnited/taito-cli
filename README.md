@@ -8,7 +8,7 @@ You can also easily extend the predefined command set with your own custom comma
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
-> Developing software on customers own private infrastucture? Taito-cli works with that too! See [custom commands](#custom-commands) and [custom plugins](#custom-plugins) chapters.
+> Developing software on custom private infrastucture? Taito-cli works with that too! See [custom commands](#custom-commands) and [custom plugins](#custom-plugins) chapters.
 
 > Excited about ChatOps? It's on the way!
 
