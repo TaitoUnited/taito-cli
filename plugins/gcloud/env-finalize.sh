@@ -60,7 +60,8 @@ if [[ "${taito_env}" == "prod" ]]; then
   echo "Press enter when ready"
   read -r
   echo
-
+else
+  echo "Finalize is required only for production."
 fi
 
 # Call next command on command chain

@@ -9,7 +9,7 @@ do
     . "${taito_cli_path}/util/secret-by-index.sh"
     if [[ "${secret_method}" == "manual" ]]; then
       echo
-      echo "New secret for ${secret_name}:"
+      echo "New secret for ${secret_name} (min 8 characters):"
       read -r -s secret_value
       echo "New secret for ${secret_name} again:"
       read -r -s secret_value2

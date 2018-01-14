@@ -32,13 +32,8 @@ if [[ ${mode} == "create" ]]; then
     git checkout master && \
     rm -rf .git"
   sleep 7
-  echo "Create GitHub repository \'${template_dest_git_url}/${repo_name}\'"
-  echo "with the following settings:"
-  echo "- Private, README.md not initialized"
-  echo "- Default branch: dev"
-  echo "- Protected branch: master (TODO more settings?)"
-  echo "- Developers team: write permission"
-  echo "- Admins team: admin permission"
+  echo "Create GitHub repository \'${template_dest_git_url}/${repo_name}\'."
+  echo "Leave README.md uninitialized."
   echo
   echo "Press enter when ready"
   read -r
@@ -60,7 +55,11 @@ fi
 rm -rf ./scripts/template
 
 if [[ ${mode} == "create" ]]; then
+  echo
   echo "--- Pushing to GitHub ---"
+  echo "NOTE: See configuration instructions at the end of README.md after git push has finished."
+  echo "Press enter to continue."
+  read -r
   "${taito_cli_path}/util/execute-on-host.sh" "\
     git init && \
     git add . && \
@@ -71,4 +70,10 @@ if [[ ${mode} == "create" ]]; then
     git push origin v0.0.0 && \
     git checkout -b dev && \
     git push -u origin dev"
+else
+  echo
+  echo "--- Instructions ---"
+  echo
+  echo "See configuration instructions at the end of README.md"
+  echo
 fi

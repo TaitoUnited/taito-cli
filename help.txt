@@ -415,6 +415,9 @@ PROJECT: BASIC SETUP
   env delete:ENV
     Delete an environment.
 
+  env finalize:prod
+    Finalize production environment by setting up DNS and monitoring.
+
   env rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.
 
