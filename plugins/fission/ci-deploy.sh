@@ -3,7 +3,7 @@
 : "${taito_cli_path:?}"
 
 # TODO serverless.com support for fission?
-if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" == "true" ]]; then
+if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" != "false" ]]; then
   echo "TODO deploy fission function"
 fi && \
 

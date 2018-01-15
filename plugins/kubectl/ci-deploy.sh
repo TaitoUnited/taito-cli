@@ -7,7 +7,7 @@
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
-if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" == "true" ]]; then
+if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" != "false" ]]; then
   "${taito_plugin_path}/util/deploy.sh" "${@}"
 fi && \
 
