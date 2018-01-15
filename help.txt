@@ -132,7 +132,6 @@ PROJECT: BASIC OPERATIONS
 
   shell[:ENV] [POD] [CONTAINER]
     Start a shell on a pod. Examples:
-    $ taito shell
     $ taito shell: client
     $ taito shell:dev client
     $ taito shell:dev my-app-client-3034393823-2f5jf
@@ -145,9 +144,15 @@ PROJECT: BASIC OPERATIONS
     $ taito exec:dev client - echo "taito!"
     $ taito exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
 
+  cp[:ENV] [POD:]path [POD:]path
+    Copy a file. Examples:
+    $ taito cp: foo.txt client:/client/foo.txt
+    $ taito cp:dev foo.txt client:/client/foo.txt
+    $ taito cp:dev client:/client/foo.txt .
+    TODO IMPLEMENT
+
   kill[:ENV] [POD]
     Kill a pod. Examples:
-    $ taito kill
     $ taito kill: client
     $ taito kill:dev client
     $ taito kill:dev my-app-client-3034393823-2f5jf

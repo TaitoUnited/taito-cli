@@ -7,9 +7,6 @@
 
 pod="${1:?Pod name not given}"
 
-# Change namespace
-"${taito_plugin_path}/util/use-context.sh" && \
-
 "${taito_plugin_path}/util/exec.sh" "${pod}" "${2:--}" /bin/sh && \
 
 # Call next command on command chain

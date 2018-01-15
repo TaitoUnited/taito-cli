@@ -119,6 +119,7 @@ And here is an example of a project specific `taito-config.sh`:
     export taito_registry="domain.com/${taito_zone}/${taito_repo_name}"
 
     # Settings for ci builds
+    export ci_exec_build=true
     export ci_exec_deploy=true
     export ci_exec_test_env=true
     export ci_exec_revert=true
@@ -159,6 +160,7 @@ And here is an example of a project specific `taito-config.sh`:
     case "${taito_env}" in
       prod)
         # Overrides for production environment
+        export ci_exec_build=false
         export ci_exec_deploy=false
         export ci_exec_test_env=false
         export ci_exec_revert=false
