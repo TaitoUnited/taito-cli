@@ -26,7 +26,7 @@ version=$(grep "version" "${taito_project_path}/package.json" | \
   grep -o "[0-9].[0-9].[0-9]")
 
 if [[ ! -f ./taitoflag_images_exist ]]; then
-  if [[ "${taito_mode:-}" == "ci" ]] || [[ "${ci_exec_build:-}" == false ]]; then
+  if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_build:-}" == "false" ]]; then
     echo "- ERROR: Image does not exist and not building a new one because ci_exec_build is false"
     exit 1
   else

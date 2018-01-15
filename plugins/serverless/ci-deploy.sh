@@ -2,7 +2,7 @@
 
 : "${taito_cli_path:?}"
 
-if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" != false ]]; then
+if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" == "true" ]]; then
   echo "TODO deploy aws/azure/gcloud function using serverless.com"
 fi && \
 
