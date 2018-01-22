@@ -7,7 +7,7 @@
 
 command=ci-release-post:${taito_env}
 
-# Run the command only if it exists
+# Run the command only if it exists in package.json
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
   (
