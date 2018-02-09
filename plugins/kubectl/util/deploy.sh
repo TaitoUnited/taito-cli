@@ -3,6 +3,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
+: "${taito_zone:?}"
 : "${taito_env:?}"
 : "${taito_branch:?}"
 : "${taito_project:?}"
@@ -51,6 +52,8 @@ echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
 echo "helm upgrade \"${options[@]}\" --debug --install \
   --namespace \"${taito_namespace}\" \
   --set env=\"${taito_env}\" \
+  --set zone.name=\"${taito_zone}\" \
+  --set zone.provider=\"${taito_provider:-}\" \
   --set project.name=\"${taito_project}\" \
   --set project.customer=\"${taito_customer:-}\" \
   --set build.imageTag=\"${image}\" \
@@ -62,6 +65,8 @@ echo "helm upgrade \"${options[@]}\" --debug --install \
 helm upgrade "${options[@]}" --debug --install \
   --namespace "${taito_namespace}" \
   --set env="${taito_env}" \
+  --set zone.name="${taito_zone}" \
+  --set zone.provider="${taito_provider:-}" \
   --set project.name="${taito_project}" \
   --set project.customer="${taito_customer:-}" \
   --set build.imageTag="${image}" \

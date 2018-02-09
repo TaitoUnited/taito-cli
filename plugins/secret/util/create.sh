@@ -17,6 +17,9 @@ do
         echo "ERROR: Passwords do not match!"
         exit 1
       fi
+    elif [[ "${secret_method}" == "file" ]]; then
+      echo "File path for ${secret_name}:"
+      read -r secret_value
     elif [[ "${secret_method}" == "random" ]]; then
       # TODO better tool for this?
       secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')

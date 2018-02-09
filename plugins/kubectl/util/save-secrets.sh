@@ -42,9 +42,13 @@ do
       kubectl create namespace "${secret_namespace}" &> /dev/null
       kubectl delete secret "${secret_name}" --namespace="${secret_namespace}" \
         2> /dev/null
+      secret_source="literal"
+      if [[ ${secret_method} == "file" ]]; then
+        secret_source="file"
+      fi
       kubectl create secret generic "${secret_name}" \
         --namespace="${secret_namespace}" \
-        --from-literal=SECRET="${secret_value}" \
+        --from-${secret_source}=SECRET="${secret_value}" \
         --from-literal=METHOD="${secret_method}"
       # shellcheck disable=SC2181
       if [[ $? -gt 0 ]]; then

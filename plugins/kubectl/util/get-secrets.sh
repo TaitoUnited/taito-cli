@@ -9,7 +9,7 @@ for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
 
-  if [[ ${secret_method} != "copy/"* ]]; then
+  if [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "file" ]]; then
     secret_value=$(kubectl get secret "${secret_name}" -o yaml \
       --namespace="${secret_source_namespace}" | grep "^  SECRET" | \
       sed -e "s/^.*: //" | base64 --decode)
