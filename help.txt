@@ -59,6 +59,14 @@ OPTIONS
   --admin, -a
     Execute as admin.
 
+  --project=PROJECT, -p=PROJECT
+    Execute command in the context of given project. This command allows
+    you to execute a taito-cli command without cloning the project repository
+    to your local disk. Examples:
+    taito -p=my-project open app:dev
+    taito -p=org@another-project open info:prod
+    TODO implement
+
   --verbose, -v
     Show all commands that plugins execute.
     TODO implement
@@ -95,15 +103,20 @@ PROJECT: BASIC OPERATIONS
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.
 
-  start[:ENV] [POD] [--clean] [--prod] [--device] [-- ARGS]
-    Starts the application in the defined environment e.g 'taito start'
-    or 'taito start:dev'. Optional arguments for running in local environment:
+  start[:ENV] [POD] [--clean] [--prod] [-- ARGS]
+    Starts the defined environment e.g 'taito start' or 'taito start:dev'.
+    Optional arguments for local environment:
     .
     POD: Start only the given pod/container/function/module
     --clean: Clean everything before start.
     --prod: Run production build instead of development build.
-    --device: Run on device instead of emulator.
-    -- ARGS: Arguments for the application.
+    -- ARGS: Additional arguments
+
+  run:ENV [-d,--device]
+    Runs the application in the defined environment e.g 'taito run:ios'.
+    Optional arguments for running in local environment:
+    .
+    -d,--device: Run on a real device instead of emulator.
 
   init
     Make sure that everything has been initialized after start (database, etc.).
