@@ -34,7 +34,5 @@ do
   secret_index=$((${secret_index}+1))
 done && \
 
-echo build: "${secret_value_ext_github_build}"
-
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

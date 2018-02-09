@@ -1,9 +1,14 @@
 #!/bin/bash
 
+# NOTE: for backwards compatibility. can be removed later.
+if [[ -z "${secret_value_git_github_build}" ]]; then
+  secret_value_git_github_build="${secret_value_ext_github_build:-}"
+fi
+
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 : "${taito_repo_name:?}"
-: "${secret_value_ext_github_build:?}"
+: "${secret_value_git_github_build:?}"
 : "${taito_project_path:?}"
 
 command=ci-release-pre:${taito_env}
@@ -16,13 +21,13 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
 
     echo "- Cloning git repo to release directory as google container builder"
     echo "workspace does not point to the original repository"
-    git clone "https://${secret_value_ext_github_build}@github.com/TaitoUnited/${taito_repo_name}.git" release && \
+    git clone "https://${secret_value_git_github_build}@github.com/TaitoUnited/${taito_repo_name}.git" release && \
     cd "${taito_project_path}/release"
     git checkout master && \
     npm install && \
 
     echo "- Running semantic-release" && \
-    NPM_TOKEN=none GH_TOKEN=${secret_value_ext_github_build} \
+    NPM_TOKEN=none GH_TOKEN=${secret_value_git_github_build} \
       npm run "${command}" -- "${@}" && \
     rm -f .npmrc && \
 

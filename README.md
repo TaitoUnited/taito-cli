@@ -220,9 +220,9 @@ Plugins require secrets to perform some of the operations. Secret naming convent
 
 * *db.silicon_valley_prod.app:random*: A randomly generated database password for silicon valley production database to be used by application.
 * *db.silicon_valley_prod.build/devops:random*: A randomly generated database password for silicon valley production database to be used by CI/CD build. It is saved to devops namespace as it is not required by the application.
+* *gcloud.cloudsql.proxy:copy/devops*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
+* *git.github.build:read/devops*: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
 * *ext.twilio.messaging:manual*: A token for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.
-* *ext.google-cloudsql.proxy:copy/devops*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
-* *ext.github.build:read/devops*: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
 
 Responsibilities of the current default plugins:
 
