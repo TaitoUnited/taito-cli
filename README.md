@@ -212,7 +212,7 @@ And here is an example of a project specific `taito-config.sh`:
     export taito_secrets="
       db.${postgres_database}.app:random
       db.${postgres_database}.build/devops:random
-      ext.cloudsql.proxy:copy/devops"
+      gcloud.cloudsql.proxy:copy/devops"
 
 ## Secret management
 

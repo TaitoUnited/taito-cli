@@ -47,6 +47,12 @@ if [[ -f "scripts/helm-${taito_env}.yaml" ]]; then
   override_file="-f scripts/helm-${taito_env}.yaml"
 fi
 
+# Determine helm chart path
+chart_path="./scripts/helm"
+if [[ -d "./scripts/${taito_project}" ]]; then
+  chart_path="./scripts/${taito_project}"
+fi
+
 echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
 
 echo "helm upgrade \"${options[@]}\" --debug --install \
@@ -60,7 +66,7 @@ echo "helm upgrade \"${options[@]}\" --debug --install \
   --set build.version=\"${version}\" \
   --set build.commit=\"TODO\" \
   -f scripts/helm.yaml ${override_file} \
-  \"${taito_project}-${taito_env}\" \"./scripts/${taito_project}\" "
+  \"${taito_project}-${taito_env}\" \"${chart_path}\" "
 
 helm upgrade "${options[@]}" --debug --install \
   --namespace "${taito_namespace}" \
@@ -73,4 +79,4 @@ helm upgrade "${options[@]}" --debug --install \
   --set build.version="${version}" \
   --set build.commit="TODO" \
   -f scripts/helm.yaml ${override_file} \
-  "${taito_project}-${taito_env}" "./scripts/${taito_project}"
+  "${taito_project}-${taito_env}" "${chart_path}"
