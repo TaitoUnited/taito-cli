@@ -8,6 +8,6 @@ else
   pod="${1:?Pod name not given}"
 fi
 
-if [[ ${pod} != *"-"* ]]; then
+if [[ ${pod} != "${taito_project}-"* ]]; then
   pod="${taito_project}-${pod}"
 fi

@@ -48,11 +48,11 @@ export template_project_prefix=${project_suffix}
 export template_repo_name=${repo_name}
 export template_repo_name_alt=${repo_name_alt}
 echo "./scripts/${mode}.sh"
-if ! "./scripts/template/${mode}.sh"; then
+if ! "./scripts/taito-template/${mode}.sh"; then
   exit 1
 fi
 
-rm -rf ./scripts/template
+rm -rf ./scripts/taito-template
 
 if [[ ${mode} == "create" ]]; then
   echo

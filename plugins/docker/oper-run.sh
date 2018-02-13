@@ -3,12 +3,10 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-switches=" ${*} "
-
-if [[ "${switches}" == *"--clean"* ]]; then
-  "${taito_plugin_path}/util/clean.sh"
-fi && \
-npm install && \
+(
+  export docker_run=true
+  "${taito_plugin_path}/util/exec.sh" "${@}"
+) && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

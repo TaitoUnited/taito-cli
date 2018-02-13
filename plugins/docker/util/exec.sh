@@ -13,7 +13,8 @@ command="${*:3}"
 compose_cmd="docker exec -it ${pod} ${command}" && \
 if [[ -n "${docker_run:-}" ]]; then
   # Using run mode instead of up
-  compose_cmd="docker-compose run --entrypoint '${command}' ${pod}"
+  # TODO take --no-deps as param
+  compose_cmd="docker-compose run --no-deps --entrypoint '${command}' ${pod}"
 fi && \
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_cmd}"

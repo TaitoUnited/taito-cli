@@ -16,6 +16,12 @@ if ! (
     params=(${@:2})
   fi
 
+  # CI/CD runs taito_impl directly so we need to print this here
+  if [[ "${taito_mode:-}" == "ci" ]] && [[ "${skip_override}" == false ]]; then
+    echo "Taito-cli Copyright (C) 2017 Taito United"
+    echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
+  fi
+
   # Determine command and env from env_command given as argument
   if [[ "${env_command}" == *":"* ]]; then
     command=${env_command%:*}

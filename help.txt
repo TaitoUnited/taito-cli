@@ -71,6 +71,9 @@ OPTIONS
     Show all commands that plugins execute.
     TODO implement
 
+  -z
+    Skip taito command overrides.
+
 ARGUMENTS
 
   ENV
@@ -87,9 +90,10 @@ PROJECT: BASIC OPERATIONS
   > All basic operation commands use 'oper' as a command grouping prefix but
   > you can leave it out if you like.
 
-  install
+  install [--clean]
     Install everything that needs to installed locally on host (e.g. libraries
-    for linting and autocompletion purposes)
+    for linting and autocompletion purposes). Use the '--clean' flag to execute
+    as clean install.
     TIP: Enable the 'make', 'npm' or 'pipenv' plugin.
 
   env
@@ -103,23 +107,26 @@ PROJECT: BASIC OPERATIONS
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.
 
-  start[:ENV] [POD] [--clean] [--prod] [-- ARGS]
+  start[:ENV] [--clean] [--prod] [POD] [-- ARGS]
     Starts the defined environment e.g 'taito start' or 'taito start:dev'.
     Optional arguments for local environment:
     .
-    POD: Start only the given pod/container/function/module
     --clean: Clean everything before start.
     --prod: Run production build instead of development build.
+    POD: Start only the given pod/container/function/module/program
     -- ARGS: Additional arguments
 
-  run:ENV [-d,--device]
+  run:ENV [--no-deps] [-d,--device] [POD]
     Runs the application in the defined environment e.g 'taito run:ios'.
     Optional arguments for running in local environment:
     .
     -d,--device: Run on a real device instead of emulator.
+    --no-deps: TODO Do not run dependencies (e.g linked services)
+    POD: Run only the given pod/container/function/module/program
 
-  init
+  init [--clean]
     Make sure that everything has been initialized after start (database, etc.).
+    Use the '--clean' flag to delete all existing data before init.
 
   stop[:ENV]
     Stop. Stops the application in the defined environment e.g 'taito stop'
@@ -130,6 +137,36 @@ PROJECT: BASIC OPERATIONS
     accounts that you can use to log in).
     TIP: Enable the 'make' or 'npm' plugin and implement oper-info[:ENV] script
     in your makefile/package.json.
+
+  unit [CONTAINER]    TODO renamed (was ci)
+    Run unit tests.
+    TIP: Enable the 'make' or 'npm' plugin and implement unit script in your
+    makefile/package.json.
+
+  test[:ENV] [CONTAINER] [SUITE]    TODO renamed (was ci)
+    Run integration and end-to-end tests.
+    TIP: Enable the 'make' or 'npm' plugin and implement test scripts
+    in your makefile/package.json using the `taito `. You can configure test users and passwords
+    for each environment in taito-config.sh as those settings are available to
+    your script as environment variables. At least implement tests for dev
+    environment.
+
+  analyze
+    Analyzes implementation and gives you feedback accordingly (webpack
+    bundle analysis, code quality analysis, vulnerability analysis, etc.)
+    TIP: Enable the 'make' or 'npm' plugin and implement oper-analyze script
+    in your makefile/package.json
+
+  scan    TODO renamed (was ci)
+    Lint code, scan for vulnerabilities, etc.
+    TIP: Enable the 'make' or 'npm' plugin and implement cscan script in your
+    makefile/package.json.
+
+  docs    TODO renamed (was ci)
+    Generate docs e.g. API docs from API definitions and PDF files from
+    markdown documentation.
+    TIP: Enable the 'make' or 'npm' plugin and implement docs script in your
+    makefile/package.json.
 
   secrets[:ENV]
     Retrieves all secrets that might be needed by a developer or CI/CD build.
@@ -175,12 +212,6 @@ PROJECT: BASIC OPERATIONS
 
   lock
     Creates lock files that lock library versions.
-
-  analyze
-    Analyzes implementation and gives you feedback accordingly (webpack
-    bundle analysis, code quality analysis, vulnerability analysis, etc.)
-    TIP: Enable the 'make' or 'npm' plugin and implement oper-analyze script
-    in your makefile/package.json
 
 PROJECT: LINKS
 
@@ -285,9 +316,9 @@ PROJECT: DATABASE OPERATIONS
     handled automatically. Always give file path relative to the project root.
     Example: taito db import:dev ./database/my-file.sql
 
-  db deploy[:ENV]
+  db deploy[:ENV] [--clean]
     Deploy changes to database. DB proxy connection and secrets are handled
-    automatically. NOTE: Usually there is no need to run this command manually.
+    automatically. Use the '--clean' flag to drop all tables before deploy.
 
   db diff:[ENV] [OTHER_ENV]
     Compare database schemas of two environments. DB proxy connection and
@@ -352,22 +383,6 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
     will be skipped since all images have already been built and tested
     by some previous CI build.
 
-  ci test unit
-    Run all unit tests.
-    TIP: Enable the 'make' or 'npm' plugin and implement ci-test-unit script
-    in your makefile/package.json.
-
-  ci scan
-    Lint code, scan for vulnerabilities, etc.
-    TIP: Enable the 'make' or 'npm' plugin and implement ci-scan script in your
-    makefile/package.json.
-
-  ci docs
-    Generate docs e.g. API docs from API definitions and PDF files from
-    markdown documentation.
-    TIP: Enable the 'make' or 'npm' plugin and implement ci-docs script in your
-    makefile/package.json.
-
   ci build:[ENV] CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
     Builds image. Example: 'taito ci build:dev client test1'.
 
@@ -385,22 +400,6 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
     For example polls the app url until version number changes to something
     else. This is used by CI/CD scripts to wait deployment before running the
     api and e2e tests.
-
-  ci test api[:ENV]
-    Run all api tests.
-    TIP: Enable the 'make' or 'npm' plugin and implement ci-test-api:ENV script
-    in your makefile/package.json. You can configure test users and passwords
-    for each environment in taito-config.sh as those settings are available to
-    your script as environment variables. At least implement tests for local
-    environment (other target environments are optional).
-
-  ci test e2e[:ENV]
-    Run all e2e tests.
-    TIP: Enable the 'make' or 'npm' plugin and implement ci-test-e2e:ENV script
-    in your makefile/package.json. You can configure test users and passwords
-    for each environment in taito-config.sh as those settings are available to
-    your script as environment variables. At least implement tests for local
-    environment (other target environments are optional).
 
   ci verify[:ENV]
     Verifies that everything went ok e.g. by checking test results. If something
@@ -511,3 +510,7 @@ GLOBAL: UTILS
   util browser: URL
     Opens the given url in default web browser. You can use this command in
     your build scripts.
+
+  util test: POD [ARGS..] [--suite=SUITE]
+    Run test suites for the given POD giving ARGS as arguments for each test
+    suite.

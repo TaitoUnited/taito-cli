@@ -15,7 +15,7 @@ _arguments "*: :(\
   db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \
   ci-prepare: ci-build ci-push ci-deploy: manual-cancel: \
   manual-deploy: manual-build-deploy: manual-revision: manual-revert: \
-  ci-wait: ci-verify: ci-docs ci-scan ci-test-unit ci-test-api: ci-test-e2e: \
+  ci-wait: ci-verify: docs scan unit test: \
   ci-publish ci-release-pre: ci-release-post: \
   project-config env-create: env-migrate: env-delete: env-rotate: env-cert: \
   env-alt-create: env-alt-migrate: env-alt-delete: \
