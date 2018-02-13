@@ -12,8 +12,19 @@ do
   command_prototype=${prefix%#*}
   name=${prefix##*#}
 
-  echo "  ${command_prototype//-/ }"
-  echo "    Opens ${name} in browser."
+  echo "  open ${command_prototype//-/ }"
+  echo "    Opens ${name} link in browser."
+  echo
+done
+
+for link in ${links[@]}
+do
+  prefix="$( cut -d '=' -f 1 <<< "$link" )";
+  command_prototype=${prefix%#*}
+  name=${prefix##*#}
+
+  echo "  link ${command_prototype//-/ }"
+  echo "    Shows ${name} link."
   echo
 done
 

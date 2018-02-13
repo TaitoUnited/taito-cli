@@ -37,7 +37,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
     export template_dest_git_url="git@github.com:MyOrganization"
 
     # links
-    export link_global_urls="open-intra#intranet=https://intra.mydomain.com"
+    export link_global_urls="intra#intranet=https://intra.mydomain.com"
     ```
 
 4. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
@@ -56,7 +56,7 @@ Run `taito -h` to show a list of all predefined commands of taito-cli and additi
 
 Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
-See the [README.md](https://github.com/TaitoUnited/server-template#readme) of server-template as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
+See the [README.md](https://github.com/TaitoUnited/server-template#readme) of [server-template](https://github.com/TaitoUnited/server-template) project as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
 ### Advanced usage
 
@@ -121,7 +121,7 @@ And here is an example of a project specific `taito-config.sh`:
     # Settings for ci builds
     export ci_exec_build=true
     export ci_exec_deploy=true
-    export ci_exec_test_env=true
+    export ci_exec_test=true
     export ci_exec_revert=true
 
     # gcloud plugin
@@ -162,7 +162,7 @@ And here is an example of a project specific `taito-config.sh`:
         # Overrides for production environment
         export ci_exec_build=false
         export ci_exec_deploy=false
-        export ci_exec_test_env=false
+        export ci_exec_test=false
         export ci_exec_revert=false
         export taito_app_url="https://www.myapp.com"
         export taito_zone="acme-restricted1"
@@ -182,7 +182,7 @@ And here is an example of a project specific `taito-config.sh`:
         ;;
       local)
         # Overrides for local environment
-        export ci_exec_test_env=true
+        export ci_exec_test=true
         export taito_app_url="http://localhost:3333"
         export postgres_host="${taito_project}-database"
         export postgres_port="5432"
@@ -195,17 +195,17 @@ And here is an example of a project specific `taito-config.sh`:
 
     # Links-global plugin
     export link_urls="\
-      open-app[:ENV]#app=${taito_app_url} \
-      open-boards=https://github.com/${taito_organization}/${taito_repo_name}/projects \
-      open-issues=https://github.com/${taito_organization}/${taito_repo_name}/issues \
-      open-builds=https://console.cloud.google.com/gcr/builds?project=${taito_zone}&query=source.repo_source.repo_name%3D%22${taito_repo_location}-${taito_repo_name}%22 \
-      open-artifacts=https://console.cloud.google.com/gcr/images/${taito_zone}/EU/${taito_repo_location}-${taito_repo_name}?project=${taito_zone} \
-      open-bucket=https://storage.googleapis.com/${taito_project}-${taito_env} \
-      open-logs:ENV=https://console.cloud.google.com/logs/viewer?project=${taito_zone}&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F${kubectl_name}%2Fnamespace_id%2F${taito_namespace} \
-      open-errors:ENV=https://sentry.io/${taito_organization}/${taito_project}/ \
-      open-uptime=https://app.google.stackdriver.com/uptime?project=${taito_zone} \
-      open-performance=https://TODO-NOT-IMPLEMENTED \
-      open-feedback=https://TODO-NOT-IMPLEMENTED
+      app[:ENV]#app=${taito_app_url} \
+      boards=https://github.com/${taito_organization}/${taito_repo_name}/projects \
+      issues=https://github.com/${taito_organization}/${taito_repo_name}/issues \
+      builds=https://console.cloud.google.com/gcr/builds?project=${taito_zone}&query=source.repo_source.repo_name%3D%22${taito_repo_location}-${taito_repo_name}%22 \
+      artifacts=https://console.cloud.google.com/gcr/images/${taito_zone}/EU/${taito_repo_location}-${taito_repo_name}?project=${taito_zone} \
+      bucket=https://storage.googleapis.com/${taito_project}-${taito_env} \
+      logs:ENV=https://console.cloud.google.com/logs/viewer?project=${taito_zone}&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F${kubectl_name}%2Fnamespace_id%2F${taito_namespace} \
+      errors:ENV=https://sentry.io/${taito_organization}/${taito_project}/ \
+      uptime=https://app.google.stackdriver.com/uptime?project=${taito_zone} \
+      performance=https://TODO-NOT-IMPLEMENTED \
+      feedback=https://TODO-NOT-IMPLEMENTED
       "
 
     # NOTE: Secret naming convention: type.target_of_type.purpose[/namespace]:generation_method

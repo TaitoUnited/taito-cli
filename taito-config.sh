@@ -14,8 +14,8 @@ export taito_namespace="${taito_project}-${taito_env}"
 
 # Link plugin
 export link_urls="\
-  open-boards=https://github.com/${taito_organization}/${taito_repo_name}/projects \
-  open-issues=https://github.com/${taito_organization}/${taito_repo_name}/issues \
-  open-builds=https://hub.docker.com/r/taitounited/taito-cli/builds/ \
-  open-artifacts=https://hub.docker.com/r/taitounited/taito-cli/tags/ \
+  boards=https://github.com/${taito_organization}/${taito_repo_name}/projects \
+  issues=https://github.com/${taito_organization}/${taito_repo_name}/issues \
+  builds=https://hub.docker.com/r/taitounited/taito-cli/builds/ \
+  artifacts=https://hub.docker.com/r/taitounited/taito-cli/tags/ \
   "
