@@ -25,36 +25,40 @@ fi
 version=$(grep "version" "${taito_project_path}/package.json" | \
   grep -o "[0-9].[0-9].[0-9]")
 
-if [[ ! -f ./taitoflag_images_exist ]]; then
-  if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_build:-}" == "false" ]]; then
-    echo "- ERROR: Image does not exist and not building a new one because ci_exec_build is false"
-    exit 1
-  else
-    echo "- Building image"
-    docker build -f "./${name}/Dockerfile.build" \
-      --build-arg BUILD_VERSION="${version}" \
-      --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-      -t "${image_path}${path_suffix}:${image_tag}" "./${name}"
-  fi
+if [[ "${taito_ci_stack:-}" != *"${name}"* ]]; then
+  echo "Skipping build: ${name} not included in taito_ci_stack"
 else
-  echo "- Image ${image_tag} already exists. Pulling the existing image."
-  # We have pull the image so that it exists at the end
-  docker pull "${image_path}${path_suffix}:${image_tag}"
-fi && \
+  if [[ ! -f ./taitoflag_images_exist ]]; then
+    if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_build:-}" == "false" ]]; then
+      echo "- ERROR: Image does not exist and not building a new one because ci_exec_build is false"
+      exit 1
+    else
+      echo "- Building image"
+      docker build -f "./${name}/Dockerfile.build" \
+        --build-arg BUILD_VERSION="${version}" \
+        --build-arg BUILD_IMAGE_TAG="${image_tag}" \
+        -t "${image_path}${path_suffix}:${image_tag}" "./${name}"
+    fi
+  else
+    echo "- Image ${image_tag} already exists. Pulling the existing image."
+    # We have pull the image so that it exists at the end
+    docker pull "${image_path}${path_suffix}:${image_tag}"
+  fi && \
 
-# Tag so that CI will not rebuild image when running docker-compose
-if [[ "${taito_mode:-}" == "ci" ]]; then
-  echo "tag for ci-test: workspace_${taito_project}${tag_suffix}:latest" && \
-  echo "tag for ci-test: ${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
-  echo "tag for ci-test: ${taito_project}${tag_suffix}:latest" && \
-  echo "pwd: ${PWD}" && \
-  echo "project path: ${taito_project_path}" && \
-  docker image tag "${image_path}${path_suffix}:${image_tag}" \
-    "workspace_${taito_project}${tag_suffix}:latest" && \
-  docker image tag "${image_path}${path_suffix}:${image_tag}" \
-    "${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
-  docker image tag "${image_path}${path_suffix}:${image_tag}" \
-    "${taito_project}${tag_suffix}:latest"
+  # Tag so that CI will not rebuild image when running docker-compose
+  if [[ "${taito_mode:-}" == "ci" ]]; then
+    echo "tag for ci-test: workspace_${taito_project}${tag_suffix}:latest" && \
+    echo "tag for ci-test: ${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
+    echo "tag for ci-test: ${taito_project}${tag_suffix}:latest" && \
+    echo "pwd: ${PWD}" && \
+    echo "project path: ${taito_project_path}" && \
+    docker image tag "${image_path}${path_suffix}:${image_tag}" \
+      "workspace_${taito_project}${tag_suffix}:latest" && \
+    docker image tag "${image_path}${path_suffix}:${image_tag}" \
+      "${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
+    docker image tag "${image_path}${path_suffix}:${image_tag}" \
+      "${taito_project}${tag_suffix}:latest"
+  fi
 fi && \
 
 # Call next command on command chain

@@ -19,10 +19,14 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
-if [[ ! -f ./taitoflag_images_exist ]]; then
-  docker push "${image_path}${path_suffix}:${image_tag}"
+if [[ "${taito_ci_stack:-}" != *"${name}"* ]]; then
+  echo "Skipping push: ${name} not included in taito_ci_stack"
 else
-  echo "- Image ${image_tag} already exists. Skipping push."
+  if [[ ! -f ./taitoflag_images_exist ]]; then
+    docker push "${image_path}${path_suffix}:${image_tag}"
+  else
+    echo "- Image ${image_tag} already exists. Skipping push."
+  fi
 fi && \
 
 # Call next command on command chain
