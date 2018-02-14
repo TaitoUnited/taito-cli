@@ -5,13 +5,13 @@
   "scripts": {
     "clean": "docker build --no-cache -t taito .",
     "verify": "npm-run-all --parallel lint test",
-    "ci-scan": "echo 'TODO lint'",
-    "ci-test-e2e": "echo 'TODO (cd test; ./all.sh)'",
+    "scan": "echo 'TODO lint'",
+    "test": "echo 'TODO (cd test; ./all.sh)'",
     "ci-release-pre": "semantic-release pre",
     "ci-release-post": "semantic-release post"
   },
   "pre-commit": [
-    "ci-scan"
+    "oper-scan"
   ],
   "pre-push": [
     "verify"

@@ -12,11 +12,10 @@ taito manual-revision:dev;\
 taito manual-revert:dev;\
 taito ci-wait:dev;\
 taito ci-verify:dev;\
-taito ci-docs;\
-taito ci-scan;\
-taito ci-test-unit;\
-taito ci-test-api;\
-taito ci-test-e2e;\
+taito oper-docs;\
+taito oper-scan;\
+taito oper-unit;\
+taito oper-test;\
 taito ci-publish;\
 taito ci-release-pre;\
 taito ci-release-post;\

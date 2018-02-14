@@ -110,8 +110,7 @@ if ! (
   export taito_cli_path="${cli_path}"
   export taito_current_path="${current_path}"
 
-  if ([[ " ci-test-unit ci-scan ci-docs publish " == *"${taito_command}"* ]] || \
-        [[ " ci-test-api:local ci-test-e2e:local " == *"${taito_command}:${taito_env}"* ]]) && \
+  if [[ " oper-unit oper-scan oper-docs ci-publish " == *"${taito_command}"* ]] && \
      [[ -f ./taitoflag_images_exist ]]; then
     echo
     echo "### Skipping ${taito_command}. Image already exists."
@@ -134,6 +133,23 @@ if ! (
     # Taito secrets for CI/CD
     # shellcheck disable=SC1091
     . ./taito-secrets.sh
+  fi
+
+  # Validate env
+  if [[ "${taito_env}" != "local" ]] && [[ "${taito_environments:-}" != *"${taito_env}"* ]]; then
+    echo
+    echo "ERROR: '${taito_env}' not included in taito_environments: ${taito_environments:-}"
+    exit 1
+  fi
+
+  # Confirm prod operation
+  if [[ "${taito_env}" == "prod" ]]; then
+    echo
+    echo "The operation is targetting prod environment. Do you want to continue (Y/n)?"
+    read -r confirm
+    if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+      exit 130
+    fi
   fi
 
   # Use overwrites defined by caller
