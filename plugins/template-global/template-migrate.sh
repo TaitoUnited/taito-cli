@@ -2,17 +2,20 @@
 
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${template_source_git_url:?}"
+: "${template_default_source_git:?}"
 
 export template="${1:?Template not given}"
 export template_name="${template}"
 export template_project_path="${PWD}"
+export template_source_git="${template_default_source_git}"
+
+# TODO read template_source_git from template_name if it has been given as prefix
 
 rm -rf "${template_project_path}/template-tmp"
 mkdir "${template_project_path}/template-tmp"
 
 "${taito_cli_path}/util/execute-on-host.sh" "\
-  git clone ${template_source_git_url}/${template}.git ./template-tmp/${template} && \
+  git clone ${template_source_git}/${template}.git ./template-tmp/${template} && \
   (cd ./template-tmp/${template} && git checkout master) && \
   echo 'Please wait...'" && \
   sleep 15 && \

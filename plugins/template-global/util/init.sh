@@ -1,7 +1,7 @@
 #!/bin/bash
 
-: "${template_source_git_url:?}"
-: "${template_dest_git_url:?}"
+: "${template_source_git:?}"
+: "${template_default_dest_git:?}"
 : "${template:?}"
 
 export mode=${1}
@@ -27,12 +27,12 @@ repo_name_alt="${repo_name//-/_}"
 
 if [[ ${mode} == "create" ]]; then
   "${taito_cli_path}/util/execute-on-host.sh" "\
-    git clone ${template_source_git_url}/${template}.git ${repo_name} && \
+    git clone ${template_source_git}/${template}.git ${repo_name} && \
     cd ${repo_name} && \
     git checkout master && \
     rm -rf .git"
   sleep 7
-  echo "Create GitHub repository \'${template_dest_git_url}/${repo_name}\'."
+  echo "Create GitHub repository \'${template_default_dest_git}/${repo_name}\'."
   echo "Leave README.md uninitialized."
   echo
   echo "Press enter when ready"
@@ -64,7 +64,7 @@ if [[ ${mode} == "create" ]]; then
     git init && \
     git add . && \
     git commit -m 'First commit' && \
-    git remote add origin ${template_dest_git_url}/${repo_name}.git && \
+    git remote add origin ${template_default_dest_git}/${repo_name}.git && \
     git push -u origin master && \
     git tag v0.0.0 && \
     git push origin v0.0.0 && \

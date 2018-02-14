@@ -33,11 +33,19 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
       gcloud-global links-global template-global"
 
     # template plugin default settings
-    export template_source_git_url="git@github.com:TaitoUnited"
-    export template_dest_git_url="git@github.com:MyOrganization"
+    export template_default_organization="myorganization"
+    export template_default_domain="devdomain.com"
+    export template_default_zone="my-zone"
+    export template_default_provider="gcloud"
+    export template_default_provider_region="europe-west1"
+    export template_default_provider_zone="europe-west1-c"
+    export template_default_source_git="git@github.com:TaitoUnited"
+    export template_default_dest_git="git@github.com:MyOrganization"
 
     # links
-    export link_global_urls="intra#intranet=https://intra.mydomain.com"
+    export link_global_urls="\
+      home=https://www.mydomain.com
+      intra#intranet=https://intra.mydomain.com"
     ```
 
 4. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
@@ -68,7 +76,7 @@ You can easily run any shell command inside the taito-cli container, for example
 
 Many tools require you to authenticate only once and then you can run any command without ever supplying your password again. For this reason taito-cli supports a separate admin account for accessing critical resources.
 
-With the `--admin` (or `-a`) option you specify that you would like to run the given command as admin. For example, you can authenticate as admin by running `taito -a --auth:prod` and then execute a command as admin by running `taito -a status:prod`. Your admin credentials are stored in taito-cli container image using `aes-256-cbc` encryption and you need to enter the decryption key everytime you execute a command as admin. Keep the decryption key in a safe place (password manager for example).
+With the `--admin` (or `-a`) option you specify that you would like to run the given command as admin. For example, you can authenticate as admin by running `taito -a --auth:prod` and then execute a command as admin by running `taito -a status:prod`. Your admin credentials are stored in taito-cli container image using `aes-256-cbc` encryption and you need to enter the decryption key everytime you execute a command as admin. Keep the decryption key in a safe place (use a password manager for example).
 
 TODO support for U2F/YubiKey?
 
@@ -84,8 +92,14 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     export taito_global_plugins="git-global template-global myplugin-global anotherplugin-global"
 
     # template plugin default settings
-    export template_source_git_url="git@github.com:TaitoUnited"
-    export template_dest_git_url="git@github.com:MyOrganization"
+    export template_default_organization="myorganization"
+    export template_default_domain="devdomain.com"
+    export template_default_zone="my-zone"
+    export template_default_provider="gcloud"
+    export template_default_provider_region="europe-west1"
+    export template_default_provider_zone="europe-west1-c"
+    export template_default_source_git="git@github.com:TaitoUnited"
+    export template_default_dest_git="git@github.com:MyOrganization"
 
     # TODO a list of plugins that are allowed to run commands on host?
 
@@ -108,6 +122,7 @@ And here is an example of a project specific `taito-config.sh`:
       gcloud-builder:-local sentry secret:-local semantic"
 
     # common settings for all plugins
+    export taito_environments="dev prod"
     export taito_organization="myorganization"
     export taito_zone="acme-zone1"
     export taito_repo_location="github-${taito_organization}"
@@ -146,8 +161,7 @@ And here is an example of a project specific `taito-config.sh`:
 
     # template plugin
     export template_name="webapp-template"
-    export template_source_git_url="git@github.com:TaitoUnited"
-    export template_dest_git_url="git@github.com:${taito_organization}"
+    export template_source_git="git@github.com:TaitoUnited"
 
     # misc settings for npm scripts
     export test_api_user="test"
