@@ -2,7 +2,6 @@
 
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${template_source_git:?}"
 : "${template_name:?}"
 : "${template_source_git:?}"
 

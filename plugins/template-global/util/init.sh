@@ -6,23 +6,29 @@
 
 export mode=${1}
 
-echo "Short name of customer or product family (one word)?"
-read -r customer
-
-echo
-echo "Short name of project or product (one word)?"
-read -r project
-
-echo
-echo "Additional suffix for this repository e.g (gui, api, etc)?"
-echo "NOTE: Suffix is optional. You can usually leave it empty."
-read -r project_suffix
-
-if [[ "${project_suffix}" != "" ]]; then
-  repo_name="${customer}-${project}-${project_suffix}"
+if [[ ${mode} == "upgrade" ]]; then
+  customer=${taito_customer:?}
+  repo_name=${taito_repo_name:?}
 else
-  repo_name="${customer}-${project}"
+  echo "Short name of customer or product family (one word)?"
+  read -r customer
+
+  echo
+  echo "Short name of project or product (one word)?"
+  read -r project
+
+  echo
+  echo "Additional suffix for this repository e.g (gui, api, etc)?"
+  echo "NOTE: Suffix is optional. You can usually leave it empty."
+  read -r project_suffix
+
+  if [[ "${project_suffix}" != "" ]]; then
+    repo_name="${customer}-${project}-${project_suffix}"
+  else
+    repo_name="${customer}-${project}"
+  fi
 fi
+
 repo_name_alt="${repo_name//-/_}"
 
 if [[ ${mode} == "create" ]]; then
@@ -43,8 +49,6 @@ fi
 
 # Call create/migrate/upgrade script implemented in template
 export template_customer=${customer}
-export template_project=${project}
-export template_project_prefix=${project_suffix}
 export template_repo_name=${repo_name}
 export template_repo_name_alt=${repo_name_alt}
 echo "./scripts/${mode}.sh"
