@@ -28,5 +28,6 @@ do
   echo
 done
 
+# TODO SHOULD BE REMOVED???
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

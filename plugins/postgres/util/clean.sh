@@ -8,6 +8,11 @@
 : "${postgres_port:?}"
 : "${taito_project_path:?}"
 
+if [[ "${taito_env}" == "prod"* ]]; then
+  echo "postgres/clean.sh: 'clean' is not allowed for production environment"
+  exit 1
+fi
+
 (
   # TODO: copy-pasted from sqitch.sh -->
   . "${taito_plugin_path}/util/postgres-username-password.sh"

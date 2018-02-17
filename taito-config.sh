@@ -6,6 +6,7 @@ export taito_extensions=""
 export taito_plugins="npm link"
 
 # Common project settings for all plugins
+export taito_environments="dev prod"
 export taito_organization="taitounited"
 export taito_repo_location="github-${taito_organization}"
 export taito_repo_name="taito-cli"

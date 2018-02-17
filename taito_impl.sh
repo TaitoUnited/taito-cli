@@ -136,7 +136,7 @@ if ! (
   fi
 
   # Validate env
-  if [[ "${taito_env}" != "local" ]] && [[ "${taito_environments:-}" != *"${taito_env}"* ]]; then
+  if [[ "${taito_env}" != "local" ]] && [[ " ${taito_environments:-} " != *" ${taito_env} "* ]]; then
     echo
     echo "ERROR: '${taito_env}' not included in taito_environments: ${taito_environments:-}"
     exit 1
