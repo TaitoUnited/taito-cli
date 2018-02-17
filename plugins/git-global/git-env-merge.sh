@@ -5,6 +5,24 @@
 dest="${taito_branch:?Destination branch name not given}"
 source="${1:?Source branch name not given}"
 
+if [[ -n ${ci_stack:-} ]]; then
+  valids=" dev->test test->staging staging->prod "
+  if [[ " ${ci_stack} " != *" staging "* ]] && \
+     [[ " ${ci_stack} " != *" test "* ]]; then
+    valids=" dev->prod "
+  elif [[ " ${ci_stack} " != *" staging "* ]]; then
+    valids=" dev->test test->prod "
+  elif [[ " ${ci_stack} " != *" test "* ]]; then
+    valids=" dev->staging staging->prod "
+  fi
+  echo "${source}->${dest}"
+  if [[ "${valids}" != *" ${source}->${dest} "* ]]; then
+    echo "Merging from ${source} to ${dest} is not allowed."
+    echo "Valid enviroment merges:${valids}"
+    exit 1
+  fi
+fi
+
 echo "Merging ${source} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
 if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
