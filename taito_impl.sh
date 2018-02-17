@@ -143,7 +143,7 @@ if ! (
   fi
 
   # Confirm prod operation
-  if [[ "${taito_env}" == "prod" ]]; then
+  if [[ "${taito_env}" == "prod" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
     echo
     echo "The operation is targetting prod environment. Do you want to continue (Y/n)?"
     read -r confirm
