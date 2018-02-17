@@ -25,8 +25,8 @@ fi
 version=$(grep "version" "${taito_project_path}/package.json" | \
   grep -o "[0-9].[0-9].[0-9]")
 
-if [[ "${taito_ci_stack:-}" != *"${name}"* ]]; then
-  echo "Skipping build: ${name} not included in taito_ci_stack"
+if [[ "${ci_stack:-}" != *"${name}"* ]]; then
+  echo "Skipping build: ${name} not included in ci_stack"
 else
   if [[ ! -f ./taitoflag_images_exist ]]; then
     if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_build:-}" == "false" ]]; then

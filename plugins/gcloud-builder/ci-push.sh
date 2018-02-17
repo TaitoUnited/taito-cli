@@ -19,8 +19,8 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
-if [[ "${taito_ci_stack:-}" != *"${name}"* ]]; then
-  echo "Skipping push: ${name} not included in taito_ci_stack"
+if [[ "${ci_stack:-}" != *"${name}"* ]]; then
+  echo "Skipping push: ${name} not included in ci_stack"
 else
   if [[ ! -f ./taitoflag_images_exist ]]; then
     docker push "${image_path}${path_suffix}:${image_tag}"
