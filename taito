@@ -247,6 +247,8 @@ if ! (
       tr '\275\276' '\r\n' | tail -n +3 | less"
   fi
 
+  exit_code=0
+
   # Execute command
   if [[ "${mode}" == "local" ]]; then
     # Mode: run directly on host
@@ -304,11 +306,15 @@ if ! (
       --entrypoint taito \
       ${image_flag} \
       ${params[@]} ${output}"
+    exit_code=$?
   fi
 
   # Execute requested commands on foreground after container has exited.
-  echo
-  eval "$(cat "${log_file_fg}")"
+  if [[ ${exit_code} == 0 ]]; then
+    echo
+    eval "$(cat "${log_file_fg}")"
+    exit_code=$?
+  fi
 
   # Kill the background execution process
   pkill -f "${log_file}"
@@ -317,8 +323,8 @@ if ! (
   rm -f "${log_file}" &> /dev/null
   rm -f "${log_file_fg}" &> /dev/null
 
+  exit ${exit_code}
+
 ); then
   exit 1
 fi
-
-exit 0

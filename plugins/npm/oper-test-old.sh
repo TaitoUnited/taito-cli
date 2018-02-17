@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+# TODO REMOVE?
+
+
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 

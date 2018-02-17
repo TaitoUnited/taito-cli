@@ -16,8 +16,7 @@ if [[ "${suffix}" == ":" ]]; then
   suffix=""
 fi
 
-if [[ -f "./package.json" ]] && \
-   [[ ${taito_command} != "oper-test" ]]; then
+if [[ -f "./package.json" ]]; then
   # Read command names from package.json
   commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 

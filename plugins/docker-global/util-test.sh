@@ -14,7 +14,7 @@ if [[ "${suite_filter}" != "suite-"* ]]; then
 fi
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod.sh" "${dir}" && \
+. "${taito_cli_path}/plugins/docker/util/determine-pod.sh" "${dir}" && \
 
 # Determine command to be run on init phase
 init_command="echo 'Not running init (ci_exec_test_init=false)'" && \
