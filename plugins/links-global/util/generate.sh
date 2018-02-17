@@ -20,7 +20,9 @@ do
       command=${prefix%#*}
       command_env=${command/\[:ENV\]/:${env}}
       command_env=${command_env/:ENV/:${env}}
-      echo "[${command_env}](${url})"
+      if [[ -n ${url} ]]; then
+        echo "[${command_env}](${url})"
+      fi
     done
   ) )
   markdown_links="${markdown_links}\n${output}  "
@@ -32,7 +34,7 @@ markdown_links=$(echo -e "${markdown_links:-}" | sort -u)
 # Add links to README.md
 {
   sed '/GENERATED LINKS START/q' README.md
-  echo -e "\n${markdown_links}\n"
+  echo -e "${markdown_links}\n"
   sed -n -e '/GENERATED LINKS END/,$p' README.md
 } >> README.md.tmp
 mv -f README.md.tmp README.md
