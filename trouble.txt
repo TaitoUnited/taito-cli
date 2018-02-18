@@ -9,21 +9,20 @@ TAITO-CLI TROUBLESHOOTING
 
   CI/CD build fails but everything works locally
     See build logs by running 'taito open builds' and fix the problem. If there
-    is now apparent reason why the build failed, just try to retry the CI/CD
+    is no apparent reason why the build failed, just try to retry the CI/CD
     build. If it fails again, try to build production build locally by running
     'taito start --clean --prod' and then try to fix the build problem.
 
-  Authentication or connection error using taito-cli
-    If you run into an authentication or connection error during command
+  Connection or authorization error using taito-cli
+    If you run into an connection or authorization error during command
     execution, the command probably requires authentication and you either have
     not authenticated or your authentication has expired. In such case, run
-    'taito --auth:ENV' to authenticate in the context of currently enabled
-    plugins.
+    'taito --auth:ENV' to authenticate.
 
   'command not found'
     Did you remember to give the correct environment as argument? Commands
-    always use the local environment by default, and not all commands support
-    local environment.
+    always use the local environment by default, and not all commands are
+    enabled for local environment.
 
     Check your plugin configuration in your taito-config.sh files.
 

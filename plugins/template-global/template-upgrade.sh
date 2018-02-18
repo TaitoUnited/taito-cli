@@ -12,8 +12,9 @@ rm -rf "${template_project_path}/template-tmp"
 mkdir "${template_project_path}/template-tmp"
 
 "${taito_cli_path}/util/execute-on-host.sh" "\
-  git clone ${template_source_git}/${template}.git ./template-tmp/${template} && \
-  (cd ./template-tmp/${template} && git checkout master) && \
+  export GIT_PAGER="" && \
+  git clone -q -b master --single-branch --depth 1 \
+    ${template_source_git}/${template}.git ./template-tmp/${template} && \
   echo 'Please wait...'" && \
   sleep 15 && \
 echo && \

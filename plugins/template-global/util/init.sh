@@ -1,5 +1,6 @@
 #!/bin/bash
 
+: "${taito_cli_path:?}"
 : "${template_source_git:?}"
 : "${template_default_dest_git:?}"
 : "${template:?}"
@@ -10,6 +11,7 @@ if [[ ${mode} == "upgrade" ]]; then
   customer=${taito_customer:?}
   repo_name=${taito_repo_name:?}
 else
+  echo
   echo "Short name of customer or product family (one word)?"
   read -r customer
 
@@ -33,14 +35,14 @@ repo_name_alt="${repo_name//-/_}"
 
 if [[ ${mode} == "create" ]]; then
   "${taito_cli_path}/util/execute-on-host.sh" "\
-    git clone ${template_source_git}/${template}.git ${repo_name} && \
+    export GIT_PAGER="" && \
+    git clone -q -b master --single-branch --depth 1 ${template_source_git}/${template}.git ${repo_name} && \
     cd ${repo_name} && \
-    git checkout master && \
     rm -rf .git"
   sleep 7
+  echo
   echo "Create GitHub repository \'${template_default_dest_git}/${repo_name}\'."
   echo "Leave README.md uninitialized."
-  echo
   echo "Press enter when ready"
   read -r
   cd "${repo_name}"
@@ -58,26 +60,27 @@ fi
 
 rm -rf ./scripts/taito-template
 
-if [[ ${mode} == "create" ]]; then
+if [[ ${mode} != "upgrade" ]]; then
   echo
-  echo "--- Pushing to GitHub ---"
-  echo "NOTE: See configuration instructions at the end of README.md after git push has finished."
-  echo "Press enter to continue."
+  echo "--- Configuration ---"
+  echo
+  echo "See configuration instructions at the end of README.md."
+  echo "IMPORTANT: Execute each configuration step thoroughly one by one."
+  echo
+fi
+
+if [[ ${mode} == "create" ]]; then
+  echo "Now pushing to git. Remember configuration after push. Press enter to continue."
   read -r
   "${taito_cli_path}/util/execute-on-host.sh" "\
-    git init && \
+    export GIT_PAGER="" && \
+    git init -q && \
     git add . && \
-    git commit -m 'First commit' && \
+    git commit -q -m 'First commit' && \
     git remote add origin ${template_default_dest_git}/${repo_name}.git && \
-    git push -u origin master && \
+    git push -q -u origin master && \
     git tag v0.0.0 && \
-    git push origin v0.0.0 && \
-    git checkout -b dev && \
-    git push -u origin dev"
-else
-  echo
-  echo "--- Instructions ---"
-  echo
-  echo "See configuration instructions at the end of README.md"
-  echo
+    git push -q origin v0.0.0 && \
+    git checkout -q -b dev && \
+    git push -q -u origin dev"
 fi
