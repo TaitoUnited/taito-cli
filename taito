@@ -285,10 +285,14 @@ if ! (
 
     # TODO do not pass taito_admin_key as command line argument
 
+    # Determine if interactive mode can be used
+    docker_it=""
+    [[ -t 1 ]] && docker_it="-it"
+
     # Run on docker
     # shellcheck disable=SC2086
     # --name taito \
-    eval "docker run -it \
+    eval "docker run ${docker_it} \
       -v \"${HOME}/.taito:/root/.taito\" \
       -v \"$(pwd):/project\" \
       -w /project \
