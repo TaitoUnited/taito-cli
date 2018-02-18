@@ -6,24 +6,13 @@
 : "${taito_repo_name:?}"
 : "${taito_project:?}"
 
-branch="${1}"
-
-# Determine branch
-if [[ -z "${branch}" ]]; then
-  if [[ "${taito_env}" == "prod" ]]; then
-    branch="master"
-  else
-    branch="${taito_env}"
-  fi
-fi
-
-echo "gcloud-builder: Adding a build trigger for ${taito_env}"
-echo "Create a new build trigger with these settings:"
+echo "gcloud-builder: Adding a build trigger for ${taito_project} in ${taito_zone}"
+echo "Create a new build trigger with these settings if one does not exist already:"
 echo "- Source: GitHub"
 echo "- Repository: ${taito_repo_name}"
-echo "- Name: ${taito_project}-${taito_env}"
+echo "- Name: ${taito_project}"
 echo "- Type: Branch"
-echo "- Branch regex: ${branch}"
+echo "- Branch regex: dev|test|staging|master"
 echo "- Build configuration: cloudbuild.yaml"
 echo "- Cloudbuild.yaml location: /cloudbuild.yaml"
 echo
