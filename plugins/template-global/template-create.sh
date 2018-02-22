@@ -29,8 +29,11 @@ export template_dest_git="${template_default_dest_git:?}"
   echo && \
   echo NOTE: Create a new GitHub repository: ${template_dest_git}/${taito_repo_name} && \
   echo Leave the README.md uninitialized. && \
-  echo Then continue by running: && \
-  echo '\$ cd ${taito_repo_name}; taito template create continue'"
+  echo && \
+  echo Continue by pressing enter && \
+  read -r && \
+  cd ${taito_repo_name} && \
+  taito template create continue"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

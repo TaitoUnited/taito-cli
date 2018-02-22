@@ -1,8 +1,8 @@
 # Taito-cli
 
-Taito-cli is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. This is made possible by defining all settings in a project specific configuration file and implementing the commands with plugins. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. This is made possible by defining all settings in a project specific configuration file and implementing the commands with plugins. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
-Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authenticating with the retrieved secrets. Taito-cli executes all this for you with a single command.
+Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
@@ -11,6 +11,8 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 > Developing software on custom private infrastucture? Taito-cli works with that too! See [custom commands](#custom-commands) and [custom plugins](#custom-plugins) chapters.
 
 > Excited about ChatOps? It's on the way!
+
+> `Taito` is a finnish word and it means `skill`.
 
 ## Prerequisites
 
@@ -434,7 +436,7 @@ TODO add documentation
 
 ## Taito-cli development
 
-Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-dev` flag (e.g. `taito -dev --help`). In the development mode your local taito-cli directory is mounted on the container. You can also run taito-cli locally without Docker using the `-local` flag, but note that in that case taito-cli will save credentials on host if you authenticate. You can delete your gcloud and kubernetes credentials by deleting the `~/.config/gcloud` and `~/.kube` directories.
+Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-dev` flag (e.g. `taito -dev --help`). In the development mode your local taito-cli directory is mounted on the container.
 
 1. Start a new feature branch.
 2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. If you are using a compiled language, add a compilation script and use `.x` as a file extension for the executable (it will be ignored by git). Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).

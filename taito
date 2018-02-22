@@ -1,334 +1,254 @@
 #!/usr/bin/env bash
+# NOTE: This bash script is run directly on host.
 
 echo "Taito-cli Copyright (C) 2017 Taito United"
 echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
 
-# TODO split into multiple bash functions and re-use some code in taito_impl.sh
-
-# Contain pwd change in a subshell
-if ! (
-
-  # Resolve taito-cli location
-  # TODO duplicate code with taito_impl.sh
+# Resolve paths
+# NOTE: duplicate with ./taito_impl.sh (taito_cli_path must be resolved before
+# other scripts can be called)
+export taito_cli_path
+export taito_src_path
+export taito_util_path
+export taito_project_path
+taito_cli_path=$(
+  # Resolve taito-cli path by following symlinks
   source="${BASH_SOURCE[0]}"
   while [[ -h "${source}" ]]; do # resolve until the file is no longer a symlink
     dir="$( cd -P "$( dirname "${source}" )" && pwd )"
     source=$(readlink "${source}")
-    # if $SOURCE was a relative symlink, we need to resolve it relative
-    # to the path where the symlink file was located
-    [[ "${source}" != /* ]] && source="${cli_path}/${source}"
+    [[ "${source}" != /* ]] && source="${taito_cli_path}/${source}"
   done
-  dir_name=$(dirname "${source}")
-  cli_path="$( cd -P "${dir_name}" && pwd )"
+  dirname "${source}"
+)
+taito_src_path="${taito_cli_path}/src" && \
+taito_util_path="${taito_cli_path}/util" && \
+taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
 
-  # Resolve project root folder by the location of taito-config.sh
-  # Use project root dir as the current working directory
-  # TODO duplicate code with taito_impl.sh
-  current_path="${PWD}"
-  while [[ "${PWD}" != "/" ]]; do
-    ls | grep taito-config.sh > /dev/null && break; cd ..;
-  done
-  if [[ ${PWD} == "/" ]]; then
-    cd "${current_path}" || exit 1
-  fi
+# Set working directory
+cd "${taito_project_path}" && \
 
-  # Read taito-config.sh files from all locations
-  # TODO duplicate code with taito_impl.sh
-  export taito_env="local"
-  if [[ -f "${HOME}/.taito/taito-config.sh" ]]; then
-    # Personal config
-    # shellcheck disable=SC1090
-    . "${HOME}/.taito/taito-config.sh"
-  fi
-  if [[ -f ./taito-config.sh ]]; then
-    # Project specific config
-    # shellcheck disable=SC1091
-    . ./taito-config.sh
-  fi
+# Read taito-config.sh files from all locations
+. "${taito_util_path}/read-taito-config.sh" "local" && \
 
-  # Determine mode
-  if [[ "${1}" == "-dev" ]] || [[ "${1}" == "-local" ]]; then
-    mode="${1#-}"
-    args=(${@:2})
-  else
-    mode=normal
-    args=(${@:1})
-  fi
-
-  # Determine admin option value
-  # TODO a quick hack -> refactor option handling
-  if [[ "${args[0]}" == "-a" ]] || [[ "${args[0]}" == "--admin" ]]; then
-    admin=true
-    args=(${args[@]:1})
-  elif [[ "${args[1]}" == "-a" ]] || [[ "${args[1]}" == "--admin" ]]; then
-    admin=true
-    args=(${args[0]} ${args[@]:2})
-  fi
-
-  # Convert space syntax to internal hyphen syntax
-  if [[ "${args[0]}" != *"-"* ]]; then
-    space_cmd=()
-    space_args=()
-    mark_found="false"
-    for arg in "${args[@]}"
-    do
-      if [[ "${arg}" == "-"* ]] || [[ ${mark_found} == "true" ]]; then
-        mark_found="true"
-        space_args+=(${arg})
-      elif [[ "${arg}" == *":"* ]] && [[ ${mark_found} == "false" ]]; then
-        mark_found="true"
-        space_cmd+=(${arg})
-      elif [[ ${mark_found} == "false" ]]; then
-        space_cmd+=(${arg})
-      fi
-    done
-    space_cmd="${space_cmd[@]}"
-    args=("${space_cmd// /-}" ${space_args[@]})
-  fi
-
-  # Determine taito command and command parameters
-  command="${args[0]}"
-  params=(${args[@]})
-  if [[ -z "${command}" ]]; then
-    command="--help"
-  fi
-
-  # Determine enabled extensions
-  extensions_local_mode=""
-  extension_paths=""
-  extension_mount_flags=""
-  exts=("${taito_extensions} ${taito_global_extensions}")
-  for extension in ${exts[@]}
-  do
-    if [[ ${extension} == "git@"* ]]; then
-      # Git url e.g. git@github.com:TaitoUnited/webapp-template.git/my-extension
-      temp=${extension#*\/}
-      repo_url=${extension%.git*}.git # git@github.com:xxx/webapp-template.git
-      repo_name=${temp%.git*} # webapp-template
-      repo_dir=${temp#*.git} # /my-extension
-      repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
-      if [[ -d "${repo_local_path}" ]]; then
-        # Pull the latest version
-        if [[ "${command}" == "--upgrade" ]]; then
-          echo "Pulling ${repo_local_path}..."
-          (cd "${repo_local_path}"; git pull &> /dev/null)
+# Parse options
+mode="normal"
+admin=false
+upgrade=false
+skip_rest=false
+args=()
+while [[ $# -gt 0 ]]
+do
+  key="$1"
+  if [[ ${skip_rest} == false ]]; then
+    case $key in
+        -dev)
+        mode="dev"
+        shift
+        ;;
+        -a|--admin)
+        admin=true
+        shift
+        ;;
+        --upgrade)
+        upgrade=true
+        shift
+        ;;
+        *)
+        # not known -> pass it to the docker container
+        args+=("$1")
+        shift
+        if [[ "$1" != "-"* ]]; then
+          # not an option -> pass all the rest to the docker container
+          skip_rest=true
         fi
-      else
-        (cd ~/.taito; git clone "${repo_url}"; cd "${repo_name}"; git checkout)
-      fi
-      extension_paths="${extension_paths} /root/.taito/${repo_name}${repo_dir}"
-      extensions_local_mode="${extensions_local_mode} \
-        ${HOME}/.taito/${repo_name}${repo_dir}"
-    elif [[ ${extension} == *"gz" ]]; then
-      # Archive link e.g.
-      # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
-      folder_name=${extension%=*}
-      url=${extension##*=}
-      if [[ ! -d "${HOME}/.taito/${folder_name}" ]]; then
-        echo "Downloading extension ${folder_name} from ${url}"
-        ( curl -sL "${url}" | tar zxv -C ~/.taito )
-      fi
-      extension_paths="${extension_paths} /root/.taito/${repo_name}"
-      extensions_local_mode="${extensions_local_mode} \
-        ${HOME}/.taito/${repo_name}"
-    else
-      # Local url
-      docker_path="${extension/\~//root}"
-      local_path="${extension/\~/${HOME}}"
-      extension_paths="${extension_paths} ${docker_path}"
-      extension_mount_flags="${extension_mount_flags} \
-        -v ${local_path}:${docker_path}"
-      extensions_local_mode="${extensions_local_mode} ${local_path}"
-    fi
-  done
-
-  # Handle taito upgrades
-  if [[ "${command}" == "--upgrade" ]]; then
-    # Pull latest version of taito bash script
-    (cd "${cli_path}"; git pull)
-
-    # Pull taito-cli docker image
-    docker pull "${taito_image:?}"
-
-    # Copy credentials from old image
-    docker rm taito-save taito-new &> /dev/null
-    if docker create --name taito-save "${taito_image}save" &> /dev/null; then
-      docker create --name taito-new "${taito_image}"
-      echo "Copying credentials from the old image."
-      mkdir -p ~/.taito/save &> /dev/null
-
-      # TODO remove: was required for copying credentials root -> taito
-      # docker cp taito-save:/home/root/.config ~/.taito/save &> /dev/null
-      # docker cp taito-save:/home/root/.kube ~/.taito/save &> /dev/null
-      # docker cp taito-save:/home/root/admin_creds.enc ~/.taito/save &> /dev/null
-
-      docker cp taito-save:/root/.config ~/.taito/save
-      docker cp taito-save:/root/.kube ~/.taito/save
-      docker cp taito-save:/root/admin_creds.enc ~/.taito/save &> /dev/null
-      docker cp ~/.taito/save/.config taito-new:/root
-      docker cp ~/.taito/save/.kube taito-new:/root
-      docker cp ~/.taito/save/admin_creds.enc taito-new:/root &> /dev/null
-
-      # 'docker cp' permissions fix (docker bug?)
-      # docker start taito-new
-      # docker exec -u root -d taito-new chown -R taito:taito /root
-      # docker stop taito-new
-
-      docker commit taito-new "${taito_image}" &> /dev/null
-      docker image tag "${taito_image}" "${taito_image}save"
-      rm -rf ~/.taito/save
-      docker rm taito-save taito-new &> /dev/null
-      echo "DONE!"
-    fi
-    exit 0
-  fi
-
-  # Prepare execution log files
-  mkdir -p "${HOME}/.taito/tmp" &> /dev/null
-  log_file=$(mktemp "${HOME}/.taito/tmp/taito-cli.XXXXXX")
-  log_file_fg=$(mktemp "${HOME}/.taito/tmp/taito-cli.XXXXXX")
-  touch "${log_file}"
-  touch "${log_file_fg}"
-
-  # Export some variables to be used by various taito commands
-  export taito_host_uname
-  taito_host_uname="$(uname)"
-  export taito_run="${log_file/${HOME}/\/root}"
-  export taito_run_fg="${log_file_fg/${HOME}/\/root}"
-
-  # Start a background process that will run commands on host in the
-  # background while the container is still running
-  # Commands are read from a log file.
-  (
-    # Read commands from log file and execute them
-    tail -f "${log_file}" | while read -r line; do
-      # TODO confirm execution?
-      eval "${line}"
-    done
-  ) &
-
-  # Link database container if env is local and the command uses database
-  # TODO: this is a quick hack
-  if ( \
-       [[ ${command} =~ db-.+ ]] || \
-       [[ ${command} == "oper-init" ]] || \
-       [[ "${command}" == "init" ]] \
-     ) && \
-     (
-       [[ ${command} == *":local" ]] || \
-       [[ ${command} != *":"* ]] \
-     ) && \
-     [[ ${command} != db-add ]] && \
-     [[ ${taito_plugins} == *"postgres"* ]] && \
-     [[ " ${params[@]} " != *" -h "* ]] && \
-     [[ " ${params[@]} " != *" --help "* ]]; then
-    if [[ ${mode} != "local" ]]; then
-      link_flags="--link ${taito_project}-database:${taito_project}-database"
-    else
-      # Running taito-cli directly on host -> use 127.0.0.1
-      export database_host_overwrite="127.0.0.1"
-    fi
-  fi
-
-  # Forward output to 'less' in case the command is `help`, `trouble` or
-  # `readme`. We need to also filter some control characters for a cleaner
-  # output.
-  if [[ "${taito_host_uname}" == "Darwin" ]]; then
-    ctrl_filter=" tr -d '[:cntrl:]' "
+        ;;
+    esac
   else
-    ctrl_filter=" grep -axv '.*' "
+    # Add to args to be passed for the docker container
+    args+=("$1")
+    shift
   fi
-  output=""
-  if [[ ${command} == "-h"* ]] || \
-     [[ ${command} == "--help"* ]] || \
-     [[ ${command} == "--trouble"* ]] || \
-     [[ ${command} == "--readme"* ]]; then
-    output="| tr '\r\n' '\275\276' | ${ctrl_filter} | \
-      tr '\275\276' '\r\n' | tail -n +3 | less"
-  fi
+done
+# set -- "${args[@]}"
 
-  exit_code=0
+# Convert space command syntax to internal hyphen syntax
+args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]})) && \
 
-  # Execute command
-  if [[ "${mode}" == "local" ]]; then
-    # Mode: run directly on host
-    export taito_mode="${mode}"
-    export taito_enabled_extensions="${extensions_local_mode}"
-    eval "${cli_path}/taito_impl.sh ${params[@]} ${output}"
-  else
-    # Mode: run on docker container
-    export taito_image_name
-    taito_image_name="${taito_image:?}"
-    image_flag="--rm ${taito_image_name}"
-    if [[ "${mode}" == "dev" ]]; then
-      extension_mount_flags="${extension_mount_flags} \
-        -v ${cli_path}:/taito-cli"
-    fi
-
-    # Expose ports so that host can access db proxy running on container
-    proxy_flags=""
-    if [[ "${gcloud_sql_proxy_port:-}" != "" ]]; then
-      proxy_flags="\
-        --expose=${gcloud_sql_proxy_port} \
-        -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"
-    fi
-
-    # Ask for admin encryption key
-    if [[ ${admin} == true ]]; then
-      echo "Admin encryption/decryption key:"
-      read -s admin_key
-      if [[ ${#admin_key} -lt 16 ]]; then
-        echo "ERROR: Encyption key must be at least 16 characters long"
-        exit 1
-      fi
-    fi
-
-    # TODO do not pass taito_admin_key as command line argument
-
-    # Determine if interactive mode can be used
-    docker_it=""
-    [[ -t 1 ]] && docker_it="-it"
-
-    # Run on docker
-    # shellcheck disable=SC2086
-    # --name taito \
-    eval "docker run ${docker_it} \
-      -v \"${HOME}/.taito:/root/.taito\" \
-      -v \"$(pwd):/project\" \
-      -w /project \
-      ${proxy_flags} \
-      ${extension_mount_flags} \
-      ${link_flags} \
-      -e taito_enabled_extensions=\"${extension_paths}\" \
-      -e taito_run=${taito_run} \
-      -e taito_run_fg=${taito_run_fg} \
-      -e taito_host_uname=\"${taito_host_uname}\" \
-      -e taito_mode=\"${mode}\" \
-      -e taito_docker=\"true\" \
-      -e taito_image_name=\"${taito_image_name}\" \
-      -e taito_admin_key=\"${admin_key}\" \
-      --entrypoint taito \
-      ${image_flag} \
-      ${params[@]} ${output}"
-    exit_code=$?
-  fi
-
-  # Execute requested commands on foreground after container has exited.
-  if [[ ${exit_code} == 0 ]]; then
-    echo
-    eval "$(cat "${log_file_fg}")"
-    exit_code=$?
-  fi
-
-  # Kill the background execution process
-  pkill -f "${log_file}"
-
-  # Cleanup
-  rm -f "${log_file}" &> /dev/null
-  rm -f "${log_file_fg}" &> /dev/null
-
-  exit ${exit_code}
-
-); then
-  exit 1
+# Determine command and its parameters
+command="${args[0]}"
+params=(${args[@]})
+if [[ -z "${command}" ]]; then
+  command="--help"
 fi
+
+# Determine enabled extensions and download missing remote extensions
+extension_paths=""
+extension_mount_flags=""
+exts=("${taito_extensions} ${taito_global_extensions}")
+for extension in ${exts[@]}
+do
+  if [[ ${extension} == "git@"* ]]; then
+    # Git url e.g. git@github.com:TaitoUnited/webapp-template.git/my-extension
+    temp=${extension#*\/}
+    repo_url=${extension%.git*}.git # git@github.com:xxx/webapp-template.git
+    repo_name=${temp%.git*} # webapp-template
+    repo_dir=${temp#*.git} # /my-extension
+    repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
+    if [[ -d "${repo_local_path}" ]]; then
+      # Pull the latest version
+      if [[ "${command}" == "--upgrade" ]]; then
+        echo "Pulling ${repo_local_path}..."
+        (cd "${repo_local_path}"; git pull &> /dev/null)
+      fi
+    else
+      (cd ~/.taito; git clone "${repo_url}"; cd "${repo_name}"; git checkout)
+    fi
+    extension_paths="${extension_paths} /root/.taito/${repo_name}${repo_dir}"
+  elif [[ ${extension} == *"gz" ]]; then
+    # Archive link e.g.
+    # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
+    folder_name=${extension%=*}
+    url=${extension##*=}
+    if [[ ! -d "${HOME}/.taito/${folder_name}" ]]; then
+      echo "Downloading extension ${folder_name} from ${url}"
+      ( curl -sL "${url}" | tar zxv -C ~/.taito )
+    fi
+    extension_paths="${extension_paths} /root/.taito/${repo_name}"
+  else
+    # Local url
+    docker_path="${extension/\~//root}"
+    local_path="${extension/\~/${HOME}}"
+    extension_paths="${extension_paths} ${docker_path}"
+    extension_mount_flags="${extension_mount_flags} \
+      -v ${local_path}:${docker_path}"
+  fi
+done
+
+# Handle taito upgrades
+if [[ ${upgrade} == true ]]; then
+  "${taito_src_path}/taito-upgrade.sh" && \
+  exit 0
+fi
+
+# Ask for admin encryption key in admin mode
+if [[ ${admin} == true ]]; then
+  echo "Admin encryption/decryption key:"
+  read -s admin_key
+  if [[ ${#admin_key} -lt 16 ]]; then
+    echo "ERROR: Encyption key must be at least 16 characters long"
+    exit 1
+  fi
+fi
+
+# Prepare execution log files
+mkdir -p "${HOME}/.taito/tmp" &> /dev/null
+log_file=$(mktemp "${HOME}/.taito/tmp/taito-cli.XXXXXX")
+log_file_fg=$(mktemp "${HOME}/.taito/tmp/taito-cli.XXXXXX")
+touch "${log_file}"
+touch "${log_file_fg}"
+
+# Set some variables to be used later
+taito_host_uname="$(uname)"
+taito_run="${log_file/${HOME}/\/root}"
+taito_run_fg="${log_file_fg/${HOME}/\/root}"
+
+# Start a background process that will run commands on host in the
+# background while the container is still running on foregound.
+# Commands to be executed are read from a log file.
+(
+  # Read commands from log file and execute them
+  tail -f "${log_file}" | while read -r line; do
+    # TODO confirm execution from user?
+    eval "${line}"
+  done
+) &
+
+# Link database container if env is local and the command uses database
+# TODO: this is an ugly quick hack
+if ( \
+     [[ ${command} =~ db-.+ ]] || \
+     [[ ${command} == "oper-init" ]] || \
+     [[ "${command}" == "init" ]] \
+   ) && \
+   (
+     [[ ${command} == *":local" ]] || \
+     [[ ${command} != *":"* ]] \
+   ) && \
+   [[ ${command} != db-add ]] && \
+   [[ ${taito_plugins} == *"postgres"* ]] && \
+   [[ " ${params[@]} " != *" -h "* ]] && \
+   [[ " ${params[@]} " != *" --help "* ]]; then
+  link_flags="--link ${taito_project}-database:${taito_project}-database"
+fi
+
+# Prepare docker options
+taito_image_name="${taito_image:?}"
+image_flag="--rm ${taito_image_name}"
+docker_it=""
+[[ -t 1 ]] && docker_it="-it"
+if [[ "${mode}" == "dev" ]]; then
+  extension_mount_flags="${extension_mount_flags} \
+    -v ${taito_cli_path}:/taito-cli"
+fi
+proxy_flags=""
+if [[ "${gcloud_sql_proxy_port:-}" != "" ]]; then
+  proxy_flags="\
+    --expose=${gcloud_sql_proxy_port} \
+    -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"
+fi
+
+# Forward taito docker container output to 'less' in case the command is `help`,
+# `trouble` or `readme`. We need to also filter some control characters for
+# a cleaner output.
+if [[ "${taito_host_uname}" == "Darwin" ]]; then
+  ctrl_filter=" tr -d '[:cntrl:]' "
+else
+  ctrl_filter=" grep -axv '.*' "
+fi
+output=""
+if [[ ${command} == "-h"* ]] || \
+   [[ ${command} == "--help"* ]] || \
+   [[ ${command} == "--trouble"* ]] || \
+   [[ ${command} == "--readme"* ]]; then
+  output="| tr '\r\n' '\275\276' | ${ctrl_filter} | \
+    tr '\275\276' '\r\n' | tail -n +3 | less"
+fi
+
+# Execute command in taito docker container
+# TODO do not pass taito_admin_key as command line argument
+# shellcheck disable=SC2086
+eval "docker run ${docker_it} \
+  -v \"${HOME}/.taito:/root/.taito\" \
+  -v \"$(pwd):/project\" \
+  -w /project \
+  ${proxy_flags} \
+  ${extension_mount_flags} \
+  ${link_flags} \
+  -e taito_enabled_extensions=\"${extension_paths}\" \
+  -e taito_run=${taito_run} \
+  -e taito_run_fg=${taito_run_fg} \
+  -e taito_host_uname=\"${taito_host_uname}\" \
+  -e taito_mode=\"${mode}\" \
+  -e taito_docker=\"true\" \
+  -e taito_image_name=\"${taito_image_name}\" \
+  -e taito_admin_key=\"${admin_key}\" \
+  --entrypoint taito \
+  ${image_flag} \
+  ${params[@]} ${output}"
+exit_code=$?
+
+# Execute requested commands on foreground after container has exited.
+if [[ ${exit_code} == 0 ]]; then
+  eval "$(cat "${log_file_fg}")"
+  exit_code=$?
+fi
+
+# Kill the background execution process
+pkill -f "${log_file}"
+
+# Cleanup
+rm -f "${log_file}" &> /dev/null
+rm -f "${log_file_fg}" &> /dev/null
+
+exit ${exit_code}

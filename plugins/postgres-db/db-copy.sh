@@ -25,6 +25,7 @@ echo "- 1. Dump data"
 dump_file="${taito_project_path}/tmp/dump.sql"
 mkdir -p "${taito_project_path}/tmp" &> /dev/null
 rm -f "${dump_file}" &> /dev/null
+# TODO use: . "${taito_util_path}/read-taito-config.sh" "${source}"
 echo "TODO implement: set user/password/database/host/port for source database"
 exit 1
 "${taito_plugin_path}/util/psql.sh" "" "-f ${dump_file}" "pg_dump" && \
