@@ -1,5 +1,16 @@
 TAITO-CLI TROUBLESHOOTING
 
+  'command not found'
+    Try running 'taito --upgrade'
+
+    Did you give the correct environment as argument? Commands always use the
+    local environment by default.
+
+    Check your plugin configuration in your taito-config.sh files.
+
+    Make sure that you have set all the environment variables correctly:
+    TODO
+
   My application does not work locally
     Try clean install, start and init by running:
 
@@ -18,13 +29,3 @@ TAITO-CLI TROUBLESHOOTING
     execution, the command probably requires authentication and you either have
     not authenticated or your authentication has expired. In such case, run
     'taito --auth:ENV' to authenticate.
-
-  'command not found'
-    Did you remember to give the correct environment as argument? Commands
-    always use the local environment by default, and not all commands are
-    enabled for local environment.
-
-    Check your plugin configuration in your taito-config.sh files.
-
-    Make sure that you have set all the environment variables correctly:
-    TODO

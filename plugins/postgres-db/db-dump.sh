@@ -3,13 +3,13 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
-: "${postgres_database:?}"
-: "${postgres_host:?}"
-: "${postgres_port:?}"
+: "${database_name:?}"
+: "${database_host:?}"
+: "${database_port:?}"
 
 username="${1}"
 
-echo "host: ${postgres_host} port:${postgres_port}"
+echo "host: ${database_host} port:${database_port}"
 
 dump_file="${taito_project_path}/tmp/dump.sql"
 mkdir -p "${taito_project_path}/tmp" &> /dev/null

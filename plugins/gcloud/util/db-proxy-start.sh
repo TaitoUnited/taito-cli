@@ -1,10 +1,10 @@
 #!/bin/bash
 
-postgres_id="${gcloud_project}:${gcloud_region}:${postgres_name}"
+database_id="${gcloud_project}:${gcloud_region}:${database_instance}"
 
 if [[ $1 == "true" ]]; then
   # Run in background
-  cloud_sql_proxy "-instances=${postgres_id}=tcp:${gcloud_sql_proxy_port}" \
+  cloud_sql_proxy "-instances=${database_id}=tcp:${gcloud_sql_proxy_port}" \
     &> /tmp/proxy-out.tmp &
   sleep 3
   cat /tmp/proxy-out.tmp
@@ -18,5 +18,5 @@ else
   echo "BIND ADDRESS: ${bind_address}"
 
   cloud_sql_proxy \
-    "-instances=${postgres_id}=tcp:${bind_address}:${gcloud_sql_proxy_port}"
+    "-instances=${database_id}=tcp:${bind_address}:${gcloud_sql_proxy_port}"
 fi

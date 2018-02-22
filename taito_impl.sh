@@ -135,6 +135,14 @@ if ! (
     . ./taito-secrets.sh
   fi
 
+  # TODO remove: for backwards compatibility
+  if [[ -n "${postgres_name:-}" ]]; then
+    export database_instance="${postgres_name:-}"
+    export database_name="${postgres_database:-}"
+    export database_host="${postgres_host:-}"
+    export database_port="${postgres_port:-}"
+  fi
+
   # Validate env
   if [[ "${taito_env}" != "local" ]] && [[ " ${taito_environments:-} " != *" ${taito_env} "* ]]; then
     echo
@@ -154,8 +162,8 @@ if ! (
 
   # Use overwrites defined by caller
   # TODO this is a quick hack
-  if [[ ${postgres_host_overwrite:-} != "" ]]; then
-    export postgres_host=${postgres_host_overwrite}
+  if [[ ${database_host_overwrite:-} != "" ]]; then
+    export database_host=${database_host_overwrite}
   fi
 
   # Create environment variables for secrets
@@ -199,6 +207,13 @@ if ! (
   enabled_plugins=""
   plugins_string=$(echo basic "${taito_plugins:-}" "${taito_global_plugins:-}" \
     | awk '{for (i=1;i<=NF;i++) if (!a[$i]++) printf("%s%s",$i,FS)}{printf("\n")}')
+  # TODO remove this (backwards compatibility)
+  plugins_string="${plugins_string/postgres /postgres-db }"
+  # TODO remove this (sqitch added for backwards compatibility)
+  if [[ "${plugins_string}" == *"postgres-db"* ]] && \
+     [[ "${plugins_string}" != *"sqitch-db"* ]]; then
+    plugins_string="sqitch-db ${plugins_string}"
+  fi
   plugins=("${plugins_string}")
 
   # Find matching plugin commands and assemble chains

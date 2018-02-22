@@ -3,13 +3,13 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
-: "${postgres_database:?}"
-: "${postgres_host:?}"
-: "${postgres_port:?}"
+: "${database_name:?}"
+: "${database_host:?}"
+: "${database_port:?}"
 : "${taito_project_path:?}"
 
 if [[ "${taito_env}" == "prod"* ]]; then
-  echo "postgres/clean.sh: 'clean' is not allowed for production environment"
+  echo "postgres-db/clean.sh: 'clean' is not allowed for production environment"
   exit 1
 fi
 
@@ -18,13 +18,13 @@ fi
   . "${taito_plugin_path}/util/postgres-username-password.sh"
 
   if [[ "${taito_env}" == "local" ]];then
-    database_user="${postgres_database}_app"
+    database_user="${database_name}_app"
     PGPASSWORD="secret"
-  elif [[ "${postgres_build_password}" != "" ]]; then
-    database_user="${postgres_build_username}"
-    PGPASSWORD="${postgres_build_password}"
+  elif [[ "${database_build_password}" != "" ]]; then
+    database_user="${database_build_username}"
+    PGPASSWORD="${database_build_password}"
   else
-    database_user="${postgres_build_username}"
+    database_user="${database_build_username}"
     echo "Password for ${database_user}:"
     read -s -r PGPASSWORD
   fi && \
@@ -33,8 +33,8 @@ fi
   echo && \
   echo "- import ./database/clean.sql" && \
   PGPASSWORD="${PGPASSWORD}" \
-    psql -h "${postgres_host}" -p "${postgres_port}" \
-    -d "${postgres_database}" \
+    psql -h "${database_host}" -p "${database_port}" \
+    -d "${database_name}" \
     -U "${database_user}" \
     -f "${taito_plugin_path}/resources/clean.sql" && \
 
@@ -47,8 +47,8 @@ fi
   rm -f "${tmp_file}" &> /dev/null && \
 
   PGPASSWORD="${PGPASSWORD}" \
-    psql -h "${postgres_host}" -p "${postgres_port}" \
-    -d "${postgres_database}" \
+    psql -h "${database_host}" -p "${database_port}" \
+    -d "${database_name}" \
     -U "${database_user}" \
     -t \
     -c "SELECT 'DROP TABLE ' || n.nspname || '.' || c.relname || ' CASCADE;' FROM pg_catalog.pg_class AS c LEFT JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace WHERE relkind = 'r' AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)" \
@@ -57,8 +57,8 @@ fi
   echo && \
   echo "- import ${tmp_file}" && \
   PGPASSWORD="${PGPASSWORD}" \
-    psql -h "${postgres_host}" -p "${postgres_port}" \
-    -d "${postgres_database}" \
+    psql -h "${database_host}" -p "${database_port}" \
+    -d "${database_name}" \
     -U "${database_user}" \
     -f "${tmp_file}" && \
 
@@ -69,7 +69,7 @@ fi
   # Run init.sql of project
   echo && \
   echo "- import ./database/init.sql" && \
-  PGPASSWORD="${PGPASSWORD}" psql -h "${postgres_host}" \
-    -p "${postgres_port}" -d "${postgres_database}" \
+  PGPASSWORD="${PGPASSWORD}" psql -h "${database_host}" \
+    -p "${database_port}" -d "${database_name}" \
      -U "${database_user}" < ./database/init.sql
 )

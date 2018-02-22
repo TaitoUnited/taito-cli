@@ -6,10 +6,10 @@
 
 . "${taito_plugin_path}/util/postgres-username-password.sh"
 
-if [[ -n ${postgres_build_password:-} ]] && [[ -n ${postgres_app_password:-} ]]; then
+if [[ -n ${database_build_password:-} ]] && [[ -n ${database_app_password:-} ]]; then
   echo "Creating users / altering passwords for ${taito_env}"
 
-  export postgres_username=postgres
+  export database_username=postgres
   "${taito_plugin_path}/util/create-users.sh"
 fi && \
 

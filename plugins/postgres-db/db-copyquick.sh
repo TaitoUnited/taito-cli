@@ -2,9 +2,9 @@
 
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${postgres_database:?}"
-: "${postgres_host:?}"
-: "${postgres_port:?}"
+: "${database_name:?}"
+: "${database_host:?}"
+: "${database_port:?}"
 
 dest="${taito_env}"
 source="${1:?Source not given}"
@@ -20,14 +20,14 @@ if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
   exit 130
 fi
 
-db_prefix=${postgres_database%_*}
+db_prefix=${database_name%_*}
 
 flags="-f ${taito_plugin_path}/resources/copyquick.sql \
-  -v source=${postgres_database} \
+  -v source=${database_name} \
   -v dest=${db_prefix}_${dest} \
   -v dest_old=${db_prefix}_${dest}_old" \
   -v dest_app=${db_prefix}_${dest}_app"
-echo 'TODO implement: dest is ${postgres_database}, source is something else'
+echo 'TODO implement: dest is ${database_name}, source is something else'
 exit 1
 "${taito_plugin_path}/util/psql.sh" "${username}" "${flags}"
 

@@ -3,9 +3,9 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
-: "${postgres_database:?}"
-: "${postgres_host:?}"
-: "${postgres_port:?}"
+: "${database_name:?}"
+: "${database_host:?}"
+: "${database_port:?}"
 
 dest="${taito_env}"
 source="${1:?Source not given}"
@@ -17,9 +17,9 @@ if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
   exit 130
 fi
 
-db_prefix=${postgres_database%_*}
-db_dest=${postgres_database%_*}_${dest}
-db_source=${postgres_database%_*}_${source}
+db_prefix=${database_name%_*}
+db_dest=${database_name%_*}_${dest}
+db_source=${database_name%_*}_${source}
 
 echo "- 1. Dump data"
 dump_file="${taito_project_path}/tmp/dump.sql"
@@ -30,7 +30,7 @@ exit 1
 "${taito_plugin_path}/util/psql.sh" "" "-f ${dump_file}" "pg_dump" && \
 
 echo "- 2. Rename the old database" && \
-postgres_username=postgres && \
+database_username=postgres && \
 . "${taito_plugin_path}/util/ask-password.sh" && \ # TODO Does not work. Why?
 flags="-f ${taito_plugin_path}/resources/rename-db.sql -v database=${db_dest} \
   -v database_new=${db_dest}_old" && \
@@ -41,7 +41,7 @@ echo "NOTE: use taito secrets:${dest} to get the build password \
 for ${db_dest}" && \
 # TODO pass username
 # TODO set also cluster name and port
-postgres_username=${username} postgres_database=${db_prefix}_${dest} \
+database_username=${username} database_name=${db_prefix}_${dest} \
   "${taito_plugin_path}/util/create-database.sh" && \
 
 echo "- 4. Import dump with a new build username" && \
@@ -51,7 +51,7 @@ sed -e "s/${db_source}/${db_dest}/g" \
   "${dump_file}" > \
   "${taito_project_path}/tmp/dump-mod.sql" && \
 flags="-f ${taito_project_path}/tmp/dump-mod.sql" && \
-postgres_database=${db_prefix}_${dest} "${taito_plugin_path}/util/psql.sh" \
+database_name=${db_prefix}_${dest} "${taito_plugin_path}/util/psql.sh" \
   "" "${flags}" && \
 
 rm -f "${taito_project_path}/tmp/dump-mod.sql" && \

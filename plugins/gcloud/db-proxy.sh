@@ -7,11 +7,11 @@
 : "${gcloud_zone:?}"
 : "${gcloud_sql_proxy_port:?}"
 # TODO rename postgres variables to common?
-: "${postgres_database:?}"
+: "${database_name:?}"
 
 echo "host=127.0.0.1, port=${gcloud_sql_proxy_port}"
 echo "Connect using your personal user account or"
-echo "${postgres_database} as username"
+echo "${database_name} as username"
 
 "${taito_plugin_path}/util/db-proxy-start.sh" && \
 "${taito_plugin_path}/util/db-proxy-stop.sh" && \

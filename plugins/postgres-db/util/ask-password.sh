@@ -1,8 +1,8 @@
 #!/bin/bash
 
-: "${postgres_username:?}"
+: "${database_username:?}"
 
-passwd_var="${postgres_username}_password"
+passwd_var="${database_username}_password"
 passwd="${!passwd_var}"
 
 export PGPASSWORD
@@ -11,6 +11,6 @@ if [[ -n "${passwd}" ]]; then
   PGPASSWORD="${passwd}"
 else
   # Ask password from user
-  echo "Password for user ${postgres_username}:"
+  echo "Password for user ${database_username}:"
   read -r -s PGPASSWORD
 fi

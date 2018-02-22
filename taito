@@ -226,7 +226,7 @@ if ! (
       link_flags="--link ${taito_project}-database:${taito_project}-database"
     else
       # Running taito-cli directly on host -> use 127.0.0.1
-      export postgres_host_overwrite="127.0.0.1"
+      export database_host_overwrite="127.0.0.1"
     fi
   fi
 

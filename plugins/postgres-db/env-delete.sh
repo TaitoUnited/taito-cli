@@ -5,10 +5,11 @@
 
 # Create a subshell to contain password
 (
-  export postgres_username=postgres
+  echo "Dropping database and users"
+  export database_username=postgres
   . "${taito_plugin_path}/util/ask-password.sh"
   "${taito_plugin_path}/util/drop-database.sh"
-  "${taito_plugin_path}/util/create-database.sh"
+  "${taito_plugin_path}/util/drop-users.sh"
 ) && \
 
 # Call next command on command chain

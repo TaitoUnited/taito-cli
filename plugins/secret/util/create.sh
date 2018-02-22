@@ -20,12 +20,14 @@ do
     elif [[ "${secret_method}" == "file" ]]; then
       echo "File path for ${secret_name}:"
       read -r secret_value
+      echo
+      echo "REMEBER TO DELETE THE FILE AFTERWARDS!!"
+      echo
+      echo sleep 1
     elif [[ "${secret_method}" == "random" ]]; then
       # TODO better tool for this?
       secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
       echo "- ${secret_name}: random value generated"
-    else
-      echo "- skipping ${secret_name}. Method ${secret_method} not supported!"
     fi
     exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
   fi

@@ -6,7 +6,7 @@
 # Create a subshell to contain password
 (
   echo "Creating database"
-  export postgres_username=postgres
+  export database_username=postgres
   . "${taito_plugin_path}/util/ask-password.sh"
   "${taito_plugin_path}/util/create-users.sh"
   "${taito_plugin_path}/util/create-database.sh"

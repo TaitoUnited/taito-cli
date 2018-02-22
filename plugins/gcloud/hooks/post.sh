@@ -1,11 +1,7 @@
 #!/bin/bash
-: "${taito_env:?}"
 : "${taito_plugin_path:?}"
-: "${taito_command:?}"
 
-if [[ ${taito_env} != "local" ]] && \
-   [[ ${taito_original_command_chain:-} == *"postgres/"* ]] && \
-   [[ ${taito_command} != "ci-test-"* ]]; then
+if [[ ${taito_command_chain:-} == *"-db/"* ]]; then
   echo "### gcloud/post: Stopping all db proxies"
   "${taito_plugin_path}/util/db-proxy-stop.sh"
 fi

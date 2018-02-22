@@ -138,18 +138,18 @@ PROJECT: BASIC OPERATIONS
     TIP: Enable the 'make' or 'npm' plugin and implement oper-info[:ENV] script
     in your makefile/package.json.
 
-  unit [CONTAINER]    TODO renamed (was ci)
+  unit [CONTAINER]
     Run unit tests.
     TIP: Enable the 'make' or 'npm' plugin and implement unit script in your
     makefile/package.json.
 
-  test[:ENV] [CONTAINER] [SUITE]    TODO renamed (was ci)
+  test[:ENV] [CONTAINER] [SUITE]
     Run integration and end-to-end tests.
-    TIP: Enable the 'make' or 'npm' plugin and implement test scripts
-    in your makefile/package.json using the `taito `. You can configure test users and passwords
-    for each environment in taito-config.sh as those settings are available to
-    your script as environment variables. At least implement tests for dev
-    environment.
+    TIP: Enable the 'make' or 'npm' plugin and implement test scripts in your
+    makefile/package.json using the `taito `. You can configure test users and
+    passwords for each environment in taito-config.sh as those settings are
+    available to your script as environment variables. At least implement tests
+    for dev environment.
 
   analyze
     Analyzes implementation and gives you feedback accordingly (webpack
@@ -157,12 +157,12 @@ PROJECT: BASIC OPERATIONS
     TIP: Enable the 'make' or 'npm' plugin and implement oper-analyze script
     in your makefile/package.json
 
-  scan    TODO renamed (was ci)
+  scan
     Lint code, scan for vulnerabilities, etc.
     TIP: Enable the 'make' or 'npm' plugin and implement cscan script in your
     makefile/package.json.
 
-  docs    TODO renamed (was ci)
+  docs
     Generate docs e.g. API docs from API definitions and PDF files from
     markdown documentation.
     TIP: Enable the 'make' or 'npm' plugin and implement docs script in your
@@ -221,17 +221,19 @@ PROJECT: LINKS
   >
   > open app[:ENV] - GUI of app
   > open admin[:ENV] - GUI of application admin tool
-  > open bucket - Storage bucket used by the app
+  > open storage - Storage bucket used by the app
   > open docs - Built docs
-  > open boards - Project kanban/scrum boards (e.g. Github projects, Trello)
-  > open issues - Project issues (e.g. GitHub issues, Trello)
-  > open repo - Project version control repository (e.g. GitHub)
+  > open project - Project management
+  > open git - Git repository (e.g. GitHub)
   > open builds - List of builds (e.g. Jenkins, Google container builder)
+  > open artifacts - Build artifacts
+  > open reports - CI/CD reports (e.g. testing and code analysis)
   > open errors:ENV - Error Tracking (e.g. Sentry)
   > open logs:ENV - Logs (e.g. Stackdriver)
   > open uptime - Uptime monitoring (e.g. Stackdriver)
   > open performance - Performace monitoring (e.g. New Relic)
   > open feedback - User feedback management
+  > open analytics - Usage analytics (e.g. Google Analytics)
 
 GLOBAL: WORKSPACE OPERATIONS
 
@@ -327,6 +329,13 @@ PROJECT: DATABASE OPERATIONS
   db log[:ENV]
     View change log of database. DB proxy connection and secrets are handled
     automatically.
+
+  db revert:[ENV] [CHANGE]
+    Rebases database by running 'db revert' and then 'db deploy'. DB proxy
+    connection and secrets are handled automatically. The command reverts all
+    changes by default. If you would like to revert to a specific revision
+    instead, view the change log first with `taito db log[:ENV]` and then run
+    `taito db revert[:ENV] CHANGE`.
 
   db revert:[ENV] [CHANGE]
     Revert database changes. DB proxy connection and secrets are

@@ -14,6 +14,7 @@ if [[ -z "${branch}" ]]; then
   fi
 fi
 
+# TODO use terraform for most of these
 if [[ "${taito_env}" == "prod" ]]; then
   echo
   echo "gcloud: Configuring DNS for ${taito_env}"

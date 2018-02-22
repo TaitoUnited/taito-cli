@@ -160,10 +160,10 @@ And here is an example of a project specific `taito-config.sh`:
     export kubectl_name="common-kubernetes"
 
     # postgres plugin
-    export postgres_name="common-postgres"
-    export postgres_database="${taito_project//-/_}_${taito_env}"
-    export postgres_host="localhost"
-    export postgres_port="${gcloud_sql_proxy_port}"
+    export database_instance="common-postgres"
+    export database_name="${taito_project//-/_}_${taito_env}"
+    export database_host="localhost"
+    export database_port="${gcloud_sql_proxy_port}"
 
     # template plugin
     export template_name="webapp-template"
@@ -189,7 +189,7 @@ And here is an example of a project specific `taito-config.sh`:
         export gcloud_region="europe-west2"
         export gcloud_zone="europe-west2-a"
         export kubernetes_name="acme-kubernetes"
-        export postgres_name="acme-postgres"
+        export database_instance="acme-postgres"
         ;;
       staging)
         # Overrides for staging environment
@@ -198,14 +198,14 @@ And here is an example of a project specific `taito-config.sh`:
         export gcloud_region="europe-west2"
         export gcloud_zone="europe-west2-a"
         export kubernetes_name="acme-kubernetes"
-        export postgres_name="acme-postgres"
+        export database_instance="acme-postgres"
         ;;
       local)
         # Overrides for local environment
         export ci_exec_test=true
         export taito_app_url="http://localhost:3333"
-        export postgres_host="${taito_project}-database"
-        export postgres_port="5432"
+        export database_host="${taito_project}-database"
+        export database_port="5432"
         ;;
     esac
 
@@ -230,8 +230,8 @@ And here is an example of a project specific `taito-config.sh`:
 
     # NOTE: Secret naming convention: type.target_of_type.purpose[/namespace]:generation_method
     export taito_secrets="
-      db.${postgres_database}.app:random
-      db.${postgres_database}.build/devops:random
+      db.${database_name}.app:random
+      db.${database_name}.build/devops:random
       gcloud.cloudsql.proxy:copy/devops"
 
 ## Secret management
