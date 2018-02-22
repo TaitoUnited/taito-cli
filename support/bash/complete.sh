@@ -20,8 +20,8 @@ _taito ()
     workspace-clean workspace-kill git-env-list git-env: git-env-merge: \
     git-feat-list git-feat git-feat-squash git-feat-merge git-feat-pr \
     db-add db-proxy: db-open: db-dump: db-import: \
-    db-deploy: db-log: db-revert: db-recreate: db-copy: db-copyquick: \
-    ci-prepare: ci-build ci-push ci-deploy: manual-cancel: \
+    db-deploy: db-log: db-revert: db-rebase: db-recreate: db-copy: \
+    db-copyquick: ci-prepare: ci-build ci-push ci-deploy: manual-cancel: \
     manual-deploy: manual-build-deploy: manual-revision: manual-revert: \
     ci-wait: ci-verify: docs scan unit test: \
     ci-publish ci-release-pre: ci-release-post: \
