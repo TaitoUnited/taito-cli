@@ -23,7 +23,10 @@ export template_dest_git="${template_default_dest_git:?}"
   echo 'export template_dest_git=${template_dest_git}' >> _template-config.sh && \
   echo 'export template_project_path=${PWD}' >> _template-config.sh && \
   echo 'export taito_template=${template}' >> _template-config.sh && \
-  echo 'export taito_customer=${taito_customer:?}' >> _template-config.sh && \
+  echo 'export taito_company=${taito_company:?}' >> _template-config.sh && \
+  echo 'export taito_family=${taito_family:-}' >> _template-config.sh && \
+  echo 'export taito_application=${taito_application:?}' >> _template-config.sh && \
+  echo 'export taito_suffix=${taito_suffix:-}' >> _template-config.sh && \
   echo 'export taito_repo_name=${taito_repo_name}' >> _template-config.sh && \
   rm -rf .git && \
   echo && \

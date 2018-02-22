@@ -135,7 +135,7 @@ And here is an example of a project specific `taito-config.sh`:
     export taito_zone="acme-zone1"
     export taito_repo_location="github-${taito_organization}"
     export taito_repo_name="acme-analytics"
-    export taito_customer="acme"
+    export taito_company="acme"
     export taito_project="acme-analytics"
     export taito_namespace="${taito_project}-${taito_env}"
     export taito_app_url="https://${taito_project}-${taito_env}.acme.com"

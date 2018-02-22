@@ -6,14 +6,14 @@ dest="${taito_branch:?Destination branch name not given}"
 source="${1:?Source branch name not given}"
 
 if [[ -n ${ci_stack:-} ]]; then
-  valids=" dev->test test->staging staging->prod "
+  valids=" dev->test test->staging staging->master "
   if [[ " ${ci_stack} " != *" staging "* ]] && \
      [[ " ${ci_stack} " != *" test "* ]]; then
-    valids=" dev->prod "
+    valids=" dev->master "
   elif [[ " ${ci_stack} " != *" staging "* ]]; then
-    valids=" dev->test test->prod "
+    valids=" dev->test test->master "
   elif [[ " ${ci_stack} " != *" test "* ]]; then
-    valids=" dev->staging staging->prod "
+    valids=" dev->staging staging->master "
   fi
   echo "${source}->${dest}"
   if [[ "${valids}" != *" ${source}->${dest} "* ]]; then

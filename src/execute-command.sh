@@ -129,6 +129,7 @@ if [[ -f ${taito_project_path}/taito-secrets.sh ]]; then
 fi
 
 # TODO remove: for backwards compatibility
+export taito_company="${taito_company:-$taito_customer}"
 if [[ -n "${postgres_name:-}" ]]; then
   export database_instance="${postgres_name:-}"
   export database_name="${postgres_database:-}"

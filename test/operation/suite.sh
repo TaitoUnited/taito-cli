@@ -18,14 +18,14 @@ taito oper-info;\
 taito oper-info:dev;\
 taito oper-status;\
 taito oper-status:dev;\
-taito oper-log customer-app-server;\
-taito oper-log:dev customer-app-server;\
-taito oper-shell customer-app-server;\
-taito oper-shell:dev customer-app-server;\
-taito oper-exec customer-app-server - ls;\
-taito oper-exec:dev customer-app-server - ls;\
-taito oper-kill customer-app-server;\
-taito oper-kill:dev customer-app-server;\
+taito oper-log company-app-server;\
+taito oper-log:dev company-app-server;\
+taito oper-shell company-app-server;\
+taito oper-shell:dev company-app-server;\
+taito oper-exec company-app-server - ls;\
+taito oper-exec:dev company-app-server - ls;\
+taito oper-kill company-app-server;\
+taito oper-kill:dev company-app-server;\
 taito oper-clean;\
 "
 

@@ -61,7 +61,10 @@ echo "helm upgrade \"${options[@]}\" --debug --install \
   --set zone.name=\"${taito_zone}\" \
   --set zone.provider=\"${taito_provider:-}\" \
   --set project.name=\"${taito_project}\" \
-  --set project.customer=\"${taito_customer:-}\" \
+  --set project.company=\"${taito_company:-}\" \
+  --set project.family=\"${taito_family:-}\" \
+  --set project.application=\"${taito_application:-}\" \
+  --set project.suffix=\"${taito_suffix:-}\" \
   --set build.imageTag=\"${image}\" \
   --set build.version=\"${version}\" \
   --set build.commit=\"TODO\" \
@@ -74,7 +77,10 @@ helm upgrade "${options[@]}" --debug --install \
   --set zone.name="${taito_zone}" \
   --set zone.provider="${taito_provider:-}" \
   --set project.name="${taito_project}" \
-  --set project.customer="${taito_customer:-}" \
+  --set project.company="${taito_company:-}" \
+  --set project.family="${taito_family:-}" \
+  --set project.application="${taito_application:-}" \
+  --set project.suffix="${taito_suffix:-}" \
   --set build.imageTag="${image}" \
   --set build.version="${version}" \
   --set build.commit="TODO" \
