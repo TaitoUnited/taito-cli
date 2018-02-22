@@ -9,7 +9,7 @@ TAITO-CLI TROUBLESHOOTING
     Check your plugin configuration in your taito-config.sh files.
 
     Make sure that you have set all the environment variables correctly:
-    TODO
+    TODO...
 
   My application does not work locally
     Try clean install, start and init by running:
