@@ -14,7 +14,7 @@ export taito_suffix
 export taito_repo_name
 
 echo
-echo "Repository, namespace and labels will be constituted from the following"
+echo "Repository name, namespace and labels will be constituted from the following"
 echo "details. Please give a short word or abbreviation for each:"
 echo
 echo "  1) Company"

@@ -1,6 +1,35 @@
 # Taito-cli
 
-Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)) that can be used in any project no matter the technology or infrastructure. This is made possible by defining all settings in a project specific configuration file and implementing the commands with plugins. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands that can be used in any project no matter the technology or infrastructure. This is made possible by defining all settings in a project specific configuration file and implementing the commands with plugins. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+
+TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all commands)
+
+    taito install
+    taito start
+    taito init
+    taito open app
+
+    taito open app:dev                       # Open application in browser
+    taito open admin:dev                     # Open admin GUI in browser
+    taito info:dev                           # Show information about dev environent user accounts, etc.
+    taito status:dev                         # Show application status from dev environment
+    taito unit                               # Run unit tests
+    taito test:dev                           # Run integration/e2e tests against dev environment
+    taito shell:dev server                   # Start shell on server container
+    taito logs:dev server                    # Tail logs of server container
+    taito open logs:dev                      # Open logs in browser (e.g. Stackdriver or ELK)
+    taito open storage:dev                   # Open storage bucket in browser
+    taito db open:dev                        # Open database on command line
+    taito db proxy:dev                       # Start proxy for accessing database with a GUI tool
+    taito db rebase:dev                      # Rebase database by running db revert and deploy
+    taito db import:dev ./database/file.sql  # Import file to database
+    taito db dump:dev                        # Dump database to a file
+    taito db log:dev                         # Show database migration logs
+    taito db revert:dev f898e8f986           # Revert database to change f898e8f986
+    taito db deploy:dev                      # Deploy database migrations
+    taito db recreate:dev                    # Recreate database
+    taito db diff:local dev                  # Diff database schemas between dev and local environment
+    taito db copy:local dev                  # Copy database from dev environment to local environment
 
 Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
 
@@ -59,15 +88,15 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 ## Upgrading
 
-You can upgrade taito-cli and it's extensions by running `taito --upgrade`.
+You can upgrade taito-cli and its extensions by running `taito --upgrade`.
 
 ## Usage
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands.
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands.
 
 *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctrl`+`å` for us scandinavians) and type `close`.*
 
-Some of the plugins require authentication. If you encounter an authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
+Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
 See the [README.md](https://github.com/TaitoUnited/server-template#readme) of [server-template](https://github.com/TaitoUnited/server-template) project as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
@@ -79,7 +108,7 @@ You can easily run any shell command inside the taito-cli container, for example
 
 ### Admin credentials
 
-Many tools require you to authenticate only once and then you can run any command without ever supplying your password again. For this reason taito-cli supports a separate admin account for accessing critical resources.
+Many tools require you to authenticate only once and then you can run any command without supplying your password again. For this reason taito-cli supports a separate admin account for accessing critical resources.
 
 With the `--admin` (or `-a`) option you specify that you would like to run the given command as admin. For example, you can authenticate as admin by running `taito -a --auth:prod` and then execute a command as admin by running `taito -a status:prod`. Your admin credentials are stored in taito-cli container image using `aes-256-cbc` encryption and you need to enter the decryption key everytime you execute a command as admin. Keep the decryption key in a safe place (use a password manager for example).
 
@@ -126,56 +155,58 @@ And here is an example of a project specific `taito-config.sh`:
     # - 'docker:local' means that docker is used only in local environment
     # - 'kubectl:-local' means that kubernetes is used in all other environments
     export taito_plugins=" \
-      postgres links-global docker:local npm kubectl:-local gcloud:-local
+      postgres sqitch links-global docker:local npm kubectl:-local gcloud:-local
       gcloud-builder:-local sentry secret:-local semantic"
 
-    # common settings for all plugins
+    # Common settings for all plugins
     export taito_environments="dev prod"
     export taito_organization="myorganization"
     export taito_zone="acme-zone1"
     export taito_repo_location="github-${taito_organization}"
     export taito_repo_name="acme-analytics"
-    export taito_company="acme"
     export taito_project="acme-analytics"
+    export taito_company="acme"
+    export taito_family=""
+    export taito_application="analytics"
+    export taito_suffix=""
     export taito_namespace="${taito_project}-${taito_env}"
-    export taito_app_url="https://${taito_project}-${taito_env}.acme.com"
     export taito_registry="domain.com/${taito_zone}/${taito_repo_name}"
-
-    # Settings for ci builds
-    export ci_exec_build=true
-    export ci_exec_deploy=true
-    export ci_exec_test=true
-    export ci_exec_revert=true
+    export taito_app_url="https://${taito_project}-${taito_env}.acme.com"
 
     # gcloud plugin
     export gcloud_region="europe-west1"
     export gcloud_zone="europe-west1-c"
     export gcloud_sql_proxy_port="5001"
 
-    # aws plugin
+    # AWS plugin
     export aws_organization="..."
     export aws_project="..."
     export aws_lambda_enabled=true
     # ...
 
-    # kubectl plugin
+    # Kubectl plugin
     export kubectl_name="common-kubernetes"
 
-    # postgres plugin
+    # Database plugins (postgres/mysql/...)
     export database_instance="common-postgres"
     export database_name="${taito_project//-/_}_${taito_env}"
     export database_host="localhost"
     export database_port="${gcloud_sql_proxy_port}"
 
-    # template plugin
+    # Sqitch plugin
+    export sqitch_engine="pg" # pq/mysql/oracle/sqlite/vertica/firebird
+
+    # Template plugin
     export template_name="webapp-template"
     export template_source_git="git@github.com:TaitoUnited"
 
-    # misc settings for npm scripts
-    export test_api_user="test"
-    export test_api_password="password"
-    export test_e2e_user="test"
-    export test_e2e_password="password"
+    # Settings for builds
+    export ci_stack="client database server"
+    export ci_exec_build=false        # build a container if does not exist already
+    export ci_exec_deploy=true        # deploy automatically
+    export ci_exec_test=false         # execute test suites after deploy
+    export ci_exec_test_init=false    # run 'init --clean' before each test suite
+    export ci_exec_revert=false       # revert deploy automatically on fail
 
     # Override settings for different environments:
     # local, feature, dev, test, staging, prod
@@ -297,18 +328,24 @@ You can run any script defined in your project root *package.json* or *makefile*
 
 > NOTE: When adding commands to your package.json or makefile, you are encouraged to follow the predefined command set that is shown by running `taito --help`. The main idea behind *taito-cli* is that the same predefined command set works from project to project, no matter the technology or infrastructure. For example:
 
-    "taito-oper-install": "npm install; ant retrieve",
+    "taito-oper-install": "npm install && ant retrieve",
     "start": "java -cp . com.domain.app.MyServer",
-    "init", "host=localhost npm run _db -- < dev-data.sql",
-    "open-app", "taito util-browser: http://localhost:8080",
-    "open-app:dev", "taito util-browser: http://mydomain-dev:8080",
-    "info", "echo admin/password, user/password",
-    "db-open", "host=localhost npm run _db"
-    "db-open:dev", "host=mydomain-dev npm run _db"
-    "db-open:test", "host=mydomain-test npm run _db"
-    "db-open:staging", "host=mydomain-staging npm run _db"
-    "db-open:prod", "host=mydomain-prod run _db"
-    "_db": "mysql -u myapp -p myapp -h ${host}"
+    "init": "host=localhost npm run _db -- < dev-data.sql",
+    "init:clean": "npm run clean && npm run init",
+    "open-app": "taito util-browser: http://localhost:8080",
+    "open-app:dev": "taito util-browser: http://mydomain-dev:8080",
+    "info": "echo admin/password, user/password",
+    "info:dev": "echo admin/password, user/password",
+    "status:client": "url=localhost/client npm run _status",
+    "status:server": "url=localhost/server npm run _status",
+    "status:dev:client": "url=mydomain-dev/client npm run _status",
+    "status:dev:server": "url=mydomain-dev/server npm run _status",
+    "db-open": "host=localhost npm run _db",
+    "db-open:dev": "host=mydomain-dev npm run _db",
+    "db-open:test": "host=mydomain-test npm run _db",
+    "db-open:staging": "host=mydomain-staging npm run _db",
+    "db-open:prod": "host=mydomain-prod run _db",
+    "_db": "mysql -u myapp -p myapp -h ${host}",
 
 You can also override any existing taito-cli command in your file by using `taito-` as script name prefix. For example the following npm script shows the init.txt file before running initialization. The `-z` flag means that override is skipped when the npm script calls taito-cli. You can use the optional *taito* prefix also for avoiding conflicts with existing script names.
 

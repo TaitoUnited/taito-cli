@@ -30,13 +30,11 @@ export template_dest_git="${template_default_dest_git:?}"
   echo 'export taito_repo_name=${taito_repo_name}' >> _template-config.sh && \
   rm -rf .git && \
   echo && \
-  echo NOTE: Create a new GitHub repository: ${template_dest_git}/${taito_repo_name} && \
-  echo Leave the README.md uninitialized. && \
-  echo && \
-  echo Continue by pressing enter && \
+  echo Create a new repository: ${template_dest_git}/${taito_repo_name} && \
+  echo Leave the README.md uninitialized. After you have created the empty repository, && \
+  echo continue by pressing enter. && \
   read -r && \
-  cd ${taito_repo_name} && \
-  taito template create continue"
+  taito -c template create continue"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

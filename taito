@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
-echo "Taito-cli Copyright (C) 2017 Taito United"
-echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
-
 # Resolve paths
 # NOTE: duplicate with ./taito_impl.sh (taito_cli_path must be resolved before
 # other scripts can be called)
@@ -33,6 +30,7 @@ cd "${taito_project_path}" && \
 
 # Parse options
 mode="normal"
+continue=false
 admin=false
 upgrade=false
 skip_rest=false
@@ -44,6 +42,10 @@ do
     case $key in
         -dev)
         mode="dev"
+        shift
+        ;;
+        -c|--continue)
+        continue=true
         shift
         ;;
         -a|--admin)
@@ -71,6 +73,11 @@ do
   fi
 done
 # set -- "${args[@]}"
+
+if [[ ${continue} == false ]]; then
+  echo "Taito-cli Copyright (C) 2017 Taito United"
+  echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
+fi
 
 # Convert space command syntax to internal hyphen syntax
 args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]})) && \

@@ -8,7 +8,7 @@
 # Execute create script of template
 "${taito_plugin_path}/util/init.sh" "create" && \
 
-echo "Pushing files to git. Remember configuration after push. Please wait..." && \
+echo "Please wait..." && \
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   export GIT_PAGER="" && \
   git init -q && \
@@ -20,7 +20,8 @@ echo "Pushing files to git. Remember configuration after push. Please wait..." &
   git push -q origin v0.0.0 && \
   git checkout -q -b dev && \
   git push -q -u origin dev > /dev/null && \
-  rm -f ./_template-config.sh"
+  rm -f ./_template-config.sh && \
+  echo DONE! Now configure your project!"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

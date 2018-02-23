@@ -25,5 +25,4 @@ if [[ ${mode} != "upgrade" ]]; then
   echo
   echo "See configuration instructions at the end of README.md."
   echo "IMPORTANT: Execute each configuration step thoroughly one by one."
-  echo
 fi
