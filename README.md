@@ -468,7 +468,6 @@ All settings defined in `taito-config.sh` are visible for plugins. Additionally 
 
 * **taito_env**: The selected environment (local, feature, dev, test, staging, prod)
 * **taito_command**: The user given command without the environment suffix.
-* **taito_command_exists**: True if command is implemented by at least one of the enabled plugins.
 * **taito_enabled_extensions**: List of all enabled extensions.
 * **taito_enabled_plugins**: List of all enabled plugins.
 * **taito_skip_override**: True if command overrides should be skipped.

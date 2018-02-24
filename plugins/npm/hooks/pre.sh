@@ -1,7 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_skip_override:?}"
-: "${taito_command_exists:?}"
 : "${taito_command:?}"
 : "${taito_env:?}"
 

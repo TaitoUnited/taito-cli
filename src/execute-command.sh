@@ -1,8 +1,6 @@
 #!/bin/bash
 # NOTE: This bash script is run inside docker container.
 
-# TODO clean this mess up a bit
-
 # Parse options
 verbose=false
 skip_override=false
@@ -59,6 +57,9 @@ elif [[ -z "${env_command}" ]]; then
 else
   command=${env_command}
 fi
+
+
+# TODO clean up code below
 
 # Use 'oper-' as a default command prefix
 orig_command=${command}
@@ -142,6 +143,9 @@ if [[ -n "${postgres_name:-}" ]]; then
   export database_host="${postgres_host:-}"
   export database_port="${postgres_port:-}"
 fi
+
+# TODO ^^^^^ clean up code ^^^^^
+
 
 # Validate env
 if [[ "${taito_env}" != "local" ]] && \
@@ -254,12 +258,6 @@ do
   fi
 done
 
-# Check if command exists
-command_exists=true
-if [ ${#command_chain[@]} -eq 0 ]; then
-  command_exists=false
-fi
-
 # Assemble the final taito command chain
 concat_command_chain=(
   "${pre_handlers[@]}"
@@ -270,7 +268,6 @@ concat_command_chain=(
 )
 
 # Export some variables to be used in command execution
-export taito_command_exists="${command_exists}"
 export taito_command_chain="${concat_command_chain[@]}"
 export taito_original_command_chain="${concat_command_chain[@]}"
 export taito_commands_only_chain="${command_chain[@]}"
@@ -283,13 +280,6 @@ if [[ ${verbose} == true ]]; then
   taito_verbose=true
   taito_setv="set -x"
   taito_vout="/dev/stdout"
-fi
-
-# Print command chain in verbose mode
-if [[ ${verbose} == true ]]; then
-  echo
-  echo "### Taito-cli: Executing on ${taito_namespace:-} environment:"
-  echo -e "${taito_command_chain// /\\n}"
 fi
 
 # Admin credentials pre-handling
@@ -334,17 +324,8 @@ if [[ -n "${taito_admin_key}" ]]; then
   export taito_is_admin=true
 fi
 
-# Auth command pre-handling
-if [[ "${command}" == "__auth" ]]; then
-  echo
-  echo "- Deleting old credentials (but not committing the change yet!)"
-  rm -rf ~/.config ~/.kube
-fi
-
-# Control flow flags
+# Execute command
 exit_code=0
-skip_commands=false
-
 if [[ "${command}" == "__shell" ]]; then
   # Start interactive shell
   /bin/bash
@@ -355,20 +336,24 @@ elif [[ "${command}" == "__" ]]; then
   eval "${params[@]}"
   exit_code=${?}
 else
+  # Print the command chain in verbose mode
+  if [[ ${verbose} == true ]]; then
+    echo
+    echo "### Taito-cli: Executing on ${taito_namespace:-} environment:"
+    echo -e "${taito_command_chain// /\\n}"
+  fi
+
   # Execute taito-cli command chain
-  if [[ ${skip_commands} == false ]]; then
-    # Call the first command on the command chain
-    "${taito_cli_path}/util/call-next.sh" "${params[@]}"
-    exit_code=${?}
-    if [[ ${exit_code} == 130 ]]; then
-      echo "Cancelled"
-    elif [[ ${exit_code} -gt 0 ]]; then
-      echo "ERROR! Command failed."
-    fi
+  "${taito_cli_path}/util/call-next.sh" "${params[@]}"
+  exit_code=${?}
+  if [[ ${exit_code} == 130 ]]; then
+    echo "Cancelled"
+  elif [[ ${exit_code} -gt 0 ]]; then
+    echo "ERROR! Command failed."
   fi
 fi
 
-# Admin post-handling (just in case)
+# Admin credentials post-handling (just in case)
 # NOTE: In case of auth command this was already run before docker commit
 if [[ -n "${taito_admin_key_orig}" ]] && [[ "${command}" != "__auth" ]]; then
   # Delete admin credentials
