@@ -31,7 +31,7 @@ fi
 # TODO execute remote merge using hub cli?
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
 git fetch origin ${source}:${dest} && \
-git push origin ${dest}; \
+git push --no-verify origin ${dest}; \
 " && \
 
 # Call next command on command chain
