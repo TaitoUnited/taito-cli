@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 
 echo "TODO implement: build, push and deploy single container"

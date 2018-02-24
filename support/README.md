@@ -1,12 +1,12 @@
-# shell support
+# Shell support
 
-## zsh
+## Autocompletion for zsh
 
 Add zsh-completion folder to your $fpath before zsh completions are loaded. For example at the beginning of the `~/.zshrc` file:
 
     fpath=(~/xxx/taito-cli/support/zsh-completion $fpath)
 
-## bash
+## Autocompletion for bash
 
 Source the `complete.sh` file in your startup script. For example in
 `~/.bashrc`

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
@@ -15,7 +14,7 @@ if [[ ${pod} != *"-"* ]]; then
     head -n1 | awk '{print $1;}')
 fi
 
-kubectl delete pod "${pod}" && \
+(${taito_setv:?}; kubectl delete pod "${pod}") && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

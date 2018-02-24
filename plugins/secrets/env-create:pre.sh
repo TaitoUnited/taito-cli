@@ -1,11 +1,7 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-name_filter="${1}"
-
-echo
 echo "Creating secrets"
 
 # shellcheck disable=SC1090

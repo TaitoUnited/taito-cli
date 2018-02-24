@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 
 echo "TODO implement: run 'db log' and 'db revert'"

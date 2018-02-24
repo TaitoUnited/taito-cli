@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 
@@ -8,8 +7,11 @@ if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_test:-}" == "true" ]]; then
     echo "Tests failed"
     if [[ ${ci_exec_revert:-} == "true" ]]; then
       echo "Reverting deployment"
-      taito "db-revert:${taito_env}"
-      taito "manual-revert:${taito_env}"
+      (
+        ${taito_setv:?}
+        taito "db-revert:${taito_env}"
+        taito "manual-revert:${taito_env}"
+      )
     fi
     exit 1
   fi

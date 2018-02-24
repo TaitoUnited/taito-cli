@@ -17,8 +17,12 @@ else
 fi
 
 echo "Using username ${database_username}"
-PGPASSWORD="${database_password}" ${command} -h "${database_host}" \
+(
+  export PGPASSWORD="${database_password}"
+  ${taito_setv:?}
+  ${command} -h "${database_host}" \
   -p "${database_port}" \
   -d "${database_name}" \
   -U "${database_username}" \
   ${flags}
+)

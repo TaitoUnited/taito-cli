@@ -104,7 +104,7 @@ See the [README.md](https://github.com/TaitoUnited/server-template#readme) of [s
 
 You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
 
-> TODO: With the `-v` or `--verbose` flag you can see all the commands that plugins run during the command execution.
+With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution.
 
 ### Admin credentials
 
@@ -156,7 +156,7 @@ And here is an example of a project specific `taito-config.sh`:
     # - 'kubectl:-local' means that kubernetes is used in all other environments
     export taito_plugins=" \
       postgres sqitch links-global docker:local npm kubectl:-local gcloud:-local
-      gcloud-builder:-local sentry secret:-local semantic"
+      gcloud-builder:-local sentry secrets:-local semantic"
 
     # Common settings for all plugins
     export taito_environments="dev prod"
@@ -279,8 +279,10 @@ Plugins require secrets to perform some of the operations. Secret naming convent
 
 Responsibilities of the current default plugins:
 
-* secret: Generates random and manual secrets when required.
-* kubectl: Saves secrets to Kubernetes, and also retrieves them when required. Kubectl also copies secrets from one namespace to another when required, and has a major role in secret rotation.
+* secrets: Generates secrets when required. Secrets can be generated randomly, or read from user input or from files.
+* kube-secrets: Reads secrets from Kubernetes when required. The plugin does not store any secrets to Kubernetes because the kubectl plugin stores project specific secrets to Kubernetes anyway and all other secrets can be stored manually.
+* gcloud-secrets: Reads secrets from gcloud when required, and also stores them. This is an alternative plugin that can be used instead of kube-secrets. TODO implement
+* kubectl: Saves project specific secrets to Kubernetes so that they can be used by applications.
 
 ## Continuous integration and delivery
 
@@ -414,11 +416,24 @@ NOTE: Always remember to call the next command of the command chain at some poin
 
 NOTE: Do not call another command directly from another. It's error prone; you'll easily mess up the command chain execution, and also clarity of user friendly info messages. Place the common logic shared by multiple commands in a separate util instead.
 
+### Logging in verbose mode
+
+Values of the following environment variables are set depending on verbose mode:
+
+* **taito_verbose**: `true` or `false`
+* **taito_setv**: `set -x` or `:`
+* **taito_vout**: `/dev/stdout` or `/dev/null`
+
+You can use these environment variables to provide additional output logging in verbose mode. For example:
+
+    echo "Some additional logging" > ${taito_vout}
+    (${taito_setv}; kubectl get pods)
+
 ### Running commands on host
 
-If your plugin needs to run some command on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS` to run it immediately in the background. Alternatively you can use the `"${taito_cli_path}/util/execute-on-host-fg.sh" COMMANDS` to run commands on foreground after the taito container has exited.
+If your plugin needs to run some commands on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS` to run them immediately in the background. Alternatively you can use the `"${taito_cli_path}/util/execute-on-host-fg.sh" COMMANDS` to run the commands on foreground after the taito container has exited. Note that if some of the commands might require user input, you must run the commands on foreground.
 
-Currently this mechanism is used  e.g. for executing docker commands and launching browser on host.
+Currently this mechanism is used  e.g. for executing docker commands on host and launching browser.
 
 ### Committing changes to the taito-cli container image
 
@@ -428,7 +443,7 @@ If your plugin needs to save some data permanently on the container image, execu
 
 When a given command name matches to multiple commands, all commands are chained in series so that each command calls the next. Command execution is ordered primarily by the execution phase (pre, command, post) and secondarily by the order of the plugins in *taito-config.sh*.
 
-Passing data between commands/phases works simply by exporting environment variables. To avoid naming conflicts between plugins, use your plugin name as a prefix for your exported environment variable. Or if the purpose is to pass data between different plugins, try to come up with some good standardized variable names and describe them in the [environment variables](#environment-variables) chapter.
+Passing data between commands/phases works simply by exporting environment variables. To avoid naming conflicts between plugins, use your plugin name as a prefix for your exported environment variables. Or if the purpose is to pass data between different plugins, try to come up with some good standardized variable names and describe them in the [environment variables](#environment-variables) chapter.
 
 Here is an example how chaining could be used e.g. to implement secret rotation by integrating an external secret manager:
 
@@ -439,10 +454,11 @@ Here is an example how chaining could be used e.g. to implement secret rotation 
 
 ### Overriding existing commands
 
-You can override a single command without disabling the whole plugin:
+If you need to alter default behaviour of a plugin in some way, you can override a single command of a plugin without disabling the whole plugin:
 
 * Create a plugin that provides an alternative implementation for the command
 * Create a pre command that removes the original command from command chain (TODO reusable script for this)
+* Make sure that your plugin is given first in the `taito_plugins` setting of your `taito-config.sh` file in project root directory.
 
 ### Environment variables
 
@@ -460,6 +476,9 @@ All settings defined in `taito-config.sh` are visible for plugins. Additionally 
 * **taito_plugin_path**: Path to root directory of the current plugin.
 * **taito_project_path**: Path to project root directory.
 * **taito_command_chain**: Chain of commands to be executed next.
+* **taito_verbose**: `true` in verbose mode, otherwise `false`.
+* **taito_setv**: `set -x` in verbose mode, otherwise `:`.
+* **taito_vout**: `/dev/stdout` in verbose mode, otherwise `/dev/null`.
 
 TODO update the list of environment variables
 

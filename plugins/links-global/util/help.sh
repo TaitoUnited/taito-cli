@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 
 echo "PROJECT: LINKS"

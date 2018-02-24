@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
@@ -17,8 +16,8 @@ options=("${@:2}")
 "${taito_plugin_path}/util/use-context.sh"
 
 # Read version number that semantic-release wrote on the package.json
-version=$(grep "version" "${taito_project_path}/package.json" | \
-  grep -o "[0-9].[0-9].[0-9]")
+version=$(grep "version" \
+  "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
 
 # Determine image
 if [[ ${image} == "--dry-run" ]]; then
@@ -28,7 +27,8 @@ if [[ ${image} == "--dry-run" ]]; then
 elif [[ -z "${image}" ]]; then
   # Image not given as param
   echo "--- Determining the latest image tag for ${taito_project}-${taito_env} ---"
-  image=$(gcloud container builds list --limit=100 --filter='STATUS=SUCCESS' | \
+  image=$(gcloud container builds list \
+      --limit=100 --filter='STATUS=SUCCESS' | \
     grep "${taito_repo_name}@${taito_branch}" | \
     sed 's/.*:\(.*\).*/\1 /g' | \
     cut -d ' ' -f 1 | head -n1)
@@ -55,34 +55,21 @@ fi
 
 echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
 
-echo "helm upgrade \"${options[@]}\" --debug --install \
-  --namespace \"${taito_namespace}\" \
-  --set env=\"${taito_env}\" \
-  --set zone.name=\"${taito_zone}\" \
-  --set zone.provider=\"${taito_provider:-}\" \
-  --set project.name=\"${taito_project}\" \
-  --set project.company=\"${taito_company:-}\" \
-  --set project.family=\"${taito_family:-}\" \
-  --set project.application=\"${taito_application:-}\" \
-  --set project.suffix=\"${taito_suffix:-}\" \
-  --set build.imageTag=\"${image}\" \
-  --set build.version=\"${version}\" \
-  --set build.commit=\"TODO\" \
-  -f scripts/helm.yaml ${override_file} \
-  \"${taito_project}-${taito_env}\" \"${chart_path}\" "
-
-helm upgrade "${options[@]}" --debug --install \
-  --namespace "${taito_namespace}" \
-  --set env="${taito_env}" \
-  --set zone.name="${taito_zone}" \
-  --set zone.provider="${taito_provider:-}" \
-  --set project.name="${taito_project}" \
-  --set project.company="${taito_company:-}" \
-  --set project.family="${taito_family:-}" \
-  --set project.application="${taito_application:-}" \
-  --set project.suffix="${taito_suffix:-}" \
-  --set build.imageTag="${image}" \
-  --set build.version="${version}" \
-  --set build.commit="TODO" \
-  -f scripts/helm.yaml ${override_file} \
-  "${taito_project}-${taito_env}" "${chart_path}"
+(
+  ${taito_setv:?}
+  helm upgrade "${options[@]}" --debug --install \
+    --namespace "${taito_namespace}" \
+    --set env="${taito_env}" \
+    --set zone.name="${taito_zone}" \
+    --set zone.provider="${taito_provider:-}" \
+    --set project.name="${taito_project}" \
+    --set project.company="${taito_company:-}" \
+    --set project.family="${taito_family:-}" \
+    --set project.application="${taito_application:-}" \
+    --set project.suffix="${taito_suffix:-}" \
+    --set build.imageTag="${image}" \
+    --set build.version="${version}" \
+    --set build.commit="TODO" \
+    -f scripts/helm.yaml ${override_file} \
+    "${taito_project}-${taito_env}" "${chart_path}"
+)

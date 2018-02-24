@@ -1,11 +1,8 @@
 #!/bin/bash
-
-
-# TODO REMOVE?
-
-
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
+
+# TODO REMOVE?
 
 # Read command names from package.json to check that command exists
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')

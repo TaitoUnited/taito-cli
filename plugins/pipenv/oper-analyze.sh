@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" \

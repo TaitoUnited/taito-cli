@@ -1,9 +1,7 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
-# TODO rename postgres variables to common?
 : "${database_external_port:?}"
 : "${database_name:?}"
 

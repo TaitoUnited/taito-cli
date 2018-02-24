@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
@@ -16,33 +15,33 @@ fi
 
 if [[ "${switch}" == "--all" ]]; then
   echo "--- Node details ---"
-  kubectl describe nodes
+  (${taito_setv:?}; kubectl describe nodes)
   echo
   echo
 
   echo "--- Nodes ---"
-  kubectl top nodes
+  (${taito_setv:?}; kubectl top nodes)
   echo
   echo
 
   echo "--- Helm ---"
-  helm list --namespace "${taito_namespace}"
+  (${taito_setv:?}; helm list --namespace "${taito_namespace}")
   echo
   echo
 
   echo "--- Ingress ---"
-  kubectl get ingress "${params[@]}"
+  (${taito_setv:?}; kubectl get ingress "${params[@]}")
   echo
   echo
 
   echo "--- Services ---"
-  kubectl get services "${params[@]}"
+  (${taito_setv:?}; kubectl get services "${params[@]}")
   echo
   echo
 fi
 
 echo "--- Pods ---"
-kubectl get pods "${params[@]}"
+(${taito_setv:?}; kubectl get pods "${params[@]}")
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

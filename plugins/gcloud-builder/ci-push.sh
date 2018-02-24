@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
@@ -23,7 +22,7 @@ if [[ "${ci_stack:-}" != *"${name}"* ]]; then
   echo "Skipping push: ${name} not included in ci_stack"
 else
   if [[ ! -f ./taitoflag_images_exist ]]; then
-    docker push "${image_path}${path_suffix}:${image_tag}"
+    (${taito_setv:?}; docker push "${image_path}${path_suffix}:${image_tag}")
   else
     echo "- Image ${image_tag} already exists. Skipping push."
   fi

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
@@ -14,6 +13,7 @@ if [[ "${taito_env}" == "prod"* ]]; then
 fi
 
 (
+  export PGPASSWORD
   # TODO: copy-pasted from sqitch.sh -->
   . "${taito_plugin_path}/util/postgres-username-password.sh"
 
@@ -32,11 +32,10 @@ fi
   # Drop all but the default schemas
   echo && \
   echo "- import ./database/clean.sql" && \
-  PGPASSWORD="${PGPASSWORD}" \
-    psql -h "${database_host}" -p "${database_port}" \
+  (${taito_setv:?}; psql -h "${database_host}" -p "${database_port}" \
     -d "${database_name}" \
     -U "${database_user}" \
-    -f "${taito_plugin_path}/resources/clean.sql" && \
+    -f "${taito_plugin_path}/resources/clean.sql") && \
 
   # Drop all content in public schema
   # TODO currently drops only tables
@@ -46,21 +45,19 @@ fi
   mkdir -p "${taito_project_path}/tmp" &> /dev/null && \
   rm -f "${tmp_file}" &> /dev/null && \
 
-  PGPASSWORD="${PGPASSWORD}" \
-    psql -h "${database_host}" -p "${database_port}" \
+  (${taito_setv:?}; psql -h "${database_host}" -p "${database_port}" \
     -d "${database_name}" \
     -U "${database_user}" \
     -t \
     -c "SELECT 'DROP TABLE ' || n.nspname || '.' || c.relname || ' CASCADE;' FROM pg_catalog.pg_class AS c LEFT JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace WHERE relkind = 'r' AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)" \
-    > "${tmp_file}" && \
+    > "${tmp_file}") && \
 
   echo && \
   echo "- import ${tmp_file}" && \
-  PGPASSWORD="${PGPASSWORD}" \
-    psql -h "${database_host}" -p "${database_port}" \
+  (${taito_setv:?}; psql -h "${database_host}" -p "${database_port}" \
     -d "${database_name}" \
     -U "${database_user}" \
-    -f "${tmp_file}" && \
+    -f "${tmp_file}") && \
 
   rm -f "${tmp_file}" &> /dev/null && \
 
@@ -69,7 +66,7 @@ fi
   # Run init.sql of project
   echo && \
   echo "- import ./database/init.sql" && \
-  PGPASSWORD="${PGPASSWORD}" psql -h "${database_host}" \
+  (${taito_setv:?}; psql -h "${database_host}" \
     -p "${database_port}" -d "${database_name}" \
-     -U "${database_user}" < ./database/init.sql
+     -U "${database_user}" < ./database/init.sql)
 )

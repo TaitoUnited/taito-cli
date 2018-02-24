@@ -1,12 +1,10 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${gcloud_project:?}"
 : "${gcloud_zone:?}"
 : "${gcloud_sql_proxy_port:?}"
-# TODO rename postgres variables to common?
 : "${database_name:?}"
 
 echo "host=127.0.0.1, port=${gcloud_sql_proxy_port}"

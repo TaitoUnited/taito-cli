@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_repo_name:?}"
 : "${sentry_organization:?}"

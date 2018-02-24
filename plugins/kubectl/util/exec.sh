@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
@@ -28,11 +27,11 @@ fi
 if [[ -z "${pod}" ]]; then
   echo
   echo "kubectl: Please give pod name as argument:"
-  kubectl get pods
+  (${taito_setv:?}; kubectl get pods)
 else
   # Kubernetes
   echo
   echo "-------------------------------------------------------------------"
   echo
-  kubectl exec -it "${pod}" -c "${container}" -- "${command[@]}"
+  (${taito_setv:?}; kubectl exec -it "${pod}" -c "${container}" -- "${command[@]}")
 fi

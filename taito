@@ -34,13 +34,14 @@ continue=false
 admin=false
 upgrade=false
 skip_rest=false
+options=()
 args=()
 while [[ $# -gt 0 ]]
 do
   key="$1"
   if [[ ${skip_rest} == false ]]; then
     case $key in
-        -dev)
+        -d|-dev|--dev)
         mode="dev"
         shift
         ;;
@@ -57,13 +58,16 @@ do
         shift
         ;;
         *)
-        # not known -> pass it to the docker container
-        args+=("$1")
-        shift
-        if [[ "$1" != "-"* ]]; then
-          # not an option -> pass all the rest to the docker container
+        if [[ "$1" == "-"* ]]; then
+          # not known -> pass it to the docker container as options
+          options+=("$1")
+        else
+          # not an option -> pass this and all the rest to the docker container
+          # as args
+          args+=("$1")
           skip_rest=true
         fi
+        shift
         ;;
     esac
   else
@@ -82,11 +86,11 @@ fi
 # Convert space command syntax to internal hyphen syntax
 args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]})) && \
 
-# Determine command and its parameters
+# Determine command and params given to docker container
 command="${args[0]}"
-params=(${args[@]})
-if [[ -z "${command}" ]]; then
-  command="--help"
+params=(${options[@]} ${args[@]})
+if [[ -z "${params[*]}" ]]; then
+  params=("--help")
 fi
 
 # Determine enabled extensions and download missing remote extensions
@@ -104,7 +108,7 @@ do
     repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
     if [[ -d "${repo_local_path}" ]]; then
       # Pull the latest version
-      if [[ "${command}" == "--upgrade" ]]; then
+      if [[ ${upgrade} == true ]]; then
         echo "Pulling ${repo_local_path}..."
         (cd "${repo_local_path}"; git pull &> /dev/null)
       fi
@@ -214,10 +218,10 @@ else
   ctrl_filter=" grep -axv '.*' "
 fi
 output=""
-if [[ ${command} == "-h"* ]] || \
-   [[ ${command} == "--help"* ]] || \
-   [[ ${command} == "--trouble"* ]] || \
-   [[ ${command} == "--readme"* ]]; then
+if [[ " ${options[*]} " == *" -h "* ]] || \
+   [[ " ${options[*]} " == *" --help "* ]] || \
+   [[ " ${options[*]} " == *" --trouble "* ]] || \
+   [[ " ${options[*]} " == *" --readme "* ]]; then
   output="| tr '\r\n' '\275\276' | ${ctrl_filter} | \
     tr '\275\276' '\r\n' | tail -n +3 | less"
 fi

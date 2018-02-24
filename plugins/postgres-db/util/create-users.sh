@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
@@ -25,6 +24,7 @@ fi
 
 # Execute
 
+${taito_setv:?}
 psql -h "${database_host}" -p "${database_port}" \
   -U "${database_username}" \
   -f "${taito_plugin_path}/resources/users.sql" \

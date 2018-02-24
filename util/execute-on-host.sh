@@ -1,10 +1,13 @@
 #!/bin/bash
+: "${taito_vout:?}"
 
 # Executes the given shell commands on host
 # NOTE: executes in container if ci mode is enabled.
 
 commands="${*:1}"
 sleep_seconds="${2}"
+
+echo "${commands}" > "${taito_vout}"
 
 if [[ "${taito_mode:-}" == "ci" ]] || \
    [[ "${taito_mode:-}" == "local" ]]; then

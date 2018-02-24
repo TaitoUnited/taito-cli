@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 
 content=$(cat "${taito_project_path}/README.md")

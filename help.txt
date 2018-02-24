@@ -69,10 +69,17 @@ OPTIONS
 
   --verbose, -v
     Show all commands that plugins execute.
-    TODO implement
+
+  --dev, -d
+    Run in development mode. Mounts taito-cli directory inside the taito-cli
+    docker container.
 
   -z
     Skip taito command overrides.
+
+  -c
+    Informs taito-cli that the command is continuing from a previous command
+    execution and therefore the license should not be shown again.
 
 ARGUMENTS
 
@@ -447,9 +454,6 @@ PROJECT: BASIC SETUP
   env rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.
 
-  env cert[:ENV] DOMAIN
-    Add a custom certificate.
-
 PROJECT: ALTERNATIVE ENVIRONMENT SETUP
 
   > An alternative environment uses the same database as the main environment,
@@ -468,9 +472,6 @@ PROJECT: ALTERNATIVE ENVIRONMENT SETUP
 
   env alt rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.
-
-  env alt cert[:ENV] DOMAIN
-    Add a custom certificate.
 
 PROJECT: CONTACTS
 

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
@@ -32,4 +31,4 @@ fi
 # Determine container name from pod name
 container=$(echo "${pod}" | sed -e 's/\([^0-9]*\)*/\1/;s/-[0-9].*$//')
 
-kubectl cp "${source}" "${dest}" -c "${container}"
+(${taito_setv:?}; kubectl cp "${source}" "${dest}" -c "${container}")

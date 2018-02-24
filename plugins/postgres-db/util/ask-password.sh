@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${database_username:?}"
 
 passwd_var="${database_username}_password"

@@ -1,6 +1,5 @@
 #!/bin/bash
 # Opens the given url in browser
-
 : "${taito_host_uname:?}"
 : "${taito_cli_path:?}"
 

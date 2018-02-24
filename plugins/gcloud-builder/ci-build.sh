@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
@@ -34,15 +33,18 @@ else
       exit 1
     else
       echo "- Building image"
-      docker build -f "./${name}/Dockerfile.build" \
-        --build-arg BUILD_VERSION="${version}" \
-        --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-        -t "${image_path}${path_suffix}:${image_tag}" "./${name}"
+      (
+        ${taito_setv:?}
+        docker build -f "./${name}/Dockerfile.build" \
+          --build-arg BUILD_VERSION="${version}" \
+          --build-arg BUILD_IMAGE_TAG="${image_tag}" \
+          -t "${image_path}${path_suffix}:${image_tag}" "./${name}"
+      )
     fi
   else
     echo "- Image ${image_tag} already exists. Pulling the existing image."
     # We have pull the image so that it exists at the end
-    docker pull "${image_path}${path_suffix}:${image_tag}"
+    (${taito_setv:?}; docker pull "${image_path}${path_suffix}:${image_tag}")
   fi && \
 
   # Tag so that CI will not rebuild image when running docker-compose
@@ -52,12 +54,15 @@ else
     echo "tag for ci-test: ${taito_project}${tag_suffix}:latest" && \
     echo "pwd: ${PWD}" && \
     echo "project path: ${taito_project_path}" && \
-    docker image tag "${image_path}${path_suffix}:${image_tag}" \
-      "workspace_${taito_project}${tag_suffix}:latest" && \
-    docker image tag "${image_path}${path_suffix}:${image_tag}" \
-      "${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
-    docker image tag "${image_path}${path_suffix}:${image_tag}" \
-      "${taito_project}${tag_suffix}:latest"
+    (
+      ${taito_setv:?}
+      docker image tag "${image_path}${path_suffix}:${image_tag}" \
+        "workspace_${taito_project}${tag_suffix}:latest" && \
+      docker image tag "${image_path}${path_suffix}:${image_tag}" \
+        "${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
+      docker image tag "${image_path}${path_suffix}:${image_tag}" \
+        "${taito_project}${tag_suffix}:latest"
+    )
   fi
 fi && \
 

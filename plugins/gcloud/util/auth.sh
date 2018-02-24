@@ -5,12 +5,12 @@ type=${1}
 
 if [[ ${type} == "" ]] || [[ ${type} == "init" ]]; then
   echo "---- gcloud init -----"
-  gcloud init --console-only --project="${taito_zone}"
+  (${taito_setv:?}; gcloud init --console-only --project="${taito_zone}")
 fi && \
 
 if [[ ${type} == "" ]] || [[ ${type} == "default" ]]; then
   echo "---- gcloud auth application-default login -----"
-  gcloud auth application-default login
+  (${taito_setv:?}; gcloud auth application-default login)
 fi && \
 
 if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]]; then

@@ -1,9 +1,10 @@
 #!/bin/bash
 # NOTE: This bash script is run inside docker container.
 
-# TODO REFACTOR: clean this mess up a bit
+# TODO clean this mess up a bit
 
 # Parse options
+verbose=false
 skip_override=false
 skip_rest=false
 args=()
@@ -12,6 +13,10 @@ do
   key="$1"
   if [[ ${skip_rest} == false ]]; then
     case $key in
+        -v|--verbose)
+        verbose=true
+        shift
+        ;;
         -z)
         skip_override=true
         shift
@@ -34,14 +39,14 @@ do
 done
 
 # CI/CD runs taito_impl directly so we need to print this here also
-if [[ "${taito_mode:-}" == "ci" ]] && [[ "${skip_override}" == false ]]; then
+if [[ "${taito_mode:-}" == "ci" ]]; then
   echo "Taito-cli Copyright (C) 2017 Taito United"
   echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
 fi
 
 # Convert space command syntax to internal hyphen syntax
 # TODO
-# args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]})) && \
+# args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]}))
 
 # Determine command, env and parameters from args
 env_command="${args[0]}"
@@ -263,15 +268,25 @@ export taito_command_exists="${command_exists}"
 export taito_command_chain="${command_chain[@]}"
 export taito_original_command_chain="${command_chain[@]}"
 export taito_enabled_plugins="${enabled_plugins}"
+export taito_verbose=
+export taito_setv=":"
+export taito_vout="/dev/null"
+if [[ ${verbose} == true ]]; then
+  # Helper environment variables to be used in verbose mode
+  taito_verbose=true
+  taito_setv="set -x"
+  taito_vout="/dev/stdout"
+fi
 
-# TODO Print command chain in verbose mode
-# if [[ ${skip_override} == false ]] && \
-#    [[ ${command_exists} == true ]] && \
-#    [[ ${command} != "__"* ]]; then
-#   echo
-#   echo "### Taito-cli: Executing on ${taito_namespace:-} environment:"
-#   echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
-# fi
+# Print command chain in verbose mode
+if [[ ${verbose} == true ]] && \
+   [[ ${skip_override} == false ]] && \
+   [[ ${command_exists} == true ]] && \
+   [[ ${command} != "__"* ]]; then
+  echo
+  echo "### Taito-cli: Executing on ${taito_namespace:-} environment:"
+  echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
+fi
 
 # Admin credentials pre-handling
 if [[ -n "${taito_admin_key}" ]]; then
@@ -318,7 +333,7 @@ fi
 # Auth command pre-handling
 if [[ "${command}" == "__auth" ]]; then
   echo
-  echo "- Deleting old credentials"
+  echo "- Deleting old credentials (but not committing the change yet!)"
   rm -rf ~/.config ~/.kube
 fi
 

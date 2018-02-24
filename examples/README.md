@@ -1,4 +1,4 @@
-# Quickstart
+# Quick start
 
 In this example we use Google Cloud and Sentry.
 

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_project:?}"
@@ -39,17 +38,20 @@ do
     fi
 
     if [[ ${secret_method} != "read/"* ]]; then
-      kubectl create namespace "${secret_namespace}" &> /dev/null
-      kubectl delete secret "${secret_name}" --namespace="${secret_namespace}" \
-        2> /dev/null
-      secret_source="literal"
-      if [[ ${secret_method} == "file" ]]; then
-        secret_source="file"
-      fi
-      kubectl create secret generic "${secret_name}" \
-        --namespace="${secret_namespace}" \
-        --from-${secret_source}=SECRET="${secret_value}" \
-        --from-literal=METHOD="${secret_method}"
+      (
+        ${taito_setv:?}
+        kubectl create namespace "${secret_namespace}" &> /dev/null
+        kubectl delete secret "${secret_name}" \
+          --namespace="${secret_namespace}" 2> /dev/null
+        secret_source="literal"
+        if [[ ${secret_method} == "file" ]]; then
+          secret_source="file"
+        fi
+        kubectl create secret generic "${secret_name}" \
+          --namespace="${secret_namespace}" \
+          --from-${secret_source}=SECRET="${secret_value}" \
+          --from-literal=METHOD="${secret_method}"
+      )
       # shellcheck disable=SC2181
       if [[ $? -gt 0 ]]; then
        exit 1
@@ -60,15 +62,6 @@ do
   secret_index=$((${secret_index}+1))
 done && \
 
-# TODO remove this
-# Copy all common secrets from common namespace
-# echo "- Copying all secrets from common namespace"
-# echo "TODO we should delete old ones first! use apply instead of create,
-# but it fails in: the object has been modified"
-# kubectl get secrets -o json --namespace common | \
-#   jq ".items[].metadata.namespace = \"${taito_namespace}\"" \
-#   | kubectl create -f  -
-
 if [[ ${kubectl_skip_restart:-} != "true" ]]; then
   echo && \
   echo "Restart all pods in namespace ${taito_namespace} (Y/n)?" && \
@@ -76,7 +69,7 @@ if [[ ${kubectl_skip_restart:-} != "true" ]]; then
   if [[ "${confirm}" =~ ^[Yy]$ ]]; then
     echo "--- kubectl: Restarting pods ---" && \
     echo "TODO rolling update instead of delete?" && \
-    kubectl delete --all pods --namespace="${taito_namespace}"
+    (${taito_setv:?}; kubectl delete --all pods --namespace="${taito_namespace}")
   fi
 else
   echo "--- NOTE: Skipping pod restart for refreshing secrets ---"

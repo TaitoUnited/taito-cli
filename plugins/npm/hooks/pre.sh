@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_skip_override:?}"
 : "${taito_command_exists:?}"
 : "${taito_command:?}"
@@ -51,7 +50,7 @@ if [[ -f "./package.json" ]]; then
     echo
     echo "### npm/pre: Running script '${npm_command}'"
     # NOTE: intentionally removed parameter support: -- "${@}"
-    if ! npm run -s "${npm_command}"; then
+    if ! (${taito_setv:?}; npm run -s "${npm_command}"); then
       exit_code=1
     else
       exit_code=66

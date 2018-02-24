@@ -1,5 +1,4 @@
 #!/bin/bash
-
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
@@ -12,6 +11,7 @@ echo "Are you sure you want to drop database ${database_name} (Y/n)?"
 read -r confirm
 if [[ ${confirm} =~ ^[Yy]$ ]]; then
   echo "- import drop.sql:"
+  ${taito_setv:?}
   psql -h "${database_host}" \
     -p "${database_port}" \
     -U "${database_username}" \
