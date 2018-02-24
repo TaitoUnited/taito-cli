@@ -112,6 +112,7 @@ fi
 # Export some variables to be used in configs and command execution
 export taito_skip_override="${skip_override}"
 export taito_command="${command}"
+export taito_orig_command="${orig_command}"
 export taito_env="${env}"
 export taito_branch="${branch}"
 
@@ -199,7 +200,7 @@ eval "$secret_exports"
 
 # Determine enabled plugins
 enabled_plugins=""
-plugins_string=$(echo basic "${taito_plugins:-}" "${taito_global_plugins:-}" \
+plugins_string=$(echo "${taito_plugins:-}" "${taito_global_plugins:-} basic " \
   | awk '{for (i=1;i<=NF;i++) if (!a[$i]++) printf("%s%s",$i,FS)}{printf("\n")}')
 # TODO remove this (backwards compatibility)
 plugins_string="${plugins_string/postgres /postgres-db }"
@@ -364,28 +365,6 @@ else
     elif [[ ${exit_code} -gt 0 ]]; then
       echo "ERROR! Command failed."
     fi
-
-    # TODO how to catch that no command was actually executed?
-    # every hook should set an environment variable if they execute something
-    # and this should be the last step in command chain
-    # if [[ "${was_executed}" == false ]] && [[ "${command}" == "oper-init" ]]; then
-    #   # None of the enabled plugins has implemented oper-init
-    #   echo "Nothing to initialize"
-    # elif [[ "${was_executed}" == false ]]; then
-    #   # Command not found
-    #   echo
-    #   if [[ "${orig_command}" != " " ]]; then
-    #     # Show matching commands
-    #     echo "Unknown command: '${orig_command//-/ }'. Perhaps one of the following commands is the one"
-    #     echo "you meant to run. Run 'taito -h' to get more help."
-    #     export taito_command_chain=""
-    #     export taito_plugin_path="${taito_cli_path}/plugins/basic"
-    #     "${taito_cli_path}/plugins/basic/__help.sh" "${orig_command}"
-    #   else
-    #     echo "Unknown command"
-    #   fi
-    #   exit_code=1
-    # fi
   fi
 fi
 

@@ -2,6 +2,8 @@
 : "${taito_cli_path:?}"
 : "${taito_command:?}"
 
+export taito_hook_command_executed=${taito_hook_command_executed}
+
 if [[ "${taito_command}" == "open-"* ]]; then
   mode="open"
 elif [[ "${taito_command}" == "link-"* ]]; then
@@ -30,6 +32,7 @@ if [[ ! -z ${mode} ]]; then
           echo "### links/pre: Showing link ${name}"
           echo "${url}"
         fi
+        taito_hook_command_executed=true
         break
       fi
     done

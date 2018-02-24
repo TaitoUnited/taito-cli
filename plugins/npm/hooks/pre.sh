@@ -5,6 +5,8 @@
 : "${taito_command:?}"
 : "${taito_env:?}"
 
+export taito_hook_command_executed=${taito_hook_command_executed}
+
 command_short="${taito_command#oper-}"
 exit_code=0
 skip_remaining_commands=false
@@ -60,6 +62,7 @@ if [[ -f "./package.json" ]]; then
     echo
     echo "### npm/pre: Running script '${npm_command}'"
     # NOTE: intentionally removed parameter support: -- "${@}"
+    taito_hook_command_executed=true
     (${taito_setv:?}; npm run -s "${npm_command}")
     exit_code=$?
   fi
