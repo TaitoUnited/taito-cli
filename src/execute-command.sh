@@ -143,7 +143,8 @@ if [[ -n "${postgres_name:-}" ]]; then
 fi
 
 # Validate env
-if [[ "${taito_env}" != "local" ]] && [[ " ${taito_environments:-} " != *" ${taito_env} "* ]]; then
+if [[ "${taito_env}" != "local" ]] && \
+   [[ " ${taito_environments:-} " != *" ${taito_env} "* ]]; then
   echo
   echo "ERROR: '${taito_env}' not included in taito_environments: ${taito_environments:-}"
   exit 1
@@ -252,23 +253,28 @@ do
   fi
 done
 
-# Assemble the final taito command chain
-command_chain=(
-  "${pre_command_chain[@]}" "${command_chain[@]}" "${post_command_chain[@]}"
-)
-
 # Check if command exists
 command_exists=true
 if [ ${#command_chain[@]} -eq 0 ]; then
   command_exists=false
 fi
 
+# Assemble the final taito command chain
+concat_command_chain=(
+  "${pre_handlers[@]}"
+  "${pre_command_chain[@]}"
+  "${command_chain[@]}"
+  "${post_command_chain[@]}"
+  "${post_handlers[@]}"
+)
+
 # Export some variables to be used in command execution
 export taito_command_exists="${command_exists}"
-export taito_command_chain="${command_chain[@]}"
-export taito_original_command_chain="${command_chain[@]}"
+export taito_command_chain="${concat_command_chain[@]}"
+export taito_original_command_chain="${concat_command_chain[@]}"
+export taito_commands_only_chain="${command_chain[@]}"
 export taito_enabled_plugins="${enabled_plugins}"
-export taito_verbose=
+export taito_verbose=false
 export taito_setv=":"
 export taito_vout="/dev/null"
 if [[ ${verbose} == true ]]; then
@@ -279,13 +285,10 @@ if [[ ${verbose} == true ]]; then
 fi
 
 # Print command chain in verbose mode
-if [[ ${verbose} == true ]] && \
-   [[ ${skip_override} == false ]] && \
-   [[ ${command_exists} == true ]] && \
-   [[ ${command} != "__"* ]]; then
+if [[ ${verbose} == true ]]; then
   echo
   echo "### Taito-cli: Executing on ${taito_namespace:-} environment:"
-  echo -e "${taito_command_chain// /\n}" | awk -F/ '{print $(NF-1)"\057"$(NF)}'
+  echo -e "${taito_command_chain// /\\n}"
 fi
 
 # Admin credentials pre-handling
@@ -351,68 +354,39 @@ elif [[ "${command}" == "__" ]]; then
   eval "${params[@]}"
   exit_code=${?}
 else
-  # Execute taito-cli command
-
-  # Call pre-handers
-  for handler in "${pre_handlers[@]}"
-  do
-    # shellcheck disable=SC1090
-    . "${taito_cli_path}/util/set-taito-plugin-path.sh" "${handler%hooks\/*}"
-    "${handler}" "${params[@]}"
-    ecode=${?}
-    if [[ ${ecode} == 66 ]]; then
-      # exit code 66: no error, but skip the following commands
-      skip_commands=true
-    elif [[ ${ecode} -gt 0 ]]; then
-      >&2 echo ERROR!
-      skip_commands=true
-      exit_code=${ecode}
-    fi
-  done
-
-  # Call command
+  # Execute taito-cli command chain
   if [[ ${skip_commands} == false ]]; then
-    if [[ ${command_exists} == true ]]; then
-      # Call the first command on the command chain
-      "${taito_cli_path}/util/call-next.sh" "${params[@]}"
-      exit_code=${?}
-      if [[ ${exit_code} == 130 ]]; then
-        echo "Cancelled"
-      elif [[ ${exit_code} -gt 0 ]]; then
-        echo "ERROR! Command failed."
-      fi
-    elif [[ "${command}" == "oper-init" ]]; then
-      # None of the enabled plugins has implemented oper-init
-      echo "Nothing to initialize"
-    else
-      # Command not found
-      echo
-      if [[ "${orig_command}" != " " ]]; then
-        # Show matching commands
-        echo "Unknown command: '${orig_command//-/ }'. Perhaps one of the following commands is the one"
-        echo "you meant to run. Run 'taito -h' to get more help."
-        export taito_command_chain=""
-        export taito_plugin_path="${taito_cli_path}/plugins/basic"
-        "${taito_cli_path}/plugins/basic/__help.sh" "${orig_command}"
-      else
-        echo "Unknown command"
-      fi
-      exit_code=1
+    # Call the first command on the command chain
+    "${taito_cli_path}/util/call-next.sh" "${params[@]}"
+    exit_code=${?}
+    if [[ ${exit_code} == 130 ]]; then
+      echo "Cancelled"
+    elif [[ ${exit_code} -gt 0 ]]; then
+      echo "ERROR! Command failed."
     fi
-  fi
 
-  # Call post-handers
-  for handler in "${post_handlers[@]}"
-  do
-    # shellcheck disable=SC1090
-    . "${taito_cli_path}/util/set-taito-plugin-path.sh" "${handler%hooks\/*}"
-    "${handler}" "${params[@]}"
-    ecode=${?}
-    if [[ ${ecode} -gt 0 ]] && [[ ${ecode} != 66 ]]; then
-      >&2 echo ERROR!
-      exit_code=${ecode}
-    fi
-  done
+    # TODO how to catch that no command was actually executed?
+    # every hook should set an environment variable if they execute something
+    # and this should be the last step in command chain
+    # if [[ "${was_executed}" == false ]] && [[ "${command}" == "oper-init" ]]; then
+    #   # None of the enabled plugins has implemented oper-init
+    #   echo "Nothing to initialize"
+    # elif [[ "${was_executed}" == false ]]; then
+    #   # Command not found
+    #   echo
+    #   if [[ "${orig_command}" != " " ]]; then
+    #     # Show matching commands
+    #     echo "Unknown command: '${orig_command//-/ }'. Perhaps one of the following commands is the one"
+    #     echo "you meant to run. Run 'taito -h' to get more help."
+    #     export taito_command_chain=""
+    #     export taito_plugin_path="${taito_cli_path}/plugins/basic"
+    #     "${taito_cli_path}/plugins/basic/__help.sh" "${orig_command}"
+    #   else
+    #     echo "Unknown command"
+    #   fi
+    #   exit_code=1
+    # fi
+  fi
 fi
 
 # Admin post-handling (just in case)

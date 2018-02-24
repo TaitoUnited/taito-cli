@@ -7,7 +7,6 @@
 pod="${1:?Pod name not given}"
 container_name="${2}"
 
-# Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
 if [[ ${pod} != *"-"* ]]; then

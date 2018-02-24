@@ -1,6 +1,7 @@
 #!/bin/bash
+: "${taito_cli_path:?}"
 
-if [[ ${taito_command_chain:-} == *"-db/"* ]]; then
+if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
   if [[ "${proxy_running:-}" == "" ]]; then
     echo "### aws/pre: Starting db proxy"
@@ -11,7 +12,10 @@ if [[ ${taito_command_chain:-} == *"-db/"* ]]; then
 fi && \
 
 if [[ "${taito_mode:-}" == "ci" ]] && \
-   [[ ${taito_command_chain:-} == *"kubectl/"* ]]; then
+   [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]]; then
   echo "### aws/pre: Getting credentials for kubernetes"
   echo "TODO implement"
 fi
+
+# Call next command on command chain
+"${taito_cli_path}/util/call-next.sh" "${@}"

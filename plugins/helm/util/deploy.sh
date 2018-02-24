@@ -12,9 +12,6 @@
 image="${1}"
 options=("${@:2}")
 
-# Change namespace
-"${taito_plugin_path}/util/use-context.sh"
-
 # Read version number that semantic-release wrote on the package.json
 version=$(grep "version" \
   "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
@@ -27,6 +24,8 @@ if [[ ${image} == "--dry-run" ]]; then
 elif [[ -z "${image}" ]]; then
   # Image not given as param
   echo "--- Determining the latest image tag for ${taito_project}-${taito_env} ---"
+  # TODO this should be in gcloud-builder plugin
+  # --> just call: 'taito image show'?
   image=$(gcloud container builds list \
       --limit=100 --filter='STATUS=SUCCESS' | \
     grep "${taito_repo_name}@${taito_branch}" | \

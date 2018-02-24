@@ -5,8 +5,7 @@
 
 flag=${1}
 
-# Change namespace
-"${taito_plugin_path}/util/use-context.sh" && \
+"${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
 
 # shellcheck disable=SC1090
 . "${taito_plugin_path}/util/get-secrets.sh" && \

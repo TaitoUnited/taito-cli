@@ -1,4 +1,5 @@
 #!/bin/bash
+: "${taito_cli_path:?}"
 : "${taito_skip_override:?}"
 : "${taito_command_exists:?}"
 : "${taito_command:?}"
@@ -6,6 +7,7 @@
 
 command_short="${taito_command#oper-}"
 exit_code=0
+skip_remaining_commands=false
 
 suffix=" ${*}"
 suffix="${suffix/--/}"
@@ -23,24 +25,32 @@ if [[ -f "./package.json" ]]; then
      [[ $(echo "${commands}" | grep "^taito-${taito_command}:${taito_env}${suffix}$") != "" ]]; then
     # Use overriding command from package.json
     npm_command="taito-${taito_command}:${taito_env}${suffix}"
+    skip_remaining_commands=true
   elif [[ ${taito_skip_override} == false ]] && \
      [[ $(echo "${commands}" | grep "^taito-${taito_command}${suffix}$") != "" ]]; then
     # Use overriding command from package.json without enviroment suffix
     npm_command="taito-${taito_command}${suffix}"
-  elif [[ ${taito_command_exists} == false ]] && \
-       [[ $(echo "${commands}" | grep "^${taito_command}:${taito_env}${suffix}$") != "" ]]; then
+    skip_remaining_commands=true
+  elif [[ ${taito_skip_override} == false ]] && \
+     [[ $(echo "${commands}" | grep "^taito-${command_short}:${taito_env}${suffix}$") != "" ]]; then
+    # Use overriding command from package.json
+    npm_command="taito-${command_short}:${taito_env}${suffix}"
+    skip_remaining_commands=true
+  elif [[ ${taito_skip_override} == false ]] && \
+     [[ $(echo "${commands}" | grep "^taito-${command_short}${suffix}$") != "" ]]; then
+    # Use overriding command from package.json without enviroment suffix
+    npm_command="taito-${command_short}${suffix}"
+    skip_remaining_commands=true
+  elif [[ $(echo "${commands}" | grep "^${taito_command}:${taito_env}${suffix}$") != "" ]]; then
     # Use normal command from package.json
     npm_command="${taito_command}:${taito_env}${suffix}"
-  elif [[ ${taito_command_exists} == false ]] && \
-       [[ $(echo "${commands}" | grep "^${taito_command}${suffix}$") != "" ]]; then
+  elif [[ $(echo "${commands}" | grep "^${taito_command}${suffix}$") != "" ]]; then
     # Use normal command from package.json without enviroment suffix
     npm_command="${taito_command}${suffix}"
-  elif [[ ${taito_command_exists} == false ]] && \
-       [[ $(echo "${commands}" | grep "^${command_short}:${taito_env}${suffix}$") != "" ]]; then
+  elif [[ $(echo "${commands}" | grep "^${command_short}:${taito_env}${suffix}$") != "" ]]; then
     # Use normal command from package.json
     npm_command="${command_short}:${taito_env}${suffix}"
-  elif [[ ${taito_command_exists} == false ]] && \
-       [[ $(echo "${commands}" | grep "^${command_short}${suffix}$") != "" ]]; then
+  elif [[ $(echo "${commands}" | grep "^${command_short}${suffix}$") != "" ]]; then
     # Use normal command from package.json without enviroment suffix
     npm_command="${command_short}${suffix}"
   fi
@@ -50,12 +60,14 @@ if [[ -f "./package.json" ]]; then
     echo
     echo "### npm/pre: Running script '${npm_command}'"
     # NOTE: intentionally removed parameter support: -- "${@}"
-    if ! (${taito_setv:?}; npm run -s "${npm_command}"); then
-      exit_code=1
-    else
-      exit_code=66
-    fi
+    (${taito_setv:?}; npm run -s "${npm_command}")
+    exit_code=$?
   fi
 fi
 
-exit ${exit_code}
+if [[ ${exit_code} != 0 ]]; then
+  exit ${exit_code}
+elif [[ ${skip_remaining_commands} == false ]]; then
+  # Call next command on command chain
+  "${taito_cli_path}/util/call-next.sh" "${@}"
+fi

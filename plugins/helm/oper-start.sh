@@ -3,10 +3,8 @@
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 
-"${taito_plugin_path}/util/use-context.sh" && \
-
-(${taito_setv:?}; kubectl delete pods --all) && \
-echo "kubectl: TODO rolling restart instead of kill" && \
+"${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
+"${taito_plugin_path}/util/deploy.sh" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

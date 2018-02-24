@@ -492,7 +492,7 @@ TODO add documentation
 
 ## Taito-cli development
 
-Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-dev` flag (e.g. `taito -dev --help`). In the development mode your local taito-cli directory is mounted on the container.
+Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-d` or `--dev` flag (e.g. `taito --dev --help`). In the development mode your local taito-cli directory is mounted on the container.
 
 1. Start a new feature branch.
 2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. If you are using a compiled language, add a compilation script and use `.x` as a file extension for the executable (it will be ignored by git). Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).

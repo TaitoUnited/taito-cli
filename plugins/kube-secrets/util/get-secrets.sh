@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO rename to get-secrets.sh
-
 # Get secret values
 secret_index=0
 secret_names=(${taito_secret_names})

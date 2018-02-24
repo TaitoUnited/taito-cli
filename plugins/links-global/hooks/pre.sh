@@ -10,7 +10,6 @@ fi
 link_name=${taito_command:5:99}
 
 if [[ ! -z ${mode} ]]; then
-  exit_code=0
   found=$(echo "${link_global_urls:-}${link_urls:-}" | grep "${link_name}[\[\:\=\#]")
   if [[ ${found} != "" ]]; then
     links=("${link_global_urls:-}" "${link_urls}")
@@ -26,18 +25,16 @@ if [[ ! -z ${mode} ]]; then
         echo
         if [[ "${mode}" == "open" ]]; then
           echo "### links/pre: Opening ${name}"
-          if ! "${taito_cli_path}/util/browser-fg.sh" "${url}"; then
-            exit 1
-          fi
+          "${taito_cli_path}/util/browser-fg.sh" "${url}"
         else
           echo "### links/pre: Showing link ${name}"
           echo "${url}"
         fi
-        exit_code=66
         break
       fi
     done
   fi
 fi
 
-exit ${exit_code}
+# Call next command on command chain
+"${taito_cli_path}/util/call-next.sh" "${@}"

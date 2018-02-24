@@ -5,10 +5,10 @@
 : "${taito_project:?}"
 : "${taito_env:?}"
 
-# Change namespace
-"${taito_plugin_path}/util/use-context.sh" && \
+"${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
 
-(${taito_setv:?}; helm list | grep "${taito_project}-${taito_env}") && \
+echo "TODO scale replicas to 0 instead of deleting" && \
+(${taito_setv:?}; helm delete --purge "${taito_project}-${taito_env}") && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

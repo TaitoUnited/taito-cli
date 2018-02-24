@@ -49,6 +49,11 @@ OPTIONS
   --auth:ENV
     Authenticate in the context of the given environment.
 
+  --dev, -d
+    Run in development mode. In the development mode your local taito-cli
+    directory is mounted on the container.
+    TODO always pass on -d switch when running another taito command
+
   --
     Execute any command inside the taito-cli container. Example:
     taito -- kubectl get pods
@@ -63,23 +68,23 @@ OPTIONS
     Execute command in the context of given project. This command allows
     you to execute a taito-cli command without cloning the project repository
     to your local disk. Examples:
-    taito -p=my-project open app:dev
-    taito -p=org@another-project open info:prod
-    TODO implement
+      taito -p=my-project open app:dev
+      taito -p=org@another-project open info:prod
+      TODO implement
 
   --verbose, -v
-    Show all commands that plugins execute.
+    Show commands that plugins execute.
 
-  --dev, -d
-    Run in development mode. Mounts taito-cli directory inside the taito-cli
-    docker container.
-
-  -z
-    Skip taito command overrides.
+  --quiet, -q
+    Quiet info logging.
+    TODO implement
 
   -c
     Informs taito-cli that the command is continuing from a previous command
     execution and therefore the license should not be shown again.
+
+  -z
+    Skip taito command overrides.
 
 ARGUMENTS
 

@@ -41,7 +41,7 @@ do
   key="$1"
   if [[ ${skip_rest} == false ]]; then
     case $key in
-        -d|-dev|--dev)
+        -d|--dev)
         mode="dev"
         shift
         ;;

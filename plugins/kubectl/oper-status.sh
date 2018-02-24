@@ -10,7 +10,6 @@ else
   params=("${@:1}")
 fi
 
-# Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
 if [[ "${switch}" == "--all" ]]; then
@@ -24,11 +23,6 @@ if [[ "${switch}" == "--all" ]]; then
   echo
   echo
 
-  echo "--- Helm ---"
-  (${taito_setv:?}; helm list --namespace "${taito_namespace}")
-  echo
-  echo
-
   echo "--- Ingress ---"
   (${taito_setv:?}; kubectl get ingress "${params[@]}")
   echo
@@ -38,9 +32,9 @@ if [[ "${switch}" == "--all" ]]; then
   (${taito_setv:?}; kubectl get services "${params[@]}")
   echo
   echo
+  echo "--- Pods ---"
 fi
 
-echo "--- Pods ---"
 (${taito_setv:?}; kubectl get pods "${params[@]}")
 
 # Call next command on command chain

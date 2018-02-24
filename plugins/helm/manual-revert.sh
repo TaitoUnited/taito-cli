@@ -7,9 +7,7 @@
 
 revision="${1:-0}"
 
-# Change namespace
-"${taito_plugin_path}/util/use-context.sh" && \
-
+"${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
 (${taito_setv:?}; helm rollback "${taito_project}-${taito_env}" "${revision}") && \
 
 # Call next command on command chain
