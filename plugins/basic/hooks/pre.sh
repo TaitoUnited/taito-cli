@@ -9,9 +9,9 @@ if [[ "${taito_command:-}" == "__auth" ]]; then
   rm -rf ~/.config ~/.kube
 fi
 
-# env-delete command pre-handling
-if [[ ${taito_command:-} == "env-delete" ]] || \
-   [[ ${taito_command:-} == "env-alt-delete" ]]; then
+# env-destroy command pre-handling
+if [[ ${taito_command:-} == "env-destroy" ]] || \
+   [[ ${taito_command:-} == "env-alt-destroy" ]]; then
   echo "### basic/pre: Deleting environment ${taito_env}. Do you want to continue (Y/n)?"
   read -r confirm
   if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then

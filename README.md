@@ -378,8 +378,8 @@ This is how you implement your own custom plugin.
       util/
         my-util.sh
       my-command.sh
-      env-create:post.sh
-      env-create:pre.sh
+      env-apply:post.sh
+      env-apply:pre.sh
       help.txt
       README.md
       trouble.txt
@@ -401,7 +401,7 @@ This is how you implement your own custom plugin.
     export taito_plugins="my-plugin"
     ```
 
-Now you should be able to call `taito my command`. And when you call `taito env create`, your `env-create:pre` and `env-create:post` commands will be called before and after all `env-create` commands defined by other enabled plugins. And if you defined also pre and post hooks, they will be called before and after any commands despite the command name.
+Now you should be able to call `taito my command`. And when you call `taito env apply`, your `env-apply:pre` and `env-apply:post` commands will be called before and after all `env-apply` commands defined by other enabled plugins. And if you defined also pre and post hooks, they will be called before and after any commands despite the command name.
 
 Note that you can also add a project specific extension to your project subdirectory and reference it like this in *taito-config.sh*:
 

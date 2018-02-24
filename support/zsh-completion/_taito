@@ -17,8 +17,8 @@ _arguments "*: :(\
   manual-deploy: manual-build-deploy: manual-revision: manual-revert: \
   ci-wait: ci-verify: docs scan unit test: \
   ci-publish ci-release-pre: ci-release-post: \
-  project-config env-create: env-migrate: env-delete: env-rotate: env-cert: \
-  env-alt-create: env-alt-migrate: env-alt-delete: \
+  project-config env-apply: env-destroy: env-rotate: env-cert: \
+  env-alt-apply: env-alt-destroy: \
   env-alt-rotate: env-alt-cert: \
   contacts-development contacts-maintenance contacts-users \
   open-app: open-admin: open-boards open-bucket open-issues open-builds \

@@ -5,9 +5,9 @@
 
 export tests="\
 taito project-config;\
-taito env-create:dev;\
+taito env-apply:dev;\
 taito env-update:dev;\
-taito env-delete:dev;\
+taito env-destroy:dev;\
 taito env-rotate:dev;\
 taito env-cert:dev;\
 "
