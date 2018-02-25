@@ -439,19 +439,24 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
 
 PROJECT: BASIC SETUP
 
-  project config
-    Configure project.
+  project apply
+    Migrate project to the latest configuration.
+
+  project destroy
+    Destroy project.
+
+PROJECT: ENVIRONMENT SETUP
 
   env apply:ENV
     Migrate environment to the latest configuration.
     TODO: implement using terraform.
-    NOTE: currently you have to run 'taito env create:ENV'
 
   env destroy:ENV
     Destroy an environment.
 
   env finalize:prod
     Finalize production environment by setting up DNS and monitoring.
+    TODO: remove once implemented with terraform
 
   env rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.
@@ -465,7 +470,6 @@ PROJECT: ALTERNATIVE ENVIRONMENT SETUP
   env alt apply:ENV
     Migrate environment to the latest configuration.
     TODO: implement using terraform.
-    NOTE: currently you have to run 'taito env create:ENV'
 
   env alt destroy:ENV [NAME]
     Destroy alternative environment. TODO not implemented.
@@ -493,14 +497,20 @@ PROJECT: CONTACTS
 ZONE
 
   zone apply
-    Apply infrastructure changes to zone.
+    Apply infrastructure changes to a zone.
+
+  zone status
+    Show status summary of a zone.
+
+  zone doctor
+    Analyze and repair a zone.
 
   zone maintenance
-    Execute all maintenance tasks that need to be run periodically
-    (e.g. upgrades, secret rotation).
+    Execute supervised maintenance tasks that need to be run periodically for
+    a zone (e.g. upgrades, secret rotation, log reviews, access right reviews).
 
   zone destroy
-    Destroy the zone.
+    Destroy a zone.
 
 GLOBAL: PASSWORDS
 

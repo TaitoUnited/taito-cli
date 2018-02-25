@@ -24,7 +24,7 @@ In this example we use Google Cloud and Sentry.
 
 1. Create a new project by running `taito template create: server-template` and follow instructions.
 
-2. Run `taito project config` in the project directory.
+2. Run `taito project apply` in the project directory.
 
 3. Create dev and prod environments for the project by running `taito env apply:dev` and `taito env apply:prod` in the project directory. This will TODO:
 

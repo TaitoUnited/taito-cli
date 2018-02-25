@@ -4,7 +4,8 @@
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
-taito project-config;\
+taito project-apply;\
+taito project-destroy;\
 taito env-apply:dev;\
 taito env-update:dev;\
 taito env-destroy:dev;\

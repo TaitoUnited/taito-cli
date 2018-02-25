@@ -304,7 +304,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito ci test api:local`: Run local api tests.
 * `taito ci test e2e:local`: Run local e2e tests.
 * `taito stop:local`: Stop the local testing environment
-* `taito env migrate`: Optional: Migrate environment to the latest configuration (e.g. by using terraform).
+* `taito env apply`: Optional: Migrate environment to the latest configuration (e.g. by using terraform).
 * `taito db deploy`: Deploy database changes.
 * `taito ci deploy`: Deploy the application.
 * `taito ci wait`: Optional: Wait for application to restart in the target environment.

@@ -24,8 +24,8 @@ _taito ()
     db-copyquick: ci-prepare: ci-build ci-push ci-deploy: manual-cancel: \
     manual-deploy: manual-build-deploy: manual-revision: manual-revert: \
     ci-wait: ci-verify: docs scan unit test: \
-    ci-publish ci-release-pre: ci-release-post: \
-    project-config env-apply: env-destroy: env-rotate: env-cert: \
+    ci-publish ci-release-pre: ci-release-post: project-apply project-destroy \
+    env-apply: env-destroy: env-rotate: env-cert: \
     env-alt-apply: env-alt-destroy: \
     env-alt-rotate: env-alt-cert: \
     contacts-development contacts-maintenance contacts-users \
