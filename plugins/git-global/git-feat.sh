@@ -19,7 +19,8 @@ if ! git checkout ${dest} 2> /dev/null; then \
   echo 'Push the ${dest} branch to remote repository (y/N)?' && \
   read -r confirm && \
   if [[ \${confirm} =~ ^[Yy]$ ]]; then \
-    git push -u origin ${dest} \
+    git push -u origin ${dest} || \
+    echo NOTE: Push failed. Fix errors and the run \'push -u origin ${dest}\'.
   fi && \
 fi \
 " && \

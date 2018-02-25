@@ -23,8 +23,11 @@ git checkout ${dest} && \
 git pull && \
 git merge ${feature} && \
 (git diff-index --quiet HEAD || git commit -v) && \
-git push && \
-echo 'Delete branch ${feature} after merge (Y/n)?' && \
+(
+  git push || \
+  echo NOTE: Push failed. Fix errors and the run \'git push\'.
+) && \
+echo 'Delete branch ${feature} (Y/n)?' && \
 read -r del && \
 if [[ \${del} =~ ^[Yy]$ ]]; then \
   git push origin --delete ${feature} &> /dev/null; \

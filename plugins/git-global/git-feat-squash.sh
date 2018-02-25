@@ -17,7 +17,10 @@ git checkout ${dest} && \
 git pull && \
 git merge --squash ${feature} && \
 (git diff-index --quiet HEAD || git commit -v) && \
-git push && \
+(
+  git push || \
+  echo NOTE: Push failed. Fix errors and the run \'git push\'.
+) && \
 git branch -D ${feature} && \
 (git push origin --delete ${feature} &> /dev/null || :) \
 " && \
