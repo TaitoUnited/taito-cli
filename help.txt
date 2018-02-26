@@ -549,6 +549,11 @@ GLOBAL: UTILS
     Opens the given url in default web browser. You can use this command in
     your build scripts.
 
+  util commit
+    Commits current changes to the taito-cli container. For example, you
+    can start a shell running 'taito --shell', make some changes and then
+    commit all changes by running 'taito util-commit' inside the container.
+
   util test: POD [ARGS..] [--suite=SUITE]
     Run test suites for the given POD giving ARGS as arguments for each test
     suite.

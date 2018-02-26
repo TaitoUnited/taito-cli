@@ -6,8 +6,11 @@ switches=" ${*} "
 
 if [[ "${switches}" == *"--clean"* ]]; then
   "${taito_plugin_path}/util/clean.sh"
+  # echo "Cleaning npm cache" && \
+  # (${taito_setv:?}; su taito -s /bin/sh -c 'npm cache clean')
 fi && \
-(${taito_setv:?}; npm install) && \
+echo "Running 'npm install'..." && \
+(${taito_setv:?}; su taito -s /bin/sh -c 'npm install') && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
