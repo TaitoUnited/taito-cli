@@ -1,3 +1,5 @@
+timeout: 1200s
+
 steps:
 - id: install
   name: 'gcr.io/cloud-builders/npm'
@@ -90,5 +92,3 @@ steps:
     docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest && \
     echo "Pushing $${tag}" && \
     docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
-
-timeout: 900s

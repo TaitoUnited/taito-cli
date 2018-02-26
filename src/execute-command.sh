@@ -259,18 +259,23 @@ do
 done
 
 # Assemble the final taito command chain
-concat_command_chain=(
+concat_full_chain=(
   "${pre_handlers[@]}"
   "${pre_command_chain[@]}"
   "${command_chain[@]}"
   "${post_command_chain[@]}"
   "${post_handlers[@]}"
 )
+concat_commands_only_chain=(
+  "${pre_command_chain[@]}"
+  "${command_chain[@]}"
+  "${post_command_chain[@]}"
+)
 
 # Export some variables to be used in command execution
-export taito_command_chain="${concat_command_chain[@]}"
-export taito_original_command_chain="${concat_command_chain[@]}"
-export taito_commands_only_chain="${command_chain[@]}"
+export taito_command_chain="${concat_full_chain[@]}"
+export taito_original_command_chain="${concat_full_chain[@]}"
+export taito_commands_only_chain="${concat_commands_only_chain[@]}"
 export taito_enabled_plugins="${enabled_plugins}"
 export taito_verbose=false
 export taito_setv=":"

@@ -11,7 +11,7 @@ echo "- Source: GitHub"
 echo "- Repository: ${taito_repo_name}"
 echo "- Name: ${taito_project}"
 echo "- Type: Branch"
-echo "- Branch regex: dev|test|staging|master"
+echo "- Branch regex: 'dev|test' or 'staging|master' depending on zone"
 echo "- Build configuration: cloudbuild.yaml"
 echo "- Cloudbuild.yaml location: /cloudbuild.yaml"
 echo

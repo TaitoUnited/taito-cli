@@ -30,6 +30,7 @@ cd "${taito_project_path}" && \
 
 # Parse options
 mode="normal"
+shell_command=false
 continue=false
 admin=false
 upgrade=false
@@ -58,7 +59,11 @@ do
         shift
         ;;
         *)
-        if [[ "$1" == "-"* ]]; then
+        if [[ "$1" == "--" ]]; then
+          # shell command: taito -- COMMAND
+          shell_command=true
+          options+=("$1")
+        elif [[ "$1" == "-"* ]]; then
           # not known -> pass it to the docker container as options
           options+=("$1")
         else
@@ -84,7 +89,9 @@ if [[ ${continue} == false ]]; then
 fi
 
 # Convert space command syntax to internal hyphen syntax
-args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]})) && \
+if [[ ${shell_command} == false ]];then
+  args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]}))
+fi && \
 
 # Determine command and params given to docker container
 command="${args[0]}"

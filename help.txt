@@ -46,6 +46,12 @@ OPTIONS
   --upgrade
     Upgrade taito-cli and its extensions to the latest version.
 
+  --upgrade-deps
+    Upgrade tools bundled inside the current taito-cli docker container to the
+    latest version. This option can be useful if you need to use an old version
+    of taito-cli container image, but require tools to be upgraded.
+    TODO implement
+
   --auth:ENV
     Authenticate in the context of the given environment.
 
