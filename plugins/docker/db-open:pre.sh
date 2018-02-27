@@ -5,8 +5,8 @@
 : "${database_external_port:?}"
 : "${database_name:?}"
 
-echo "NOTE: Use the following connection details if you want to connect the"
-echo "database with a database client GUI:"
+echo "NOTE: You can use the following connection details if you want to connect the"
+echo "database with a database client app:"
 echo "- host: 127.0.0.1"
 echo "- port: ${database_external_port}"
 echo "- database: ${database_name}"
