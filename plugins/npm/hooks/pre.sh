@@ -56,6 +56,26 @@ if [[ -f "./package.json" ]]; then
     npm_command="${command_short}${suffix}"
   fi
 
+  # taito test prehandling
+
+  running_ci_test=false
+  if [[ "${taito_mode:-}" == "ci" ]] && \
+     ( \
+       [[ "${npm_command%%:*}" == "test" ]] ||
+       [[ "${npm_command%%:*}" == "oper-test" ]] \
+     ); then
+     running_ci_test=true
+  fi
+
+  if [[ ${running_ci_test} == true ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
+    echo "Skipping test because ci_exec_test != true"
+    npm_command=""
+    running_ci_test=false
+    taito_hook_command_executed=true
+  fi
+
+  # run npm command
+
   if [[ "${npm_command}" != "" ]]; then
     # Run it
     echo
@@ -64,6 +84,14 @@ if [[ -f "./package.json" ]]; then
     taito_hook_command_executed=true
     (${taito_setv:?}; npm run -s "${npm_command}")
     exit_code=$?
+  fi
+
+  # taito test posthandling
+
+  if [[ ${running_ci_test} == true ]] && [[ ${exit_code} != 0 ]]; then
+    # Notify verify step so that it can revert the changes
+    # TODO move this to src/execute-command.sh
+    cat "failed" > ./taitoflag_test_failed
   fi
 fi
 
