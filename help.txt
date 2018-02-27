@@ -108,10 +108,11 @@ PROJECT: BASIC OPERATIONS
   > All basic operation commands use 'oper' as a command grouping prefix but
   > you can leave it out if you like.
 
-  install [--clean]
+  install [--clean] [--all]
     Install everything that needs to installed locally on host (e.g. libraries
     for linting and autocompletion purposes). Use the '--clean' flag to execute
-    as clean install.
+    a clean install. Use the '--all' flag to request for a full install in case
+    you need all libraries to be installed on host for autocompletion, etc.
     TIP: Enable the 'make', 'npm' or 'pipenv' plugin.
 
   env
@@ -134,13 +135,14 @@ PROJECT: BASIC OPERATIONS
     POD: Start only the given pod/container/function/module/program
     -- ARGS: Additional arguments
 
-  run:ENV [--no-deps] [-d,--device] [POD]
+  run:ENV [--no-deps] [-d,--device] [POD] [-- ARGS]
     Runs the application in the defined environment e.g 'taito run:ios'.
     Optional arguments for running in local environment:
     .
     -d,--device: Run on a real device instead of emulator.
     --no-deps: TODO Do not run dependencies (e.g linked services)
     POD: Run only the given pod/container/function/module/program
+    -- ARGS: Additional arguments
 
   init [--clean]
     Make sure that everything has been initialized after start (database, etc.).
