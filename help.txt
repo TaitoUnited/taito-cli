@@ -70,12 +70,12 @@ OPTIONS
   --admin, -a
     Execute as admin.
 
-  --project=PROJECT, -p=PROJECT
+  --project PROJECT, -p PROJECT
     Execute command in the context of given project. This command allows
     you to execute a taito-cli command without cloning the project repository
     to your local disk. Examples:
-      taito -p=my-project open app:dev
-      taito -p=org@another-project open info:prod
+      taito -p my-project open app:dev
+      taito -p org@another-project open info:prod
       TODO implement
 
   --verbose, -v
@@ -144,7 +144,7 @@ PROJECT: BASIC OPERATIONS
     POD: Run only the given pod/container/function/module/program
     -- ARGS: Additional arguments
 
-  init [--clean]
+  init[:ENV] [--clean]
     Make sure that everything has been initialized after start (database, etc.).
     Use the '--clean' flag to delete all existing data before init.
 
