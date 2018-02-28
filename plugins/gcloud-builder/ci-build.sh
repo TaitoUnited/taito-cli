@@ -41,7 +41,7 @@ else
         docker build --target builder -f "./${name}/Dockerfile.build" \
           --build-arg BUILD_VERSION="${version}" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-          -t "${builder_image}" "./${name}"
+          -t "${builder_image}" "./${name}" && \
         docker build -f "./${name}/Dockerfile.build" \
           --cache-from "${builder_image}"
           --build-arg BUILD_VERSION="${version}" \
