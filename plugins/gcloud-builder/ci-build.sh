@@ -43,7 +43,7 @@ else
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
           -t "${builder_image}" "./${name}" && \
         docker build -f "./${name}/Dockerfile.build" \
-          --cache-from "${builder_image}"
+          --cache-from "${builder_image}" \
           --build-arg BUILD_VERSION="${version}" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
           -t "${image_path}${path_suffix}:${image_tag}" "./${name}"
