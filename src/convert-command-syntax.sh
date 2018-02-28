@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
-args=(${@:0})
+args=("$@")
 
 # Convert space syntax to internal hyphen syntax
 if [[ "${args[0]}" != *"-"* ]]; then
