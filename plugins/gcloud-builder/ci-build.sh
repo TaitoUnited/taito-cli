@@ -47,22 +47,24 @@ else
     (${taito_setv:?}; docker pull "${image_path}${path_suffix}:${image_tag}")
   fi && \
 
-  # Tag so that CI will not rebuild image when running docker-compose
   if [[ "${taito_mode:-}" == "ci" ]]; then
-    echo "tag for ci-test: workspace_${taito_project}${tag_suffix}:latest" && \
-    echo "tag for ci-test: ${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
-    echo "tag for ci-test: ${taito_project}${tag_suffix}:latest" && \
-    echo "pwd: ${PWD}" && \
-    echo "project path: ${taito_project_path}" && \
-    (
-      ${taito_setv:?}
-      docker image tag "${image_path}${path_suffix}:${image_tag}" \
-        "workspace_${taito_project}${tag_suffix}:latest" && \
-      docker image tag "${image_path}${path_suffix}:${image_tag}" \
-        "${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
-      docker image tag "${image_path}${path_suffix}:${image_tag}" \
-        "${taito_project}${tag_suffix}:latest"
-    )
+    # Tag so that CI will not rebuild image when running docker-compose
+    # echo "tag for ci-test: workspace_${taito_project}${tag_suffix}:latest" && \
+    # echo "tag for ci-test: ${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
+    # echo "tag for ci-test: ${taito_project}${tag_suffix}:latest" && \
+    # echo "pwd: ${PWD}" && \
+    # echo "project path: ${taito_project_path}" && \
+    # (
+    #   ${taito_setv:?}
+    #   docker image tag "${image_path}${path_suffix}:${image_tag}" \
+    #     "workspace_${taito_project}${tag_suffix}:latest" && \
+    #   docker image tag "${image_path}${path_suffix}:${image_tag}" \
+    #     "${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
+    #   docker image tag "${image_path}${path_suffix}:${image_tag}" \
+    #     "${taito_project}${tag_suffix}:latest"
+    # )
+    echo "Docker images after build:" && \
+    docker images
   fi
 fi && \
 

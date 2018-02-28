@@ -12,6 +12,11 @@ suite_filter="${@: -1}"
 echo "# Running tests for ${dir} in ${taito_env} environment"
 echo
 
+if [[ "${taito_mode:-}" == "ci" ]]; then
+  echo "Docker images before test:"
+  docker images
+fi
+
 if [[ "${suite_filter}" != "suite-"* ]]; then
   suite_filter=""
 fi
