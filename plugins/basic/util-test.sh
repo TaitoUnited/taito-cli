@@ -36,15 +36,23 @@ compose_cmd="docker exec -it ${pod} SUITE ${args}" && \
 if [[ "${taito_env}" != "local" ]]; then
   # Running against a remote service
   image_test="${taito_project}-${dir}-test:latest"
-  if [[ "${taito_mode:-}" == "ci" ]]; then
-    # Use cached build stage of production build for testing
-    compose_pre_cmd="docker build -f ./${dir}/Dockerfile.build --target builder -t ${image_test} ./${dir} && "
-  else
-    # Use pre-existing development image for testing
-    image_dev="${taito_repo_name/-/}_${taito_project}-${dir}"
-    compose_pre_cmd="(docker image tag ${image_dev} ${image_test} || \
-      (echo ERROR: DEVELOPMENT CONTAINER ${image_dev} MUST BE BUILT FIRST && (exit 1))) && "
+  image_src="${taito_project}-${dir}-builder:latest"
+  if [[ "${taito_mode:-}" != "ci" ]]; then
+    # Use development image for testing
+    # NOTE: does not exist if project dir is not named after taito_repo_name
+    image_src="${taito_repo_name/-/}_${taito_project}-${dir}"
   fi
+  compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
+    (echo ERROR: Container ${image_src} must be built before tests can be run && (exit 1))) && "
+  # if [[ "${taito_mode:-}" == "ci" ]]; then
+  #   # Use cached build stage of production build for testing
+  #   compose_pre_cmd="docker build -f ./${dir}/Dockerfile.build --target builder -t ${image_builder} ./${dir} && "
+  # else
+  #   # Use pre-existing development image for testing
+  #   image_dev="${taito_repo_name/-/}_${taito_project}-${dir}"
+  #   compose_pre_cmd="(docker image tag ${image_dev} ${image_test} || \
+  #     (echo ERROR: DEVELOPMENT CONTAINER ${image_dev} MUST BE BUILT FIRST && (exit 1))) && "
+  # fi
   compose_cmd="docker run --entrypoint sh ${image_test} SUITE ${args}"
 fi && \
 

@@ -35,7 +35,15 @@ else
       echo "- Building image"
       (
         ${taito_setv:?}
+        # We build the build stage container separately so that it can be used
+        # for testing in later ci steps
+        builder_image="${taito_project}-${name}-builder:latest"
+        docker build --target builder -f "./${name}/Dockerfile.build" \
+          --build-arg BUILD_VERSION="${version}" \
+          --build-arg BUILD_IMAGE_TAG="${image_tag}" \
+          -t "${builder_image}" "./${name}"
         docker build -f "./${name}/Dockerfile.build" \
+          --cache-from "${builder_image}"
           --build-arg BUILD_VERSION="${version}" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
           -t "${image_path}${path_suffix}:${image_tag}" "./${name}"
