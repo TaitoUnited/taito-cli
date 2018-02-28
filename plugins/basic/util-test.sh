@@ -37,7 +37,7 @@ if [[ "${taito_env}" != "local" ]]; then
     compose_pre_cmd="(docker image tag ${image_dev} ${image_test} || \
       (echo ERROR: DEVELOPMENT CONTAINER ${image_dev} MUST BE BUILT FIRST && (exit 1))) && "
   fi
-  compose_cmd="docker run -it --entrypoint sh ${image_test} SUITE ${args}"
+  compose_cmd="docker run --entrypoint sh ${image_test} SUITE ${args}"
 fi && \
 
 # Create test suite template from init and test phase commands
