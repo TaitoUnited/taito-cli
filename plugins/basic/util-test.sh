@@ -9,6 +9,9 @@ dir="${1}"
 args="${*:2}"
 suite_filter="${@: -1}"
 
+echo "# Running tests for ${dir} in ${taito_env} environment"
+echo
+
 if [[ "${suite_filter}" != "suite-"* ]]; then
   suite_filter=""
 fi

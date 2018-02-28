@@ -9,10 +9,8 @@ sleep_seconds="${2}"
 
 echo "+ ${commands}" > "${taito_vout}"
 
-if [[ "${taito_mode:-}" == "ci" ]] || \
-   [[ "${taito_mode:-}" == "local" ]]; then
+if [[ "${taito_mode:-}" == "ci" ]]; then
   eval "${commands}"
-  echo
 elif [[ -n ${taito_run:-} ]]; then
   echo "${commands}" >> ${taito_run}
   sleep "${sleep_seconds:-2}"

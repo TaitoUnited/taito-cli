@@ -8,10 +8,8 @@ commands="${*:1}"
 
 echo "+ ${commands}" > "${taito_vout}"
 
-if [[ "${taito_mode:-}" == "ci" ]] || \
-   [[ "${taito_mode:-}" == "local" ]]; then
+if [[ "${taito_mode:-}" == "ci" ]]; then
   eval "${commands}"
-  echo
 elif [[ -n ${taito_run_fg:-} ]]; then
   echo "${commands}" >> ${taito_run_fg}
 else
