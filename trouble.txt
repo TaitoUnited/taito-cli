@@ -29,3 +29,5 @@ TAITO-CLI TROUBLESHOOTING
     execution, the command probably requires authentication and you either have
     not authenticated or your authentication has expired. In such case, run
     'taito --auth:ENV' to authenticate.
+
+  ...
