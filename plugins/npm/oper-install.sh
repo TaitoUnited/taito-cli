@@ -3,7 +3,8 @@
 : "${taito_plugin_path:?}"
 
 switches=" ${*} "
-run_install_dev="$(npm run | grep 'install-dev$')"
+task_install_ci_exists="$(npm run | grep 'install-ci$')"
+task_install_dev_exists="$(npm run | grep 'install-dev$')"
 
 if [[ "${switches}" == *" --clean "* ]]; then
   "${taito_plugin_path}/util/clean.sh"
@@ -22,7 +23,11 @@ if [[ "${switches}" == *" --all "* ]]; then
   "${taito_cli_path}/util/execute-on-host-fg.sh" "\
     echo \"# Running 'npm run install-all'\" && \
     npm run install-all"
-elif [[ "${run_install_dev}" ]]; then
+elif [[ "${taito_mode:-}" == "ci" ]] && [[ "${task_install_ci_exists:-}" ]]; then
+  "${taito_cli_path}/util/execute-on-host-fg.sh" "\
+    echo \"# Running 'npm run install-dev'\" && \
+    npm run install-ci"
+elif [[ "${taito_mode:-}" != "ci" ]] && [[ "${task_install_dev_exists:-}" ]]; then
   "${taito_cli_path}/util/execute-on-host-fg.sh" "\
     echo \"# Running 'npm run install-dev'\" && \
     npm run install-dev"
