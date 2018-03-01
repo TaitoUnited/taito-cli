@@ -37,7 +37,9 @@ else
       echo "- Building image"
       (
         ${taito_setv:?}
-        # We build the build stage container separately so that it can be used as:
+        # Pull latest builder image from registry to be used as cache (if exists)
+        docker pull "${image_builder}"
+        # Build the build stage container separately so that it can be used as:
         # 1) Build cache for later builds using --cache-from
         # 2) Integration and e2e test executioner
         docker build \
@@ -49,6 +51,7 @@ else
           --tag "${image_builder}" \
           --tag "${image_tester}" \
           "./${name}" && \
+        # Build the production runtime
         docker build \
           -f "./${name}/Dockerfile.build" \
           --cache-from "${image_builder}" \
