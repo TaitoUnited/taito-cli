@@ -80,7 +80,10 @@ if [[ -f "./package.json" ]]; then
     # Run it
     echo
     echo "### npm/pre: Running script '${npm_command}'"
-    # NOTE: intentionally removed parameter support: -- "${@}"
+    # NOTE: Intentionally removed parameter support: -- "${@}"
+    # NOTE: All libs are installed using 'npm install' run on directly on host.
+    #       Perhaps some npm scripts should also be run on host to avoid
+    #       compatibilty issues.
     taito_hook_command_executed=true
     (${taito_setv:?}; npm run -s "${npm_command}")
     exit_code=$?
