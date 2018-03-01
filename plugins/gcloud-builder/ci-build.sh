@@ -10,10 +10,8 @@ image_tag=${2:-dry-run}
 image_path=${3}
 
 path_suffix=""
-# tag_suffix=""
 if [[ "${name}" != "." ]]; then
   path_suffix="/${name}"
-  # tag_suffix="-${name}"
 fi
 
 if [[ "${image_path}" == "" ]]; then
@@ -39,21 +37,37 @@ else
       echo "- Building image"
       (
         ${taito_setv:?}
-        # We build the build stage container separately so that it can be used
-        # for testing in later ci steps
-        docker build --target builder -f "./${name}/Dockerfile.build" \
+        # We build the build stage container separately so that it can be used as:
+        # 1) Build cache for later builds using --cache-from
+        # 2) Integration and e2e test executioner
+        (
+          # First try with cache
+          docker build \
+            --target builder \
+            -f "./${name}/Dockerfile.build" \
+            --build-arg BUILD_VERSION="${version}" \
+            --build-arg BUILD_IMAGE_TAG="${image_tag}" \
+            --cache-from "${image_builder}" \
+            --tag "${image_builder}" \
+            --tag "${image_tester}" \
+            "./${name}" || \
+          # ...then try without cache
+          echo "WARN! Skipping cache. Container missing from registry: ${image_builder}"
+          docker build \
+            --target builder \
+            -f "./${name}/Dockerfile.build" \
+            --build-arg BUILD_VERSION="${version}" \
+            --build-arg BUILD_IMAGE_TAG="${image_tag}" \
+            --tag "${image_builder}" \
+            --tag "${image_tester}" \
+            "./${name}"
+        ) && \
+        docker build \
+          -f "./${name}/Dockerfile.build" \
+          --cache-from "${image_builder}" \
           --build-arg BUILD_VERSION="${version}" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-          --cache-from "${image_builder}" \
-          -t "${image_builder}" "./${name}" && \
-        docker build -f "./${name}/Dockerfile.build" \
-          --cache-from "${image_builder}" \
-          --build-arg BUILD_VERSION="${version}" \
-          --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-          -t "${image}" "./${name}"
-
-        # We tag the builder so that it can be used by later steps for testing
-        docker image tag "${image_builder}" "${image_tester}"
+          --tag "${image}" "./${name}"
       )
     fi
   else
@@ -63,21 +77,6 @@ else
   fi && \
 
   if [[ "${taito_mode:-}" == "ci" ]]; then
-    # Tag so that CI will not rebuild image when running docker-compose
-    # echo "tag for ci-test: workspace_${taito_project}${tag_suffix}:latest" && \
-    # echo "tag for ci-test: ${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
-    # echo "tag for ci-test: ${taito_project}${tag_suffix}:latest" && \
-    # echo "pwd: ${PWD}" && \
-    # echo "project path: ${taito_project_path}" && \
-    # (
-    #   ${taito_setv:?}
-    #   docker image tag "${image_path}${path_suffix}:${image_tag}" \
-    #     "workspace_${taito_project}${tag_suffix}:latest" && \
-    #   docker image tag "${image_path}${path_suffix}:${image_tag}" \
-    #     "${taito_project//-/}_${taito_project}${tag_suffix}:latest" && \
-    #   docker image tag "${image_path}${path_suffix}:${image_tag}" \
-    #     "${taito_project}${tag_suffix}:latest"
-    # )
     echo "Docker images after build:" && \
     docker images
   fi
