@@ -10,15 +10,19 @@ image_tag=${2:-dry-run}
 image_path=${3}
 
 path_suffix=""
-tag_suffix=""
+# tag_suffix=""
 if [[ "${name}" != "." ]]; then
   path_suffix="/${name}"
-  tag_suffix="-${name}"
+  # tag_suffix="-${name}"
 fi
 
 if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
+
+image="${image_path}${path_suffix}:${image_tag}"
+image_builder="${image_path}${path_suffix}/builder:latest"
+image_tester="${taito_project}-${name}-tester:latest"
 
 # Read version number that semantic-release wrote on the package.json
 version=$(grep "version" "${taito_project_path}/package.json" | \
@@ -37,22 +41,25 @@ else
         ${taito_setv:?}
         # We build the build stage container separately so that it can be used
         # for testing in later ci steps
-        builder_image="${taito_project}-${name}-builder:latest"
         docker build --target builder -f "./${name}/Dockerfile.build" \
           --build-arg BUILD_VERSION="${version}" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-          -t "${builder_image}" "./${name}" && \
+          --cache-from "${image_builder}" \
+          -t "${image_builder}" "./${name}" && \
         docker build -f "./${name}/Dockerfile.build" \
-          --cache-from "${builder_image}" \
+          --cache-from "${image_builder}" \
           --build-arg BUILD_VERSION="${version}" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-          -t "${image_path}${path_suffix}:${image_tag}" "./${name}"
+          -t "${image}" "./${name}"
+
+        # We tag the builder so that it can be used by later steps for testing
+        docker image tag "${image_builder}" "${image_tester}"
       )
     fi
   else
     echo "- Image ${image_tag} already exists. Pulling the existing image."
     # We have pull the image so that it exists at the end
-    (${taito_setv:?}; docker pull "${image_path}${path_suffix}:${image_tag}")
+    (${taito_setv:?}; docker pull "${image}")
   fi && \
 
   if [[ "${taito_mode:-}" == "ci" ]]; then

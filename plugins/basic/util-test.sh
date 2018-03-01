@@ -35,8 +35,8 @@ compose_pre_cmd=""
 compose_cmd="docker exec -it ${pod} SUITE ${args}" && \
 if [[ "${taito_env}" != "local" ]]; then
   # Running against a remote service
-  image_test="${taito_project}-${dir}-test:latest"
-  image_src="${taito_project}-${dir}-builder:latest"
+  image_test="${taito_project}-${dir}-util-test:latest"
+  image_src="${taito_project}-${dir}-tester:latest"
   if [[ "${taito_mode:-}" != "ci" ]]; then
     # Use development image for testing
     # NOTE: does not exist if project dir is not named after taito_repo_name

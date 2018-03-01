@@ -18,11 +18,15 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
+image="${image_path}${path_suffix}:${image_tag}"
+image_builder="${image_path}${path_suffix}/builder:latest"
+
 if [[ "${ci_stack:-}" != *"${name}"* ]]; then
   echo "Skipping push: ${name} not included in ci_stack"
 else
   if [[ ! -f ./taitoflag_images_exist ]]; then
-    (${taito_setv:?}; docker push "${image_path}${path_suffix}:${image_tag}")
+    (${taito_setv:?}; docker push "${image}") && \
+    (${taito_setv:?}; docker push "${image_builder}")
   else
     echo "- Image ${image_tag} already exists. Skipping push."
   fi
