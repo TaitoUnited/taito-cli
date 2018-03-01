@@ -19,6 +19,7 @@ if [[ "${image_path}" == "" ]]; then
 fi
 
 image="${image_path}${path_suffix}:${image_tag}"
+image_latest="${image_path}${path_suffix}:latest"
 image_builder="${image_path}${path_suffix}-builder:latest"
 image_tester="${taito_project}-${name}-tester:latest"
 
@@ -37,8 +38,9 @@ else
       echo "- Building image"
       (
         ${taito_setv:?}
-        # Pull latest builder image from registry to be used as cache (if exists)
+        # Pull latest builder and production image to be used as cache
         docker pull "${image_builder}"
+        docker pull "${image_latest}"
         # Build the build stage container separately so that it can be used as:
         # 1) Build cache for later builds using --cache-from
         # 2) Integration and e2e test executioner
@@ -52,12 +54,16 @@ else
           --tag "${image_tester}" \
           "./${name}" && \
         # Build the production runtime
+        # TODO use also latest production container as cache?
         docker build \
           -f "./${name}/Dockerfile.build" \
           --cache-from "${image_builder}" \
+          --cache-from "${image_latest}" \
           --build-arg BUILD_VERSION="${version}" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-          --tag "${image}" "./${name}"
+          --tag "${image}" \
+          --tag "${image_latest}" \
+          "./${name}"
       )
     fi
   else
