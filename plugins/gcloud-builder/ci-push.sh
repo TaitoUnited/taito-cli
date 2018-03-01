@@ -19,7 +19,7 @@ if [[ "${image_path}" == "" ]]; then
 fi
 
 image="${image_path}${path_suffix}:${image_tag}"
-image_builder="${image_path}${path_suffix}/builder:latest"
+image_builder="${image_path}${path_suffix}-builder:latest"
 
 if [[ "${ci_stack:-}" != *"${name}"* ]]; then
   echo "Skipping push: ${name} not included in ci_stack"

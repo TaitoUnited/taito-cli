@@ -19,7 +19,7 @@ if [[ "${image_path}" == "" ]]; then
 fi
 
 image="${image_path}${path_suffix}:${image_tag}"
-image_builder="${image_path}${path_suffix}/builder:latest"
+image_builder="${image_path}${path_suffix}-builder:latest"
 image_tester="${taito_project}-${name}-tester:latest"
 
 # Read version number that semantic-release wrote on the package.json
