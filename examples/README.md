@@ -14,7 +14,7 @@ In this example we use Google Cloud and Sentry.
 
 ## Create a taito zone
 
-1. Configure `taito_zone` and `gcloud_organization` settings in the `zone/taito-config.sh` file.
+1. Configure `taito_zone` and `gcloud_organization` settings in the `zone-gcloud/taito-config.sh` file.
 
 2. Create a zone by running `taito zone apply` in the zone directory.
 
