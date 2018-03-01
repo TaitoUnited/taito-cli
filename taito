@@ -191,7 +191,7 @@ if ( \
    ) && \
    (
      [[ ${command} == *":local" ]] || \
-     [[ ${command} != *":"* ]] \
+     [[ ${command} == *":" ]] \
    ) && \
    [[ ${command} != db-add ]] && \
    [[ ${taito_plugins} == *"postgres"* ]] && \
