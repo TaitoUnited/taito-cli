@@ -40,28 +40,15 @@ else
         # We build the build stage container separately so that it can be used as:
         # 1) Build cache for later builds using --cache-from
         # 2) Integration and e2e test executioner
-        (
-          # First try with cache
-          docker build \
-            --target builder \
-            -f "./${name}/Dockerfile.build" \
-            --build-arg BUILD_VERSION="${version}" \
-            --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-            --cache-from "${image_builder}" \
-            --tag "${image_builder}" \
-            --tag "${image_tester}" \
-            "./${name}" || \
-          # ...then try without cache
-          echo "WARN! Skipping cache. Container missing from registry: ${image_builder}"
-          docker build \
-            --target builder \
-            -f "./${name}/Dockerfile.build" \
-            --build-arg BUILD_VERSION="${version}" \
-            --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-            --tag "${image_builder}" \
-            --tag "${image_tester}" \
-            "./${name}"
-        ) && \
+        docker build \
+          --target builder \
+          -f "./${name}/Dockerfile.build" \
+          --build-arg BUILD_VERSION="${version}" \
+          --build-arg BUILD_IMAGE_TAG="${image_tag}" \
+          --cache-from "${image_builder}" \
+          --tag "${image_builder}" \
+          --tag "${image_tester}" \
+          "./${name}" && \
         docker build \
           -f "./${name}/Dockerfile.build" \
           --cache-from "${image_builder}" \
