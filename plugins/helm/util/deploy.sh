@@ -22,15 +22,8 @@ if [[ ${image} == "--dry-run" ]]; then
   options=("${@:1}")
   image="DRY_RUN"
 elif [[ -z "${image}" ]]; then
-  # Image not given as param
-  echo "--- Determining the latest image tag for ${taito_project}-${taito_env} ---"
-  # TODO this should be in gcloud-builder plugin
-  # --> just call: 'taito image show'?
-  image=$(gcloud container builds list \
-      --limit=100 --filter='STATUS=SUCCESS' | \
-    grep "${taito_repo_name}@${taito_branch}" | \
-    sed 's/.*:\(.*\).*/\1 /g' | \
-    cut -d ' ' -f 1 | head -n1)
+  # Image not given as param -> use latest.
+  image="latest"
 fi
 
 if [[ -z ${image} ]]; then

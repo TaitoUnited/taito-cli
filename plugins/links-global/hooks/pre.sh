@@ -27,6 +27,7 @@ if [[ ! -z ${mode} ]]; then
         echo
         if [[ "${mode}" == "open" ]]; then
           echo "### links/pre: Opening ${name}"
+          echo Opening link "${url}"
           "${taito_cli_path}/util/browser-fg.sh" "${url}"
         else
           echo "### links/pre: Showing link ${name}"
