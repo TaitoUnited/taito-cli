@@ -100,6 +100,12 @@ if [[ -z "${params[*]}" ]]; then
   params=("--help")
 fi
 
+# Determine environment
+taito_env="local"
+if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
+  taito_env=${command##*:}
+fi
+
 # Determine enabled extensions and download missing remote extensions
 extension_paths=""
 extension_mount_flags=""
@@ -184,19 +190,17 @@ taito_run_fg="${log_file_fg/${HOME}/\/root}"
 
 # Link database container if env is local and the command uses database
 # TODO: this is an ugly quick hack
-if ( \
-     [[ ${command} =~ db-.+ ]] || \
-     [[ ${command} == "oper-init" ]] || \
-     [[ "${command}" == "init" ]] \
-   ) && \
-   (
-     [[ ${command} == *":local" ]] || \
-     [[ ${command} == *":" ]] \
-   ) && \
-   [[ ${command} != db-add ]] && \
-   [[ ${taito_plugins} == *"postgres"* ]] && \
+if [[ "${taito_env}" == "local" ]] && \
+   [[ "${command}" != "db-add"* ]] && \
+   [[ " ${taito_plugins} " == *"-db "* ]] && \
    [[ " ${params[@]} " != *" -h "* ]] && \
-   [[ " ${params[@]} " != *" --help "* ]]; then
+   [[ " ${params[@]} " != *" --help "* ]] && \
+   (
+     [[ "${command}" == "db-"* ]] || \
+     [[ "${command}" == "oper-init"* ]] || \
+     [[ "${command}" == "init"* ]]
+   ); then
+  echo "# Linking local db: ${taito_project}-database:${taito_project}-database"
   link_flags="--link ${taito_project}-database:${taito_project}-database"
 fi
 

@@ -287,14 +287,6 @@ if [[ ${verbose} == true ]]; then
   taito_vout="/dev/stdout"
 fi
 
-# Print some additional info in verbose mode
-if [[ ${verbose} == true ]]; then
-  echo
-  echo "### Taito-cli info:"
-  echo "- command: ${command}"
-  echo "- params: ${params[*]}"
-fi
-
 # Admin credentials pre-handling
 if [[ -n "${taito_admin_key}" ]]; then
   if [[ ${#taito_admin_key} -lt 16 ]]; then
