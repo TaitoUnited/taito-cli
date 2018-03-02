@@ -556,6 +556,5 @@ GLOBAL: UTILS
     can start a shell running 'taito --shell', make some changes and then
     commit all changes by running 'taito util-commit' inside the container.
 
-  util test: POD [ARGS..] [--suite=SUITE]
-    Run test suites for the given POD giving ARGS as arguments for each test
-    suite.
+  util test: POD [SUITE_FILTER]
+    Run test suites for the given POD.

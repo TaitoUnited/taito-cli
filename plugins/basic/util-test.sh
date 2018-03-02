@@ -6,8 +6,7 @@
 : "${taito_repo_name:?}"
 
 dir="${1}"
-args="${*:2}"
-suite_filter="${@: -1}"
+suite_filter="${2}"
 
 echo "# Running tests for ${dir} in ${taito_env} environment"
 echo
@@ -15,10 +14,6 @@ echo
 if [[ "${taito_mode:-}" == "ci" ]]; then
   echo "Docker images before test:"
   docker images
-fi
-
-if [[ "${suite_filter}" != "suite-"* ]]; then
-  suite_filter=""
 fi
 
 # shellcheck disable=SC1090
@@ -30,9 +25,12 @@ if [[ "${ci_exec_test_init:-}" == "true" ]]; then
   init_command="taito init:${taito_env} --clean"
 fi && \
 
+# Pass all environment variables for the test run
+test_env_vars=$(env | cut -f1 -d= | sed 's/^/-e /' | tr '\n' ' ')
+
 # Determine command to be run on test phase
 compose_pre_cmd=""
-compose_cmd="docker exec -it ${pod} SUITE ${args}" && \
+compose_cmd="docker exec ${test_env_vars} -it ${pod} SUITE" && \
 if [[ "${taito_env}" != "local" ]]; then
   # Running against a remote service
   image_test="${taito_project}-${dir}-util-test:latest"
@@ -44,7 +42,7 @@ if [[ "${taito_env}" != "local" ]]; then
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run && (exit 1))) && "
-  compose_cmd="docker run --entrypoint sh ${image_test} SUITE ${args}"
+  compose_cmd="docker run ${test_env_vars} --entrypoint sh ${image_test} SUITE"
 fi && \
 
 # Create test suite template from init and test phase commands
@@ -52,7 +50,7 @@ template="${init_command} && ${compose_cmd}" && \
 
 # Generate commands to be run by traversing all test suites
 commands="" && \
-suites=($(ls ./${dir}/test/suite-*.sh 2> /dev/null | grep "${suite_filter}")) && \
+suites=($(ls ./${dir}/test/suite*.sh 2> /dev/null | grep "${suite_filter}")) && \
 for suite in "${suites[@]}"
 do
   s=${suite/.\/${dir}/.}

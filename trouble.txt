@@ -11,12 +11,18 @@ TAITO-CLI TROUBLESHOOTING
     Make sure that you have set all the environment variables correctly:
     TODO...
 
-  My application does not work locally
-    Try clean install, start and init by running:
-
+  Application does not work locally
+    Try clean start by running:
     $ taito install --clean
     $ taito start --clean
     $ taito init --clean
+
+    Try cleaning your local workspace by running 'workspace-clean' and/or
+    'workspace-kill'
+
+  'No space left on device'
+    Try cleaning your local workspace by running 'workspace-clean'. If you are
+    using Docker, you can also try to resize Docker virtual disk larger.
 
   CI/CD build fails but everything works locally
     See build logs by running 'taito open builds' and fix the problem. If there
