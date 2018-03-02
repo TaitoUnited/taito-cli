@@ -338,9 +338,9 @@ PROJECT: DATABASE OPERATIONS
     handled automatically. Always give file path relative to the project root.
     Example: taito db import:dev ./database/my-file.sql
 
-  db deploy[:ENV] [--clean]
+  db deploy[:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled
-    automatically. Use the '--clean' flag to drop all tables before deploy.
+    automatically.
 
   db diff:[ENV] [OTHER_ENV]
     Compare database schemas of two environments. DB proxy connection and
