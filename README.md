@@ -64,6 +64,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
       gcloud-global links-global template-global"
 
     # template plugin default settings
+    export template_default_taito_image="taitounited/taito-cli:latest"
     export template_default_organization="myorganization"
     export template_default_domain="devdomain.com"
     export template_default_zone="my-zone"
@@ -73,6 +74,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
     export template_default_provider_zone="europe-west1-b"
     export template_default_provider_region_prod="europe-west2"
     export template_default_provider_zone_prod="europe-west2-a"
+    export template_default_registry="eu.gcr.io"
     export template_default_source_git="git@github.com:TaitoUnited"
     export template_default_dest_git="git@github.com:MyOrganization"
 
@@ -126,6 +128,7 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     export taito_global_plugins="git-global template-global myplugin-global anotherplugin-global"
 
     # template plugin default settings
+    export template_default_taito_image="taitounited/taito-cli:latest"
     export template_default_organization="myorganization"
     export template_default_domain="devdomain.com"
     export template_default_zone="my-zone"
@@ -135,6 +138,7 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     export template_default_provider_zone="europe-west1-b"
     export template_default_provider_region_prod="europe-west2"
     export template_default_provider_zone_prod="europe-west2-a"
+    export template_default_registry="eu.gcr.io"
     export template_default_source_git="git@github.com:TaitoUnited"
     export template_default_dest_git="git@github.com:MyOrganization"
 
