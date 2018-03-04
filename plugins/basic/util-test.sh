@@ -46,15 +46,15 @@ if [[ "${taito_env}" != "local" ]]; then
 fi && \
 
 # Create test suite template from init and test phase commands
-template="${init_command} && ${compose_cmd}" && \
+template="echo 'SUITE START' && ${init_command} && ${compose_cmd} && echo 'SUITE END'" && \
 
 # Generate commands to be run by traversing all test suites
 commands="" && \
-suites=($(ls ./${dir}/test/suite*.sh 2> /dev/null | grep "${suite_filter}")) && \
+suites=($(find ./${dir}/test -name '*.sh' 2> /dev/null | grep "suite" | grep "${suite_filter}")) && \
 for suite in "${suites[@]}"
 do
   s=${suite/.\/${dir}/.}
-  commands="${commands} && ${template/SUITE/$s}"
+  commands="${commands} && ${template//SUITE/$s}"
 done
 
 # Execute tests

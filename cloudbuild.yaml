@@ -1,4 +1,6 @@
-timeout: 1200s
+images: [
+  'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:latest'
+]
 
 steps:
 - id: install
