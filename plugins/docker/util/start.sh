@@ -21,7 +21,6 @@ if [[ -n "${docker_run:-}" ]]; then
 fi
 
 if [[ "${switches}" == *"--clean"* ]]; then
-  "${taito_plugin_path}/util/clean.sh" && \
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
     "${setenv}docker-compose ${compose_cmd} --force-recreate --build"
 else
