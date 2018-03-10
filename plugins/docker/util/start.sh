@@ -22,7 +22,7 @@ fi
 
 if [[ "${switches}" == *"--clean"* ]]; then
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
-    "${setenv}docker-compose ${compose_cmd} --force-recreate --build"
+    "${setenv}docker-compose ${compose_cmd} --force-recreate --build --remove-orphans"
 else
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
     "${setenv}docker-compose ${compose_cmd}"

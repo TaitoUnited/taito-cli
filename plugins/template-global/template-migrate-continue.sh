@@ -15,6 +15,8 @@
 # Delete template files
 rm -rf "${template_project_path}/template-tmp"
 
+rm -f ./_template-config.sh && \
+
 # Create initial tag
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   git tag v0.0.0 && \

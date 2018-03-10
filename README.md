@@ -1,6 +1,8 @@
 # Taito-cli
 
-Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands that can be used in any project no matter the technology or infrastructure. This is made possible by defining all settings in a project specific configuration file and implementing the commands with plugins. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands that can be used in any project no matter the technology or infrastructure. This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+
+Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
 
 TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all commands)
 
@@ -30,8 +32,6 @@ TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-c
     taito db recreate:dev                    # Recreate database
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
-
-Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
@@ -322,7 +322,13 @@ See [cloudbuild.yaml](https://github.com/TaitoUnited/server-template/blob/master
 
 ## Infrastructure management
 
-Taito-cli also provides a lightweight abstraction on top of infrastructure and configuration management tools. See the [taito-cli-zone](https://github.com/TaitoUnited/taito-cli-zone) extension.
+Taito-cli also provides a lightweight abstraction on top of infrastructure and configuration management tools. TODO
+
+    taito zone apply: Apply infrastructure changes to the zone.
+    taito zone status: Show status summary of the zone.
+    taito zone doctor: Analyze and repair the zone.
+    taito zone maintenance: Execute supervised maintenance tasks that need to be run periodically for the zone (e.g. upgrades, secret rotation, log reviews, access right reviews).
+    taito zone destroy: Destroy the zone.
 
 ## ChatOps
 

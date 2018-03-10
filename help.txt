@@ -455,6 +455,14 @@ PROJECT: BASIC SETUP
   project destroy
     Destroy project.
 
+  project docs
+    Populate taito settings to project documentation (e.g. links)
+
+  project contacts
+    List of project contacts.
+    TIP: Enable the 'make' or 'npm' plugin and implement project-contacts
+    script in your makefile/package.json.
+
 PROJECT: ENVIRONMENT SETUP
 
   env apply:ENV
@@ -486,23 +494,6 @@ PROJECT: ALTERNATIVE ENVIRONMENT SETUP
 
   env alt rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.
-
-PROJECT: CONTACTS
-
-  contacts development
-    List of contacts required for development.
-    TIP: Enable the 'make' or 'npm' plugin and implement contacts-development
-    script in your makefile/package.json.
-
-  contacts maintenance
-    List contacts that should be notified of a maintenance break, incident or
-    some other problems.
-    TIP: Enable the 'make' or 'npm' plugin and implement contacts-maintenance
-    script in your makefile/package.json.
-
-  contacts users [TYPE]
-    TODO optional command for listing users that should be notified of
-    incidents, etc? Generated from user database?
 
 ZONE
 

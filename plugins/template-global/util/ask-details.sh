@@ -31,14 +31,14 @@ fi
 echo
 echo "2) Optional: Product family (e.g. 'merri')?"
 read -r taito_family
-if [[ ${#taito_family} -gt 10 ]]; then
+if [[ ${#taito_family} -gt 14 ]]; then
   echo "ERROR: too long"
   exit 1
 fi
 echo
 echo "3) Application name (e.g. 'chat')?"
 read -r taito_application # TODO application
-if [[ -z "${taito_application}" ]] || [[ ${#taito_application} -gt 10 ]]; then
+if [[ -z "${taito_application}" ]] || [[ ${#taito_application} -gt 14 ]]; then
   echo "ERROR: not given or too long"
   exit 1
 fi

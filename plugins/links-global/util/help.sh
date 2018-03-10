@@ -4,29 +4,33 @@
 echo "PROJECT: LINKS"
 echo
 
-links=("${link_urls:-}")
-for link in ${links[@]}
-do
-  prefix="$( cut -d '=' -f 1 <<< "$link" )";
-  command_prototype=${prefix%#*}
-  name=${prefix##*#}
+while IFS='*' read -ra items; do
+  for item in "${items[@]}"; do
+    words=(${item})
+    link="${words[0]}"
+    description="${words[*]:1}"
+    if [[ ${link} ]]; then
+      prefix="$( cut -d '=' -f 1 <<< "$link" )";
+      command_prototype=${prefix%#*}
+      echo "  open ${command_prototype//-/ }"
+      echo "    ${description}"
+      echo
+    fi
+  done
+done <<< "${link_urls:-}"
 
-  echo "  open ${command_prototype//-/ }"
-  echo "    Opens ${name} link in browser."
-  echo
-done
+while IFS='*' read -ra items; do
+  for item in "${items[@]}"; do
+    words=(${item})
+    link="${words[0]}"
+    description="${words[*]:1}"
+    if [[ ${link} ]]; then
+      prefix="$( cut -d '=' -f 1 <<< "$link" )";
+      command_prototype=${prefix%#*}
 
-for link in ${links[@]}
-do
-  prefix="$( cut -d '=' -f 1 <<< "$link" )";
-  command_prototype=${prefix%#*}
-  name=${prefix##*#}
-
-  echo "  link ${command_prototype//-/ }"
-  echo "    Shows ${name} link."
-  echo
-done
-
-# TODO SHOULD BE REMOVED???
-# Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+      echo "  link ${command_prototype//-/ }"
+      echo "    ${description}"
+      echo
+    fi
+  done
+done <<< "${link_urls:-}"

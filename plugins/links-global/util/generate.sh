@@ -9,20 +9,28 @@ envs=("${taito_environments:-}")
 for env in ${envs[@]}
 do
   output=$( (
-    taito_env="${env}"
+    export taito_env="${env}"
     . "${taito_project_path}/taito-config.sh"
-    links=("${link_urls:-}")
-    for link in ${links[@]}
-    do
-      prefix="$( cut -d '=' -f 1 <<< "$link" )";
-      url="$( cut -d '=' -f 2- <<< "$link" )"
-      command=${prefix%#*}
-      command_env=${command/\[:ENV\]/:${env}}
-      command_env=${command_env/:ENV/:${env}}
-      if [[ -n ${url} ]]; then
-        echo "[${command_env}](${url})"
-      fi
-    done
+    while IFS='*' read -ra items; do
+      for item in "${items[@]}"; do
+        words=(${item})
+        link="${words[0]}"
+        if [[ ${link} ]]; then
+          url="$( cut -d '=' -f 2- <<< "$link" )"
+          description="${words[*]:1}"
+          description="${description//:ENV/$env}"
+          if [[ ! ${description} ]]; then
+            prefix="$( cut -d '=' -f 1 <<< "$link" )";
+            command=${prefix%#*}
+            description=${command/\[:ENV\]/:${env}}
+            description=${description/:ENV/:${env}}
+          fi
+          if [[ -n ${url} ]]; then
+            echo "* [${description}](${url})"
+          fi
+        fi
+      done
+    done <<< "${link_urls:-}"
   ) )
   markdown_links="${markdown_links}\n${output}  "
 done
