@@ -1,15 +1,10 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${taito_env:?}"
-: "${database_name:?}"
-: "${database_host:?}"
-: "${database_port:?}"
 
-username="${1}"
+echo "Dumping data to file ${1}. Please wait..."
 
-echo "host: ${database_host} port:${database_port}"
-echo "TODO implement"
+"${taito_plugin_path}/util/mysqldump.sh" > "${1}"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
