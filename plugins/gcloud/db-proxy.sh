@@ -7,9 +7,12 @@
 : "${gcloud_sql_proxy_port:?}"
 : "${database_name:?}"
 
-echo "host=127.0.0.1, port=${gcloud_sql_proxy_port}"
-echo "Connect using your personal user account or"
-echo "${database_name} as username"
+echo "Database connection details:"
+echo "- host: 127.0.0.1"
+echo "- port: ${database_port:-}"
+echo "- database: ${database_name:-}"
+echo "- username: ${database_username:-}, ${database_name}, ${database_name}_app or your personal username"
+echo "- password: ${database_password:-?}"
 
 "${taito_plugin_path}/util/db-proxy-start.sh" && \
 "${taito_plugin_path}/util/db-proxy-stop.sh" && \

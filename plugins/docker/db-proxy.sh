@@ -5,17 +5,12 @@
 : "${database_external_port:?}"
 : "${database_name:?}"
 
-username="${database_name}_app"
-if [[ "${database_username:-}" ]]; then
-  username="${database_username}"
-fi
-
 echo "No database proxy required. Just connect with the following details:"
 echo "- host: 127.0.0.1"
-echo "- port: ${database_external_port}"
-echo "- database: ${database_name}"
-echo "- username: ${username}"
-echo "- password: secret"
+echo "- port: ${database_external_port:-database_port}"
+echo "- database: ${database_name:-}"
+echo "- username: ${database_username:-}, ${database_name}, ${database_name}_app or your personal username"
+echo "- password: ${database_password:-?}"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

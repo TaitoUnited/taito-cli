@@ -214,7 +214,12 @@ if [[ "${mode}" == "dev" ]]; then
     -v ${taito_cli_path}:/taito-cli"
 fi
 proxy_flags=""
-if [[ "${gcloud_sql_proxy_port:-}" != "" ]]; then
+if [[ "${database_proxy_port:-}" != "" ]]; then
+  proxy_flags="\
+    --expose=${database_proxy_port} \
+    -p 127.0.0.1:${database_proxy_port}:${database_proxy_port}"
+elif [[ "${gcloud_sql_proxy_port:-}" != "" ]]; then
+  # TODO remove gcloud_sql_proxy_port setting
   proxy_flags="\
     --expose=${gcloud_sql_proxy_port} \
     -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"

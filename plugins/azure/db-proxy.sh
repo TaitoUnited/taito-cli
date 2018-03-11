@@ -2,11 +2,14 @@
 : "${taito_cli_path:?}"
 : "${database_name:?}"
 
-echo "host=0.0.0.0, port=TODO"
-echo "Connect using your personal user account or"
-echo "${database_name} as username"
+echo "Database connection details:"
+echo "- host: 127.0.0.1"
+echo "- port: ${database_external_port:-database_port}"
+echo "- database: ${database_name:-}"
+echo "- username: ${database_username:-}, ${database_name}, ${database_name}_app or your personal username"
+echo "- password: ${database_password:-?}"
 
-echo "TODO implement" && \
+echo "TODO implement"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
