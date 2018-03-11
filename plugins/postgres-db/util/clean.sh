@@ -7,6 +7,8 @@
 : "${database_port:?}"
 : "${taito_project_path:?}"
 
+# TODO clean this mess. duplicate code in clean.sh, psql.sh and sqitch.sh
+
 if [[ "${taito_env}" == "prod"* ]]; then
   echo "postgres-db/clean.sh: 'clean' is not allowed for production environment"
   exit 1
@@ -14,19 +16,24 @@ fi
 
 (
   export PGPASSWORD
-  # TODO: copy-pasted from sqitch.sh -->
-  . "${taito_plugin_path}/util/postgres-username-password.sh"
 
-  if [[ "${taito_env}" == "local" ]];then
-    database_user="${database_name}_app"
-    PGPASSWORD="secret"
-  elif [[ "${database_build_password}" != "" ]]; then
-    database_user="${database_build_username}"
-    PGPASSWORD="${database_build_password}"
-  else
-    database_user="${database_build_username}"
-    echo "Password for ${database_user}:"
-    read -s -r PGPASSWORD
+  database_user="${database_name}_app"
+  if [[ "${database_username:-}" ]]; then
+    database_user="${database_username}"
+  fi
+  PGPASSWORD="${database_password:-secret}"
+
+  if [[ "${taito_env}" != "local" ]];then
+    # TODO: copy-pasted from sqitch.sh -->
+    . "${taito_plugin_path}/util/postgres-username-password.sh"
+    if [[ "${database_build_password:-}" != "" ]]; then
+      database_user="${database_build_username:-}"
+      PGPASSWORD="${database_build_password}"
+    elif [[ "${database_build_username:-}" != "" ]]; then
+      database_user="${database_build_username}"
+      echo "Password for ${database_user}:"
+      read -s -r PGPASSWORD
+    fi
   fi && \
 
   # Drop all but the default schemas

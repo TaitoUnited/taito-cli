@@ -5,6 +5,8 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
+# TODO clean this mess. duplicate code in clean.sh, psql.sh and sqitch.sh
+
 command="${1}"
 options="${@:2}"
 
@@ -15,19 +17,23 @@ sqitch_engine="${sqitch_engine:-pg}"
 
   # TODO mysql support
 
-  # TODO do not reference postgres plugin util directly
-  . "${taito_cli_path}/plugins/postgres-db/util/postgres-username-password.sh"
+  database_user="${database_name}_app"
+  if [[ "${database_username:-}" ]]; then
+    database_user="${database_username}"
+  fi
+  sqitch_password="${database_password:-secret}"
 
-  if [[ "${taito_env}" == "local" ]];then
-    database_user="${database_name}_app"
-    sqitch_password="secret"
-  elif [[ "${database_build_password}" != "" ]]; then
-    database_user="${database_build_username}"
-    sqitch_password="${database_build_password}"
-  else
-    database_user="${database_build_username}"
-    echo "Password for ${database_user}:"
-    read -s -r sqitch_password
+  if [[ "${taito_env}" != "local" ]];then
+    # TODO do not reference postgres plugin util directly
+    . "${taito_cli_path}/plugins/postgres-db/util/postgres-username-password.sh"
+    if [[ "${database_build_password}" != "" ]]; then
+      database_user="${database_build_username}"
+      sqitch_password="${database_build_password}"
+    elif [[ "${database_build_username:-}" != "" ]]; then
+      database_user="${database_build_username}"
+      echo "Password for ${database_user}:"
+      read -s -r sqitch_password
+    fi
   fi
 
   echo "- sqitch: ${command}"

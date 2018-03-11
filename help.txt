@@ -331,7 +331,7 @@ PROJECT: DATABASE OPERATIONS
     handled automatically. NOTE: If you want to access database using a GUI
     tool, use the db proxy:ENV command instead.
 
-  db dump[:ENV]
+  db dump[:ENV] FILE
     Take a database dump. DB proxy connection and secrets are handled
     automatically.
 

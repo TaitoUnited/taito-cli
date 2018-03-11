@@ -242,6 +242,7 @@ fi
 # shellcheck disable=SC2086
 eval "docker run ${docker_it} \
   -v \"${HOME}/.taito:/root/.taito\" \
+  -v \"${HOME}/.ssh:/root/.ssh\" \
   -v \"$(pwd):/project\" \
   -w /project \
   ${proxy_flags} \
