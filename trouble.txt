@@ -1,37 +1,33 @@
 TAITO-CLI TROUBLESHOOTING
 
-  'command not found'
-    Try running 'taito --upgrade'
-
-    Did you give the correct environment as argument? Commands always use the
-    local environment by default.
-
-    Check your plugin configuration in your taito-config.sh files.
-
-    Make sure that you have set all the environment variables correctly:
-    TODO...
-
-  Application does not work locally
-    Try clean start by running:
-    $ taito install --clean
-    $ taito start --clean
-    $ taito init --clean
-
-    Try cleaning your local workspace by running 'workspace-clean' and/or
-    'workspace-kill'
-
   'No space left on device'
     Try cleaning your local workspace by running 'workspace-clean'. If you are
     using Docker, you can also try to resize Docker virtual disk larger.
-
-  CI/CD build fails but everything works locally
-    See build logs by running 'taito open builds' and fix the problem. If there
-    is no apparent reason why the build failed, just try to retry the CI/CD
-    build. If it fails again, try to build production build locally by running
-    'taito start --clean --prod' and then try to fix the build problem.
 
   Connection or authorization error using taito-cli
     If you run into an connection or authorization error during command
     execution, the command probably requires authentication and you either have
     not authenticated or your authentication has expired. In such case, run
     'taito --auth:ENV' to authenticate.
+
+  'command not found'
+    * Try running 'taito --upgrade'
+    * Did you give the correct environment as argument? Commands always use the
+      local environment by default.
+    * Check your plugin configuration in your taito-config.sh files.
+    * Make sure that you have set all the environment variables correctly:
+      TODO...
+
+  Application does not work locally
+    * Try clean start by running:
+      $ taito install --clean
+      $ taito start --clean
+      $ taito init --clean
+    * Try cleaning your local workspace by running 'workspace-clean' and/or
+      'workspace-kill'
+
+  CI/CD build fails but everything works locally
+    See build logs by running 'taito open builds' and fix the problem. If there
+    is no apparent reason why the build failed, just try to retry the CI/CD
+    build. If it fails again, try to build production build locally by running
+    'taito start --clean --prod' and then try to fix the build problem.

@@ -11,7 +11,7 @@ do
   if [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
     opts=""
     if [[ -f "${HOME}/.ssh/config.taito" ]]; then
-      opts="-F ~/.ssh/config.taito"
+      opts="-F${HOME}/.ssh/config.taito"
     fi
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"

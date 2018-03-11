@@ -4,7 +4,7 @@
 if [[ "${ssh_db_proxy:-}" ]]; then
   opts=""
   if [[ -f "${HOME}/.ssh/config.taito" ]]; then
-    opts="-F ~/.ssh/config.taito"
+    opts="-F${HOME}/.ssh/config.taito"
   fi
   sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes -L ${ssh_db_proxy} sleep 180"
 
