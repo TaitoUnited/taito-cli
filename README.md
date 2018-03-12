@@ -4,6 +4,10 @@ Taito command line interface is an extensible toolkit for developers and devops 
 
 Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
 
+You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
+
+With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
+
 TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all commands)
 
     taito install
@@ -32,10 +36,6 @@ TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-c
     taito db recreate:dev                    # Recreate database
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
-
-You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
-
-With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
 > Developing software on custom private infrastucture? Taito-cli works with that too! See [custom commands](#custom-commands) and [custom plugins](#custom-plugins) chapters.
 

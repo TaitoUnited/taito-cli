@@ -227,7 +227,7 @@ PROJECT: BASIC OPERATIONS
     $ taito kill:dev client
     $ taito kill:dev my-app-client-3034393823-2f5jf
 
-  clean [data | build]
+  clean [POD | npm | data | build | ...]
     Clean.
 
   lock

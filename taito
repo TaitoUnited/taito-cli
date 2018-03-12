@@ -257,6 +257,7 @@ eval "docker run ${docker_it} \
   -e taito_run=${taito_run} \
   -e taito_run_fg=${taito_run_fg} \
   -e taito_host_uname=\"${taito_host_uname}\" \
+  -e taito_host_project_path=\"${taito_project_path}\" \
   -e taito_mode=\"${mode}\" \
   -e taito_docker=\"true\" \
   -e taito_image_name=\"${taito_image_name}\" \
