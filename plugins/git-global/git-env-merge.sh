@@ -4,14 +4,14 @@
 dest="${taito_branch:?Destination branch name not given}"
 source="${1:?Source branch name not given}"
 
-if [[ -n ${ci_stack:-} ]]; then
+if [[ -n ${taito_environments:-} ]]; then
   valids=" dev->test test->staging staging->master "
-  if [[ " ${ci_stack} " != *" staging "* ]] && \
-     [[ " ${ci_stack} " != *" test "* ]]; then
+  if [[ " ${taito_environments} " != *" staging "* ]] && \
+     [[ " ${taito_environments} " != *" test "* ]]; then
     valids=" dev->master "
-  elif [[ " ${ci_stack} " != *" staging "* ]]; then
+  elif [[ " ${taito_environments} " != *" staging "* ]]; then
     valids=" dev->test test->master "
-  elif [[ " ${ci_stack} " != *" test "* ]]; then
+  elif [[ " ${taito_environments} " != *" test "* ]]; then
     valids=" dev->staging staging->master "
   fi
   echo "${source}->${dest}"

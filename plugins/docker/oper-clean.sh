@@ -14,7 +14,7 @@ if [[ ${1} ]]; then
   project_name="${project_name//-/}"
   project_name="${project_name//_/}"
 
-  echo "NOTE: docker-compose must not be running or else clean fails"
+  echo "NOTE: You must run 'taito stop' first or else clean fails"
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
     "docker rmi ${project_name}_${pod:?}"
 else
