@@ -74,6 +74,11 @@ if [[ -f "./package.json" ]]; then
     taito_hook_command_executed=true
   fi
 
+  if [[ "${taito_command}" == "ci-release"* ]]; then
+    echo "TODO: remove this ci-release skip hack"
+    npm_command=""
+  fi
+
   # run npm command
 
   if [[ "${npm_command}" != "" ]]; then
