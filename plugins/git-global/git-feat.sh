@@ -21,7 +21,7 @@ if ! git checkout ${dest} 2> /dev/null; then \
   if [[ \${confirm} =~ ^[Yy]$ ]]; then \
     git push -u origin ${dest} || \
     echo NOTE: Push failed. Fix errors and the run \'push -u origin ${dest}\'.
-  fi && \
+  fi \
 fi \
 " && \
 
