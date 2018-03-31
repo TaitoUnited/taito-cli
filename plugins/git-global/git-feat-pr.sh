@@ -4,7 +4,11 @@
 : "${taito_project_path:?}"
 
 dest="${taito_branch:-dev}"
-feature="feature/${1:?Feature name not given}"
+if [[ ${1} ]]; then
+  feature="feature/${1}"
+else
+  feature=$(git symbolic-ref --short HEAD)
+fi
 
 echo "Making a pull request for merging ${feature} \
 to ${dest}. Do you want to continue (Y/n)?"

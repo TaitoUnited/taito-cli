@@ -286,25 +286,29 @@ PROJECT: GIT OPERATIONS
   git feat list
     List all feature branches.
 
-  git feat:[ENV] FEATURE_NAME
-    Creates a new local branch for a feature or executes a normal branch
-    checkout if the branch already exists. The dev branch is used as a default
-    env branch (source branch).
+  git feat[:ENV] FEATURE_NAME
+    Creates a new branch for a feature or executes a normal branch checkout if
+    the branch already exists. The dev branch is used as a default env branch
+    (source branch).
 
-  git feat squash:[ENV] FEATURE_NAME
+  git feat rebase[:ENV] [FEATURE_NAME]
+    Rebases a feature branch. The dev branch is used as a default env branch
+    that the feature branch is rebased with.
+
+  git feat squash[:ENV] [FEATURE_NAME]
     Merges a feature to a target branch as a single squashed commit and
     deletes the feature branch. The dev branch is used as a default env
     branch (destination for merge). Use this command for a short-lived feature
     branch with a cohesive set of changes.
 
-  git feat merge:[ENV] FEATURE_NAME
+  git feat merge[:ENV] [FEATURE_NAME]
     Merges a feature to a target branch. The dev branch is used as a
     default env branch (destination for merge). The command suggests rebase
     before merge and delete feature after merge. With rebase you can clean up
     commit history before merge e.g. by reordering commits and selectively
     squashing some of them together.
 
-  git feat pr:[ENV] FEATURE_NAME
+  git feat pr[:ENV] [FEATURE_NAME]
     Creates a pull request for a feature. The dev branch is used as a default
     env branch (destination for merge). The command suggests rebase before
     making the pull request. With rebase you can clean up commit history by
