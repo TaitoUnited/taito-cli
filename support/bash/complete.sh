@@ -18,6 +18,8 @@ _taito ()
     oper-info: oper-secrets: oper-status: oper-logs: oper-shell: oper-exec: \
     oper-kill: oper-clean oper-lock oper-analyze \
     workspace-clean workspace-kill git-env-list git-env: git-env-merge: \
+    vcs-feat-list vcs-feat vcs-feat-rebase vcs-feat-squash vcs-feat-merge \
+    vcs-feat-pr \
     git-feat-list git-feat git-feat-rebase git-feat-squash git-feat-merge \
     git-feat-pr \
     db-add db-proxy: db-open: db-dump: db-import: \

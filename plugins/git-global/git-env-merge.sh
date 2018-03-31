@@ -2,7 +2,11 @@
 : "${taito_cli_path:?}"
 
 dest="${taito_branch:?Destination branch name not given}"
-source="${1:?Source branch name not given}"
+if [[ ${1} ]]; then
+  source="${1}"
+else
+  source=$(git symbolic-ref --short HEAD)
+fi
 
 if [[ -n ${taito_environments:-} ]]; then
   valids=" dev->test test->staging staging->master "

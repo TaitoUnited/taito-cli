@@ -1,8 +1,10 @@
 # Taito-cli
 
+> Taito is a Finnish word meaning "ability" or "skill".
+
 Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands that can be used in any project no matter the technology or infrastructure. This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Build scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
-Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a proxy and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
+Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a tunnel and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
@@ -10,38 +12,45 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all commands)
 
-    taito install
-    taito start
-    taito init
-    taito open app
-
-    taito open app:dev                       # Open application in browser
-    taito open admin:dev                     # Open admin GUI in browser
-    taito info:dev                           # Show information about dev environent user accounts, etc.
-    taito status:dev                         # Show application status from dev environment
+    taito install                            # Install some libraries on host
+    taito start                              # Start containers
+    taito init                               # Initialize database and storage buckets
+    taito open app                           # Open application on browser
+    taito open kanban                        # Open project kanban board on browser
+    taito info                               # Show info required for logging in to app
     taito unit                               # Run unit tests
+    taito db open                            # Access database from command line
+    taito shell: server                      # Start shell inside a container named 'server'
+
+    taito vcs feat list                      # List all feature branches
+    taito vcs feat: pricing                  # Switch to pricing feature branch
+    taito vcs feat merge                     # Merge current feature branch to the original branch
+
+    taito vcs env:dev                        # Switch to dev environment branch
+    taito vcs env merge:test                 # Merge current environent branch to test environment branch
+
+All commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
+
+    taito open app:dev                       # Open application on browser
+    taito open admin:dev                     # Open application admin GUI on browser
+    taito info:dev                           # Show information required for signing in to application
+    taito status:dev                         # Show application status
     taito test:dev                           # Run integration/e2e tests against dev environment
-    taito shell:dev server                   # Start shell on server container
-    taito logs:dev server                    # Tail logs of server container
-    taito open logs:dev                      # Open logs in browser (e.g. Stackdriver or ELK)
-    taito open storage:dev                   # Open storage bucket in browser
+    taito shell:dev server                   # Start shell on a container named 'server'
+    taito logs:dev worker                    # Tail logs of container named 'worker'
+    taito open logs:dev                      # Open logs on browser (e.g. Stackdriver or ELK)
+    taito open storage:dev                   # Open storage bucket on browser
     taito db open:dev                        # Open database on command line
-    taito db proxy:dev                       # Start proxy for accessing database with a GUI tool
+    taito db proxy:dev                       # Start a proxy for accessing remote database with a GUI tool
+    taito db deploy:dev                      # Deploy database migrations
     taito db rebase:dev                      # Rebase database by running db revert and deploy
-    taito db import:dev ./database/file.sql  # Import file to database
+    taito db import:dev ./database/file.sql  # Import a file to database
     taito db dump:dev                        # Dump database to a file
     taito db log:dev                         # Show database migration logs
-    taito db revert:dev f898e8f986           # Revert database to change f898e8f986
-    taito db deploy:dev                      # Deploy database migrations
+    taito db revert:dev f898e8f986           # Revert database migrations to change f898e8f986
     taito db recreate:dev                    # Recreate database
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
-
-> Developing software on custom private infrastucture? Taito-cli works with that too! See [custom commands](#custom-commands) and [custom plugins](#custom-plugins) chapters.
-
-> Excited about ChatOps? It's on the way!
-
-> `Taito` is a finnish word and it means `skill`.
 
 ## Prerequisites
 
@@ -51,9 +60,9 @@ TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-c
 
 ## Installation
 
-1. Clone this repository and checkout the master branch.
+1. Clone this repository.
 
-2. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a simple bash script that runs taito-cli as a Docker container.
+2. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
 
 3. Configure your personal settings in `~/.taito/taito-config.sh`. For example:
     ```
@@ -86,7 +95,7 @@ TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-c
 
 4. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
 
-> NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. However, for basic usage you can alternatively use the `taito.bat` instead of `taito` bash script.
+> NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. For basic usage, however, you may alternatively try to use the `taito.bat` instead of `taito` bash script.
 
 ## Upgrading
 
@@ -96,11 +105,11 @@ You can upgrade taito-cli and its extensions by running `taito --upgrade`.
 
 Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for all commands.
 
-*But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press `ctrl`+`]` (or `ctrl`+`å` for us scandinavians) and type `close`.*
+*But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press <kbd>ctrl</kbd>+<kbd>]</kbd> (or <kbd>ctrl</kbd>+<kbd>å</kbd> for us scandinavians) and type `close`.*
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
-See the [README.md](https://github.com/TaitoUnited/server-template#readme) of [server-template](https://github.com/TaitoUnited/server-template) project as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
+See the [README.md](https://github.com/TaitoUnited/server-template#readme) of the [server-template](https://github.com/TaitoUnited/server-template) project as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
 ### Advanced usage
 
@@ -147,12 +156,12 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     # TODO implement a setting for confirming an execution if it contains
     # a command outside of preconfirmed plugins/extensions???
 
-And here is an example of a project specific `taito-config.sh`:
+And here is an example of a project specific `taito-config.sh`. TODO Something about dockerfile tags.
 
     #!/bin/bash
 
     # Taito-cli settings
-    export taito_image="taitounited/taito-cli:0.5.0"
+    export taito_image="taitounited/taito-cli:latest"
     export taito_extensions="
       my-extension-0.5.0=https://github.com/MyOrg/my-extension/archive/v0.5.0.tar.gz"
     # Enabled taito-cli plugins
@@ -322,13 +331,13 @@ See [cloudbuild.yaml](https://github.com/TaitoUnited/server-template/blob/master
 
 ## Infrastructure management
 
-Taito-cli also provides a lightweight abstraction on top of infrastructure and configuration management tools. TODO
+Taito-cli also provides a lightweight abstraction on top of infrastructure and configuration management tools for managing a *zone*. A zone provides basic infrastructure that your projects can rely on. It usually consists of container orhestration and database clusters, logging and monitoring systems, etc. You can manage your zone using the following commands:
 
-    taito zone apply: Apply infrastructure changes to the zone.
-    taito zone status: Show status summary of the zone.
-    taito zone doctor: Analyze and repair the zone.
-    taito zone maintenance: Execute supervised maintenance tasks that need to be run periodically for the zone (e.g. upgrades, secret rotation, log reviews, access right reviews).
-    taito zone destroy: Destroy the zone.
+    taito zone apply          # Apply infrastructure changes to the zone.
+    taito zone status         # Show status summary of the zone.
+    taito zone doctor         # Analyze and repair the zone.
+    taito zone maintenance    # Execute supervised maintenance tasks.
+    taito zone destroy        # Destroy the zone.
 
 ## ChatOps
 
@@ -336,7 +345,7 @@ TODO ChatOps: Deploy taito-cli to Kubernetes and integrate it with Mattermost ru
 
 ## Custom commands
 
-You can run any script defined in your project root *package.json* or *makefile* with taito-cli. Just add scripts to your file, and enable the `npm` or `make` plugin in your taito-config.sh. Thus, you can use *taito-cli* with any project, even those that use technologies that are not supported by any of the taito-cli plugins.
+You can run any script defined in your project root *package.json* or *makefile* with taito-cli. Just add scripts to your file, and enable the `npm` or `make` plugin in your taito-config.sh. Thus, you can use *taito-cli* with any project, even those that use technologies that are not supported by any of the existing taito-cli plugins.
 
 > NOTE: When adding commands to your package.json or makefile, you are encouraged to follow the predefined command set that is shown by running `taito --help`. The main idea behind *taito-cli* is that the same predefined command set works from project to project, no matter the technology or infrastructure. For example:
 
@@ -369,7 +378,9 @@ You can also override any existing taito-cli command in your file by using `tait
 
 ### The basics
 
-This is how you implement your own custom plugin.
+You can implement your plugin with almost any programming language. The only requirement is that your plugin provides taito command implementations as executable files. Bash is good for simple plugins. Python or Go is preferred for more complex stuff. And you can use JavaScript too.
+
+This is how you implement your own custom plugin:
 
 1. First create a directory that works as a taito-cli extension. It is basically a collection of plugins:
 
