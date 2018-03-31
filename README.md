@@ -24,13 +24,6 @@ TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-c
     taito db add: role_enum                  # Add a database migration
     taito shell: server                      # Start shell inside a container named 'server'
 
-    taito vcs feat list                      # List all feature branches
-    taito vcs feat: pricing                  # Switch to the pricing feature branch
-    taito vcs feat merge                     # Merge the current feature branch to the original branch
-    taito vcs env list                       # List all environment branches
-    taito vcs env:dev                        # Switch to the dev environment branch
-    taito vcs env merge:test                 # Merge the current environment branch to the test environment branch
-
 All commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
 
     taito open app:dev                       # Open application on browser
@@ -54,6 +47,17 @@ All commands target the local development environment by default. If you want to
     taito db rebase:dev                      # Rebase database by running db revert and deploy
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
+
+TODO Opinionated view on version control (e.g. rebase, fast-forward):
+
+    taito vcs feat list                      # List all feature branches
+    taito vcs feat: pricing                  # Switch to the pricing feature branch
+    taito vcs feat merge                     # Merge the current feature branch to the original branch
+    taito vcs env list                       # List all environment branches
+    taito vcs env:dev                        # Switch to the dev environment branch
+    taito vcs env merge:test                 # Merge the current environment branch to the test environment branch
+
+TODO Support for release branches
 
 ## Prerequisites
 
