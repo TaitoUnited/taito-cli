@@ -21,14 +21,15 @@ TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-c
     taito unit                               # Run unit tests
     taito test                               # Run integration and e2e tests
     taito db open                            # Access database from command line
+    taito db add: role_enum                  # Add a database migration
     taito shell: server                      # Start shell inside a container named 'server'
 
     taito vcs feat list                      # List all feature branches
     taito vcs feat: pricing                  # Switch to the pricing feature branch
-    taito vcs feat merge                     # Merge current feature branch to the original branch
+    taito vcs feat merge                     # Merge the current feature branch to the original branch
     taito vcs env list                       # List all environment branches
-    taito vcs env:dev                        # Switch to dev environment branch
-    taito vcs env merge:test                 # Merge current environment branch to test environment branch
+    taito vcs env:dev                        # Switch to the dev environment branch
+    taito vcs env merge:test                 # Merge the current environment branch to the test environment branch
 
 All commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
 
@@ -38,18 +39,19 @@ All commands target the local development environment by default. If you want to
     taito status:dev                         # Show application status
     taito test:dev                           # Run integration/e2e tests against dev environment
     taito shell:dev server                   # Start shell on a container named 'server'
-    taito logs:dev worker                    # Tail logs of container named 'worker'
+    taito logs:dev worker                    # Tail logs of a container named 'worker'
     taito open logs:dev                      # Open logs on browser (e.g. Stackdriver or ELK)
     taito open storage:dev                   # Open storage bucket on browser
+    taito init:dev --clean                   # Reinitialize database and storage
     taito db open:dev                        # Open database on command line
     taito db proxy:dev                       # Start a proxy for accessing remote database with a GUI tool
-    taito db deploy:dev                      # Deploy database migrations
-    taito db rebase:dev                      # Rebase database by running db revert and deploy
     taito db import:dev ./database/file.sql  # Import a file to database
     taito db dump:dev                        # Dump database to a file
     taito db log:dev                         # Show database migration logs
     taito db revert:dev f898e8f986           # Revert database migrations to change f898e8f986
     taito db recreate:dev                    # Recreate database
+    taito db deploy:dev                      # Deploy database migrations
+    taito db rebase:dev                      # Rebase database by running db revert and deploy
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
 
