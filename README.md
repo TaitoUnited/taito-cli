@@ -19,15 +19,16 @@ TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-c
     taito open kanban                        # Open project kanban board on browser
     taito info                               # Show info required for logging in to app
     taito unit                               # Run unit tests
+    taito test                               # Run integration and e2e tests
     taito db open                            # Access database from command line
     taito shell: server                      # Start shell inside a container named 'server'
 
     taito vcs feat list                      # List all feature branches
-    taito vcs feat: pricing                  # Switch to pricing feature branch
+    taito vcs feat: pricing                  # Switch to the pricing feature branch
     taito vcs feat merge                     # Merge current feature branch to the original branch
-
+    taito vcs env list                       # List all environment branches
     taito vcs env:dev                        # Switch to dev environment branch
-    taito vcs env merge:test                 # Merge current environent branch to test environment branch
+    taito vcs env merge:test                 # Merge current environment branch to test environment branch
 
 All commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
 
