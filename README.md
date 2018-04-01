@@ -16,13 +16,17 @@ TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-c
     taito start                              # Start containers
     taito init                               # Initialize database and storage buckets
     taito open app                           # Open application on browser
-    taito open kanban                        # Open project kanban board on browser
+    taito open admin                         # Open admin GUI on browser
     taito info                               # Show info required for logging in to app
     taito unit                               # Run unit tests
     taito test                               # Run integration and e2e tests
     taito db open                            # Access database from command line
     taito db add: role_enum                  # Add a database migration
     taito shell: server                      # Start shell inside a container named 'server'
+    taito open builds                        # Open build logs on browser
+    taito open boards                        # Open project kanban board(s) on browser
+    taito workspace kill                     # Kill all running processes (e.g. containers)
+    taito workspace clean                    # Remove all unused build artifacts (e.g. images)
 
 All commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
 
@@ -48,7 +52,7 @@ All commands target the local development environment by default. If you want to
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
 
-TODO Opinionated view on version control (e.g. rebase, fast-forward):
+TODO Take an opinionated view on version control (e.g. configure when to rebase, fast-forward, etc):
 
     taito vcs feat list                      # List all feature branches
     taito vcs feat: pricing                  # Switch to the pricing feature branch
