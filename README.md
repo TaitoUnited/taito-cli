@@ -10,7 +10,7 @@ You can also easily extend the predefined command set with your own custom comma
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
-TODO most common examples (see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all commands)
+TODO Most common for local development:
 
     taito install                            # Install some libraries on host
     taito start                              # Start containers
@@ -52,7 +52,7 @@ All commands target the local development environment by default. If you want to
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
 
-TODO Take an opinionated view on version control (e.g. configure when to rebase, fast-forward, etc):
+TODO With taito-cli you can take an opinionated view on version control (e.g. configure when to rebase, fast-forward, etc):
 
     taito vcs feat list                      # List all feature branches
     taito vcs feat: pricing                  # Switch to the pricing feature branch
@@ -61,7 +61,23 @@ TODO Take an opinionated view on version control (e.g. configure when to rebase,
     taito vcs env:dev                        # Switch to the dev environment branch
     taito vcs env merge:test                 # Merge the current environment branch to the test environment branch
 
-TODO Support for release branches
+    TODO Support for release branches
+
+TODO Infrastructure management for projects:
+
+    taito env apply:dev       # Apply project specific changes to dev environment
+    taito env rotate:dev      # Rotate project specific secrets in dev environment
+    taito env destroy:dev     # Destroy dev environment of the current project
+
+TODO Infrastructure management for zones:
+
+    taito zone apply          # Apply infrastructure changes to the zone.
+    taito zone status         # Show status summary of the zone.
+    taito zone doctor         # Analyze and repair the zone.
+    taito zone maintenance    # Execute supervised maintenance tasks.
+    taito zone destroy        # Destroy the zone.
+
+See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all taito-cli commands.
 
 ## Prerequisites
 

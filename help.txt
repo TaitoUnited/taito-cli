@@ -20,7 +20,7 @@ QUICK EXAMPLES
     taito workspace kill     # Kill all running processes (e.g. containers)
     taito workspace clean    # Remove all unused build artifacts (e.g. images)
 
-  REMOTE ENVIRONMENT
+  ACCESSING REMOTE ENVIRONMENT
     taito open app:dev       # Open application on browser
     taito open admin:dev     # Open application admin GUI on browser
     taito info:dev           # Show information required for signing in
@@ -44,7 +44,12 @@ QUICK EXAMPLES
     taito vcs env:dev        # Switch to the dev environment branch
     taito vcs env merge:test # Merge the current env branch to the test branch
 
-  INFRASTRUCTURE MANAGEMENT
+  PROJECT ENVIRONMENT MANAGEMENT
+    taito env apply:dev      # Apply project specific changes to dev env
+    taito env rotate:dev     # Rotate project specific secrets in dev env
+    taito env destroy:dev    # Destroy dev environment of the current project
+
+  ZONE MANAGEMENT
     taito zone apply         # Apply infrastructure changes to the zone.
     taito zone status        # Show status summary of the zone.
     taito zone doctor        # Analyze and repair the zone.
