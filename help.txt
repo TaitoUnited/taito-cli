@@ -20,7 +20,7 @@ QUICK EXAMPLES
     taito workspace kill     # Kill all running processes (e.g. containers)
     taito workspace clean    # Remove all unused build artifacts (e.g. images)
 
-  ACCESSING REMOTE ENVIRONMENT
+  REMOTE ENVIRONMENT
     taito open app:dev       # Open application on browser
     taito open admin:dev     # Open application admin GUI on browser
     taito info:dev           # Show information required for signing in
@@ -37,19 +37,19 @@ QUICK EXAMPLES
     taito db dump:dev ./tmp/dump.sql          # Dump database to a file
 
   VERSION CONTROL
-    taito vcs feat list      # List all feature branches
-    taito vcs feat: pricing  # Switch to the pricing feature branch
-    taito vcs feat merge     # Merge the current feature branch to the original
-    taito vcs env list       # List all environment branches
-    taito vcs env:dev        # Switch to the dev environment branch
-    taito vcs env merge:test # Merge the current env branch to the test branch
+    taito vc feat list       # List all feature branches
+    taito vc feat: pricing   # Switch to the pricing feature branch
+    taito vc feat merge      # Merge the current feature branch to the original
+    taito vc env list        # List all environment branches
+    taito vc env:dev         # Switch to the dev environment branch
+    taito vc env merge:test  # Merge the current env branch to the test branch
 
-  PROJECT ENVIRONMENT MANAGEMENT
+  PROJECT INFRASTRUCTURE MANAGEMENT
     taito env apply:dev      # Apply project specific changes to dev env
     taito env rotate:dev     # Rotate project specific secrets in dev env
     taito env destroy:dev    # Destroy dev environment of the current project
 
-  ZONE MANAGEMENT
+  ZONE INFRASTRUCTURE MANAGEMENT
     taito zone apply         # Apply infrastructure changes to the zone.
     taito zone status        # Show status summary of the zone.
     taito zone doctor        # Analyze and repair the zone.
@@ -300,7 +300,7 @@ PROJECT: LINKS
   > open docs - Built docs
   > open boards - Kanban/scrum board(s)
   > open git - Git repository (e.g. GitHub)
-  > open vcs - Version control repository (e.g. GitHub)
+  > open vc - Version control repository (e.g. GitHub)
   > open builds - List of builds (e.g. Jenkins, Google container builder)
   > open artifacts - Build artifacts
   > open reports - CI/CD reports (e.g. testing and code analysis)
@@ -323,18 +323,15 @@ GLOBAL: WORKSPACE OPERATIONS
 
 PROJECT: VERSION CONTROL OPERATIONS
 
-  vcs env list
-  git env list
+  vc env list
     List all environment branches.
 
-  vcs env:ENV [SOURCE_BRANCH]
-  git env:ENV [SOURCE_BRANCH]
+  vc env:ENV [SOURCE_BRANCH]
     Creates a new environment branch or executes a normal branch checkout if
     the branch already exists. The dev branch is used as a default source
     branch.
 
-  vcs env merge:ENV [SOURCE_BRANCH]
-  git env merge:ENV [SOURCE_BRANCH]
+  vc env merge:ENV [SOURCE_BRANCH]
     Merges source env branch to target env branch without making changes
     to the current local git workspace. Current branch is used as a default
     source branch. The command fails if fast-forward is not possible. Merge
@@ -343,38 +340,32 @@ PROJECT: VERSION CONTROL OPERATIONS
     container is deployed to other environments as well once environment
     branches are merged.
 
-  vcs feat list
-  git feat list
+  vc feat list
     List all feature branches.
 
-  vcs feat[:ENV] FEATURE_NAME
-  git feat[:ENV] FEATURE_NAME
+  vc feat[:ENV] FEATURE_NAME
     Creates a new branch for a feature or executes a normal branch checkout if
     the branch already exists. The dev branch is used as a default env branch
     (source branch).
 
-  vcs feat rebase[:ENV] [FEATURE_NAME]
-  git feat rebase[:ENV] [FEATURE_NAME]
+  vc feat rebase[:ENV] [FEATURE_NAME]
     Rebases a feature branch. The dev branch is used as a default env branch
     that the feature branch is rebased with.
 
-  vcs feat squash[:ENV] [FEATURE_NAME]
-  git feat squash[:ENV] [FEATURE_NAME]
+  vc feat squash[:ENV] [FEATURE_NAME]
     Merges a feature to a target branch as a single squashed commit and
     deletes the feature branch. The dev branch is used as a default env
     branch (destination for merge). Use this command for a short-lived feature
     branch with a cohesive set of changes.
 
-  vcs feat merge[:ENV] [FEATURE_NAME]
-  git feat merge[:ENV] [FEATURE_NAME]
+  vc feat merge[:ENV] [FEATURE_NAME]
     Merges a feature to a target branch. The dev branch is used as a
     default env branch (destination for merge). The command suggests rebase
     before merge and delete feature after merge. With rebase you can clean up
     commit history before merge e.g. by reordering commits and selectively
     squashing some of them together.
 
-  vcs feat pr[:ENV] [FEATURE_NAME]
-  git feat pr[:ENV] [FEATURE_NAME]
+  vc feat pr[:ENV] [FEATURE_NAME]
     Creates a pull request for a feature. The dev branch is used as a default
     env branch (destination for merge). The command suggests rebase before
     making the pull request. With rebase you can clean up commit history by

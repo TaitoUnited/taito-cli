@@ -10,7 +10,7 @@ You can also easily extend the predefined command set with your own custom comma
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
-TODO Most common for local development:
+Below are some examples of the most common taito-cli commands used in local development:
 
     taito install                            # Install some libraries on host
     taito start                              # Start containers
@@ -28,7 +28,7 @@ TODO Most common for local development:
     taito workspace kill                     # Kill all running processes (e.g. containers)
     taito workspace clean                    # Remove all unused build artifacts (e.g. images)
 
-All commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
+All taito-cli commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
 
     taito open app:dev                       # Open application on browser
     taito open admin:dev                     # Open application admin GUI on browser
@@ -52,30 +52,30 @@ All commands target the local development environment by default. If you want to
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
 
-TODO With taito-cli you can take an opinionated view on version control (e.g. configure when to rebase, fast-forward, etc):
+With taito-cli you can take an opinionated view on version control. Some examples:
 
-    taito vcs feat list                      # List all feature branches
-    taito vcs feat: pricing                  # Switch to the pricing feature branch
-    taito vcs feat merge                     # Merge the current feature branch to the original branch
-    taito vcs env list                       # List all environment branches
-    taito vcs env:dev                        # Switch to the dev environment branch
-    taito vcs env merge:test                 # Merge the current environment branch to the test environment branch
+    taito vc feat list                       # List all feature branches
+    taito vc feat: pricing                   # Switch to the pricing feature branch
+    taito vc feat merge                      # Merge the current feature branch to the original branch but rebase first
+    taito vc env list                        # List all environment branches
+    taito vc env:dev                         # Switch to the dev environment branch
+    taito vc env merge:test                  # Merge the current environment branch to the test environment branch using fast-forward only
 
     TODO Support for release branches
 
-TODO Infrastructure management for projects:
+Infrastructure management for projects:
 
-    taito env apply:dev       # Apply project specific changes to dev environment
-    taito env rotate:dev      # Rotate project specific secrets in dev environment
-    taito env destroy:dev     # Destroy dev environment of the current project
+    taito env apply:dev                      # Apply project specific changes to dev environment
+    taito env rotate:dev                     # Rotate project specific secrets in dev environment
+    taito env destroy:dev                    # Destroy dev environment of the current project
 
-TODO Infrastructure management for zones:
+Infrastructure management for zones:
 
-    taito zone apply          # Apply infrastructure changes to the zone.
-    taito zone status         # Show status summary of the zone.
-    taito zone doctor         # Analyze and repair the zone.
-    taito zone maintenance    # Execute supervised maintenance tasks.
-    taito zone destroy        # Destroy the zone.
+    taito zone apply                         # Apply infrastructure changes to the zone
+    taito zone status                        # Show status summary of the zone
+    taito zone doctor                        # Analyze and repair the zone
+    taito zone maintenance                   # Execute supervised maintenance tasks.
+    taito zone destroy                       # Destroy the zone
 
 See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all taito-cli commands.
 
