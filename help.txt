@@ -54,11 +54,11 @@ QUICK EXAMPLES
     taito project destroy    # Destroy project
 
   ZONE INFRASTRUCTURE MANAGEMENT
-    taito zone apply         # Apply infrastructure changes to the zone.
-    taito zone status        # Show status summary of the zone.
-    taito zone doctor        # Analyze and repair the zone.
-    taito zone maintenance   # Execute supervised maintenance tasks.
-    taito zone destroy       # Destroy the zone.
+    taito zone apply         # Apply infrastructure changes to the zone
+    taito zone status        # Show status summary of the zone
+    taito zone doctor        # Analyze and repair the zone
+    taito zone maintenance   # Execute maintenance tasks interactively
+    taito zone destroy       # Destroy the zone
 
   PASSWORD SHARING
     taito passwd share           # Share a password using a one-time magic link

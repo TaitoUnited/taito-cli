@@ -78,18 +78,18 @@ Infrastructure management for zones:
     taito zone apply                 # Apply infrastructure changes to the zone
     taito zone status                # Show status summary of the zone
     taito zone doctor                # Analyze and repair the zone
-    taito zone maintenance           # Execute supervised maintenance tasks.
+    taito zone maintenance           # Execute supervised maintenance tasks interactively.
     taito zone destroy               # Destroy the zone
 
 Password sharing:
 
     taito passwd share               # Generate a one-time magic link for sharing a password
-    taito passwd list: twilio        # List all twilio passwords
-    taito passwd get: twilio-key     # Get twilio-key passwd
-    taito passwd set: twilio-key     # Set twilio-key passwd
-    taito passwd rotate: twilio      # Rotate all twilio passwords
+    taito passwd list: movie         # List all movie passwords
+    taito passwd get: movie-key      # Get movie-key passwd
+    taito passwd set: movie-key      # Set movie-key passwd
+    taito passwd rotate: movie       # Rotate all movie passwords
 
-See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all taito-cli commands.
+See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all predefined taito-cli commands.
 
 ## Prerequisites
 
@@ -375,7 +375,7 @@ Taito-cli also provides a lightweight abstraction on top of infrastructure and c
     taito zone apply          # Apply infrastructure changes to the zone.
     taito zone status         # Show status summary of the zone.
     taito zone doctor         # Analyze and repair the zone.
-    taito zone maintenance    # Execute supervised maintenance tasks.
+    taito zone maintenance    # Execute supervised maintenance tasks interactively.
     taito zone destroy        # Destroy the zone.
 
 ## ChatOps
