@@ -10,7 +10,7 @@ You can also easily extend the predefined command set with your own custom comma
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
-Below are some examples of the most common taito-cli commands used in local development:
+Some examples of the most common taito-cli commands used in local development:
 
     taito install                            # Install some libraries on host
     taito start                              # Start containers
@@ -21,6 +21,7 @@ Below are some examples of the most common taito-cli commands used in local deve
     taito unit                               # Run unit tests
     taito test                               # Run integration and e2e tests
     taito db open                            # Access database from command line
+    taito db proxy                           # Show db connection details. Start a proxy if required.
     taito db add: role_enum                  # Add a database migration
     taito shell: server                      # Start shell inside a container named 'server'
     taito open builds                        # Open build logs on browser
@@ -54,28 +55,39 @@ All taito-cli commands target the local development environment by default. If y
 
 With taito-cli you can take an opinionated view on version control. Some examples:
 
-    taito vc feat list                       # List all feature branches
-    taito vc feat: pricing                   # Switch to the pricing feature branch
-    taito vc feat merge                      # Merge the current feature branch to the original branch but rebase first
-    taito vc env list                        # List all environment branches
-    taito vc env:dev                         # Switch to the dev environment branch
-    taito vc env merge:test                  # Merge the current environment branch to the test environment branch using fast-forward only
+    taito vc feat list               # List all feature branches
+    taito vc feat: pricing           # Switch to the pricing feature branch
+    taito vc feat squash             # Merge the current feature branch to the original branch as a single commit
+    taito vc feat merge              # Merge the current feature branch to the original branch, but rebase first
+    taito vc env list                # List all environment branches
+    taito vc env:dev                 # Switch to the dev environment branch
+    taito vc env merge:test          # Merge the current environment branch to the test environment branch using ff-only
 
     TODO Support for release branches
 
 Infrastructure management for projects:
 
-    taito env apply:dev                      # Apply project specific changes to dev environment
-    taito env rotate:dev                     # Rotate project specific secrets in dev environment
-    taito env destroy:dev                    # Destroy dev environment of the current project
+    taito project apply              # Migrate project to the latest configuration.
+    taito env apply:dev              # Apply project specific changes to dev environment
+    taito env rotate:dev             # Rotate project specific secrets in dev environment
+    taito env destroy:dev            # Destroy dev environment of the current project
+    taito project destroy            # Destroy project.
 
 Infrastructure management for zones:
 
-    taito zone apply                         # Apply infrastructure changes to the zone
-    taito zone status                        # Show status summary of the zone
-    taito zone doctor                        # Analyze and repair the zone
-    taito zone maintenance                   # Execute supervised maintenance tasks.
-    taito zone destroy                       # Destroy the zone
+    taito zone apply                 # Apply infrastructure changes to the zone
+    taito zone status                # Show status summary of the zone
+    taito zone doctor                # Analyze and repair the zone
+    taito zone maintenance           # Execute supervised maintenance tasks.
+    taito zone destroy               # Destroy the zone
+
+Password sharing:
+
+    taito passwd share               # Generate a one-time magic link for sharing a password
+    taito passwd list: twilio        # List all twilio passwords
+    taito passwd get: twilio-key     # Get twilio-key passwd
+    taito passwd set: twilio-key     # Set twilio-key passwd
+    taito passwd rotate: twilio      # Rotate all twilio passwords
 
 See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all taito-cli commands.
 
