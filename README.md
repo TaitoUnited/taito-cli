@@ -12,7 +12,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 Some examples of the most common taito-cli commands used in local development:
 
-    taito install                            # Install some libraries on host
+    taito install                            # Install libraries on host
     taito start                              # Start containers
     taito init                               # Initialize database and storage buckets
     taito open app                           # Open application on browser
@@ -64,6 +64,14 @@ With taito-cli you can take an opinionated view on version control. Some example
     taito vc env merge:test          # Merge the current environment branch to the test environment branch using ff-only
 
     TODO Support for release branches
+
+Some manual deployment operations in case CI/CD problems:
+
+    taito depl build:dev worker      # Build and deploy worker container to dev environment
+    taito depl deploy:dev v1.1.1     # Deploy prebuilt version to dev environment
+    taito depl cancel:dev            # Cancel an ongoing build for dev environment
+    taito depl revision:dev          # Show current revision deployed on dev environment
+    taito depl revert:dev 20         # Revert application to revision 20 on dev environment
 
 Infrastructure management for projects:
 

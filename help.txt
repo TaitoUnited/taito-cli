@@ -4,7 +4,7 @@ TAITO-CLI
 QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
-    taito install            # Install some libraries on host
+    taito install            # Install libraries on host
     taito start              # Start containers
     taito init               # Initialize database and storage buckets
     taito open app           # Open application on browser
@@ -21,7 +21,7 @@ QUICK EXAMPLES
     taito workspace kill     # Kill all running processes (e.g. containers)
     taito workspace clean    # Remove all unused build artifacts (e.g. images)
 
-  ACCESS REMOTE ENVIRONMENT
+  REMOTE ENVIRONMENT ACCESS
     taito open app:dev       # Open application on browser
     taito open admin:dev     # Open application admin GUI on browser
     taito info:dev           # Show information required for signing in
@@ -45,6 +45,13 @@ QUICK EXAMPLES
     taito vc env list        # List all environment branches
     taito vc env:dev         # Switch to the dev environment branch
     taito vc env merge:test  # Merge the current env branch to the test branch
+
+  MANUAL DEPLOYMENT OPERATIONS
+    taito depl build:dev worker   # Build and deploy worker container to dev env
+    taito depl deploy:dev v1.1.1  # Deploy prebuilt version to dev env
+    taito depl cancel:dev         # Cancel an ongoing build for dev env
+    taito depl revision:dev       # Show current revision on dev env
+    taito depl revert:dev 20      # Revert application on dev env to revision 20
 
   PROJECT INFRASTRUCTURE MANAGEMENT
     taito project apply      # Migrate project to the latest configuration
@@ -459,21 +466,21 @@ PROJECT: DATABASE OPERATIONS
 
 PROJECT: MANUAL DEPLOYMENT OPERATIONS
 
-  manual cancel:ENV [IGNORE_BUILD_ID]
-    Cancel an ongoing build, but ignore the given build id.
-
-  manual deploy:ENV TAG|COMMIT
-    Deploys a prebuilt version to an environment. TODO implement
-
-  manual build deploy:[ENV] NAME
+  depl build:[ENV] NAME
     Build, push and deploy a container or some other deployable module to
     server. Use this when you need to quickly deploy manual changes to some
-    environment. Example: taito manual build deploy:dev server
+    environment. Example: taito depl build:dev server
 
-  manual revision[:ENV]
+  depl deploy:ENV TAG|COMMIT
+    Deploys a prebuilt version to an environment. TODO implement
+
+  depl cancel:ENV [IGNORE_BUILD_ID]
+    Cancel an ongoing build, but ignore the given build id.
+
+  depl revision[:ENV]
     Show current revision.
 
-  manual revert[:ENV] [REVISION]
+  depl revert[:ENV] [REVISION]
     Reverts application to another revision. Reverts to the previous version
     if revision has not been given as argument. You can see current revision
     number by running `taito manual revision[:ENV]`.

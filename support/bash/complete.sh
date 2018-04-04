@@ -22,8 +22,8 @@ _taito ()
     vc-feat-pr \
     db-add db-proxy: db-open: db-dump: db-import: \
     db-deploy: db-log: db-revert: db-rebase: db-recreate: db-copy: \
-    db-copyquick: ci-prepare: ci-build ci-push ci-deploy: manual-cancel: \
-    manual-deploy: manual-build-deploy: manual-revision: manual-revert: \
+    db-copyquick: ci-prepare: ci-build ci-push ci-deploy: depl-cancel: \
+    depl-deploy: depl-build: depl-revision: depl-revert: \
     ci-wait: ci-verify: docs scan unit test: \
     ci-publish ci-release-pre: ci-release-post: project-apply project-destroy \
     env-apply: env-destroy: env-rotate: env-cert: \
