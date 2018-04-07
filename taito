@@ -88,7 +88,7 @@ done
 # set -- "${args[@]}"
 
 if [[ ${mode} == "print" ]]; then
-  "${taito_src_path}/print-project-commands.sh"
+  "${taito_src_path}/print-commands.sh"
   exit 0
 fi
 

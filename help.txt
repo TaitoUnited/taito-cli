@@ -355,7 +355,7 @@ PROJECT: VERSION CONTROL OPERATIONS
   vc env list
     List all environment branches.
 
-  vc env BRANCH [SOURCE_BRANCH]
+  vc env: BRANCH [SOURCE_BRANCH]
     Creates a new environment branch or executes a normal branch checkout if
     the branch already exists. The dev branch is used as a default source
     branch.
@@ -442,7 +442,7 @@ PROJECT: DATABASE OPERATIONS
     View change log of database. DB proxy connection and secrets are handled
     automatically.
 
-  db revert:[ENV] [CHANGE]
+  db rebase:[ENV] [CHANGE]
     Rebases database by running 'db revert' and then 'db deploy'. DB proxy
     connection and secrets are handled automatically. The command reverts all
     changes by default. If you would like to revert to a specific revision
