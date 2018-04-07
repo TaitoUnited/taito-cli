@@ -3,8 +3,8 @@
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
-source="${1:-dev}"
-dest="${taito_branch:?Destination branch name not given}"
+source="${2:-dev}"
+dest="${1:?Destination branch name not given}"
 
 # TODO duplicate code with git-feat.sh?
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
