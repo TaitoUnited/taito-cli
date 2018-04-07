@@ -23,7 +23,19 @@ elif [[ ${was_executed} == false ]]; then
     echo "you meant to run. Run 'taito -h' to get more help."
     export taito_command_chain=""
     export taito_plugin_path="${taito_cli_path}/plugins/basic"
-    "${taito_cli_path}/plugins/basic/__help.sh" "${taito_orig_command}"
+    help=$("${taito_cli_path}/plugins/basic/__help.sh" "${taito_orig_command}")
+    if [[ ${#help} -le 5 ]]; then
+      # No help found. Try with only a first letter of the last word.
+      last=${taito_orig_command##*-}
+      help=$("${taito_cli_path}/plugins/basic/__help.sh" \
+        "${taito_orig_command%-*}-${last:0:1}")
+    fi
+    if [[ ${#help} -le 5 ]]; then
+      # No help found for command. Try without the last word.
+      help=$("${taito_cli_path}/plugins/basic/__help.sh" \
+        "${taito_orig_command%-*}")
+    fi
+    echo "${help}"
   else
     echo "Unknown command"
   fi
