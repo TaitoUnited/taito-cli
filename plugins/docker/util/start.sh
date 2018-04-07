@@ -5,7 +5,7 @@
 
 switches=" ${*} "
 
-setenv=""
+setenv="dockerfile=Dockerfile "
 if [[ "${switches}" == *"--prod"* ]]; then
   setenv="dockerfile=Dockerfile.build "
 fi
@@ -20,10 +20,13 @@ if [[ -n "${docker_run:-}" ]]; then
   compose_cmd="run ${pod:?}"
 fi
 
+flags=""
 if [[ "${switches}" == *"--clean"* ]]; then
-  "${taito_cli_path}/util/execute-on-host-fg.sh" \
-    "${setenv}docker-compose ${compose_cmd} --force-recreate --build --remove-orphans"
-else
-  "${taito_cli_path}/util/execute-on-host-fg.sh" \
-    "${setenv}docker-compose ${compose_cmd}"
+  flags="${flags} --force-recreate --build --remove-orphans"
 fi
+if [[ "${switches}" == *"-b"* ]]; then
+  flags="${flags} --detach"
+fi
+
+"${taito_cli_path}/util/execute-on-host-fg.sh" \
+  "${setenv}docker-compose ${compose_cmd} ${flags}"
