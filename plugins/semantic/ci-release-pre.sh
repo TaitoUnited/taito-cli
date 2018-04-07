@@ -10,7 +10,7 @@ if [[ -z "${secret_value_git_github_build}" ]]; then
   secret_value_git_github_build="${secret_value_ext_github_build:-}"
 fi
 
-command=ci-release-pre:${taito_env}
+command=release-pre:${taito_env}
 
 # Run the command only if it exists in package.json
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
