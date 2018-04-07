@@ -38,13 +38,15 @@ QUICK EXAMPLES
     taito db dump:dev ./tmp/dump.sql          # Dump database to a file
 
   VERSION CONTROL
+    taito vc env list        # List all environment branches
+    taito vc env: dev        # Switch to the dev environment branch
+    taito vc env merge       # Merge current env branch to the next env branch
     taito vc feat list       # List all feature branches
     taito vc feat: pricing   # Switch to the pricing feature branch
+    taito vc feat rebase     # Rebase feature branch with the original branch
+    taito vc feat merge      # Merge current feature branch to the original
     taito vc feat squash     # Squash feature branch as a single commit
-    taito vc feat merge      # Merge the current feature branch to the original
-    taito vc env list        # List all environment branches
-    taito vc env:dev         # Switch to the dev environment branch
-    taito vc env merge:test  # Merge the current env branch to the test branch
+    taito vc feat pr         # Create a pull-request for current feature branch
 
   MANUAL DEPLOYMENT OPERATIONS
     taito depl build:dev worker   # Build and deploy worker container to dev env
@@ -53,12 +55,16 @@ QUICK EXAMPLES
     taito depl revision:dev       # Show current revision on dev env
     taito depl revert:dev 20      # Revert application on dev env to revision 20
 
+  PROJECT TEMPLATES
+    taito template create: server-template  # Create a project based on template
+    taito template upgrade                  # Upgrade project using template
+
   PROJECT INFRASTRUCTURE MANAGEMENT
     taito project apply      # Migrate project to the latest configuration
+    taito project destroy    # Destroy project
     taito env apply:dev      # Apply project specific changes to dev env
     taito env rotate:dev     # Rotate project specific secrets in dev env
     taito env destroy:dev    # Destroy dev environment of the current project
-    taito project destroy    # Destroy project
 
   ZONE INFRASTRUCTURE MANAGEMENT
     taito zone apply         # Apply infrastructure changes to the zone
@@ -158,6 +164,10 @@ OPTIONS
     Quiet info logging.
     TODO implement
 
+  --print-commands
+    Prints all project commands. You can use this for implementing
+    autocompletion for taito-cli.
+
   -c
     Informs taito-cli that the command is continuing from a previous command
     execution and therefore the license should not be shown again.
@@ -199,10 +209,11 @@ PROJECT: BASIC OPERATIONS
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.
 
-  start[:ENV] [--clean] [--prod] [POD] [-- ARGS]
+  start[:ENV] [--background] [--clean] [--prod] [POD] [-- ARGS]
     Starts the defined environment e.g 'taito start' or 'taito start:dev'.
     Optional arguments for local environment:
     .
+    --backgroud: Run in background.
     --clean: Clean everything before start.
     --prod: Run production build instead of development build.
     POD: Start only the given pod/container/function/module/program
@@ -344,12 +355,12 @@ PROJECT: VERSION CONTROL OPERATIONS
   vc env list
     List all environment branches.
 
-  vc env:ENV [SOURCE_BRANCH]
+  vc env BRANCH [SOURCE_BRANCH]
     Creates a new environment branch or executes a normal branch checkout if
     the branch already exists. The dev branch is used as a default source
     branch.
 
-  vc env merge:ENV [SOURCE_BRANCH]
+  vc env merge [SOURCE_BRANCH] [DESTINATION_BRANCH]
     Merges source env branch to target env branch without making changes
     to the current local git workspace. Current branch is used as a default
     source branch. The command fails if fast-forward is not possible. Merge
@@ -483,7 +494,7 @@ PROJECT: MANUAL DEPLOYMENT OPERATIONS
   depl revert[:ENV] [REVISION]
     Reverts application to another revision. Reverts to the previous version
     if revision has not been given as argument. You can see current revision
-    number by running `taito manual revision[:ENV]`.
+    number by running `taito depl revision[:ENV]`.
 
 PROJECT: AUTOMATIC CI/CD OPERATIONS
 
@@ -514,7 +525,7 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
   ci verify[:ENV]
     Verifies that everything went ok e.g. by checking test results. If something
     went wrong and autorevert is enabled for the environment, runs
-    `taito db revert[:ENV]` and `taito manual revert[:ENV]`.
+    `taito db revert[:ENV]` and `taito depl revert[:ENV]`.
 
   ci publish
     Publishes build artifacts (e.g. docs, test reports) to a central location.

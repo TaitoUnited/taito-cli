@@ -10,24 +10,24 @@ You can also easily extend the predefined command set with your own custom comma
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
-Some examples of the most common taito-cli commands used in local development:
+Some examples of the most common predefined taito-cli commands used in local development:
 
-    taito install                            # Install libraries on host
-    taito start                              # Start containers
-    taito init                               # Initialize database and storage buckets
-    taito open app                           # Open application on browser
-    taito open admin                         # Open admin GUI on browser
-    taito info                               # Show info required for logging in to app
-    taito unit                               # Run unit tests
-    taito test                               # Run integration and e2e tests
-    taito db open                            # Access database from command line
-    taito db proxy                           # Show db connection details. Start a proxy if required.
-    taito db add: role_enum                  # Add a database migration
-    taito shell: server                      # Start shell inside a container named 'server'
-    taito open builds                        # Open build logs on browser
-    taito open boards                        # Open project kanban board(s) on browser
-    taito workspace kill                     # Kill all running processes (e.g. containers)
-    taito workspace clean                    # Remove all unused build artifacts (e.g. images)
+    taito install                    # Install libraries on host
+    taito start                      # Start containers
+    taito init                       # Initialize database and storage buckets
+    taito open app                   # Open application on browser
+    taito open admin                 # Open admin GUI on browser
+    taito info                       # Show info required for logging in to app
+    taito unit                       # Run unit tests
+    taito test                       # Run integration and e2e tests
+    taito db open                    # Access database from command line
+    taito db proxy                   # Show db connection details. Start a proxy if required.
+    taito db add: role_enum          # Add a database migration
+    taito shell: server              # Start shell inside a container named 'server'
+    taito open builds                # Open build logs on browser
+    taito open boards                # Open project kanban board(s) on browser
+    taito workspace kill             # Kill all running processes (e.g. containers)
+    taito workspace clean            # Remove all unused build artifacts (e.g. images)
 
 All taito-cli commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
 
@@ -53,19 +53,22 @@ All taito-cli commands target the local development environment by default. If y
     taito db diff:local dev                  # Diff database schemas between dev and local environment
     taito db copy:local dev                  # Copy database from dev environment to local environment
 
-With taito-cli you can take an opinionated view on version control. Some examples:
+With taito-cli you can take an opinionated view on version control. Some examples of predefined commands:
+
+    taito vc env list                # List all environment branches
+    taito vc env: dev                # Switch to the dev environment branch
+    taito vc env merge               # Merge the current environment branch to the next environment branch
 
     taito vc feat list               # List all feature branches
     taito vc feat: pricing           # Switch to the pricing feature branch
-    taito vc feat squash             # Merge the current feature branch to the original branch as a single commit
-    taito vc feat merge              # Merge the current feature branch to the original branch, but rebase first
-    taito vc env list                # List all environment branches
-    taito vc env:dev                 # Switch to the dev environment branch
-    taito vc env merge:test          # Merge the current environment branch to the test environment branch using ff-only
+    taito vc feat rebase             # Rebase current feature branch with the original branch
+    taito vc feat merge              # Merge current feature branch to the original branch, but rebase first
+    taito vc feat squash             # Merge current feature branch to the original branch as a single commit
+    taito vc feat pr                 # Create a pull-request for merging current feature branch to the original
 
     TODO Support for release branches
 
-Some manual deployment operations in case CI/CD problems:
+Manual deployment operations in case CI/CD problems:
 
     taito depl build:dev worker      # Build and deploy worker container to dev environment
     taito depl deploy:dev v1.1.1     # Deploy prebuilt version to dev environment
@@ -73,13 +76,19 @@ Some manual deployment operations in case CI/CD problems:
     taito depl revision:dev          # Show current revision deployed on dev environment
     taito depl revert:dev 20         # Revert application to revision 20 on dev environment
 
+Creating projects based on configurable project templates:
+
+    taito template create: server-template  # Create a project based on server-template
+    taito template upgrade           # Upgrade project based on template
+
 Infrastructure management for projects:
 
     taito project apply              # Migrate project to the latest configuration.
+    taito project destroy            # Destroy project.
+
     taito env apply:dev              # Apply project specific changes to dev environment
     taito env rotate:dev             # Rotate project specific secrets in dev environment
     taito env destroy:dev            # Destroy dev environment of the current project
-    taito project destroy            # Destroy project.
 
 Infrastructure management for zones:
 
@@ -116,8 +125,8 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     #!/bin/bash
 
     export taito_image="taitounited/taito-cli:latest"
-    export taito_global_plugins="docker-global fun-global git-global \
-      gcloud-global links-global template-global"
+    export taito_global_plugins="docker-global fun-global gcloud-global \
+      links-global template-global"
 
     # template plugin default settings
     export template_default_taito_image="taitounited/taito-cli:latest"
@@ -140,7 +149,10 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
       intra#intranet=https://intra.mydomain.com"
     ```
 
-4. For autocompletion support see [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
+Optional steps:
+
+- Install shell autocompletion: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
+- Install plugin for your editor: [atom-taito-cli](https://github.com/keskiju/atom-taito-cli), vscode-taito-cli
 
 > NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. For basic usage, however, you may alternatively try to use the `taito.bat` instead of `taito` bash script.
 
@@ -181,7 +193,7 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     # taito-cli default settings
     export taito_image="taitounited/taito-cli:latest"
     export taito_global_extensions="~/my-extension git@github.com:MyOrganization/another-extension.git"
-    export taito_global_plugins="git-global template-global myplugin-global anotherplugin-global"
+    export taito_global_plugins="template-global myplugin-global anotherplugin-global"
 
     # template plugin default settings
     export template_default_taito_image="taitounited/taito-cli:latest"
@@ -348,29 +360,29 @@ Responsibilities of the current default plugins:
 
 Taito-cli is designed so that in most cases your CI/CD tool needs only to execute a bunch of taito-cli commands without any arguments to get the job done. Everything is already configured in taito-config.sh, and taito-cli provides support for various infrastructures by plugins. You can also run any of the steps manually from command line using *taito-cli*. A typical CI/CD process would consist of the following steps, many of which can be run parallel.
 
+TODO separate ci command for every step (even for otherwise existing commands --> avoid accidental overrides in package.json, ci mode, etc)
+
 * `taito --auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
-* `taito manual cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
+* `taito depl cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
 * `taito ci prepare`: Set ci flags by status check. The ci flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since all images have already been built and tested by some previous CI build.
 * `taito install`: Install required libraries.
 * `taito secrets`: Fetch secrets that are required by the following CI/CD steps.
 * `taito ci release pre`: Make some preparations for the release if required. Typically this step determines the new version number for the release by the type of commits (feature, fix, etc).
-* `taito ci test unit`: Run unit tests.
+* `taito ci unit`: Run unit tests.
 * `taito ci scan`: Lint code, scan for code smells and vulnerabilities, etc. (TODO ship code climate with taito container?)
 * `taito ci docs`: Generate docs.
 * `taito ci build`: Build containers, functions, etc (separate build step for each)
 * `taito ci push`: Push containers, functions, etc to registry (separate build step for each)
 * `taito start:local`: Start the local testing environment
 * `taito ci wait:local`: Wait for local testing environemnt to start
-* `taito ci test api:local`: Run local api tests.
-* `taito ci test e2e:local`: Run local e2e tests.
+* `taito ci test:local`: Run local api/e2e tests.
 * `taito stop:local`: Stop the local testing environment
 * `taito env apply`: Optional: Migrate environment to the latest configuration (e.g. by using terraform).
 * `taito db deploy`: Deploy database changes.
 * `taito ci deploy`: Deploy the application.
 * `taito ci wait`: Optional: Wait for application to restart in the target environment.
-* `taito ci test api`: Optional: Run api tests for the target environment.
-* `taito ci test e2e`: Optional: Run e2e tests for the target environment.
-* `taito ci verify`: Optional: Verifies that api and e2e tests went ok for the target environment. If tests failed and autorevert is enabled for the target environment, executes `taito db revert` and `taito manual revert`.
+* `taito ci test`: Optional: Run api/e2e tests for the target environment.
+* `taito ci verify`: Optional: Verifies that api and e2e tests went ok for the target environment. If tests failed and autorevert is enabled for the target environment, executes `taito db revert` and `taito depl revert`.
 * `taito ci publish`: Publish all artifacts to a central location (e.g. container images, libraries, docs, test results, test coverage reports, code quality reports).
 * `taito ci release post`: Typically generates release notes from git commits or issues, and tags the git repository with the new version number.
 
