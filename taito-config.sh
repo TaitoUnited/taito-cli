@@ -3,7 +3,7 @@
 # Taito-cli settings
 export taito_image="taitounited/taito-cli:latest"
 export taito_extensions=""
-export taito_plugins="npm link"
+export taito_plugins="npm git link"
 
 # Common project settings for all plugins
 export taito_environments="dev prod"

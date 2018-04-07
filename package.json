@@ -7,8 +7,8 @@
     "verify": "npm-run-all --parallel lint test",
     "scan": "echo 'TODO lint'",
     "test": "echo 'TODO (cd test; ./all.sh)'",
-    "ci-release-pre": "semantic-release pre",
-    "ci-release-post": "semantic-release post"
+    "release-pre": "semantic-release pre",
+    "release-post": "semantic-release post"
   },
   "pre-commit": [
     "oper-scan"
