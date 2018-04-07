@@ -79,7 +79,7 @@ Manual deployment operations in case CI/CD problems:
 Creating projects based on configurable project templates:
 
     taito template create: server-template  # Create a project based on server-template
-    taito template upgrade           # Upgrade project based on template
+    taito template upgrade                  # Upgrade project based on template
 
 Infrastructure management for projects:
 
@@ -116,6 +116,8 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
 ## Installation
 
+> NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. For basic usage, however, you may alternatively try to use the `taito.bat` instead of `taito` bash script.
+
 1. Clone this repository.
 
 2. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
@@ -149,12 +151,10 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
       intra#intranet=https://intra.mydomain.com"
     ```
 
-Optional steps:
+### Optional steps
 
-- Install shell autocompletion: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
-- Install plugin for your editor: [atom-taito-cli](https://github.com/keskiju/atom-taito-cli), vscode-taito-cli
-
-> NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. For basic usage, however, you may alternatively try to use the `taito.bat` instead of `taito` bash script.
+- Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
+- Install taito-cli plugin for your editor: [atom-taito-cli](https://github.com/keskiju/atom-taito-cli), [vscode-taito-cli](https://github.com/keskiju/vscode-taito-cli)
 
 ## Upgrading
 
