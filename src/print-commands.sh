@@ -70,8 +70,10 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
   for env in ${envs}
   do
     suffix=""
+    param=":"
     if [[ "${env}" != "local" ]]; then
       suffix=":${env}"
+      param=":${env}"
     fi
 
     echo "start${suffix}"
@@ -86,17 +88,17 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
 
     echo "db proxy${suffix}"
     echo "db open${suffix}"
-    echo "db import${suffix} [FILE]"
+    echo "db import${param} [FILE]"
     echo "db dump${suffix}"
     echo "db log${suffix}"
     echo "db recreate${suffix}"
     echo "db deploy${suffix}"
     echo "db rebase${suffix}"
-    echo "db rebase${suffix} [CHANGE]"
-    echo "db revert${suffix} [CHANGE]"
-    echo "db diff${suffix} [SOURCE_ENV]"
-    echo "db copy${suffix} [SOURCE_ENV]"
-    echo "db copyquick${suffix} [SOURCE_ENV]"
+    echo "db rebase${param} [CHANGE]"
+    echo "db revert${param} [CHANGE]"
+    echo "db diff${param} [SOURCE_ENV]"
+    echo "db copy${param} [SOURCE_ENV]"
+    echo "db copyquick${param} [SOURCE_ENV]"
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then
@@ -124,24 +126,24 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
       # echo "env alt rotate${suffix}"
       # echo "env alt destroy${suffix}"
 
-      echo "depl deploy${suffix} [IMAGE_TAG]"
+      echo "depl deploy${param} [IMAGE_TAG]"
       echo "depl cancel${suffix}"
       echo "depl revision${suffix}"
-      echo "depl revert${suffix} [REVISION]"
+      echo "depl revert${param} [REVISION]"
     fi
 
     # Stack component commands
     for stack in ${ci_stack}
     do
-      echo "test${suffix} ${stack}"
-      echo "test${suffix} ${stack} [SUITE]"
-      echo "logs${suffix} ${stack}"
-      echo "shell${suffix} ${stack}"
-      echo "exec${suffix} ${stack} - [COMMAND]"
-      echo "cp${suffix} ${stack}:[PATH] [PATH]"
-      echo "cp${suffix} [PATH] ${stack}:[PATH]"
-      echo "kill${suffix} ${stack}"
-      echo "depl build${suffix} ${stack}"
+      echo "test${param} ${stack}"
+      echo "test${param} ${stack} [SUITE]"
+      echo "logs${param} ${stack}"
+      echo "shell${param} ${stack}"
+      echo "exec${param} ${stack} - [COMMAND]"
+      echo "cp${param} ${stack}:[PATH] [PATH]"
+      echo "cp${param} [PATH] ${stack}:[PATH]"
+      echo "kill${param} ${stack}"
+      echo "depl build${param} ${stack}"
     done
 
     # Links
