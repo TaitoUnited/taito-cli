@@ -8,8 +8,8 @@ taito oper-secrets:dev;\
 taito ci-build;\
 taito ci-deploy:dev;\
 taito ci-canary;\
-taito manual-revision:dev;\
-taito manual-revert:dev;\
+taito depl-revision:dev;\
+taito depl-revert:dev;\
 taito ci-wait:dev;\
 taito ci-verify:dev;\
 taito oper-docs;\
