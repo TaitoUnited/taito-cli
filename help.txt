@@ -4,81 +4,107 @@ TAITO-CLI
 QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
-    taito install            # Install libraries on host
-    taito start              # Start containers
-    taito init               # Initialize database and storage buckets
-    taito open app           # Open application on browser
-    taito open admin         # Open admin GUI on browser
-    taito info               # Show info required for logging in to app
-    taito unit               # Run unit tests
-    taito test               # Run integration and e2e tests
-    taito db open            # Access database from command line
-    taito db proxy           # Show db conn details. Start a proxy if required.
-    taito db add: role_enum  # Add a database migration
-    taito shell: server      # Start shell inside a container named 'server'
-    taito open builds        # Open build logs on browser
-    taito open boards        # Open project kanban board(s) on browser
-    taito workspace kill     # Kill all running processes (e.g. containers)
-    taito workspace clean    # Remove all unused build artifacts (e.g. images)
+    install                 # Install libraries on host
+    (env)                   # Initialize shell environment (e.g. pipenv)
+    (build)                 # Build project
+    start                   # Start containers
+    init                    # Initialize database and storage buckets
+    (run)                   # Run the application
+    open app                # Open application on browser
+    open admin              # Open admin GUI on browser
+    open builds             # Open build logs on browser
+    open boards             # Open project kanban board(s) on browser
+    info                    # Show info required for logging in to app
+    unit                    # Run unit tests
+    test                    # Run integration and e2e tests
+    db open                 # Access database from command line
+    db proxy                # Show db conn details. Start a proxy if required.
+    db add: role_enum       # Add a database migration
+    workspace kill          # Kill all running processes (e.g. containers)
+    workspace clean         # Remove all unused build artifacts (e.g. images)
+    shell: server           # Start shell inside a container named 'server'
+    exec: server - echo foo # Execute a command in a container named 'server'
+    cp: ./file server:/app  # Copy a file to container names 'server'
+    analyze                 # Analyze implementation
+    scan                    # Lint code, scan for vulnerabilities, etc
+    docs                    # Generate documentation
+    lock                    # Lock libraries
 
-  REMOTE ENVIRONMENT ACCESS
-    taito open app:dev       # Open application on browser
-    taito open admin:dev     # Open application admin GUI on browser
-    taito info:dev           # Show information required for signing in
-    taito status:dev         # Show application status
-    taito test:dev           # Run integration/e2e tests against dev env
-    taito shell:dev server   # Start a shell on a container named 'server'
-    taito logs:dev worker    # Tail logs of a container named 'worker'
-    taito open logs:dev      # Open logs on browser (e.g. Stackdriver or ELK)
-    taito open storage:dev   # Open storage bucket on browser
-    taito init:dev --clean   # Reinitialize database and storage
-    taito db open:dev        # Open database on command line
-    taito db proxy:dev       # Start a database proxy for a GUI tool access
-    taito db import:dev ./database/file.sql   # Import a file to database
-    taito db dump:dev ./tmp/dump.sql          # Dump database to a file
+  REMOTE ENVIRONMENT
+    open app:dev            # Open application on browser
+    open admin:dev          # Open application admin GUI on browser
+    info:dev                # Show information required for signing in
+    status:dev              # Show application status
+    secrets:dev             # Show secrets
+    test:dev                # Run integration/e2e tests against dev env
+    shell:dev server        # Start a shell on a container named 'server'
+    logs:dev worker         # Tail logs of a container named 'worker'
+    kill:dev worker         # Kill a container named 'worker'
+    open logs:dev           # Open logs on browser (e.g. Stackdriver or ELK)
+    open storage:dev        # Open storage bucket on browser
+    init:dev --clean        # Reinitialize database and storage
+
+  DATABASE OPERATIONS
+    db open:dev             # Open database on command line
+    db proxy:dev            # Start a database proxy for a GUI tool access
+    db import:dev ./database/file.sql   # Import a file to database
+    db dump:dev ./tmp/dump.sql          # Dump database to a file
+    db log:dev              # View change log of database
+    db recreate:dev         # Recreate the database
+    db deploy:dev           # Deploy changes to database
+    db rebase:dev           # Rebase a database (db revert + db deploy)
+    db rebase:dev abgj4i5f  # Rebase a database (db revert + db deploy)
+    db revert:dev abgj4i5f  # Revert a database
+    db diff:dev test        # Compare db schemas of dev and test environments
+    db copy:dev test        # Copy database from test to dev
+    db copyquick:dev test   # Copy database from test to dev (WARNING!!)
 
   VERSION CONTROL
-    taito vc env list        # List all environment branches
-    taito vc env: dev        # Switch to the dev environment branch
-    taito vc env merge       # Merge current env branch to the next env branch
-    taito vc feat list       # List all feature branches
-    taito vc feat: pricing   # Switch to the pricing feature branch
-    taito vc feat rebase     # Rebase feature branch with the original branch
-    taito vc feat merge      # Merge current feature branch to the original
-    taito vc feat squash     # Squash feature branch as a single commit
-    taito vc feat pr         # Create a pull-request for current feature branch
+    vc env list             # List all environment branches
+    vc env: dev             # Switch to the dev environment branch
+    vc env merge            # Merge current env branch to the next env branch
+    vc feat list            # List all feature branches
+    vc feat: pricing        # Switch to the pricing feature branch
+    vc feat rebase          # Rebase feature branch with the original branch
+    vc feat merge           # Merge current feature branch to the original
+    vc feat squash          # Squash feature branch as a single commit
+    vc feat pr              # Create a pull-request for current feature branch
 
   MANUAL DEPLOYMENT OPERATIONS
-    taito depl build:dev worker   # Build and deploy worker container to dev env
-    taito depl deploy:dev v1.1.1  # Deploy prebuilt version to dev env
-    taito depl cancel:dev         # Cancel an ongoing build for dev env
-    taito depl revision:dev       # Show current revision on dev env
-    taito depl revert:dev 20      # Revert application on dev env to revision 20
+    depl build:dev worker   # Build and deploy worker container to dev env
+    depl deploy:dev v1.1.1  # Deploy prebuilt version to dev env
+    depl cancel:dev         # Cancel an ongoing build for dev env
+    depl revision:dev       # Show current revision on dev env
+    depl revert:dev 20      # Revert application on dev env to revision 20
 
   PROJECT TEMPLATES
-    taito template create: server-template  # Create a project based on template
-    taito template upgrade                  # Upgrade project using template
+    template create: server-template  # Create a project based on template
+    template upgrade                  # Upgrade project using template
+
+  PROJECT CONFIGURATION
+    project apply           # Migrate project to the latest configuration
+    project docs            # Populate taito settings to project documentation
+    project contact         # List project contacts
+    project destroy         # Destroy project
 
   PROJECT INFRASTRUCTURE MANAGEMENT
-    taito project apply      # Migrate project to the latest configuration
-    taito project destroy    # Destroy project
-    taito env apply:dev      # Apply project specific changes to dev env
-    taito env rotate:dev     # Rotate project specific secrets in dev env
-    taito env destroy:dev    # Destroy dev environment of the current project
+    env apply:dev           # Apply project specific changes to dev env
+    env rotate:dev          # Rotate project specific secrets in dev env
+    env destroy:dev         # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
-    taito zone apply         # Apply infrastructure changes to the zone
-    taito zone status        # Show status summary of the zone
-    taito zone doctor        # Analyze and repair the zone
-    taito zone maintenance   # Execute maintenance tasks interactively
-    taito zone destroy       # Destroy the zone
+    zone apply              # Apply infrastructure changes to the zone
+    zone status             # Show status summary of the zone
+    zone doctor             # Analyze and repair the zone
+    zone maintenance        # Execute maintenance tasks interactively
+    zone destroy            # Destroy the zone
 
   PASSWORD SHARING
-    taito passwd share           # Share a password using a one-time magic link
-    taito passwd list: movie     # List all movie passwords
-    taito passwd get: movie-key  # Get movie-key passwd
-    taito passwd set: movie-key  # Set movie-key passwd
-    taito passwd rotate: movie   # Rotate all movie passwords
+    passwd share            # Share a password using a one-time magic link
+    passwd list: movie      # List all movie passwords
+    passwd get: movie-key   # Get movie-key passwd
+    passwd set: movie-key   # Set movie-key passwd
+    passwd rotate: movie    # Rotate all movie passwords
 
 SYNTAX ALTERNATIVES
 

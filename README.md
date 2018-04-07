@@ -582,4 +582,4 @@ Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/tait
 
 ## License
 
-Taito-cli is licensed under the [MIT license](https://github.com/TaitoUnited/taito-cli/blob/master/LICENSE).
+Taito-cli is licensed under the [MIT license](https://github.com/TaitoUnited/taito-cli/blob/master/LICENSE), and supported by [Taito United](http://taitounited.fi/).

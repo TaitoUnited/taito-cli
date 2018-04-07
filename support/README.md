@@ -1,5 +1,7 @@
 # Shell support
 
+TODO Implement intelligent suggestions using `taito --print-commands`. Perhaps running `taito` without any arguments should start an interactive mode that suggests commands by fuzzy matching?
+
 ## Autocompletion for zsh
 
 Add zsh-completion folder to your $fpath before zsh completions are loaded. For example at the beginning of the `~/.zshrc` file:
