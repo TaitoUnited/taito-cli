@@ -6,12 +6,16 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
 (
   # Basic commands
   echo "--help \
+    &focus \
     # Show help.txt of current project and a list of all taito-cli commands"
   echo "--readme \
+    &focus \
     # Show README.md of current project and taito-cli"
   echo "--shell \
+    &focus \
     # Start interactive shell on the taito-cli container"
   echo "--trouble \
+    &focus \
     # Show trouble.txt of current project and taito-cli"
   echo "--upgrade \
     # Upgrade taito-cli and its extensions to the latest version"
@@ -26,6 +30,7 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
   echo "db add: [NAME] \
     # Add a database migration"
   echo "template create: [TEMPLATE] \
+    &focus \
     # Create a project based on a template"
   echo "template upgrade \
     # Upgrade project using template"
@@ -46,6 +51,7 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
   echo "vc feat squash \
     # Squash feature branch as a single commit"
   echo "vc feat merge \
+    &focus \
     # Merge current feature branch to the original"
   echo "vc feat pr \
     # Create a pull-request for current feature branch"
@@ -95,65 +101,65 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
   echo "passwd set: [NAME] \
     # Set a password"
   echo "passwd rotate \
+    &focus \
     # Rotate all passwords"
   echo "passwd rotate: [FILTER] \
+    &focus \
     # Rotate some passwords"
 
   # Environment specific commands
   envs="local ${taito_environments:-}"
   for env in ${envs}
   do
-    suffix=""
-    param=":"
-    if [[ "${env}" != "local" ]]; then
-      suffix=":${env}"
-      param=":${env}"
-    fi
+    suffix=":${env}"
+    param=":${env}"
 
     echo "start${suffix} \
-      # Start app / watch"
+      # Start app / watch on ${env} environment"
     echo "stop${suffix} \
-      # Stop app / watch"
+      # Stop app / watch on ${env} environment"
     # TODO run:ios run:android # Run the application
     echo "init${suffix} \
-      # Initialize database and storage buckets"
+      # Initialize database and storage buckets on ${env} environment"
     echo "init${suffix} --clean \
-      # Initialize database and storage buckets"
+      &focus \
+      # Clean and renitialize database and storage buckets on ${env} environment"
     echo "info${suffix} \
-      # Show info required for logging in to app"
+      # Show info required for logging in to app on ${env} environment"
     echo "test${suffix} \
-      # Run integration and e2e tests"
+      # Run integration and e2e tests on ${env} environment"
     echo "secrets${suffix} \
-      # Show secrets"
+      # Show secrets of ${env} environment"
     echo "status${suffix} \
-      # Show application status"
+      # Show application status of ${env} environment"
 
     echo "db proxy${suffix} \
-      # Show db conn details and start a proxy if required"
+      # Show db conn details for ${env} environment and start a proxy if required"
     echo "db open${suffix} \
-      # Access database from command line"
+      &focus \
+      # Open database client for ${env} environment from command line"
     echo "db import${param} [FILE] \
-      # Import a file to database"
+      # Import a file to database on ${env} environment"
     echo "db dump${suffix} \
-      # Dump database to a file"
+      # Dump database of ${env} environment to a file"
     echo "db log${suffix} \
-      # View change log of database"
+      # View change log of ${env} environment database"
     echo "db recreate${suffix} \
-      # Recreates the database"
+      # Recreates the ${env} environment database"
     echo "db deploy${suffix} \
-      # Deploy changes to database"
+      # Deploy changes to ${env} environment database"
     echo "db rebase${suffix} \
-      # Rebases database by running 'db revert' and then 'db deploy'"
+      # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
     echo "db rebase${param} [CHANGE] \
-      # Rebases database by running 'db revert' and then 'db deploy'"
+      # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
     echo "db revert${param} [CHANGE] \
-      # Revert database changes"
+      # Revert ${env} environment database changes"
     echo "db diff${param} [SOURCE_ENV] \
-      # Compare database schemas of two environments"
+      # Compare (diff) source env database schema with ${env} environment"
     echo "db copy${param} [SOURCE_ENV] \
-      # Copy database from one environment to another"
+      # Copy database from source env to ${env} environment"
     echo "db copyquick${param} [SOURCE_ENV] \
-      # Copy database quickly from one environent to another (WARNING!!)"
+      # Copy database quickly from source env to ${env} environment (WARNING!!)"
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then
@@ -180,52 +186,57 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
     # Remote-only commands
     if [[ "${env}" != "local" ]]; then
       echo "--auth${suffix} \
+        &focus \
         # Authenticate for the ${env} environment"
       echo "vc env: ${env} \
         # Switch to the ${env} environment branch"
 
       # NOTE: Advanced
       echo "env apply${suffix} \
-        # Apply project specific changes to ${env} env"
+        &focus \
+        # Apply project specific changes to ${env} environment"
       echo "env rotate${suffix} \
-        # Rotate project specific secrets in ${env} env"
+        &focus \
+        # Rotate project specific secrets in ${env} environment"
       echo "env destroy${suffix} \
+        &focus \
         # Destroy the ${env} environment of the current project"
       # echo "env alt apply${suffix}"
       # echo "env alt rotate${suffix}"
       # echo "env alt destroy${suffix}"
 
       echo "depl deploy${param} [IMAGE_TAG] \
-        # Deploy prebuilt version to ${env} env"
+        # Deploy prebuilt version to ${env} environment"
       echo "depl cancel${suffix} \
-        # Cancel an ongoing build for ${env} env"
+        # Cancel an ongoing build for ${env} environment"
       echo "depl revision${suffix} \
-        # Show current revision of ${env} env"
+        # Show current revision of ${env} environment"
       echo "depl revert${param} [REVISION] \
-        # Revert application on ${env} env to another revision"
+        # Revert application on ${env} environment to an another revision"
     fi
 
     # Stack component commands
     for stack in ${ci_stack}
     do
       echo "test${param} ${stack} \
-        # Run integration and e2e tests"
+        # Run integration and e2e tests of the ${stack} container on ${env} environment"
       echo "test${param} ${stack} [SUITE] \
-        # Run an integration or e2e test suite"
+        # Run an integration or e2e test suite of the ${stack} container on ${env} environment"
       echo "logs${param} ${stack} \
-        # Tail logs of a container named ${stack}"
+        # Tail logs of the ${stack} container running on ${env} environment"
       echo "shell${param} ${stack} \
-        # Start shell inside a container named ${stack}"
+        &focus \
+        # Start shell inside the ${stack} container running on ${env} environment"
       echo "exec${param} ${stack} - [COMMAND] \
-        # Execute a command in a container"
+        # Execute a command in the ${stack} container running on ${env} environment"
       echo "cp${param} ${stack}:[PATH] [PATH] \
-        # Copy a file from a container"
+        # Copy a file from the ${stack} container running on ${env} environment"
       echo "cp${param} [PATH] ${stack}:[PATH] \
-        # Copy a file to a container"
+        # Copy a file to the ${stack} container running on ${env} environment"
       echo "kill${param} ${stack} \
-        # Kill a container named ${stack}"
+        # Kill the ${stack} container running on ${env} environment"
       echo "depl build${param} ${stack} \
-        # Build and deploy ${stack} container to ${env} env"
+        # Build and deploy the ${stack} container to ${env} environment"
     done
 
     # Links

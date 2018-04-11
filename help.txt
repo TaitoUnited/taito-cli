@@ -53,8 +53,8 @@ QUICK EXAMPLES
     db recreate:dev         # Recreate the database
     db deploy:dev           # Deploy changes to database
     db rebase:dev           # Rebase a database (db revert + db deploy)
-    db rebase:dev abgj4i5f  # Rebase a database (db revert + db deploy)
-    db revert:dev abgj4i5f  # Revert a database
+    db rebase:dev b91b7b2   # Rebase a database (db revert + db deploy)
+    db revert:dev b91b7b2   # Revert a database
     db diff:dev test        # Compare db schemas of dev and test environments
     db copy:dev test        # Copy database from test to dev
     db copyquick:dev test   # Copy database from test to dev (WARNING!!)
