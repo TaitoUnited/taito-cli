@@ -108,11 +108,17 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
     # Rotate some passwords"
 
   # Environment specific commands
-  envs="local ${taito_environments:-}"
-  for env in ${envs}
+  envs="loc local ${taito_environments:-}"
+  for env_orig in ${envs}
   do
+    env="${env_orig}"
     suffix=":${env}"
     param=":${env}"
+    if [[ ${env_orig} == "loc" ]]; then
+      env="local"
+      suffix=""
+      param=":"
+    fi
 
     echo "start${suffix} \
       # Start app / watch on ${env} environment"
@@ -252,11 +258,13 @@ features=$(git branch -a | grep " feature/" | sed -e 's|feature/||')
             command_env=${command/\[:ENV\]/$suffix}
             echo "open ${command_env} \
               # Open ${env} environment ${name} in browser"
-          elif [[ "${command}" == *":ENV"* ]] && [[ "${env}" != "local" ]]; then
+          elif [[ "${command}" == *":ENV"* ]] && \
+               [[ "${env_orig}" != "loc" ]]; then
             command_env=${command/:ENV/$suffix}
             echo "open ${command_env} \
               # Open ${env} environment ${name} in browser"
-          elif [[ "${command}" != *":ENV"* ]] && [[ "${env}" == "local" ]]; then
+          elif [[ "${command}" != *":ENV"* ]] && \
+               [[ "${env_orig}" == "loc" ]]; then
             echo "open ${command} \
               # Open ${name} in browser"
           fi
