@@ -20,6 +20,12 @@ echo "--trouble \
 echo "--upgrade \
   # Upgrade taito-cli and its extensions to the latest version"
 
+# Workspace
+echo "workspace clean \
+  # Remove all unused build artifacts (e.g. images)"
+echo "workspace kill \
+  # Kill all running processes (e.g. containers)"
+
 # New project from template
 echo "template create: [TEMPLATE] \
   &focus \
@@ -82,10 +88,6 @@ if [[ ${taito_project:-} ]]; then
     # Add a database migration"
   echo "template upgrade \
     # Upgrade project using template"
-  echo "workspace clean \
-    # Remove all unused build artifacts (e.g. images)"
-  echo "workspace kill \
-    # Kill all running processes (e.g. containers)"
 
   # Version control commands
   echo "vc env list \

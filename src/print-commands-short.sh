@@ -8,6 +8,10 @@ echo "--shell"
 echo "--trouble"
 echo "--upgrade"
 
+# Workspace
+echo "workspace clean"
+echo "workspace kill"
+
 # New project from template
 echo "template create: TEMPLATE"
 
@@ -52,8 +56,6 @@ if [[ ${taito_project:-} ]]; then
   echo "build"
   echo "db add: NAME"
   echo "template upgrade"
-  echo "workspace clean"
-  echo "workspace kill"
 
   # Version control commands
   echo "vc env list"
