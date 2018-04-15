@@ -50,6 +50,10 @@ do
         mode="print"
         shift
         ;;
+        --print-commands-short)
+        mode="print-short"
+        shift
+        ;;
         -c|--continue)
         continue=true
         shift
@@ -89,6 +93,11 @@ done
 
 if [[ ${mode} == "print" ]]; then
   "${taito_src_path}/print-commands.sh"
+  exit 0
+fi
+
+if [[ ${mode} == "print-short" ]]; then
+  "${taito_src_path}/print-commands-short.sh"
   exit 0
 fi
 
