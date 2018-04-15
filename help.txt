@@ -190,9 +190,9 @@ OPTIONS
     Quiet info logging.
     TODO implement
 
-  --print-commands
-    Prints all project commands. You can use this for implementing
-    autocompletion for taito-cli.
+  --print-commands, --print-commands-short
+    Prints all project commands. You can use this to implement autocompletion
+    for taito-cli commands.
 
   -c
     Informs taito-cli that the command is continuing from a previous command
