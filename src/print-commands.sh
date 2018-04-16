@@ -94,6 +94,8 @@ if [[ ${taito_project:-} ]]; then
     # List all environment branches"
   echo "vc env merge \
     # Merge current env branch to the next env branch"
+  echo "vc env merge: [SOURCE_BRANCH] [DESTINATION_BRANCH] \
+    # Merge source env branch to the destination env branch"
   echo "vc feat list \
     # List all feature branches"
   echo "vc feat rebase \
@@ -236,13 +238,15 @@ if [[ ${taito_project:-} ]]; then
       # echo "env alt rotate${suffix}"
       # echo "env alt destroy${suffix}"
 
-      echo "depl deploy${param} [IMAGE_TAG] \
-        # Deploy prebuilt version to ${env} environment"
-      echo "depl cancel${suffix} \
+      echo "deployment trigger${suffix} \
+        # Trigger ci build for ${env} environment"
+      echo "deployment cancel${suffix} \
         # Cancel an ongoing build for ${env} environment"
-      echo "depl revision${suffix} \
+      echo "deployment deploy${param} [IMAGE_TAG] \
+        # Deploy prebuilt version to ${env} environment"
+      echo "deployment revision${suffix} \
         # Show current revision of ${env} environment"
-      echo "depl revert${param} [REVISION] \
+      echo "deployment revert${param} [REVISION] \
         # Revert application on ${env} environment to an another revision"
     fi
 
@@ -266,7 +270,7 @@ if [[ ${taito_project:-} ]]; then
         # Copy a file to the ${stack} container running on ${env} environment"
       echo "kill${param} ${stack} \
         # Kill the ${stack} container running on ${env} environment"
-      echo "depl build${param} ${stack} \
+      echo "deployment build${param} ${stack} \
         # Build and deploy the ${stack} container to ${env} environment"
     done
 

@@ -60,6 +60,7 @@ if [[ ${taito_project:-} ]]; then
   # Version control commands
   echo "vc env list"
   echo "vc env merge"
+  echo "vc env merge: [SOURCE_BRANCH] [DESTINATION_BRANCH]"
   echo "vc feat list"
   echo "vc feat rebase"
   echo "vc feat squash"
@@ -152,10 +153,11 @@ if [[ ${taito_project:-} ]]; then
       # echo "env alt rotate${suffix}"
       # echo "env alt destroy${suffix}"
 
-      echo "depl deploy${param} IMAGE_TAG"
-      echo "depl cancel${suffix}"
-      echo "depl revision${suffix}"
-      echo "depl revert${param} REVISION"
+      echo "deployment trigger${suffix}"
+      echo "deployment cancel${suffix}"
+      echo "deployment deploy${param} IMAGE_TAG"
+      echo "deployment revision${suffix}"
+      echo "deployment revert${param} REVISION"
     fi
 
     # Stack component commands
@@ -169,7 +171,7 @@ if [[ ${taito_project:-} ]]; then
       echo "cp${param} ${stack}:PATH PATH"
       echo "cp${param} PATH ${stack}:PATH"
       echo "kill${param} ${stack}"
-      echo "depl build${param} ${stack}"
+      echo "deployment build${param} ${stack}"
     done
 
     # Links

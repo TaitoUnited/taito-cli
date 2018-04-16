@@ -155,13 +155,24 @@ if [[ "${taito_env}" != "local" ]] && \
   exit 1
 fi
 
-# Confirm prod operation
+# Confirm prod operations
 if [[ "${taito_env}" == "prod" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo
   echo "The operation is targetting prod environment. Do you want to continue (Y/n)?"
   read -r confirm
   if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
     exit 130
+  fi
+
+  # Confirm suspicious operations
+  if [[ "${taito_command}" != "init" ]]; then
+    echo
+    echo "Command '${orig_command}' is not meant to be run on production environment"
+    echo "Do you want to continue anyway (Y/n)?"
+    read -r confirm
+    if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+      exit 130
+    fi
   fi
 fi
 

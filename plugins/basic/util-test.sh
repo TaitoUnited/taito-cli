@@ -4,6 +4,7 @@
 : "${taito_project:?}"
 : "${taito_env:?}"
 : "${taito_repo_name:?}"
+: "${taito_vout:?}"
 
 dir="${1}"
 suite_filter="${2}"
@@ -26,7 +27,23 @@ if [[ "${ci_exec_test_init:-}" == "true" ]]; then
 fi && \
 
 # Pass all environment variables for the test run
-test_env_vars=$(env | cut -f1 -d= | sed 's/^/-e /' | tr '\n' ' ')
+# | cut -f1 -d=
+# TODO remove "^DATABASE_\|^TEST_\|^test_"
+test_env_vars=$(env | grep "^DATABASE_\|^TEST_\|^test_" | \
+  sed 's/^/-e /' | tr '\n' ' ')
+
+# TODO why this is required?
+if [[ "${test_env_vars}" ]] && [[ ${test_env_vars} != "-e "* ]]; then
+  test_env_vars="-e ${test_env_vars}"
+fi
+
+echo --------- test_env_vars start ---------
+echo "${test_env_vars}"
+echo --------- test_env_vars end ---------
+
+# TODO does not work against dev because db proxy must be started
+# before and proxy is running inside the taito container and not
+# the tester container
 
 # Determine command to be run on test phase
 compose_pre_cmd=""
@@ -42,7 +59,8 @@ if [[ "${taito_env}" != "local" ]]; then
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run && (exit 1))) && "
-  compose_cmd="docker run ${test_env_vars} --entrypoint sh ${image_test} SUITE"
+  compose_cmd="docker run ${test_env_vars} --entrypoint \
+    sh ${image_test} SUITE"
 fi && \
 
 # Create test suite template from init and test phase commands
@@ -50,7 +68,8 @@ template="echo 'SUITE START' && ${init_command} && ${compose_cmd} && echo 'SUITE
 
 # Generate commands to be run by traversing all test suites
 commands="" && \
-suites=($(find ./${dir}/test -name '*.sh' 2> /dev/null | grep "suite" | grep "${suite_filter}")) && \
+suites=($(find ./${dir}/test -name '*.sh' 2> /dev/null | grep "suite" | \
+  grep "${suite_filter}")) && \
 for suite in "${suites[@]}"
 do
   s=${suite/.\/${dir}/.}
@@ -59,7 +78,8 @@ done
 
 # Execute tests
 if [[ ! -z ${commands} ]]; then
-  "${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_pre_cmd}${commands# && }"
+  "${taito_cli_path}/util/execute-on-host.sh" \
+    "${compose_pre_cmd}${commands# && }"
 fi && \
 
 # Call next command on command chain

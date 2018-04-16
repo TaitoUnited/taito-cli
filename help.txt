@@ -5,16 +5,17 @@ QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
     install                 # Install libraries on host
-    (env)                   # Initialize shell environment (e.g. pipenv)
-    (build)                 # Build project
-    start                   # Start containers
+    (env)                   # Initialize shell environment (e.g. for pipenv)
+    (build)                 # Build project (if not built autom. by start)
+    start                   # Start containers / watch / application
     init                    # Initialize database and storage buckets
-    (run)                   # Run the application
+    (run)                   # Run the application (if not run autom. by start)
     open app                # Open application on browser
     open admin              # Open admin GUI on browser
     open builds             # Open build logs on browser
     open boards             # Open project kanban board(s) on browser
     info                    # Show info required for logging in to app
+    lint                    # Lint code
     unit                    # Run unit tests
     test                    # Run integration and e2e tests
     db open                 # Access database from command line
@@ -28,7 +29,6 @@ QUICK EXAMPLES
     analyze                 # Analyze implementation
     scan                    # Lint code, scan for vulnerabilities, etc
     docs                    # Generate documentation
-    lock                    # Lock libraries
 
   REMOTE ENVIRONMENT
     open app:dev            # Open application on browser
@@ -63,6 +63,7 @@ QUICK EXAMPLES
     vc env list             # List all environment branches
     vc env: dev             # Switch to the dev environment branch
     vc env merge            # Merge current env branch to the next env branch
+    vc env merge: dev test  # Merge dev environment branch to test branch
     vc feat list            # List all feature branches
     vc feat: pricing        # Switch to the pricing feature branch
     vc feat rebase          # Rebase feature branch with the original branch
@@ -71,11 +72,12 @@ QUICK EXAMPLES
     vc feat pr              # Create a pull-request for current feature branch
 
   MANUAL DEPLOYMENT OPERATIONS
-    depl build:dev worker   # Build and deploy worker container to dev env
-    depl deploy:dev v1.1.1  # Deploy prebuilt version to dev env
-    depl cancel:dev         # Cancel an ongoing build for dev env
-    depl revision:dev       # Show current revision on dev env
-    depl revert:dev 20      # Revert application on dev env to revision 20
+    deployment trigger:dev        # Trigger ci build for dev environment
+    deployment cancel:dev         # Cancel an ongoing dev environment ci build
+    deployment build:dev worker   # Build and deploy worker container to dev env
+    deployment deploy:dev v1.1.1  # Deploy prebuilt version to dev env
+    deployment revision:dev       # Show current revision on dev env
+    deployment revert:dev 20      # Revert application on dev env to revision 20
 
   PROJECT TEMPLATES
     template create: server-template  # Create a project based on template
@@ -105,30 +107,6 @@ QUICK EXAMPLES
     passwd get: movie-key   # Get movie-key passwd
     passwd set: movie-key   # Set movie-key passwd
     passwd rotate: movie    # Rotate all movie passwords
-
-SYNTAX ALTERNATIVES
-
-  SPACE SYNTAX
-    taito workspace clean
-    taito open app:dev
-    taito logs:dev client
-    taito git feat squash: myfeature
-
-  HYPHEN SYNTAX
-    taito workspace-clean
-    taito open-app:dev
-    taito logs:dev client
-    taito git-feat-squash myfeature
-
-  > When using the space syntax, you must add an environment definition or
-  > use plain ':' to separate the command from arguments. Examples:
-  > $ taito logs:dev client
-  > $ taito git feat squash: myfeature
-  > NOTE: Autocomplete does not support the space syntax yet.
-
-  > You should always use the internal hyphen syntax when defining build
-  > targets (e.g. npm scripts) as some build tools do not support spaces in
-  > build target names.
 
 OPTIONS
 
@@ -212,6 +190,10 @@ ARGUMENTS
     Depending on the environment, POD may reference to a Kubernetes pod,
     a Docker container, a function or some other deployable module.
 
+ALTERNATIVE HYPHEN SYNTAX
+
+  You can also use hyphen instead of space e.g. `taito db-open:dev`
+
 PROJECT: BASIC OPERATIONS
 
   > All basic operation commands use 'oper' as a command grouping prefix but
@@ -265,7 +247,7 @@ PROJECT: BASIC OPERATIONS
   info[:ENV]
     Show some useful information about the environment (e.g. shared user
     accounts that you can use to log in).
-    TIP: Enable the 'make' or 'npm' plugin and implement oper-info[:ENV] script
+    TIP: Enable the 'make' or 'npm' plugin and implement info[:ENV] script
     in your makefile/package.json.
 
   unit [CONTAINER]
@@ -284,12 +266,17 @@ PROJECT: BASIC OPERATIONS
   analyze
     Analyzes implementation and gives you feedback accordingly (webpack
     bundle analysis, code quality analysis, vulnerability analysis, etc.)
-    TIP: Enable the 'make' or 'npm' plugin and implement oper-analyze script
+    TIP: Enable the 'make' or 'npm' plugin and implement analyze script
     in your makefile/package.json
 
   scan
     Lint code, scan for vulnerabilities, etc.
-    TIP: Enable the 'make' or 'npm' plugin and implement cscan script in your
+    TIP: Enable the 'make' or 'npm' plugin and implement scan script in your
+    makefile/package.json.
+
+  lint
+    Lint code
+    TIP: Enable the 'make' or 'npm' plugin and implement lint script in your
     makefile/package.json.
 
   docs
@@ -339,9 +326,6 @@ PROJECT: BASIC OPERATIONS
 
   clean [POD | npm | data | build | ...]
     Clean.
-
-  lock
-    Creates lock files that lock library versions.
 
 PROJECT: LINKS
 
@@ -398,7 +382,7 @@ PROJECT: VERSION CONTROL OPERATIONS
   vc feat list
     List all feature branches.
 
-  vc feat[:ENV] FEATURE_NAME
+  vc feat:[ENV] FEATURE_NAME
     Creates a new branch for a feature or executes a normal branch checkout if
     the branch already exists. The dev branch is used as a default env branch
     (source branch).
@@ -503,24 +487,24 @@ PROJECT: DATABASE OPERATIONS
 
 PROJECT: MANUAL DEPLOYMENT OPERATIONS
 
-  depl build:[ENV] NAME
+  deployment build:[ENV] NAME
     Build, push and deploy a container or some other deployable module to
     server. Use this when you need to quickly deploy manual changes to some
-    environment. Example: taito depl build:dev server
+    environment. Example: taito deployment build:dev server
 
-  depl deploy:ENV TAG|COMMIT
+  deployment deploy:ENV TAG|COMMIT
     Deploys a prebuilt version to an environment. TODO implement
 
-  depl cancel:ENV [IGNORE_BUILD_ID]
+  deployment cancel:ENV [IGNORE_BUILD_ID]
     Cancel an ongoing build, but ignore the given build id.
 
-  depl revision[:ENV]
+  deployment revision[:ENV]
     Show current revision.
 
-  depl revert[:ENV] [REVISION]
+  deployment revert[:ENV] [REVISION]
     Reverts application to another revision. Reverts to the previous version
     if revision has not been given as argument. You can see current revision
-    number by running `taito depl revision[:ENV]`.
+    number by running `taito deployment revision[:ENV]`.
 
 PROJECT: AUTOMATIC CI/CD OPERATIONS
 
@@ -551,7 +535,7 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
   ci verify[:ENV]
     Verifies that everything went ok e.g. by checking test results. If something
     went wrong and autorevert is enabled for the environment, runs
-    `taito db revert[:ENV]` and `taito depl revert[:ENV]`.
+    `taito db revert[:ENV]` and `taito deployment revert[:ENV]`.
 
   ci publish
     Publishes build artifacts (e.g. docs, test reports) to a central location.
@@ -560,8 +544,8 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
   ci release post:ENV
     Release pre and post handling. These commands usually generate release notes
     automatically and tag the git repository with a new version number.
-    TIP: Enable the 'make' or 'npm' plugin and implement ci-release-pre:prod and
-    ci-release-post:prod scripts in your makefile/package.json.
+    TIP: Enable the 'make' or 'npm' plugin and implement release-pre:prod and
+    release-post:prod scripts in your makefile/package.json.
 
 PROJECT: BASIC SETUP
 

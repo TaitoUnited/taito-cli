@@ -29,12 +29,12 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito workspace kill             # Kill all running processes (e.g. containers)
     taito workspace clean            # Remove all unused build artifacts (e.g. images)
 
-All taito-cli commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
+All taito-cli commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting a remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
 
     taito open app:dev                       # Open application on browser
     taito open admin:dev                     # Open application admin GUI on browser
     taito info:dev                           # Show information required for signing in to application
-    taito status:dev                         # Show application status
+    taito status:dev                         # Show status
     taito test:dev                           # Run integration/e2e tests against dev environment
     taito shell:dev server                   # Start shell on a container named 'server'
     taito logs:dev worker                    # Tail logs of a container named 'worker'
@@ -44,20 +44,29 @@ All taito-cli commands target the local development environment by default. If y
     taito db open:dev                        # Open database on command line
     taito db proxy:dev                       # Start a proxy for accessing remote database with a GUI tool
     taito db import:dev ./database/file.sql  # Import a file to database
-    taito db dump:dev                        # Dump database to a file
-    taito db log:dev                         # Show database migration logs
-    taito db revert:dev f898e8f986           # Revert database migrations to change f898e8f986
-    taito db recreate:dev                    # Recreate database
-    taito db deploy:dev                      # Deploy database migrations
-    taito db rebase:dev                      # Rebase database by running db revert and deploy
-    taito db diff:local dev                  # Diff database schemas between dev and local environment
-    taito db copy:local dev                  # Copy database from dev environment to local environment
 
-With taito-cli you can take an opinionated view on version control. Some examples of predefined commands:
+Some database operation examples targetting a test environment:
+
+    taito db open:test                       # Open database on command line
+    taito db proxy:test                      # Start a database proxy for GUI tool access
+    taito db import:test./database/file.sql  # Import a file to database
+    taito db dump:test./tmp/dump.sql         # Dump database to a file
+    taito db log:test                        # View change log of database
+    taito db recreate:test                   # Recreate the database
+    taito db deploy:test                     # Deploy changes to database
+    taito db rebase:test                     # Rebase a database (db revert + db deploy)
+    taito db rebase:test b91b7b2             # Rebase a database (db revert + db deploy) from change 'b91b7b2'
+    taito db revert:test b91b7b2             # Revert a database to change 'b91b7b2'
+    taito db diff:test dev                   # Compare db schemas of dev and test environments
+    taito db copy:test dev                   # Copy database from dev to test
+    taito db copyquick:test dev              # Copy database from dev to test (both databases in the same cluster)
+
+With taito-cli you can take an opinionated view on version control. Some examples of predefined version control commands:
 
     taito vc env list                # List all environment branches
     taito vc env: dev                # Switch to the dev environment branch
     taito vc env merge               # Merge the current environment branch to the next environment branch
+    taito vc env merge: dev test     # Merge dev environment branch to test environment branch
 
     taito vc feat list               # List all feature branches
     taito vc feat: pricing           # Switch to the pricing feature branch
@@ -68,18 +77,19 @@ With taito-cli you can take an opinionated view on version control. Some example
 
     TODO Support for release branches
 
-Manual deployment operations in case CI/CD problems:
+Manual deployment operations in case there are some problems with automated CI/CD builds:
 
-    taito depl build:dev worker      # Build and deploy worker container to dev environment
-    taito depl deploy:dev v1.1.1     # Deploy prebuilt version to dev environment
-    taito depl cancel:dev            # Cancel an ongoing build for dev environment
-    taito depl revision:dev          # Show current revision deployed on dev environment
-    taito depl revert:dev 20         # Revert application to revision 20 on dev environment
+    taito deployment trigger:dev             # Trigger ci build for dev environment
+    taito deployment cancel:dev              # Cancel an ongoing dev environment build
+    taito deployment build:dev worker        # Build and deploy worker container to dev environment directly from local env
+    taito deployment deploy:dev v1.1.1       # Deploy a prebuilt version to dev environment
+    taito deployment revision:dev            # Show current revision deployed on dev environment
+    taito deployment revert:dev 20           # Revert application to revision 20 on dev environment
 
 Creating projects based on configurable project templates:
 
-    taito template create: server-template  # Create a project based on server-template
-    taito template upgrade                  # Upgrade project based on template
+    taito template create: server-template   # Create a project based on server-template
+    taito template upgrade                   # Upgrade project based on template
 
 Infrastructure management for projects:
 
@@ -363,7 +373,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 TODO separate ci command for every step (even for otherwise existing commands --> avoid accidental overrides in package.json, ci mode, etc)
 
 * `taito --auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
-* `taito depl cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
+* `taito deployment cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
 * `taito ci prepare`: Set ci flags by status check. The ci flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since all images have already been built and tested by some previous CI build.
 * `taito install`: Install required libraries.
 * `taito secrets`: Fetch secrets that are required by the following CI/CD steps.
@@ -382,7 +392,7 @@ TODO separate ci command for every step (even for otherwise existing commands --
 * `taito ci deploy`: Deploy the application.
 * `taito ci wait`: Optional: Wait for application to restart in the target environment.
 * `taito ci test`: Optional: Run api/e2e tests for the target environment.
-* `taito ci verify`: Optional: Verifies that api and e2e tests went ok for the target environment. If tests failed and autorevert is enabled for the target environment, executes `taito db revert` and `taito depl revert`.
+* `taito ci verify`: Optional: Verifies that api and e2e tests went ok for the target environment. If tests failed and autorevert is enabled for the target environment, executes `taito db revert` and `taito deployment revert`.
 * `taito ci publish`: Publish all artifacts to a central location (e.g. container images, libraries, docs, test results, test coverage reports, code quality reports).
 * `taito ci release post`: Typically generates release notes from git commits or issues, and tags the git repository with the new version number.
 
