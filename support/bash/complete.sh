@@ -3,7 +3,7 @@
 _taito_commands()
 {
   taito --print-commands-short | \
-    grep "${taito_prefix}" | awk "{print \$${taito_index}}"
+    grep "${taito_prefix} " | awk "{print \$${taito_index}}"
 }
 
 _taito ()
