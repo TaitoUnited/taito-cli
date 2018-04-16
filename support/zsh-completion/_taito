@@ -2,8 +2,12 @@
 
 _taito_commands()
 {
-  taito --print-commands-short | \
-    grep "${taito_prefix} " | awk "{print \$${taito_index}}"
+  pattern=""
+  if [[ ${taito_prefix} ]]; then
+    pattern="${taito_prefix} "
+  fi
+  taito -d --print-commands-short | \
+    grep -e "${pattern}" | awk "{print \$${taito_index}}"
 }
 
 _taito()

@@ -7,6 +7,7 @@ echo "--readme"
 echo "--shell"
 echo "--trouble"
 echo "--upgrade"
+echo "-- COMMANDS"
 
 # Workspace
 echo "workspace clean"
@@ -60,7 +61,7 @@ if [[ ${taito_project:-} ]]; then
   # Version control commands
   echo "vc env list"
   echo "vc env merge"
-  echo "vc env merge: [SOURCE_BRANCH] [DESTINATION_BRANCH]"
+  echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH"
   echo "vc feat list"
   echo "vc feat rebase"
   echo "vc feat squash"

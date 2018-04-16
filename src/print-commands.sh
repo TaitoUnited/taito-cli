@@ -19,6 +19,8 @@ echo "--trouble \
   # Show trouble.txt of current project and taito-cli"
 echo "--upgrade \
   # Upgrade taito-cli and its extensions to the latest version"
+echo "-- COMMANDS \
+  # Run commands inside the taito-cli container"
 
 # Workspace
 echo "workspace clean \
@@ -27,7 +29,7 @@ echo "workspace kill \
   # Kill all running processes (e.g. containers)"
 
 # New project from template
-echo "template create: [TEMPLATE] \
+echo "template create: TEMPLATE \
   &focus \
   # Create a project based on a template"
 
@@ -52,16 +54,16 @@ done <<< "${link_global_urls:-}"
 #   # Share a password using a one-time magic link"
 # echo "passwd list \
 #   # List all passwords"
-# echo "passwd list: [FILTER] \
+# echo "passwd list: FILTER \
 #   # Search for passwords"
-# echo "passwd get: [NAME] \
+# echo "passwd get: NAME \
 #   # Get a password"
-# echo "passwd set: [NAME] \
+# echo "passwd set: NAME \
 #   # Set a password"
 # echo "passwd rotate \
 #   &focus \
 #   # Rotate all passwords"
-# echo "passwd rotate: [FILTER] \
+# echo "passwd rotate: FILTER \
 #   &focus \
 #   # Rotate some passwords"
 
@@ -84,7 +86,7 @@ if [[ ${taito_project:-} ]]; then
     # Initialize shell environment (e.g. pipenv)"
   echo "build \
     # Build project"
-  echo "db add: [NAME] \
+  echo "db add: NAME \
     # Add a database migration"
   echo "template upgrade \
     # Upgrade project using template"
@@ -94,7 +96,7 @@ if [[ ${taito_project:-} ]]; then
     # List all environment branches"
   echo "vc env merge \
     # Merge current env branch to the next env branch"
-  echo "vc env merge: [SOURCE_BRANCH] [DESTINATION_BRANCH] \
+  echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH \
     # Merge source env branch to the destination env branch"
   echo "vc feat list \
     # List all feature branches"
@@ -107,7 +109,7 @@ if [[ ${taito_project:-} ]]; then
     # Merge current feature branch to the original"
   echo "vc feat pr \
     # Create a pull-request for current feature branch"
-  echo "vc feat: [FEATURE] \
+  echo "vc feat: FEATURE \
     # Switch to a feature branch"
   for feature in ${features}
   do
@@ -171,7 +173,7 @@ if [[ ${taito_project:-} ]]; then
     echo "db open${suffix} \
       &focus \
       # Open database client for ${env} environment from command line"
-    echo "db import${param} [FILE] \
+    echo "db import${param} FILE \
       # Import a file to database on ${env} environment"
     echo "db dump${suffix} \
       # Dump database of ${env} environment to a file"
@@ -183,15 +185,15 @@ if [[ ${taito_project:-} ]]; then
       # Deploy changes to ${env} environment database"
     echo "db rebase${suffix} \
       # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
-    echo "db rebase${param} [CHANGE] \
+    echo "db rebase${param} CHANGE \
       # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
-    echo "db revert${param} [CHANGE] \
+    echo "db revert${param} CHANGE \
       # Revert ${env} environment database changes"
-    echo "db diff${param} [SOURCE_ENV] \
+    echo "db diff${param} SOURCE_ENV \
       # Compare (diff) source env database schema with ${env} environment"
-    echo "db copy${param} [SOURCE_ENV] \
+    echo "db copy${param} SOURCE_ENV \
       # Copy database from source env to ${env} environment"
-    echo "db copyquick${param} [SOURCE_ENV] \
+    echo "db copyquick${param} SOURCE_ENV \
       # Copy database quickly from source env to ${env} environment (WARNING!!)"
 
     # Local-only commands
@@ -242,11 +244,11 @@ if [[ ${taito_project:-} ]]; then
         # Trigger ci build for ${env} environment"
       echo "deployment cancel${suffix} \
         # Cancel an ongoing build for ${env} environment"
-      echo "deployment deploy${param} [IMAGE_TAG] \
+      echo "deployment deploy${param} IMAGE_TAG \
         # Deploy prebuilt version to ${env} environment"
       echo "deployment revision${suffix} \
         # Show current revision of ${env} environment"
-      echo "deployment revert${param} [REVISION] \
+      echo "deployment revert${param} REVISION \
         # Revert application on ${env} environment to an another revision"
     fi
 
@@ -255,18 +257,18 @@ if [[ ${taito_project:-} ]]; then
     do
       echo "test${param} ${stack} \
         # Run integration and e2e tests of the ${stack} container on ${env} environment"
-      echo "test${param} ${stack} [SUITE] \
+      echo "test${param} ${stack} SUITE \
         # Run an integration or e2e test suite of the ${stack} container on ${env} environment"
       echo "logs${param} ${stack} \
         # Tail logs of the ${stack} container running on ${env} environment"
       echo "shell${param} ${stack} \
         &focus \
         # Start shell inside the ${stack} container running on ${env} environment"
-      echo "exec${param} ${stack} - [COMMAND] \
+      echo "exec${param} ${stack} - COMMAND \
         # Execute a command in the ${stack} container running on ${env} environment"
-      echo "cp${param} ${stack}:[PATH] [PATH] \
+      echo "cp${param} ${stack}:PATH PATH \
         # Copy a file from the ${stack} container running on ${env} environment"
-      echo "cp${param} [PATH] ${stack}:[PATH] \
+      echo "cp${param} PATH ${stack}:PATH \
         # Copy a file to the ${stack} container running on ${env} environment"
       echo "kill${param} ${stack} \
         # Kill the ${stack} container running on ${env} environment"
