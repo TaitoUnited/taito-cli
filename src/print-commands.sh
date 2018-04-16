@@ -233,12 +233,16 @@ if [[ ${taito_project:-} ]]; then
       echo "env rotate${suffix} \
         &focus \
         # Rotate project specific secrets in ${env} environment"
+      echo "env rotate${param} FILTER \
+        &focus \
+        # Rotate project specific secrets in ${env} environment"
       echo "env destroy${suffix} \
         &focus \
         # Destroy the ${env} environment of the current project"
-      # echo "env alt apply${suffix}"
-      # echo "env alt rotate${suffix}"
-      # echo "env alt destroy${suffix}"
+      # echo "alt apply${suffix}"
+      # echo "alt rotate${suffix}"
+      # echo "alt rotate${param} FILTER"
+      # echo "alt destroy${suffix}"
 
       echo "deployment trigger${suffix} \
         # Trigger ci build for ${env} environment"
@@ -266,9 +270,9 @@ if [[ ${taito_project:-} ]]; then
         # Start shell inside the ${stack} container running on ${env} environment"
       echo "exec${param} ${stack} - COMMAND \
         # Execute a command in the ${stack} container running on ${env} environment"
-      echo "cp${param} ${stack}:PATH PATH \
+      echo "copy${param} ${stack}:PATH PATH \
         # Copy a file from the ${stack} container running on ${env} environment"
-      echo "cp${param} PATH ${stack}:PATH \
+      echo "copy${param} PATH ${stack}:PATH \
         # Copy a file to the ${stack} container running on ${env} environment"
       echo "kill${param} ${stack} \
         # Kill the ${stack} container running on ${env} environment"

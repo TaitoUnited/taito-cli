@@ -92,6 +92,7 @@ QUICK EXAMPLES
   PROJECT INFRASTRUCTURE MANAGEMENT
     env apply:dev           # Apply project specific changes to dev env
     env rotate:dev          # Rotate project specific secrets in dev env
+    env rotate:dev gcloud   # Rotate project specific gcloud secrets in dev env
     env destroy:dev         # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
@@ -585,14 +586,14 @@ PROJECT: ALTERNATIVE ENVIRONMENT SETUP
   > but containers are built from an alternative branch. You can use alternative
   > environments for canary releases, A/B testing, etc.
 
-  env alt apply:ENV
+  alt apply:ENV
     Migrate environment to the latest configuration.
     TODO: implement using terraform.
 
-  env alt destroy:ENV [NAME]
+  alt destroy:ENV
     Destroy alternative environment. TODO not implemented.
 
-  env alt rotate:ENV [NAME_FILTER]
+  alt rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.
 
 ZONE

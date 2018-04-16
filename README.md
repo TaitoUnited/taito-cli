@@ -8,6 +8,8 @@ Taito-cli is designed so that plugins may execute a single command together in c
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
+TODO taito-templates (taito-cli integration, kube/helm/terraform-templates, semantic-versioning), person dependency
+
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
 
 Some examples of the most common predefined taito-cli commands used in local development:
@@ -98,7 +100,10 @@ Infrastructure management for projects:
 
     taito env apply:dev              # Apply project specific changes to dev environment
     taito env rotate:dev             # Rotate project specific secrets in dev environment
+    taito env rotate:dev gcloud      # Rotate project specific gcloud secrets in dev environment
     taito env destroy:dev            # Destroy dev environment of the current project
+
+    TODO Alternative environments for canary releases, A/B testing, etc.
 
 Infrastructure management for zones:
 

@@ -149,10 +149,12 @@ if [[ ${taito_project:-} ]]; then
       # NOTE: Advanced
       echo "env apply${suffix}"
       echo "env rotate${suffix}"
+      echo "env rotate${param} FILTER"
       echo "env destroy${suffix}"
-      # echo "env alt apply${suffix}"
-      # echo "env alt rotate${suffix}"
-      # echo "env alt destroy${suffix}"
+      # echo "alt apply${suffix}"
+      # echo "alt rotate${suffix}"
+      # echo "alt rotate${param} FILTER"
+      # echo "alt destroy${suffix}"
 
       echo "deployment trigger${suffix}"
       echo "deployment cancel${suffix}"
@@ -169,8 +171,8 @@ if [[ ${taito_project:-} ]]; then
       echo "logs${param} ${stack}"
       echo "shell${param} ${stack}"
       echo "exec${param} ${stack} - COMMAND"
-      echo "cp${param} ${stack}:PATH PATH"
-      echo "cp${param} PATH ${stack}:PATH"
+      echo "copy${param} ${stack}:PATH PATH"
+      echo "copy${param} PATH ${stack}:PATH"
       echo "kill${param} ${stack}"
       echo "deployment build${param} ${stack}"
     done
