@@ -4,72 +4,72 @@ TAITO-CLI
 QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
-    install                 # Install libraries on host
-    (env)                   # Initialize shell environment (e.g. for pipenv)
-    (build)                 # Build project (if not built autom. by start)
-    start                   # Start containers / watch / application
-    init                    # Initialize database and storage buckets
-    (run)                   # Run the application (if not run autom. by start)
-    open app                # Open application on browser
-    open admin              # Open admin GUI on browser
-    open builds             # Open build logs on browser
-    open boards             # Open project kanban board(s) on browser
-    info                    # Show info required for logging in to app
-    lint                    # Lint code
-    unit                    # Run unit tests
-    test                    # Run integration and e2e tests
-    db open                 # Access database from command line
-    db proxy                # Show db conn details. Start a proxy if required.
-    db add: role_enum       # Add a database migration
-    workspace kill          # Kill all running processes (e.g. containers)
-    workspace clean         # Remove all unused build artifacts (e.g. images)
-    shell: server           # Start shell inside a container named 'server'
-    exec: server - echo foo # Execute a command in a container named 'server'
-    cp: ./file server:/app  # Copy a file to container names 'server'
-    analyze                 # Analyze implementation
-    scan                    # Lint code, scan for vulnerabilities, etc
-    docs                    # Generate documentation
+    install                  # Install libraries on host
+    (env)                    # Initialize shell environment (e.g. for pipenv)
+    (build)                  # Build project (if not built autom. by start)
+    start                    # Start containers / watch / application
+    init                     # Initialize database and storage buckets
+    (run)                    # Run the application (if not run autom. by start)
+    open app                 # Open application on browser
+    open admin               # Open admin GUI on browser
+    open builds              # Open build logs on browser
+    open boards              # Open project kanban board(s) on browser
+    info                     # Show info required for logging in to app
+    lint                     # Lint code
+    unit                     # Run unit tests
+    test                     # Run integration and e2e tests
+    db open                  # Access database from command line
+    db proxy                 # Show db conn details. Start a proxy if required.
+    db add: role_enum        # Add a database migration
+    workspace kill           # Kill all running processes (e.g. containers)
+    workspace clean          # Remove all unused build artifacts (e.g. images)
+    shell: server            # Start shell inside a container named 'server'
+    exec: server -- echo foo # Execute a command in a container named 'server'
+    copy: ./file server:/app # Copy a file to container names 'server'
+    analyze                  # Analyze implementation
+    scan                     # Lint code, scan for vulnerabilities, etc
+    docs                     # Generate documentation
 
-  REMOTE ENVIRONMENT
-    open app:dev            # Open application on browser
-    open admin:dev          # Open application admin GUI on browser
-    info:dev                # Show information required for signing in
-    status:dev              # Show application status
-    secrets:dev             # Show secrets
-    test:dev                # Run integration/e2e tests against dev env
-    shell:dev server        # Start a shell on a container named 'server'
-    logs:dev worker         # Tail logs of a container named 'worker'
-    kill:dev worker         # Kill a container named 'worker'
-    open logs:dev           # Open logs on browser (e.g. Stackdriver or ELK)
-    open storage:dev        # Open storage bucket on browser
-    init:dev --clean        # Reinitialize database and storage
+  ACCESSING A REMOTE ENVIRONMENT
+    open app:dev             # Open application on browser
+    open admin:dev           # Open application admin GUI on browser
+    info:dev                 # Show information required for signing in
+    status:dev               # Show application status
+    secrets:dev              # Show secrets
+    test:dev                 # Run integration/e2e tests against dev env
+    shell:dev server         # Start a shell on a container named 'server'
+    logs:dev worker          # Tail logs of a container named 'worker'
+    kill:dev worker          # Kill a container named 'worker'
+    open logs:dev            # Open logs on browser (e.g. Stackdriver or ELK)
+    open storage:dev         # Open storage bucket on browser
+    init:dev --clean         # Reinitialize database and storage
 
   DATABASE OPERATIONS
-    db open:dev             # Open database on command line
-    db proxy:dev            # Start a database proxy for a GUI tool access
+    db open:dev              # Open database on command line
+    db proxy:dev             # Start a database proxy for a GUI tool access
     db import:dev ./database/file.sql   # Import a file to database
     db dump:dev ./tmp/dump.sql          # Dump database to a file
-    db log:dev              # View change log of database
-    db recreate:dev         # Recreate the database
-    db deploy:dev           # Deploy changes to database
-    db rebase:dev           # Rebase a database (db revert + db deploy)
-    db rebase:dev b91b7b2   # Rebase a database (db revert + db deploy)
-    db revert:dev b91b7b2   # Revert a database
-    db diff:dev test        # Compare db schemas of dev and test environments
-    db copy:dev test        # Copy database from test to dev
-    db copyquick:dev test   # Copy database from test to dev (WARNING!!)
+    db log:dev               # View change log of database
+    db recreate:dev          # Recreate the database
+    db deploy:dev            # Deploy changes to database
+    db rebase:dev            # Rebase a database (db revert + db deploy)
+    db rebase:dev b91b7b2    # Rebase a database (db revert + db deploy)
+    db revert:dev b91b7b2    # Revert a database
+    db diff:dev test         # Compare db schemas of dev and test environments
+    db copy:dev test         # Copy database from test to dev
+    db copyquick:dev test    # Copy database from test to dev (WARNING!!)
 
   VERSION CONTROL
-    vc env list             # List all environment branches
-    vc env: dev             # Switch to the dev environment branch
-    vc env merge            # Merge current env branch to the next env branch
-    vc env merge: dev test  # Merge dev environment branch to test branch
-    vc feat list            # List all feature branches
-    vc feat: pricing        # Switch to the pricing feature branch
-    vc feat rebase          # Rebase feature branch with the original branch
-    vc feat merge           # Merge current feature branch to the original
-    vc feat squash          # Squash feature branch as a single commit
-    vc feat pr              # Create a pull-request for current feature branch
+    vc env list              # List all environment branches
+    vc env: dev              # Switch to the dev environment branch
+    vc env merge             # Merge current env branch to the next env branch
+    vc env merge: dev test   # Merge dev environment branch to test branch
+    vc feat list             # List all feature branches
+    vc feat: pricing         # Switch to the pricing feature branch
+    vc feat rebase           # Rebase feature branch with the original branch
+    vc feat merge            # Merge current feature branch to the original
+    vc feat squash           # Squash feature branch as a single commit
+    vc feat pr               # Create a pull-request for current feature branch
 
   MANUAL DEPLOYMENT OPERATIONS
     deployment trigger:dev        # Trigger ci build for dev environment
@@ -84,30 +84,30 @@ QUICK EXAMPLES
     template upgrade                  # Upgrade project using template
 
   PROJECT CONFIGURATION
-    project apply           # Migrate project to the latest configuration
-    project docs            # Populate taito settings to project documentation
-    project contact         # List project contacts
-    project destroy         # Destroy project
+    project apply            # Migrate project to the latest configuration
+    project docs             # Populate taito settings to project documentation
+    project contact          # List project contacts
+    project destroy          # Destroy project
 
   PROJECT INFRASTRUCTURE MANAGEMENT
-    env apply:dev           # Apply project specific changes to dev env
-    env rotate:dev          # Rotate project specific secrets in dev env
-    env rotate:dev gcloud   # Rotate project specific gcloud secrets in dev env
-    env destroy:dev         # Destroy dev environment of the current project
+    env apply:dev            # Apply project specific changes to dev env
+    env rotate:dev           # Rotate project specific secrets in dev env
+    env rotate:dev gcloud    # Rotate project specific gcloud secrets in dev env
+    env destroy:dev          # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
-    zone apply              # Apply infrastructure changes to the zone
-    zone status             # Show status summary of the zone
-    zone doctor             # Analyze and repair the zone
-    zone maintenance        # Execute maintenance tasks interactively
-    zone destroy            # Destroy the zone
+    zone apply               # Apply infrastructure changes to the zone
+    zone status              # Show status summary of the zone
+    zone doctor              # Analyze and repair the zone
+    zone maintenance         # Execute maintenance tasks interactively
+    zone destroy             # Destroy the zone
 
   PASSWORD SHARING
-    passwd share            # Share a password using a one-time magic link
-    passwd list: movie      # List all movie passwords
-    passwd get: movie-key   # Get movie-key passwd
-    passwd set: movie-key   # Set movie-key passwd
-    passwd rotate: movie    # Rotate all movie passwords
+    passwd share             # Share a password using a one-time magic link
+    passwd list: movie       # List all movie passwords
+    passwd get: movie-key    # Get movie-key passwd
+    passwd set: movie-key    # Set movie-key passwd
+    passwd rotate: movie     # Rotate all movie passwords
 
 OPTIONS
 
@@ -305,18 +305,18 @@ PROJECT: BASIC OPERATIONS
     $ taito shell:dev my-app-client-3034393823-2f5jf
 
   exec[:ENV] POD CONTAINER COMMAND
-    Execute command in pod. Run 'taito status[:ENV]' first to get the pod name
-    and status. Give - as container if it should be determined automatically.
+    Execute command in pod. Give -- as container if it should be determined
+    automatically by POD name.
     Examples:
-    $ taito exec: client - echo "taito!"
-    $ taito exec:dev client - echo "taito!"
-    $ taito exec:dev my-app-client-3034393823-2f5jf - echo "taito!"
+    $ taito exec: client -- echo "taito!"
+    $ taito exec:dev client -- echo "taito!"
+    $ taito exec:dev my-app-client-3034393823-2f5jf -- echo "taito!"
 
-  cp[:ENV] [POD:]path [POD:]path
+  copy[:ENV] [POD:]path [POD:]path
     Copy a file. Examples:
-    $ taito cp: foo.txt client:/client/foo.txt
-    $ taito cp:dev foo.txt client:/client/foo.txt
-    $ taito cp:dev client:/client/foo.txt .
+    $ taito copy: foo.txt client:/client/foo.txt
+    $ taito copy:dev foo.txt client:/client/foo.txt
+    $ taito copy:dev client:/client/foo.txt .
     TODO IMPLEMENT
 
   kill[:ENV] [POD]

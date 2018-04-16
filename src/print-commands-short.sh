@@ -51,7 +51,6 @@ fi
 # Project
 if [[ ${taito_project:-} ]]; then
   echo "install"
-  echo "install --zzzzz" # TODO remove this zsh autocompletion hack
   echo "install --clean"
   echo "env"
   echo "build"
@@ -105,7 +104,6 @@ if [[ ${taito_project:-} ]]; then
     echo "stop${suffix}"
     # TODO run:ios run:android # Run the application
     echo "init${suffix}"
-    echo "init${suffix} --zzzzz" # TODO remove this zsh autocompletion hack
     echo "init${suffix} --clean"
     echo "info${suffix}"
     echo "test${suffix}"
@@ -134,11 +132,11 @@ if [[ ${taito_project:-} ]]; then
       echo "start${suffix} --clean --background"
       echo "start${suffix} --prod --clean"
       echo "start${suffix} --clean --prod"
+      echo "lint${suffix}"
       echo "unit${suffix}"
       echo "analyze${suffix}"
       echo "scan${suffix}"
       echo "docs${suffix}"
-      echo "lock${suffix}"
     fi
 
     # Remote-only commands
@@ -170,7 +168,7 @@ if [[ ${taito_project:-} ]]; then
       echo "test${param} ${stack} SUITE"
       echo "logs${param} ${stack}"
       echo "shell${param} ${stack}"
-      echo "exec${param} ${stack} - COMMAND"
+      echo "exec${param} ${stack} -- COMMAND"
       echo "copy${param} ${stack}:PATH PATH"
       echo "copy${param} PATH ${stack}:PATH"
       echo "kill${param} ${stack}"

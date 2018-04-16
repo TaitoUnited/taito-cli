@@ -21,8 +21,8 @@ _taito()
     _files -f
   else
     # Autocomplete using taito-cli commands
-    taito_commands=($(_taito_commands))
-    compadd "$@" $taito_commands
+    taito_commands=( $(_taito_commands) )
+    compadd -- "$@" ${taito_commands}
   fi
 }
 

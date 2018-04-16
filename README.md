@@ -25,7 +25,8 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito db open                    # Access database from command line
     taito db proxy                   # Show db connection details. Start a proxy if required.
     taito db add: role_enum          # Add a database migration
-    taito shell: server              # Start shell inside a container named 'server'
+    taito shell: server              # Start a shell inside a container named 'server'
+    taito exec: server -- echo foo   # Execute a command inside the server container
     taito open builds                # Open build logs on browser
     taito open boards                # Open project kanban board(s) on browser
     taito workspace kill             # Kill all running processes (e.g. containers)
@@ -39,6 +40,7 @@ All taito-cli commands target the local development environment by default. If y
     taito status:dev                         # Show status
     taito test:dev                           # Run integration/e2e tests against dev environment
     taito shell:dev server                   # Start shell on a container named 'server'
+    taito exec:dev server -- echo foo        # Execute a command inside the server container
     taito logs:dev worker                    # Tail logs of a container named 'worker'
     taito open logs:dev                      # Open logs on browser (e.g. Stackdriver or ELK)
     taito open storage:dev                   # Open storage bucket on browser

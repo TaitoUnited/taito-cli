@@ -206,6 +206,8 @@ if [[ ${taito_project:-} ]]; then
         # Clean and start containers"
       echo "start${suffix} --prod --clean \
         # Clean and start containers in production mode"
+      echo "lint${suffix} \
+        # Lint code"
       echo "unit${suffix} \
         # Run unit tests"
       echo "analyze${suffix} \
@@ -214,8 +216,6 @@ if [[ ${taito_project:-} ]]; then
         # Lint code, check code complexity, etc"
       echo "docs${suffix} \
         # Generate documentation"
-      echo "lock${suffix} \
-        # Lock libraries"
     fi
 
     # Remote-only commands
@@ -268,7 +268,7 @@ if [[ ${taito_project:-} ]]; then
       echo "shell${param} ${stack} \
         &focus \
         # Start shell inside the ${stack} container running on ${env} environment"
-      echo "exec${param} ${stack} - COMMAND \
+      echo "exec${param} ${stack} -- COMMAND \
         # Execute a command in the ${stack} container running on ${env} environment"
       echo "copy${param} ${stack}:PATH PATH \
         # Copy a file from the ${stack} container running on ${env} environment"
