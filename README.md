@@ -170,8 +170,8 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
 ### Optional steps
 
-- Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
-- Install taito-cli plugin for your editor: [atom-taito-cli](https://github.com/keskiju/atom-taito-cli), [vscode-taito-cli](https://github.com/keskiju/vscode-taito-cli)
+1. Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
+2. Install taito-cli plugin for your editor: [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
 
 ## Upgrading
 

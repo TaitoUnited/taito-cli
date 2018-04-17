@@ -165,7 +165,7 @@ if [[ "${taito_env}" == "prod" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   fi
 
   # Confirm suspicious operations
-  if [[ "${taito_command}" != "init" ]]; then
+  if [[ "${taito_command}" == "init" ]]; then
     echo
     echo "Command '${orig_command}' is not meant to be run on production environment"
     echo "Do you want to continue anyway (Y/n)?"

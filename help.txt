@@ -488,6 +488,12 @@ PROJECT: DATABASE OPERATIONS
 
 PROJECT: MANUAL DEPLOYMENT OPERATIONS
 
+  deployment trigger:ENV
+    Trigger ci build.
+
+  deployment cancel:ENV [IGNORE_BUILD_ID]
+    Cancel an ongoing build, but ignore the given build id.
+
   deployment build:[ENV] NAME
     Build, push and deploy a container or some other deployable module to
     server. Use this when you need to quickly deploy manual changes to some
@@ -495,9 +501,6 @@ PROJECT: MANUAL DEPLOYMENT OPERATIONS
 
   deployment deploy:ENV TAG|COMMIT
     Deploys a prebuilt version to an environment. TODO implement
-
-  deployment cancel:ENV [IGNORE_BUILD_ID]
-    Cancel an ongoing build, but ignore the given build id.
 
   deployment revision[:ENV]
     Show current revision.
