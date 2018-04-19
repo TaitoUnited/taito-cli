@@ -21,6 +21,7 @@ QUICK EXAMPLES
     db open                  # Access database from command line
     db proxy                 # Show db conn details. Start a proxy if required.
     db add: role_enum        # Add a database migration
+    db import: ./file.sql    # Import a file to database
     workspace kill           # Kill all running processes (e.g. containers)
     workspace clean          # Remove all unused build artifacts (e.g. images)
     shell: server            # Start shell inside a container named 'server'

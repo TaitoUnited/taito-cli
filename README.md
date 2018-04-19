@@ -19,12 +19,13 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito init                       # Initialize database and storage buckets
     taito open app                   # Open application on browser
     taito open admin                 # Open admin GUI on browser
-    taito info                       # Show info required for logging in to app
+    taito info                       # Show info required for signing in to the locally running app
     taito unit                       # Run unit tests
     taito test                       # Run integration and e2e tests
     taito db open                    # Access database from command line
     taito db proxy                   # Show db connection details. Start a proxy if required.
     taito db add: role_enum          # Add a database migration
+    taito db import: ./file.sql      # Import a file to database
     taito shell: server              # Start a shell inside a container named 'server'
     taito exec: server -- echo foo   # Execute a command inside the server container
     taito open builds                # Open build logs on browser
@@ -32,13 +33,13 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito workspace kill             # Kill all running processes (e.g. containers)
     taito workspace clean            # Remove all unused build artifacts (e.g. images)
 
-All taito-cli commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting a remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work.
+All taito-cli commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting a remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work as you expect.
 
     taito open app:dev                       # Open application on browser
     taito open admin:dev                     # Open application admin GUI on browser
     taito info:dev                           # Show information required for signing in to application
     taito status:dev                         # Show status
-    taito test:dev                           # Run integration/e2e tests against dev environment
+    taito test:dev                           # Run integration/e2e tests against the dev environment
     taito shell:dev server                   # Start shell on a container named 'server'
     taito exec:dev server -- echo foo        # Execute a command inside the server container
     taito logs:dev worker                    # Tail logs of a container named 'worker'
@@ -85,7 +86,7 @@ Manual deployment operations in case there are some problems with automated CI/C
 
     taito deployment trigger:dev             # Trigger ci build for dev environment
     taito deployment cancel:dev              # Cancel an ongoing dev environment build
-    taito deployment build:dev worker        # Build and deploy worker container to dev environment directly from local env
+    taito deployment build:dev worker        # Build and deploy worker container to dev env directly from local env
     taito deployment deploy:dev v1.1.1       # Deploy a prebuilt version to dev environment
     taito deployment revision:dev            # Show current revision deployed on dev environment
     taito deployment revert:dev 20           # Revert application to revision 20 on dev environment
@@ -93,7 +94,7 @@ Manual deployment operations in case there are some problems with automated CI/C
 Creating projects based on configurable project templates:
 
     taito template create: server-template   # Create a project based on server-template
-    taito template upgrade                   # Upgrade project based on template
+    taito template upgrade                   # Upgrade current project based on a template
 
 Infrastructure management for projects:
 

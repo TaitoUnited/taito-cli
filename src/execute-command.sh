@@ -156,7 +156,12 @@ if [[ "${taito_env}" != "local" ]] && \
 fi
 
 # Confirm prod operations
-if [[ "${taito_env}" == "prod" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
+if [[ "${taito_env}" == "prod" ]] && \
+   [[ "${taito_command}" != "oper-info" ]] && \
+   [[ "${taito_command}" != "oper-status" ]] && \
+   [[ "${taito_command}" != "oper-logs" ]] && \
+   [[ "${taito_command}" != "open-"* ]] && \
+   [[ "${taito_mode:-}" != "ci" ]]; then
   echo
   echo "The operation is targetting prod environment. Do you want to continue (Y/n)?"
   read -r confirm
@@ -165,7 +170,7 @@ if [[ "${taito_env}" == "prod" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   fi
 
   # Confirm suspicious operations
-  if [[ "${taito_command}" == "init" ]]; then
+  if [[ "${taito_command}" == "oper-init" ]]; then
     echo
     echo "Command '${orig_command}' is not meant to be run on production environment"
     echo "Do you want to continue anyway (Y/n)?"
