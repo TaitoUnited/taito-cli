@@ -12,8 +12,11 @@ dest="${2:?}"
 
 # Convert source pod name to full form
 if [[ ${source} == *":"* ]]; then
-  source_pod=$(kubectl get pods | grep "${taito_project}" | grep "${source%:*}" | \
-    head -n1 | awk '{print $1;}')
+  # TODO use determine-pod-container.sh
+  source_pod=$(kubectl get pods | grep "${taito_project}" | \
+    sed -e "s/${taito_project}-//" | \
+    grep "${source%:*}" | \
+    head -n1 | awk "{print \"${taito_project}-\" \$1;}")
   source_path="${source##*:}"
   source="${source_pod}:${source_path}"
   pod="${source_pod}"
@@ -21,8 +24,11 @@ fi
 
 # Convert destination pod name to full form
 if [[ ${dest} == *":"* ]]; then
-  dest_pod=$(kubectl get pods | grep "${taito_project}" | grep "${dest%:*}" | \
-    head -n1 | awk '{print $1;}')
+  # TODO use determine-pod-container.sh
+  dest_pod=$(kubectl get pods | grep "${taito_project}" | \
+    sed -e "s/${taito_project}-//" | \
+    grep "${dest%:*}" | \
+    head -n1 | awk "{print \"${taito_project}-\" \$1;}")
   dest_path="${dest##*:}"
   dest="${dest_pod}:${dest_path}"
   pod="${dest_pod}"

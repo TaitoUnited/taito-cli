@@ -8,10 +8,7 @@ pod="${1:?Pod name not given}"
 
 "${taito_plugin_path}/util/use-context.sh" && \
 
-if [[ ${pod} != *"-"* ]]; then
-  pod=$(kubectl get pods | grep "${taito_project}" | grep "${pod}" | \
-    head -n1 | awk '{print $1;}')
-fi
+. "${taito_plugin_path}/util/determine-pod-container.sh"
 
 (${taito_setv:?}; kubectl delete pod "${pod}") && \
 

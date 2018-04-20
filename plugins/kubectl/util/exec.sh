@@ -11,18 +11,7 @@ command=("${@:3}")
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
-if [[ ${pod} != *"-"* ]]; then
-  # Short pod name was given. Determine the full pod name.
-  pod=$(kubectl get pods | grep "${taito_project}" | \
-    sed -e "s/${taito_project}-//" | \
-    grep "${pod}" | \
-    head -n1 | awk "{print \"${taito_project}-\" \$1;}")
-fi
-
-if [[ "${container}" == "--" ]] || [[ "${container}" == "-" ]]; then
-  # No container name was given. Determine container name.
-  container=$(echo "${pod}" | sed -e 's/\([^0-9]*\)*/\1/;s/-[0-9].*$//')
-fi
+. "${taito_plugin_path}/util/determine-pod-container.sh"
 
 if [[ -z "${pod}" ]]; then
   echo

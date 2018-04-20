@@ -5,21 +5,14 @@
 : "${taito_project:?}"
 
 pod="${1:?Pod name not given}"
-container_name="${2}"
+container="${2}"
 
 "${taito_plugin_path}/util/use-context.sh"
 
-if [[ ${pod} != *"-"* ]]; then
-  pod=$(kubectl get pods | grep "${taito_project}" | grep "${pod}" | \
-    head -n1 | awk '{print $1;}')
-fi
+. "${taito_plugin_path}/util/determine-pod-container.sh"
 
-if [[ -z "${container_name}" ]]; then
-  container_name=$(echo "${pod}" | sed -e 's/\([^0-9]*\)*/\1/;s/-[0-9].*$//')
-fi
-
-echo "${pod}"
-echo "${container_name}"
+echo pod: "${pod}"
+echo container: "${container}"
 
 if [[ -z "${pod}" ]]; then
   echo
@@ -34,7 +27,7 @@ else
   echo
   echo
   echo "--- kubectl: Logs ---"
-  if ! (${taito_setv:?}; kubectl logs -f --tail=400 "${pod}" "${container_name}"); then
+  if ! (${taito_setv:?}; kubectl logs -f --tail=400 "${pod}" "${container}"); then
     exit 1
   fi
 fi
