@@ -16,8 +16,10 @@ QUICK EXAMPLES
     open boards              # Open project kanban board(s) on browser
     info                     # Show info required for logging in to app
     lint                     # Lint code
-    unit                     # Run unit tests
-    test                     # Run integration and e2e tests
+    unit                     # Run all unit tests
+    unit: client -- car      # Run the 'car' unit test on client container
+    test                     # Run all integration and e2e tests
+    test: server -- trip car # Run the 'car' test of 'trip' test suite on...
     db open                  # Access database from command line
     db proxy                 # Show db conn details. Start a proxy if required.
     db add: role_enum        # Add a database migration
@@ -252,12 +254,12 @@ PROJECT: BASIC OPERATIONS
     TIP: Enable the 'make' or 'npm' plugin and implement info[:ENV] script
     in your makefile/package.json.
 
-  unit [CONTAINER]
+  unit [CONTAINER] -- [TEST]
     Run unit tests.
     TIP: Enable the 'make' or 'npm' plugin and implement unit script in your
     makefile/package.json.
 
-  test[:ENV] [CONTAINER] [SUITE]
+  test[:ENV] [CONTAINER] -- [SUITE] [TEST]
     Run integration and end-to-end tests.
     TIP: Enable the 'make' or 'npm' plugin and implement test scripts in your
     makefile/package.json using the `taito `. You can configure test users and

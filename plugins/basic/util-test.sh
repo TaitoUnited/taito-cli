@@ -7,6 +7,7 @@
 
 dir="${1}"
 suite_filter="${2}"
+test_filter="${3}"
 
 echo "# Running tests for ${dir} in ${taito_env} environment"
 echo
@@ -30,7 +31,7 @@ test_env_vars=$(env | cut -f1 -d= | sed 's/^/-e /' | tr '\n' ' ')
 
 # Determine command to be run on test phase
 compose_pre_cmd=""
-compose_cmd="docker exec ${test_env_vars} -it ${pod} SUITE" && \
+compose_cmd="docker exec ${test_env_vars} -it ${pod} ./test.sh SUITE ${test_filter}" && \
 if [[ "${taito_env}" != "local" ]]; then
   # Running against a remote service
   image_test="${taito_project}-${dir}-util-test:latest"
@@ -42,7 +43,7 @@ if [[ "${taito_env}" != "local" ]]; then
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run && (exit 1))) && "
-  compose_cmd="docker run ${test_env_vars} --entrypoint sh ${image_test} SUITE"
+  compose_cmd="docker run ${test_env_vars} --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
 fi && \
 
 # Create test suite template from init and test phase commands
@@ -50,12 +51,11 @@ template="echo 'SUITE START' && ${init_command} && ${compose_cmd} && echo 'SUITE
 
 # Generate commands to be run by traversing all test suites
 commands="" && \
-suites=($(find ./${dir}/test -name '*.sh' 2> /dev/null | grep "suite" | grep "${suite_filter}")) && \
+suites=($(cat ./${dir}/test-suites | grep "${suite_filter}")) && \
 for suite in "${suites[@]}"
 do
-  s=${suite/.\/${dir}/.}
-  commands="${commands} && ${template//SUITE/$s}"
-done
+  commands="${commands} && ${template//SUITE/$suite}"
+done && \
 
 # Execute tests
 if [[ ! -z ${commands} ]]; then

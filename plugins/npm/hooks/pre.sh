@@ -6,16 +6,29 @@
 
 export taito_hook_command_executed=${taito_hook_command_executed}
 
-command_short="${taito_command#oper-}"
 exit_code=0
 skip_remaining_commands=false
 
+# EXAMPLE: taito test:dev server -- suite user
+# - command_short = "test"
+# - env = "dev"
+# - suffix = "server"
+# - params = " -- suite user"
+command_short="${taito_command#oper-}"
+
 suffix=" ${*}"
+suffix="${suffix% -- *}"
 suffix="${suffix/--/}"
 suffix="${suffix/  /:}"
 suffix="${suffix/ /:}"
 if [[ "${suffix}" == ":" ]]; then
   suffix=""
+fi
+
+params=""
+if [[ " ${*}" == *" -- "* ]]; then
+  params=" ${*}"
+  params=" -- ${params#* -- }"
 fi
 
 if [[ -f "./package.json" ]]; then
@@ -90,7 +103,7 @@ if [[ -f "./package.json" ]]; then
     #       Perhaps some npm scripts should also be run on host to avoid
     #       compatibilty issues.
     taito_hook_command_executed=true
-    (${taito_setv:?}; npm run -s "${npm_command}")
+    (${taito_setv:?}; npm run -s ${npm_command}${params})
     exit_code=$?
   fi
 
