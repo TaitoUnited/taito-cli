@@ -54,8 +54,8 @@ Some database operation examples targetting a test environment:
 
     taito db open:test                       # Open database on command line
     taito db proxy:test                      # Start a database proxy for GUI tool access
-    taito db import:test./database/file.sql  # Import a file to database
-    taito db dump:test./tmp/dump.sql         # Dump database to a file
+    taito db import:test ./database/file.sql # Import a file to database
+    taito db dump:test ./tmp/dump.sql        # Dump database to a file
     taito db log:test                        # View change log of database
     taito db recreate:test                   # Recreate the database
     taito db deploy:test                     # Deploy changes to database

@@ -6,16 +6,12 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-username="${1}"
+dump_file="${1:?}"
+username=""
 
-echo "host: ${database_host} port:${database_port}"
-
-dump_file="${taito_project_path}/tmp/dump.sql"
-mkdir -p "${taito_project_path}/tmp" &> /dev/null
-
-"${taito_plugin_path}/util/psql.sh" "${username}" "-f ${dump_file}" "pg_dump" && \
-
-echo "Dump file location: ${dump_file}" && \
+echo "Dumping database ${database_name} to ${dump_file}. Please wait..."
+"${taito_plugin_path}/util/psql.sh" "${username}" \
+  "-f ${dump_file}" "pg_dump" && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
