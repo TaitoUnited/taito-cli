@@ -209,7 +209,9 @@ if [[ ${taito_project:-} ]]; then
       echo "lint${suffix} \
         # Lint code"
       echo "unit${suffix} \
-        # Run unit tests"
+        # Run all unit tests"
+      echo "unit${suffix} -- TEST \
+        # Run an unit test"
       echo "analyze${suffix} \
         # Analyze implementation"
       echo "scan${suffix} \
@@ -260,9 +262,11 @@ if [[ ${taito_project:-} ]]; then
     for stack in ${ci_stack}
     do
       echo "test${param} ${stack} \
-        # Run integration and e2e tests of the ${stack} container on ${env} environment"
-      echo "test${param} ${stack} SUITE \
+        # Run all integration and e2e tests of the ${stack} container on ${env} environment"
+      echo "test${param} ${stack} -- SUITE \
         # Run an integration or e2e test suite of the ${stack} container on ${env} environment"
+      echo "test${param} ${stack} -- SUITE TEST \
+        # Run a test of an integration or e2e test suite of the ${stack} container on ${env} environment"
       echo "logs${param} ${stack} \
         # Tail logs of the ${stack} container running on ${env} environment"
       echo "shell${param} ${stack} \

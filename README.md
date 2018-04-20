@@ -14,26 +14,26 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 
 Some examples of the most common predefined taito-cli commands used in local development:
 
-    taito install                    # Install libraries on host
-    taito start                      # Start containers
-    taito init                       # Initialize database and storage buckets
-    taito open app                   # Open application on browser
-    taito open admin                 # Open admin GUI on browser
-    taito info                       # Show info required for signing in to the locally running app
-    taito unit                       # Run all unit tests
-    taito unit: client -- car        # Run the 'car' unit test on client container
-    taito test                       # Run all integration and e2e tests
-    taito test: server -- travel car # Run the 'car' test of 'travel' test suite on server container
-    taito db open                    # Access database from command line
-    taito db proxy                   # Show db connection details. Start a proxy if required.
-    taito db add: role_enum          # Add a database migration
-    taito db import: ./file.sql      # Import a file to database
-    taito shell: server              # Start a shell inside a container named 'server'
-    taito exec: server -- echo foo   # Execute a command inside the server container
-    taito open builds                # Open build logs on browser
-    taito open boards                # Open project kanban board(s) on browser
-    taito workspace kill             # Kill all running processes (e.g. containers)
-    taito workspace clean            # Remove all unused build artifacts (e.g. images)
+    taito install                            # Install libraries on host
+    taito start                              # Start containers
+    taito init                               # Initialize database and storage buckets
+    taito open app                           # Open application on browser
+    taito open admin                         # Open admin GUI on browser
+    taito info                               # Show info required for signing in to the locally running app
+    taito unit                               # Run all unit tests
+    taito unit: client -- car                # Run the 'car' unit test on client container
+    taito test                               # Run all integration and e2e tests
+    taito test: server -- travel car         # Run the 'car' test of 'travel' test suite on server container
+    taito db open                            # Access database from command line
+    taito db proxy                           # Show db connection details. Start a proxy if required.
+    taito db add: role_enum                  # Add a database migration
+    taito db import: ./file.sql              # Import a file to database
+    taito shell: server                      # Start a shell inside a container named 'server'
+    taito exec: server -- echo foo           # Execute a command inside the server container
+    taito open builds                        # Open build logs on browser
+    taito open boards                        # Open project kanban board(s) on browser
+    taito workspace kill                     # Kill all running processes (e.g. containers)
+    taito workspace clean                    # Remove all unused build artifacts (e.g. images)
 
 All taito-cli commands target the local development environment by default. If you want to run a command targetting a remote environment, just add `:ENV` to the command. Below are some example commands targetting a remote dev environment. And yes, you can run docker-compose locally and Kubernetes on servers; all the same commands still work as you expect.
 
@@ -70,17 +70,17 @@ Some database operation examples targetting a test environment:
 
 With taito-cli you can take an opinionated view on version control. Some examples of predefined version control commands:
 
-    taito vc env list                # List all environment branches
-    taito vc env: dev                # Switch to the dev environment branch
-    taito vc env merge               # Merge the current environment branch to the next environment branch
-    taito vc env merge: dev test     # Merge dev environment branch to test environment branch
+    taito vc env list                        # List all environment branches
+    taito vc env: dev                        # Switch to the dev environment branch
+    taito vc env merge                       # Merge the current environment branch to the next environment branch
+    taito vc env merge: dev test             # Merge dev environment branch to test environment branch
 
-    taito vc feat list               # List all feature branches
-    taito vc feat: pricing           # Switch to the pricing feature branch
-    taito vc feat rebase             # Rebase current feature branch with the original branch
-    taito vc feat merge              # Merge current feature branch to the original branch, but rebase first
-    taito vc feat squash             # Merge current feature branch to the original branch as a single commit
-    taito vc feat pr                 # Create a pull-request for merging current feature branch to the original
+    taito vc feat list                       # List all feature branches
+    taito vc feat: pricing                   # Switch to the pricing feature branch
+    taito vc feat rebase                     # Rebase current feature branch with the original branch
+    taito vc feat merge                      # Merge current feature branch to the original branch, but rebase first
+    taito vc feat squash                     # Merge current feature branch to the original branch as a single commit
+    taito vc feat pr                         # Create a pull-request for merging current feature branch to the original
 
     TODO Support for release branches
 
@@ -100,31 +100,31 @@ Creating projects based on configurable project templates:
 
 Infrastructure management for projects:
 
-    taito project apply              # Migrate project to the latest configuration.
-    taito project destroy            # Destroy project.
+    taito project apply                      # Migrate project to the latest configuration.
+    taito project destroy                    # Destroy project.
 
-    taito env apply:dev              # Apply project specific changes to dev environment
-    taito env rotate:dev             # Rotate project specific secrets in dev environment
-    taito env rotate:dev gcloud      # Rotate project specific gcloud secrets in dev environment
-    taito env destroy:dev            # Destroy dev environment of the current project
+    taito env apply:dev                      # Apply project specific changes to dev environment
+    taito env rotate:dev                     # Rotate project specific secrets in dev environment
+    taito env rotate:dev gcloud              # Rotate project specific gcloud secrets in dev environment
+    taito env destroy:dev                    # Destroy dev environment of the current project
 
     TODO Alternative environments for canary releases, A/B testing, etc.
 
 Infrastructure management for zones:
 
-    taito zone apply                 # Apply infrastructure changes to the zone
-    taito zone status                # Show status summary of the zone
-    taito zone doctor                # Analyze and repair the zone
-    taito zone maintenance           # Execute supervised maintenance tasks interactively.
-    taito zone destroy               # Destroy the zone
+    taito zone apply                         # Apply infrastructure changes to the zone
+    taito zone status                        # Show status summary of the zone
+    taito zone doctor                        # Analyze and repair the zone
+    taito zone maintenance                   # Execute supervised maintenance tasks interactively.
+    taito zone destroy                       # Destroy the zone
 
 Password sharing:
 
-    taito passwd share               # Generate a one-time magic link for sharing a password
-    taito passwd list: movie         # List all movie passwords
-    taito passwd get: movie-key      # Get movie-key passwd
-    taito passwd set: movie-key      # Set movie-key passwd
-    taito passwd rotate: movie       # Rotate all movie passwords
+    taito passwd share                       # Generate a one-time magic link for sharing a password
+    taito passwd list: movie                 # List all movie passwords
+    taito passwd get: movie-key              # Get movie-key passwd
+    taito passwd set: movie-key              # Set movie-key passwd
+    taito passwd rotate: movie               # Rotate all movie passwords
 
 See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all predefined taito-cli commands.
 

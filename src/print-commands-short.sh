@@ -134,6 +134,7 @@ if [[ ${taito_project:-} ]]; then
       echo "start${suffix} --clean --prod"
       echo "lint${suffix}"
       echo "unit${suffix}"
+      echo "unit${suffix} -- TEST"
       echo "analyze${suffix}"
       echo "scan${suffix}"
       echo "docs${suffix}"
@@ -165,7 +166,8 @@ if [[ ${taito_project:-} ]]; then
     for stack in ${ci_stack}
     do
       echo "test${param} ${stack}"
-      echo "test${param} ${stack} SUITE"
+      echo "test${param} ${stack} -- SUITE"
+      echo "test${param} ${stack} -- SUITE TEST"
       echo "logs${param} ${stack}"
       echo "shell${param} ${stack}"
       echo "exec${param} ${stack} -- COMMAND"
