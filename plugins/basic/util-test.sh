@@ -60,7 +60,9 @@ template="echo 'SUITE START' && ${init_command} && ${compose_cmd} && echo 'SUITE
 
 # Generate commands to be run by traversing all test suites
 commands="" && \
-echo "Reading test suites from ./${dir}/test-suites" && \
+echo "Current dir: ${PWD}"
+ls
+echo "Reading test suites from ./${dir}/test-suites"
 suites=($(cat "./${dir}/test-suites" >2 /dev/null | \
   grep "${suite_filter}")) && \
 for suite in "${suites[@]}"
