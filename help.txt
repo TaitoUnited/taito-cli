@@ -17,8 +17,10 @@ QUICK EXAMPLES
     info                     # Show info required for logging in to app
     lint                     # Lint code
     unit                     # Run all unit tests
-    unit: client -- car      # Run the 'car' unit test on client container
+    unit: client             # Run all unit tests of client container
+    unit: client -- car      # Run the 'car' unit test of client container
     test                     # Run all integration and e2e tests
+    test: server             # Run all integration and e2e tests of server c...
     test: server -- trip car # Run the 'car' test of 'trip' test suite on...
     db open                  # Access database from command line
     db proxy                 # Show db conn details. Start a proxy if required.

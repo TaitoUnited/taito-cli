@@ -21,8 +21,10 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito open admin                         # Open admin GUI on browser
     taito info                               # Show info required for signing in to the locally running app
     taito unit                               # Run all unit tests
-    taito unit: client -- car                # Run the 'car' unit test on client container
+    taito unit: client                       # Run all unit tests of client container
+    taito unit: client -- car                # Run the 'car' unit test of client container
     taito test                               # Run all integration and e2e tests
+    taito test: server                       # Run all integration and e2e tests of server container
     taito test: server -- travel car         # Run the 'car' test of 'travel' test suite on server container
     taito db open                            # Access database from command line
     taito db proxy                           # Show db connection details. Start a proxy if required.

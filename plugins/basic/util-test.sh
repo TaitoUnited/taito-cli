@@ -26,12 +26,14 @@ if [[ "${ci_exec_test_init:-}" == "true" ]]; then
   init_command="taito init:${taito_env} --clean"
 fi && \
 
-# Pass all environment variables for the test run
-test_env_vars=$(env | cut -f1 -d= | sed 's/^/-e /' | tr '\n' ' ')
+# Pass all environment variables with the "test_${dir}_" prefix for the test.
+# Creates docker parameters: -e ENV_VAR='value' -e ENV_VAR2='value2' ...
+docker_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/-e /" \
+  | sed "s/=/='/" | sed "s/$/'/" | tr '\n' ' ' | sed 's/.$//') && \
 
 # Determine command to be run on test phase
 compose_pre_cmd=""
-compose_cmd="docker exec ${test_env_vars} -it ${pod} ./test.sh SUITE ${test_filter}" && \
+compose_cmd="docker exec ${docker_env_vars} -it ${pod} ./test.sh SUITE ${test_filter}" && \
 if [[ "${taito_env}" != "local" ]]; then
   # Running against a remote service
   image_test="${taito_project}-${dir}-util-test:latest"
@@ -43,7 +45,7 @@ if [[ "${taito_env}" != "local" ]]; then
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run && (exit 1))) && "
-  compose_cmd="docker run ${test_env_vars} --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
+  compose_cmd="docker run ${docker_env_vars} --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
 fi && \
 
 # Create test suite template from init and test phase commands
