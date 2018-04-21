@@ -6,7 +6,7 @@ _taito_commands()
   if [[ ${taito_prefix} ]]; then
     pattern="${taito_prefix} "
   fi
-  taito --print-commands-short | \
+  taito --print-commands-short "${taito_prefix}" | \
     grep -e "${pattern}" | awk "{print \$${taito_index}}"
 }
 

@@ -92,12 +92,12 @@ done
 # set -- "${args[@]}"
 
 if [[ ${mode} == "print" ]]; then
-  "${taito_src_path}/print-commands.sh"
+  "${taito_src_path}/print-commands.sh" "${args[*]}"
   exit 0
 fi
 
 if [[ ${mode} == "print-short" ]]; then
-  "${taito_src_path}/print-commands-short.sh"
+  "${taito_src_path}/print-commands-short.sh" "${args[*]}"
   exit 0
 fi
 

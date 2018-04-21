@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
-features=$(git branch -a 2> /dev/null | \
-  grep " feature/" | sed -e 's|feature/||')
+cprefix="${1:-*}"
 
 # Basic commands
 echo "--help \
@@ -34,19 +33,23 @@ echo "template create: TEMPLATE \
   # Create a project based on a template"
 
 # Global links
-while IFS='*' read -ra items; do
-  for item in "${items[@]}"; do
-    words=(${item})
-    link="${words[0]}"
-    if [[ ${link} ]]; then
-      prefix="$( cut -d '=' -f 1 <<< "$link" )";
-      command=${prefix%#*}
-      name=${prefix##*#}
-      echo "open ${command} \
-        # Open ${name} in browser"
-    fi
-  done
-done <<< "${link_global_urls:-}"
+if [[ "${cprefix}" == "open"* || "${cprefix}" == "*" ]]; then
+  while IFS='*' read -ra items; do
+    for item in "${items[@]}"; do
+      words=(${item})
+      link="${words[0]}"
+      if [[ ${link} ]]; then
+        prefix="$( cut -d '=' -f 1 <<< "$link" )";
+        command=${prefix%#*}
+        name=${prefix##*#}
+        echo "open ${command} \
+          # Open ${name} in browser"
+      fi
+    done
+  done <<< "${link_global_urls:-}"
+else
+  echo "open"
+fi
 
 # Passwords
 # TODO: enable only if available
@@ -92,25 +95,32 @@ if [[ ${taito_project:-} ]]; then
     # Upgrade project using template"
 
   # Version control commands
-  echo "vc env list \
-    # List all environment branches"
-  echo "vc env merge \
-    # Merge current env branch to the next env branch"
-  echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH \
-    # Merge source env branch to the destination env branch"
-  echo "vc feat list \
-    # List all feature branches"
-  echo "vc feat rebase \
-    # Rebase feature branch with the original branch"
-  echo "vc feat squash \
-    # Squash feature branch as a single commit"
-  echo "vc feat merge \
-    &focus \
-    # Merge current feature branch to the original"
-  echo "vc feat pr \
-    # Create a pull-request for current feature branch"
-  echo "vc feat: FEATURE \
-    # Switch to a feature branch"
+  if [[ "${cprefix}" == "vc"* ]] || [[ "${cprefix}" == "*" ]]; then
+    echo "vc env list \
+      # List all environment branches"
+    echo "vc env merge \
+      # Merge current env branch to the next env branch"
+    echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH \
+      # Merge source env branch to the destination env branch"
+    echo "vc feat list \
+      # List all feature branches"
+    echo "vc feat rebase \
+      # Rebase feature branch with the original branch"
+    echo "vc feat squash \
+      # Squash feature branch as a single commit"
+    echo "vc feat merge \
+      &focus \
+      # Merge current feature branch to the original"
+    echo "vc feat pr \
+      # Create a pull-request for current feature branch"
+    echo "vc feat: FEATURE \
+      # Switch to a feature branch"
+  else
+    echo "vc"
+  fi
+
+  features=$(git branch -a 2> /dev/null | \
+    grep " feature/" | sed -e 's|feature/||')
   for feature in ${features}
   do
     echo "vc feat: ${feature} \
@@ -134,7 +144,6 @@ if [[ ${taito_project:-} ]]; then
     # Populate taito settings to project documentation"
   echo "project contacts \
     # List project contacts"
-
 
   # Environment specific commands
   envs="loc local ${taito_environments:-}"
@@ -263,10 +272,17 @@ if [[ ${taito_project:-} ]]; then
     do
       echo "test${param} ${stack} \
         # Run all integration and e2e tests of the ${stack} container on ${env} environment"
-      echo "test${param} ${stack} -- SUITE \
-        # Run an integration or e2e test suite of the ${stack} container on ${env} environment"
-      echo "test${param} ${stack} -- SUITE TEST \
-        # Run a test of an integration or e2e test suite of the ${stack} container on ${env} environment"
+      if [[ "${cprefix}" == "test"* || "${cprefix}" == "*" ]]; then
+        suites=($(cat "./${stack}/test-suites" 2> /dev/null)) && \
+        for suite in "${suites[@]}"
+        do
+          echo "test${param} ${stack} -- ${suite} \
+            # Run an integration or e2e test suite of the ${stack} container on ${env} environment"
+          echo "test${param} ${stack} -- ${suite} TEST \
+            # Run a test of an integration or e2e test suite of the ${stack} container on ${env} environment"
+        done
+      fi
+
       echo "logs${param} ${stack} \
         # Tail logs of the ${stack} container running on ${env} environment"
       echo "shell${param} ${stack} \
@@ -285,30 +301,32 @@ if [[ ${taito_project:-} ]]; then
     done
 
     # Links
-    while IFS='*' read -ra items; do
-      for item in "${items[@]}"; do
-        words=(${item})
-        link="${words[0]}"
-        if [[ ${link} ]]; then
-          prefix="$( cut -d '=' -f 1 <<< "$link" )";
-          command=${prefix%#*}
-          name=${prefix##*#}
-          if [[ "${command}" == *"[:ENV]"* ]]; then
-            command_env=${command/\[:ENV\]/$suffix}
-            echo "open ${command_env} \
-              # Open ${env} environment ${name} in browser"
-          elif [[ "${command}" == *":ENV"* ]] && \
-               [[ "${env_orig}" != "loc" ]]; then
-            command_env=${command/:ENV/$suffix}
-            echo "open ${command_env} \
-              # Open ${env} environment ${name} in browser"
-          elif [[ "${command}" != *":ENV"* ]] && \
-               [[ "${env_orig}" == "loc" ]]; then
-            echo "open ${command} \
-              # Open ${name} in browser"
+    if [[ "${cprefix}" == "open"* || "${cprefix}" == "*" ]]; then
+      while IFS='*' read -ra items; do
+        for item in "${items[@]}"; do
+          words=(${item})
+          link="${words[0]}"
+          if [[ ${link} ]]; then
+            prefix="$( cut -d '=' -f 1 <<< "$link" )";
+            command=${prefix%#*}
+            name=${prefix##*#}
+            if [[ "${command}" == *"[:ENV]"* ]]; then
+              command_env=${command/\[:ENV\]/$suffix}
+              echo "open ${command_env} \
+                # Open ${env} environment ${name} in browser"
+            elif [[ "${command}" == *":ENV"* ]] && \
+                 [[ "${env_orig}" != "loc" ]]; then
+              command_env=${command/:ENV/$suffix}
+              echo "open ${command_env} \
+                # Open ${env} environment ${name} in browser"
+            elif [[ "${command}" != *":ENV"* ]] && \
+                 [[ "${env_orig}" == "loc" ]]; then
+              echo "open ${command} \
+                # Open ${name} in browser"
+            fi
           fi
-        fi
-      done
-    done <<< "${link_urls:-}"
+        done
+      done <<< "${link_urls:-}"
+    fi
   done
 fi

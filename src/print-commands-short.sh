@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
+cprefix="${1:-*}"
+
 # Basic commands
 echo "--help"
 echo "--readme"
@@ -17,17 +19,21 @@ echo "workspace kill"
 echo "template create: TEMPLATE"
 
 # Global links
-while IFS='*' read -ra items; do
-  for item in "${items[@]}"; do
-    words=(${item})
-    link="${words[0]}"
-    if [[ ${link} ]]; then
-      prefix="$( cut -d '=' -f 1 <<< "$link" )";
-      command=${prefix%#*}
-      echo "open ${command}"
-    fi
-  done
-done <<< "${link_global_urls:-}"
+if [[ "${cprefix}" == "open"* || "${cprefix}" == "*" ]]; then
+  while IFS='*' read -ra items; do
+    for item in "${items[@]}"; do
+      words=(${item})
+      link="${words[0]}"
+      if [[ ${link} ]]; then
+        prefix="$( cut -d '=' -f 1 <<< "$link" )";
+        command=${prefix%#*}
+        echo "open ${command}"
+      fi
+    done
+  done <<< "${link_global_urls:-}"
+else
+  echo "open"
+fi
 
 # Passwords
 # TODO enable only when available
@@ -58,21 +64,26 @@ if [[ ${taito_project:-} ]]; then
   echo "template upgrade"
 
   # Version control commands
-  echo "vc env list"
-  echo "vc env merge"
-  echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH"
-  echo "vc feat list"
-  echo "vc feat rebase"
-  echo "vc feat squash"
-  echo "vc feat merge"
-  echo "vc feat pr"
-  echo "vc feat: FEATURE"
-  features=$(git branch -a 2> /dev/null | \
-    grep " feature/" | sed -e 's|feature/||')
-  for feature in ${features}
-  do
-    echo "vc feat: ${feature}"
-  done
+  if [[ "${cprefix}" == "vc"* ]] || [[ "${cprefix}" == "*" ]]; then
+    echo "vc env list"
+    echo "vc env merge"
+    echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH"
+    echo "vc feat list"
+    echo "vc feat rebase"
+    echo "vc feat squash"
+    echo "vc feat merge"
+    echo "vc feat pr"
+    echo "vc feat: FEATURE"
+
+    features=$(git branch -a 2> /dev/null | \
+      grep " feature/" | sed -e 's|feature/||')
+    for feature in ${features}
+    do
+      echo "vc feat: ${feature}"
+    done
+  else
+    echo "vc"
+  fi
 
   # Stack component commands
   for stack in ${ci_stack:-}
@@ -166,8 +177,14 @@ if [[ ${taito_project:-} ]]; then
     for stack in ${ci_stack}
     do
       echo "test${param} ${stack}"
-      echo "test${param} ${stack} -- SUITE"
-      echo "test${param} ${stack} -- SUITE TEST"
+      if [[ "${cprefix}" == "test"* || "${cprefix}" == "*" ]]; then
+        suites=($(cat "./${stack}/test-suites" 2> /dev/null)) && \
+        for suite in "${suites[@]}"
+        do
+          echo "test${param} ${stack} -- ${suite}"
+          echo "test${param} ${stack} -- ${suite} TEST"
+        done
+      fi
       echo "logs${param} ${stack}"
       echo "shell${param} ${stack}"
       echo "exec${param} ${stack} -- COMMAND"
@@ -178,27 +195,29 @@ if [[ ${taito_project:-} ]]; then
     done
 
     # Links
-    while IFS='*' read -ra items; do
-      for item in "${items[@]}"; do
-        words=(${item})
-        link="${words[0]}"
-        if [[ ${link} ]]; then
-          prefix="$( cut -d '=' -f 1 <<< "$link" )";
-          command=${prefix%#*}
-          name=${prefix##*#}
-          if [[ "${command}" == *"[:ENV]"* ]]; then
-            command_env=${command/\[:ENV\]/$suffix}
-            echo "open ${command_env}"
-          elif [[ "${command}" == *":ENV"* ]] && \
-               [[ "${env_orig}" != "loc" ]]; then
-            command_env=${command/:ENV/$suffix}
-            echo "open ${command_env}"
-          elif [[ "${command}" != *":ENV"* ]] && \
-               [[ "${env_orig}" == "loc" ]]; then
-            echo "open ${command}"
+    if [[ "${cprefix}" == "open"* || "${cprefix}" == "*" ]]; then
+      while IFS='*' read -ra items; do
+        for item in "${items[@]}"; do
+          words=(${item})
+          link="${words[0]}"
+          if [[ ${link} ]]; then
+            prefix="$( cut -d '=' -f 1 <<< "$link" )";
+            command=${prefix%#*}
+            name=${prefix##*#}
+            if [[ "${command}" == *"[:ENV]"* ]]; then
+              command_env=${command/\[:ENV\]/$suffix}
+              echo "open ${command_env}"
+            elif [[ "${command}" == *":ENV"* ]] && \
+                 [[ "${env_orig}" != "loc" ]]; then
+              command_env=${command/:ENV/$suffix}
+              echo "open ${command_env}"
+            elif [[ "${command}" != *":ENV"* ]] && \
+                 [[ "${env_orig}" == "loc" ]]; then
+              echo "open ${command}"
+            fi
           fi
-        fi
-      done
-    done <<< "${link_urls:-}"
+        done
+      done <<< "${link_urls:-}"
+    fi
   done
 fi

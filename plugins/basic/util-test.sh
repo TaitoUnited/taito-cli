@@ -9,6 +9,11 @@ dir="${1}"
 suite_filter="${2}"
 test_filter="${3}"
 
+# TODO Using remote database connection during tests does not currently
+# work because db proxy is either started on host (local development) or
+# inside taito container (ci runs), and tests are run inside the test container
+# and therefore has not access to the proxied connection.
+
 echo "# Running tests for ${dir} in ${taito_env} environment"
 echo
 
