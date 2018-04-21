@@ -457,6 +457,8 @@ You can also override any existing taito-cli command in your file by using `tait
 
 ## Custom plugins
 
+> Before implementing your own custom plugin, you should browse through existing [extensions](https://github.com/search?q=topic%3Ataito-extension&type=Repositories), as they already might provide what you are looking for.
+
 ### The basics
 
 You can implement your plugin with almost any programming language. The only requirement is that your plugin provides taito command implementations as executable files. Bash is good for simple plugins. Python or Go is preferred for more complex stuff. And you can use JavaScript too.

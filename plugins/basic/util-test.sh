@@ -62,6 +62,11 @@ template="echo 'SUITE START' && ${init_command} && ${compose_cmd} && echo 'SUITE
 commands="" && \
 echo "Current dir: ${PWD}"
 ls
+echo ---
+ls "./${dir}"
+echo ---
+cat "./${dir}/test-suites"
+echo ---
 echo "Reading test suites from ./${dir}/test-suites"
 suites=($(cat "./${dir}/test-suites" >2 /dev/null | \
   grep "${suite_filter}")) && \
