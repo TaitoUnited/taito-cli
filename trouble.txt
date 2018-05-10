@@ -1,14 +1,19 @@
 TAITO-CLI TROUBLESHOOTING
 
   'No space left on device'
-    Try cleaning your local workspace by running 'workspace-clean'. If you are
-    using Docker, you can also try to resize Docker virtual disk larger.
+    Try cleaning your local workspace by running 'workspace clean'. You can
+    also try to enlarge the docker virtual disk in your docker preferences.
 
-  Connection or authorization error using taito-cli
-    If you run into an connection or authorization error during command
-    execution, the command probably requires authentication and you either have
-    not authenticated or your authentication has expired. In such case, run
-    'taito --auth:ENV' to authenticate.
+  Taito-cli hangs after displaying the copyright notice
+    First try restarting your Docker daemon. If the problem persists after
+    Docker restart, try Docker reset as your Docker virtual disk might have
+    been corrupted.
+
+  Connection or authorization error
+    If you run into an connection or authorization error during taito-cli
+    command execution, the command probably requires authentication and you
+    either have not authenticated or your authentication has expired. In such
+    case, run 'taito --auth:ENV' to authenticate.
 
   'command not found'
     * Try running 'taito --upgrade'

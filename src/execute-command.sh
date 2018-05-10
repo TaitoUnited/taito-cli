@@ -3,6 +3,7 @@
 
 # Parse options
 verbose=false
+continue=false
 skip_override=false
 skip_rest=false
 args=()
@@ -11,6 +12,10 @@ do
   key="$1"
   if [[ ${skip_rest} == false ]]; then
     case $key in
+        -c|--continue)
+        continue=true
+        shift
+        ;;
         -v|--verbose)
         verbose=true
         shift
@@ -37,7 +42,7 @@ do
 done
 
 # CI/CD runs taito_impl directly so we need to print this here also
-if [[ "${taito_mode:-}" == "ci" ]]; then
+if [[ "${taito_mode:-}" == "ci" ]] && [[ "${continue}" == "false" ]]; then
   echo "Taito-cli Copyright (C) 2017 Taito United"
   echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
 fi
