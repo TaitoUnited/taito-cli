@@ -112,6 +112,7 @@ if [[ ${taito_project:-} ]]; then
     fi
 
     echo "start${suffix}"
+    echo "restart${suffix}"
     echo "stop${suffix}"
     # TODO run:ios run:android # Run the application
     echo "init${suffix}"
@@ -185,6 +186,7 @@ if [[ ${taito_project:-} ]]; then
           echo "test${param} ${stack} -- ${suite} TEST"
         done
       fi
+      echo "restart${param} ${stack}"
       echo "logs${param} ${stack}"
       echo "shell${param} ${stack}"
       echo "exec${param} ${stack} -- COMMAND"

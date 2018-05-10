@@ -8,7 +8,7 @@ QUICK EXAMPLES
     (env)                    # Initialize shell environment (e.g. for pipenv)
     (build)                  # Build project (if not built autom. by start)
     start                    # Start containers / watch / application
-    init                     # Initialize database and storage buckets
+    init                     # Initialize database and storage
     (run)                    # Run the application (if not run autom. by start)
     open app                 # Open application on browser
     open admin               # Open admin GUI on browser
@@ -232,6 +232,12 @@ PROJECT: BASIC OPERATIONS
     --prod: Run production build instead of development build.
     POD: Start only the given pod/container/function/module/program
     -- ARGS: Additional arguments
+
+  restart[:ENV] [POD]
+    Starts the defined environment e.g 'taito restart' or 'taito restart:dev'.
+    Optional arguments:
+    .
+    POD: Start only the given pod/container/function/module/program
 
   run:ENV [--no-deps] [-d,--device] [POD] [-- ARGS]
     Runs the application in the defined environment e.g 'taito run:ios'.

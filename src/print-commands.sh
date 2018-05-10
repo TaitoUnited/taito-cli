@@ -160,6 +160,8 @@ if [[ ${taito_project:-} ]]; then
 
     echo "start${suffix} \
       # Start app / watch on ${env} environment"
+    echo "restart${suffix} \
+      # Restart app / watch on ${env} environment"
     echo "stop${suffix} \
       # Stop app / watch on ${env} environment"
     # TODO run:ios run:android # Run the application
@@ -283,6 +285,8 @@ if [[ ${taito_project:-} ]]; then
         done
       fi
 
+      echo "restart${param} ${stack} \
+        # Restart the ${stack} container running on ${env} environment"
       echo "logs${param} ${stack} \
         # Tail logs of the ${stack} container running on ${env} environment"
       echo "shell${param} ${stack} \
