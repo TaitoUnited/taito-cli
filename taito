@@ -260,12 +260,14 @@ if [[ " ${options[*]} " == *" -h "* ]] || \
     tr '\275\276' '\r\n' | tail -n +3 | less"
 fi
 
+# NOTE: removed ssh directory mount (apple configs cause problems on linux)
+# -v \"${HOME}/.ssh:/root/.ssh\" \
+
 # Execute command in taito docker container
 # TODO do not pass taito_admin_key as command line argument
 # shellcheck disable=SC2086
 eval "docker run ${docker_it} \
   -v \"${HOME}/.taito:/root/.taito\" \
-  -v \"${HOME}/.ssh:/root/.ssh\" \
   -v \"$(pwd):/project\" \
   -w /project \
   ${proxy_flags} \
