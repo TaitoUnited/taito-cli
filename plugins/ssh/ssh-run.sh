@@ -1,10 +1,8 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
+: "${taito_host_uname:?}"
 
-opts=""
-if [[ -f "${HOME}/.ssh/config.taito" ]]; then
-  opts="-F${HOME}/.ssh/config.taito"
-fi
+. ${taito_plugin_path}/util/opts.sh
 ssh "${opts}" "${@}"
 
 # Call next command on command chain

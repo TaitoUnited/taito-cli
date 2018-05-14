@@ -9,10 +9,7 @@ plugin_suffices=$(env | cut -f1 -d= | grep "ssh_forward_for_" | \
 for plugin_suffix in ${plugin_suffices[@]}
 do
   if [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
-    opts=""
-    if [[ -f "${HOME}/.ssh/config.taito" ]]; then
-      opts="-F${HOME}/.ssh/config.taito"
-    fi
+    . ${taito_plugin_path}/util/opts.sh
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"
     sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes -L ${forward_value} sleep 10"

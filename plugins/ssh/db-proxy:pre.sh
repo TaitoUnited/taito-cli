@@ -2,10 +2,7 @@
 : "${taito_cli_path:?}"
 
 if [[ "${ssh_db_proxy:-}" ]]; then
-  opts=""
-  if [[ -f "${HOME}/.ssh/config.taito" ]]; then
-    opts="-F${HOME}/.ssh/config.taito"
-  fi
+  . ${taito_plugin_path}/util/opts.sh
   sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes -L ${ssh_db_proxy} sleep 180"
 
   echo "Database connection details:"
