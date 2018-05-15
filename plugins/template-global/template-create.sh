@@ -34,7 +34,7 @@ export template_dest_git="${template_default_dest_git:?}"
   echo Leave the README.md uninitialized. After you have created the empty repository, && \
   echo continue by pressing enter. && \
   read -r && \
-  taito -c template create continue"
+  taito -c template-create-continue"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

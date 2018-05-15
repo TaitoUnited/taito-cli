@@ -20,7 +20,7 @@ echo
 echo "  1) Company"
 echo "  2) Product family (optional)"
 echo "  3) Application name"
-echo "  4) Implemenation suffix (optional)"
+echo "  4) Implementation suffix (optional)"
 echo
 echo "1) Company (e.g. 'seedi')?"
 read -r taito_company
