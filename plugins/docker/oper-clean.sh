@@ -16,7 +16,7 @@ if [[ ${1} ]]; then
 
   echo "NOTE: You must run 'taito stop' first or else clean fails"
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
-    "docker rmi ${project_name}_${pod:?}"
+    "docker rmi --force ${project_name}_${pod:?}"
 else
   "${taito_plugin_path}/util/clean.sh" "${@}"
 fi && \
