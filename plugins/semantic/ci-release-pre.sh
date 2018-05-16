@@ -1,6 +1,7 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
+: "${taito_organization:?}"
 : "${taito_repo_name:?}"
 : "${secret_value_git_github_build:?}"
 : "${taito_project_path:?}"
@@ -23,10 +24,11 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
 
     echo "Preparing release"
 
+    # TODO remove hardcoded github.com
     echo "- Cloning git repo to release directory as google container builder"
     echo "workspace does not point to the original repository"
     ${taito_setv:?}
-    git clone "https://${secret_value_git_github_build}@github.com/TaitoUnited/${taito_repo_name}.git" release && \
+    git clone "https://${secret_value_git_github_build}@github.com/${taito_organization}/${taito_repo_name}.git" release && \
     cd "${taito_project_path}/release"
     git checkout master && \
     npm install && \
