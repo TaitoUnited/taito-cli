@@ -10,6 +10,12 @@
 
 rm -f ./_template-config.sh && \
 
+echo && \
+echo Create a new repository: ${template_dest_git:?}/${taito_repo_name:?} && \
+echo Leave the README.md uninitialized. After you have created the empty repository, && \
+echo continue by pressing enter. && \
+read -r && \
+
 echo "Please wait..." && \
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   export GIT_PAGER="" && \
