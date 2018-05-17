@@ -10,6 +10,8 @@
 
 rm -f ./_template-config.sh && \
 
+taito project-docs && \
+
 echo && \
 echo Create a new repository: ${template_dest_git:?}/${taito_repo_name:?} && \
 echo Leave the README.md uninitialized. After you have created the empty repository, && \
