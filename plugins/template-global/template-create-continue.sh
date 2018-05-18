@@ -30,7 +30,8 @@ echo "Please wait..." && \
   git push -q origin v0.0.0 && \
   git checkout -q -b dev && \
   git push -q -u origin dev > /dev/null && \
-  echo DONE! Now configure your project!"
+  echo DONE! Now configure your project! && \
+  echo See configuration instructions at the end of the README.md file"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
