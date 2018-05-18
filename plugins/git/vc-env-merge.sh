@@ -34,8 +34,9 @@ fi
 
 echo
 echo "NOTE: You should always wait for dev environment build to finish"
-echo "successfully before merging changes to subsequent environment branches."
-echo "Otherwise your build may fail because of missing container image."
+echo "successfully before merging commits to subsequent environment branches."
+echo "Otherwise your build may fail because of a missing container image"
+echo "that has not yet been built."
 echo
 echo "Merging ${source} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
