@@ -8,6 +8,9 @@
 export template="${template_name}"
 export template_project_path="${PWD}"
 
+echo
+echo "Please wait..."
+
 # Clone template git repo to a temporary template-tmp directory
 rm -rf "${template_project_path}/template-tmp"
 mkdir "${template_project_path}/template-tmp"

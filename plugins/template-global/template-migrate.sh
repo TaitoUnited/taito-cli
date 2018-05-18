@@ -13,6 +13,9 @@ export template_source_git="${template_default_source_git}"
 
 . "${taito_plugin_path}/util/ask-details.sh"
 
+echo
+echo "Please wait..."
+
 # Write template migrate settings to a temporary config file
 # TODO remove unnecessary settings
 echo export template="${template}" >> _template-config.sh && \

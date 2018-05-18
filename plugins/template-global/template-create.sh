@@ -11,6 +11,9 @@ export template_dest_git="${template_default_dest_git:?}"
 
 . "${taito_plugin_path}/util/ask-details.sh"
 
+echo
+echo "Please wait..."
+
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   export GIT_PAGER="" && \
   git clone -q -b master --single-branch --depth 1 ${template_source_git}/${template}.git ${taito_repo_name:?} && \
