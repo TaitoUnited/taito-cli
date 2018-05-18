@@ -32,6 +32,11 @@ if [[ "${valids}" != *" ${source}->${dest} "* ]]; then
   exit 1
 fi
 
+echo
+echo "NOTE: You should always wait for dev environment build to finish"
+echo "successfully before merging changes to subsequent environment branches."
+echo "Otherwise your build may fail because of missing container image."
+echo
 echo "Merging ${source} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
 if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
