@@ -34,6 +34,11 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     npm install && \
 
     echo "- Running semantic-release" && \
+    echo
+    echo "NOTE: Semantic-release will fail if there are no such commits that"
+    echo "end up in release notes. By default only 'feat' and 'fix' commits"
+    echo "end up there."
+    echo
     npm run "${command}" -- "${@}" && \
     rm -f .npmrc && \
 
