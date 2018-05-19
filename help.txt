@@ -273,12 +273,12 @@ PROJECT: BASIC OPERATIONS
     TIP: Enable the 'make' or 'npm' plugin and implement info[:ENV] script
     in your makefile/package.json.
 
-  unit [CONTAINER] -- [TEST]
+  unit[:TARGET] [TEST]
     Run unit tests.
     TIP: Enable the 'make' or 'npm' plugin and implement unit script in your
     makefile/package.json.
 
-  test[:ENV] [CONTAINER] -- [SUITE] [TEST]
+  test[:TARGET][:ENV] [SUITE] [TEST]
     Run integration and end-to-end tests.
     TIP: Enable the 'make' or 'npm' plugin and implement test scripts in your
     makefile/package.json using the `taito `. You can configure test users and
