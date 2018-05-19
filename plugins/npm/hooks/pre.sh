@@ -14,7 +14,7 @@ skip_remaining_commands=false
 # - target = "server"
 # - env = "dev"
 # - params = "suite user"
-command_short="${taito_command#oper-}"
+command_short="${taito_command}"
 
 target=""
 if [[ "${taito_target:-}" ]]; then
@@ -68,10 +68,7 @@ if [[ -f "./package.json" ]]; then
 
   running_ci_test=false
   if [[ "${taito_mode:-}" == "ci" ]] && \
-     ( \
-       [[ "${npm_command%%:*}" == "test" ]] ||
-       [[ "${npm_command%%:*}" == "oper-test" ]] \
-     ); then
+     [[ "${npm_command%%:*}" == "test" ]]; then
      running_ci_test=true
   fi
 

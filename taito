@@ -215,7 +215,6 @@ if [[ "${taito_env}" == "local" ]] && \
    [[ " ${params[@]} " != *" --help "* ]] && \
    (
      [[ "${command}" == "db-"* ]] || \
-     [[ "${command}" == "oper-init"* ]] || \
      [[ "${command}" == "init"* ]]
    ); then
   echo "# Linking local db: ${taito_project}-database:${taito_project}-database"

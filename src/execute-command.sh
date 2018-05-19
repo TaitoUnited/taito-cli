@@ -71,13 +71,10 @@ else
   command=${env_command}
 fi
 
-# TODO clean up code below
-
-# Use 'oper-' as a default command prefix
+# TODO can be removed? was used for oper-
 orig_command=${command}
-if [[ "${command}" != *"-"* ]]; then
-  command="oper-${command}"
-fi
+
+# TODO clean up code below
 
 # Determine env
 if [[ "${env}" == "" ]]; then
@@ -130,7 +127,7 @@ export taito_env="${env}"
 export taito_branch="${branch}"
 export taito_target="${target}"
 
-if [[ " oper-unit oper-scan oper-docs ci-publish " == *"${taito_command}"* ]] && \
+if [[ " unit scan docs ci-publish " == *"${taito_command}"* ]] && \
    [[ -f ./taitoflag_images_exist ]]; then
   echo
   echo "### Skipping ${taito_command}. Image already exists."
@@ -170,9 +167,9 @@ fi
 
 # Confirm prod operations
 if [[ "${taito_env}" == "prod" ]] && \
-   [[ "${taito_command}" != "oper-info" ]] && \
-   [[ "${taito_command}" != "oper-status" ]] && \
-   [[ "${taito_command}" != "oper-logs" ]] && \
+   [[ "${taito_command}" != "info" ]] && \
+   [[ "${taito_command}" != "status" ]] && \
+   [[ "${taito_command}" != "logs" ]] && \
    [[ "${taito_command}" != "open-"* ]] && \
    [[ "${taito_mode:-}" != "ci" ]]; then
   echo
@@ -183,7 +180,7 @@ if [[ "${taito_env}" == "prod" ]] && \
   fi
 
   # Confirm suspicious operations
-  if [[ "${taito_command}" == "oper-init" ]]; then
+  if [[ "${taito_command}" == "init" ]]; then
     echo
     echo "Command '${orig_command}' is not meant to be run on production environment"
     echo "Do you want to continue anyway (Y/n)?"

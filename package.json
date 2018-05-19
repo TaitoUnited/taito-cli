@@ -11,7 +11,7 @@
     "release-post": "semantic-release post"
   },
   "pre-commit": [
-    "oper-scan"
+    "scan"
   ],
   "pre-push": [
     "verify"

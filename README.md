@@ -433,7 +433,7 @@ You can run any script defined in your project root *package.json* or *makefile*
 
 > NOTE: When adding commands to your package.json or makefile, you are encouraged to follow the predefined command set that is shown by running `taito --help`. The main idea behind *taito-cli* is that the same predefined command set works from project to project, no matter the technology or infrastructure. For example:
 
-    "taito-oper-install": "npm install && ant retrieve",
+    "taito-install": "npm install && ant retrieve",
     "start": "java -cp . com.domain.app.MyServer",
     "init": "host=localhost npm run _db -- < dev-data.sql",
     "init:clean": "npm run clean && npm run init",
@@ -454,7 +454,7 @@ You can run any script defined in your project root *package.json* or *makefile*
 
 You can also override any existing taito-cli command in your file by using `taito-` as script name prefix. For example the following npm script shows the init.txt file before running initialization. The `-z` flag means that override is skipped when the npm script calls taito-cli. You can use the optional *taito* prefix also for avoiding conflicts with existing script names.
 
-    "taito-oper-init": "less init.txt; taito -z init"
+    "taito-init": "less init.txt; taito -z init"
 
 > NOTE: Instead of custom commands, you can also implement a set of taito-cli plugins for the infrastructure in question (see the next chapter).
 

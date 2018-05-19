@@ -4,7 +4,7 @@
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
-taito oper-secrets:dev;\
+taito secrets:dev;\
 taito ci-build;\
 taito ci-deploy:dev;\
 taito ci-canary;\
@@ -12,10 +12,10 @@ taito depl-revision:dev;\
 taito depl-revert:dev;\
 taito ci-wait:dev;\
 taito ci-verify:dev;\
-taito oper-docs;\
-taito oper-scan;\
-taito oper-unit;\
-taito oper-test;\
+taito docs;\
+taito scan;\
+taito unit;\
+taito test;\
 taito ci-publish;\
 taito ci-release-pre;\
 taito ci-release-post;\

@@ -10,8 +10,8 @@ if [[ "${taito_hook_command_executed:-}" == true ]] || \
   was_executed=true
 fi
 
-if [[ ${was_executed} == false ]] && [[ "${taito_command}" == "oper-init" ]]; then
-  # None of the enabled plugins has implemented oper-init
+if [[ ${was_executed} == false ]] && [[ "${taito_command}" == "init" ]]; then
+  # None of the enabled plugins has implemented init
   echo "### basic/post: Nothing to initialize"
 elif [[ ${was_executed} == false ]]; then
   # Command not found

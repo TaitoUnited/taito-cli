@@ -4,29 +4,29 @@
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
-taito oper-install;\
-taito oper-compile;\
-taito oper-start;\
-taito oper-start --clean;\
-taito oper-start:dev;\
-taito oper-run:ios;\
-taito oper-run:android;\
-taito oper-init;\
-taito oper-stop;\
-taito oper-stop:dev;\
-taito oper-info;\
-taito oper-info:dev;\
-taito oper-status;\
-taito oper-status:dev;\
-taito oper-log company-app-server;\
-taito oper-log:dev company-app-server;\
-taito oper-shell company-app-server;\
-taito oper-shell:dev company-app-server;\
-taito oper-exec company-app-server - ls;\
-taito oper-exec:dev company-app-server - ls;\
-taito oper-kill company-app-server;\
-taito oper-kill:dev company-app-server;\
-taito oper-clean;\
+taito install;\
+taito compile;\
+taito start;\
+taito start --clean;\
+taito start:dev;\
+taito run:ios;\
+taito run:android;\
+taito init;\
+taito stop;\
+taito stop:dev;\
+taito info;\
+taito info:dev;\
+taito status;\
+taito status:dev;\
+taito log company-app-server;\
+taito log:dev company-app-server;\
+taito shell company-app-server;\
+taito shell:dev company-app-server;\
+taito exec company-app-server - ls;\
+taito exec:dev company-app-server - ls;\
+taito kill company-app-server;\
+taito kill:dev company-app-server;\
+taito clean;\
 "
 
 if ! ../util/verify.sh; then
