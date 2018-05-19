@@ -6,8 +6,13 @@ _taito_commands()
   if [[ ${taito_prefix} ]]; then
     pattern="${taito_prefix} "
   fi
-  taito --print-commands-short "${taito_prefix}" | \
-    grep -e "${pattern}" | awk "{print \$${taito_index}}"
+  if [[ "${COMP_LINE:$COMP_POINT-1:$COMP_POINT}" == " " ]]; then
+    taito --print-commands-short "${taito_prefix}" | \
+      grep -e "${pattern}" | awk "{print \$${taito_index}}" | sed 's/:.*//'
+  else
+    taito --print-commands-short "${taito_prefix}" | \
+      grep -e "${pattern}" | awk "{print \$${taito_index}}"
+  fi
 }
 
 _taito ()
