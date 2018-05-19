@@ -11,12 +11,9 @@ if [[ "${switches}" == *"--prod"* ]]; then
 fi
 
 compose_cmd="up"
-if [[ -n "${1}" ]] && [[ "${1}" != "--"* ]]; then
-  docker_run="${1}"
-fi
-if [[ -n "${docker_run:-}" ]]; then
+if [[ -n "${taito_target:-}" ]]; then
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/determine-pod.sh" "${docker_run}" && \
+  . "${taito_plugin_path}/util/determine-pod.sh" && \
   compose_cmd="run ${pod:?}"
 fi
 

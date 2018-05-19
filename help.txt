@@ -8,7 +8,10 @@ QUICK EXAMPLES
     (env)                    # Initialize shell environment (e.g. for pipenv)
     (build)                  # Build project (if not built autom. by start)
     start                    # Start containers / watch / application
+    restart                  # Restart containers / watch / application
+    restart:client           # Restart client container
     init                     # Initialize database and storage
+    init --clean             # Clean and reinitialize database and storage
     (run)                    # Run the application (if not run autom. by start)
     open app                 # Open application on browser
     open admin               # Open admin GUI on browser
@@ -17,22 +20,24 @@ QUICK EXAMPLES
     info                     # Show info required for logging in to app
     lint                     # Lint code
     unit                     # Run all unit tests
-    unit: client             # Run all unit tests of client container
-    unit: client -- car      # Run the 'car' unit test of client container
+    unit:client              # Run all unit tests of client container
+    unit:client car          # Run the 'car' unit test of client container
     test                     # Run all integration and e2e tests
-    test: server             # Run all integration and e2e tests of server c...
-    test: server -- trip car # Run the 'car' test of 'trip' test suite on...
-    db open                  # Access database from command line
+    test:server              # Run all integration and e2e tests of server c...
+    test:server trip car     # Run the 'car' test of 'trip' test suite on...
+    db connect               # Access default database from command line
+    db connect:report        # Access report database from command line
     db proxy                 # Show db conn details. Start a proxy if required.
     db add: role_enum        # Add a database migration
     db import: ./file.sql    # Import a file to database
     workspace kill           # Kill all running processes (e.g. containers)
     workspace clean          # Remove all unused build artifacts (e.g. images)
-    shell: server            # Start shell inside a container named 'server'
-    exec: server -- echo foo # Execute a command in a container named 'server'
-    copy: ./file server:/app # Copy a file to container names 'server'
-    commit: client           # Commit changes to client container image
-    clean: server            # Clean server container by deleting it
+    shell:server             # Start shell inside a container named 'server'
+    exec:server echo foo     # Execute a command in a container named 'server'
+    copy to:server ./file /app     # Copy a file to container named 'server'
+    copy from:server /app/file .   # Copy a file from container named 'server'
+    commit:client            # Commit changes to client container image
+    clean:server             # Clean server container by deleting it
     analyze                  # Analyze implementation
     scan                     # Lint code, scan for vulnerabilities, etc
     docs                     # Generate documentation
@@ -44,15 +49,19 @@ QUICK EXAMPLES
     status:dev               # Show application status
     secrets:dev              # Show secrets
     test:dev                 # Run integration/e2e tests against dev env
-    shell:dev server         # Start a shell on a container named 'server'
-    logs:dev worker          # Tail logs of a container named 'worker'
-    kill:dev worker          # Kill a container named 'worker'
-    open logs:dev            # Open logs on browser (e.g. Stackdriver or ELK)
+    logs:worker:dev          # Tail logs of a container named 'worker'
+    kill:worker:dev          # Kill a container named 'worker'
+    shell:server:dev         # Start a shell on a container named 'server'
+    exec:server:dev echo foo # Execute a command in a container named 'server'
+    copy to:server:dev ./file /app   # Copy a file to container named 'server'
+    copy from:server:dev /app/file . # Copy a file from container named 'server'
+    open logs:dev            # Open logs on browser (e.g. Stackdriver or EFK)
     open storage:dev         # Open storage bucket on browser
     init:dev --clean         # Reinitialize database and storage
 
   DATABASE OPERATIONS
-    db open:dev              # Open database on command line
+    db connect:dev           # Access default database on command line
+    db connect:report:dev    # Access report database on command line
     db proxy:dev             # Start a database proxy for a GUI tool access
     db import:dev ./database/file.sql   # Import a file to database
     db dump:dev ./tmp/dump.sql          # Dump database to a file
@@ -81,7 +90,7 @@ QUICK EXAMPLES
   MANUAL DEPLOYMENT OPERATIONS
     deployment trigger:dev        # Trigger ci build for dev environment
     deployment cancel:dev         # Cancel an ongoing dev environment ci build
-    deployment build:dev worker   # Build and deploy worker container to dev env
+    deployment build:worker:dev   # Build and deploy worker container to dev env
     deployment deploy:dev v1.1.1  # Deploy prebuilt version to dev env
     deployment revision:dev       # Show current revision on dev env
     deployment revert:dev 20      # Revert application on dev env to revision 20
@@ -194,13 +203,13 @@ ARGUMENTS
     Environment is 'local' by default. For mobile projects ENV can also be
     'ios' or 'android'.
 
-  POD
-    Depending on the environment, POD may reference to a Kubernetes pod,
-    a Docker container, a function or some other deployable module.
+  TARGET
+    Depending on the environment, TARGET may reference to a Kubernetes pod,
+    a Docker container, a function, a database or some other module.
 
 ALTERNATIVE HYPHEN SYNTAX
 
-  You can also use hyphen instead of space e.g. `taito db-open:dev`
+  You can also use hyphen instead of space e.g. `taito db-connect:dev`
 
 PROJECT: BASIC OPERATIONS
 
@@ -225,30 +234,30 @@ PROJECT: BASIC OPERATIONS
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.
 
-  start[:ENV] [--background] [--clean] [--prod] [POD] [-- ARGS]
+  start[:TARGET][:ENV] [--background] [--clean] [--prod] [ARGS]
     Starts the defined environment e.g 'taito start' or 'taito start:dev'.
     Optional arguments for local environment:
     .
     --backgroud: Run in background.
     --clean: Clean everything before start.
     --prod: Run production build instead of development build.
-    POD: Start only the given pod/container/function/module/program
-    -- ARGS: Additional arguments
+    TARGET: Start only the given pod/container/function/module/program
+    ARGS: Additional arguments
 
-  restart[:ENV] [POD]
+  restart[:TARGET][:ENV]
     Starts the defined environment e.g 'taito restart' or 'taito restart:dev'.
     Optional arguments:
     .
-    POD: Start only the given pod/container/function/module/program
+    TARGET: Start only the given pod/container/function/module/program
 
-  run:ENV [--no-deps] [-d,--device] [POD] [-- ARGS]
+  run[:TARGET]:ENV [--no-deps] [-d,--device] [ARGS]
     Runs the application in the defined environment e.g 'taito run:ios'.
     Optional arguments for running in local environment:
     .
     -d,--device: Run on a real device instead of emulator.
     --no-deps: TODO Do not run dependencies (e.g linked services)
-    POD: Run only the given pod/container/function/module/program
-    -- ARGS: Additional arguments
+    TARGET: Run only the given pod/container/function/module/program
+    ARGS: Additional arguments
 
   init[:ENV] [--clean]
     Make sure that everything has been initialized after start (database, etc.).
@@ -305,43 +314,48 @@ PROJECT: BASIC OPERATIONS
   status[:ENV]
     Show status summary of environment (status of services, pods, etc.).
 
-  logs[:ENV] POD [CONTAINER]
+  logs[:TARGET][:ENV]
     Follow logs of a pod. Examples:
-    $ taito logs: client
-    $ taito logs:dev client
-    $ taito logs:dev my-app-client-3034393823-2f5jf
+    $ taito logs:client
+    $ taito logs:client:dev
+    $ taito logs:my-app-client-3034393823-2f5jf:dev
 
-  shell[:ENV] [POD] [CONTAINER]
-    Start a shell on a pod. Examples:
+  shell[:TARGET][:ENV]
+    Start a shell on a container. Examples:
     $ taito shell: client
     $ taito shell:dev client
     $ taito shell:dev my-app-client-3034393823-2f5jf
 
-  exec[:ENV] POD CONTAINER COMMAND
-    Execute command in pod. Give -- as container if it should be determined
-    automatically by POD name.
+  exec[:TARGET][:ENV] COMMAND
+    Execute command in container.
     Examples:
-    $ taito exec: client -- echo "taito!"
-    $ taito exec:dev client -- echo "taito!"
-    $ taito exec:dev my-app-client-3034393823-2f5jf -- echo "taito!"
+    $ taito exec:client echo "taito!"
+    $ taito exec:client:dev echo "taito!"
+    $ taito exec:my-app-client-3034393823-2f5jf:dev echo "taito!"
 
-  copy[:ENV] [POD:]path [POD:]path
+  copy to:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
     Copy a file. Examples:
-    $ taito copy: foo.txt client:/client/foo.txt
-    $ taito copy:dev foo.txt client:/client/foo.txt
-    $ taito copy:dev client:/client/foo.txt .
+    $ taito copy to:client foo.txt /client/foo.txt
+    $ taito copy to:client:dev foo.txt client:/client/foo.txt
+    $ taito copy to:dev client:/client/foo.txt .
     TODO IMPLEMENT
 
-  kill[:ENV] [POD]
-    Kill a pod. Examples:
-    $ taito kill: client
-    $ taito kill:dev client
-    $ taito kill:dev my-app-client-3034393823-2f5jf
+  copy from:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
+    Copy a file. Examples:
+    $ taito copy from:client /client/foo.txt .
+    $ taito copy from:client:dev /client/foo.txt .
+    TODO IMPLEMENT
 
-  commit [POD]
+  kill:TARGET[:ENV]
+    Kill a container. Examples:
+    $ taito kill:client
+    $ taito kill:client:dev
+    $ taito kill:my-app-client-3034393823-2f5jf:dev
+
+  commit:TARGET
     Commit changes to a container
 
-  clean [POD | npm | data | build | ...]
+  clean[:TARGET]
     Clean.
 
 PROJECT: LINKS
@@ -429,12 +443,12 @@ PROJECT: VERSION CONTROL OPERATIONS
 
 PROJECT: DATABASE OPERATIONS
 
-  db add: NAME [-r REQUIRES] [-n DESCRIPTION]
+  db add:[TARGET] NAME [-r REQUIRES] [-n DESCRIPTION]
     Add a new change to migration plan. Run 'db add' without arguments to get
     help. You can run the change to local database by running `taito db:deploy`.
     Example: 'taito db add order.table -r user.table -n 'Table for orders.'
 
-  db proxy[:ENV]
+  db proxy[:TARGET][:ENV]
     Starts a proxy for accessing a database and shows connections details that
     you should use with your database GUI tool to connect the database. If
     proxy is not required, the command shows connection details nevertheless.
@@ -443,40 +457,40 @@ PROJECT: DATABASE OPERATIONS
     passwords are rotated once in a while, thus, if you get an authentication
     error, retrieve new secrets by running `taito oper secrets:ENV` again.
 
-  db open[:ENV] [USERNAME]
+  db connect[:TARGET][:ENV] [USERNAME]
     Access database from command line. DB proxy connection and secrets are
     handled automatically. NOTE: If you want to access database using a GUI
     tool, use the db proxy:ENV command instead.
 
-  db dump[:ENV] FILE
+  db dump[:TARGET][:ENV] FILE
     Take a database dump. DB proxy connection and secrets are handled
     automatically.
 
-  db import:[ENV] FILE
+  db import[:TARGET][:ENV] FILE
     Import a file to database. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
     Example: taito db import:dev ./database/my-file.sql
 
-  db deploy[:ENV]
+  db deploy[:TARGET][:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled
     automatically.
 
-  db diff:[ENV] [OTHER_ENV]
+  db diff[:TARGET][:ENV] [OTHER_ENV]
     Compare database schemas of two environments. DB proxy connection and
     secrets are handled automatically. TODO implement.
 
-  db log[:ENV]
+  db log[:TARGET][:ENV]
     View change log of database. DB proxy connection and secrets are handled
     automatically.
 
-  db rebase:[ENV] [CHANGE]
+  db rebase[:TARGET][:ENV] [CHANGE]
     Rebases database by running 'db revert' and then 'db deploy'. DB proxy
     connection and secrets are handled automatically. The command reverts all
     changes by default. If you would like to revert to a specific revision
     instead, view the change log first with `taito db log[:ENV]` and then run
     `taito db revert[:ENV] CHANGE`.
 
-  db revert:[ENV] [CHANGE]
+  db revert[:TARGET][:ENV] [CHANGE]
     Revert database changes. DB proxy connection and secrets are
     handled automatically. Revert the previous migration batch by running
     `taito db revert[:ENV]`. If you would like to revert to a specific revision
@@ -484,18 +498,18 @@ PROJECT: DATABASE OPERATIONS
     `taito db revert[:ENV] CHANGE`. TODO currently always requires CHANGE
     param.
 
-  db recreate[:ENV]
+  db recreate[:TARGET][:ENV]
     Recreates the database. Thus on next deployment, all database migrations
     will be run from the beginning. DB proxy connection and secrets are handled
     automatically.
 
-  db copy:ENV SOURCE_ENV
+  db copy[:TARGET]:ENV SOURCE_ENV
     Copy database from one environment to another. For example
     `db copy:staging prod` or `db copy:local dev`. If you do not have enough
     rights, ask devops personnel to do this for you. DB proxy connection and
     secrets are handled automatically.
 
-  db copyquick:ENV SOURCE_ENV
+  db copyquick[:TARGET]:ENV SOURCE_ENV
     Copy database quickly from one environent to another. DB proxy connection
     and secrets are handled automatically. NOTE: The command requires
     that both databases are located on the same database cluster. The command
@@ -534,11 +548,11 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
     will be skipped since all images have already been built and tested
     by some previous CI build.
 
-  ci build:[ENV] CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
-    Builds image. Example: 'taito ci build:dev client test1'.
+  ci build:TARGET[:ENV] IMAGE_TAG [PROJECT_REPOSITORY]
+    Builds image. Example: 'taito ci build:client:dev test1'.
 
-  ci push: CONTAINER_NAME IMAGE_TAG [PROJECT_REPOSITORY]
-    Pushes image to image registry. Example: 'taito ci push:dev client test1'.
+  ci push:TARGET[:ENV] IMAGE_TAG [PROJECT_REPOSITORY]
+    Pushes image to image registry. Example: 'taito ci push:client test1'.
 
   ci deploy[:ENV] [IMAGE_TAG] [--dry-run]
     Deploy the application either by using IMAGE_TAG given as parameter or
@@ -669,5 +683,5 @@ GLOBAL: UTILS
     can start a shell running 'taito --shell', make some changes and then
     commit all changes by running 'taito util-commit' inside the container.
 
-  util test: POD [SUITE_FILTER]
-    Run test suites for the given POD.
+  util test:TARGET [SUITE_FILTER]
+    Run test suites for the given container.

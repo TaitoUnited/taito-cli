@@ -6,8 +6,8 @@
 export tests="\
 taito db-proxy:dev;\
 taito db-add test.table -n 'Test table';\
-taito db-open;\
-taito db-open:dev;\
+taito db-connect;\
+taito db-connect:dev;\
 taito db-dump;\
 taito db-dump:dev;\
 taito db-import import.sql;\

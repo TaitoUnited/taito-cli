@@ -4,9 +4,12 @@
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
-pod="${1:?Pod name not given}"
+source="${1:?}"
+dest="${2:?}"
 
-"${taito_plugin_path}/util/cp.sh" "${@}" && \
+. "${taito_plugin_path}/util/determine-pod-container.sh"
+
+(${taito_setv:?}; kubectl cp "${source}" "${pod}:${dest}" -c "${container}")
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

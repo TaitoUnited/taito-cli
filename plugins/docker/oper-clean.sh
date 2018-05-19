@@ -2,9 +2,9 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-if [[ ${1} ]]; then
+if [[ ${taito_target:-} ]]; then
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/determine-pod.sh" "${@}"
+  . "${taito_plugin_path}/util/determine-pod.sh"
 
   # Docker-compose uses directory name as project name by default
   project_name="${taito_host_project_path:?}"
@@ -18,7 +18,11 @@ if [[ ${1} ]]; then
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
     "docker rmi --force ${project_name}_${pod:?}"
 else
-  "${taito_plugin_path}/util/clean.sh" "${@}"
+  # TODO [data | build] as arguments
+  echo "Docker will remove images and volumes after taito-cli has exited"
+
+  "${taito_cli_path}/util/execute-on-host-fg.sh" \
+    "docker-compose down --rmi 'all' --volumes --remove-orphans"
 fi && \
 
 # Call next command on command chain

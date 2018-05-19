@@ -2,10 +2,8 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-: "${1:?Container not given}"
-
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod.sh" "${@}"
+. "${taito_plugin_path}/util/determine-pod.sh"
 
 echo container: ${pod:?}
 

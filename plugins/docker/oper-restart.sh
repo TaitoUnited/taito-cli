@@ -2,12 +2,10 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-pod="${1}"
-
-if [[ -n "${pod}" ]]; then
+if [[ -n "${taito_target:-}" ]]; then
   # Restart only the container given as argument
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/determine-pod.sh" "${@}" && \
+  . "${taito_plugin_path}/util/determine-pod.sh" && \
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
     "docker-compose restart ${pod:?}"
 else

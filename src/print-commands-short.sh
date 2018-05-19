@@ -86,9 +86,9 @@ if [[ ${taito_project:-} ]]; then
   fi
 
   # Stack component commands
-  for stack in ${ci_stack:-}
+  for stack in ${taito_targets:-}
   do
-    echo "clean: ${stack}"
+    echo "clean:${stack}"
   done
 
   # Project management
@@ -123,7 +123,7 @@ if [[ ${taito_project:-} ]]; then
     echo "status${suffix}"
 
     echo "db proxy${suffix}"
-    echo "db open${suffix}"
+    echo "db connect${suffix}"
     echo "db import${param}"
     echo "db dump${suffix}"
     echo "db log${suffix}"
@@ -146,7 +146,7 @@ if [[ ${taito_project:-} ]]; then
       echo "start${suffix} --clean --prod"
       echo "lint${suffix}"
       echo "unit${suffix}"
-      echo "unit${suffix} -- TEST"
+      echo "unit${suffix} TEST"
       echo "analyze${suffix}"
       echo "scan${suffix}"
       echo "docs${suffix}"
@@ -175,25 +175,29 @@ if [[ ${taito_project:-} ]]; then
     fi
 
     # Stack component commands
-    for stack in ${ci_stack}
+    for stack in ${taito_targets}
     do
-      echo "test${param} ${stack}"
+      if [[ "${env}" == "local" ]]; then
+        echo "unit:${stack}${suffix}"
+        echo "unit:${stack}${param} TEST"
+      fi
+      echo "test:${stack}${suffix}"
       if [[ "${cprefix}" == "test"* || "${cprefix}" == "*" ]]; then
         suites=($(cat "./${stack}/test-suites" 2> /dev/null)) && \
         for suite in "${suites[@]}"
         do
-          echo "test${param} ${stack} -- ${suite}"
-          echo "test${param} ${stack} -- ${suite} TEST"
+          echo "test:${stack}${param} ${suite}"
+          echo "test:${stack}${param} ${suite} TEST"
         done
       fi
-      echo "restart${param} ${stack}"
-      echo "logs${param} ${stack}"
-      echo "shell${param} ${stack}"
-      echo "exec${param} ${stack} -- COMMAND"
-      echo "copy${param} ${stack}:PATH PATH"
-      echo "copy${param} PATH ${stack}:PATH"
-      echo "kill${param} ${stack}"
-      echo "deployment build${param} ${stack}"
+      echo "restart:${stack}${suffix}"
+      echo "logs:${stack}${suffix}"
+      echo "shell:${stack}${suffix}"
+      echo "exec:${stack}${param} COMMAND"
+      echo "copy to:${stack}${param} SOURCE_PATH DESTINATION_PATH"
+      echo "copy from:${stack}${param} SOURCE_PATH DESTINATION_PATH"
+      echo "kill:${stack}${suffix}"
+      echo "deployment build:${stack}${suffix}"
     done
 
     # Links

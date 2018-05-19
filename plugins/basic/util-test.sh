@@ -5,9 +5,9 @@
 : "${taito_env:?}"
 : "${taito_repo_name:?}"
 
-dir="${1}"
-suite_filter="${2}"
-test_filter="${3}"
+dir="${taito_target:?Target not given}"
+suite_filter="${1}"
+test_filter="${2}"
 
 # TODO Using remote database connection during tests does not currently
 # work because db proxy is either started on host (local development) or

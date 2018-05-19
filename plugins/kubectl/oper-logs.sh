@@ -4,8 +4,7 @@
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
-pod="${1:?Pod name not given}"
-container="${2}"
+container="${1}"
 
 "${taito_plugin_path}/util/use-context.sh"
 

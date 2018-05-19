@@ -5,9 +5,9 @@
 : "${taito_registry:?}"
 : "${taito_env:?}"
 
-name=${1:?Name not given}
-image_tag=${2:-dry-run}
-image_path=${3}
+name=${taito_target:?Target not given}
+image_tag=${1:-dry-run}
+image_path=${2}
 
 path_suffix=""
 if [[ "${name}" != "." ]]; then
@@ -27,8 +27,8 @@ image_tester="${taito_project}-${name}-tester:latest"
 version=$(grep "version" "${taito_project_path}/package.json" | \
   grep -o "[0-9].[0-9].[0-9]")
 
-if [[ "${ci_stack:-}" != *"${name}"* ]]; then
-  echo "Skipping build: ${name} not included in ci_stack"
+if [[ "${taito_targets:-}" != *"${name}"* ]]; then
+  echo "Skipping build: ${name} not included in taito_targets"
 else
   if [[ ! -f ./taitoflag_images_exist ]]; then
     if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_build:-}" == "false" ]]; then

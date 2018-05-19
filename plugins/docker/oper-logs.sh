@@ -4,7 +4,7 @@
 : "${taito_project:?}"
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod.sh" "${@}" && \
+. "${taito_plugin_path}/util/determine-pod.sh" && \
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" \
   "docker logs -f --tail 400 ${pod:?}" && \

@@ -3,11 +3,9 @@
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 
-pod="${1}"
-
 "${taito_plugin_path}/util/use-context.sh" && \
 
-if [[ -n "${pod}" ]]; then
+if [[ -n "${taito_target:-}" ]]; then
   # Restart only the container given as argument
   echo "TODO implement: Restart only the container given as argument"
   exit 1

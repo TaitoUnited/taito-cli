@@ -1,11 +1,12 @@
 #!/bin/bash
 : "${taito_project:?}"
+: "${taito_target:?Target not given}"
 
-if [[ ${pod} ]] && [[ ${pod} != *"-"* ]]; then
+if [[ ${taito_target} != *"-"* ]]; then
   # Short pod name was given. Determine the full pod name.
   pod=$(kubectl get pods | grep "${taito_project}" | \
     sed -e "s/${taito_project}-//" | \
-    grep "${pod}" | \
+    grep "${taito_target}" | \
     head -n1 | awk "{print \"${taito_project}-\" \$1;}")
 fi
 

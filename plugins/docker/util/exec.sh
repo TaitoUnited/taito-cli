@@ -3,11 +3,10 @@
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 
-pod="${1}"
-command="${*:3}"
+command="${*}"
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod.sh" "${pod}" && \
+. "${taito_plugin_path}/util/determine-pod.sh" && \
 
 compose_cmd="docker exec -it ${pod} ${command}" && \
 if [[ -n "${docker_run:-}" ]]; then

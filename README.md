@@ -21,17 +21,18 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito open admin                         # Open admin GUI on browser
     taito info                               # Show info required for signing in to the locally running app
     taito unit                               # Run all unit tests
-    taito unit: client                       # Run all unit tests of client container
-    taito unit: client -- car                # Run the 'car' unit test of client container
+    taito unit:client                        # Run all unit tests of client container
+    taito unit:client car                    # Run the 'car' unit test of client container
     taito test                               # Run all integration and e2e tests
-    taito test: server                       # Run all integration and e2e tests of server container
-    taito test: server -- travel car         # Run the 'car' test of 'travel' test suite on server container
-    taito db open                            # Access database from command line
-    taito db proxy                           # Show db connection details. Start a proxy if required.
+    taito test:server                        # Run all integration and e2e tests of server container
+    taito test:server travel car             # Run the 'car' test of 'travel' test suite on server container
+    taito db connect                         # Access default database from command line
+    taito db connect:report                  # Access report database from command line
+    taito db proxy                           # Show db connection details for default database. Start a proxy if required.
     taito db add: role_enum                  # Add a database migration
     taito db import: ./file.sql              # Import a file to database
-    taito shell: server                      # Start a shell inside a container named 'server'
-    taito exec: server -- echo foo           # Execute a command inside the server container
+    taito shell:server                       # Start a shell inside a container named 'server'
+    taito exec:server echo foo               # Execute a command inside the server container
     taito open builds                        # Open build logs on browser
     taito open boards                        # Open project kanban board(s) on browser
     taito workspace kill                     # Kill all running processes (e.g. containers)
@@ -44,19 +45,21 @@ All taito-cli commands target the local development environment by default. If y
     taito info:dev                           # Show information required for signing in to application
     taito status:dev                         # Show status
     taito test:dev                           # Run integration/e2e tests against the dev environment
-    taito shell:dev server                   # Start shell on a container named 'server'
-    taito exec:dev server -- echo foo        # Execute a command inside the server container
-    taito logs:dev worker                    # Tail logs of a container named 'worker'
-    taito open logs:dev                      # Open logs on browser (e.g. Stackdriver or ELK)
+    taito shell:server:dev                   # Start shell on a container named 'server'
+    taito exec:server:dev echo foo           # Execute a command inside the server container
+    taito logs:worker:dev                    # Tail logs of a container named 'worker'
+    taito open logs:dev                      # Open logs on browser (e.g. Stackdriver or EFK)
     taito open storage:dev                   # Open storage bucket on browser
     taito init:dev --clean                   # Reinitialize database and storage
-    taito db open:dev                        # Open database on command line
-    taito db proxy:dev                       # Start a proxy for accessing remote database with a GUI tool
+    taito db connect:dev                     # Access default database on command line
+    taito db connect:report:dev              # Access report database on command line
+    taito db proxy:dev                       # Start a proxy for accessing default remote database with a GUI tool
     taito db import:dev ./database/file.sql  # Import a file to database
 
 Some database operation examples targetting a test environment:
 
-    taito db open:test                       # Open database on command line
+    taito db connect:test                    # Access default database on command line
+    taito db connect:report:test             # Access report database on command line
     taito db proxy:test                      # Start a database proxy for GUI tool access
     taito db import:test ./database/file.sql # Import a file to database
     taito db dump:test ./tmp/dump.sql        # Dump database to a file
@@ -295,7 +298,7 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     export template_source_git="git@github.com:TaitoUnited"
 
     # Settings for builds
-    export ci_stack="client database server"
+    export taito_targets="client database server"
     export ci_exec_build=false        # build a container if does not exist already
     export ci_exec_deploy=true        # deploy automatically
     export ci_exec_test=false         # execute test suites after deploy
@@ -442,11 +445,11 @@ You can run any script defined in your project root *package.json* or *makefile*
     "status:server": "url=localhost/server npm run _status",
     "status:dev:client": "url=mydomain-dev/client npm run _status",
     "status:dev:server": "url=mydomain-dev/server npm run _status",
-    "db-open": "host=localhost npm run _db",
-    "db-open:dev": "host=mydomain-dev npm run _db",
-    "db-open:test": "host=mydomain-test npm run _db",
-    "db-open:staging": "host=mydomain-staging npm run _db",
-    "db-open:prod": "host=mydomain-prod run _db",
+    "db-connect": "host=localhost npm run _db",
+    "db-connect:dev": "host=mydomain-dev npm run _db",
+    "db-connect:test": "host=mydomain-test npm run _db",
+    "db-connect:staging": "host=mydomain-staging npm run _db",
+    "db-connect:prod": "host=mydomain-prod run _db",
     "_db": "mysql -u myapp -p myapp -h ${host}",
 
 You can also override any existing taito-cli command in your file by using `taito-` as script name prefix. For example the following npm script shows the init.txt file before running initialization. The `-z` flag means that override is skipped when the npm script calls taito-cli. You can use the optional *taito* prefix also for avoiding conflicts with existing script names.
@@ -571,7 +574,8 @@ If you need to alter default behaviour of a plugin in some way, you can override
 All settings defined in `taito-config.sh` are visible for plugins. Additionally the following environment variables are exported by taito-cli:
 
 * **taito_env**: The selected environment (local, feature, dev, test, staging, prod)
-* **taito_command**: The user given command without the environment suffix.
+* **taito_target**: Command target (e.g. admin, client, server, worker, ...)
+* **taito_command**: The user given command without the target and environment suffix.
 * **taito_enabled_extensions**: List of all enabled extensions.
 * **taito_enabled_plugins**: List of all enabled plugins.
 * **taito_skip_override**: True if command overrides should be skipped.

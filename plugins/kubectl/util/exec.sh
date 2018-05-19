@@ -4,9 +4,7 @@
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
-pod="${1:?}"
-container="${2}"
-command=("${@:3}")
+command=("${@}")
 
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"

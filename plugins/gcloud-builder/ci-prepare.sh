@@ -4,9 +4,9 @@
 : "${taito_repo_name:?}"
 : "${taito_registry:?}"
 
-name=${1:?Name not given}
-image_tag=${2}
-image_path=${3}
+name=${taito_target:?Target not given}
+image_tag=${1}
+image_path=${2}
 
 if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"

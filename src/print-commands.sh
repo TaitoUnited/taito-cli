@@ -128,9 +128,9 @@ if [[ ${taito_project:-} ]]; then
   done
 
   # Stack component commands
-  for stack in ${ci_stack:-}
+  for stack in ${taito_targets:-}
   do
-    echo "clean: ${stack} \
+    echo "clean:${stack} \
       # Clean ${stack} image (NOTE: run 'taito stop' first)"
   done
 
@@ -181,7 +181,7 @@ if [[ ${taito_project:-} ]]; then
 
     echo "db proxy${suffix} \
       # Show db conn details for ${env} environment and start a proxy if required"
-    echo "db open${suffix} \
+    echo "db connect${suffix} \
       &focus \
       # Open database client for ${env} environment from command line"
     echo "db import${param} FILE \
@@ -221,7 +221,7 @@ if [[ ${taito_project:-} ]]; then
         # Lint code"
       echo "unit${suffix} \
         # Run all unit tests"
-      echo "unit${suffix} -- TEST \
+      echo "unit${suffix} TEST \
         # Run an unit test"
       echo "analyze${suffix} \
         # Analyze implementation"
@@ -270,37 +270,43 @@ if [[ ${taito_project:-} ]]; then
     fi
 
     # Stack component commands
-    for stack in ${ci_stack}
+    for stack in ${taito_targets}
     do
-      echo "test${param} ${stack} \
+      if [[ "${env}" == "local" ]]; then
+        echo "unit:${stack}${suffix} \
+          # Run all unit tests"
+        echo "unit:${stack}${param} TEST \
+          # Run an unit test"
+      fi
+      echo "test:${stack}${suffix} \
         # Run all integration and e2e tests of the ${stack} container on ${env} environment"
       if [[ "${cprefix}" == "test"* || "${cprefix}" == "*" ]]; then
         suites=($(cat "./${stack}/test-suites" 2> /dev/null)) && \
         for suite in "${suites[@]}"
         do
-          echo "test${param} ${stack} -- ${suite} \
+          echo "test:${stack}${param} ${suite} \
             # Run an integration or e2e test suite of the ${stack} container on ${env} environment"
-          echo "test${param} ${stack} -- ${suite} TEST \
+          echo "test:${stack}${param} ${suite} TEST \
             # Run a test of an integration or e2e test suite of the ${stack} container on ${env} environment"
         done
       fi
 
-      echo "restart${param} ${stack} \
+      echo "restart:${stack}${suffix} \
         # Restart the ${stack} container running on ${env} environment"
-      echo "logs${param} ${stack} \
+      echo "logs:${stack}${suffix} \
         # Tail logs of the ${stack} container running on ${env} environment"
-      echo "shell${param} ${stack} \
+      echo "shell:${stack}${suffix} \
         &focus \
         # Start shell inside the ${stack} container running on ${env} environment"
-      echo "exec${param} ${stack} -- COMMAND \
+      echo "exec:${stack}${param} COMMAND \
         # Execute a command in the ${stack} container running on ${env} environment"
-      echo "copy${param} ${stack}:PATH PATH \
+      echo "copy to:${stack}${param} SOURCE_PATH DESTINATION_PATH \
         # Copy a file from the ${stack} container running on ${env} environment"
-      echo "copy${param} PATH ${stack}:PATH \
+      echo "copy from:${stack}${param} SOURCE_PATH DESTINATION_PATH \
         # Copy a file to the ${stack} container running on ${env} environment"
-      echo "kill${param} ${stack} \
+      echo "kill:${stack}${suffix} \
         # Kill the ${stack} container running on ${env} environment"
-      echo "deployment build${param} ${stack} \
+      echo "deployment build:${stack}${suffix} \
         # Build and deploy the ${stack} container to ${env} environment"
     done
 

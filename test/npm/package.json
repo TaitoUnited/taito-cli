@@ -1,6 +1,6 @@
 {
   "scripts": {
     "custom": "echo 'Custom npm command OK'",
-    "db-open:dev": "echo 'Overridden taito-cli command OK'"
+    "db-connect:dev": "echo 'Overridden taito-cli command OK'"
   }
 }

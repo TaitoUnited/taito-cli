@@ -51,18 +51,25 @@ fi
 # TODO
 # args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]}))
 
-# Determine command, env and parameters from args
+# Determine command, target, env and parameters from args
 env_command="${args[0]}"
 params=(${args[@]:1})
 if [[ "${env_command}" == *":"* ]]; then
-  command=${env_command%:*}
-  env=${env_command##*:}
+  IFS=':' read -ra ADDR <<< "${env_command}"
+  for sect in "${ADDR[@]}"; do
+    if [[ -z "${command}" ]]; then
+      command="${sect}"
+    elif [[ " local feature dev test staging prod " == *" ${sect} "* ]]; then
+      env="${sect}"
+    else
+      target="${sect}"
+    fi
+  done
 elif [[ -z "${env_command}" ]]; then
   env_command="--help"
 else
   command=${env_command}
 fi
-
 
 # TODO clean up code below
 
@@ -121,6 +128,7 @@ export taito_command="${command}"
 export taito_orig_command="${orig_command}"
 export taito_env="${env}"
 export taito_branch="${branch}"
+export taito_target="${target}"
 
 if [[ " oper-unit oper-scan oper-docs ci-publish " == *"${taito_command}"* ]] && \
    [[ -f ./taitoflag_images_exist ]]; then

@@ -4,7 +4,7 @@
 # NOTE: You should also provide some more fine grained tests for each plugin.
 
 export tests="\
-npm db-open:dev;\
+npm db-connect:dev;\
 npm custom;\
 "
 

@@ -5,9 +5,9 @@
 : "${taito_registry:?}"
 : "${taito_env:?}"
 
-name=${1:?Name not given}
-image_tag=${2:?Image tag not given}
-image_path=${3}
+name=${taito_target:?Target not given}
+image_tag=${1:?Image tag not given}
+image_path=${2}
 
 path_suffix=""
 if [[ "${name}" != "." ]]; then
@@ -22,8 +22,8 @@ image="${image_path}${path_suffix}:${image_tag}"
 image_latest="${image_path}${path_suffix}:latest"
 image_builder="${image_path}${path_suffix}-builder:latest"
 
-if [[ "${ci_stack:-}" != *"${name}"* ]]; then
-  echo "Skipping push: ${name} not included in ci_stack"
+if [[ "${taito_targets:-}" != *"${name}"* ]]; then
+  echo "Skipping push: ${name} not included in taito_targets"
 else
   if [[ ! -f ./taitoflag_images_exist ]]; then
     (${taito_setv:?}; docker push "${image}") && \
