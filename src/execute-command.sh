@@ -59,7 +59,7 @@ if [[ "${env_command}" == *":"* ]]; then
   for sect in "${ADDR[@]}"; do
     if [[ -z "${command}" ]]; then
       command="${sect}"
-    elif [[ " local feature dev test staging prod " == *" ${sect} "* ]]; then
+    elif [[ " local feature dev test staging prod master " == *" ${sect} "* ]]; then
       env="${sect}"
     else
       target="${sect}"
