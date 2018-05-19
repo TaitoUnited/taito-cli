@@ -453,9 +453,9 @@ PROJECT: DATABASE OPERATIONS
     you should use with your database GUI tool to connect the database. If
     proxy is not required, the command shows connection details nevertheless.
     If you don't have a personal account for the database, you can get a
-    working username and password by running `taito oper secrets:ENV`. Note that
+    working username and password by running `taito secrets:ENV`. Note that
     passwords are rotated once in a while, thus, if you get an authentication
-    error, retrieve new secrets by running `taito oper secrets:ENV` again.
+    error, retrieve new secrets by running `taito secrets:ENV` again.
 
   db connect[:TARGET][:ENV] [USERNAME]
     Access database from command line. DB proxy connection and secrets are
