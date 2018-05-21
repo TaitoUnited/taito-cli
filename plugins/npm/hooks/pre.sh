@@ -55,22 +55,6 @@ if [[ -f "./package.json" ]]; then
     # Use overriding command from package.json without enviroment target
     npm_command="taito-${taito_command}${target}${options}"
     skip_remaining_commands=true
-  elif [[ ${taito_skip_override} == false ]] && \
-     [[ $(echo "${commands}" | grep "^taito-${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
-    # Use overriding command from package.json
-    npm_command="taito-${taito_command}${target}:${taito_env}${options}"
-    skip_remaining_commands=true
-  elif [[ ${taito_skip_override} == false ]] && \
-     [[ $(echo "${commands}" | grep "^taito-${taito_command}${target}${options}$") != "" ]]; then
-    # Use overriding command from package.json without enviroment target
-    npm_command="taito-${taito_command}${target}${options}"
-    skip_remaining_commands=true
-  elif [[ $(echo "${commands}" | grep "^${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
-    # Use normal command from package.json
-    npm_command="${taito_command}${target}:${taito_env}${options}"
-  elif [[ $(echo "${commands}" | grep "^${taito_command}${target}${options}$") != "" ]]; then
-    # Use normal command from package.json without enviroment target
-    npm_command="${taito_command}${target}${options}"
   elif [[ $(echo "${commands}" | grep "^${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
     # Use normal command from package.json
     npm_command="${taito_command}${target}:${taito_env}${options}"
