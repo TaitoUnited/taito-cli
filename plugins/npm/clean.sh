@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-if [[ ! ${1} ]] || [[ ${1} == "npm" ]]; then
+if [[ ! ${taito_target:-} ]] || [[ ${taito_target} == "npm" ]]; then
   "${taito_plugin_path}/util/clean.sh"
 fi && \
 
