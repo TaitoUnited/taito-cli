@@ -4,6 +4,8 @@
 : "${taito_env:?}"
 : "${database_name:?}"
 
+echo "TODO :all target for deploying all databases (ci)"
+
 echo "Deploying changes to database ${taito_env}" && \
 "${taito_plugin_path}/util/deploy-changes.sh" "${@}" && \
 

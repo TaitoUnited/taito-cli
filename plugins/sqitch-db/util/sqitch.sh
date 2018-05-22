@@ -12,8 +12,14 @@ options="${@:2}"
 
 sqitch_engine="${sqitch_engine:-pg}"
 
+if [[ ! -f "./${taito_target:-database}/sqitch.conf" ]]; then
+  echo "File './${taito_target:-database}/sqitch.conf' does not exist."
+  echo "Skipping sqitch..."
+  exit
+fi
+
 (
-  cd database || exit
+  cd "${taito_target:-database}" || exit
 
   # TODO mysql support
 

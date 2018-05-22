@@ -126,6 +126,19 @@ export taito_orig_command="${orig_command}"
 export taito_env="${env}"
 export taito_branch="${branch}"
 export taito_target="${target}"
+export taito_verbose=false
+export taito_setv=":"
+export taito_vout="/dev/null"
+if [[ ${verbose} == true ]]; then
+  # Helper environment variables to be used in verbose mode
+  taito_verbose=true
+  taito_setv="set -x"
+  taito_vout="/dev/stdout"
+
+  echo taito_command: "${taito_command}"
+  echo taito_target: "${taito_target}"
+  echo taito_env: "${taito_env}"
+fi
 
 if [[ " unit scan docs ci-publish " == *"${taito_command}"* ]] && \
    [[ -f ./taitoflag_images_exist ]]; then
@@ -137,6 +150,9 @@ fi
 
 # Read taito-config.sh files from all locations
 . "${taito_util_path}/read-taito-config.sh" "${taito_env}" && \
+
+# Select database configs using taito_target
+. "${taito_util_path}/read-database-config.sh" "${taito_env}" && \
 
 # Read taito-secrets.sh in case of CI/CD
 if [[ -f ${taito_project_path}/taito-secrets.sh ]]; then
@@ -303,15 +319,6 @@ export taito_command_chain="${concat_full_chain[@]}"
 export taito_original_command_chain="${concat_full_chain[@]}"
 export taito_commands_only_chain="${concat_commands_only_chain[@]}"
 export taito_enabled_plugins="${enabled_plugins}"
-export taito_verbose=false
-export taito_setv=":"
-export taito_vout="/dev/null"
-if [[ ${verbose} == true ]]; then
-  # Helper environment variables to be used in verbose mode
-  taito_verbose=true
-  taito_setv="set -x"
-  taito_vout="/dev/stdout"
-fi
 
 # Admin credentials pre-handling
 if [[ -n "${taito_admin_key}" ]]; then

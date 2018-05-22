@@ -2,14 +2,17 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-# Create a subshell to contain password
-(
-  echo "Dropping database and users"
-  export database_username=postgres
-  . "${taito_plugin_path}/util/ask-password.sh"
-  "${taito_plugin_path}/util/drop-database.sh"
-  "${taito_plugin_path}/util/drop-users.sh"
-) && \
+echo "TODO execute for all postgres databases"
+if [[ "${database_type:-}" == "postgres" ]] || [[ -z "${database_type}" ]]; then
+  # Create a subshell to contain password
+  (
+    echo "Dropping database and users"
+    export database_username=postgres
+    . "${taito_plugin_path}/util/ask-password.sh"
+    "${taito_plugin_path}/util/drop-database.sh"
+    "${taito_plugin_path}/util/drop-users.sh"
+  )
+fi && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

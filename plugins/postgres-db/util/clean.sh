@@ -38,7 +38,7 @@ fi
 
   # Drop all but the default schemas
   echo && \
-  echo "- import ./database/clean.sql" && \
+  echo "- import postgres-db/resources/clean.sql" && \
   (${taito_setv:?}; psql -h "${database_host}" -p "${database_port}" \
     -d "${database_name}" \
     -U "${database_user}" \
@@ -72,8 +72,8 @@ fi
 
   # Run init.sql of project
   echo && \
-  echo "- import ./database/init.sql" && \
+  echo "- import ./${taito_target:-database}/init.sql" && \
   (${taito_setv:?}; psql -h "${database_host}" \
     -p "${database_port}" -d "${database_name}" \
-     -U "${database_user}" < ./database/init.sql)
+     -U "${database_user}" < "./${taito_target:-database}/init.sql")
 )

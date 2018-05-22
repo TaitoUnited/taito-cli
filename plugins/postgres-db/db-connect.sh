@@ -6,11 +6,11 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-username="${1}"
-
-echo "host: ${database_host} port:${database_port}"
-
-"${taito_plugin_path}/util/psql.sh" "${username}" && \
+if [[ "${database_type:-}" == "postgres" ]] || [[ -z "${database_type}" ]]; then
+  username="${1}"
+  echo "host: ${database_host} port:${database_port}"
+  "${taito_plugin_path}/util/psql.sh" "${username}"
+fi && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -5,11 +5,13 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-dest="${taito_env}"
-source="${1:?Source not given}"
-username="${2}"
+if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
+  dest="${taito_env}"
+  source="${1:?Source not given}"
+  username="${2}"
 
-echo "TODO implement"
+  echo "TODO implement"
+fi && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

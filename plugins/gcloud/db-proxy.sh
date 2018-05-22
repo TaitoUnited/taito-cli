@@ -4,7 +4,6 @@
 : "${taito_env:?}"
 : "${gcloud_project:?}"
 : "${gcloud_zone:?}"
-: "${gcloud_sql_proxy_port:?}"
 : "${database_name:?}"
 
 echo "Database connection details:"

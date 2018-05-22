@@ -270,10 +270,16 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     export taito_registry="domain.com/${taito_zone}/${taito_repo_name}"
     export taito_app_url="https://${taito_project}-${taito_env}.acme.com"
 
+    # Database plugins (postgres/mysql/...)
+    export database_instance="common-postgres"
+    export database_name="${taito_project//-/_}_${taito_env}"
+    export database_host="localhost"
+    export database_proxy_port="5001"
+    export database_port="${database_proxy_port}"
+
     # gcloud plugin
     export gcloud_region="europe-west1"
     export gcloud_zone="europe-west1-c"
-    export gcloud_sql_proxy_port="5001"
 
     # AWS plugin
     export aws_organization="..."
@@ -283,12 +289,6 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
 
     # Kubectl plugin
     export kubectl_name="common-kubernetes"
-
-    # Database plugins (postgres/mysql/...)
-    export database_instance="common-postgres"
-    export database_name="${taito_project//-/_}_${taito_env}"
-    export database_host="localhost"
-    export database_port="${gcloud_sql_proxy_port}"
 
     # Sqitch plugin
     export sqitch_engine="pg" # pq/mysql/oracle/sqlite/vertica/firebird

@@ -121,7 +121,10 @@ fi
 # Determine environment
 taito_env="local"
 if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
-  taito_env=${command##*:}
+  sect=${command##*:}
+  if [[ " local feature dev test staging prod master " == *" ${sect} "* ]]; then
+    taito_env=${sect}
+  fi
 fi
 
 # Determine enabled extensions and download missing remote extensions
@@ -236,7 +239,7 @@ if [[ "${database_proxy_port:-}" != "" ]]; then
     --expose=${database_proxy_port} \
     -p 127.0.0.1:${database_proxy_port}:${database_proxy_port}"
 elif [[ "${gcloud_sql_proxy_port:-}" != "" ]]; then
-  # TODO remove gcloud_sql_proxy_port setting
+  # TODO remove gcloud_sql_proxy_port setting from all projects
   proxy_flags="\
     --expose=${gcloud_sql_proxy_port} \
     -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"

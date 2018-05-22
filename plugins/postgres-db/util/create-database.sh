@@ -19,10 +19,10 @@
     -v "dbuserapp=${database_name}_app") && \
 
   echo
-  echo "- import ./database/init.sql"
+  echo "- import ./${taito_target:-database}/init.sql"
   (${taito_setv:?}; psql -h "${database_host}" \
     -p "${database_port}" -d "${database_name}" \
-     -U "${database_username}" < ./database/init.sql) && \
+     -U "${database_username}" < "./${taito_target:-database}/init.sql") && \
 
   . "${taito_plugin_path}/util/postgres-username-password.sh" && \
 
