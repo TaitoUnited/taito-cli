@@ -1,0 +1,7 @@
+TERRAFORM
+
+  terraform:ENV [ARGS]
+    Runs a terraform command in ./scripts/terraform directory. Remember to
+    define correct state path relative to the terraform directory. Examples:
+      taito terraform:dev plan
+      taito terraform:dev -state=./dev/terraform.tfstate apply

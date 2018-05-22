@@ -265,6 +265,7 @@ fi
 eval "docker run ${docker_it} \
   -v \"${HOME}/.taito:/root/.taito\" \
   -v \"${HOME}/.ssh:/root/.ssh\" \
+  -v \"${HOME}/.terraform.d:/root/.terraform.d\" \
   -v \"$(pwd):/project\" \
   -w /project \
   ${proxy_flags} \
