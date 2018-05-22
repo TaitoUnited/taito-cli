@@ -36,7 +36,7 @@ docker_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/-e /" \
 
 # Determine pod
 # shellcheck disable=SC1090
-. "${taito_cli_path}/plugins/docker/util/determine-pod.sh" "${dir}" && \
+. "${taito_cli_path}/plugins/docker-compose/util/determine-pod.sh" "${dir}" && \
 
 # Determine command to be run on test phase
 compose_pre_cmd=""
