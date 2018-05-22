@@ -70,6 +70,9 @@ else
     echo "- Image ${image_tag} already exists. Pulling the existing image."
     # We have pull the image so that it exists at the end
     (${taito_setv:?}; docker pull "${image}")
+    # We have to also pull the builder image for integration tests
+    (${taito_setv:?}; docker pull "${image_builder}")
+    (${taito_setv:?}; docker image tag "${image_builder}" "${image_tester}")
   fi && \
 
   if [[ "${taito_mode:-}" == "ci" ]]; then
