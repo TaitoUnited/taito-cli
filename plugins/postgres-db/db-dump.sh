@@ -6,7 +6,7 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-if [[ "${database_type:-}" == "postgres" ]] || [[ -z "${database_type}" ]]; then
+if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   dump_file="${1:?}"
   username=""
 

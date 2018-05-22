@@ -6,7 +6,7 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-if [[ "${database_type:-}" == "postgres" ]] || [[ -z "${database_type}" ]]; then
+if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   username="${1}"
   echo "host: ${database_host} port:${database_port}"
   "${taito_plugin_path}/util/psql.sh" "${username}"

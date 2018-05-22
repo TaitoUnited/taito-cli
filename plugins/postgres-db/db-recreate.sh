@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-if [[ "${database_type:-}" == "postgres" ]] || [[ -z "${database_type}" ]]; then
+if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   # Create a subshell to contain password
   (
     export database_username=postgres

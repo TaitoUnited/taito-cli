@@ -3,18 +3,26 @@
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
-echo "TODO execute for all postgres databases"
-if [[ "${database_type:-}" == "postgres" ]] || [[ -z "${database_type}" ]]; then
-  . "${taito_plugin_path}/util/postgres-username-password.sh"
+(
+  databases=("${taito_target:-$taito_databases}")
+  for database in ${databases[@]}
+  do
+    export taito_target="${database}"
+    . "${taito_util_path}/read-database-config.sh" "${database}" && \
 
-  if [[ -n ${database_build_password:-} ]] && \
-     [[ -n ${database_app_password:-} ]]; then
-    echo "Creating users / altering passwords for ${taito_env}"
+    if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
+      . "${taito_plugin_path}/util/postgres-username-password.sh"
 
-    export database_username=postgres
-    "${taito_plugin_path}/util/create-users.sh"
-  fi
-fi && \
+      if [[ -n ${database_build_password:-} ]] && \
+         [[ -n ${database_app_password:-} ]]; then
+        echo "Creating users / altering passwords for ${taito_env}"
+
+        export database_username=postgres
+        "${taito_plugin_path}/util/create-users.sh"
+      fi
+    fi
+  done
+) && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

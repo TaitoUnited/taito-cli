@@ -6,7 +6,7 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-if [[ "${database_type:-}" == "postgres" ]] || [[ -z "${database_type}" ]]; then
+if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   dest="${taito_env}"
   source="${1:?Source not given}"
   username="${2:-postgres}"

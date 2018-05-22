@@ -290,9 +290,6 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     # Kubectl plugin
     export kubectl_name="common-kubernetes"
 
-    # Sqitch plugin
-    export sqitch_engine="pg" # pq/mysql/oracle/sqlite/vertica/firebird
-
     # Template plugin
     export template_name="webapp-template"
     export template_source_git="git@github.com:TaitoUnited"

@@ -211,6 +211,7 @@ taito_run_fg="${log_file_fg/${HOME}/\/root}"
 
 # Link database container if env is local and the command uses database
 # TODO: this is an ugly quick hack
+link_flags=""
 if [[ "${taito_env}" == "local" ]] && \
    [[ "${command}" != "db-add"* ]] && \
    [[ " ${taito_plugins} " == *"-db "* ]] && \
@@ -220,8 +221,14 @@ if [[ "${taito_env}" == "local" ]] && \
      [[ "${command}" == "db-"* ]] || \
      [[ "${command}" == "init"* ]]
    ); then
-  echo "# Linking local db: ${taito_project}-database:${taito_project}-database"
-  link_flags="--link ${taito_project}-database:${taito_project}-database"
+  databases=("${taito_databases}")
+  for database in ${databases[@]}
+  do
+    echo "# Linking local db: \
+      ${taito_project}-${database}:${taito_project}-${database}"
+    link_flags="${link_flags} --link \
+      ${taito_project}-${database}:${taito_project}-${database}"
+  done
 fi
 
 # Prepare docker options

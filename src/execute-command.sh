@@ -152,7 +152,7 @@ fi
 . "${taito_util_path}/read-taito-config.sh" "${taito_env}" && \
 
 # Select database configs using taito_target
-. "${taito_util_path}/read-database-config.sh" "${taito_env}" && \
+. "${taito_util_path}/read-database-config.sh" && \
 
 # Read taito-secrets.sh in case of CI/CD
 if [[ -f ${taito_project_path}/taito-secrets.sh ]]; then

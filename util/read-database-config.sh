@@ -3,7 +3,8 @@
 : "${taito_project_path:?}"
 : "${taito_vout:?}"
 
-target="${taito_target:-database}"
+target="${1:-$taito_target}"
+target="${target:-database}"
 
 echo "Determining database settings by ${target}" > "${taito_vout}"
 
@@ -32,4 +33,12 @@ if [[ -n "${target}" ]] && [[ -n "${!env_var_name}" ]]; then
   env_var_name="db_${target}_port"
   export database_port="${!env_var_name}"
   echo "- database_port: ${database_port}" > "${taito_vout}"
+
+  env_var_name="db_${target}_username"
+  export database_username="${!env_var_name}"
+  echo "- database_username: ${database_port}" > "${taito_vout}"
+
+  env_var_name="db_${target}_password"
+  export database_password="${!env_var_name}"
+  echo "- database_password: ${database_port}" > "${taito_vout}"
 fi

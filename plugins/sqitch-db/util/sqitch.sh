@@ -10,11 +10,10 @@
 command="${1}"
 options="${@:2}"
 
-sqitch_engine="${sqitch_engine:-pg}"
+sqitch_engine="${database_type:-pg}"
 
 if [[ ! -f "./${taito_target:-database}/sqitch.conf" ]]; then
-  echo "File './${taito_target:-database}/sqitch.conf' does not exist."
-  echo "Skipping sqitch..."
+  echo "SKIP: File './${taito_target:-database}/sqitch.conf' does not exist."
   exit
 fi
 
