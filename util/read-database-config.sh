@@ -34,11 +34,15 @@ if [[ -n "${target}" ]] && [[ -n "${!env_var_name}" ]]; then
   export database_port="${!env_var_name}"
   echo "- database_port: ${database_port}" > "${taito_vout}"
 
+  env_var_name="db_${target}_external_port"
+  export database_external_port="${!env_var_name}"
+  echo "- database_external_port: ${database_external_port}" > "${taito_vout}"
+
   env_var_name="db_${target}_username"
   export database_username="${!env_var_name}"
-  echo "- database_username: ${database_port}" > "${taito_vout}"
+  echo "- database_username: ${database_username}" > "${taito_vout}"
 
   env_var_name="db_${target}_password"
   export database_password="${!env_var_name}"
-  echo "- database_password: ${database_port}" > "${taito_vout}"
+  echo "- database_password: ${database_password}" > "${taito_vout}"
 fi

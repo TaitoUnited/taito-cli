@@ -27,9 +27,10 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito test:server                        # Run all integration and e2e tests of server container
     taito test:server travel car             # Run the 'car' test of 'travel' test suite on server container
     taito db connect                         # Access default database from command line
-    taito db connect:report                  # Access report database from command line
+    taito db connect:reportdb                # Access report database from command line
     taito db proxy                           # Show db connection details for default database. Start a proxy if required.
-    taito db add: role_enum                  # Add a database migration
+    taito db add: role_enum                  # Add a database migration for default database
+    taito db add:reportdb role_enum          # Add a database migration for the report database
     taito db import: ./file.sql              # Import a file to database
     taito shell:server                       # Start a shell inside a container named 'server'
     taito exec:server echo foo               # Execute a command inside the server container
@@ -52,14 +53,14 @@ All taito-cli commands target the local development environment by default. If y
     taito open storage:dev                   # Open storage bucket on browser
     taito init:dev --clean                   # Reinitialize database and storage
     taito db connect:dev                     # Access default database on command line
-    taito db connect:report:dev              # Access report database on command line
+    taito db connect:reportdb:dev            # Access report database on command line
     taito db proxy:dev                       # Start a proxy for accessing default remote database with a GUI tool
     taito db import:dev ./database/file.sql  # Import a file to database
 
 Some database operation examples targetting a test environment:
 
     taito db connect:test                    # Access default database on command line
-    taito db connect:report:test             # Access report database on command line
+    taito db connect:reportdb:test           # Access report database on command line
     taito db proxy:test                      # Start a database proxy for GUI tool access
     taito db import:test ./database/file.sql # Import a file to database
     taito db dump:test ./tmp/dump.sql        # Dump database to a file
