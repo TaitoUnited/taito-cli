@@ -492,12 +492,10 @@ PROJECT: DATABASE OPERATIONS
     `taito db revert[:ENV] CHANGE`.
 
   db revert[:TARGET][:ENV] [CHANGE]
-    Revert database changes. DB proxy connection and secrets are
-    handled automatically. Revert the previous migration batch by running
-    `taito db revert[:ENV]`. If you would like to revert to a specific revision
+    Revert all database changes. DB proxy connection and secrets are
+    handled automatically. If you would like to revert to a specific revision
     instead, view the change log first with `taito db log[:ENV]` and then run
-    `taito db revert[:ENV] CHANGE`. TODO currently always requires CHANGE
-    param.
+    `taito db revert[:ENV] CHANGE`.
 
   db recreate[:TARGET][:ENV]
     Recreates the database. Thus on next deployment, all database migrations
