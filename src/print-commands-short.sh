@@ -133,8 +133,8 @@ if [[ ${taito_project:-} ]]; then
     echo "db rebase${param} CHANGE"
     echo "db revert${param} CHANGE"
     echo "db diff${param} SOURCE_ENV"
-    echo "db copy${param} SOURCE_ENV"
-    echo "db copyquick${param} SOURCE_ENV"
+    echo "db copy to${param} SOURCE_ENV"
+    echo "db copyquick to${param} SOURCE_ENV"
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then

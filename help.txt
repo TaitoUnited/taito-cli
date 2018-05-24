@@ -73,8 +73,8 @@ QUICK EXAMPLES
     db rebase:dev b91b7b2    # Rebase a database (db revert + db deploy)
     db revert:dev b91b7b2    # Revert a database
     db diff:dev test         # Compare db schemas of dev and test environments
-    db copy:dev test         # Copy database from test to dev
-    db copyquick:dev test    # Copy database from test to dev (WARNING!!)
+    db copy to:dev test      # Copy test database to dev
+    db copyquick to:dev test # Copy test database to dev (WARNING!!)
 
   VERSION CONTROL
     vc env list              # List all environment branches
@@ -502,13 +502,13 @@ PROJECT: DATABASE OPERATIONS
     will be run from the beginning. DB proxy connection and secrets are handled
     automatically.
 
-  db copy[:TARGET]:ENV SOURCE_ENV
+  db copy to[:TARGET]:ENV SOURCE_ENV
     Copy database from one environment to another. For example
     `db copy:staging prod` or `db copy:local dev`. If you do not have enough
     rights, ask devops personnel to do this for you. DB proxy connection and
     secrets are handled automatically.
 
-  db copyquick[:TARGET]:ENV SOURCE_ENV
+  db copyquick to[:TARGET]:ENV SOURCE_ENV
     Copy database quickly from one environent to another. DB proxy connection
     and secrets are handled automatically. NOTE: The command requires
     that both databases are located on the same database cluster. The command

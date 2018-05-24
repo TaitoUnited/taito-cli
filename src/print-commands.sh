@@ -202,9 +202,9 @@ if [[ ${taito_project:-} ]]; then
       # Revert ${env} environment database changes"
     echo "db diff${param} SOURCE_ENV \
       # Compare (diff) source env database schema with ${env} environment"
-    echo "db copy${param} SOURCE_ENV \
+    echo "db copy to${param} SOURCE_ENV \
       # Copy database from source env to ${env} environment"
-    echo "db copyquick${param} SOURCE_ENV \
+    echo "db copyquick to${param} SOURCE_ENV \
       # Copy database quickly from source env to ${env} environment (WARNING!!)"
 
     # Local-only commands
