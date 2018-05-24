@@ -8,8 +8,6 @@ task_install_dev_exists="$(npm run | grep 'install-dev$')"
 
 if [[ "${switches}" == *" --clean "* ]]; then
   "${taito_plugin_path}/util/clean.sh"
-  # echo "Cleaning npm cache" && \
-  # (${taito_setv:?}; su taito -s /bin/sh -c 'npm cache clean')
 fi && \
 
 # NOTE: Changed 'npm install' to run on host because of linux permission issues.
