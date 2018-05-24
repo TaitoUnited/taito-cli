@@ -40,9 +40,18 @@ if [[ -f "scripts/helm-${taito_env}.yaml" ]]; then
 fi
 
 # Determine helm chart path
-chart_path="./scripts/helm"
-if [[ -d "./scripts/${taito_project}" ]]; then
+if [[ -n "${helm_chart:-}" ]]; then
+  chart_path="${helm_chart}"
+elif [[ -d "./scripts/${taito_project}" ]]; then
   chart_path="./scripts/${taito_project}"
+else
+  chart_path="./scripts/helm"
+fi
+
+# Set version
+version_option=""
+if [[ -n "${helm_chart_version:-}" ]]; then
+  version_option="--version ${helm_chart_version}"
 fi
 
 echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
@@ -63,5 +72,6 @@ echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
     --set build.version="${version}" \
     --set build.commit="TODO" \
     -f scripts/helm.yaml ${override_file} \
+    ${version_option} \
     "${taito_project}-${taito_env}" "${chart_path}"
 )
