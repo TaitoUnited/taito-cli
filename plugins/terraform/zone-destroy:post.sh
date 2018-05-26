@@ -2,13 +2,15 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
+: "${taito_provider:?}"
 
 # shellcheck disable=SC1090
 . "${taito_plugin_path}/util/env.sh" && \
 (
-  cd "./scripts/terraform" && \
-  terraform init -backend-config="./common/backend.tf" && \
-  terraform apply -state="./${taito_env}/terraform.tfstate"
+  cd "./scripts/terraform/${taito_provider}" && \
+  terraform init && \
+  ./import_state.sh && \
+  terraform destroy
 ) && \
 
 # Call next command on command chain
