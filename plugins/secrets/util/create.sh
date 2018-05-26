@@ -18,12 +18,20 @@ do
         exit 1
       fi
     elif [[ "${secret_method}" == "file" ]]; then
-      echo "File path for ${secret_name}:"
+      echo "Secret ${secret_name}"
+      echo
+      if [[ "${secret_name}" == *"gcloud"* ]]; then
+        echo "HINT: You most likely can download the secret key file from the following url:"
+        echo "https://console.cloud.google.com/iam-admin/serviceaccounts?project=${gcloud_resource_project_id}"
+      fi
+      echo
+      echo "File path for ${secret_name} relative to project root folder"
+      echo "(for example './secret.json'):"
       read -r secret_value
       echo
-      echo "REMEBER TO DELETE THE FILE AFTERWARDS!!"
-      echo
-      echo sleep 1
+      echo "REMEMBER TO DELETE THE FILE FROM LOCAL DISK AFTER THE EXECUTION OF" echo "THIS TAITO COMMAND HAS FINISHED! AND NEVER COMMIT IT TO GIT!"
+      echo "PRESS ENTER TO CONTINUE"
+      read -r
     elif [[ "${secret_method}" == "random" ]]; then
       # TODO better tool for this?
       secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
