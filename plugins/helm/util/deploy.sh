@@ -64,6 +64,12 @@ fi && \
 
 # Deploy charts defined in helm_charts environment variable
 
+if [[ -z "${helm_charts:-}" ]] && [[ ! -d "${HOME}/.helm" ]]; then
+  # Loading charts from external helm repositories but helm has not been
+  # initialized --> initalize it
+  helm init --client-only
+fi
+
 charts=("${helm_charts}")
 for chart in ${charts[@]}
 do
