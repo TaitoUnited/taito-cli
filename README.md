@@ -157,14 +157,19 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
       links-global template-global"
 
     # template plugin default settings
+    # NOTE: These example settings do not work!! Replace them with the
+    # settings used by your organization.
     export template_default_taito_image="taitounited/taito-cli:latest"
     export template_default_organization="myorganization"
     export template_default_domain="devdomain.com"
     export template_default_zone="my-zone"
     export template_default_zone_prod="my-prod-zone"
     export template_default_provider="gcloud"
+    export template_default_provider_billing_account="123456-123456-123456"
+    export template_default_provider_org_id="123456789"
     export template_default_provider_region="europe-west1"
     export template_default_provider_zone="europe-west1-b"
+    export template_default_provider_org_id_prod="123456789"
     export template_default_provider_region_prod="europe-west2"
     export template_default_provider_zone_prod="europe-west2-a"
     export template_default_registry="eu.gcr.io"
@@ -222,14 +227,19 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     export taito_global_plugins="template-global myplugin-global anotherplugin-global"
 
     # template plugin default settings
+    # NOTE: These example settings do not work!! Replace them with the
+    # settings used by your organization.
     export template_default_taito_image="taitounited/taito-cli:latest"
     export template_default_organization="myorganization"
     export template_default_domain="devdomain.com"
     export template_default_zone="my-zone"
     export template_default_zone_prod="my-prod-zone"
     export template_default_provider="gcloud"
+    export template_default_provider_billing_account="123456-123456-123456"
+    export template_default_provider_org_id="123456789"
     export template_default_provider_region="europe-west1"
     export template_default_provider_zone="europe-west1-b"
+    export template_default_provider_org_id_prod="123456789"
     export template_default_provider_region_prod="europe-west2"
     export template_default_provider_zone_prod="europe-west2-a"
     export template_default_registry="eu.gcr.io"
