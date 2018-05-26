@@ -76,6 +76,14 @@ QUICK EXAMPLES
     db copy to:dev test      # Copy test database to dev
     db copyquick to:dev test # Copy test database to dev (WARNING!!)
 
+  STORAGE OPERATIONS
+    storage mount:dev              # Mount dev storage bucket to ./mnt/BUCKET
+    storage mount:dev ./mymount    # Mount dev storage bucket to ./mymount
+    storage copy from:dev ./data   # Copy files from dev bucket to ./data
+    storage copy to:dev ./data     # Copy files from ./data to dev bucket
+    storage sync from:dev ./data   # Sync files from dev bucket to ./data
+    storage sync to:dev ./data     # Sync files from ./data to dev bucket
+
   VERSION CONTROL
     vc env list              # List all environment branches
     vc env: dev              # Switch to the dev environment branch
@@ -514,6 +522,23 @@ PROJECT: DATABASE OPERATIONS
     that both databases are located on the same database cluster. The command
     might also do some quirky things to make copying quicker so it might not
     be safe to use it with a live production database.
+
+PROJECT: STORAGE OPERATIONS
+
+  storage mount[:TARGET]:ENV [MOUNT_PATH]
+    Mount storage bucket to MOUNT_PATH or ./mnt/BUCKET
+
+  storage copy from[:TARGET]:ENV DESTINATION_DIR
+    Copy files from storage bucket to DESTINATION_DIR
+
+  storage copy to[:TARGET]:ENV SOURCE_DIR
+    Copy files from SOURCE_DIR to storage bucket
+
+  storage sync from[:TARGET]:ENV DESTINATION_DIR
+    Sync files from storage bucket to DESTINATION_DIR.
+
+  storage sync to[:TARGET]:ENV SOURCE_DIR
+    Sync files from SOURCE_DIR to storage bucket
 
 PROJECT: MANUAL DEPLOYMENT OPERATIONS
 

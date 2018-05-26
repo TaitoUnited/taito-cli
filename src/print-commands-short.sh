@@ -122,19 +122,26 @@ if [[ ${taito_project:-} ]]; then
     echo "secrets${suffix}"
     echo "status${suffix}"
 
-    echo "db proxy${suffix}"
-    echo "db connect${suffix}"
-    echo "db import${param}"
-    echo "db dump${suffix}"
-    echo "db log${suffix}"
-    echo "db recreate${suffix}"
-    echo "db deploy${suffix}"
-    echo "db rebase${suffix}"
-    echo "db rebase${param} CHANGE"
-    echo "db revert${param} CHANGE"
-    echo "db diff${param} SOURCE_ENV"
-    echo "db copy to${param} SOURCE_ENV"
-    echo "db copyquick to${param} SOURCE_ENV"
+    for database in ${taito_databases:-}
+    do
+      db=""
+      if [[ "${database}" != "database" ]]; then
+        db=":${database}"
+      fi
+      echo "db proxy${db}${suffix}"
+      echo "db connect${db}${suffix}"
+      echo "db import${db}${param}"
+      echo "db dump${db}${suffix}"
+      echo "db log${db}${suffix}"
+      echo "db recreate${db}${suffix}"
+      echo "db deploy${db}${suffix}"
+      echo "db rebase${db}${suffix}"
+      echo "db rebase${db}${param} CHANGE"
+      echo "db revert${db}${param} CHANGE"
+      echo "db diff${db}${param} SOURCE_ENV"
+      echo "db copy to${db}${param} SOURCE_ENV"
+      echo "db copyquick to${db}${param} SOURCE_ENV"
+    done
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then
@@ -172,6 +179,20 @@ if [[ ${taito_project:-} ]]; then
       echo "deployment deploy${param} IMAGE_TAG"
       echo "deployment revision${suffix}"
       echo "deployment revert${param} REVISION"
+
+      for storage in ${taito_storages:-}
+      do
+        st=""
+        if [[ "${storage}" != "${taito_storages}" ]]; then
+          st=":${storage}"
+        fi
+        echo "storage mount${st}${suffix}"
+        echo "storage mount${st}${param} MOUNT_PATH"
+        echo "storage copy from${st}${param} DEST_DIR"
+        echo "storage copy to${st}${param} SOURCE_DIR"
+        echo "storage sync from${st}${param} DEST_DIR"
+        echo "storage sync to${st}${param} SOURCE_DIR"
+      done
     fi
 
     # Stack component commands

@@ -252,6 +252,12 @@ elif [[ "${gcloud_sql_proxy_port:-}" != "" ]]; then
     -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"
 fi
 
+# gcsfuse mounting requires privileged mode
+misc_flags=""
+if [[ "${command}" == "storage"* ]]; then
+  misc_flags="--privileged"
+fi
+
 # Forward taito docker container output to 'less' in case the command is `help`,
 # `trouble` or `readme`. We need to also filter some control characters for
 # a cleaner output.
@@ -281,6 +287,7 @@ eval "docker run ${docker_it} \
   ${proxy_flags} \
   ${extension_mount_flags} \
   ${link_flags} \
+  ${misc_flags} \
   -e taito_enabled_extensions=\"${extension_paths}\" \
   -e taito_run=${taito_run} \
   -e taito_run_fg=${taito_run_fg} \

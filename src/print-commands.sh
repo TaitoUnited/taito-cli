@@ -179,33 +179,40 @@ if [[ ${taito_project:-} ]]; then
     echo "status${suffix} \
       # Show application status of ${env} environment"
 
-    echo "db proxy${suffix} \
-      # Show db conn details for ${env} environment and start a proxy if required"
-    echo "db connect${suffix} \
-      &focus \
-      # Open database client for ${env} environment from command line"
-    echo "db import${param} FILE \
-      # Import a file to database on ${env} environment"
-    echo "db dump${suffix} \
-      # Dump database of ${env} environment to a file"
-    echo "db log${suffix} \
-      # View change log of ${env} environment database"
-    echo "db recreate${suffix} \
-      # Recreates the ${env} environment database"
-    echo "db deploy${suffix} \
-      # Deploy changes to ${env} environment database"
-    echo "db rebase${suffix} \
-      # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
-    echo "db rebase${param} CHANGE \
-      # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
-    echo "db revert${param} CHANGE \
-      # Revert ${env} environment database changes"
-    echo "db diff${param} SOURCE_ENV \
-      # Compare (diff) source env database schema with ${env} environment"
-    echo "db copy to${param} SOURCE_ENV \
-      # Copy database from source env to ${env} environment"
-    echo "db copyquick to${param} SOURCE_ENV \
-      # Copy database quickly from source env to ${env} environment (WARNING!!)"
+    for database in ${taito_databases:-}
+    do
+      db=""
+      if [[ "${database}" != "database" ]]; then
+        db=":${database}"
+      fi
+      echo "db proxy${db}${suffix} \
+        # Show db conn details for ${env} environment and start a proxy if required"
+      echo "db connect${db}${suffix} \
+        &focus \
+        # Open database client for ${env} environment from command line"
+      echo "db import${db}${param} FILE \
+        # Import a file to database on ${env} environment"
+      echo "db dump${db}${suffix} \
+        # Dump database of ${env} environment to a file"
+      echo "db log${db}${suffix} \
+        # View change log of ${env} environment database"
+      echo "db recreate${db}${suffix} \
+        # Recreates the ${env} environment database"
+      echo "db deploy${db}${suffix} \
+        # Deploy changes to ${env} environment database"
+      echo "db rebase${db}${suffix} \
+        # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
+      echo "db rebase${db}${param} CHANGE \
+        # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
+      echo "db revert${db}${param} CHANGE \
+        # Revert ${env} environment database changes"
+      echo "db diff${db}${param} SOURCE_ENV \
+        # Compare (diff) source env database schema with ${env} environment"
+      echo "db copy to${db}${param} SOURCE_ENV \
+        # Copy database from source env to ${env} environment"
+      echo "db copyquick to${db}${param} SOURCE_ENV \
+        # Copy database quickly from source env to ${env} environment (WARNING!!)"
+    done
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then
@@ -267,6 +274,26 @@ if [[ ${taito_project:-} ]]; then
         # Show current revision of ${env} environment"
       echo "deployment revert${param} REVISION \
         # Revert application on ${env} environment to an another revision"
+
+      for storage in ${taito_storages:-}
+      do
+        st=""
+        if [[ "${storage}" != "${taito_storages}" ]]; then
+          st=":${storage}"
+        fi
+        echo "storage mount${st}${suffix} \
+          # Mount dev storage bucket to ./mnt/BUCKET"
+        echo "storage mount${st}${param} MOUNT_PATH \
+          # Mount dev storage bucket to MOUNT_PATH"
+        echo "storage copy from${st}${param} DEST_DIR \
+          # Copy files from dev bucket to DEST_DIR "
+        echo "storage copy to${st}${param} SOURCE_DIR \
+          # Copy files from SOURCE_DIR to dev bucket"
+        echo "storage sync from${st}${param} DEST_DIR \
+          # Sync files from dev bucket to DEST_DIR"
+        echo "storage sync to${st}${param} SOURCE_DIR \
+          # Sync files from SOURCE_DIR to dev bucket"
+      done
     fi
 
     # Stack component commands

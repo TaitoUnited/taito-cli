@@ -74,6 +74,15 @@ Some database operation examples targetting a test environment:
     taito db copy to:dev test                # Copy test database to dev
     taito db copyquick to:dev test           # Copy test database to dev (both databases in the same cluster, users may be blocked)
 
+Storage operation examples:
+
+    storage mount:dev                        # Mount default dev storage bucket to ./mnt/BUCKET
+    storage mount:dev ./mymount              # Mount default dev storage bucket to ./mymount
+    storage copy from:dev ./data             # Copy files from default dev bucket to ./data
+    storage copy to:dev ./data               # Copy files from ./data to default dev bucket
+    storage sync from:dev ./data             # Sync files from default dev bucket to ./data
+    storage sync to:dev ./data               # Sync files from ./data to default dev bucket
+
 With taito-cli you can take an opinionated view on version control. Some examples of predefined version control commands:
 
     taito vc env list                        # List all environment branches
