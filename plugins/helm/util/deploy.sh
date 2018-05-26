@@ -68,9 +68,9 @@ if [[ -n "${helm_charts:-}" ]] && [[ ! -d "${HOME}/.helm" ]]; then
   # Loading charts from external helm repositories but helm has not been
   # initialized --> initalize it
   helm init --client-only
-fi
+fi && \
 
-charts=("${helm_charts}")
+charts=("${helm_charts}")  && \
 for chart in ${charts[@]}
 do
   echo "- Deploying chart ${chart} for ${taito_project}-${taito_env} using Helm"
@@ -100,4 +100,7 @@ do
       ${helm_deploy_options:-} \
       "${chart_name}" "${chart}"
   )
+  if [[ $? -ne 0 ]]; then
+    exit $?
+  fi
 done
