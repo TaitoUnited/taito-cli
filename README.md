@@ -161,13 +161,16 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     ```
     #!/bin/bash
 
+    # NOTE: These are example settings! Replace them with the settings
+    # defined by your organization. If your organization uses also some
+    # additional private plugins, remember to configure also them in your
+    # personal configuration file.
+
     export taito_image="taitounited/taito-cli:latest"
     export taito_global_plugins="docker-global fun-global gcloud-global \
       links-global template-global"
 
     # template plugin default settings
-    # NOTE: These example settings do not work!! Replace them with the
-    # settings used by your organization.
     export template_default_taito_image="taitounited/taito-cli:latest"
     export template_default_organization="myorganization"
     export template_default_domain="devdomain.com"
