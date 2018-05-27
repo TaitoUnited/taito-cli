@@ -22,7 +22,7 @@ else
   echo "Docker will remove images and volumes after taito-cli has exited"
 
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
-    "docker-compose down --rmi 'all' --volumes --remove-orphans"
+    "docker-compose down --rmi 'local' --volumes --remove-orphans"
 fi && \
 
 # Call next command on command chain

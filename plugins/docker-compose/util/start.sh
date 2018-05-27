@@ -19,7 +19,8 @@ fi
 
 flags=""
 if [[ "${switches}" == *"--clean"* ]]; then
-  flags="${flags} --force-recreate --build --remove-orphans"
+  flags="${flags} --force-recreate --build --remove-orphans \
+    --renew-anon-volumes"
 fi
 if [[ "${switches}" == *"-b"* ]]; then
   flags="${flags} --detach"
