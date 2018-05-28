@@ -18,4 +18,5 @@ export link_urls="\
   * project=https://github.com/${taito_organization}/${taito_repo_name}/projects \
   * builds=https://hub.docker.com/r/taitounited/taito-cli/builds/ \
   * artifacts=https://hub.docker.com/r/taitounited/taito-cli/tags/ \
+  * git=https://github.com/TaitoUnited/taito-cli GitHub repository \
   "

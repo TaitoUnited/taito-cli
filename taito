@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
+thome="${TAITO_HOME:-$HOME}"
+
 # Resolve paths
 # NOTE: duplicate with ./taito_impl.sh (taito_cli_path must be resolved before
 # other scripts can be called)
@@ -139,7 +141,7 @@ do
     repo_url=${extension%.git*}.git # git@github.com:xxx/webapp-template.git
     repo_name=${temp%.git*} # webapp-template
     repo_dir=${temp#*.git} # /my-extension
-    repo_local_path="${HOME}/.taito/${repo_name}" # ~/.taito/webapp-template
+    repo_local_path="${thome}/.taito/${repo_name}" # ~/.taito/webapp-template
     if [[ -d "${repo_local_path}" ]]; then
       # Pull the latest version
       if [[ ${upgrade} == true ]]; then
@@ -147,7 +149,7 @@ do
         (cd "${repo_local_path}"; git pull &> /dev/null)
       fi
     else
-      (cd ~/.taito; git clone "${repo_url}"; cd "${repo_name}"; git checkout)
+      (cd ${thome}/.taito; git clone "${repo_url}"; cd "${repo_name}"; git checkout)
     fi
     extension_paths="${extension_paths} /root/.taito/${repo_name}${repo_dir}"
   elif [[ ${extension} == *"gz" ]]; then
@@ -155,15 +157,15 @@ do
     # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
     folder_name=${extension%=*}
     url=${extension##*=}
-    if [[ ! -d "${HOME}/.taito/${folder_name}" ]]; then
+    if [[ ! -d "${thome}/.taito/${folder_name}" ]]; then
       echo "Downloading extension ${folder_name} from ${url}"
-      ( curl -sL "${url}" | tar zxv -C ~/.taito )
+      ( curl -sL "${url}" | tar zxv -C ${thome}/.taito )
     fi
     extension_paths="${extension_paths} /root/.taito/${repo_name}"
   else
     # Local url
-    docker_path="${extension/\~//root}"
-    local_path="${extension/\~/${HOME}}"
+    docker_path="${extension/\${thome}//root}"
+    local_path="${extension/\${thome}/${thome}}"
     extension_paths="${extension_paths} ${docker_path}"
     extension_mount_flags="${extension_mount_flags} \
       -v ${local_path}:${docker_path}"
@@ -187,16 +189,16 @@ if [[ ${admin} == true ]]; then
 fi
 
 # Prepare execution log files
-mkdir -p "${HOME}/.taito/tmp" &> /dev/null
-log_file=$(mktemp "${HOME}/.taito/tmp/taito-cli.XXXXXX")
-log_file_fg=$(mktemp "${HOME}/.taito/tmp/taito-cli.XXXXXX")
+mkdir -p "${thome}/.taito/tmp" &> /dev/null
+log_file=$(mktemp "${thome}/.taito/tmp/taito-cli.XXXXXX")
+log_file_fg=$(mktemp "${thome}/.taito/tmp/taito-cli.XXXXXX")
 touch "${log_file}"
 touch "${log_file_fg}"
 
 # Set some variables to be used later
 taito_host_uname="$(uname)"
-taito_run="${log_file/${HOME}/\/root}"
-taito_run_fg="${log_file_fg/${HOME}/\/root}"
+taito_run="${log_file/${thome}/\/root}"
+taito_run_fg="${log_file_fg/${thome}/\/root}"
 
 # Start a background process that will run commands on host in the
 # background while the container is still running on foregound.
@@ -279,9 +281,9 @@ fi
 # TODO do not pass taito_admin_key as command line argument
 # shellcheck disable=SC2086
 eval "docker run ${docker_it} \
-  -v \"${HOME}/.taito:/root/.taito\" \
-  -v \"${HOME}/.ssh:/root/.ssh\" \
-  -v \"${HOME}/.terraform.d:/root/.terraform.d\" \
+  -v \"${thome}/.taito:/root/.taito\" \
+  -v \"${thome}/.ssh:/root/.ssh\" \
+  -v \"${thome}/.terraform.d:/root/.terraform.d\" \
   -v \"$(pwd):/project\" \
   -w /project \
   ${proxy_flags} \
