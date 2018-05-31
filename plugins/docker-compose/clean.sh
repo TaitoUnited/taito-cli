@@ -11,8 +11,8 @@ if [[ ${taito_target:-} ]]; then
   # Leave only directory name
   project_name="${project_name##*/}"
   # Remove special characters
-  project_name="${project_name//-/}"
-  project_name="${project_name//_/}"
+  # project_name="${project_name//-/}"
+  # project_name="${project_name//_/}"
 
   echo "NOTE: You must run 'taito stop' first or else clean fails"
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
