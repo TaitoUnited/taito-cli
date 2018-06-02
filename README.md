@@ -151,7 +151,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
 ## Installation
 
-### Linux / macOS
+> For Windows: Taito-cli requires [cygwin](https://www.cygwin.com/) with the procps-ng package installed (`apt-cyg install procps-ng`). Configure cygwin so that you can call `docker` and `docker-compose` commands from cygwin shell. If you would rather use [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) instead of cygwin, see the next chapter.
 
 1. Clone this repository.
 
@@ -199,9 +199,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     * Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
     * Install taito-cli plugin for your editor: [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
 
-### Windows
-
-> Running taito-cli requires [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about). This will probably change in the future.
+## Installation for Windows Subsystem for Linux
 
 > Docker cannot use the Linux file system effectively. Therefore all your software projects and taito-cli settings should be located on the Windows file system.
 

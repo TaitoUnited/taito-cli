@@ -145,7 +145,10 @@ do
       # Pull the latest version
       if [[ ${upgrade} == true ]]; then
         echo "Pulling ${repo_local_path}..."
-        (cd "${repo_local_path}"; git pull &> /dev/null)
+        (
+          cd "${repo_local_path}"
+          git pull &> /dev/null
+        )
       fi
     else
       (
@@ -281,8 +284,10 @@ if [[ " ${options[*]} " == *" -h "* ]] || \
     tr '\275\276' '\r\n' | tail -n +3 | less"
 fi
 
+uname_sr="$(uname -sr)"
 # For windows we need to make sure that all mounted directories exist
-if [[ $(uname -sr) == *"Microsoft"* ]]; then
+if [[ "${uname_sr}" == *"Microsoft"* ]] || \
+   [[ "${uname_sr}" == *"CYGWIN"* ]]; then
   mkdir -p "${taito_home_path}/.taito"
   mkdir -p "${taito_home_path}/.ssh"
   mkdir -p "${taito_home_path}/.terraform.d"
