@@ -1,5 +1,24 @@
 # Taito-cli
 
+Table of contents:
+
+* [Introduction](#introduction)
+* [Installation](#installation)
+* [Upgrading](#upgrading)
+* [Troubleshooting](#troubleshooting)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Secret management](#secret-management)
+* [Continuous integration and delivery](#continuous-integration-and-delivery)
+* [Infrastructure management](#infrastructure-management)
+* [ChatOps](#chatops)
+* [Custom commands](#custom-commands)
+* [Custom plugins](#custom-plugins)
+* [Taito-cli development](#taito-cli-development)
+* [License](#license)
+
+## Introduction
+
 > Taito is a Finnish word meaning "ability" or "skill".
 
 Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands that can be used in any project no matter the technology or infrastructure. This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
@@ -143,17 +162,19 @@ Password sharing:
 
 See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all predefined taito-cli commands.
 
-## Prerequisites
+## Installation
+
+### Prerequisites
 
 * Docker
 * Git
 * Bash
 
-## Installation
+### Linux / macOS / Windows with cygwin
 
-> For Windows: Taito-cli requires [cygwin](https://www.cygwin.com/) with the procps-ng package installed (`apt-cyg install procps-ng`). Configure cygwin so that you can call `docker` and `docker-compose` commands from cygwin shell. If you would rather use [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) instead of cygwin, see the next chapter.
+> For Windows: Taito-cli requires [cygwin](https://www.cygwin.com/) with the procps-ng package installed: `apt-cyg install procps-ng`. Configure cygwin in that way you can call `docker` and `docker-compose` commands from cygwin shell. If you would rather use [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) instead of [cygwin](https://www.cygwin.com/), see the next chapter.
 
-1. Clone this repository.
+1. Clone this git repository.
 
 2. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
 
@@ -161,10 +182,8 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     ```
     #!/bin/bash
 
-    # NOTE: These are example settings! Replace them with the settings
-    # defined by your organization. If your organization uses also some
-    # additional private plugins, remember to configure also them in your
-    # personal configuration file.
+    # NOTE: These are example settings! Replace them with your personal
+    # settings or with the settings defined by your organization.
 
     export taito_image="taitounited/taito-cli:latest"
     export taito_global_plugins="docker-global fun-global gcloud-global \
@@ -199,28 +218,26 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     * Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
     * Install taito-cli plugin for your editor: [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
 
-## Installation for Windows Subsystem for Linux
+### Windows Subsystem for Linux
 
 > Docker cannot use the Linux file system effectively. Therefore all your software projects and taito-cli settings should be located on the Windows file system.
 
-1. Install [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) and configure it so that you can call `docker` and `docker-compose` commands from bash shell.
+1. Configure [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) in that way you can call `docker` and `docker-compose` commands from linux shell.
 
-2. Mount your windows drive to `/c` instead of the default `/mnt/c`. This way the same file path works both on Windows and on Linux. NOTE: If your software projects are located on some other drive than `c:`, mount also that drive.
+2. Mount your windows drive to `/c` instead of the default `/mnt/c`. This way the same file paths work both on Windows and on Linux. NOTE: If your software projects are located on some other drive than `c:`, mount also that drive.
 
 3. Clone the [taito-cli](https://github.com/TaitoUnited/taito-cli) git repository on the Linux file system.
 
-4. Symlink the file named `taito` to your bash shell path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
+4. Symlink the file named `taito` to your shell path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
 
-5. Choose a folder from Windows drive that will act as your home directory when running taito-cli. Set `TAITO_HOME` environment variable for your bash shell, for example: `export TAITO_HOME="/c/users/myusername"`.
+5. Choose a folder from Windows drive that will act as your home directory when running taito-cli. Set `TAITO_HOME` environment variable for your linux shell, for example: `export TAITO_HOME="/c/users/myusername"`.
 
 6. Configure your personal settings in `${TAITO_HOME}/.taito/taito-config.sh`. For example:
     ```
     #!/bin/bash
 
-    # NOTE: These are example settings! Replace them with the settings
-    # defined by your organization. If your organization uses also some
-    # additional private plugins, remember to configure also them in your
-    # personal configuration file.
+    # NOTE: These are example settings! Replace them with your personal
+    # settings or with the settings defined by your organization.
 
     export taito_image="taitounited/taito-cli:latest"
     export taito_global_plugins="docker-global fun-global gcloud-global \
@@ -533,7 +550,7 @@ Taito-cli also provides a lightweight abstraction on top of infrastructure and c
 
 ## ChatOps
 
-TODO ChatOps: Deploy taito-cli to Kubernetes and integrate it with Mattermost running on the same cluster (implement taito-cli mattermost plugin). Add also some intelligence with google apis (just for fun)?
+TODO ChatOps: Mattermost/Slack integrations, some additional intelligence with Google services.
 
 ## Custom commands
 

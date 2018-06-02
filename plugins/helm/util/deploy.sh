@@ -43,6 +43,7 @@ if [[ -d "./scripts/helm" ]]; then
   echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
   (
     ${taito_setv:?}
+    helm dependency update "./scripts/helm"
     helm upgrade "${options[@]}" --debug --install \
       --namespace "${taito_namespace}" \
       --set env="${taito_env}" \
@@ -60,47 +61,4 @@ if [[ -d "./scripts/helm" ]]; then
       ${helm_deploy_options:-} \
       "${taito_project}-${taito_env}" "./scripts/helm"
   )
-fi && \
-
-# Deploy charts defined in helm_charts environment variable
-
-if [[ -n "${helm_charts:-}" ]] && [[ ! -d "${HOME}/.helm" ]]; then
-  # Loading charts from external helm repositories but helm has not been
-  # initialized --> initalize it
-  helm init --client-only
-fi && \
-
-charts=("${helm_charts}")  && \
-for chart in ${charts[@]}
-do
-  echo "- Deploying chart ${chart} for ${taito_project}-${taito_env} using Helm"
-  chart_name="${chart##*/}"
-
-  # helm-ENV.yaml overrides default settings of helm.yaml
-  chart_override_file=""
-  if [[ -f "scripts/${chart_name}/helm-${taito_env}.yaml" ]]; then
-    chart_override_file="-f scripts/${chart_name}/helm-${taito_env}.yaml"
-  fi
-  (
-    ${taito_setv:?}
-    helm upgrade "${options[@]}" --debug --install \
-      --namespace "${taito_namespace}" \
-      --set env="${taito_env}" \
-      --set zone.name="${taito_zone}" \
-      --set zone.provider="${taito_provider:-}" \
-      --set project.name="${taito_project}" \
-      --set project.company="${taito_company:-}" \
-      --set project.family="${taito_family:-}" \
-      --set project.application="${taito_application:-}" \
-      --set project.suffix="${taito_suffix:-}" \
-      --set build.imageTag="${image}" \
-      --set build.version="${version}" \
-      --set build.commit="TODO" \
-      -f scripts/${chart_name}/helm.yaml ${chart_override_file} \
-      ${helm_deploy_options:-} \
-      "${chart_name}" "${chart}"
-  )
-  if [[ $? -ne 0 ]]; then
-    exit $?
-  fi
-done
+fi
