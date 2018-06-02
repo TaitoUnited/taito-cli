@@ -43,6 +43,7 @@ if [[ -d "./scripts/helm" ]]; then
   echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
   (
     ${taito_setv:?}
+    helm init --client-only
     helm dependency update "./scripts/helm"
     helm upgrade "${options[@]}" --debug --install \
       --namespace "${taito_namespace}" \
