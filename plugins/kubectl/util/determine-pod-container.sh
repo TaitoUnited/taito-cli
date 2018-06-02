@@ -14,5 +14,6 @@ if [[ -z "${container}" ]] || \
    [[ "${container}" == "--" ]] || \
    [[ "${container}" == "-" ]]; then
   # No container name was given. Determine container name.
-  container=$(echo "${pod}" | sed -e 's/\([^0-9]*\)*/\1/;s/-[0-9].*$//')
+  container=$(echo "${pod}" | \
+    sed -e 's/\([^0-9]*\)*/\1/;s/-[a-z0-9]*-[a-z0-9]*$//')
 fi
