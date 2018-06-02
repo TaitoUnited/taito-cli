@@ -294,9 +294,9 @@ do
     # Add matching commands to command chain
     commands=($(ls "${plugin_path}/${command}"[:.]* 2> /dev/null))
 
-    pre_command_chain+=($(printf '%s\n' "${commands[@]}" | grep ":pre\."))
-    command_chain+=($(printf '%s\n' "${commands[@]}" | grep -v ":\|\.txt\|\.md" ))
-    post_command_chain+=($(printf '%s\n' "${commands[@]}" | grep ":post\."))
+    pre_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#pre\."))
+    command_chain+=($(printf '%s\n' "${commands[@]}" | grep -v "#\|\.txt\|\.md" ))
+    post_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#post\."))
   fi
 done
 
