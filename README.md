@@ -151,7 +151,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
 ## Installation
 
-> NOTE: On Windows you can use the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) to get all the benefits of taito-cli. For basic usage, however, you may alternatively try to use the `taito.bat` instead of `taito` bash script.
+### Linux / macOS
 
 1. Clone this repository.
 
@@ -194,14 +194,76 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
       intra#intranet=https://intra.mydomain.com"
     ```
 
-### Optional steps
+4. Optional steps:
 
-1. Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
-2. Install taito-cli plugin for your editor: [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
+    * Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
+    * Install taito-cli plugin for your editor: [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
+
+### Windows
+
+> Running taito-cli requires [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about). This will probably change in the future.
+
+> Docker cannot use the Linux file system effectively. Therefore all your software projects and taito-cli settings should be located on the Windows file system.
+
+1. Install [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) and configure it so that you can call `docker` and `docker-compose` commands from bash shell.
+
+2. Mount your windows drive to `/c` instead of the default `/mnt/c`. This way the same file path works both on Windows and on Linux. NOTE: If your software projects are located on some other drive than `c:`, mount also that drive.
+
+3. Clone the [taito-cli](https://github.com/TaitoUnited/taito-cli) git repository on the Linux file system.
+
+4. Symlink the file named `taito` to your bash shell path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
+
+5. Choose a folder from Windows drive that will act as your home directory when running taito-cli. Set `TAITO_HOME` environment variable for your bash shell, for example: `export TAITO_HOME="/c/users/myusername"`.
+
+6. Configure your personal settings in `${TAITO_HOME}/.taito/taito-config.sh`. For example:
+    ```
+    #!/bin/bash
+
+    # NOTE: These are example settings! Replace them with the settings
+    # defined by your organization. If your organization uses also some
+    # additional private plugins, remember to configure also them in your
+    # personal configuration file.
+
+    export taito_image="taitounited/taito-cli:latest"
+    export taito_global_plugins="docker-global fun-global gcloud-global \
+      links-global template-global"
+
+    # template plugin default settings
+    export template_default_taito_image="taitounited/taito-cli:latest"
+    export template_default_organization="myorganization"
+    export template_default_domain="devdomain.com"
+    export template_default_zone="my-zone"
+    export template_default_zone_prod="my-prod-zone"
+    export template_default_provider="gcloud"
+    export template_default_provider_billing_account="123456-123456-123456"
+    export template_default_provider_org_id="123456789"
+    export template_default_provider_region="europe-west1"
+    export template_default_provider_zone="europe-west1-b"
+    export template_default_provider_org_id_prod="123456789"
+    export template_default_provider_region_prod="europe-west2"
+    export template_default_provider_zone_prod="europe-west2-a"
+    export template_default_registry="eu.gcr.io"
+    export template_default_source_git="git@github.com:TaitoUnited"
+    export template_default_dest_git="git@github.com:MyOrganization"
+
+    # links
+    export link_global_urls="\
+      home=https://www.mydomain.com
+      intra#intranet=https://intra.mydomain.com"
+    ```
+
+7. Optional steps:
+
+    * Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
+    * Install taito-cli plugin for your editor: [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
 
 ## Upgrading
 
 You can upgrade taito-cli and its extensions by running `taito --upgrade`.
+
+## Troubleshooting
+
+See `trouble.txt` or run `taito --trouble`.
 
 ## Usage
 

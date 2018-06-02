@@ -5,10 +5,10 @@
 export taito_env="${1:-$taito_env}"
 
 # Read taito-config.sh files from all locations
-if [[ -f "${HOME}/.taito/taito-config.sh" ]]; then
+if [[ -f "${taito_home_path}/.taito/taito-config.sh" ]]; then
   # Personal config
   # shellcheck disable=SC1090
-  . "${HOME}/.taito/taito-config.sh"
+  . "${taito_home_path}/.taito/taito-config.sh"
 fi
 if [[ -f "${taito_project_path}/taito-config.sh" ]]; then
   # Project specific config

@@ -4,6 +4,7 @@
 # Resolve paths
 # NOTE: duplicate with ./taito (taito_cli_path must be resolved before
 # other scripts can be called)
+export taito_home_path="${TAITO_HOME:-$HOME}"
 export taito_cli_path
 export taito_src_path
 export taito_util_path

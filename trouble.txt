@@ -17,6 +17,7 @@ TAITO-CLI TROUBLESHOOTING
 
   'command not found'
     * Try running 'taito --upgrade'
+    * Try upgrading docker and docker-compose
     * Did you give the correct environment as argument? Commands always use the
       local environment by default.
     * Check your plugin configuration in your taito-config.sh files.
