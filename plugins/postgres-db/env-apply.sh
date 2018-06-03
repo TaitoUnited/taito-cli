@@ -14,8 +14,8 @@
       (
         echo "Creating database"
         export database_username=postgres
-        . "${taito_plugin_path}/util/ask-password.sh"
-        "${taito_plugin_path}/util/create-users.sh"
+        . "${taito_plugin_path}/util/ask-password.sh" && \
+        "${taito_plugin_path}/util/create-users.sh" && \
         "${taito_plugin_path}/util/create-database.sh"
       )
     fi

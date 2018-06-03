@@ -208,7 +208,7 @@ OPTIONS
 ARGUMENTS
 
   ENV
-    Environment: 'local', 'feature', 'dev', 'test', 'staging' or 'prod'.
+    Environment: 'local', 'feat', 'dev', 'test', 'stag' or 'prod'.
     Environment is 'local' by default. For mobile projects ENV can also be
     'ios' or 'android'.
 
@@ -512,7 +512,7 @@ PROJECT: DATABASE OPERATIONS
 
   db copy to[:TARGET]:ENV SOURCE_ENV
     Copy database from one environment to another. For example
-    `db copy:staging prod` or `db copy:local dev`. If you do not have enough
+    `db copy:stag prod` or `db copy:local dev`. If you do not have enough
     rights, ask devops personnel to do this for you. DB proxy connection and
     secrets are handled automatically.
 

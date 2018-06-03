@@ -11,7 +11,16 @@
     . "${taito_util_path}/read-database-config.sh" "${database}" && \
 
     if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
-      echo "TODO implement"
+      . "${taito_plugin_path}/util/mysql-username-password.sh" && \
+
+      if [[ -n ${database_build_password:-} ]] && \
+         [[ -n ${database_app_password:-} ]]; then
+        echo "Creating users / altering passwords for ${taito_env}"
+
+        export database_username=root
+        . "${taito_plugin_path}/util/ask-password.sh" && \
+        "${taito_plugin_path}/util/create-users.sh"
+      fi
     fi
   done
 ) && \

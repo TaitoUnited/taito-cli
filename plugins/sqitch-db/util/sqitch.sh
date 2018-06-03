@@ -20,9 +20,11 @@ fi
 (
   cd "${taito_target:-database}" || exit
 
-  # TODO mysql support
-
-  database_user="${database_name}_app"
+  if [[ ${sqitch_engine} == "mysql" ]]; then
+    database_user="${database_name}ap"
+  else
+    database_user="${database_name}_app"
+  fi
   if [[ "${database_username:-}" ]]; then
     database_user="${database_username}"
   fi

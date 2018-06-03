@@ -8,6 +8,7 @@
 : "${taito_project_path:?}"
 
 # TODO clean this mess. duplicate code in clean.sh, psql.sh and sqitch.sh
+# TODO this file is not used in anywhere? --> just delete it!
 
 if [[ "${taito_env}" == "prod"* ]]; then
   echo "postgres-db/clean.sh: 'clean' is not allowed for production environment"

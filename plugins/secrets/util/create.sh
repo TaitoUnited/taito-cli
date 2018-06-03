@@ -35,6 +35,9 @@ do
     elif [[ "${secret_method}" == "random" ]]; then
       # TODO better tool for this?
       secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
+      if [[ ${#secret_value} -gt 30 ]]; then
+        secret_value="${secret_value: -30}"
+      fi
       echo "- ${secret_name}: random value generated"
     fi
     exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "

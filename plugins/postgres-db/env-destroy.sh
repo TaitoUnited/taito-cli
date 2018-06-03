@@ -14,8 +14,8 @@
       (
         echo "Dropping database and users"
         export database_username=postgres
-        . "${taito_plugin_path}/util/ask-password.sh"
-        "${taito_plugin_path}/util/drop-database.sh"
+        . "${taito_plugin_path}/util/ask-password.sh" && \
+        "${taito_plugin_path}/util/drop-database.sh" && \
         "${taito_plugin_path}/util/drop-users.sh"
       )
     fi

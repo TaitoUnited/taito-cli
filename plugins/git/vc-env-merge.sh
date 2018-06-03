@@ -2,14 +2,14 @@
 : "${taito_cli_path:?}"
 : "${taito_environments:?}"
 
-valids=" dev->test test->staging staging->master "
-if [[ " ${taito_environments} " != *" staging "* ]] && \
+valids=" dev->test test->stag stag->master "
+if [[ " ${taito_environments} " != *" stag "* ]] && \
    [[ " ${taito_environments} " != *" test "* ]]; then
   valids=" dev->master "
-elif [[ " ${taito_environments} " != *" staging "* ]]; then
+elif [[ " ${taito_environments} " != *" stag "* ]]; then
   valids=" dev->test test->master "
 elif [[ " ${taito_environments} " != *" test "* ]]; then
-  valids=" dev->staging staging->master "
+  valids=" dev->stag stag->master "
 fi
 
 # Determine source branch

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+secret_index=0
 secret_names=(${taito_secret_names})
 for secret_name in ${secret_names[@]}
 do
@@ -12,4 +13,5 @@ do
       read -r
     fi
   fi
+  secret_index=$((${secret_index}+1))
 done

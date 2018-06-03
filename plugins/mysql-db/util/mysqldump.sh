@@ -4,13 +4,32 @@
 : "${database_port:?}"
 : "${database_name:?}"
 
-username="${1:-$database_username}"
+username="${1}"
+# flags="${2}"
+# command="${3:-mysql}"
 
-# TODO determine password from secrets
+mysql_username="${database_name}ap"
+if [[ "${database_username:-}" ]]; then
+  mysql_username="${database_username}"
+fi
+mysql_password="${database_password:-secret}"
+
+if [[ "${username}" != "" ]]; then
+  mysql_username="${username}"
+  mysql_password=""
+elif [[ "${taito_env}" != "local" ]]; then
+  . "${taito_plugin_path}/util/mysql-username-password.sh"
+  if [[ "${database_build_username}" ]]; then
+    mysql_username="${database_build_username}"
+    mysql_password="${database_build_password}"
+  fi
+fi
 
 if [[ "${database_password:-}" ]]; then
-  MYSQL_PWD="${database_password}" \
-  mysqldump -h "${database_host}" -P "${database_port}" -u "${username}" "${database_name}"
+  MYSQL_PWD="${mysql_password}" \
+  mysqldump -h "${database_host}" -P "${database_port}" \
+    -u "${mysql_username}" "${database_name}"
 else
-  mysqldump -p -h "${database_host}" -P "${database_port}" -u "${username}" "${database_name}"
+  mysqldump -p -h "${database_host}" -P "${database_port}" \
+    -u "${mysql_username}" "${database_name}"
 fi

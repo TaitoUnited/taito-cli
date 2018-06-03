@@ -412,7 +412,7 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     export ci_exec_revert=false       # revert deploy automatically on fail
 
     # Override settings for different environments:
-    # local, feature, dev, test, staging, prod
+    # local, feat, dev, test, stag, prod
     case "${taito_env}" in
       prod)
         # Overrides for production environment
@@ -427,7 +427,7 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
         export kubernetes_name="acme-kubernetes"
         export db_database_instance="acme-postgres"
         ;;
-      staging)
+      stag)
         # Overrides for staging environment
         export taito_app_url="https://${taito_project}-${taito_env}.myapp.com"
         export taito_zone="acme-restricted1"
@@ -573,7 +573,7 @@ You can run any script defined in your project root *package.json* or *makefile*
     "db-connect": "host=localhost npm run _db",
     "db-connect:dev": "host=mydomain-dev npm run _db",
     "db-connect:test": "host=mydomain-test npm run _db",
-    "db-connect:staging": "host=mydomain-staging npm run _db",
+    "db-connect:stag": "host=mydomain-stag npm run _db",
     "db-connect:prod": "host=mydomain-prod run _db",
     "_db": "mysql -u myapp -p myapp -h ${host}",
 
@@ -698,7 +698,7 @@ If you need to alter default behaviour of a plugin in some way, you can override
 
 All settings defined in `taito-config.sh` are visible for plugins. Additionally the following environment variables are exported by taito-cli:
 
-* **taito_env**: The selected environment (local, feature, dev, test, staging, prod)
+* **taito_env**: The selected environment (local, feat, dev, test, stag, prod)
 * **taito_target**: Command target (e.g. admin, client, server, worker, ...)
 * **taito_command**: The user given command without the target and environment suffix.
 * **taito_enabled_extensions**: List of all enabled extensions.
@@ -721,6 +721,10 @@ These variable names are meant for communication between plugins.
 Secrets:
 
 TODO add documentation
+
+### Tips
+
+* [Bash string manipulation cheatsheet](https://gist.github.com/magnetikonline/90d6fe30fc247ef110a1)
 
 ## Taito-cli development
 

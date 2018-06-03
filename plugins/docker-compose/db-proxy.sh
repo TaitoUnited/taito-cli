@@ -9,7 +9,7 @@ echo "No database proxy required. Just connect with the following details:"
 echo "- host: 127.0.0.1"
 echo "- port: ${database_external_port:-database_port}"
 echo "- database: ${database_name:-}"
-echo "- username: ${database_username:-}, ${database_name}, ${database_name}_app or your personal username"
+echo "- username: ${database_username:-}, ${database_name}, ${database_name}_app, ${database_name}ap or your personal username"
 echo "- password: ${database_password:-?}"
 
 # Call next command on command chain

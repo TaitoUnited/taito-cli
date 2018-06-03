@@ -11,7 +11,7 @@
     . "${taito_util_path}/read-database-config.sh" "${database}" && \
 
     if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
-      . "${taito_plugin_path}/util/postgres-username-password.sh"
+      . "${taito_plugin_path}/util/postgres-username-password.sh" && \
 
       if [[ -n ${database_build_password:-} ]] && \
          [[ -n ${database_app_password:-} ]]; then

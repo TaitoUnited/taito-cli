@@ -1,5 +1,7 @@
 -- used by: clean
 
+-- TODO this file is not used anywhere --> just delete it?
+
 -- Drop all but the default schemas
 CREATE OR REPLACE FUNCTION drop_all ()
    RETURNS VOID  AS

@@ -59,7 +59,7 @@ if [[ "${env_command}" == *":"* ]]; then
   for sect in "${ADDR[@]}"; do
     if [[ -z "${command}" ]]; then
       command="${sect}"
-    elif [[ " local feature dev test staging prod master " == *" ${sect} "* ]]; then
+    elif [[ " local feat dev test stag prod master " == *" ${sect} "* ]]; then
       env="${sect}"
     else
       target="${sect}"
@@ -265,7 +265,7 @@ command_chain=()
 post_command_chain=()
 extensions=("${taito_enabled_extensions} ${taito_cli_path}/plugins")
 # TODO plugin_path??
-commands=($(ls "${plugin_path}/${command}"[:.]* 2> /dev/null))
+commands=($(ls "${plugin_path}/${command}"[\#.]* 2> /dev/null))
 for plugin in ${plugins[@]}
 do
   # Check first if plugin is enabled for this environment:
@@ -292,7 +292,7 @@ do
     post_handlers+=($(ls "${plugin_path}"/hooks/post* 2> /dev/null))
 
     # Add matching commands to command chain
-    commands=($(ls "${plugin_path}/${command}"[:.]* 2> /dev/null))
+    commands=($(ls "${plugin_path}/${command}"[\#.]* 2> /dev/null))
 
     pre_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#pre\."))
     command_chain+=($(printf '%s\n' "${commands[@]}" | grep -v "#\|\.txt\|\.md" ))

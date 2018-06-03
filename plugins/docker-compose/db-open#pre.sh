@@ -6,6 +6,9 @@
 : "${database_name:?}"
 
 username="${database_name}_app"
+if [[ "${database_type:-}" == "mysql" ]]; then
+  username="${database_name}ap"
+fi
 if [[ "${database_username:-}" ]]; then
   username="${database_username}"
 fi

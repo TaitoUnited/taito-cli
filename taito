@@ -123,7 +123,7 @@ fi
 taito_env="local"
 if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
   sect=${command##*:}
-  if [[ " local feature dev test staging prod master " == *" ${sect} "* ]]; then
+  if [[ " local feat dev test stag prod master " == *" ${sect} "* ]]; then
     taito_env=${sect}
   fi
 fi
