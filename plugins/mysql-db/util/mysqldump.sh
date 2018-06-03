@@ -8,7 +8,7 @@ username="${1}"
 # flags="${2}"
 # command="${3:-mysql}"
 
-mysql_username="${database_name}ap"
+mysql_username="${database_name}a"
 if [[ "${database_username:-}" ]]; then
   mysql_username="${database_username}"
 fi

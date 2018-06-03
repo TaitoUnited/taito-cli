@@ -12,4 +12,4 @@ ${taito_setv:?}
 mysql -h "${database_host}" \
   -P "${database_port}" \
   -u "${database_username}" \
-  -e "set @database='${database_name}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}ap'; source ${taito_plugin_path}/resources/drop-users.sql ;"
+  -e "set @database='${database_name}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source ${taito_plugin_path}/resources/drop-users.sql ;"

@@ -5,13 +5,13 @@
 
 "${taito_plugin_path}/util/use-context.sh" && \
 
+echo "kubectl: TODO rolling restart instead of kill" && \
 if [[ -n "${taito_target:-}" ]]; then
   # Restart only the container given as argument
-  echo "TODO implement: Restart only the container given as argument"
-  exit 1
+  . "${taito_plugin_path}/util/determine-pod-container.sh" && \
+  (${taito_setv:?}; kubectl delete pod "${pod}")
 else
-  (${taito_setv:?}; kubectl delete pods --all) && \
-  echo "kubectl: TODO rolling restart instead of kill"
+  (${taito_setv:?}; kubectl delete pods --all)
 fi && \
 
 # Call next command on command chain

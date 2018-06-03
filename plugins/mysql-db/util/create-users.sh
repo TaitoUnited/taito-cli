@@ -28,4 +28,4 @@ ${taito_setv:?}
 mysql -h "${database_host}" \
   -P "${database_port}" \
   -u "${database_username}" \
-  -e "set @database='${database_name}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}ap'; set @passwordapp='${database_app_password}'; set @passwordmgr='${database_build_password}'; source ${taito_plugin_path}/resources/users.sql ;"
+  -e "set @database='${database_name}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; set @passwordapp='${database_app_password}'; set @passwordmgr='${database_build_password}'; source ${taito_plugin_path}/resources/users.sql ;"
