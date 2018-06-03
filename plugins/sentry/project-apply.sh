@@ -26,9 +26,15 @@ read -r
 
 echo "Sentry public DSN url?"
 read -r dsn_public
+if [[ -z "${dsn_public}" ]]; then
+  dsn_public="TODO"
+fi
 
 echo "Sentry private DSN url?"
 read -r dsn
+if [[ -z "${dsn}" ]]; then
+  dsn="TODO"
+fi
 
 echo "Replacing Sentry DSN keys in heml.yaml and Dockerfile.build"
 echo
