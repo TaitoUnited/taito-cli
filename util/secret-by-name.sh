@@ -17,5 +17,7 @@ do
   secret_index=$((${secret_index}+1))
 done
 
-secret_index=${found_index}
-. "${taito_cli_path}/util/secret-by-index.sh"
+if [[ "${found_index}" != "-1" ]]; then
+  secret_index=${found_index}
+  . "${taito_cli_path}/util/secret-by-index.sh"
+fi
