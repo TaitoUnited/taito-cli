@@ -24,7 +24,7 @@ echo "  4) Implementation suffix (optional)"
 echo
 echo "1) Company (e.g. 'seedi')?"
 read -r taito_company
-if [[ -z "${taito_company}" ]] || [[ ${#taito_company} -gt 10 ]]; then
+if [[ -z "${taito_company}" ]] || [[ ${#taito_company} -gt 12 ]]; then
   echo "ERROR: not given or too long"
   exit 1
 fi
