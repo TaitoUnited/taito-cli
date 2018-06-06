@@ -95,12 +95,12 @@ Some database operation examples targetting a test environment:
 
 Storage operation examples:
 
-    storage mount:dev                        # Mount default dev storage bucket to ./mnt/BUCKET
-    storage mount:dev ./mymount              # Mount default dev storage bucket to ./mymount
-    storage copy from:dev ./data             # Copy files from default dev bucket to ./data
-    storage copy to:dev ./data               # Copy files from ./data to default dev bucket
-    storage sync from:dev ./data             # Sync files from default dev bucket to ./data
-    storage sync to:dev ./data               # Sync files from ./data to default dev bucket
+    taito storage mount:dev                  # Mount default dev storage bucket to ./mnt/BUCKET
+    taito storage mount:dev ./mymount        # Mount default dev storage bucket to ./mymount
+    taito storage copy from:dev ./data       # Copy files from default dev bucket to ./data
+    taito storage copy to:dev ./data         # Copy files from ./data to default dev bucket
+    taito storage sync from:dev ./data       # Sync files from default dev bucket to ./data
+    taito storage sync to:dev ./data         # Sync files from ./data to default dev bucket
 
 With taito-cli you can take an opinionated view on version control. Some examples of predefined version control commands:
 
@@ -648,6 +648,10 @@ NOTE: Always remember to call the next command of the command chain at some poin
 
 NOTE: Do not call another command directly from another. It's error prone; you'll easily mess up the command chain execution, and also clarity of user friendly info messages. Place the common logic shared by multiple commands in a separate util instead.
 
+### Tips
+
+* [Bash string manipulation cheatsheet](https://gist.github.com/magnetikonline/90d6fe30fc247ef110a1)
+
 ### Logging in verbose mode
 
 Values of the following environment variables are set depending on verbose mode:
@@ -721,10 +725,6 @@ These variable names are meant for communication between plugins.
 Secrets:
 
 TODO add documentation
-
-### Tips
-
-* [Bash string manipulation cheatsheet](https://gist.github.com/magnetikonline/90d6fe30fc247ef110a1)
 
 ## Taito-cli development
 

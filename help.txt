@@ -35,8 +35,10 @@ QUICK EXAMPLES
     workspace clean          # Remove all unused build artifacts (e.g. images)
     shell:server             # Start shell inside a container named 'server'
     exec:server echo foo     # Execute a command in a container named 'server'
-    copy to:server ./file /app     # Copy a file to container named 'server'
-    copy from:server /app/file .   # Copy a file from container named 'server'
+    copy to:server ./asdf /app   # Copy a file/folder to server container
+    copy from:server /app/asdf . # Copy a file/folder from server container
+    sync to:server ./asdf /app   # Sync folder to server container
+    sync from:server /app/asdf . # Sync folder from server container
     commit:client            # Commit changes to client container image
     clean:server             # Clean server container by deleting it
     analyze                  # Analyze implementation
@@ -54,8 +56,10 @@ QUICK EXAMPLES
     kill:worker:dev          # Kill a container named 'worker'
     shell:server:dev         # Start a shell on a container named 'server'
     exec:server:dev echo foo # Execute a command in a container named 'server'
-    copy to:server:dev ./file /app   # Copy a file to container named 'server'
-    copy from:server:dev /app/file . # Copy a file from container named 'server'
+    copy to:server:dev ./file /app   # Copy a file/folder to server container
+    copy from:server:dev /app/file . # Copy a file/folder from server container
+    sync to:server:dev ./asdf /app   # Sync folder to server container
+    sync from:server:dev /app/asdf . # Sync folder from server container
     open logs:dev            # Open logs on browser (e.g. Stackdriver or EFK)
     open storage:dev         # Open storage bucket on browser
     init:dev --clean         # Reinitialize databases and storages
@@ -343,16 +347,27 @@ PROJECT: BASIC OPERATIONS
     $ taito exec:my-app-client-3034393823-2f5jf:dev echo "taito!"
 
   copy to:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
-    Copy a file. Examples:
+    Copy a file or folder. Examples:
     $ taito copy to:client foo.txt /client/foo.txt
     $ taito copy to:client:dev foo.txt client:/client/foo.txt
-    $ taito copy to:dev client:/client/foo.txt .
     TODO IMPLEMENT
 
   copy from:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
-    Copy a file. Examples:
+    Copy a file or folder. Examples:
     $ taito copy from:client /client/foo.txt .
     $ taito copy from:client:dev /client/foo.txt .
+    TODO IMPLEMENT
+
+  sync to:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
+    Sync a folder. Examples:
+    $ taito sync to:client ./foo /foo
+    $ taito sync to:client:dev ./foo /foo
+    TODO IMPLEMENT
+
+  sync from:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
+    Sync a folder. Examples:
+    $ taito sync from:client /foo ./foo
+    $ taito sync from:client:dev /foo ./foo
     TODO IMPLEMENT
 
   kill:TARGET[:ENV]
