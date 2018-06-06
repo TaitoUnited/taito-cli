@@ -50,10 +50,10 @@ else
       if [[ $pulled == "true" ]]; then
         break
       elif [[ $count -gt 20 ]]; then
-        echo "- ERROR: Image ${image_tag} not found event after multiple retries and not building a new one because ci_exec_build is false"
+        echo "- ERROR: Image ${image_tag} not found from registry even after multiple retries. Not building a new image because ci_exec_build is set to false for this environment."
         exit 1
       else
-        echo "- WARN: Image ${image_tag} not found and not building a new one because ci_exec_build is false. Retry in 30 secs."
+        echo "- WARN: Image ${image_tag} not found from registry. Not building a new image because ci_exec_build is set to false for this environment. Retry in 30 secs."
         sleep 30
       fi
     done

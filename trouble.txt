@@ -37,3 +37,8 @@ TAITO-CLI TROUBLESHOOTING
     is no apparent reason why the build failed, just try to retry the CI/CD
     build. If it fails again, try to build production build locally by running
     'taito start --clean --prod' and then try to fix the build problem.
+
+  'Not building a new image because ci_exec_build is false.'
+    The ci_exec_build taito config setting is set to false for the environment
+    in question. Therefore a new image will not ever be built for the
+    environment. An existing image will be used instead.

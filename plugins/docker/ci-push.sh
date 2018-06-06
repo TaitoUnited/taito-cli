@@ -25,10 +25,15 @@ image_builder="${image_path}${path_suffix}-builder:latest"
 if [[ "${taito_targets:-}" != *"${name}"* ]]; then
   echo "Skipping push: ${name} not included in taito_targets"
 else
-  if [[ ! -f ./taitoflag_images_exist ]]; then
-    (${taito_setv:?}; docker push "${image}") && \
-    (${taito_setv:?}; docker push "${image_latest}") && \
-    (${taito_setv:?}; docker push "${image_builder}")
+  if [[ ! -f ./taitoflag_images_exist ]] && \
+     ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_build:-}" == "true" ]])
+  then
+    (
+      ${taito_setv:?}
+      docker push "${image}" && \
+      docker push "${image_latest}" && \
+      docker push "${image_builder}"
+    )
   else
     echo "- Image ${image_tag} already exists. Skipping push."
   fi
