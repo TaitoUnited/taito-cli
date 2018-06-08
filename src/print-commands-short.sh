@@ -81,6 +81,10 @@ if [[ ${taito_project:-} ]]; then
     do
       echo "vc feat: ${feature}"
     done
+
+    echo "vc pull"
+    echo "vc push"
+    echo "vc revert"
   else
     echo "vc"
   fi

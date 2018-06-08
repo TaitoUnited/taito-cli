@@ -115,6 +115,13 @@ if [[ ${taito_project:-} ]]; then
       # Create a pull-request for current feature branch"
     echo "vc feat: FEATURE \
       # Switch to a feature branch"
+    echo "vc pull \
+      # Pull changes"
+    echo "vc push \
+      # Push changes"
+    echo "vc revert \
+      # Revert latest commit from local and remote repo"
+
   else
     echo "vc"
   fi

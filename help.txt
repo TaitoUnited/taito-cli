@@ -99,6 +99,9 @@ QUICK EXAMPLES
     vc feat merge            # Merge current feature branch to the original
     vc feat squash           # Squash feature branch as a single commit
     vc feat pr               # Create a pull-request for current feature branch
+    vc pull                  # Pull changes
+    vc push                  # Push changes
+    vc revert                # Revert latest commit from local and remote repo
 
   MANUAL DEPLOYMENT OPERATIONS
     deployment trigger:dev        # Trigger ci build for dev environment

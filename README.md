@@ -102,7 +102,7 @@ Storage operation examples:
     taito storage sync from:dev ./data       # Sync files from default dev bucket to ./data
     taito storage sync to:dev ./data         # Sync files from ./data to default dev bucket
 
-With taito-cli you can take an opinionated view on version control. Some examples of predefined version control commands:
+With taito-cli you can take an opinionated view on version control. However, command usage should be optional as many developers rather use gui tools for some of these operations. Examples:
 
     taito vc env list                        # List all environment branches
     taito vc env: dev                        # Switch to the dev environment branch
@@ -115,6 +115,10 @@ With taito-cli you can take an opinionated view on version control. Some example
     taito vc feat merge                      # Merge current feature branch to the original branch, but rebase first
     taito vc feat squash                     # Merge current feature branch to the original branch as a single commit
     taito vc feat pr                         # Create a pull-request for merging current feature branch to the original
+
+    taito vc pull                            # Pull changes
+    taito vc push                            # Push changes
+    taivo vc revert                          # Revert latest commit both from local and remote repository
 
     TODO Support for release branches
 
