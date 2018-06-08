@@ -14,7 +14,7 @@ switches=" ${*} "
 
     if [[ "${switches}" == *"--clean"* ]]; then
       echo "Rebasing database ${database_name:?}"
-      "${taito_plugin_path}/util/sqitch.sh" rebase --set env="'${taito_env}'"
+      "${taito_plugin_path}/util/sqitch.sh" rebase --set env="'${taito_env}'" || "${taito_plugin_path}/util/deploy-changes.sh"
     else
       echo "Deploying changes to database ${taito_env}" && \
       "${taito_plugin_path}/util/deploy-changes.sh"
