@@ -38,6 +38,7 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito init                               # Initialize database and storage buckets
     taito open app                           # Open application on browser
     taito open admin                         # Open admin GUI on browser
+    taito open -h                            # List all links
     taito info                               # Show info required for signing in to the locally running app
     taito unit                               # Run all unit tests
     taito unit:client                        # Run all unit tests of client container
@@ -176,7 +177,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
 ### Linux / macOS / Windows with cygwin
 
-> For Windows: Taito-cli requires [cygwin](https://www.cygwin.com/) with the procps-ng package installed: `apt-cyg install procps-ng`. Configure cygwin in that way you can call `docker` and `docker-compose` commands from cygwin shell. If you would rather use [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) instead of [cygwin](https://www.cygwin.com/), see the next chapter.
+> For Windows: Taito-cli requires [cygwin](https://www.cygwin.com/) with the procps-ng package installed: `apt-cyg install procps-ng`. Configure cygwin in that way you can call `git`, `docker` and `docker-compose` commands from cygwin shell. If you would rather use [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) instead of [cygwin](https://www.cygwin.com/), see the next chapter.
 
 1. Clone this git repository.
 
@@ -226,7 +227,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
 > Docker cannot use the Linux file system effectively. Therefore all your software projects and taito-cli settings should be located on the Windows file system.
 
-1. Configure [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) in that way you can call `docker` and `docker-compose` commands from linux shell.
+1. Configure [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) in that way you can call `git`, `docker` and `docker-compose` commands from linux shell.
 
 2. Mount your windows drive to `/c` instead of the default `/mnt/c`. This way the same file paths work both on Windows and on Linux. NOTE: If your software projects are located on some other drive than `c:`, mount also that drive.
 

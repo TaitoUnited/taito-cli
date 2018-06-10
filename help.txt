@@ -17,6 +17,7 @@ QUICK EXAMPLES
     open admin               # Open admin GUI on browser
     open builds              # Open build logs on browser
     open boards              # Open project kanban board(s) on browser
+    open -h                  # List all links
     info                     # Show info required for logging in to app
     lint                     # Lint code
     unit                     # Run all unit tests
