@@ -7,6 +7,6 @@ COPY . /taito-cli
 WORKDIR /taito-cli
 RUN ln -s /taito-cli/taito_impl.sh /usr/local/bin/taito
 
-EXPOSE 1000-9999
+EXPOSE 5000-6000
 # USER taito
 ENTRYPOINT ["taito"]
