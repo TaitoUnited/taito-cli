@@ -16,7 +16,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   echo "WARNING! This operation will disconnect all connections! Continue (Y/n)?"
   read -r confirm
 
-  if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+  if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
     exit 130
   fi
 

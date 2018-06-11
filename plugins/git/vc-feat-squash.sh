@@ -11,7 +11,7 @@ fi
 
 echo "Squashing ${feature} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
-if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
   exit 130
 fi
 

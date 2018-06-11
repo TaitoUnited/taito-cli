@@ -11,7 +11,7 @@ dest="${1:?Destination branch name not given}"
 if ! git checkout ${dest} 2> /dev/null; then \
   echo 'Creating a new branch ${dest} from ${source}. Do you want to continue (Y/n)?' && \
   read -r confirm && \
-  if ! [[ \${confirm} =~ ^[Yy]$ ]]; then \
+  if ! [[ \${confirm} =~ ^[Yy]*$ ]]; then \
     echo Cancelled && \
     exit 130; \
   fi && \

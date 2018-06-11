@@ -13,7 +13,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
 
   echo "Copying ${source} to ${dest}. Do you want to continue (Y/n)?"
   read -r confirm
-  if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+  if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
     exit 130
   fi
 

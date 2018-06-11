@@ -8,7 +8,8 @@
 
 echo
 echo "Terraform is currently used only for creating new resources for"
-echo "an existing project. Make sure that project ${taito_resource_namespace}" echo "exists and has '${taito_resource_namespace_id}' as an id."
+echo "an existing project. Make sure that project '${taito_resource_namespace}'"
+echo "exists and has '${taito_resource_namespace_id}' as an id."
 echo "You also might need to enable billing for it."
 echo
 if [[ "${taito_provider}" == "gcloud" ]]; then
@@ -17,7 +18,7 @@ fi
 echo
 echo "Continue (Y/n)?"
 read -r confirm
-if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
   exit 130
 fi
 

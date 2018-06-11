@@ -7,7 +7,7 @@
 : "${database_port:?}"
 
 echo "--- Deleting database ${database_name} ---"
-echo "Are you sure you want to drop database ${database_name} (Y/n)?"
+echo "Are you sure you want to drop database ${database_name} (y/N)?"
 read -r confirm
 if [[ ${confirm} =~ ^[Yy]$ ]]; then
   echo "- import drop.sql:"

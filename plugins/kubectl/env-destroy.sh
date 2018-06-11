@@ -13,7 +13,7 @@ echo "Deleting secrets from Kubernetes" && \
 echo "Delete namespace ${taito_namespace} (Y/n)?" && \
 echo "WARNING: Do not delete the namespace if it contains also some other apps" && \
 read -r confirm && \
-if [[ "${confirm}" =~ ^[Yy]$ ]]; then
+if [[ "${confirm}" =~ ^[Yy]*$ ]]; then
   (${taito_setv:?}; kubectl delete namespace "${taito_namespace}")
 fi && \
 

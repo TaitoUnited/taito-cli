@@ -13,7 +13,7 @@ fi
 echo "Making a pull request for merging ${feature} \
 to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
-if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
   exit 130
 fi
 
@@ -21,7 +21,7 @@ fi
 echo 'Rebase branch ${feature} before making the pull request (Y/n)?' && \
 read -r rebase && \
 git checkout ${feature} && \
-if [[ \${rebase} =~ ^[Yy]$ ]]; then \
+if [[ \${rebase} =~ ^[Yy]*$ ]]; then \
   git rebase -i ${dest}; \
 fi && \
 git push -u origin ${feature} && \

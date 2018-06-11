@@ -12,7 +12,7 @@ fi
 
 echo "Merging ${feature} to ${dest}. Do you want to continue (Y/n)?"
 read -r confirm
-if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
   exit 130
 fi
 
@@ -20,7 +20,7 @@ fi
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
 echo 'Rebase branch ${feature} before merge (Y/n)?' && \
 read -r rebase && \
-if [[ \${rebase} =~ ^[Yy]$ ]]; then \
+if [[ \${rebase} =~ ^[Yy]*$ ]]; then \
   git checkout ${feature} && git rebase -i ${dest} && git checkout -; \
 fi && \
 git checkout ${dest} && \
@@ -33,7 +33,7 @@ git merge ${feature} && \
 ) && \
 echo 'Delete branch ${feature} (Y/n)?' && \
 read -r del && \
-if [[ \${del} =~ ^[Yy]$ ]]; then \
+if [[ \${del} =~ ^[Yy]*$ ]]; then \
   git push origin --delete ${feature} &> /dev/null; \
   git branch -d ${feature}; \
 else \

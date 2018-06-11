@@ -9,7 +9,7 @@ dest="feature/${1:?Feature name not given}"
 if ! git checkout ${dest} 2> /dev/null; then \
   echo 'Creating a new branch: ${dest}. Do you want to continue (Y/n)?' && \
   read -r confirm && \
-  if ! [[ \${confirm} =~ ^[Yy]$ ]]; then \
+  if ! [[ \${confirm} =~ ^[Yy]*$ ]]; then \
     echo Cancelled && \
     exit 130; \
   fi && \
