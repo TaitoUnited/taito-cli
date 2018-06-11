@@ -2,6 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_provider:?}"
+: "${taito_env:?}"
 : "${taito_resource_namespace:?}"
 : "${taito_resource_namespace_id:?}"
 
@@ -24,10 +25,10 @@ fi
 . "${taito_plugin_path}/util/env.sh" && \
 (
   cd "./scripts/terraform/${taito_provider}" && \
-  mkdir -p "./${taito_resource_namespace}" && \
+  mkdir -p "./${taito_env}" && \
   terraform init -backend-config="../common/backend.tf" && \
   ./import_state.sh && \
-  terraform apply -state="./${taito_resource_namespace}/terraform.tfstate"
+  terraform apply -state="./${taito_env}/terraform.tfstate"
 ) && \
 
 # Call next command on command chain
