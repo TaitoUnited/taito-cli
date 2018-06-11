@@ -1,13 +1,13 @@
 #!/bin/bash
 
+. _template-config.sh
+
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_repo_name:?}"
 : "${template_dest_git:?}"
 # TODO: separate setting for git organization
 : "${template_default_organization:?}"
-
-. _template-config.sh
 
 # Execute create script of template
 "${taito_plugin_path}/util/init.sh" "create" && \
@@ -34,8 +34,11 @@ echo "Please wait..." && \
   git push -q origin v0.0.0 && \
   git checkout -q -b dev && \
   git push -q -u origin dev > /dev/null && \
+  echo && \
   echo DONE! Now configure your project! See the configuration chapter && \
   echo of the project README.md for more details. && \
+  echo Press enter to continue && \
+  read -r && \
   taito util-browser https://github.com/${template_default_organization}/${taito_repo_name}/#configuration"
 
 # Call next command on command chain

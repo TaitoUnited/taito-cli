@@ -1,10 +1,10 @@
 #!/bin/bash
 
+. _template-config.sh
+
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${template_default_source_git:?}"
-
-. _template-config.sh
 
 # Execute migrate script of template
 (
