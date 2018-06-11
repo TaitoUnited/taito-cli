@@ -7,6 +7,7 @@
 source="${1:?}"
 dest="${2:?}"
 
+"${taito_plugin_path}/util/use-context.sh" && \
 . "${taito_plugin_path}/util/determine-pod-container.sh"
 
 (${taito_setv:?}; kubectl cp "${pod}:${source}" "${dest}" -c "${container}")

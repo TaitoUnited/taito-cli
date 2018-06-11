@@ -1,10 +1,10 @@
 #!/bin/bash
 : "${taito_vout:?}"
-: "${taito_env:?}"
+: "${taito_resource_namespace:?}"
 
 # Set terraform basic settings
 export TF_LOG="INFO"
-export TF_LOG_PATH="./${taito_env}/terraform.log"
+export TF_LOG_PATH="./${taito_resource_namespace}/terraform.log"
 export TF_PLUGIN_CACHE_DIR="/${HOME}/.terraform.d/plugin-cache"
 
 # Export all taito_xxx environment variables as TF_VAR terraform variables.
