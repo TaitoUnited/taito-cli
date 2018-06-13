@@ -8,3 +8,7 @@ taitoflag_*
 *.tmp
 *.pyc
 *~
+*.tfstate
+*.tfstate.backup
+*.backup
+*.tgz

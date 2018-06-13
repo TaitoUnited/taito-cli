@@ -5,7 +5,8 @@ type=${1}
 
 if [[ ${type} == "" ]] || [[ ${type} == "init" ]]; then
   echo "---- gcloud init -----"
-  (${taito_setv:?}; gcloud init --console-only --project="${taito_zone}")
+  # NOTE: removed  --project="${taito_zone}"
+  (${taito_setv:?}; gcloud init --console-only)
 fi && \
 
 if [[ ${type} == "" ]] || [[ ${type} == "default" ]]; then
@@ -13,7 +14,10 @@ if [[ ${type} == "" ]] || [[ ${type} == "default" ]]; then
   (${taito_setv:?}; gcloud auth application-default login)
 fi && \
 
-if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]]; then
-  echo "---- gcloud container clusters get-credentials -----"
-  "${taito_plugin_path}/util/get-credentials-kube.sh"
+if [[ -n "${kubectl_name:-}" ]]; then
+  if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]]; then
+    echo "---- gcloud container clusters get-credentials -----"
+    "${taito_plugin_path}/util/get-credentials-kube.sh" || \
+      "WARN: Kubernetes authentication failed. OK if does not exist yet."
+  fi
 fi

@@ -5,14 +5,21 @@
 : "${taito_provider:?}"
 : "${taito_resource_namespace:?}"
 
-# shellcheck disable=SC1090
-. "${taito_plugin_path}/util/env.sh" && \
-(
-  cd "./scripts/terraform/${taito_provider}" && \
-  terraform init -backend-config="../common/backend.tf" && \
-  ./import_state.sh && \
-  terraform destroy -state="./${taito_env}/terraform.tfstate"
-) && \
+name=${1}
+
+if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}"; then
+  (
+    export TF_LOG_PATH="./${taito_env}/terraform.log"
+    # shellcheck disable=SC1090
+    . "${taito_plugin_path}/util/env.sh" && \
+    cd "./scripts/terraform/${taito_provider}" && \
+    terraform init -backend-config="../common/backend.tf" && \
+    if [[ -f import_state.sh ]]; then
+      ./import_state.sh
+    fi && \
+    terraform destroy -state="./${taito_env}/terraform.tfstate"
+  )
+fi && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

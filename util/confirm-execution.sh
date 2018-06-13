@@ -1,7 +1,7 @@
 #!/bin/bash
 
-requested_name=${1}
-current_name=${2}
+current_name=${1}
+requested_name=${2}
 
 if [[ "${requested_name}" == "" ]] || \
    [[ "${requested_name}" == "${current_name}" ]]; then

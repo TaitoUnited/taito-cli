@@ -35,11 +35,11 @@ echo "Please wait..." && \
   git checkout -q -b dev && \
   git push -q -u origin dev > /dev/null && \
   echo && \
-  echo DONE! Now configure your project! See the configuration chapter && \
-  echo of the project README.md for more details. && \
-  echo Press enter to continue && \
+  echo DONE! Now configure your project! && \
+  echo Press enter to open the configuration chapter of README.md && \
   read -r && \
-  taito util-browser https://github.com/${template_default_organization}/${taito_repo_name}/#configuration"
+  echo && \
+  taito -c util-browser https://github.com/${template_default_organization}/${taito_repo_name}/#configuration"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

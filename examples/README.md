@@ -1,6 +1,6 @@
 # Quick start
 
-In this example we use Google Cloud and Sentry.
+In this example we use Google Cloud.
 
 > NOTE: Taito-cli is still work in progress. Not all steps work yet.
 
@@ -8,23 +8,41 @@ In this example we use Google Cloud and Sentry.
 
 1. Create a Google Cloud account.
 
-2. Create a Sentry account.
+2. Create a billing account on Google Cloud.
 
 3. Install taito-cli.
 
-## Create a taito zone
+## Create a taito zone in Google Cloud
 
-1. Configure `taito_zone` and `gcloud_organization` settings in the `zone-gcloud/taito-config.sh` file.
+1. Configure `taito_zone` and `gcloud_org_id` in the `zone-gcloud/taito-config.sh` file. (TODO configure all places that say...)
 
-2. Create a zone by running `taito zone apply` in the zone directory.
+2. Authenticate by running `taito --auth` in the `zone-gcloud` directory.
 
-3. TODO set as default zone
+3. Create taito zone by running `taito zone apply` in the `zone-gcloud` directory.
 
-## Create a project and deploy it to taito-zone
+4. TODO change postgres user password afterwards or provide it with google_sql_user? tfstate contains some generated passwords and certificates that should be protected anyway! --> TODO: Add note that no need to commit if you don't want to manage state with terraform.
+
+TODO: LoadBalancer IP:
+- check google load balancer IP and set DNS record: *.mydomain.com
+- make IP permanent: VPC Network -> External IP Addresses -> Ephemeral>Static
+
+TODO: CI/CD cannot pull taito-cli image from another zone -> use docker hub in all examples
+TODO: Check TODOs of 'zone apply' command implementations.
+
+The newly created zone includes:
+
+* Kubernetes cluster for applications
+* Postgres cluster for data
+* Storage for serving static resources
+* Container registry and builder for CI/CD
+* Stackdriver for logging and monitoring
+* Google Functions and pubsub for events/notifications
+
+## Create a project and deploy it to the taito zone
 
 1. Create a new project by running `taito template create: server-template` and follow instructions.
 
-2. Run `taito project apply` in the project directory.
+2. Run `taito project apply` in the project directory. TODO sentry
 
 3. Create dev and prod environments for the project by running `taito env apply:dev` and `taito env apply:prod` in the project directory. This will TODO:
 

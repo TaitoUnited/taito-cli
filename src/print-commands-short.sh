@@ -18,23 +18,6 @@ echo "workspace kill"
 # New project from template
 echo "template create: TEMPLATE"
 
-# Global links
-if [[ "${cprefix}" == "open"* || "${cprefix}" == "*" ]]; then
-  while IFS='*' read -ra items; do
-    for item in "${items[@]}"; do
-      words=(${item})
-      link="${words[0]}"
-      if [[ ${link} ]]; then
-        prefix="$( cut -d '=' -f 1 <<< "$link" )";
-        command=${prefix%#*}
-        echo "open ${command}"
-      fi
-    done
-  done <<< "${link_global_urls:-}"
-else
-  echo "open"
-fi
-
 # Passwords
 # TODO enable only when available
 # echo "passwd share"
@@ -52,6 +35,28 @@ if [[ ${taito_is_zone:-} ]]; then
   echo "zone doctor"
   echo "zone maintenance"
   echo "zone destroy"
+fi
+
+# Global links
+if [[ ${taito_is_zone:-} ]]; then
+  global_links="${link_global_urls:-} ${link_urls:-}"
+else
+  global_links="${link_global_urls:-}"
+fi
+if [[ "${cprefix}" == "open"* || "${cprefix}" == "*" ]]; then
+  while IFS='*' read -ra items; do
+    for item in "${items[@]}"; do
+      words=(${item})
+      link="${words[0]}"
+      if [[ ${link} ]]; then
+        prefix="$( cut -d '=' -f 1 <<< "$link" )";
+        command=${prefix%#*}
+        echo "open ${command}"
+      fi
+    done
+  done <<< "${global_links:-}"
+else
+  echo "open"
 fi
 
 # Project

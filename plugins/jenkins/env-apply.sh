@@ -1,7 +1,9 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 
-echo "TODO create build trigger"
+if "${taito_cli_path}/util/confirm-execution.sh" "jenkins-trigger" "${name}"; then
+  echo "TODO create build trigger"
+fi
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

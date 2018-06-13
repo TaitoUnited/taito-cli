@@ -15,7 +15,7 @@
   (
     ${taito_setv:?}
     psql -h "${database_host}" \
-      -p "${database_port}"
+      -p "${database_port}" \
       -U "${database_username}" \
       -f "${taito_plugin_path}/resources/create.sql" \
       -v "database=${database_name}" \
@@ -28,7 +28,7 @@
     (
       ${taito_setv:?}
       psql -h "${database_host}" \
-        -p "${database_port}"
+        -p "${database_port}" \
         -d "${database_name}" \
         -U "${database_username}" \
         < "./${taito_target:-database}/db.sql"
@@ -44,7 +44,7 @@
   PGPASSWORD="${secret_value}"
   (
     ${taito_setv:?}
-    psql -h "${database_host}"
+    psql -h "${database_host}" \
     -p "${database_port}" \
     -d "${database_name}" \
     -U "${database_name}" \

@@ -1,0 +1,12 @@
+nginx-ingress:
+  rbac:
+    create: true
+  serviceAccount:
+    create: true
+  controller:
+    replicaCount: 2
+    service:
+      # loadBalancerIP: 'CHANGE'
+    extraArgs:
+      annotations-prefix: ingress.kubernetes.io
+      # enable-dynamic-configuration: true

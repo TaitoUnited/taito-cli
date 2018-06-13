@@ -1,0 +1,3 @@
+apiVersion: v1
+name: common-certmanager
+version: 0.1.0

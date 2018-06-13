@@ -642,14 +642,14 @@ PROJECT: BASIC SETUP
 
 PROJECT: ENVIRONMENT SETUP
 
-  env apply:ENV
+  env apply:ENV [NAME]
     Migrate environment to the latest configuration.
     TODO: implement using terraform.
 
-  env destroy:ENV
+  env destroy:ENV [NAME]
     Destroy an environment.
 
-  env finalize:prod
+  env finalize:prod [NAME]
     Finalize production environment by setting up DNS and monitoring.
     TODO: remove once implemented with terraform
 
@@ -674,20 +674,20 @@ PROJECT: ALTERNATIVE ENVIRONMENT SETUP
 
 ZONE
 
-  zone apply
+  zone apply [NAME]
     Apply infrastructure changes to a zone.
 
-  zone status
+  zone status [NAME]
     Show status summary of a zone.
 
-  zone doctor
+  zone doctor [NAME]
     Analyze and repair a zone.
 
-  zone maintenance
+  zone maintenance [NAME]
     Execute supervised maintenance tasks that need to be run periodically for
     a zone (e.g. upgrades, secret rotation, log reviews, access right reviews).
 
-  zone destroy
+  zone destroy [NAME]
     Destroy a zone.
 
 GLOBAL: PASSWORDS
