@@ -14,7 +14,9 @@ In this example we use Google Cloud.
 
 ## Create a taito zone in Google Cloud
 
-1. Configure `taito_zone` and `gcloud_org_id` in the `zone-gcloud/taito-config.sh` file. (TODO configure all places that say...)
+TODO OPTIONAL: first setup remote state for terraform
+
+1. Configure `taito_zone` and `gcloud_org_id` in the `zone-gcloud/taito-config.sh` file. (TODO configure all places that say...) (TODO installing without organization?)
 
 2. Authenticate by running `taito --auth` in the `zone-gcloud` directory.
 
