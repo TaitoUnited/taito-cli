@@ -49,8 +49,9 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito db connect                         # Access default database from command line
     taito db connect:reportdb                # Access report database from command line
     taito db proxy                           # Show db connection details for default database. Start a proxy if required.
-    taito db add: role_enum                  # Add a database migration for default database
-    taito db add:reportdb role_enum          # Add a database migration for the report database
+    taito db add: role_enum                  # Add a new database migration for default database
+    taito db add:reportdb role_enum          # Add a new database migration for the report database
+    taito db deploy                          # Deploy migrations to default database
     taito db import: ./file.sql              # Import a file to database
     taito shell:server                       # Start a shell inside a container named 'server'
     taito exec:server echo foo               # Execute a command inside the server container
@@ -103,7 +104,14 @@ Storage operation examples:
     taito storage sync from:dev ./data       # Sync files from default dev bucket to ./data
     taito storage sync to:dev ./data         # Sync files from ./data to default dev bucket
 
-With taito-cli you can take an opinionated view on version control. However, command usage should be optional as many developers rather use gui tools for some of these operations. Examples:
+Analyze:
+
+    taito check size                         # Analyze size
+    taito check size:client                  # Analyze size of the client
+    taito check deps                         # Check dependencies
+    taito check deps:worker                  # Check dependencies of the worker
+
+With taito-cli you can take an opinionated view on version control. However, command usage should be optional as many developers rather use git or gui for some of these operations. Examples:
 
     taito vc env list                        # List all environment branches
     taito vc env: dev                        # Switch to the dev environment branch
@@ -653,10 +661,6 @@ NOTE: Always remember to call the next command of the command chain at some poin
 
 NOTE: Do not call another command directly from another. It's error prone; you'll easily mess up the command chain execution, and also clarity of user friendly info messages. Place the common logic shared by multiple commands in a separate util instead.
 
-### Tips
-
-* [Bash string manipulation cheatsheet](https://gist.github.com/magnetikonline/90d6fe30fc247ef110a1)
-
 ### Logging in verbose mode
 
 Values of the following environment variables are set depending on verbose mode:
@@ -730,6 +734,10 @@ These variable names are meant for communication between plugins.
 Secrets:
 
 TODO add documentation
+
+### Tips
+
+* [Bash string manipulation cheatsheet](https://gist.github.com/magnetikonline/90d6fe30fc247ef110a1)
 
 ## Taito-cli development
 

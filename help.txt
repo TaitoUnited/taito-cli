@@ -31,6 +31,7 @@ QUICK EXAMPLES
     db proxy                 # Show db conn details. Start a proxy if required.
     db add: role_enum        # Add a migration for default database
     db add:report role_enum  # Add a migration for report database
+    db deploy                # Deploy migrations to default database
     db import: ./file.sql    # Import a file to default database
     workspace kill           # Kill all running processes (e.g. containers)
     workspace clean          # Remove all unused build artifacts (e.g. images)
@@ -42,9 +43,11 @@ QUICK EXAMPLES
     sync from:server /app/asdf . # Sync folder from server container
     commit:client            # Commit changes to client container image
     clean:server             # Clean server container by deleting it
-    analyze                  # Analyze implementation
-    scan                     # Lint code, scan for vulnerabilities, etc
     docs                     # Generate documentation
+    check size               # Analyze size
+    check size:client        # Analyze size of the client
+    check deps               # Check dependencies
+    check deps:worker        # Check dependencies of the worker
 
   ACCESSING A REMOTE ENVIRONMENT
     open app:dev             # Open application on browser

@@ -163,8 +163,8 @@ if [[ ${taito_project:-} ]]; then
       echo "lint${suffix}"
       echo "unit${suffix}"
       echo "unit${suffix} TEST"
-      echo "analyze${suffix}"
-      echo "scan${suffix}"
+      echo "check size${suffix}"
+      echo "check deps${suffix}"
       echo "docs${suffix}"
     fi
 
