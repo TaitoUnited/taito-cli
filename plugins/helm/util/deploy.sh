@@ -50,6 +50,8 @@ if [[ -d "./scripts/helm" ]]; then
       --set env="${taito_env}" \
       --set zone.name="${taito_zone}" \
       --set zone.provider="${taito_provider:-}" \
+      --set zone.namespace="${taito_namespace}" \
+      --set zone.resourceNamespace="${taito_resource_namespace:-}" \
       --set project.name="${taito_project}" \
       --set project.company="${taito_company:-}" \
       --set project.family="${taito_family:-}" \
