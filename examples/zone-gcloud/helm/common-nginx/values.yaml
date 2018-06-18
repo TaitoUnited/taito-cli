@@ -4,7 +4,7 @@ nginx-ingress:
   serviceAccount:
     create: true
   controller:
-    replicaCount: 2
+    replicaCount: 3
     service:
       # loadBalancerIP: 'CHANGE'
     extraArgs:
