@@ -230,14 +230,26 @@ if [[ "${taito_env}" == "local" ]] && \
      [[ "${command}" == "db-"* ]] || \
      [[ "${command}" == "init"* ]]
    ); then
-  databases=("${taito_databases}")
-  for database in ${databases[@]}
+  docker_project="${PWD##*/}"
+  # docker_project="${docker_project//-/}"
+  # docker_project="${docker_project//_/}"
+  networks=("${taito_networks}")
+  for network in ${networks[@]}
   do
-    echo "# Linking local db: \
-      ${taito_project}-${database}:${taito_project}-${database}"
-    link_flags="${link_flags} --link \
-      ${taito_project}-${database}:${taito_project}-${database}"
+    link_flags="${link_flags} --network ${docker_project}_${network}"
   done
+
+  # TODO remove links and use networks only
+  if [[ "${link_flags}" == "" ]]; then
+    databases=("${taito_databases}")
+    for database in ${databases[@]}
+    do
+      echo "# Linking local db: \
+        ${taito_project}-${database}:${taito_project}-${database}"
+      link_flags="${link_flags} --link \
+        ${taito_project}-${database}:${taito_project}-${database}"
+    done
+  fi
 fi
 
 # Prepare docker options
