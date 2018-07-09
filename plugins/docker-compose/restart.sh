@@ -11,7 +11,7 @@ if [[ -n "${taito_target:-}" ]]; then
 else
   # Restart all containers
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
-    "docker-compose down" && \
+    "docker-compose stop" && \
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
     "${taito_plugin_path}/util/start.sh" "${@}"
 fi && \
