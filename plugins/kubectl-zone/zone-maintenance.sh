@@ -3,7 +3,9 @@
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-secrets" "${name}"; then
+if "${taito_cli_path}/util/confirm-execution.sh" "kubectl" "${name}" \
+  "Rotating secrets"
+then
   echo "TODO rotate secrets"
 fi && \
 

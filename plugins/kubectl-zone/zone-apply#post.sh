@@ -3,16 +3,17 @@
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-devops-namespace" "${name}"
+if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-devops-namespace" "${name}" \
+  "Generating 'devops' namespace on Kubernetes"
 then
-  echo "Generating 'devops' namespace on Kubernetes..." && \
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
   kubectl create namespace devops || \
     echo "Failed to create namespace 'devops'. OK if it already exists"
 fi && \
 
 # TODO create the service account with terraform?
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-cloudsql-secret" "${name}"
+if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-cloudsql-secret" "${name}" \
+  "Creating service acccount for Cloud SQL access and saving it to devops namespace"
 then
   echo && \
   echo "Service account for database access:" && \
@@ -28,7 +29,8 @@ then
 fi && \
 
 # TODO GitHub token handling should be implemented somewhere else?
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-github-secret" "${name}"
+if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-github-secret" "${name}" \
+  "Saving GitHub token to devops namespace for tagging releases"
 then
   echo && \
   echo "GitHub token for tagging releases:" && \

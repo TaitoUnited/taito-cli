@@ -189,7 +189,7 @@ if [[ "${taito_env}" == "prod" ]] && \
    [[ "${taito_command}" != "open-"* ]] && \
    [[ "${taito_mode:-}" != "ci" ]]; then
   echo
-  echo "The operation is targetting prod environment. Do you want to continue (y/N)?"
+  echo "The operation is targetting prod environment of ${taito_project:-}. Do you want to continue (y/N)?"
   read -r confirm
   if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
     exit 130
