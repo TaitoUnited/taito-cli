@@ -219,6 +219,8 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     export template_default_registry="eu.gcr.io"
     export template_default_source_git="git@github.com:TaitoUnited"
     export template_default_dest_git="git@github.com:MyOrganization"
+    export template_default_postgres="my-postgres"
+    export template_default_mysql="my-mysql"
 
     # links
     export link_global_urls="\
@@ -273,6 +275,8 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     export template_default_registry="eu.gcr.io"
     export template_default_source_git="git@github.com:TaitoUnited"
     export template_default_dest_git="git@github.com:MyOrganization"
+    export template_default_postgres="my-postgres"
+    export template_default_mysql="my-mysql"
 
     # links
     export link_global_urls="\
@@ -347,6 +351,8 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     export template_default_registry="eu.gcr.io"
     export template_default_source_git="git@github.com:TaitoUnited"
     export template_default_dest_git="git@github.com:MyOrganization"
+    export template_default_postgres="my-postgres"
+    export template_default_mysql="my-mysql"
 
     # TODO a list of plugins that are allowed to run commands on host?
 
