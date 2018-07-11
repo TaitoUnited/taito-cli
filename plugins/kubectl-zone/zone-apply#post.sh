@@ -3,6 +3,12 @@
 
 name=${1}
 
+if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-dashboard" "${name}" \
+  "Stopping dashboard as it is not needed in most cloud setups"
+then
+  kubectl scale --replicas=0 --namespace kube-system deployment/kubernetes-dashboard
+fi && \
+
 if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-devops-namespace" "${name}" \
   "Generating 'devops' namespace on Kubernetes"
 then
