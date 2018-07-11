@@ -1,11 +1,14 @@
 #!/bin/bash
+: "${taito_cli_path:?}"
 
 exports=""
 secret_index=0
 secret_names=(${taito_secret_names})
 for secret_name in ${secret_names[@]}
 do
-  if [[ -z "${name_filter}" ]] || [[ ${secret_name} == *"${name_filter}"* ]]; then
+  if ( [[ -z "${name_filter}" ]] || [[ ${secret_name} == *"${name_filter}"* ]] ) && \
+    "${taito_cli_path}/util/confirm-execution.sh" "${secret_name}" "" "Create/determine value for secret ${secret_name}"
+  then
     . "${taito_cli_path}/util/secret-by-index.sh"
     if [[ "${secret_method}" == "manual" ]]; then
       echo
