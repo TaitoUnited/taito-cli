@@ -205,7 +205,8 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     # template plugin default settings
     export template_default_taito_image="taitounited/taito-cli:latest"
     export template_default_organization="myorganization"
-    export template_default_domain="devdomain.com"
+    export template_default_domain="mydevdomain.com"
+    export template_default_domain_prod="mydomain.com"
     export template_default_zone="my-zone"
     export template_default_zone_prod="my-prod-zone"
     export template_default_provider="gcloud"
@@ -219,6 +220,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     export template_default_registry="eu.gcr.io"
     export template_default_source_git="git@github.com:TaitoUnited"
     export template_default_dest_git="git@github.com:MyOrganization"
+    export template_default_kubernetes="my-kubernetes"
     export template_default_postgres="my-postgres"
     export template_default_mysql="my-mysql"
 
@@ -261,7 +263,8 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     # template plugin default settings
     export template_default_taito_image="taitounited/taito-cli:latest"
     export template_default_organization="myorganization"
-    export template_default_domain="devdomain.com"
+    export template_default_domain="mydevdomain.com"
+    export template_default_domain_prod="mydomain.com"
     export template_default_zone="my-zone"
     export template_default_zone_prod="my-prod-zone"
     export template_default_provider="gcloud"
@@ -275,6 +278,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     export template_default_registry="eu.gcr.io"
     export template_default_source_git="git@github.com:TaitoUnited"
     export template_default_dest_git="git@github.com:MyOrganization"
+    export template_default_kubernetes="my-kubernetes"
     export template_default_postgres="my-postgres"
     export template_default_mysql="my-mysql"
 
@@ -337,7 +341,8 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     # settings used by your organization.
     export template_default_taito_image="taitounited/taito-cli:latest"
     export template_default_organization="myorganization"
-    export template_default_domain="devdomain.com"
+    export template_default_domain="mydevdomain.com"
+    export template_default_domain_prod="mydomain.com"
     export template_default_zone="my-zone"
     export template_default_zone_prod="my-prod-zone"
     export template_default_provider="gcloud"
@@ -351,6 +356,7 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     export template_default_registry="eu.gcr.io"
     export template_default_source_git="git@github.com:TaitoUnited"
     export template_default_dest_git="git@github.com:MyOrganization"
+    export template_default_kubernetes="my-kubernetes"
     export template_default_postgres="my-postgres"
     export template_default_mysql="my-mysql"
 
