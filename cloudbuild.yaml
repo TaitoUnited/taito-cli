@@ -86,7 +86,7 @@ steps:
     # Read version number that semantic-release wrote on the package.json
     # and tag image with it
     echo "Fetching version from package.json"
-    tag=$$(grep "version" package.json | grep -o "[0-9]*\.[0-9]*\.[0-9]*")
+    tag=$$(grep -e "version" package.json | grep -o "[0-9]*\.[0-9]*\.[0-9]*")
     echo "Using tag $${tag}" && \
     docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
       eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} && \
