@@ -12,10 +12,6 @@
 image="${1}"
 options=("${@:2}")
 
-# Read version number that semantic-release wrote on the package.json
-version=$(grep "version" \
-  "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
-
 # Determine image
 if [[ ${image} == "--dry-run" ]]; then
   # TODO: this is a quick hack
@@ -31,13 +27,23 @@ if [[ -z ${image} ]]; then
   exit 1
 fi
 
-# Deploy chart located in ./scripts/helm
+# Read version number that semantic-release wrote on the package.json
+version=$(grep "version" \
+  "${taito_project_path}/package.json" | grep -o "[0-9].[0-9].[0-9]")
 
+# Deploy chart located in ./scripts/helm
 if [[ -d "./scripts/helm" ]]; then
+  # Substitute environment variables in helm.yaml
+  perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : ""/eg' \
+    scripts/helm.yaml > scripts/helm.yaml.tmp
+
   # helm-ENV.yaml overrides default settings of helm.yaml
   override_file=""
   if [[ -f "scripts/helm-${taito_env}.yaml" ]]; then
-    override_file="-f scripts/helm-${taito_env}.yaml"
+    override_file="-f scripts/helm-${taito_env}.yaml.tmp"
+    # Substitute environment variables in helm-ENV.yaml
+    perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : ""/eg' \
+      "scripts/helm-${taito_env}.yaml" > "scripts/helm-${taito_env}.yaml.tmp"
   fi
 
   echo "- Deploying ${image} of ${taito_project}-${taito_env} using Helm"
@@ -62,8 +68,11 @@ if [[ -d "./scripts/helm" ]]; then
       --set build.imageTag="${image}" \
       --set build.version="${version}" \
       --set build.commit="TODO" \
-      -f scripts/helm.yaml ${override_file} \
+      -f scripts/helm.yaml.tmp ${override_file} \
       ${helm_deploy_options:-} \
       "${taito_project}-${taito_env}" "./scripts/helm"
   )
+
+  rm -f scripts/helm.yaml.tmp
+  rm -f "scripts/helm-${taito_env}.yaml.tmp"
 fi
