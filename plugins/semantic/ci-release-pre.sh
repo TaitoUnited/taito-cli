@@ -42,12 +42,11 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     echo
     npm run "${command}" -- "${@}" && \
     rm -f .npmrc && \
-
     echo "- Copying package.json that contains the new version number" && \
     rm -f "${taito_project_path}/package.json" && \
     yes | cp package.json "${taito_project_path}/package.json" && \
-    version=$(grep "version" "${taito_project_path}/package.json" | \
-      grep -o "[0-9].[0-9].[0-9]") && \
+    version=$(cat package.json | grep -o 'version[": ]*[0-9]*\.[0-9]*\.[0-9]*' | \
+      grep -o '[0-9]*\.[0-9]*\.[0-9]*') && \
     echo "- New version in ./package.json: ${version}"
   )
 fi && \
