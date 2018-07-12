@@ -11,6 +11,7 @@ if [[ -z "${secret_value_git_github_build}" ]]; then
   secret_value_git_github_build="${secret_value_ext_github_build:-}"
 fi
 
+# Determine npm command based on environment
 command=release-pre:${taito_env}
 
 # Run the command only if it exists in package.json
@@ -25,11 +26,11 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     echo "Preparing release"
 
     # TODO remove hardcoded github.com
-    echo "- Cloning git repo to release directory as google container builder"
-    echo "workspace does not point to the original repository"
+    echo "- Cloning git repo to a separate release directory because builder"
+    echo "workspace does not necessarily point to the original repository"
     ${taito_setv:?}
     git clone "https://${secret_value_git_github_build}@github.com/${taito_organization}/${taito_repo_name}.git" release && \
-    cd "${taito_project_path}/release"
+    cd "${taito_project_path}/release" && \
     git checkout master && \
     npm install && \
 
@@ -42,10 +43,9 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     npm run "${command}" -- "${@}" && \
     rm -f .npmrc && \
 
-    echo "- Copying package.json with a new version number" && \
+    echo "- Copying package.json that contains the new version number" && \
     rm -f "${taito_project_path}/package.json" && \
     yes | cp package.json "${taito_project_path}/package.json" && \
-
     version=$(grep "version" "${taito_project_path}/package.json" | \
       grep -o "[0-9].[0-9].[0-9]") && \
     echo "- New version in ./package.json: ${version}"
