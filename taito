@@ -348,4 +348,5 @@ fi
 rm -f "${log_file}" &> /dev/null
 rm -f "${log_file_fg}" &> /dev/null
 
+# Exit
 exit ${exit_code}
