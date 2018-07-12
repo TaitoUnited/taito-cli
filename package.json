@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "clean": "docker build --no-cache -t taito .",
-    "verify": "npm-run-all --parallel lint test",
+    "verify": "npm-run-all --parallel scan test",
     "scan": "echo 'TODO lint'",
     "test": "echo 'TODO (cd test; ./all.sh)'",
     "release-pre": "semantic-release pre",
