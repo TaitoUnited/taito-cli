@@ -171,8 +171,11 @@ do
     extension_paths="${extension_paths} /root/.taito/${repo_name}"
   else
     # Local url
-    docker_path="${extension/\${taito_home_path}//root}"
-    local_path="${extension/\${taito_home_path}/${taito_home_path}}"
+    # First replace ~ with an absolute home path.
+    # Then replace home path with /root for docker.
+    local_path="${extension/\~/${taito_home_path}}"
+    docker_path="${extension/\~/${taito_home_path}}"
+    docker_path="${docker_path/$taito_home_path//root}"
     extension_paths="${extension_paths} ${docker_path}"
     extension_mount_flags="${extension_mount_flags} \
       -v ${local_path}:${docker_path}"
