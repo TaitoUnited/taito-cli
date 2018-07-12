@@ -1,6 +1,7 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
+: "${taito_branch:?}"
 : "${taito_organization:?}"
 : "${taito_repo_name:?}"
 : "${secret_value_git_github_build:?}"
@@ -31,7 +32,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     ${taito_setv:?}
     git clone "https://${secret_value_git_github_build}@github.com/${taito_organization}/${taito_repo_name}.git" release && \
     cd "${taito_project_path}/release" && \
-    git checkout master && \
+    git checkout ${taito_branch} && \
     npm install && \
 
     echo "- Running semantic-release" && \
