@@ -26,5 +26,7 @@ if [[ "${switches}" == *"-b"* ]]; then
   flags="${flags} --detach"
 fi
 
-"${taito_cli_path}/util/execute-on-host-fg.sh" \
-  "${setenv}docker-compose ${compose_cmd} ${flags}"
+"${taito_cli_path}/util/execute-on-host-fg.sh" "\
+  if [ -f ./taito-run-env.sh ]; then . ./taito-run-env.sh; fi && \
+  ${setenv}docker-compose ${compose_cmd} ${flags} \
+"
