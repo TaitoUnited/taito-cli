@@ -5,19 +5,16 @@
 : "${taito_namespace:?}"
 : "${kubectl_skip_restart:-}"
 
-name_filter="${1}"
-
 # Validate secret values
 secret_index=0
 secret_names=(${taito_secret_names})
 for secret_name in "${secret_names[@]}"
 do
-  if [[ -z "${name_filter}" ]] || [[ ${secret_name} == *"${name_filter}"* ]]; then
-    . "${taito_cli_path}/util/secret-by-index.sh"
-    if [[ ${#secret_value} -lt 8 ]] && [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
-      echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
-      exit 1
-    fi
+  . "${taito_cli_path}/util/secret-by-index.sh"
+  if [[ "${secret_value:-}" ]] && [[ ${#secret_value} -lt 8 ]] && \
+     [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
+    echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
+    exit 1
   fi
   secret_index=$((${secret_index}+1))
 done && \
@@ -26,9 +23,9 @@ done && \
 secret_index=0
 for secret_name in "${secret_names[@]}"
 do
-  if [[ -z "${name_filter}" ]] || [[ ${secret_name} == *"${name_filter}"* ]]; then
-    . "${taito_cli_path}/util/secret-by-index.sh"
+  . "${taito_cli_path}/util/secret-by-index.sh"
 
+  if [[ "${secret_value:-}" ]]; then
     if [[ ${secret_method} == "copy/"* ]]; then
       echo "Copy ${secret_name} from ${secret_source_namespace} namespace"
       secret_value=$(kubectl get secret "${secret_name}" -o yaml \
