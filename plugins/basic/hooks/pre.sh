@@ -1,8 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${taito_env:?}"
-: "${taito_project:?}"
 
 # --auth command pre-handling
 if [[ "${taito_command:-}" == "__auth" ]]; then
