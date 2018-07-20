@@ -753,14 +753,15 @@ TODO add documentation
 
 ## Taito-cli development
 
-Development installation: Symlink `taito` (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`) and run commands using the `-d` or `--dev` flag (e.g. `taito --dev --help`). In the development mode your local taito-cli directory is mounted on the container.
+Development installation: Run commands in development mode by using the `-d, --dev` flag (e.g. `taito -d env apply:dev`). In the development mode your local taito-cli directory is mounted on the container. If you are working with your own fork, update taito symlink so that it points to your forked version (see [taito-cli installation](#installation)).
 
-1. Start a new feature branch.
+1. Fork taito-cli repository (or make a feature branch if you have write permissions to taito-cli repository).
 2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. If you are using a compiled language, add a compilation script and use `.x` as a file extension for the executable (it will be ignored by git). Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
-3. Add description of your implementation in your plugin README.md. Concentrate on explaining how your plugin is designed to work with other plugins, e.g. which environent variables it expects and which it exports for others to use.
-4. If you did not implement any of the predefined commands, add your command usage description in plugin help.txt file.
-5. Add some integration or unit tests for your command.
-6. Make a pull request.
+3. TODO autocompletions
+4. Add description of your implementation in your plugin README.md. Concentrate on explaining how your plugin is designed to work with other plugins, e.g. which environent variables it expects and which it exports for others to use.
+5. If you did not implement any of the predefined commands, add your command usage description in plugin help.txt file.
+6. Add some integration or unit tests for your command.
+7. Make a pull request.
 
 ## License
 
