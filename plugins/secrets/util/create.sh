@@ -6,10 +6,10 @@ secret_index=0
 secret_names=(${taito_secret_names})
 for secret_name in ${secret_names[@]}
 do
+  . "${taito_cli_path}/util/secret-by-index.sh"
   if ( [[ -z "${name_filter}" ]] || [[ ${secret_name} == *"${name_filter}"* ]] ) && \
-    "${taito_cli_path}/util/confirm-execution.sh" "${secret_name}" "" "Create/determine value for secret ${secret_name}"
+    "${taito_cli_path}/util/confirm-execution.sh" "${secret_name}" "" "Create new value for '${secret_name}' using method '${secret_method:-}'"
   then
-    . "${taito_cli_path}/util/secret-by-index.sh"
     if [[ "${secret_method}" == "manual" ]]; then
       echo
       echo "New secret for ${secret_name} (min 8 characters):"
@@ -41,9 +41,10 @@ do
       if [[ ${#secret_value} -gt 30 ]]; then
         secret_value="${secret_value: -30}"
       fi
-      echo "- ${secret_name}: random value generated"
+      echo "random value generated"
     fi
-    exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
+    echo
+    exports="${exports}export ${secret_value_var}=\"${secret_value}\"; export ${secret_changed_var}=\"true\"; "
   fi
   secret_index=$((${secret_index}+1))
 done && \

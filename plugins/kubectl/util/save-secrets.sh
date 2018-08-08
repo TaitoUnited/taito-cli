@@ -25,8 +25,9 @@ for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
 
-  if [[ "${secret_value:-}" ]] || \
-     [[ ${secret_method} == "copy/"* ]]; then
+  if  [[ "${secret_changed:-}" ]] && ( \
+        [[ "${secret_value:-}" ]] || [[ ${secret_method} == "copy/"* ]] \
+      ); then
     if [[ ${secret_method} == "copy/"* ]]; then
       echo "Copy ${secret_name} from ${secret_source_namespace} namespace"
       secret_value=$(kubectl get secret "${secret_name}" -o yaml \
@@ -54,7 +55,6 @@ do
       if [[ $? -gt 0 ]]; then
        exit 1
       fi
-      echo "- ${secret_name} saved"
     fi
   fi
   secret_index=$((${secret_index}+1))
@@ -65,7 +65,7 @@ if [[ ${kubectl_skip_restart:-} != "true" ]]; then
   echo "Restart all pods in namespace ${taito_namespace} (Y/n)?" && \
   read -r confirm && \
   if [[ "${confirm}" =~ ^[Yy]*$ ]]; then
-    echo "--- kubectl: Restarting pods ---" && \
+    echo "Restarting pods..." && \
     echo "TODO rolling update instead of delete?" && \
     (${taito_setv:?}; kubectl delete --all pods --namespace="${taito_namespace}")
   fi

@@ -34,7 +34,7 @@ With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybr
 Some examples of the most common predefined taito-cli commands used in local development:
 
     taito install                            # Install libraries on host
-    taito start                              # Start containers
+    taito start                              # Start the application
     taito init                               # Initialize database and storage buckets
     taito open app                           # Open application on browser
     taito open admin                         # Open admin GUI on browser
@@ -53,10 +53,14 @@ Some examples of the most common predefined taito-cli commands used in local dev
     taito db add:reportdb role_enum          # Add a new database migration for the report database
     taito db deploy                          # Deploy migrations to default database
     taito db import: ./file.sql              # Import a file to database
-    taito shell:server                       # Start a shell inside a container named 'server'
+    taito shell:server                       # Start shell inside a container named 'server'
     taito exec:server echo foo               # Execute a command inside the server container
+    taito copy to:server ./source /dest      # Copy a file/folder to server container
+    taito copy from:server /app/source .     # Copy a file/folder from server container
     taito open builds                        # Open build logs on browser
-    taito open boards                        # Open project kanban board(s) on browser
+    taito open kanban                        # Open project kanban board on browser
+    taito open docs                          # Open project documentation on browser
+    taito open ux                            # Open UX guides and layouts on browser
     taito workspace kill                     # Kill all running processes (e.g. containers)
     taito workspace clean                    # Remove all unused build artifacts (e.g. images)
 
@@ -67,6 +71,7 @@ All taito-cli commands target the local development environment by default. If y
     taito info:dev                           # Show information required for signing in to application
     taito status:dev                         # Show status
     taito test:dev                           # Run integration/e2e tests against the dev environment
+    taito test:server:dev travel car         # Run the 'car' test of 'travel' test suite on server container
     taito shell:server:dev                   # Start shell on a container named 'server'
     taito exec:server:dev echo foo           # Execute a command inside the server container
     taito logs:worker:dev                    # Tail logs of a container named 'worker'
@@ -99,10 +104,10 @@ Storage operation examples:
 
     taito storage mount:dev                  # Mount default dev storage bucket to ./mnt/BUCKET
     taito storage mount:dev ./mymount        # Mount default dev storage bucket to ./mymount
-    taito storage copy from:dev ./data       # Copy files from default dev bucket to ./data
-    taito storage copy to:dev ./data         # Copy files from ./data to default dev bucket
-    taito storage sync from:dev ./data       # Sync files from default dev bucket to ./data
-    taito storage sync to:dev ./data         # Sync files from ./data to default dev bucket
+    taito storage copy from:dev /sour ./dest # Copy files from default dev bucket
+    taito storage copy to:dev ./source /dest # Copy files to default dev bucket
+    taito storage sync from:dev /sour ./dest # Sync files from default dev bucket
+    taito storage sync to:dev ./source /dest # Sync files to default dev bucket
 
 Analyze:
 
@@ -307,7 +312,7 @@ Run `taito -h` to show a list of all predefined commands of taito-cli and additi
 
 *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press <kbd>ctrl</kbd>+<kbd>]</kbd> (or <kbd>ctrl</kbd>+<kbd>å</kbd> for us scandinavians) and type `close`.*
 
-Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` to authenticate in the current context. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
+Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of the project. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
 See the [README.md](https://github.com/TaitoUnited/server-template#readme) of the [server-template](https://github.com/TaitoUnited/server-template) project as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 

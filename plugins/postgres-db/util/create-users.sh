@@ -6,8 +6,6 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-echo "- import users.sql"
-
 . "${taito_plugin_path}/util/postgres-username-password.sh"
 
 # Validate env variables

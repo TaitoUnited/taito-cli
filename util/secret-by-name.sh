@@ -1,6 +1,8 @@
 #!/bin/bash
 : "${find_secret_name:?}"
 
+# TODO refactor secret handling!
+
 # Reads secret info to environment variables. The secret in question is
 # determined by the given ${find_secret_name}"
 

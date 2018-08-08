@@ -85,12 +85,12 @@ QUICK EXAMPLES
     db copyquick to:dev test # Copy test database to dev (WARNING!!)
 
   STORAGE OPERATIONS
-    storage mount:dev              # Mount dev storage bucket to ./mnt/BUCKET
-    storage mount:dev ./mymount    # Mount dev storage bucket to ./mymount
-    storage copy from:dev ./data   # Copy files from dev bucket to ./data
-    storage copy to:dev ./data     # Copy files from ./data to dev bucket
-    storage sync from:dev ./data   # Sync files from dev bucket to ./data
-    storage sync to:dev ./data     # Sync files from ./data to dev bucket
+    storage mount:dev                  # Mount dev storage bucket to ./mnt/BUCKT
+    storage mount:dev ./mymount        # Mount dev storage bucket to ./mymount
+    storage copy from:dev /sour ./dest # Copy files from dev bucket
+    storage copy to:dev ./sour /dest   # Copy files to dev bucket
+    storage sync from:dev /sour ./dest # Sync files from dev bucket
+    storage sync to:dev ./sour /dest   # Sync files to dev bucket
 
   VERSION CONTROL
     vc env list              # List all environment branches
