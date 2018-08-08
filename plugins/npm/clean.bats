@@ -1,31 +1,28 @@
 #!/usr/bin/env bats
 
-load "${BATS_TEST_DIRNAME}/../../unit/test-helper.sh" true
+load "${BATS_TEST_DIRNAME}/../../test/util/test-helper.sh" true
 
 @test "npm: 'taito clean'" {
-  result="$(${BATS_TEST_DIRNAME}/clean.sh)"
-  echo "${result}"
-  executed_count=$(echo "${result}" | grep -c executed:)
-  [[ ${executed_count} == "2" ]]
-  [[ "${result}" == *"executed: rm -rf ./node_modules ./client/node_modules :"* ]]
-  [[ "${result}" == *"executed: call-next.sh  :"* ]]
+  test clean.sh
+
+  assert_executed rm -rf ./node_modules ./client/node_modules
+  assert_executed call-next.sh
+  assert_executed_count 2
 }
 
 @test "npm: 'taito clean:npm'" {
   export taito_target="npm"
-  result="$(${BATS_TEST_DIRNAME}/clean.sh)"
-  echo "${result}"
-  executed_count=$(echo "${result}" | grep -c executed:)
-  [[ ${executed_count} == "2" ]]
-  [[ "${result}" == *"executed: rm -rf ./node_modules ./client/node_modules :"* ]]
-  [[ "${result}" == *"executed: call-next.sh  :"* ]]
+  test clean.sh
+
+  assert_executed rm -rf ./node_modules ./client/node_modules
+  assert_executed call-next.sh
+  assert_executed_count 2
 }
 
 @test "npm: 'taito clean:client'" {
   export taito_target="client"
-  result="$(${BATS_TEST_DIRNAME}/clean.sh)"
-  echo "${result}"
-  executed_count=$(echo "${result}" | grep -c executed:)
-  [[ ${executed_count} == "1" ]]
-  [[ "${result}" == *"executed: call-next.sh  :"* ]]
+  test clean.sh
+
+  assert_executed call-next.sh
+  assert_executed_count 1
 }

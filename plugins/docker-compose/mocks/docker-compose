@@ -2,3 +2,6 @@
 
 echo "executed: docker-compose ${*} :"
 echo "dockerfile: ${dockerfile}"
+
+echo " Up acme-chat-client"
+echo " Up acme-chat-server"

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ ${*} == "ps -a -q" ]]; then
+  echo CONTAINER_ID_1
+  echo CONTAINER_ID_2
+  echo CONTAINER_ID_3
+elif [[ ${*} == "ps -q" ]]; then
+  echo CONTAINER_ID_1
+  echo CONTAINER_ID_2
+else
+  echo "executed: docker ${*} :"
+fi

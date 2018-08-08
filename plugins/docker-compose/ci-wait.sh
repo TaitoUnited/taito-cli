@@ -15,10 +15,10 @@ do
     docker-compose ps
   fi
   up=$(docker-compose ps | grep " Up " | grep -E "\-server|\-client")
-  sleep 5
+  sleep "${ci_wait_test_sleep:-5}"
   ((counter++))
 done && \
-sleep 5 && \
+sleep "${ci_wait_test_sleep:-5}" && \
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"
