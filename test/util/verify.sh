@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO obsolete?
+
 : "${tests:?}"
 
 # Runs all tests and verifies them
