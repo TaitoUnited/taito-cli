@@ -25,7 +25,8 @@ for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
 
-  if [[ "${secret_value:-}" ]]; then
+  if [[ "${secret_value:-}" ]] || \
+     [[ ${secret_method} == "copy/"* ]]; then
     if [[ ${secret_method} == "copy/"* ]]; then
       echo "Copy ${secret_name} from ${secret_source_namespace} namespace"
       secret_value=$(kubectl get secret "${secret_name}" -o yaml \
