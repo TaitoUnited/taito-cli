@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 
@@ -26,7 +26,7 @@ if [[ "${switches}" == *"-b"* ]]; then
   flags="${flags} --detach"
 fi
 
-"${taito_cli_path}/util/execute-on-host-fg.sh" "\
+"${taito_util_path}/execute-on-host-fg.sh" "\
   if [ -f ./taito-run-env.sh ]; then . ./taito-run-env.sh; fi && \
   ${setenv}docker-compose ${compose_cmd} ${flags} \
 "

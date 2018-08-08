@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [[ "${*}" == "run" ]]; then
+  # list all script names for tests
+  echo "  install-ci"
+  echo "    description"
+  echo "  install-dev"
+  echo "    description"
+  echo "  install-all"
+  echo "    description"
+  echo "  command:server:dev:option"
+  echo "    description"
+  echo "  taito-init"
+  echo "    description"
+  echo "  taito-init:clean"
+  echo "    description"
+  echo "  init"
+  echo "    description"
+  echo "  info:prod"
+  echo "    description"
+  echo "  test"
+  echo "    description"
+else
+  # execute npm script
+  echo "executed: npm ${*} :"
+fi
+
+if [[ "${*}" == *"fail" ]]; then
+  exit 2
+fi

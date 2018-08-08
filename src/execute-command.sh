@@ -265,7 +265,7 @@ command_chain=()
 post_command_chain=()
 extensions=("${taito_enabled_extensions} ${taito_cli_path}/plugins")
 # TODO plugin_path??
-commands=($(ls "${plugin_path}/${command}"[\#.]* 2> /dev/null))
+# commands=($(ls "${plugin_path}/${command}"[\#.]* 2> /dev/null))
 for plugin in ${plugins[@]}
 do
   # Check first if plugin is enabled for this environment:
@@ -288,11 +288,11 @@ do
     done
 
     # Add pre/post handlers
-    pre_handlers+=($(ls "${plugin_path}"/hooks/pre* 2> /dev/null))
-    post_handlers+=($(ls "${plugin_path}"/hooks/post* 2> /dev/null))
+    pre_handlers+=($(ls "${plugin_path}"/hooks/pre*{sh,py,js,x} 2> /dev/null))
+    post_handlers+=($(ls "${plugin_path}"/hooks/post*{sh,py,js,x} 2> /dev/null))
 
     # Add matching commands to command chain
-    commands=($(ls "${plugin_path}/${command}"[\#.]* 2> /dev/null))
+    commands=($(ls "${plugin_path}/${command}"[\#.]*{sh,py,js,x} 2> /dev/null))
 
     pre_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#pre\."))
     command_chain+=($(printf '%s\n' "${commands[@]}" | grep -v "#\|\.txt\|\.md" ))

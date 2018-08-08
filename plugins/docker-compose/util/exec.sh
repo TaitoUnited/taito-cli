@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 
@@ -15,4 +15,4 @@ if [[ -n "${docker_run:-}" ]]; then
   compose_cmd="docker-compose run --no-deps --entrypoint '${command}' ${pod}"
 fi && \
 
-"${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_cmd}"
+"${taito_util_path}/execute-on-host-fg.sh" "${compose_cmd}"

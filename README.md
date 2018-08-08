@@ -514,6 +514,8 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
       jwt.${taito_project}.auth:random
     "
 
+> TODO taito-run-env.sh documentation (docker-compose)
+
 ## Secret management
 
 Plugins require secrets to perform some of the operations. Secret naming convention is *type.target_of_type.purpose[/namespace]:generation_method*. For example:
@@ -753,14 +755,14 @@ TODO add documentation
 
 ## Taito-cli development
 
-Development installation: Run commands in development mode by using the `-d, --dev` flag (e.g. `taito -d env apply:dev`). In the development mode your local taito-cli directory is mounted on the container. If you are working with your own fork, update taito symlink so that it points to your forked version (see [taito-cli installation](#installation)).
+Run commands in development mode by using the `-d, --dev` flag (e.g. `taito -d env apply:dev`). In the development mode your local taito-cli directory is mounted on the container. If you are working with your own fork, update taito symlink so that it points to your forked version (see [taito-cli installation](#installation)).
 
-1. Fork taito-cli repository (or make a feature branch if you have write permissions to taito-cli repository).
-2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. If you are using a compiled language, add a compilation script and use `.x` as a file extension for the executable (it will be ignored by git). Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
-3. TODO autocompletions
-4. Add description of your implementation in your plugin README.md. Concentrate on explaining how your plugin is designed to work with other plugins, e.g. which environent variables it expects and which it exports for others to use.
-5. If you did not implement any of the predefined commands, add your command usage description in plugin help.txt file.
-6. Add some integration or unit tests for your command.
+1. Fork taito-cli repository (or create a new feature branch if you have write permissions to taito-cli repository).
+2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. If you are using a compiled language (Go for example), add a compilation script to `package.json` and use `.x` as a file extension for the executable (it will be ignored by git). Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
+3. Add unit tests for your command. You can execute a single unit test by executing the corresponding bats file. All unit tests are run automatically on git push and during CI build, but you can also run them manually with the `taito unit` command.
+4. TODO command autocompletions
+5. Add description of your implementation in your plugin README.md. Concentrate on explaining how your plugin is designed to work with other plugins, e.g. which environent variables it expects and which it exports for others to use.
+6. If you did not implement any of the predefined commands, add your command usage description in plugin help.txt file.
 7. Make a pull request.
 
 ## License

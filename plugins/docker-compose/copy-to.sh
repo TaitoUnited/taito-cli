@@ -1,13 +1,16 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_target:?}"
 
 source="${1:?}"
 dest="${2:?}"
 
-docker_cmd="docker cp ${source} ${taito_target}:${dest}"
-"${taito_cli_path}/util/execute-on-host-fg.sh" "${docker_cmd}"
+# shellcheck disable=SC1090
+. "${taito_plugin_path}/util/determine-pod.sh" && \
+
+docker_cmd="docker cp ${source} ${pod:?}:${dest}"
+"${taito_util_path}/execute-on-host-fg.sh" "${docker_cmd}"
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

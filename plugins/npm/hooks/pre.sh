@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_skip_override:?}"
 : "${taito_command:?}"
 : "${taito_env:?}"
@@ -31,7 +31,7 @@ do
   elif [[ -z "${params}" ]]; then
     params=" -- ${arg}"
   else
-    params="${arg}"
+    params="${params} ${arg}"
   fi
 done
 
@@ -41,7 +41,7 @@ echo "target suffix: ${target}" > ${taito_vout}
 echo "options suffix: ${options}" > ${taito_vout}
 echo "params suffix: ${params}" > ${taito_vout}
 
-if [[ -f "./package.json" ]]; then
+if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   # Read command names from package.json
   commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 
@@ -111,5 +111,5 @@ if [[ ${exit_code} != 0 ]]; then
   exit ${exit_code}
 elif [[ ${skip_remaining_commands} == false ]]; then
   # Call next command on command chain
-  "${taito_cli_path}/util/call-next.sh" "${@}"
+  "${taito_util_path}/call-next.sh" "${@}"
 fi

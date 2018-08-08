@@ -3,15 +3,17 @@
   "description": "Taito command line interface",
   "private": false,
   "scripts": {
-    "clean": "docker build --no-cache -t taito .",
-    "verify": "npm-run-all --parallel scan test",
-    "scan": "echo 'TODO lint'",
-    "test": "echo 'TODO (cd test; ./all.sh)'",
+    "__clean": "docker build --no-cache -t taito .",
+    "verify": "taito lint && taito -c compile && taito -c unit",
+    "lint": "echo 'TODO lint'",
+    "compile": "echo 'TODO compilation for Go'",
+    "unit": "taito -- find . -name \"*.bats\" -type f -prune -exec bats '{}' +",
+    "test": "echo 'TODO integration tests (cd test; ./all.sh)'",
     "release-pre": "semantic-release pre",
     "release-post": "semantic-release post"
   },
   "pre-commit": [
-    "scan"
+    "lint"
   ],
   "pre-push": [
     "verify"

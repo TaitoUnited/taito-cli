@@ -6,9 +6,6 @@ steps:
 - id: install
   name: 'gcr.io/cloud-builders/npm'
   args: ['install']
-- id: scan
-  name: 'gcr.io/cloud-builders/npm'
-  args: ['run', 'scan']
 - id: secrets
   waitFor: ['-']
   name: 'gcr.io/cloud-builders/kubectl'

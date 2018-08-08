@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "executed: docker-compose ${*} :"
+echo "dockerfile: ${dockerfile}"
