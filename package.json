@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "__clean": "docker build --no-cache -t taito .",
-    "verify": "taito lint && taito -c compile && taito -c unit",
+    "verify": "taito -d lint && taito -d -c compile && taito -d -c unit",
     "lint": "echo 'TODO lint'",
     "compile": "echo 'TODO compilation for Go'",
     "unit": "taito -- find . -name \"*.bats\" -type f -prune -exec bats '{}' +",

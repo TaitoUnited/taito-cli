@@ -19,7 +19,7 @@ load "${BATS_TEST_DIRNAME}/../../unit/test-helper.sh"
   echo "${result}"
   executed_count=$(echo "${result}" | grep -c executed:)
   [[ ${executed_count} == "2" ]]
-  [[ "${result}" == *"executed: docker rmi --force acme-chat-server :"* ]]
+  [[ "${result}" == *"executed: docker rmi --force taito-cli_acme-chat-server :"* ]]
   [[ "${result}" == *"executed: call-next.sh  :"* ]]
 }
 
