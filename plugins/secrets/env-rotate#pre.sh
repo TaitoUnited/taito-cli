@@ -4,7 +4,6 @@
 
 name_filter="${1}"
 
-echo
 echo "Creating secrets"
 
 # shellcheck disable=SC1090
