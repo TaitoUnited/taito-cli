@@ -11,7 +11,7 @@ export taito_is_zone="true"
 export taito_zone="CHANGE" # taito zone name/id
 
 # gcloud settings
-export gcloud_org_id="CHANGE"
+export gcloud_org_id="CHANGE" # NOTE: leave empty for 'no organization'
 export gcloud_billing_account_id="CHANGE"
 export gcloud_project_id="${taito_zone}"
 export gcloud_region="europe-west1"

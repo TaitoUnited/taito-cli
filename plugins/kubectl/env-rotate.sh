@@ -3,7 +3,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 
-if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" "Save secrets to Kubernetes"
+if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" "Save newly created secrets to Kubernetes"
 then
   # Ensure that namespace exists
   "${taito_plugin_path}/util/use-context.sh"

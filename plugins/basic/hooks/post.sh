@@ -12,12 +12,13 @@ fi
 
 if [[ ${was_executed} == false ]] && [[ "${taito_command}" == "init" ]]; then
   # None of the enabled plugins has implemented init
+  echo
   echo "### basic/post: Nothing to initialize"
 elif [[ ${was_executed} == false ]]; then
   # Command not found
-  echo
   if [[ "${taito_orig_command}" != " " ]]; then
     # Show matching commands
+    echo
     echo "### basic/post:"
     echo "Unknown command: '${taito_orig_command//-/ }'. Perhaps one of the following commands is the one"
     echo "you meant to run. Run 'taito -h' to get more help."
@@ -37,6 +38,7 @@ elif [[ ${was_executed} == false ]]; then
     fi
     echo "${help}"
   else
+    echo
     echo "Unknown command"
   fi
 fi

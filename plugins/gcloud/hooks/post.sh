@@ -3,6 +3,7 @@
 : "${taito_plugin_path:?}"
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
+  echo
   echo "### gcloud/post: Stopping all db proxies"
   "${taito_plugin_path}/util/db-proxy-stop.sh"
 fi

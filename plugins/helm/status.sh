@@ -5,8 +5,6 @@
 
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
 (${taito_setv:?}; helm list --namespace "${taito_namespace}")
-echo
-echo
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

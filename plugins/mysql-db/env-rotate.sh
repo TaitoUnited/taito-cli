@@ -14,10 +14,11 @@
       . "${taito_plugin_path}/util/mysql-username-password.sh" && \
 
       if [[ -n ${database_build_password:-} ]] && \
-         [[ -n ${database_app_password:-} ]] && \
-         [[ ${database_build_password_changed:-} ]] && \
-         [[ ${database_app_password_changed:-} ]]; then
-        if "${taito_cli_path}/util/confirm-execution.sh" "mysql" "" "Set new passwords for mysql"
+         [[ -n ${database_app_password:-} ]] && ( \
+           [[ ${database_build_password_changed:-} ]] || \
+           [[ ${database_app_password_changed:-} ]]
+         ); then
+        if "${taito_cli_path}/util/confirm-execution.sh" "mysql" "" "Configure new database passwords to mysql"
         then
           echo "Creating users / altering passwords for ${taito_env}"
           echo

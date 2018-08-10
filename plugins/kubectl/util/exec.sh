@@ -17,8 +17,5 @@ if [[ -z "${pod}" ]]; then
   (${taito_setv:?}; kubectl get pods)
 else
   # Kubernetes
-  echo
-  echo "-------------------------------------------------------------------"
-  echo
   (${taito_setv:?}; kubectl exec -it "${pod}" -c "${container}" -- "${command[@]}")
 fi

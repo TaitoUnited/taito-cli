@@ -4,6 +4,7 @@
 : "${taito_command:?}"
 : "${taito_env:?}"
 : "${taito_vout:?}"
+: "${taito_dout:?}"
 
 export taito_hook_command_executed=${taito_hook_command_executed}
 
@@ -35,11 +36,11 @@ do
   fi
 done
 
-echo "command: ${taito_command}" > ${taito_vout}
-echo "env: ${taito_env}" > ${taito_vout}
-echo "target suffix: ${target}" > ${taito_vout}
-echo "options suffix: ${options}" > ${taito_vout}
-echo "params suffix: ${params}" > ${taito_vout}
+echo "command: ${taito_command}" > ${taito_dout}
+echo "env: ${taito_env}" > ${taito_dout}
+echo "target suffix: ${target}" > ${taito_dout}
+echo "options suffix: ${options}" > ${taito_dout}
+echo "params suffix: ${params}" > ${taito_dout}
 
 if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   # Read command names from package.json

@@ -14,10 +14,11 @@
       . "${taito_plugin_path}/util/postgres-username-password.sh" && \
 
       if [[ -n ${database_build_password:-} ]] && \
-         [[ -n ${database_app_password:-} ]] && \
-         [[ ${database_build_password_changed:-} ]] && \
-         [[ ${database_app_password_changed:-} ]]; then
-        if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" "Set new passwords for postgres"
+         [[ -n ${database_app_password:-} ]] && ( \
+           [[ ${database_build_password_changed:-} ]] || \
+           [[ ${database_app_password_changed:-} ]]
+         ); then
+        if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" "Configure new database passwords to postgres"
         then
           echo "Creating users / altering passwords for ${taito_env}"
           echo

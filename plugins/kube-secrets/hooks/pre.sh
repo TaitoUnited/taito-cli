@@ -4,8 +4,9 @@
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
    [[ ${taito_commands_only_chain:-} == *"ci-release"* ]]; then
+  # TODO fetch db secrets only? does ci-release still require secrets?
   echo
-  echo "### kube-secrets/pre: Getting current db password from Kubernetes"
+  echo "### kube-secrets/pre: Getting secrets from Kubernetes"
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
   # shellcheck disable=SC1090
   . "${taito_plugin_path}/util/get-secrets.sh"

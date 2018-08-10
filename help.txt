@@ -201,6 +201,9 @@ OPTIONS
   --verbose, -v
     Show commands that plugins execute.
 
+  --debug
+    Show debug output.
+
   --quiet, -q
     Quiet info logging.
     TODO implement

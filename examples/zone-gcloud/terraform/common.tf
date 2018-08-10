@@ -1,6 +1,10 @@
 variable "taito_zone" {}
-variable "gcloud_org_id" {}
-variable "gcloud_billing_account_id" {}
+variable "gcloud_org_id" {
+  default = ""
+}
+variable "gcloud_billing_account_id" {
+  default = ""
+}
 variable "gcloud_project_id" {}
 variable "gcloud_region" {}
 variable "gcloud_zone" {}

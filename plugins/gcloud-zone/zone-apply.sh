@@ -3,17 +3,16 @@
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-auth" "${name}" \
-  "Authenticating to gcloud"
-then
-  if [[ -n "${kubectl_name:-}" ]]; then
-    echo "Authenticating to Kubernetes: ${kubectl_name:-}"
-    "${taito_cli_path}/plugins/gcloud/util/get-credentials-kube.sh"
+if [[ -n "${kubectl_name:-}" ]]; then
+  if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-auth" "${name}" \
+    "Authenticate to gcloud Kubernetes ${kubectl_name:-}"
+  then
+      "${taito_cli_path}/plugins/gcloud/util/get-credentials-kube.sh"
   fi
 fi && \
 
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-builder" "${name}" \
-  "Initializing cloud container builder"
+  "Initialize cloud container builder"
 then
   echo "Add the following roles for service account XXX@cloudbuild.gserviceaccount.com"
   echo "so that the container builder is allowed to execute Kubernetes"

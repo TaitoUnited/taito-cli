@@ -12,6 +12,7 @@ fi
 # env-destroy command pre-handling
 if [[ ${taito_command:-} == "env-destroy" ]] || \
    [[ ${taito_command:-} == "env-alt-destroy" ]]; then
+  echo
   echo "### basic/pre: Deleting environment ${taito_env} of ${taito_project}. Do you want to continue (Y/n)?"
   read -r confirm
   if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then

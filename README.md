@@ -308,7 +308,7 @@ See `trouble.txt` or run `taito --trouble`.
 
 ## Usage
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for predefined commands.
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for predefined commands. Note that only a very small subset of taito commands are enabled if you are located outside a project directory.
 
 *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press <kbd>ctrl</kbd>+<kbd>]</kbd> (or <kbd>ctrl</kbd>+<kbd>å</kbd> for us scandinavians) and type `close`.*
 
@@ -318,9 +318,9 @@ See the [README.md](https://github.com/TaitoUnited/server-template#readme) of th
 
 ### Advanced usage
 
-You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
+With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
 
-With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution.
+You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
 
 ### Admin credentials
 
@@ -523,7 +523,9 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
 
 ## Secret management
 
-Plugins require secrets to perform some of the operations. Secret naming convention is *type.target_of_type.purpose[/namespace]:generation_method*. For example:
+Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands.
+
+Secret naming convention is *type.target_of_type.purpose[/namespace]:generation_method*. For example:
 
 * *db.silicon_valley_prod.app:random*: A randomly generated database password for silicon valley production database to be used by application.
 * *db.silicon_valley_prod.build/devops:random*: A randomly generated database password for silicon valley production database to be used by CI/CD build. It is saved to devops namespace as it is not required by the application.
@@ -680,18 +682,24 @@ NOTE: Always remember to call the next command of the command chain at some poin
 
 NOTE: Do not call another command directly from another. It's error prone; you'll easily mess up the command chain execution, and also clarity of user friendly info messages. Place the common logic shared by multiple commands in a separate util instead.
 
-### Logging in verbose mode
+### Output in verbose and debug mode
+
+Values of the following environment variables are set depending on debug mode:
+
+* **taito_debug**: `true` or `false`
+* **taito_dout**: `/dev/stdout` or `/dev/null`
 
 Values of the following environment variables are set depending on verbose mode:
 
 * **taito_verbose**: `true` or `false`
-* **taito_setv**: `set -x` or `:`
 * **taito_vout**: `/dev/stdout` or `/dev/null`
+* **taito_setv**: `set -x` or `:`
 
-You can use these environment variables to provide additional output logging in verbose mode. For example:
+You can use these environment variables to provide additional output in verbose or debug mode. For example:
 
-    echo "Some additional logging" > ${taito_vout}
-    (${taito_setv}; kubectl get pods)
+    echo "Additional debug output" > ${taito_dout}
+    echo "Additional verbose output" > ${taito_vout}
+    (${taito_setv}; kubectl get pods) # The command will printed in verbose mode
 
 ### Running commands on host
 

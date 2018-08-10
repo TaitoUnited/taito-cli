@@ -2,7 +2,7 @@
 : "${taito_zone:?}"
 : "${kubectl_cluster:?}"
 : "${kubectl_user:?}"
-: "${taito_vout:?}"
+: "${taito_dout:?}"
 
 namespace="${taito_namespace:-kube-system}"
 
@@ -13,7 +13,7 @@ namespace="${taito_namespace:-kube-system}"
   kubectl config set-context "${namespace}" \
     --namespace="${namespace}" \
     --cluster="${kubectl_cluster}" \
-    --user="${kubectl_user}" > "${taito_vout}" && \
+    --user="${kubectl_user}" > "${taito_dout}" && \
 
-  kubectl config use-context "${namespace}" > "${taito_vout}"
+  kubectl config use-context "${namespace}" > "${taito_dout}"
 )

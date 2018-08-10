@@ -43,15 +43,16 @@ fi
     fi
   fi
 
-  echo "- sqitch: ${command}"
-
   export SQITCH_PASSWORD
   SQITCH_PASSWORD="${sqitch_password}"
-  # TODO remove engine=pg default
-  (${taito_setv:?}; sqitch --engine "${sqitch_engine:-pg}" \
-    -h "${database_host}" -p "${database_port}" \
-    -d "${database_name}" \
-    -u "${database_user}" "${command}" "${@:2}")
+  (
+    ${taito_setv:?}
+    # TODO remove engine=pg default
+    sqitch --engine "${sqitch_engine:-pg}" \
+      -h "${database_host}" -p "${database_port}" \
+      -d "${database_name}" \
+      -u "${database_user}" "${command}" "${@:2}"
+  )
 )
 # shellcheck disable=SC2181
 if [[ $? -gt 0 ]]; then

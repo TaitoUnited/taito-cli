@@ -2,8 +2,9 @@
 # NOTE: This bash script is run inside docker container.
 
 # Parse options
-verbose=false
-continue=false
+verbose="${taito_verbose:-false}"
+debug="${taito_debug:-false}"
+continue="${taito_continue:-false}"
 skip_override=false
 skip_rest=false
 args=()
@@ -18,6 +19,11 @@ do
         ;;
         -v|--verbose)
         verbose=true
+        shift
+        ;;
+        --debug)
+        verbose=true
+        debug=true
         shift
         ;;
         -z)
@@ -120,6 +126,7 @@ if [[ "${command}" == "--"* ]]; then
 fi
 
 # Export some variables to be used in configs and command execution
+export taito_continue="true"
 export taito_skip_override="${skip_override}"
 export taito_command="${command}"
 export taito_orig_command="${orig_command}"
@@ -127,14 +134,18 @@ export taito_env="${env}"
 export taito_branch="${branch}"
 export taito_target="${target}"
 export taito_verbose=false
+export taito_debug=false
 export taito_setv=":"
-export taito_vout="/dev/null"
+export taito_vout="/dev/null" # verbode mode output
+export taito_dout="/dev/null" # debug mode output
 if [[ ${verbose} == true ]]; then
   # Helper environment variables to be used in verbose mode
   taito_verbose=true
   taito_setv="set -x"
   taito_vout="/dev/stdout"
-
+fi
+if [[ ${debug} == true ]]; then
+  taito_debug=true
   echo taito_command: "${taito_command}"
   echo taito_target: "${taito_target}"
   echo taito_env: "${taito_env}"
@@ -374,8 +385,8 @@ elif [[ "${command}" == "__" ]]; then
   eval "${params[@]}"
   exit_code=${?}
 else
-  # Print some additional info in verbose mode
-  if [[ ${verbose} == true ]]; then
+  # Print some additional info in debug mode
+  if [[ ${debug} == true ]]; then
     echo
     echo "### Taito-cli: Executing on ${taito_namespace:-} environment:"
     echo -e "${taito_command_chain// /\\n}"
