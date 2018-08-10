@@ -178,6 +178,11 @@ Password sharing:
     taito passwd set: movie-key              # Set movie-key passwd
     taito passwd rotate: movie               # Rotate all movie passwords
 
+Hour reporting:
+
+    taito hours add: 6,5 Did some work            # Add work hour entry for the current project
+    taito hours add: acme chat 6,5 Did some work  # Add work hour entry for the `chat` project of `acme` client.
+
 See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all predefined taito-cli commands.
 
 ## Installation

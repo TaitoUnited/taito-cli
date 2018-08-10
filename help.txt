@@ -145,6 +145,10 @@ QUICK EXAMPLES
     passwd set: movie-key    # Set movie-key passwd
     passwd rotate: movie     # Rotate all movie passwords
 
+  HOUR REPORTING:
+    taito hours add: 6,5 Did some work           # Add entry for current project
+    taito hours add: acme chat 6,5 Did some work # Add entry for acme chat
+
 OPTIONS
 
   --help, -h
@@ -414,6 +418,15 @@ PROJECT: LINKS
   > open performance - Performace monitoring (e.g. New Relic)
   > open feedback - User feedback management
   > open analytics - Usage analytics (e.g. Google Analytics)
+
+PROJECT: HOUR REPORTING
+
+  hours add: [CLIENT] [PROJECT] HOURS COMMENT...
+    Add a work hour entry. If client and project have not been given,
+    determine client and project from taito-config.sh of current project.
+    Examples:
+    $ taito hours add: 6,5 Did some work
+    $ taito hours add: acme chat 6,5 Did some work
 
 GLOBAL: WORKSPACE OPERATIONS
 
