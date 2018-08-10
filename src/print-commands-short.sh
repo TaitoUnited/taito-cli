@@ -28,6 +28,20 @@ echo "template create: TEMPLATE"
 # echo "passwd rotate"
 # echo "passwd rotate: FILTER"
 
+# Hours
+echo "hours add: HOURS COMMENT"
+echo "hours add: CLIENT PROJECT HOURS COMMENT"
+time_intervals="this-month last-month this-week last-week"
+for time_interval in ${time_intervals}
+do
+  echo "hours list: all ${time_interval}"
+  echo "hours list: CLIENT ${time_interval}"
+  echo "hours list: CLIENT PROJECT ${time_interval}"
+  echo "hours summary: all ${time_interval}"
+  echo "hours summary: CLIENT ${time_interval}"
+  echo "hours summary: CLIENT PROJECT ${time_interval}"
+done
+
 # Zone management
 if [[ ${taito_is_zone:-} ]]; then
   echo "zone apply"

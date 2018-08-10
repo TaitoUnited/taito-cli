@@ -51,6 +51,28 @@ echo "template create: TEMPLATE \
 #   &focus \
 #   # Rotate some passwords"
 
+# Hours
+echo "hours add: HOURS COMMENT \
+  # Add hour entry for current project"
+echo "hours add: CLIENT PROJECT HOURS COMMENT \
+  # Add hour entry for PROJECT of CLIENT"
+time_intervals="this-month last-month this-week last-week"
+for time_interval in ${time_intervals}
+do
+  echo "hours list: all ${time_interval} \
+    # List hour entries of ${time_interval}"
+  echo "hours list: CLIENT ${time_interval} \
+    # List hour entries of ${time_interval} for CLIENT"
+  echo "hours list: CLIENT PROJECT ${time_interval} \
+    # List hour entries of ${time_interval} for PROJECT of CLIENT"
+  echo "hours summary: all ${time_interval} \
+    # Show hour entry summary of ${time_interval}"
+  echo "hours summary: CLIENT ${time_interval} \
+    # Show hour entry summary of ${time_interval} for CLIENT"
+  echo "hours summary: CLIENT PROJECT ${time_interval} \
+    # Show hour entry summary of ${time_interval} for PROJECT of CLIENT"
+done
+
 # Zone management
 if [[ ${taito_is_zone:-} ]]; then
   echo "zone apply # Apply infrastructure changes to the zone"
