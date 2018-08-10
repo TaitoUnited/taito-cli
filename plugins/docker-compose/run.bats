@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-load "${BATS_TEST_DIRNAME}/../../test/util/test-helper.sh"
+load "${taito_cli_path}/test/util/test-helper.sh"
 
 # TODO run command should not work like this?
 @test "docker-compose: 'taito run:server' command" {

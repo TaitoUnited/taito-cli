@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-load "${BATS_TEST_DIRNAME}/../../test/util/test-helper.sh" true
+load "${taito_cli_path}/test/util/test-helper.sh" true
 
 @test "npm: 'taito clean'" {
   test clean.sh

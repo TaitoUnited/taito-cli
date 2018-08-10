@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-load "${BATS_TEST_DIRNAME}/../../test/util/test-helper.sh"
+load "${taito_cli_path}/test/util/test-helper.sh"
 
 @test "docker-compose: 'taito stop'" {
   test stop.sh

@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-load "${BATS_TEST_DIRNAME}/../../../test/util/test-helper.sh" true "${BATS_TEST_DIRNAME}/.."
+load "${taito_cli_path}/test/util/test-helper.sh" true "${BATS_TEST_DIRNAME}/.."
 
 @test "npm: 'taito command:server:dev --option parameter1 parameter2'" {
   export taito_command="command"

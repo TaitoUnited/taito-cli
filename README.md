@@ -635,7 +635,23 @@ This is how you implement your own custom plugin:
       another-plugin/
     ```
 
-2. Add some executable commands to one of the plugins (shell scripts for example) and documentation in help.txt, trouble.txt and README.md. With the #pre and #post prefixes you can define that your command should be run in pre or post phase instead of the normal execute phase (more on that later).
+2. Add `package.json` and `taito-config.sh` files to the root directory of your extension  (`my-extension`). Minimal `package.json` and `taito-config.sh` contents for supporting unit tests:
+
+    ```
+    {
+      "scripts": {
+        "unit": "taito -- find . -name \"*.bats\" -type f -prune -exec bats '{}' +"
+      }
+    }
+    ```
+
+    ```
+    #!/bin/sh
+    export taito_image="taitounited/taito-cli:latest"
+    export taito_plugins="npm"
+    ```
+
+3. Add some executable commands to one of the plugins as `.sh`, `.py`, `.js` or `.x` files). Optionally add also documentation in help.txt, trouble.txt and README.md files. With the #pre and #post prefixes you can define that your command should be run in pre or post phase instead of the normal execute phase (more on that later).
 
     ```
     my-plugin/
@@ -643,15 +659,18 @@ This is how you implement your own custom plugin:
         my-script.sql
       util/
         my-util.sh
+      my-command.bats
       my-command.sh
+      env-apply#post.bats
       env-apply#post.sh
+      env-apply#pre.bats
       env-apply#pre.sh
       help.txt
       README.md
       trouble.txt
     ```
 
-3. Optionally you can also add pre and post hooks to your plugin. These will be called before and after any other commands despite the command name. Exit with code 0 if execution should be continued, code 1 if handler encountered an error and code 2 if everything went ok, but execution should not be continued nevertheless. See npm plugin as an example.
+4. Optionally you can also add pre and post hooks to your plugin. These will be called before and after any other commands despite the command name. Exit with code 0 if execution should be continued, code 1 if handler encountered an error and code 2 if everything went ok, but execution should not be continued nevertheless. See npm plugin as an example.
 
     ```
     my-plugin/
@@ -660,12 +679,14 @@ This is how you implement your own custom plugin:
         post.sh
     ```
 
-4. Add the extension directory to your *taito_global_extensions* or *taito_extensions* definition and the plugin to your *taito_global_plugins* or *taito_plugins* definition. You can reference extension either by file path or git url.
+5. Add the extension directory to your *taito_global_extensions* or *taito_extensions* definition and the plugin to your *taito_global_plugins* or *taito_plugins* definition. You can reference extension either by file path or git url.
 
     ```
     export taito_extensions="git@github.com:JohnDoe/my-extension.git"
     export taito_plugins="my-plugin"
     ```
+
+6. Implement unit tests for your commands with [bats](https://github.com/bats-core/bats-core). See `.bats` files under `taito-cli/plugins` as an example. You can run your unit tests with the `taito unit` command.
 
 Now you should be able to call `taito my command`. And when you call `taito env apply`, your `env-apply#pre` and `env-apply#post` commands will be called before and after all `env-apply` commands defined by other enabled plugins. And if you defined also pre and post hooks, they will be called before and after any commands despite the command name.
 
