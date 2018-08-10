@@ -28,9 +28,6 @@ elif [[ "${taito_env}" != "local" ]]; then
   fi
 fi
 
-echo "host:${database_host} port:${database_port} database:${database_name} \
-username:${mysql_username}"
-
 if [[ "${mysql_password:-}" ]]; then
   MYSQL_PWD="${mysql_password}" \
   mysql -h "${database_host}" -P "${database_port}" -D "${database_name}" \

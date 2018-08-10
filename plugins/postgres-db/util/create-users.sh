@@ -2,6 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
+: "${taito_vout:?}"
 : "${database_name:?}"
 : "${database_host:?}"
 : "${database_port:?}"
@@ -29,4 +30,5 @@ psql -h "${database_host}" -p "${database_port}" \
   -v "database=${database_name}" \
   -v "dbuserapp=${database_name}_app" \
   -v "passwordapp=${database_app_password}" \
-  -v "passwordbuild=${database_build_password}"
+  -v "passwordbuild=${database_build_password}" \
+  > ${taito_vout} 2>&1

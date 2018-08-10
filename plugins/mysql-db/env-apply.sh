@@ -17,11 +17,11 @@ name=${1}
       then
         # Create a subshell to contain password
         (
-          echo "Creating database"
           export database_username=root
           . "${taito_plugin_path}/util/ask-password.sh" && \
           "${taito_plugin_path}/util/create-users.sh" && \
-          "${taito_plugin_path}/util/create-database.sh"
+          "${taito_plugin_path}/util/create-database.sh" && \
+          echo "Created database ${database_name:-}"
         )
       fi
     fi

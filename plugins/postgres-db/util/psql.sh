@@ -27,7 +27,6 @@ elif [[ "${taito_env}" != "local" ]]; then
   fi
 fi
 
-echo "Using username ${psql_username}"
 (
   export PGPASSWORD="${psql_password}"
   ${taito_setv:?}

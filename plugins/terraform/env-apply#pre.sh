@@ -9,16 +9,17 @@
 name=${1}
 
 if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
-  "Apply changes to environment ${taito_env} by running terraform scripts"
+  "Apply changes to ${taito_env} environment by running terraform scripts"
 then
   echo
-  echo "Terraform is currently used only for creating new resources for"
+  echo "NOTE: Terraform is currently used only for creating new resources for"
   echo "an existing project. Make sure that project '${taito_resource_namespace}'"
   echo "exists and has '${taito_resource_namespace_id}' as an id."
   echo "You also might need to enable billing for it."
   echo
   if [[ "${taito_provider}" == "gcloud" ]]; then
-    echo "NOTE: Also enable the Compute Engine API before continuing"
+    echo "NOTE: Also make sure that the Compute Engine API is enabled for"
+    echo "'${taito_resource_namespace}' project before continuing"
   fi
   echo
   echo "Continue (Y/n)?"

@@ -19,18 +19,11 @@
            [[ ${database_app_password_changed:-} ]]
          ); then
         if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" \
-          "Configure new database passwords to postgres"
+          "Set new passwords for postgres database ${database_name:-}"
         then
-          echo "Creating users / altering passwords for ${taito_env}"
-          echo
-          echo "NOTE: YOU CAN IGNORE THE 'role already exists' ERROR MESSAGES"
-          echo
-
           export database_username=postgres
           "${taito_plugin_path}/util/create-users.sh" && \
-
-          echo && \
-          echo "NOTE: YOU CAN IGNORE THE 'role/user already exists' ERROR MESSAGES"
+          echo "Altered database user passwords for database ${database_name:-}"
         fi
       fi
     fi

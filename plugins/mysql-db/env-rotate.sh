@@ -19,19 +19,12 @@
            [[ ${database_app_password_changed:-} ]]
          ); then
         if "${taito_cli_path}/util/confirm-execution.sh" "mysql" "" \
-          "Configure new database passwords to mysql"
+          "Set new passwords for mysql database ${database_name:-}"
         then
-          echo "Creating users / altering passwords for ${taito_env}"
-          echo
-          echo "NOTE: YOU CAN IGNORE THE 'role/user already exists' ERROR MESSAGES"
-          echo
-
           export database_username=root
           . "${taito_plugin_path}/util/ask-password.sh" && \
           "${taito_plugin_path}/util/create-users.sh" && \
-
-          echo && \
-          echo "NOTE: YOU CAN IGNORE THE 'role/user already exists' ERROR MESSAGES"
+          echo "Altered database user passwords for database ${database_name:-}"
         fi
       fi
     fi

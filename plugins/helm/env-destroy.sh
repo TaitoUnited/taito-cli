@@ -9,7 +9,8 @@ echo "Delete and purge helm release ${taito_project}-${taito_env} (Y/n)?" && \
 read -r confirm && \
 if [[ "${confirm}" =~ ^[Yy]*$ ]]; then
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
-  (${taito_setv:?}; helm delete --purge "${taito_project}-${taito_env}")
+  (${taito_setv:?}; helm delete --purge "${taito_project}-${taito_env}") || \
+  echo "WARNING: Deleting helm release failed. Have you ever deployed?"
 fi && \
 
 # Call next command on command chain

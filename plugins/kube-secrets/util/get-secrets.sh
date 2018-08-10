@@ -11,7 +11,7 @@ do
     echo "+ kubectl get secret ${secret_name}" \
       "--namespace=${secret_source_namespace} ..." > "${taito_vout:?}"
     secret_value=$(kubectl get secret "${secret_name}" -o yaml \
-      --namespace="${secret_source_namespace}" | grep "^  SECRET" | \
+      --namespace="${secret_source_namespace}" 2> /dev/null | grep "^  SECRET" | \
       sed -e "s/^.*: //" | base64 --decode)
     set +x
     # shellcheck disable=SC2181

@@ -17,7 +17,6 @@ name=${1}
       then
         # Create a subshell to contain password
         (
-          echo "Dropping database and users"
           export database_username=postgres
           . "${taito_plugin_path}/util/ask-password.sh" && \
           "${taito_plugin_path}/util/drop-database.sh" && \

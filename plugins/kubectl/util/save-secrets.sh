@@ -29,11 +29,9 @@ do
         [[ "${secret_value:-}" ]] || [[ ${secret_method} == "copy/"* ]] \
       ); then
     if [[ ${secret_method} == "copy/"* ]]; then
-      echo "Copy ${secret_name} from ${secret_source_namespace} namespace"
       secret_value=$(kubectl get secret "${secret_name}" -o yaml \
         --namespace="${secret_source_namespace}" | grep "^  SECRET" | \
         sed -e "s/^.*: //" | base64 --decode)
-      echo "Copied"
     fi
 
     if [[ ${secret_method} != "read/"* ]]; then
@@ -69,6 +67,4 @@ if [[ ${kubectl_skip_restart:-} != "true" ]]; then
     echo "TODO rolling update instead of delete?" && \
     (${taito_setv:?}; kubectl delete --all pods --namespace="${taito_namespace}")
   fi
-else
-  echo "--- NOTE: Skipping pod restart for refreshing secrets ---"
 fi

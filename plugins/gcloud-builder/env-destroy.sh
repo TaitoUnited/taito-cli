@@ -8,8 +8,11 @@ name=${1}
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-builder-trigger" "${name}" \
   "Remove build trigger of ${taito_project} from ${taito_zone}"
 then
-  echo "TODO not implemented. Delete trigger manually."
-  echo "Press enter when done"
+  echo "Delete trigger manually. Press enter to open build trigger management."
+  read -r
+  "${taito_cli_path}/util/browser.sh" \
+    "https://console.cloud.google.com/gcr/triggers?project=${taito_zone}" && \
+  echo "Press enter when you have deleted the trigger."
   read -r
 fi && \
 
