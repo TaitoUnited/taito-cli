@@ -3,9 +3,11 @@
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-save" "${name}"; then
-  echo "Saving secrets to Kubernetes"
+name=${1}
 
+if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-save-secrets" "${name}" \
+  "Save secrets to Kubernetes"
+then
   # Make sure that namespace exists
   "${taito_plugin_path}/util/use-context.sh"
   (${taito_setv:?}; kubectl create namespace "${taito_namespace}" &> /dev/null)

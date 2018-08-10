@@ -5,18 +5,20 @@
 : "${taito_env:?}"
 : "${taito_namespace:?}"
 
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-delete" "${name}"; then
-  "${taito_plugin_path}/util/use-context.sh" && \
+name=${1}
 
-  echo "Deleting secrets from Kubernetes" && \
-  "${taito_plugin_path}/util/delete-secrets.sh" && \
+"${taito_plugin_path}/util/use-context.sh" && \
 
-  echo "Delete namespace ${taito_namespace} (Y/n)?" && \
-  echo "WARNING: Do not delete the namespace if it contains also some other apps" && \
-  read -r confirm && \
-  if [[ "${confirm}" =~ ^[Yy]*$ ]]; then
-    (${taito_setv:?}; kubectl delete namespace "${taito_namespace}")
-  fi
+if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-delete-secrets" "${name}" \
+  "Delete secrets of namespace ${taito_namespace} from Kubernetes"
+then
+  "${taito_plugin_path}/util/delete-secrets.sh"
+fi && \
+
+if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-delete-namespace" "${name}" \
+  "Delete namespace ${taito_namespace} from Kubernetes"
+then
+  (${taito_setv:?}; kubectl delete namespace "${taito_namespace}")
 fi && \
 
 # Call next command on command chain

@@ -6,7 +6,9 @@
 name=${1}
 
 # Initialize Helm
-if "${taito_cli_path}/util/confirm-execution.sh" "helm-init" "${name}"; then
+if "${taito_cli_path}/util/confirm-execution.sh" "helm-init" "${name}" \
+  "Init helm by installing/upgrading helm tiller on Kubernetes"
+then
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
   echo "Initializing helm..." && \
   # TODO: helm v3 will remove tiller so from what i understood the permissions will be by the user who apply it --> no need for service account
@@ -20,7 +22,8 @@ if [[ -d "./helm" ]]; then
   charts=($(cd helm && ls)) && \
   for chart in ${charts[@]}
   do
-    if "${taito_cli_path}/util/confirm-execution.sh" "${chart}" "${name}"
+    if "${taito_cli_path}/util/confirm-execution.sh" "${chart}" "${name}" \
+      "Install helm chart ${chart} on Kubernetes"
     then
       # TODO support namespaces
       echo "- Deploying chart ${chart} using Helm"

@@ -8,7 +8,8 @@ for secret_name in ${secret_names[@]}
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
   if ( [[ -z "${name_filter}" ]] || [[ ${secret_name} == *"${name_filter}"* ]] ) && \
-    "${taito_cli_path}/util/confirm-execution.sh" "${secret_name}" "" "Create new value for '${secret_name}' using method '${secret_method:-}'"
+    "${taito_cli_path}/util/confirm-execution.sh" "${secret_name}" "" \
+      "Create new value for '${secret_name}' using method '${secret_method:-}'"
   then
     if [[ "${secret_method}" == "manual" ]]; then
       echo

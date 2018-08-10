@@ -2,15 +2,19 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-if "${taito_cli_path}/util/confirm-execution.sh" "mysql" "${name}"; then
-  (
-    databases=("${taito_target:-$taito_databases}")
-    for database in ${databases[@]}
-    do
-      export taito_target="${database}"
-      . "${taito_util_path}/read-database-config.sh" "${database}" && \
+name=${1}
 
-      if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
+(
+  databases=("${taito_target:-$taito_databases}")
+  for database in ${databases[@]}
+  do
+    export taito_target="${database}"
+    . "${taito_util_path}/read-database-config.sh" "${database}" && \
+
+    if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
+      if "${taito_cli_path}/util/confirm-execution.sh" "mysql" "${name}" \
+        "Create mysql database ${database_name}"
+      then
         # Create a subshell to contain password
         (
           echo "Creating database"
@@ -20,9 +24,9 @@ if "${taito_cli_path}/util/confirm-execution.sh" "mysql" "${name}"; then
           "${taito_plugin_path}/util/create-database.sh"
         )
       fi
-    done
-  )
-fi && \
+    fi
+  done
+) && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -5,8 +5,11 @@
 : "${taito_repo_name:?}"
 : "${taito_project:?}"
 
-if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-builder-trigger" "${name}"; then
-  echo "gcloud-builder: Adding a build trigger for ${taito_project} in ${taito_zone}"
+name=${1}
+
+if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-builder-trigger" "${name}" \
+  "Add a build trigger for ${taito_project} in ${taito_zone}"
+then
   echo "Create a new build trigger with these settings if one does not exist already:"
   echo "- Source: GitHub"
   echo "- Repository: ${taito_repo_name}"

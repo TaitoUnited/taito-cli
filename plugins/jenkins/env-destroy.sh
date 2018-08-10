@@ -1,7 +1,13 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
+: "${taito_zone:?}"
+: "${taito_project:?}"
 
-if "${taito_cli_path}/util/confirm-execution.sh" "jenkins-trigger" "${name}"; then
+name=${1}
+
+if "${taito_cli_path}/util/confirm-execution.sh" "jenkins-trigger" "${name}" \
+  "Remove build trigger of ${taito_project} from ${taito_zone}"
+then
   echo "TODO delete build trigger"
 fi
 

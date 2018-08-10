@@ -10,7 +10,8 @@ if [[ -d "./helm" ]]; then
   charts=($(cd helm && ls)) && \
   for chart in ${charts[@]}
   do
-    if "${taito_cli_path}/util/confirm-execution.sh" "${chart}" "${name}"
+    if "${taito_cli_path}/util/confirm-execution.sh" "${chart}" "${name}" \
+      "Delete helm chart ${chart} from Kubernetes"
     then
       echo "- Deleting chart ${chart} using Helm"
       (

@@ -8,7 +8,9 @@
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}"; then
+if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
+  "Apply changes to environment ${taito_env} by running terraform scripts"
+then
   echo
   echo "Terraform is currently used only for creating new resources for"
   echo "an existing project. Make sure that project '${taito_resource_namespace}'"

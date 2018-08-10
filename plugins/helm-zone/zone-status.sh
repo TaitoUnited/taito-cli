@@ -5,8 +5,9 @@
 
 name=${1}
 
-# Initialize Helm
-if "${taito_cli_path}/util/confirm-execution.sh" "helm" "${name}"; then
+if "${taito_cli_path}/util/confirm-execution.sh" "helm" "${name}" \
+  "Show Helm status"
+then
   helm list
 fi
 

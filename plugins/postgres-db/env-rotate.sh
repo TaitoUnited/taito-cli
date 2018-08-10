@@ -18,7 +18,8 @@
            [[ ${database_build_password_changed:-} ]] || \
            [[ ${database_app_password_changed:-} ]]
          ); then
-        if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" "Configure new database passwords to postgres"
+        if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" \
+          "Configure new database passwords to postgres"
         then
           echo "Creating users / altering passwords for ${taito_env}"
           echo

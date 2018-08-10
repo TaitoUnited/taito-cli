@@ -43,6 +43,7 @@ setup() {
   # Set some variables
   export taito_env="local"
   export taito_vout="/dev/stdout"
+  export taito_dout="/dev/stdout"
   export taito_skip_override="false"
   export taito_testing="true"
 }

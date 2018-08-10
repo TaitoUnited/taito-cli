@@ -3,7 +3,9 @@
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "custom" "${name}"; then
+if "${taito_cli_path}/util/confirm-execution.sh" "custom" "${name}" \
+  "Execute custom maintenance"
+then
   echo "extension/custom: doing some maintenance..."
 fi
 

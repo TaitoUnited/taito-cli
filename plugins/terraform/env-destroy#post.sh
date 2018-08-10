@@ -7,7 +7,9 @@
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}"; then
+if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
+  "Destroy environment ${taito_env} by running terraform"
+then
   (
     export TF_LOG_PATH="./${taito_env}/terraform.log"
     # shellcheck disable=SC1090

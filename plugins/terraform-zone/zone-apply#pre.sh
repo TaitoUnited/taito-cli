@@ -3,9 +3,10 @@
 : "${taito_env:?}"
 
 name=${1}
-prompt="Apply changes to ${taito_env} by running terraform scripts"
 
-if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" "${prompt}"; then
+if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
+  "Apply changes by running terraform scripts"
+then
   (
     export TF_LOG_PATH="./terraform.log"
     # shellcheck disable=SC1090
