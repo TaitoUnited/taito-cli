@@ -182,6 +182,9 @@ Hour reporting:
 
     taito hours add: 6,5 Did some work            # Add work hour entry for the current project
     taito hours add: acme chat 6,5 Did some work  # Add work hour entry for the `chat` project of `acme` client.
+    TODO bulk adds (e.g. three weeks on vacation)
+    taito hours list: all this-month              # List hour entries of this month
+    taito hours summary: all this-month           # Show summary for this month
 
 See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all predefined taito-cli commands.
 

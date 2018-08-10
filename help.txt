@@ -146,8 +146,11 @@ QUICK EXAMPLES
     passwd rotate: movie     # Rotate all movie passwords
 
   HOUR REPORTING:
-    taito hours add: 6,5 Did some work           # Add entry for current project
-    taito hours add: acme chat 6,5 Did some work # Add entry for acme chat
+    taito hours add: 6,5 Did work               # Add entry for current project
+    taito hours add: acme chat 6,5 Did work     # Add entry for acme chat
+    TODO bulk adds (e.g. three weeks on vacation)
+    taito hours list: all this-month            # List hour entries of this month
+    taito hours summary: all this-month         # Show summary for this month
 
 OPTIONS
 
@@ -427,6 +430,14 @@ PROJECT: HOUR REPORTING
     Examples:
     $ taito hours add: 6,5 Did some work
     $ taito hours add: acme chat 6,5 Did some work
+
+  TODO bulk adds
+
+  hours list: [CLIENT|all] [PROJECT] [this-month|last-month|this-week|last-week]
+    List hours
+
+  hours summary: [CLIENT|all] [PROJECT] [this-month|last-month|this-week|last-week]
+    Show summary
 
 GLOBAL: WORKSPACE OPERATIONS
 
