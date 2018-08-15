@@ -1,6 +1,16 @@
-# gcloud example zone (TODO)
+# gcloud example zone
 
-Interactive operations:
+## Links
+
+[//]: # (GENERATED LINKS START)
+
+LINKS WILL BE GENERATED HERE
+
+[//]: # (GENERATED LINKS END)
+
+> You can update this section by configuring links in `taito-config.sh` and running `taito project docs`.
+
+## Interactive operations:
 
 * `taito zone apply`: Apply infrastructure changes to the zone.
 * `taito zone status`: Show status summary of the zone.

@@ -3,7 +3,7 @@
 # taito-cli settings
 export taito_image="taitounited/taito-cli:latest"
 # TODO export taito_extensions="./extension"
-export taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone"
+export taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone links-global"
 # TODO custom plugin
 
 # common settings
@@ -29,5 +29,7 @@ export kubectl_user="${kubectl_cluster}"
 # links
 export link_urls="\
   * dashboard=https://console.cloud.google.com/apis/dashboard?project=${gcloud_project_id} Google Cloud Dashboard \
+  * kubernetes=https://console.cloud.google.com/kubernetes/list?project=gcloud-temp1 Kubernetes clusters \
+  * databases=https://console.cloud.google.com/sql/instances?project=gcloud-temp1 Database clusters \
   * logs=https://console.cloud.google.com/logs/viewer?project=${gcloud_project_id} Logs \
 "
