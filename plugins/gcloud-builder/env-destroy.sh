@@ -11,7 +11,7 @@ then
   echo "Delete trigger manually. Press enter to open build trigger management."
   read -r
   "${taito_cli_path}/util/browser.sh" \
-    "https://console.cloud.google.com/gcr/triggers?project=${taito_zone}" && \
+    "https://console.cloud.google.com/cloud-build/triggers?project=${taito_zone}" && \
   echo "Press enter when you have deleted the trigger."
   read -r
 fi && \
