@@ -27,10 +27,14 @@ elif [[ "${taito_env}" != "local" ]]; then
 fi
 
 if [[ "${database_password:-}" ]]; then
-  MYSQL_PWD="${mysql_password}" \
-  mysqldump -h "${database_host}" -P "${database_port}" \
-    -u "${mysql_username}" "${database_name}"
+  (
+    export MYSQL_PWD="${mysql_password}"
+    ${taito_setv:?}
+    mysqldump -h "${database_host}" -P "${database_port}" \
+      -u "${mysql_username}" "${database_name}"
+  )
 else
+  ${taito_setv:?}
   mysqldump -p -h "${database_host}" -P "${database_port}" \
     -u "${mysql_username}" "${database_name}"
 fi

@@ -10,7 +10,6 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   filename="${1:?Filename not given}"
   username="${2}"
 
-  echo "host: ${database_host} port:${database_port}"
   (
     cd "${taito_current_path}"
     flags="-f ${filename}"

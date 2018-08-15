@@ -8,7 +8,6 @@
 
 if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   username="${1}"
-  echo "host: ${database_host} port:${database_port}"
   "${taito_plugin_path}/util/psql.sh" "${username}"
 fi && \
 
