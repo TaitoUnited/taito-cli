@@ -43,5 +43,7 @@ markdown_links=$(echo -e "${markdown_links:-}" | sort -u)
   sed '/GENERATED LINKS START/q' README.md
   echo -e "${markdown_links}\n"
   sed -n -e '/GENERATED LINKS END/,$p' README.md
-} >> README.md.tmp
-mv -f README.md.tmp README.md
+} > README.md.tmp
+truncate --size 0 README.md
+cat README.md.tmp > README.md
+rm -f README.md.tmp
