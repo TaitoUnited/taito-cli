@@ -234,8 +234,10 @@ if [[ "${taito_env}" == "local" ]] && \
      [[ "${command}" == "init"* ]]
    ); then
   docker_project="${PWD##*/}"
-  # docker_project="${docker_project//-/}"
-  # docker_project="${docker_project//_/}"
+  if [[ "${docker_legacy_networking}" == "true" ]]; then
+    docker_project="${docker_project//-/}"
+    docker_project="${docker_project//_/}"
+  fi
   networks=("${taito_networks}")
   for network in ${networks[@]}
   do
