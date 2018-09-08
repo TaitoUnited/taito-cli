@@ -602,8 +602,10 @@ PROJECT: MANUAL DEPLOYMENT OPERATIONS
     server. Use this when you need to quickly deploy manual changes to some
     environment. Example: taito deployment build:dev server
 
-  deployment deploy:ENV TAG|COMMIT
-    Deploys a prebuilt version to an environment. TODO implement
+  deployment deploy:ENV [IMAGE_TAG|VC_TAG] [--dry-run]
+    Deploys a prebuilt version to the given environment using the current
+    configuration. Uses the latest prebuilt version of the environment
+    in question by default.
 
   deployment revision[:ENV]
     Show current revision.
