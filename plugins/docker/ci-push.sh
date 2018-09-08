@@ -18,9 +18,14 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
-image="${image_path}${path_suffix}:${image_tag}"
-image_latest="${image_path}${path_suffix}:latest"
-image_builder="${image_path}${path_suffix}-builder:latest"
+# Read version number that semantic-release wrote on the package.json
+version=$(grep "version" "${taito_project_path}/package.json" | \
+  grep -o "[0-9].[0-9].[0-9]")
+
+prefix="${image_path}${path_suffix}"
+image="${prefix}:${image_tag}"
+image_latest="${prefix}:latest"
+image_builder="${prefix}-builder:latest"
 
 if [[ "${taito_targets:-}" != *"${name}"* ]]; then
   echo "Skipping push: ${name} not included in taito_targets"
@@ -36,6 +41,14 @@ else
     )
   else
     echo "- Image ${image_tag} already exists. Skipping push."
+  fi && \
+  if [[ "${version}" ]]; then
+    echo "- Tagging an existing image with semantic version ${version}"
+    (
+      ${taito_setv:?}
+      docker image tag "${image}" "${prefix}:${version}" && \
+      docker push "${prefix}:${version}"
+    )
   fi
 fi && \
 
