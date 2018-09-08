@@ -18,14 +18,15 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
+# Read version number that semantic-release wrote on the package.json
+version=$(grep "version" "${taito_project_path}/package.json" | \
+  grep -o "[0-9].[0-9].[0-9]")
+
+# TODO tag also builder and tester with image_tag and tag?
 image="${image_path}${path_suffix}:${image_tag}"
 image_latest="${image_path}${path_suffix}:latest"
 image_builder="${image_path}${path_suffix}-builder:latest"
 image_tester="${taito_project}-${name}-tester:latest"
-
-# Read version number that semantic-release wrote on the package.json
-version=$(grep "version" "${taito_project_path}/package.json" | \
-  grep -o "[0-9].[0-9].[0-9]")
 
 if [[ "${taito_targets:-}" != *"${name}"* ]]; then
   echo "Skipping build: ${name} not included in taito_targets"
@@ -78,6 +79,10 @@ else
         --tag "${image_tester}" \
         "./${name}" && \
       # Build the production runtime
+      build_opts=""
+      if [[ ${version} ]]; then
+        build_opts="--tag ${image_path}${path_suffix}:${version}"
+      fi
       # TODO use also latest production container as cache?
       docker build \
         -f "./${name}/Dockerfile.build" \
@@ -87,6 +92,7 @@ else
         --build-arg BUILD_IMAGE_TAG="${image_tag}" \
         --tag "${image}" \
         --tag "${image_latest}" \
+        ${build_opts} \
         "./${name}"
     )
   fi && \
