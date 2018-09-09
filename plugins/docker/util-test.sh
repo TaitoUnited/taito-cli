@@ -39,7 +39,7 @@ docker_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/-e /" \
 . "${taito_cli_path}/plugins/docker-compose/util/determine-pod.sh" "${dir}" && \
 
 # Determine command to be run on test phase
-# docker_compose="false"
+docker_compose="false"
 compose_pre_cmd=""
 compose_cmd="docker exec ${docker_env_vars} -it ${pod} ./test.sh SUITE ${test_filter}" && \
 if [[ "${taito_env}" != "local" ]]; then
@@ -55,15 +55,17 @@ if [[ "${taito_env}" != "local" ]]; then
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run. HINT: taito start && (exit 1))) && "
-  # if [[ ${taito_mode} != "ci" ]] && [[ -f ./docker-compose-test.yaml ]] && [[ $(grep "${container_test}" "./docker-compose-test.yaml") ]]; then
-  #   # TODO: no longer required?
-  #   echo "docker-compose -f ./docker-compose-test.yaml run ..."
-  #   docker_compose="true"
-  #   compose_cmd="docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} ./test.sh SUITE ${test_filter}"
-  # else
-  #   compose_cmd="docker run ${docker_env_vars} --network=host --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
-  # fi
-  compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
+  if [[ ${ci_exec_test_db_proxy_on_host:-} != "true" ]] && \
+     [[ -f ./docker-compose-test.yaml ]] && \
+     [[ $(grep "${container_test}" "./docker-compose-test.yaml") ]]; then
+    # TODO: no longer required?
+    echo "docker-compose -f ./docker-compose-test.yaml run ..."
+    docker_compose="true"
+    compose_cmd="docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} ./test.sh SUITE ${test_filter}"
+  else
+    compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
+  fi
+  # compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
 fi && \
 
 # Create test suite template from init and test phase commands
@@ -80,7 +82,7 @@ done && \
 
 # Execute tests
 if [[ ! -z ${commands} ]]; then
-  if [[ "${taito_env}" == "local" ]] || [[ "${ci_exec_test_db_proxy}" != "true" ]]; then
+  if [[ "${taito_env}" == "local" ]] || [[ "${ci_exec_test_db_proxy_on_host}" != "true" ]]; then
     "${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_pre_cmd}${commands# && }"
   else
     "${taito_cli_path}/util/execute-on-host.sh" "${compose_pre_cmd}${commands# && }"
@@ -88,10 +90,10 @@ if [[ ! -z ${commands} ]]; then
 fi && \
 
 # Stop all test containers started by docker-compose
-# if [[ ${docker_compose} == "true" ]]; then
-#   "${taito_cli_path}/util/execute-on-host-fg.sh" \
-#     "docker-compose -f ./docker-compose-test.yaml down || echo OK"
-# fi && \
+if [[ ${docker_compose} == "true" ]]; then
+  "${taito_cli_path}/util/execute-on-host-fg.sh" \
+    "docker-compose -f ./docker-compose-test.yaml down || echo OK"
+fi && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
