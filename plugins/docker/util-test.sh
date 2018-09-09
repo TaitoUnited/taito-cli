@@ -20,6 +20,7 @@ echo
 if [[ "${taito_mode:-}" == "ci" ]]; then
   echo "Docker images before test:"
   docker images
+  docker-compose -f docker-compose-test.yaml up
 fi
 
 # Determine command to be run on init phase
