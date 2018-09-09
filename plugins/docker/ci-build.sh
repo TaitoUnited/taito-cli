@@ -46,11 +46,12 @@ else
       ) && pulled="true"
       if [[ $pulled == "true" ]]; then
         break
-      elif [[ $count -gt 20 ]]; then
+      elif [[ $count -gt 40 ]]; then
         echo "- ERROR: Image ${image_tag} not found from registry even after multiple retries. Not building a new image because ci_exec_build is set to false for this environment."
         exit 1
       else
         echo "- WARN: Image ${image_tag} not found from registry. Not building a new image because ci_exec_build is set to false for this environment. Retry in 30 secs."
+        echo "- TODO: We should also wait that the whole dev build has completed (integration tests)"
         sleep 30
       fi
     done

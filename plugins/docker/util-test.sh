@@ -53,7 +53,7 @@ if [[ "${taito_env}" != "local" ]]; then
     image_src="${taito_repo_name}_${taito_project}-${dir}"
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
-    (echo ERROR: Container ${image_src} must be built before tests can be run && (exit 1))) && "
+    (echo ERROR: Container ${image_src} must be built before tests can be run. HINT: taito start && (exit 1))) && "
   if [[ -f ./docker-compose-test.yaml ]] && [[ $(grep "${container_test}" "./docker-compose-test.yaml") ]]; then
     compose_cmd="docker-compose -f ./docker-compose-test.yaml run ${docker_env_vars} ${container_test} ./test.sh SUITE ${test_filter}"
   else
