@@ -10,6 +10,7 @@ sleep_seconds="${2}"
 echo "+ ${commands}" > "${taito_vout}"
 
 if [[ "${taito_mode:-}" == "ci" ]]; then
+  echo "RUNNING: ${commands}"
   eval "${commands}"
 elif [[ -n ${taito_run:-} ]]; then
   echo "${commands}" >> ${taito_run}

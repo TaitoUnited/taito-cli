@@ -9,6 +9,7 @@ commands="${*:1}"
 echo "+ ${commands}" > "${taito_vout}"
 
 if [[ "${taito_mode:-}" == "ci" ]]; then
+  echo "RUNNING: ${commands}"
   eval "${commands}"
 elif [[ -n ${taito_run_fg:-} ]]; then
   echo "${commands}" >> ${taito_run_fg}
