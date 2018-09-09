@@ -20,7 +20,7 @@ echo
 if [[ "${taito_mode:-}" == "ci" ]]; then
   echo "Docker images before test:"
   docker images
-  docker ps
+  docker ps -a --format '{{.Image}} {{.Names}}'
 fi
 
 # Determine command to be run on init phase
