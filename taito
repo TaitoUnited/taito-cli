@@ -318,7 +318,6 @@ eval "docker run ${docker_it} \
   -v \"${taito_home_path}/.terraform.d:/root/.terraform.d\" \
   -v \"$(pwd):/project\" \
   -w /project \
-  --network=host \
   ${proxy_flags} \
   ${extension_mount_flags} \
   ${link_flags} \
