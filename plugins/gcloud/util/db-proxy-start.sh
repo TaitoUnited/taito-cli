@@ -9,8 +9,8 @@ if [[ -n "${database_proxy_port:-}" ]]; then
     # Run in background
     (
       ${taito_setv:?}
-      cloud_sql_proxy "-instances=${database_id}=tcp:${database_proxy_port}" \
-        &> /tmp/proxy-out.tmp &
+      cloud_sql_proxy "-instances=${database_id}=tcp:${database_proxy_port}"
+        # TODO put back: &> /tmp/proxy-out.tmp &
     )
     if [[ "${taito_verbose}" == "true" ]]; then
       sleep 3
