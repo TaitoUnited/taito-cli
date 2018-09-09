@@ -20,7 +20,6 @@ echo
 if [[ "${taito_mode:-}" == "ci" ]]; then
   echo "Docker images before test:"
   docker images
-  docker-compose -f docker-compose-test.yaml up
 fi
 
 # Determine command to be run on init phase
@@ -84,9 +83,9 @@ done && \
 # Execute tests
 if [[ ! -z ${commands} ]]; then
   if [[ "${taito_env}" == "local" ]] || [[ "${ci_exec_test_db_proxy_on_host}" != "true" ]]; then
-    "${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_pre_cmd}${commands# && }"
+    "${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_pre_cmd} docker-compose -f docker-compose-test.yaml up && ${commands# && }"
   else
-    "${taito_cli_path}/util/execute-on-host.sh" "${compose_pre_cmd}${commands# && }"
+    "${taito_cli_path}/util/execute-on-host.sh" "${compose_pre_cmd} docker-compose -f docker-compose-test.yaml up && ${commands# && }"
   fi
 fi && \
 
