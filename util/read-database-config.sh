@@ -3,7 +3,11 @@
 : "${taito_project_path:?}"
 : "${taito_dout:?}"
 
-target="${1:-$taito_target}"
+target="${1}"
+if [[ -z ${1} ]] && [[ -n "${taito_target:-}" ]] && \
+   [[ "${taito_databases:-}" == *"${taito_target}"* ]]; then
+  target="${$taito_target:-}"
+fi
 target="${target:-database}"
 
 echo "Determining database settings by ${target}" > "${taito_dout}"

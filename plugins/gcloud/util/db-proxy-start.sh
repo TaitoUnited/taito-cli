@@ -3,7 +3,7 @@
 : "${taito_vout:?}"
 
 if [[ -n "${database_proxy_port:-}" ]]; then
-  database_id="${gcloud_project:-}:${gcloud_region:-}:${database_instance:-}"
+  database_id="${gcloud_project:?}:${gcloud_region:?}:${database_instance:?}"
 
   if [[ $1 == "true" ]]; then
     # Run in background
