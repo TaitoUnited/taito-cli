@@ -43,16 +43,22 @@ compose_pre_cmd=""
 compose_cmd="docker exec ${docker_env_vars} -it ${pod} ./test.sh SUITE ${test_filter}" && \
 if [[ "${taito_env}" != "local" ]]; then
   # Running against a remote service
-  image_test="${taito_project}-${dir}-util-test:latest"
-  image_src="${taito_project}-${dir}-tester:latest"
+  container_test="${taito_project}-${dir}-test"
+  image_test="${container_test}:latest"
+  image_src="${container_test}er:latest"
   if [[ "${taito_mode:-}" != "ci" ]]; then
     # Use development image for testing
     # NOTE: does not exist if project dir is not named after taito_repo_name
-    image_src="${taito_repo_name/-/}_${taito_project}-${dir}"
+    # NOTE: was ${taito_repo_name/-/}
+    image_src="${taito_repo_name}_${taito_project}-${dir}"
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run && (exit 1))) && "
-  compose_cmd="docker run ${docker_env_vars} --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
+  if [[ -f ./docker-compose-test.yaml ]] && [[ $(grep "${container_test}" "./docker-compose-test.yaml") ]]; then
+    compose_cmd="docker-compose -f ./docker-compose-test.yaml run ${docker_env_vars} ${container_test} ./test.sh SUITE ${test_filter}"
+  else
+    compose_cmd="docker run ${docker_env_vars} --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
+  fi
 fi && \
 
 # Create test suite template from init and test phase commands

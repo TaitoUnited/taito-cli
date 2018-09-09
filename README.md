@@ -141,7 +141,7 @@ Manual deployment operations in case there are some problems with automated CI/C
     taito deployment trigger:dev             # Trigger ci build for dev environment
     taito deployment cancel:dev              # Cancel an ongoing dev environment build
     taito deployment build:worker:dev        # Build and deploy worker container to dev env directly from local env
-    taito deployment deploy:dev v1.1.1       # Deploy a prebuilt version to dev environment
+    taito deployment deploy:dev 1.1.1        # Deploy a prebuilt version to dev environment
     taito deployment revision:dev            # Show current revision deployed on dev environment
     taito deployment revert:dev 20           # Revert application to revision 20 on dev environment
 
