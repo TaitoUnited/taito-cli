@@ -13,8 +13,10 @@ image="${1}"
 options=("${@:2}")
 
 # Determine image
-if [[ ${image} == "--dry-run" ]]; then
-  # TODO: this is a quick hack
+# TODO: this is a quick hack
+if [[ "${taito_mode:-}" == "ci" ]] && [[ ! -f ./taitoflag_images_exist ]]; then
+  image="${image}-untested"
+elif [[ ${image} == "--dry-run" ]]; then
   options=("${@:1}")
   image="DRY_RUN"
 elif [[ -z "${image}" ]]; then

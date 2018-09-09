@@ -20,6 +20,7 @@ fi
 
 prefix="${image_path}${path_suffix}"
 image="${prefix}:${image_tag}"
+image_untested="${image}-untested"
 image_latest="${prefix}:latest"
 image_builder="${prefix}-builder:latest"
 image_tester="${taito_project}-${name}-tester:latest"
@@ -84,6 +85,7 @@ else
         --build-arg BUILD_VERSION="UNKNOWN" \
         --build-arg BUILD_IMAGE_TAG="${image_tag}" \
         --tag "${image}" \
+        --tag "${image_untested}" \
         --tag "${image_latest}" \
         "./${name}"
     )

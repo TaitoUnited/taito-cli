@@ -25,6 +25,7 @@ version=$(cat "${taito_project_path}/package.json" | \
 
 prefix="${image_path}${path_suffix}"
 image="${prefix}:${image_tag}"
+image_untested="${image}-untested"
 image_latest="${prefix}:latest"
 image_builder="${prefix}-builder:latest"
 
@@ -36,7 +37,7 @@ else
   then
     (
       ${taito_setv:?}
-      docker push "${image}" && \
+      docker push "${image_untested}" && \
       docker push "${image_latest}" && \
       docker push "${image_builder}"
     )
