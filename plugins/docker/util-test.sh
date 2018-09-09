@@ -83,7 +83,7 @@ if [[ ! -z ${commands} ]]; then
 fi && \
 
 # Run down all test containers started by docker-compose
-if [ ${docker_compose} == "true" ]]; then
+if [[ ${docker_compose} == "true" ]]; then
   "${taito_cli_path}/util/execute-on-host-fg.sh" \
     "docker-compose -f ./docker-compose-test.yaml down || echo OK"
 fi && \
