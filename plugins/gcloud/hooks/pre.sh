@@ -3,7 +3,9 @@
 : "${taito_plugin_path:?}"
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
-     [[ ${taito_command:-} == "util-test" ]] && [[ ${taito_env:-} != "local" ]] \
+     [[ ${taito_command:-} == "test" ]] && \
+     [[ ${ci_exec_test_db_proxy:-} == "true" ]] && \
+     [[ ${taito_env:-} != "local" ]] \
    ); then
   proxy_running=$(pgrep "cloud_sql_proxy")
   if [[ "${proxy_running}" == "" ]]; then

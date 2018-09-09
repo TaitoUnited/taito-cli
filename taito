@@ -209,6 +209,11 @@ touch "${log_file_fg}"
 taito_host_uname="$(uname)"
 taito_run="${log_file/${taito_home_path}/\/root}"
 taito_run_fg="${log_file_fg/${taito_home_path}/\/root}"
+if [[ "${taito_host_uname}" == "Darwin" ]]; then
+  ctrl_filter=" tr -d '[:cntrl:]' "
+else
+  ctrl_filter=" grep -axv '.*' "
+fi
 
 # Start a background process that will run commands on host in the
 # background while the container is still running on foregound.
@@ -216,7 +221,6 @@ taito_run_fg="${log_file_fg/${taito_home_path}/\/root}"
 (
   # Read commands from log file and execute them
   tail -f "${log_file}" | while read -r line; do
-    # TODO confirm execution from user?
     eval "${line}"
   done
 ) &
@@ -287,11 +291,6 @@ fi
 # Forward taito docker container output to 'less' in case the command is `help`,
 # `trouble` or `readme`. We need to also filter some control characters for
 # a cleaner output.
-if [[ "${taito_host_uname}" == "Darwin" ]]; then
-  ctrl_filter=" tr -d '[:cntrl:]' "
-else
-  ctrl_filter=" grep -axv '.*' "
-fi
 output=""
 if [[ " ${options[*]} " == *" -h "* ]] || \
    [[ " ${options[*]} " == *" --help "* ]] || \
@@ -319,6 +318,7 @@ eval "docker run ${docker_it} \
   -v \"${taito_home_path}/.terraform.d:/root/.terraform.d\" \
   -v \"$(pwd):/project\" \
   -w /project \
+  --network=host \
   ${proxy_flags} \
   ${extension_mount_flags} \
   ${link_flags} \
