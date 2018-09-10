@@ -34,14 +34,14 @@ fi && \
 docker_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/-e /" \
   | sed "s/=/='/" | sed "s/$/'/" | tr '\n' ' ' | sed 's/.$//') && \
 export_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/export /" \
-  | tr '\n' '; ' | sed 's/.$//') && \
+  | tr '\n' ' && ' | sed 's/.$//') && \
 
 if [[ ${export_env_vars} ]]; then
-  export_env_vars="${export_env_vars};"
+  export_env_vars="${export_env_vars} && "
 fi
 
 docker_env_vars="-e taito_running_tests='true' ${docker_env_vars}"
-export_env_vars="export taito_running_tests=true; ${export_env_vars}"
+export_env_vars="export taito_running_tests=true && ${export_env_vars}"
 
 # Determine pod
 # shellcheck disable=SC1090
