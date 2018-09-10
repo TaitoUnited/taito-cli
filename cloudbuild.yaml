@@ -42,7 +42,7 @@ steps:
     npm install && \
 
     echo "# Running semantic-release pre" && \
-    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-pre \
+    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-pre:prod \
       > ./release-output && \
     cat ./release-output && \
 
@@ -75,7 +75,7 @@ steps:
     echo "# Running semantic-release post" && \
     github_token=$$(cat github-token.tmp) && \
     cd release && \
-    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post
+    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post:prod
 
 - id: push
   name: 'gcr.io/cloud-builders/docker'
