@@ -54,7 +54,9 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
       echo "- Copying package.json that contains the new version number" && \
       rm -f "${taito_project_path}/package.json" && \
       yes | cp package.json "${taito_project_path}/package.json"
-    fi
+    fi && \
+
+    echo "Version: $(cat ../taitoflag_version)"
   )
 fi && \
 

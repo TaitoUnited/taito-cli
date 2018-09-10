@@ -30,6 +30,9 @@ steps:
   - |
     github_token=$$(cat github-token.tmp)
 
+    # TODO is git clone / npm install even necessary with the latest
+    # semantic release?
+
     echo "# Cloning git repo to release directory as google container"
     echo "# builder workspace does not point to the original repository"
     git clone "https://${github_token}@github.com/TaitoUnited/taito-cli.git" \
@@ -39,11 +42,14 @@ steps:
     npm install && \
 
     echo "# Running semantic-release pre" && \
-    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-pre && \
-    rm -f .npmrc && \
+    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-pre \
+      > ./release-output && \
+    cat ./release-output && \
 
-    echo "# Copying package.json with a new version number" && \
-    cp package.json ..
+    # Parse version from semantic-release output
+    cat ./release-output | \
+      grep "next release version" | \
+      grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version
 
 - id: build
   name: 'gcr.io/cloud-builders/docker'
@@ -82,9 +88,7 @@ steps:
   - |
     # Read version number that semantic-release wrote on the package.json
     # and tag image with it
-    echo "Fetching version from package.json"
-    tag=$$(cat package.json | grep -o 'version[": ]*[0-9]*\.[0-9]*\.[0-9]*' | \
-      grep -o '[0-9]*\.[0-9]*\.[0-9]*')
+    tag=$$(cat "./taitoflag_version")
     echo "Using tag $${tag}" && \
     docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
       eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} && \
