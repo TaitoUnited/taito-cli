@@ -30,20 +30,25 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     git checkout ${taito_branch} && \
 
     # TODO avoid reading secrets to env vars before running npm install
-    # TODO is this even necessary with the latest semantic release?
+    # TODO is git clone / npm install even necessary with the latest
+    # semantic release?
     npm install && \
 
     echo "- Running npm script ${command}" && \
     NPM_TOKEN=none GH_TOKEN=${secret_value_git_github_build} \
-      npm run "${command}" -- "${@}" # | \
-      # grep "next release version" | \
-      # grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
+      npm run "${command}" -- "${@}" > ./release-output && \
+    cat ./release-output && \
+
+    # Parse version from semantic-release output
+    cat ./release-output | \
+      grep "next release version" | \
+      grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
 
     # Support old semantic version (TODO remove support)
-    if [[ -s ../taitoflag_version ]]; then
+    if [[ ! $(cat ../taitoflag_version) ]]; then
       cat ./package.json | \
         grep -o 'version[": ]*[0-9]*\.[0-9]*\.[0-9]*' | \
-        grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version &&
+        grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
 
       rm -f .npmrc && \
       echo "- Copying package.json that contains the new version number" && \
