@@ -35,7 +35,10 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     git checkout ${taito_branch} && \
     npm install && \
 
-    echo "- Running semantic-release" && \
+    # Required by semantic release?
+    npm install eslint mocha && \
+
+    echo "- Running npm script ${command}" && \
 
     if [[ ${#GH_TOKEN} -lt 8 ]]; then
       echo "WARNING: GH_TOKEN NOT SET!"
