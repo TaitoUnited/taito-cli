@@ -16,7 +16,7 @@ echo "Canceling all previous ongoing builds targetting branch ${branch_name}"
 
 (
   ${taito_setv:?}
-  gcloud beta container builds list --ongoing | \
+  gcloud builds list --ongoing | \
     grep "${full_repo_name}@${branch_name}" | \
     grep -v "${ignore_build_id}" | \
     cut -d ' ' -f 1 | \

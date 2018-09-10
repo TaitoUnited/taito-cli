@@ -16,7 +16,7 @@ echo "Checking if image already exists in the container registry"
 echo "TODO check from container registry instead as there might be manual \
 builds also"
 
-check=$(gcloud beta container builds list --limit=1 \
+check=$(gcloud builds list --limit=1 \
   --filter="STATUS=SUCCESS AND IMAGES=${image_path}/${name}:${image_tag}" \
   | grep "${image_tag}")
 
