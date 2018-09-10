@@ -16,14 +16,11 @@ command=release-post:${taito_env}
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
   (
-    export NPM_TOKEN
-    export GH_TOKEN
-    NPM_TOKEN=none
-    GH_TOKEN=${secret_value_git_github_build}
     echo "Finalizing release"
     cd "${taito_project_path}/release" || exit 1
     ${taito_setv:?}
-    npm run "${command}" -- "${@}" && \
+    NPM_TOKEN=none GH_TOKEN=${secret_value_git_github_build} \
+      npm run "${command}" -- "${@}" && \
     rm -f .npmrc
   )
 fi && \

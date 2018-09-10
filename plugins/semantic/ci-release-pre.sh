@@ -19,11 +19,6 @@ command=release-pre:${taito_env}
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
   (
-    export NPM_TOKEN
-    export GH_TOKEN
-    NPM_TOKEN=none
-    GH_TOKEN=${secret_value_git_github_build}
-
     echo "Preparing release"
 
     # TODO remove hardcoded github.com
@@ -33,20 +28,16 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     git clone "https://${secret_value_git_github_build}@github.com/${taito_organization}/${taito_repo_name}.git" release && \
     cd "${taito_project_path}/release" && \
     git checkout ${taito_branch} && \
+
+    # TODO avoid reading secrets to env vars before running npm install
+    # TODO is this even necessary with the latest semantic release?
     npm install && \
 
-    # Required by semantic release?
-    npm install eslint mocha && \
-
     echo "- Running npm script ${command}" && \
-
-    if [[ ${#GH_TOKEN} -lt 8 ]]; then
-      echo "WARNING: GH_TOKEN NOT SET!"
-    fi && \
-
-    NPM_TOKEN=none GH_TOKEN=${GH_TOKEN} npm run "${command}" -- "${@}" | \
-      grep "next release version" | \
-      grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
+    NPM_TOKEN=none GH_TOKEN=${secret_value_git_github_build} \
+      npm run "${command}" -- "${@}" # | \
+      # grep "next release version" | \
+      # grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
 
     # Support old semantic version (TODO remove support)
     if [[ -s ../taitoflag_version ]]; then
