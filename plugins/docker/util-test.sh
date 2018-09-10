@@ -40,6 +40,9 @@ if [[ ${export_env_vars} ]]; then
   export_env_vars="${export_env_vars};"
 fi
 
+docker_env_vars="-e taito_running_tests='true' ${docker_env_vars}"
+export_env_vars="export taito_running_tests=true; ${export_env_vars}"
+
 # Determine pod
 # shellcheck disable=SC1090
 . "${taito_cli_path}/plugins/docker-compose/util/determine-pod.sh" "${dir}" && \
