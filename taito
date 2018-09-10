@@ -128,6 +128,20 @@ if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
   fi
 fi
 
+# Determine user details
+taito_container_home="/home/taito"
+docker_user_opts="--user $(id -u):$(id -g)"
+if [[ ${admin} == true ]]; then
+  taito_container_home="/root"
+  docker_user_opts=""
+  echo "Admin encryption/decryption key:"
+  read -s admin_key
+  if [[ ${#admin_key} -lt 16 ]]; then
+    echo "ERROR: Encyption key must be at least 16 characters long"
+    exit 1
+  fi
+fi
+
 # Determine enabled extensions and download missing remote extensions
 extension_paths=""
 extension_mount_flags=""
@@ -158,7 +172,7 @@ do
         git checkout
       )
     fi
-    extension_paths="${extension_paths} /root/.taito/${repo_name}${repo_dir}"
+    extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}${repo_dir}"
   elif [[ ${extension} == *"gz" ]]; then
     # Archive link e.g.
     # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
@@ -168,14 +182,14 @@ do
       echo "Downloading extension ${folder_name} from ${url}"
       ( curl -sL "${url}" | tar zxv -C ${taito_home_path}/.taito )
     fi
-    extension_paths="${extension_paths} /root/.taito/${repo_name}"
+    extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}"
   else
     # Local url
     # First replace ~ with an absolute home path.
-    # Then replace home path with /root for docker.
+    # Then replace home path with ${taito_container_home} for docker.
     local_path="${extension/\~/${taito_home_path}}"
     docker_path="${extension/\~/${taito_home_path}}"
-    docker_path="${docker_path/$taito_home_path//root}"
+    docker_path="${docker_path/$taito_home_path/$taito_container_home}"
     extension_paths="${extension_paths} ${docker_path}"
     extension_mount_flags="${extension_mount_flags} \
       -v ${local_path}:${docker_path}"
@@ -187,15 +201,8 @@ if [[ ${upgrade} == true ]]; then
   "${taito_src_path}/taito-upgrade.sh" && \
   exit 0
 fi
-
-# Ask for admin encryption key in admin mode
-if [[ ${admin} == true ]]; then
-  echo "Admin encryption/decryption key:"
-  read -s admin_key
-  if [[ ${#admin_key} -lt 16 ]]; then
-    echo "ERROR: Encyption key must be at least 16 characters long"
-    exit 1
-  fi
+if [[ "$(docker images -q ${taito_image:?} 2> /dev/null)" == "" ]]; then
+  "${taito_src_path}/taito-upgrade.sh"
 fi
 
 # Prepare execution log files
@@ -207,8 +214,8 @@ touch "${log_file_fg}"
 
 # Set some variables to be used later
 taito_host_uname="$(uname)"
-taito_run="${log_file/${taito_home_path}/\/root}"
-taito_run_fg="${log_file_fg/${taito_home_path}/\/root}"
+taito_run="${log_file/${taito_home_path}/${taito_container_home}}"
+taito_run_fg="${log_file_fg/${taito_home_path}/${taito_container_home}}"
 if [[ "${taito_host_uname}" == "Darwin" ]]; then
   ctrl_filter=" tr -d '[:cntrl:]' "
 else
@@ -313,11 +320,12 @@ fi
 # TODO do not pass taito_admin_key as command line argument
 # shellcheck disable=SC2086
 eval "docker run ${docker_it} \
-  -v \"${taito_home_path}/.taito:/root/.taito\" \
-  -v \"${taito_home_path}/.ssh:/root/.ssh\" \
-  -v \"${taito_home_path}/.terraform.d:/root/.terraform.d\" \
+  -v \"${taito_home_path}/.taito:${taito_container_home}/.taito\" \
+  -v \"${taito_home_path}/.ssh:${taito_container_home}/.ssh\" \
+  -v \"${taito_home_path}/.terraform.d:${taito_container_home}/.terraform.d\" \
   -v \"$(pwd):/project\" \
   -w /project \
+  ${docker_user_opts} \
   ${proxy_flags} \
   ${extension_mount_flags} \
   ${link_flags} \
