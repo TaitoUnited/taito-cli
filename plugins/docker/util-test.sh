@@ -20,7 +20,6 @@ echo
 if [[ "${taito_mode:-}" == "ci" ]]; then
   echo "Docker images before test:"
   docker images
-  docker ps -a --format '{{.Image}} {{.Names}}'
 fi
 
 # Determine command to be run on init phase
@@ -34,6 +33,8 @@ fi && \
 # Creates docker parameters: -e ENV_VAR='value' -e ENV_VAR2='value2' ...
 docker_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/-e /" \
   | sed "s/=/='/" | sed "s/$/'/" | tr '\n' ' ' | sed 's/.$//') && \
+export_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/export /" \
+  | tr '\n' '; ' | sed 's/.$//') && \
 
 # Determine pod
 # shellcheck disable=SC1090
@@ -56,17 +57,19 @@ if [[ "${taito_env}" != "local" ]]; then
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run. HINT: taito start && (exit 1))) && "
-  if [[ ${ci_exec_test_db_proxy_on_host:-} != "true" ]] && \
-     [[ -f ./docker-compose-test.yaml ]] && \
+  if [[ -f ./docker-compose-test.yaml ]] && \
      [[ $(grep "${container_test}" "./docker-compose-test.yaml") ]]; then
-    # TODO: no longer required?
-    echo "docker-compose -f ./docker-compose-test.yaml run ..."
     docker_compose="true"
-    compose_cmd="docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} ./test.sh SUITE ${test_filter}"
+    compose_cmd="docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ./test.sh SUITE ${test_filter}'"
   else
     compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
   fi
-  # compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
+
+  # NOTE: Quick hack for gcloud builder -> run tests directly inside taito-cli because
+  # sql proxy fails to connect in docker-compose
+  if [[ "${taito_plugins}" == *"gcloud-builder"* ]] && [[ "${taito_mode:-}" == "ci" ]]; then
+    compose_cmd="${export_env_vars}; cd ./${dir} && npm install && ./test.sh SUITE ${test_filter}"
+  fi
 fi && \
 
 # Create test suite template from init and test phase commands
@@ -83,11 +86,7 @@ done && \
 
 # Execute tests
 if [[ ! -z ${commands} ]]; then
-  if [[ "${taito_env}" == "local" ]] || [[ "${ci_exec_test_db_proxy_on_host}" != "true" ]]; then
-    "${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_pre_cmd} docker-compose -f docker-compose-test.yaml up && ${commands# && }"
-  else
-    "${taito_cli_path}/util/execute-on-host.sh" "${compose_pre_cmd} docker-compose -f docker-compose-test.yaml up && ${commands# && }"
-  fi
+  "${taito_cli_path}/util/execute-on-host-fg.sh" "${compose_pre_cmd}${commands# && }"
 fi && \
 
 # Stop all test containers started by docker-compose

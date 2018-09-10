@@ -3,21 +3,12 @@
 : "${taito_plugin_path:?}"
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
-     [[ ${taito_command:-} == "test" ]] && \
-     [[ ${ci_exec_test_db_proxy_on_host:-} == "true" ]] && \
-     [[ ${taito_env:-} != "local" ]] \
-   ); then
-
-  if [[ "${taito_command}" == "test" ]] && [[ "${taito_env}" != "ci" ]]; then
-    sleep 10
-    echo
-    echo "### gcloud/post: Stopping all db proxies"
-    echo "NOTE: Press enter once all tests have been run"
-    read -r
-  else
-    echo
-    echo "### gcloud/post: Stopping all db proxies"
-  fi
+    [[ "${taito_command:-}" == "test" ]] &&
+    [[ "${taito_plugins:-}" == *"gcloud-builder"* ]] &&
+    [[ "${taito_mode:-}" == "ci" ]] \
+  ); then
+  echo
+  echo "### gcloud/post: Stopping all db proxies"
 
   "${taito_plugin_path}/util/db-proxy-stop.sh"
 fi

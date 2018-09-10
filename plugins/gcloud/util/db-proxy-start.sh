@@ -7,17 +7,15 @@ if [[ -n "${database_proxy_port:-}" ]]; then
 
   if [[ $1 == "true" ]]; then
     # Run in background
-    cloud_sql_proxy "-instances=${database_id}=tcp:${database_proxy_port}" &
-    # TODO put back
-    # (
-    #   ${taito_setv:?}
-    #   cloud_sql_proxy "-instances=${database_id}=tcp:${database_proxy_port}" \
-    #     &> /tmp/proxy-out.tmp &
-    # )
-    # if [[ "${taito_verbose}" == "true" || "${taito_mode:-}" == "ci" ]]; then
-    #   sleep 3
-    #   cat /tmp/proxy-out.tmp
-    # fi
+    (
+      ${taito_setv:?}
+      cloud_sql_proxy "-instances=${database_id}=tcp:0.0.0.0:${database_proxy_port}" \
+        &> /tmp/proxy-out.tmp &
+    )
+    if [[ "${taito_verbose}" == "true" || "${taito_mode:-}" == "ci" ]]; then
+      sleep 3
+      cat /tmp/proxy-out.tmp
+    fi
   else
     if [[ "${taito_docker}" == "true" ]]; then
       bind_address="0.0.0.0"
