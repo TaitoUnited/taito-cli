@@ -36,19 +36,22 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     npm install && \
 
     echo "- Running semantic-release" && \
-    echo
-    echo "NOTE: Semantic-release will fail if there are no such commits that"
-    echo "end up in release notes. By default only 'feat' and 'fix' commits"
-    echo "end up there."
-    echo
-    npm run "${command}" -- "${@}" && \
-    rm -f .npmrc && \
-    echo "- Copying package.json that contains the new version number" && \
-    rm -f "${taito_project_path}/package.json" && \
-    yes | cp package.json "${taito_project_path}/package.json" && \
-    version=$(cat package.json | grep -o 'version[": ]*[0-9]*\.[0-9]*\.[0-9]*' | \
-      grep -o '[0-9]*\.[0-9]*\.[0-9]*') && \
-    echo "- New version in ./package.json: ${version}"
+
+    npm run "${command}" -- "${@}" | \
+      grep "next release version" | \
+      grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
+
+    # Support old semantic version (TODO remove support)
+    if [[ -s ../taitoflag_version ]]; then
+      cat ./package.json | \
+        grep -o 'version[": ]*[0-9]*\.[0-9]*\.[0-9]*' | \
+        grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version &&
+
+      rm -f .npmrc && \
+      echo "- Copying package.json that contains the new version number" && \
+      rm -f "${taito_project_path}/package.json" && \
+      yes | cp package.json "${taito_project_path}/package.json"
+    fi
   )
 fi && \
 

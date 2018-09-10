@@ -29,10 +29,7 @@ if [[ -z ${image} ]]; then
   exit 1
 fi
 
-# Read version number that semantic-release wrote on the package.json
-version=$(cat "${taito_project_path}/package.json" | \
-  grep -o 'version[": ]*[0-9]*\.[0-9]*\.[0-9]*' | \
-  grep -o '[0-9]*\.[0-9]*\.[0-9]*')
+version=$(cat "${taito_project_path}/taitoflag_version")
 
 # Deploy chart located in ./scripts/helm
 if [[ -d "./scripts/helm" ]]; then
