@@ -36,6 +36,10 @@ docker_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/-e /" \
 export_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/export /" \
   | tr '\n' '; ' | sed 's/.$//') && \
 
+if [[ ${export_env_vars} ]]; then
+  export_env_vars="${export_env_vars};"
+fi
+
 # Determine pod
 # shellcheck disable=SC1090
 . "${taito_cli_path}/plugins/docker-compose/util/determine-pod.sh" "${dir}" && \
@@ -68,7 +72,7 @@ if [[ "${taito_env}" != "local" ]]; then
   # NOTE: Quick hack for gcloud builder -> run tests directly inside taito-cli because
   # sql proxy fails to connect in docker-compose
   if [[ "${taito_plugins}" == *"gcloud-builder"* ]] && [[ "${taito_mode:-}" == "ci" ]]; then
-    compose_cmd="${export_env_vars}; cd ./${dir} && npm install && ./test.sh SUITE ${test_filter}"
+    compose_cmd="${export_env_vars} cd ./${dir} && npm install && ./test.sh SUITE ${test_filter}"
   fi
 fi && \
 
