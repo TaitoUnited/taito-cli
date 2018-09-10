@@ -37,7 +37,11 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
 
     echo "- Running semantic-release" && \
 
-    npm run "${command}" -- "${@}" | \
+    if [[ ${#GH_TOKEN} -lt 8 ]]; then
+      echo "WARNING: GH_TOKEN NOT SET!"
+    fi && \
+
+    NPM_TOKEN=none GH_TOKEN=${GH_TOKEN} npm run "${command}" -- "${@}" | \
       grep "next release version" | \
       grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
 
