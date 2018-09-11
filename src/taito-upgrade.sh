@@ -36,7 +36,7 @@ fi
 echo "Changing uid and gid to match the current user id"
 docker start taito-new &> /dev/null
 docker exec -it taito-new /bin/sh -c \
-  "groupadd --gid $(id -g) taitogroup 2> /dev/null || usermod --uid $(id -u) taito"
+  "groupadd --gid $(id -g) taitogroup 2> /dev/null || : ; usermod --uid $(id -u) taito"
 sleep 3
 
 echo "Committing changes to taito image"
