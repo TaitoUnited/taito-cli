@@ -13,6 +13,12 @@ docker pull "${taito_image}"
 docker rm taito-save taito-new &> /dev/null
 docker create --name taito-new "${taito_image}"
 
+echo "Creating taito user with local user uid and gid"
+docker start taito-new &> /dev/null
+docker exec -it taito-new /bin/sh -c "\
+  /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g) && \
+  /taito-cli-deps/tools/user-init.sh taito"
+
 # Copy credentials from old image
 if docker create --name taito-save "${taito_image}save" &> /dev/null; then
   echo "Copying credentials from the old image."
@@ -32,12 +38,6 @@ if docker create --name taito-save "${taito_image}save" &> /dev/null; then
 
   rm -rf ~/.taito/save
 fi
-
-echo "Changing uid and gid to match the current user id"
-docker start taito-new &> /dev/null
-docker exec -it taito-new /bin/sh -c \
-  "groupadd --gid $(id -g) taitogroup 2> /dev/null; usermod --uid $(id -u) taito"
-sleep 3
 
 echo "Committing changes to taito image"
 docker commit taito-new "${taito_image}" &> /dev/null
