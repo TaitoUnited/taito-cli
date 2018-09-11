@@ -19,6 +19,9 @@ docker exec -it taito-new /bin/sh -c "\
   /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g) && \
   /taito-cli-deps/tools/user-init.sh taito"
 
+# NOTE: just in case
+sleep 3
+
 # Copy credentials from old image
 if docker create --name taito-save "${taito_image}save" &> /dev/null; then
   echo "Copying credentials from the old image."
