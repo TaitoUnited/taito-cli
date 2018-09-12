@@ -12,7 +12,10 @@ do
     . ${taito_plugin_path}/util/opts.sh
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"
-    sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes -L ${forward_value} sleep 10"
+    (
+      ${taito_setv:?};
+      sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 10"
+    )
     ssh_was_run="true"
   fi
 done
