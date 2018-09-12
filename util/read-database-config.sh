@@ -6,7 +6,7 @@
 target="${1}"
 if [[ -z ${1} ]] && [[ -n "${taito_target:-}" ]] && \
    [[ "${taito_databases:-}" == *"${taito_target}"* ]]; then
-  target="${$taito_target:-}"
+  target="${taito_target:-}"
 fi
 target="${target:-database}"
 
