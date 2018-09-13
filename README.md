@@ -134,6 +134,7 @@ With taito-cli you can take an opinionated view on version control. However, com
     taito vc push                            # Push changes
     taivo vc revert                          # Revert latest commit both from local and remote repository
 
+    TODO Support for hotfix branches
     TODO Support for release branches
 
 Manual deployment operations in case there are some problems with automated CI/CD builds:
@@ -452,7 +453,7 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     export ci_exec_revert=false       # revert deploy automatically on fail
 
     # Override settings for different environments:
-    # local, feat, dev, test, stag, prod
+    # local, feat, dev, test, stag, canary, prod
     case "${taito_env}" in
       prod)
         # Overrides for production environment
@@ -523,13 +524,13 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
 
     # NOTE: Secret naming convention: type.target_of_type.purpose[/namespace]:generation_method
     export taito_secrets="
-      git.github.build:read/devops
-      gcloud.cloudsql.proxy:copy/devops
-      db.${db_database_name}.build/devops:random
-      db.${db_database_name}.app:random
-      storage.${taito_project}.gateway:random
-      gcloud.${taito_project}-${taito_env}.multi:file
-      jwt.${taito_project}.auth:random
+      ${db_database_name}-db-app.password:random
+      ${taito_project}-${taito_env}-basic-auth.auth:htpasswd
+      ${taito_project}-${taito_env}-storage-gateway.secret:random
+      ${taito_project}-${taito_env}-gserviceaccount.key:file
+      ${taito_project}-${taito_env}-jwt.secret:random
+      ${taito_project}-${taito_env}-admin.password:manual
+      ${taito_project}-${taito_env}-user.password:manual
     "
 
 > TODO taito-run-env.sh documentation (docker-compose)
@@ -538,13 +539,13 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
 
 Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands.
 
-Secret naming convention is *type.target_of_type.purpose[/namespace]:generation_method*. For example:
+Secret naming convention is secret_name.property_name[/namespace]:generation_method*. For example:
 
-* *db.silicon_valley_prod.app:random*: A randomly generated database password for silicon valley production database to be used by application.
-* *db.silicon_valley_prod.build/devops:random*: A randomly generated database password for silicon valley production database to be used by CI/CD build. It is saved to devops namespace as it is not required by the application.
-* *gcloud.cloudsql.proxy:copy/devops*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
-* *git.github.build:read/devops*: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
-* *ext.twilio.messaging:manual*: A token for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.
+* *silicon-valley-prod-twilio.apikey:manual*: API key for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.
+* *silicon_valley_prod-db-app.password:random*: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be used by application.
+* *silicon_valley_prod-db-mgr.password/devops:random*: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be in managing the database (for CI/CD, etc). It is saved to devops namespace as it is not required by the application.
+* *gcloud-cloudsql-proxy.key:copy/devops*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
+* *github-buildbot.token:read/devops*: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
 
 Responsibilities of the current default plugins:
 
@@ -772,7 +773,7 @@ If you need to alter default behaviour of a plugin in some way, you can override
 
 All settings defined in `taito-config.sh` are visible for plugins. Additionally the following environment variables are exported by taito-cli:
 
-* **taito_env**: The selected environment (local, feat, dev, test, stag, prod)
+* **taito_env**: The selected environment (local, feat, dev, test, stag, canary, prod)
 * **taito_target**: Command target (e.g. admin, client, server, worker, ...)
 * **taito_command**: The user given command without the target and environment suffix.
 * **taito_enabled_extensions**: List of all enabled extensions.

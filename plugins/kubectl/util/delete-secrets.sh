@@ -21,6 +21,14 @@ secret_names=(${taito_secret_names})
 for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
+
+  # TODO remove once all projects have been converted
+  secret_property="SECRET"
+  if [[ "${taito_secrets_version:-}" == "2" ]]; then
+    secret_property="${secret_name##*.}"
+    secret_name="${secret_name%.*}"
+  fi
+
   if [[ ${secret_method:?} != "read/"* ]]; then
     (
       ${taito_setv:?}

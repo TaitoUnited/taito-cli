@@ -7,11 +7,21 @@ for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
 
-  if [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "file" ]]; then
+  # [[ ${secret_method} != "htpasswd" ]]
+  if [[ ${secret_method} != "copy/"* ]] && \
+     [[ ${secret_method} != "file" ]]; then
+
+    # TODO remove once all project have been converted
+    secret_property="SECRET"
+    if [[ "${taito_secrets_version:-}" == "2" ]]; then
+      secret_property="${secret_name##*.}"
+      secret_name="${secret_name%.*}"
+    fi
+
     echo "+ kubectl get secret ${secret_name}" \
       "--namespace=${secret_source_namespace} ..." > "${taito_vout:?}"
     secret_value=$(kubectl get secret "${secret_name}" -o yaml \
-      --namespace="${secret_source_namespace}" 2> /dev/null | grep "^  SECRET" | \
+      --namespace="${secret_source_namespace}" 2> /dev/null | grep "^  ${secret_property}" | \
       sed -e "s/^.*: //" | base64 --decode)
     set +x
     # shellcheck disable=SC2181

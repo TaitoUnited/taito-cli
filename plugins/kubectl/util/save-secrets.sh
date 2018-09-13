@@ -28,9 +28,17 @@ do
   if  [[ "${secret_changed:-}" ]] && ( \
         [[ "${secret_value:-}" ]] || [[ ${secret_method} == "copy/"* ]] \
       ); then
+
+    # TODO remove once all projects have been converted
+    secret_property="SECRET"
+    if [[ "${taito_secrets_version:-}" == "2" ]]; then
+      secret_property="${secret_name##*.}"
+      secret_name="${secret_name%.*}"
+    fi
+
     if [[ ${secret_method} == "copy/"* ]]; then
       secret_value=$(kubectl get secret "${secret_name}" -o yaml \
-        --namespace="${secret_source_namespace}" | grep "^  SECRET" | \
+        --namespace="${secret_source_namespace}" | grep "^  ${secret_property}" | \
         sed -e "s/^.*: //" | base64 --decode)
     fi
 
@@ -41,12 +49,13 @@ do
         kubectl delete secret "${secret_name}" \
           --namespace="${secret_namespace}" 2> /dev/null
         secret_source="literal"
-        if [[ ${secret_method} == "file" ]]; then
+        if [[ ${secret_method} == "file" ]] || \
+           [[ ${secret_method} == "htpasswd" ]]; then
           secret_source="file"
         fi
         kubectl create secret generic "${secret_name}" \
           --namespace="${secret_namespace}" \
-          --from-${secret_source}=SECRET="${secret_value}" \
+          --from-${secret_source}=${secret_property}="${secret_value}" \
           --from-literal=METHOD="${secret_method}"
       )
       # shellcheck disable=SC2181
