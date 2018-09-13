@@ -1,12 +1,14 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
-: "${secret_value_git_github_build:?}"
 : "${taito_project_path:?}"
 
 # NOTE: for backwards compatibility. can be removed later.
-if [[ -z "${secret_value_git_github_build}" ]]; then
-  secret_value_git_github_build="${secret_value_ext_github_build:-}"
+if [[ -z "${secret_value_github_buildbot_token:-}" ]]; then
+  secret_value_github_buildbot_token="${secret_value_git_github_build:-}"
+fi
+if [[ -z "${secret_value_github_buildbot_token:-}" ]]; then
+  secret_value_github_buildbot_token="${secret_value_ext_github_build:-}"
 fi
 
 # Determine npm command based on environment
@@ -19,7 +21,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     echo "Finalizing release"
     cd "${taito_project_path}/release" || exit 1
     ${taito_setv:?}
-    NPM_TOKEN=none GH_TOKEN=${secret_value_git_github_build} \
+    NPM_TOKEN=none GH_TOKEN=${secret_value_github_buildbot_token} \
       npm run "${command}" -- "${@}" && \
     rm -f .npmrc
   )

@@ -4,12 +4,15 @@
 : "${taito_branch:?}"
 : "${taito_organization:?}"
 : "${taito_repo_name:?}"
-: "${secret_value_git_github_build:?}"
 : "${taito_project_path:?}"
 
 # NOTE: for backwards compatibility. can be removed later.
-if [[ -z "${secret_value_git_github_build}" ]]; then
-  secret_value_git_github_build="${secret_value_ext_github_build:-}"
+# NOTE: for backwards compatibility. can be removed later.
+if [[ -z "${secret_value_github_buildbot_token:-}" ]]; then
+  secret_value_github_buildbot_token="${secret_value_git_github_build:-}"
+fi
+if [[ -z "${secret_value_github_buildbot_token:-}" ]]; then
+  secret_value_github_buildbot_token="${secret_value_ext_github_build:-}"
 fi
 
 # Determine npm command based on environment
@@ -25,7 +28,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     echo "- Cloning git repo to a separate release directory because builder"
     echo "workspace does not necessarily point to the original repository"
     ${taito_setv:?}
-    git clone "https://${secret_value_git_github_build}@github.com/${taito_organization}/${taito_repo_name}.git" release && \
+    git clone "https://${secret_value_github_buildbot_token}@github.com/${taito_organization}/${taito_repo_name}.git" release && \
     cd "${taito_project_path}/release" && \
     git checkout ${taito_branch} && \
 
@@ -35,7 +38,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     npm install && \
 
     echo "- Running npm script ${command}" && \
-    NPM_TOKEN=none GH_TOKEN=${secret_value_git_github_build} \
+    NPM_TOKEN=none GH_TOKEN=${secret_value_github_buildbot_token} \
       npm run "${command}" -- "${@}" > ./release-output && \
     cat ./release-output && \
 

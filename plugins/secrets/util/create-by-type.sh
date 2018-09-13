@@ -21,7 +21,7 @@ case "${secret_method}" in
       echo
     fi
     while [[ ! -f ${secret_value} ]]; do
-      echo "File path (for example './secret.json'):"
+      echo "File path (for example 'secret.json'):"
       read -r secret_value
     done
     ;;
