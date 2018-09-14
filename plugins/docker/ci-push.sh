@@ -18,7 +18,7 @@ if [[ "${image_path}" == "" ]]; then
   image_path="${taito_registry}"
 fi
 
-version=$(cat "${taito_project_path}/taitoflag_version")
+version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)
 
 prefix="${image_path}${path_suffix}"
 image="${prefix}:${image_tag}"

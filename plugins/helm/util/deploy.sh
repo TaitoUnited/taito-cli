@@ -29,7 +29,7 @@ if [[ -z ${image} ]]; then
   exit 1
 fi
 
-version=$(cat "${taito_project_path}/taitoflag_version")
+version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)
 
 # Deploy chart located in ./scripts/helm
 if [[ -d "./scripts/helm" ]]; then
@@ -51,8 +51,24 @@ if [[ -d "./scripts/helm" ]]; then
     ${taito_setv:?}
     helm init --client-only
     helm dependency update "./scripts/helm"
+    # TODO remove non-globals
     helm upgrade "${options[@]}" --debug --install \
       --namespace "${taito_namespace}" \
+      --set global.env="${taito_env}" \
+      --set global.zone.name="${taito_zone}" \
+      --set global.zone.provider="${taito_provider:-}" \
+      --set global.zone.providerRegion="${taito_provider_region:-}" \
+      --set global.zone.providerZone="${taito_provider_zone:-}" \
+      --set global.zone.namespace="${taito_namespace}" \
+      --set global.zone.resourceNamespace="${taito_resource_namespace:-}" \
+      --set global.project.name="${taito_project}" \
+      --set global.project.company="${taito_company:-}" \
+      --set global.project.family="${taito_family:-}" \
+      --set global.project.application="${taito_application:-}" \
+      --set global.project.suffix="${taito_suffix:-}" \
+      --set global.build.imageTag="${image}" \
+      --set global.build.version="${version}" \
+      --set global.build.commit="TODO" \
       --set env="${taito_env}" \
       --set zone.name="${taito_zone}" \
       --set zone.provider="${taito_provider:-}" \
