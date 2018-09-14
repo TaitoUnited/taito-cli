@@ -7,7 +7,7 @@ do
   . "${taito_cli_path}/util/secret-by-index.sh"
   if ( \
       [[ "${secret_method:-}" == "file" ]] || \
-      [[ "${secret_method:-}" == "htpasswd" ]] \
+      [[ "${secret_method:-}" == "htpasswd"* ]] \
      ) && [[ "${secret_changed:-}" ]] && [[ "${secret_value:-}" ]]; then
     echo "Deleting file '${secret_value:-}'. Press enter to continue."
     read -r

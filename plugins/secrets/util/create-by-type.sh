@@ -25,21 +25,32 @@ case "${secret_method}" in
       read -r secret_value
     done
     ;;
-  htpasswd)
+  htpasswd|htpasswd-plain)
     mkdir -p ./tmp
     secret_value="./tmp/${secret_name}"
     rm -f "${secret_value}"
     touch "${secret_value}"
     echo "Enter all usernames and passwords for the htpasswd file."
-    echo "Leave the username empty when you are done."
+    echo "Enter empty username when you are done."
+    echo
+    if [[ "${secret_method}" == "htpasswd-plain" ]]; then
+      htpasswd_options="-p"
+      echo "NOTE: All passwords will be stored in plain text. You should not use"
+      echo "them for anything important. Use method 'htpasswd' instead if you"
+      echo "want to encrypt all passwords"
+    else
+      htpasswd_options=""
+      echo "NOTE: All passwords will be encrypted. Thus, you should store all credentials"
+      echo "to a safe location so that you can remember them later. Use a password manager"
+      echo "for example."
+    fi
     while echo && echo "username: " && read -r username && [[ ${username} ]]
     do
-      until htpasswd "${secret_value}" "${username}"; do :; done
+      until htpasswd ${htpasswd_options} "${secret_value}" "${username}"; do :; done
     done
-    echo
-    echo "NOTE: Remember to save these usernames and passwords to a safe location."
-    echo "Use a password manager for example. Press enter to continue."
-    read -r
+    if [[ "${secret_method}" == "htpasswd-plain" ]]; then
+      sed -i -- "s/:/:{PLAIN}/" "${secret_value}"
+    fi
     ;;
   random)
     # TODO better tool for this?

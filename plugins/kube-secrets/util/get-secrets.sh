@@ -7,7 +7,6 @@ for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
 
-  # [[ ${secret_method} != "htpasswd" ]]
   if [[ ${secret_method} != "copy/"* ]] && \
      [[ ${secret_method} != "file" ]]; then
 

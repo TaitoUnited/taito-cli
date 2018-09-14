@@ -50,7 +50,7 @@ do
           --namespace="${secret_namespace}" 2> /dev/null
         secret_source="literal"
         if [[ ${secret_method} == "file" ]] || \
-           [[ ${secret_method} == "htpasswd" ]]; then
+           [[ ${secret_method} == "htpasswd"* ]]; then
           secret_source="file"
         fi
         kubectl create secret generic "${secret_name}" \
