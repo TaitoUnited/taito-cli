@@ -1,6 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
-: "${taito_env:?}"
+: "${taito_target_env:?}"
 : "${taito_branch:?}"
 : "${taito_organization:?}"
 : "${taito_repo_name:?}"
@@ -16,7 +16,7 @@ if [[ -z "${secret_value_github_buildbot_token:-}" ]]; then
 fi
 
 # Determine npm command based on environment
-command=release-pre:${taito_env}
+command=release-pre:${taito_target_env}
 
 # Run the command only if it exists in package.json
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
