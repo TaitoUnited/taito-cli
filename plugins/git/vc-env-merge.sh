@@ -2,7 +2,6 @@
 : "${taito_cli_path:?}"
 : "${taito_environments:?}"
 
-echo asdf
 valids=""
 prev_env=""
 for env in ${taito_environments}
@@ -29,7 +28,13 @@ if [[ ! ${dest} ]]; then
   dest=$(echo "${valids}" | sed "s/.*${source}->\([^[:space:]]*\).*/\1/")
 fi
 
-echo "${source}->${dest}"
+# Determine additional git options
+git_push_options=""
+if [[ " ${*} " == *"--force"* ]]; then
+  git_push_options="--force"
+fi
+
+echo "${source}->${dest} ${git_push_options}"
 if [[ "${valids}" != *" ${source}->${dest} "* ]]; then
   echo "Merging from ${source} to ${dest} is not allowed."
   echo "Valid enviroment merges:${valids}"
@@ -46,7 +51,8 @@ fi
 # TODO execute remote merge using hub cli?
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
 git fetch origin ${source}:${dest} && \
-git push --no-verify origin ${dest}; \
+git push --no-verify ${git_push_options} origin ${dest} || \
+echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${dest}' \
 " && \
 
 # Call next command on command chain
