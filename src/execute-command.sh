@@ -262,7 +262,7 @@ eval "$secret_exports"
 
 # Determine enabled plugins
 enabled_plugins=""
-plugins_string=$(echo "${taito_plugins:-}" "${taito_global_plugins:-} basic " \
+plugins_string=$(echo "${taito_global_plugins:-} ${taito_plugins:-} basic " \
   | awk '{for (i=1;i<=NF;i++) if (!a[$i]++) printf("%s%s",$i,FS)}{printf("\n")}')
 # TODO remove this (backwards compatibility)
 plugins_string="${plugins_string/postgres /postgres-db }"
