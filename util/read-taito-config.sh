@@ -3,6 +3,7 @@
 : "${taito_project_path:?}"
 
 export taito_env="${1:-$taito_env}"
+export taito_target_env="${taito_target_env:-$taito_env}"
 
 # Read taito-config.sh files from all locations
 if [[ -f "${taito_home_path}/.taito/taito-config.sh" ]]; then

@@ -12,7 +12,7 @@ do
 
     # TODO remove once all project have been converted
     secret_property="SECRET"
-    if [[ "${taito_secrets_version:-}" == "2" ]]; then
+    if [[ "${taito_version:-}" -ge "1" ]]; then
       secret_property="${secret_name##*.}"
       secret_name="${secret_name%.*}"
     fi

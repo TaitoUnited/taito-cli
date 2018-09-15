@@ -2,6 +2,8 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
+: "${taito_project:?}"
+: "${taito_target_env:?}"
 
 "${taito_plugin_path}/util/use-context.sh" && \
 
@@ -11,7 +13,7 @@ if [[ -n "${taito_target:-}" ]]; then
   . "${taito_plugin_path}/util/determine-pod-container.sh" && \
   (${taito_setv:?}; kubectl delete pod "${pod}")
 else
-  (${taito_setv:?}; kubectl delete pods --all)
+  (${taito_setv:?}; kubectl delete pods -l release="${taito_project}-${taito_target_env}")
 fi && \
 
 # Call next command on command chain

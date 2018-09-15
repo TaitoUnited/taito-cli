@@ -143,8 +143,8 @@ Manual deployment operations in case there are some problems with automated CI/C
     taito deployment cancel:dev              # Cancel an ongoing dev environment build
     taito deployment build:worker:dev        # Build and deploy worker container to dev env directly from local env
     taito deployment deploy:dev 1.1.1        # Deploy a prebuilt version to dev environment
-    taito deployment revision:dev            # Show current revision deployed on dev environment
-    taito deployment revert:dev 20           # Revert application to revision 20 on dev environment
+    taito deployment revision:canary         # Show current revision deployed on canary environment
+    taito deployment revert:canary 20        # Revert application to revision 20 on canary environment
 
 Creating projects based on configurable project templates:
 
@@ -160,8 +160,6 @@ Infrastructure management for projects:
     taito env rotate:dev                     # Rotate project specific secrets in dev environment
     taito env rotate:dev gcloud              # Rotate project specific gcloud secrets in dev environment
     taito env destroy:dev                    # Destroy dev environment of the current project
-
-    TODO Alternative environments for canary releases, A/B testing, etc.
 
 Infrastructure management for zones:
 
@@ -383,6 +381,8 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
 
     #!/bin/bash
 
+    # TODO update based on server-template
+
     # Taito-cli settings
     export taito_image="taitounited/taito-cli:latest"
     export taito_extensions="
@@ -406,10 +406,11 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     export taito_family=""
     export taito_application="analytics"
     export taito_suffix=""
+    export taito_env="${taito_env/canary/prod}" # Canary points to prod
     export taito_namespace="${taito_project}-${taito_env}"
     export taito_resource_namespace="${taito_project}-${taito_env}"
     export taito_registry="domain.com/${taito_zone}/${taito_repo_name}"
-    export taito_app_url="https://${taito_project}-${taito_env}.acme.com"
+    export taito_app_url="https://${taito_project}-${taito_target_env}.acme.com"
 
     # Structure definitions for all plugins
     export taito_environments="dev prod"
@@ -453,7 +454,7 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     export ci_exec_revert=false       # revert deploy automatically on fail
 
     # Override settings for different environments:
-    # local, feat, dev, test, stag, canary, prod
+    # local, feat-NAME, dev, test, stag, canary, prod
     case "${taito_env}" in
       prod)
         # Overrides for production environment
@@ -506,7 +507,7 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     export link_urls="\
       * app[:ENV]#app=${taito_app_url} Application (:ENV) \
       * admin[:ENV]#admin=${taito_admin_url} Admin user interface (:ENV) \
-      * api[:ENV]#app=${taito_app_url}/api/infra/uptimez API (:ENV) \
+      * api[:ENV]#app=${taito_app_url}/api/uptimez API (:ENV) \
       * docs=https://github.com/${taito_organization}/${taito_repo_name}/wiki Project documentation \
       * git=https://github.com/${taito_organization}/${taito_repo_name} GitHub repository \
       * kanban=https://github.com/${taito_organization}/${taito_repo_name}/projects Kanban boards \
@@ -516,7 +517,7 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
       * artifacts=https://TODO-DOCS-AND-TEST-REPORTS Generated documentation and test reports \
       * storage:ENV#storage=https://console.cloud.google.com/storage/browser/${taito_project}-${taito_env}?project=${taito_resource_namespace_id} Storage bucket (:ENV) \
       * logs:ENV#logs=https://console.cloud.google.com/logs/viewer?project=${taito_zone}&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F${kubectl_name}%2Fnamespace_id%2F${taito_namespace} Logs (:ENV) \
-      * errors:ENV#errors=https://sentry.io/${taito_organization}/${taito_project}/?query=is%3Aunresolved+environment%3A${taito_env} Sentry errors (:ENV) \
+      * errors:ENV#errors=https://sentry.io/${taito_organization}/${taito_project}/?query=is%3Aunresolved+environment%3A${taito_target_env} Sentry errors (:ENV) \
       * uptime=https://app.google.stackdriver.com/uptime?project=${taito_zone} Uptime monitoring (Stackdriver) \
       * feedback=https://TODO-ZENDESK User feedback (Zendesk) \
       * performance=https://TODO-NEW-RELIC Performance metrics (New Relic) \
@@ -525,7 +526,7 @@ And here is an example of a project specific `taito-config.sh`. TODO Something a
     # NOTE: Secret naming convention: type.target_of_type.purpose[/namespace]:generation_method
     export taito_secrets="
       ${db_database_name}-db-app.password:random
-      ${taito_project}-${taito_env}-basic-auth.auth:htpasswd
+      ${taito_project}-${taito_env}-basic-auth.auth:htpasswd-plain
       ${taito_project}-${taito_env}-storage-gateway.secret:random
       ${taito_project}-${taito_env}-gserviceaccount.key:file
       ${taito_project}-${taito_env}-jwt.secret:random
@@ -541,10 +542,11 @@ Plugins require secrets to perform some of the operations. Secrets are configure
 
 Secret naming convention is secret_name.property_name[/namespace]:generation_method*. For example:
 
+* *silicon-valley-prod-basic-auth.auth:htpasswd*: User credentials for basic authentication. Use `htpasswd-plain` instead of `htpasswd` if you want to store the passwords in plain text (e.g. for development purposes).
 * *silicon-valley-prod-twilio.apikey:manual*: API key for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.
 * *silicon_valley_prod-db-app.password:random*: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be used by application.
 * *silicon_valley_prod-db-mgr.password/devops:random*: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be in managing the database (for CI/CD, etc). It is saved to devops namespace as it is not required by the application.
-* *gcloud-cloudsql-proxy.key:copy/devops*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
+* *cloudsql-gserviceaccount.key:copy/devops*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
 * *github-buildbot.token:read/devops*: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
 
 Responsibilities of the current default plugins:
@@ -773,7 +775,8 @@ If you need to alter default behaviour of a plugin in some way, you can override
 
 All settings defined in `taito-config.sh` are visible for plugins. Additionally the following environment variables are exported by taito-cli:
 
-* **taito_env**: The selected environment (local, feat, dev, test, stag, canary, prod)
+* **taito_env**: The selected environment (e.g. local, feat-NAME, dev, test, stag, canary, prod)
+* **taito_target_env**: TODO ....
 * **taito_target**: Command target (e.g. admin, client, server, worker, ...)
 * **taito_command**: The user given command without the target and environment suffix.
 * **taito_enabled_extensions**: List of all enabled extensions.

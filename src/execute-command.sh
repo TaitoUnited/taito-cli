@@ -59,13 +59,17 @@ fi
 
 # Determine command, target, env and parameters from args
 env_command="${args[0]}"
+env_command="${env_command,,}"
 params=(${args[@]:1})
 if [[ "${env_command}" == *":"* ]]; then
   IFS=':' read -ra ADDR <<< "${env_command}"
   for sect in "${ADDR[@]}"; do
     if [[ -z "${command}" ]]; then
       command="${sect}"
-    elif [[ " local feat dev test stag prod master " == *" ${sect} "* ]]; then
+    # TODO: Remove hardcoded envs. They are currently required because
+    # taito-config.sh has not been read yet at this point of execution
+    elif [[ " local dev test stag canary prod master " == *" ${sect} "* ]] || \
+         [[ "${sect}" == "feat-"* ]]; then
       env="${sect}"
     else
       target="${sect}"
@@ -93,14 +97,6 @@ if [[ "${env}" == "master" ]]; then
 elif [[ "${env}" == "f"* ]]; then
   # branch name given instead of env
   env="feature"
-fi
-
-# Branch is determined by the env
-branch="${env}"
-if [[ "${branch}" == "prod" ]]; then
-  branch="master"
-elif [[ "${branch}" == "local" ]]; then
-  branch=""
 fi
 
 # Handle 'taito -h'
@@ -131,7 +127,7 @@ export taito_skip_override="${skip_override}"
 export taito_command="${command}"
 export taito_orig_command="${orig_command}"
 export taito_env="${env}"
-export taito_branch="${branch}"
+export taito_target_env="${env}"
 export taito_target="${target}"
 export taito_verbose=false
 export taito_debug=false
@@ -161,6 +157,15 @@ fi
 
 # Read taito-config.sh files from all locations
 . "${taito_util_path}/read-taito-config.sh" "${taito_env}" && \
+
+# Determine branch
+branch="${taito_env}"
+if [[ "${branch}" == "prod" ]]; then
+  branch="master"
+elif [[ "${branch}" == "local" ]]; then
+  branch=""
+fi
+export taito_branch="${branch}"
 
 # Select database configs using taito_target
 . "${taito_util_path}/read-database-config.sh" && \

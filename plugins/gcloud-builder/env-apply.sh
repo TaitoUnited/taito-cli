@@ -15,7 +15,7 @@ then
   echo "- Repository: ${taito_repo_name}"
   echo "- Name: ${taito_project}"
   echo "- Type: Branch"
-  echo "- Branch regex: 'dev|test' or 'stag|master' depending on zone"
+  echo "- Branch regex: 'dev|test' or 'stag|canary|master' depending on zone"
   echo "- Build configuration: cloudbuild.yaml"
   echo "- Cloudbuild.yaml location: /cloudbuild.yaml"
   echo

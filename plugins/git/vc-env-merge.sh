@@ -2,15 +2,19 @@
 : "${taito_cli_path:?}"
 : "${taito_environments:?}"
 
-valids=" dev->test test->stag stag->master "
-if [[ " ${taito_environments} " != *" stag "* ]] && \
-   [[ " ${taito_environments} " != *" test "* ]]; then
-  valids=" dev->master "
-elif [[ " ${taito_environments} " != *" stag "* ]]; then
-  valids=" dev->test test->master "
-elif [[ " ${taito_environments} " != *" test "* ]]; then
-  valids=" dev->stag stag->master "
-fi
+echo asdf
+valids=""
+prev_env=""
+for env in ${taito_environments}
+do
+  env="${env/prod/master}"
+  if [[ ${env} != "feat"* ]]; then
+    if [[ ${prev_env} ]]; then
+      valids="${valids} ${prev_env}->${env} "
+    fi
+    prev_env="${env}"
+  fi
+done
 
 # Determine source branch
 if [[ ${1} ]]; then

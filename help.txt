@@ -229,9 +229,9 @@ OPTIONS
 ARGUMENTS
 
   ENV
-    Environment: 'local', 'feat', 'dev', 'test', 'stag' or 'prod'.
-    Environment is 'local' by default. For mobile projects ENV can also be
-    'ios' or 'android'.
+    Environment: For example 'local', 'feat-orders', 'dev', 'test', 'stag',
+    'canary' or 'prod'. Environment is 'local' by default. For mobile projects
+    ENV can also be 'ios' or 'android'.
 
   TARGET
     Depending on the environment, TARGET may reference to a Kubernetes pod,
@@ -246,11 +246,12 @@ PROJECT: BASIC OPERATIONS
   > All basic operation commands use 'oper' as a command grouping prefix but
   > you can leave it out if you like.
 
-  install [--clean] [--all]
+  install [--clean] [--lock]
     Install everything that needs to installed locally on host (e.g. libraries
     for linting and autocompletion purposes). Use the '--clean' flag to execute
-    a clean install. Use the '--all' flag to request for a full install in case
-    you need all libraries to be installed on host for autocompletion, etc.
+    a clean install. Use the '--lock' flag to install version locked packages.
+    Use the '--all' flag to request for a full install in case you need all
+    libraries to be installed on host for autocompletion, etc.
     TIP: Enable the 'make', 'npm' or 'pipenv' plugin.
 
   env

@@ -113,7 +113,7 @@ if [[ ${shell_command} == false ]];then
 fi && \
 
 # Determine command and params given to docker container
-command="${args[0]}"
+command=$(echo "${args[0]}" | tr '[:upper:]' '[:lower:]')
 params=(${options[@]} ${args[@]})
 if [[ -z "${params[*]}" ]]; then
   params=("--help")
@@ -122,9 +122,10 @@ fi
 # Determine environment
 taito_env="local"
 if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
-  sect=${command##*:}
-  if [[ " local feat dev test stag prod master " == *" ${sect} "* ]]; then
-    taito_env=${sect}
+  sect="${command##*:}"
+  if [[ " local ${taito_environments:-} master " == *" ${sect} "* ]] || \
+     [[ "${sect}" == "feat-"* ]]; then
+    taito_env="${sect}"
   fi
 fi
 

@@ -2,6 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
+: "${taito_target_env:?}"
 
 switch="${1}"
 if [[ "${switch}" == "--all" ]]; then
@@ -33,9 +34,13 @@ if [[ "${switch}" == "--all" ]]; then
   echo
   echo
   echo "--- Pods ---"
+  (${taito_setv:?}; kubectl get pods "${params[@]}")
+elif [[ "${taito_version:-}" -ge "1" ]]; then
+  (${taito_setv:?}; kubectl get pods "${params[@]}" | grep -e "${taito_target_env}\\|RESTARTS")
+else
+  (${taito_setv:?}; kubectl get pods "${params[@]}")
 fi
 
-(${taito_setv:?}; kubectl get pods "${params[@]}")
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
