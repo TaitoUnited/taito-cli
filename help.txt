@@ -96,7 +96,7 @@ QUICK EXAMPLES
     vc env list              # List all environment branches
     vc env: dev              # Switch to the dev environment branch
     vc env merge             # Merge current env branch to the next env branch
-    vc env merge: dev test   # Merge dev environment branch to test branch
+    vc env merge: dev stag   # Merge dev to stag and all env branches in between
     vc feat list             # List all feature branches
     vc feat: pricing         # Switch to the pricing feature branch
     vc feat rebase           # Rebase feature branch with the original branch
@@ -146,11 +146,11 @@ QUICK EXAMPLES
     passwd rotate: movie     # Rotate all movie passwords
 
   HOUR REPORTING:
-    taito hours add: 6,5 Did work               # Add entry for current project
-    taito hours add: acme chat 6,5 Did work     # Add entry for acme chat
+    taito hours add: 6,5 MRM-123 Did some work     # Entry for current project
+    taito hours add: acme chat MRM-123 6,5 Comment # Entry for acme chat
     TODO bulk adds (e.g. three weeks on vacation)
-    taito hours list: all this-month            # List hour entries of this month
-    taito hours summary: all this-month         # Show summary for this month
+    taito hours list: all this-month               # List entries of this month
+    taito hours summary: all this-month            # Show summary for this month
 
 OPTIONS
 
@@ -168,16 +168,10 @@ OPTIONS
     Show trouble.txt of current project and taito-cli.
 
   --readme
-    Show README.md of current project and taito-cli.
+    Show README.md of current project.
 
   --upgrade
     Upgrade taito-cli and its extensions to the latest version.
-
-  --upgrade-deps
-    Upgrade tools bundled inside the current taito-cli docker container to the
-    latest version. This option can be useful if you need to use an old version
-    of taito-cli container image, but require tools to be upgraded.
-    TODO implement
 
   --auth:ENV
     Authenticate in the context of the given environment.
@@ -205,6 +199,9 @@ OPTIONS
       taito -p org@another-project open info:prod
       TODO implement
 
+  --organization ORG, -o ORG
+    Use taito configuration overrides defined in '~/.taito/taito-config-ORG.sh'.
+
   --verbose, -v
     Show commands that plugins execute.
 
@@ -212,7 +209,7 @@ OPTIONS
     Show debug output.
 
   --quiet, -q
-    Quiet info logging.
+    No logging output.
     TODO implement
 
   --print-commands, --print-commands-short
@@ -224,7 +221,7 @@ OPTIONS
     execution and therefore the copyright license should not be shown again.
 
   -z
-    Skip taito command overrides.
+    Skip taito command overrides during execution.
 
 ARGUMENTS
 
@@ -460,14 +457,15 @@ PROJECT: VERSION CONTROL OPERATIONS
     the branch already exists. The dev branch is used as a default source
     branch.
 
-  vc env merge [SOURCE_BRANCH] [DESTINATION_BRANCH]
-    Merges source env branch to target env branch without making changes
-    to the current local git workspace. Current branch is used as a default
-    source branch. The command fails if fast-forward is not possible. Merge
-    operations between environment branches should always be fast-forwarded so
-    that a container is first built for dev environment and then the same
-    container is deployed to other environments as well once environment
-    branches are merged.
+  vc env merge [SOURCE_BRANCH] [DESTINATION_BRANCH] [--force]
+    Merges source env branch to target env branch and all env branches in
+    between them without making changes to the current local git workspace.
+    Current branch is used as the default source branch and the next env branch
+    as the default destination branch. The command fails if fast-forward is not
+    possible. Merge operations between environment branches should always be
+    fast-forwarded so that a container is first built for dev environment and
+    then the same container is deployed to other environments as well once
+    environment branches are merged.
 
   vc feat list
     List all feature branches.

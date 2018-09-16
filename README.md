@@ -121,7 +121,7 @@ With taito-cli you can take an opinionated view on version control. However, com
     taito vc env list                        # List all environment branches
     taito vc env: dev                        # Switch to the dev environment branch
     taito vc env merge                       # Merge the current environment branch to the next environment branch
-    taito vc env merge: dev test             # Merge dev environment branch to test environment branch
+    taito vc env merge: dev stag             # Merge dev environment branch to stag branch, and all env branches in between them
 
     taito vc feat list                       # List all feature branches
     taito vc feat: pricing                   # Switch to the pricing feature branch

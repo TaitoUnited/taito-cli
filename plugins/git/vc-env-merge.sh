@@ -2,58 +2,90 @@
 : "${taito_cli_path:?}"
 : "${taito_environments:?}"
 
-valids=""
+# Parse arguments
+source=""
+dest=""
+git_push_options=""
+while [[ $# -gt 0 ]]
+do
+  if [[ ${1} == "--force" ]]; then
+    git_push_options="--force"
+  elif [[ ${1} == "--" ]]; then
+    echo "ERROR: Invalid option ${1}"
+    exit 1
+  elif [[ ! ${source} ]]; then
+    source=${1/prod/master}
+  elif [[ ! ${dest} ]]; then
+    dest=${1/prod/master}
+  else
+    echo "ERROR: Invalid parameter ${1}"
+    exit 1
+  fi
+  shift
+done
+
+# Determine valid merges
+merges=""
 prev_env=""
 for env in ${taito_environments}
 do
   env="${env/prod/master}"
   if [[ ${env} != "feat"* ]]; then
     if [[ ${prev_env} ]]; then
-      valids="${valids} ${prev_env}->${env} "
+      merges="${merges} ${prev_env}->${env} "
     fi
     prev_env="${env}"
   fi
 done
 
 # Determine source branch
-if [[ ${1} ]]; then
-  source="${1}"
-else
+if [[ ! ${source} ]]; then
   source=$(git symbolic-ref --short HEAD)
 fi
 
 # Determine destination branch
-dest="${2}"
 if [[ ! ${dest} ]]; then
-  dest=$(echo "${valids}" | sed "s/.*${source}->\([^[:space:]]*\).*/\1/")
+  dest=$(echo "${merges}" | sed "s/.*${source}->\([^[:space:]]*\).*/\1/")
 fi
 
-# Determine additional git options
-git_push_options=""
-if [[ " ${*} " == *"--force"* ]]; then
-  git_push_options="--force"
-fi
-
-echo "${source}->${dest} ${git_push_options}"
-if [[ "${valids}" != *" ${source}->${dest} "* ]]; then
+# Validate arguments
+if [[ ! "${merges}" =~ .*${source}-.*\>${dest}.* ]]; then
   echo "Merging from ${source} to ${dest} is not allowed."
-  echo "Valid enviroment merges:${valids}"
+  echo "Changes must be merged from one environment to another in this order:"
+  echo "${taito_environments}"
   exit 1
 fi
 
-echo
-echo "Merging ${source} to ${dest}. Do you want to continue (Y/n)?"
-read -r confirm
-if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
-  exit 130
-fi
+# Execute all merges
+source_found=false
+for merge in ${merges[@]}
+do
+  if [[ "${merge}" == "${source}->"* ]] || [[ "${source_found}" ]]; then
+    source_found=true
+    s="${merge%->*}"
+    d="${merge##*->}"
+    echo "${s}->${d} ${git_push_options}"
 
-# TODO execute remote merge using hub cli?
-"${taito_cli_path}/util/execute-on-host-fg.sh" "\
-git fetch origin ${source}:${dest} && \
-git push --no-verify ${git_push_options} origin ${dest} || \
-echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${dest}' \
-" && \
+    "${taito_cli_path}/util/execute-on-host-fg.sh" "\
+    echo && \
+    echo \"Merging ${s} -> ${d} ${git_push_options}\" && \
+    echo \"Do you want to continue (Y/n)?\" && \
+    read -r confirm && \
+    if ! [[ ${confirm:-y} =~ ^[Yy]*$ ]]; then
+      exit 130
+    fi && \
+    echo Merging... && \
+    git fetch origin ${s}:${d} && \
+    git push --no-verify ${git_push_options} origin ${d} || \
+    echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d}' \
+    "
+
+  fi
+  if [[ "${merge}" == *"->${dest}" ]]; then
+    break
+  fi
+done
+echo
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
