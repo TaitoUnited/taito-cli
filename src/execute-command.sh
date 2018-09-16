@@ -168,6 +168,29 @@ elif [[ "${branch}" == "local" ]]; then
 fi
 export taito_branch="${branch}"
 
+# Validate args
+if [[ " local ${taito_environments:-} " != *" ${taito_target_env} "* ]]; then
+  echo
+  echo "ERROR: Unknown environment '${taito_target_env}'"
+  echo "Valid environments: local ${taito_environments}"
+  exit 1
+fi
+if [[ " local ${taito_environments:-} " != *" ${taito_env} "* ]]; then
+  echo
+  echo "ERROR: Unknown environment '${taito_env}'"
+  echo "Valid environments: local ${taito_environments}"
+  exit 1
+fi
+if [[ ${taito_target} ]] && \
+   [[ " ${taito_targets:-} " != *" ${taito_target} "* ]] && \
+   [[ " ${taito_databases:-} " != *" ${taito_target} "* ]]; then
+  echo
+  echo "ERROR: Unknown target '${taito_target}'"
+  echo "Valid environments: local ${taito_environments}"
+  echo "Valid targets: ${taito_targets}"
+  exit 1
+fi
+
 # Select database configs using taito_target
 . "${taito_util_path}/read-database-config.sh" && \
 

@@ -3,17 +3,24 @@
 : "${taito_project_path:?}"
 
 filename="${1:?}"
+mode="${2}"
 
 content=""
 
-# Add also file from project root
+if [[ "${mode}" == "taito-cli-first" ]]; then
+  c=$(cat "${taito_cli_path}/${filename}")
+  content="${content}${c}\n\n"
+fi
+
 if [[ -f "${taito_project_path}/${filename}" ]]; then
   c=$(cat "${taito_project_path}/${filename}")
   content="${content}${c}\n\n"
 fi
 
-c=$(cat "${taito_cli_path}/${filename}")
-content="${content}${c}\n\n"
+if [[ "${mode}" != "taito-cli-first" ]]; then
+  c=$(cat "${taito_cli_path}/${filename}")
+  content="${content}${c}\n\n"
+fi
 
 # Check plugin commands only if plugin is enabled for this environment:
 # e.g. docker:local kubectl:-local

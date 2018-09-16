@@ -27,9 +27,12 @@ elif [[ ${was_executed} == false ]]; then
     help=$("${taito_cli_path}/plugins/basic/__help.sh" "${taito_orig_command}")
     if [[ ${#help} -le 5 ]]; then
       # No help found. Try with only a first letter of the last word.
-      last=${taito_orig_command##*-}
-      help=$("${taito_cli_path}/plugins/basic/__help.sh" \
-        "${taito_orig_command%-*}-${last:0:1}")
+      last_word=${taito_orig_command##*-}
+      search="${last_word:0:1}"
+      if [[ "${taito_orig_command}" == *"-"* ]]; then
+        search="${taito_orig_command%-*} ${last_word:0:1}"
+      fi
+      help=$("${taito_cli_path}/plugins/basic/__help.sh" "${search}")
     fi
     if [[ ${#help} -le 5 ]]; then
       # No help found for command. Try without the last word.
