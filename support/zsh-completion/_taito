@@ -21,7 +21,8 @@ _taito()
   export taito_index
   export taito_prefix="${words[@]:1:$taito_index-1}"
 
-  if [[ ${taito_prefix} == *"db import:"* ]]; then
+  if [[ ${taito_prefix} == *"db import:"* ]] || \
+     [[ ${taito_prefix} == *"db dump:"* ]]; then
     # Autocomplete using filenames
     _files -f
   else

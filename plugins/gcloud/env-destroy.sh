@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 
-if [[ "${taito_env}" == "prod" ]]; then
+if [[ "${taito_target_env}" == "prod" ]]; then
   echo "TODO not implemented. Delete these manually:"
   echo "- DNS settings"
   echo "- Uptime check"

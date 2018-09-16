@@ -226,7 +226,7 @@ if [[ ${taito_project:-} ]]; then
         # Open database client for ${env} environment from command line"
       echo "db import${db}${param} FILE \
         # Import a file to database on ${env} environment"
-      echo "db dump${db}${suffix} \
+      echo "db dump${db}${suffix} FILE \
         # Dump database of ${env} environment to a file"
       echo "db log${db}${suffix} \
         # View change log of ${env} environment database"

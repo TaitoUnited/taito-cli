@@ -1,0 +1,7 @@
+FROM taitounited/taito-cli-deps:gcloud
+MAINTAINER Taito United <support@taitounited.fi>
+
+COPY . /taito-cli
+WORKDIR /taito-cli
+RUN ln -s /taito-cli/taito_impl.sh /usr/local/bin/taito
+RUN npm run verify

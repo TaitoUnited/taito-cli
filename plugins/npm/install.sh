@@ -9,13 +9,18 @@ if [[ "${switches}" == *" --clean "* ]]; then
   "${taito_plugin_path}/util/clean.sh"
 fi && \
 
+npm_command="install"
+if [[ "${switches}" == *" --lock "* ]]; then
+  npm_command="ci"
+fi && \
+
 # Run npm install
 # NOTE: Changed 'npm install' to run on host because of linux permission issues.
 # We are installing libs locally anyway so perhaps it is better this way.
 # TODO add '--python=${npm_python}' for npm install?
 "${taito_util_path}/execute-on-host-fg.sh" "\
-  echo \"# Running 'npm install'\" && \
-  npm install" && \
+  echo \"# Running 'npm ${npm_command}'\" && \
+  npm ${npm_command}" && \
 
 # Run postinstall script: install-all, install-ci or install-dev
 task_postinstall=""
