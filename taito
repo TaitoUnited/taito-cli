@@ -1,41 +1,16 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
-# Resolve paths
-# NOTE: duplicate with ./taito_impl.sh (taito_cli_path must be resolved before
-# other scripts can be called)
-export taito_home_path="${TAITO_HOME:-$HOME}"
-export taito_cli_path
-export taito_src_path
-export taito_util_path
-export taito_project_path
-taito_cli_path=$(
-  # Resolve taito-cli path by following symlinks
-  source="${BASH_SOURCE[0]}"
-  while [[ -h "${source}" ]]; do # resolve until the file is no longer a symlink
-    dir="$( cd -P "$( dirname "${source}" )" && pwd )"
-    source=$(readlink "${source}")
-    [[ "${source}" != /* ]] && source="${taito_cli_path}/${source}"
-  done
-  dirname "${source}"
-)
-taito_src_path="${taito_cli_path}/src" && \
-taito_util_path="${taito_cli_path}/util" && \
-taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
-
-# Set working directory
-cd "${taito_project_path}" && \
-
-# Read taito-config.sh files from all locations
-. "${taito_util_path}/read-taito-config.sh" "local" && \
-
 # Parse arguments
+# TODO rename variables
 mode="normal"
 shell_command=false
 continue=false
 admin=false
 upgrade=false
 skip_rest=false
+taito_organization_param=""
+project=""
 options=()
 args=()
 while [[ $# -gt 0 ]]
@@ -55,6 +30,16 @@ do
         mode="print-short"
         shift
         ;;
+        -o|--organization)
+        shift
+        taito_organization_param="$1"
+        shift
+        ;;
+        -p|--project)
+        shift
+        project="$1"
+        shift
+        ;;
         -c|--continue)
         continue=true
         shift
@@ -64,6 +49,7 @@ do
         shift
         ;;
         --upgrade)
+        # TODO upgrade should be mode?
         upgrade=true
         shift
         ;;
@@ -90,8 +76,54 @@ do
     shift
   fi
 done
-# set -- "${args[@]}"
 
+# Resolve taito-cli paths
+# NOTE: duplicate with ./taito_impl.sh (taito_cli_path must be resolved before
+# other scripts can be called)
+export taito_home_path="${TAITO_HOME:-$HOME}"
+export taito_cli_path
+export taito_src_path
+export taito_util_path
+export taito_project_path
+taito_cli_path=$(
+  # Resolve taito-cli path by following symlinks
+  source="${BASH_SOURCE[0]}"
+  while [[ -h "${source}" ]]; do # resolve until the file is no longer a symlink
+    dir="$( cd -P "$( dirname "${source}" )" && pwd )"
+    source=$(readlink "${source}")
+    [[ "${source}" != /* ]] && source="${taito_cli_path}/${source}"
+  done
+  dirname "${source}"
+)
+taito_src_path="${taito_cli_path}/src" && \
+taito_util_path="${taito_cli_path}/util" && \
+
+# Read personal taito-config settings
+. "${taito_util_path}/read-user-taito-config.sh" "local" && \
+
+# Pull project specific taito-config settings from git
+if [[ "${project}" ]]; then
+  project_local_path="${taito_home_path}/.taito/projects/${project}" && \
+  if [[ ! -d "${project_local_path}" ]]; then
+    mkdir -p "${project_local_path}" && \
+    cd "${project_local_path}" && \
+    git clone --no-checkout --depth 1 -b dev --single-branch --filter=blob:none \
+      "${git_organization:?}/${project}.git" . &> /dev/null && \
+    git checkout dev -- taito-config.sh package.json &> /dev/null
+  else
+    cd "${project_local_path}" && \
+    git pull &> /dev/null
+  fi
+fi && \
+
+# Resolve project path
+taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
+cd "${taito_project_path}" && \
+
+# Read project specific taito-config settings
+. "${taito_util_path}/read-project-taito-config.sh" "local" && \
+
+# Handle special modes
 if [[ ${mode} == "print" ]]; then
   "${taito_src_path}/print-commands.sh" "${args[*]}"
   exit 0
@@ -155,11 +187,11 @@ do
     repo_url=${extension%.git*}.git # git@github.com:xxx/webapp-template.git
     repo_name=${temp%.git*} # webapp-template
     repo_dir=${temp#*.git} # /my-extension
-    repo_local_path="${taito_home_path}/.taito/${repo_name}"
+    repo_local_path="${taito_home_path}/.taito/extensions/${repo_name}"
     if [[ -d "${repo_local_path}" ]]; then
       # Pull the latest version
       if [[ ${upgrade} == true ]]; then
-        echo "Pulling ${repo_local_path}..."
+        echo "Pulling ${repo_local_path} from git"
         (
           cd "${repo_local_path}"
           git pull &> /dev/null
@@ -167,10 +199,12 @@ do
       fi
     else
       (
-        cd ${taito_home_path}/.taito
-        git clone "${repo_url}"
-        cd "${repo_name}"
-        git checkout
+        echo
+        echo "Checking out extension ${repo_url} from git"
+        mkdir -p ${repo_local_path}
+        cd ${repo_local_path}
+        git clone "${repo_url}" . &> /dev/null
+        git checkout &> /dev/null
       )
     fi
     extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}${repo_dir}"
@@ -180,6 +214,7 @@ do
     folder_name=${extension%=*}
     url=${extension##*=}
     if [[ ! -d "${taito_home_path}/.taito/${folder_name}" ]]; then
+      echo
       echo "Downloading extension ${folder_name} from ${url}"
       ( curl -sL "${url}" | tar zxv -C ${taito_home_path}/.taito )
     fi
@@ -188,6 +223,13 @@ do
     # Local url
     # First replace ~ with an absolute home path.
     # Then replace home path with ${taito_container_home} for docker.
+    if [[ ${upgrade} == true ]] && [[ -d "${extension}/.git" ]]; then
+      echo "Pulling ${extension} from git"
+      (
+        cd "${extension}"
+        git pull &> /dev/null
+      )
+    fi
     local_path="${extension/\~/${taito_home_path}}"
     docker_path="${extension/\~/${taito_home_path}}"
     docker_path="${docker_path/$taito_home_path/$taito_container_home}"
@@ -340,6 +382,7 @@ eval "docker run ${docker_it} \
   -e taito_docker=\"true\" \
   -e taito_image_name=\"${taito_image_name}\" \
   -e taito_admin_key=\"${admin_key}\" \
+  -e taito_organization_param=\"${taito_organization_param}\" \
   --entrypoint taito \
   ${image_flag} \
   ${params[@]} ${output}"

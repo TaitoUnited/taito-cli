@@ -211,8 +211,14 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     # settings or with the settings defined by your organization.
 
     export taito_image="taitounited/taito-cli:latest"
-    export taito_global_plugins="docker-global fun-global gcloud-global \
-      links-global template-global"
+    export taito_global_plugins="docker-global fun-global \
+      google-global gcloud-global links-global template-global"
+
+    # git settings
+    export git_organization="git@github.com:MyOrganization"
+
+    # google settings
+    export google_authuser="1"
 
     # template plugin default settings
     export template_default_taito_image="taitounited/taito-cli:latest"
@@ -269,8 +275,14 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
     # settings or with the settings defined by your organization.
 
     export taito_image="taitounited/taito-cli:latest"
-    export taito_global_plugins="docker-global fun-global gcloud-global \
-      links-global template-global"
+    export taito_global_plugins="docker-global fun-global \
+      google-global gcloud-global links-global template-global"
+
+    # git settings
+    export git_organization="git@github.com:MyOrganization"
+
+    # google settings
+    export google_authuser="1"
 
     # template plugin default settings
     export template_default_taito_image="taitounited/taito-cli:latest"
@@ -327,7 +339,11 @@ See the [README.md](https://github.com/TaitoUnited/server-template#readme) of th
 
 With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
 
-You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
+You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
+
+If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `template create` command as it will tell taito-cli to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION template create: server-template`.
+
+You can execute project specific commands outside the project directory with the `-p` option, for example `taito -p my-project open app:dev`. This works only if you have configured `git_organization` setting in you personal `taito-config.sh` file.
 
 ### Admin credentials
 
@@ -339,7 +355,7 @@ TODO support for U2F/YubiKey?
 
 ## Configuration
 
-By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and project specific settings in `taito-config.sh` file placed in your project root folder. Here is an example of a personal `taito-config.sh`:
+By default only the *basic* plugin is enabled. You can configure your personal default settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. Project specific settings are defined in `taito-config.sh` file placed in your project root folder. Here is an example of a personal or organization specific taito configuration:
 
     #!/bin/bash
 
@@ -347,6 +363,9 @@ By default only the *basic* plugin is enabled. You can configure your personal s
     export taito_image="taitounited/taito-cli:latest"
     export taito_global_extensions="~/my-extension git@github.com:MyOrganization/another-extension.git"
     export taito_global_plugins="template-global myplugin-global anotherplugin-global"
+
+    # git settings
+    export git_organization="git@github.com:MyOrganization"
 
     # template plugin default settings
     # NOTE: These example settings do not work!! Replace them with the

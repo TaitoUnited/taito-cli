@@ -4,16 +4,18 @@
 : "${taito_image:?}"
 
 # Pull latest version of taito bash script
+echo "Pulling ${taito_cli_path} from git"
 (cd "${taito_cli_path}" && git pull)
 
 # Pull taito-cli docker image
+echo "Pulling ${taito_image} docker image"
 docker pull "${taito_image}"
 
 # Prepare taito-new image for modificaions
 docker rm taito-save taito-new &> /dev/null
 docker create --name taito-new "${taito_image}"
 
-echo "Creating taito user with local user uid and gid"
+echo "Creating taito user with local user uid and gid on taito-cli image"
 docker start taito-new &> /dev/null
 docker exec -it taito-new /bin/sh -c "\
   /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g) && \
@@ -24,7 +26,7 @@ sleep 3
 
 # Copy credentials from old image
 if docker create --name taito-save "${taito_image}save" &> /dev/null; then
-  echo "Copying credentials from the old image."
+  echo "Copying credentials from the old taito-cli image."
   mkdir -p ~/.taito/save/root &> /dev/null
   mkdir -p ~/.taito/save/taito &> /dev/null
 
@@ -42,7 +44,7 @@ if docker create --name taito-save "${taito_image}save" &> /dev/null; then
   rm -rf ~/.taito/save
 fi
 
-echo "Committing changes to taito image"
+echo "Committing changes to taito-cli image"
 docker commit taito-new "${taito_image}" &> /dev/null
 docker stop taito-new &> /dev/null
 docker image tag "${taito_image}" "${taito_image}save"

@@ -156,7 +156,8 @@ if [[ " unit scan docs ci-publish " == *"${taito_command}"* ]] && \
 fi
 
 # Read taito-config.sh files from all locations
-. "${taito_util_path}/read-taito-config.sh" "${taito_env}" && \
+. "${taito_util_path}/read-user-taito-config.sh" "${taito_env}" && \
+. "${taito_util_path}/read-project-taito-config.sh" "${taito_env}" && \
 
 # Determine branch
 branch="${taito_env}"
