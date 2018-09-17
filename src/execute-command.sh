@@ -182,6 +182,7 @@ if [[ " local ${taito_environments:-} " != *" ${taito_env} "* ]]; then
   exit 1
 fi
 if [[ ${taito_target} ]] && \
+   [[ "${taito_mode:-}" != "ci" ]] && \
    [[ "${taito_targets:-}" != *"${taito_target}"* ]] && \
    [[ "${taito_databases:-}" != *"${taito_target}"* ]]; then
   echo
