@@ -16,8 +16,12 @@ case "${secret_method}" in
   file)
     echo "Give file path for ${secret_name} relative to project root folder."
     if [[ "${secret_name}" == *"gcloud"* ]]; then
+      opts=""
+      if [[ ${google_authuser:-} ]]; then
+        opts="authuser=${google_authuser}&"
+      fi
       echo "You most likely can download the secret key file from the following url:"
-      echo "https://console.cloud.google.com/iam-admin/serviceaccounts?project=${taito_resource_namespace_id:-}"
+      echo "https://console.cloud.google.com/iam-admin/serviceaccounts?${opts}project=${taito_resource_namespace_id:-}"
       echo
     fi
     while [[ ! -f ${secret_value} ]]; do

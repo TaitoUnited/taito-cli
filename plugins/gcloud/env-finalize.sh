@@ -54,7 +54,11 @@ if [[ "${taito_env}" == "prod" ]]; then
   echo
   echo "Press enter to open logs"
   read -r
-  if ! "${taito_cli_path}/util/browser.sh" "https://console.cloud.google.com/logs/viewer?project=${taito_zone}&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F${kubectl_name}%2Fnamespace_id%2F${taito_namespace}"; then
+  opts=""
+  if [[ ${google_authuser:-} ]]; then
+    opts="authuser=${google_authuser}&"
+  fi
+  if ! "${taito_cli_path}/util/browser.sh" "https://console.cloud.google.com/logs/viewer?${opts}project=${taito_zone}&minLogLevel=0&expandAll=false&resource=container%2Fcluster_name%2F${kubectl_name}%2Fnamespace_id%2F${taito_namespace}"; then
     exit 1
   fi
   echo "Press enter when ready"
