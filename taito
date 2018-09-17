@@ -402,6 +402,7 @@ rm -f "${log_file}" &> /dev/null
 rm -f "${log_file_fg}" &> /dev/null
 
 if [[ "${exit_code}" != "0" ]]; then
+  echo
   echo "HINT: Run 'taito --trouble' to see troubleshoothing"
   echo
 fi

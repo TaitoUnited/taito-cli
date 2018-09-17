@@ -4,14 +4,15 @@ TAITO-CLI TROUBLESHOOTING
     Try to upgrade taito-cli by running 'taito --upgrade'
 
   Connection or authorization error
-    If you run into an connection or authorization error during taito-cli
+    If you run into a connection or authorization error during taito-cli
     command execution, the command probably requires authentication and you
     either have not authenticated or your authentication has expired. In such
     case, run 'taito --auth:ENV' to authenticate.
 
   'No space left on device'
-    Try cleaning your local workspace by running 'taito workspace clean'. You
-    can also try to enlarge the docker virtual disk in your docker preferences.
+    Try cleaning your local workspace by running 'taito workspace kill' and
+    'taito workspace clean'. You can also try to enlarge the docker virtual
+    disk in your docker preferences.
 
   Taito-cli hangs after displaying the copyright notice
     First try restarting your Docker daemon. If the problem persists after
@@ -19,29 +20,24 @@ TAITO-CLI TROUBLESHOOTING
     been corrupted.
 
   'command not found'
-    * Try running 'taito --upgrade'
-    * Try upgrading docker and docker-compose
-    * Did you give the correct environment as argument? Commands always use the
+    - Try running 'taito --upgrade'
+    - Try upgrading docker and docker-compose
+    - Did you give the correct environment as argument? Commands always use the
       local environment by default.
-    * Check your plugin configuration in your taito-config.sh files.
-    * Make sure that you have set all the environment variables correctly:
+    - Check your plugin configuration in your taito-config.sh files.
+    - Make sure that you have set all the environment variables correctly:
       TODO...
 
   Application does not work locally
-    * Try clean start by running:
+    - Try clean start by running:
       $ taito install --clean
       $ taito start --clean
       $ taito init --clean
-    * Try cleaning your local workspace by running 'workspace-clean' and/or
-      'workspace-kill'
+    - Try cleaning your local workspace by running 'workspace-kill' and/or
+      'workspace-clean'
 
   CI/CD build fails but everything works locally
     See build logs by running 'taito open builds' and fix the problem. If there
     is no apparent reason why the build failed, just try to retry the CI/CD
     build. If it fails again, try to build production build locally by running
     'taito start --clean --prod' and then try to fix the build problem.
-
-  'Not building a new image because ci_exec_build is false.'
-    The ci_exec_build taito config setting is set to false for the environment
-    in question. Therefore a new image will not ever be built for the
-    environment. An existing image will be used instead.
