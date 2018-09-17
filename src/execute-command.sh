@@ -68,7 +68,7 @@ if [[ "${env_command}" == *":"* ]]; then
       command="${sect}"
     # TODO: Remove hardcoded envs. They are currently required because
     # taito-config.sh has not been read yet at this point of execution
-    elif [[ " local dev test stag canary prod master " == *" ${sect} "* ]] || \
+    elif [[ " local dev test stag staging cana canary prod master " == *" ${sect} "* ]] || \
          [[ "${sect}" == "feat-"* ]]; then
       env="${sect}"
     else
