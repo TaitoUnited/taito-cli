@@ -4,11 +4,11 @@
 : "${taito_image:?}"
 
 # Pull latest version of taito bash script
-echo "Pulling ${taito_cli_path} from git"
+echo "Pulling taito-cli directory from git: ${taito_cli_path}"
 (cd "${taito_cli_path}" && git pull)
 
 # Pull taito-cli docker image
-echo "Pulling ${taito_image} docker image"
+echo "Pulling taito-cli docker image from registry: ${taito_image}"
 docker pull "${taito_image}"
 
 # Prepare taito-new image for modificaions
@@ -26,7 +26,7 @@ sleep 3
 
 # Copy credentials from old image
 if docker create --name taito-save "${taito_image}save" &> /dev/null; then
-  echo "Copying credentials from the old taito-cli image."
+  echo "Copying credentials from the old taito-cli image"
   mkdir -p ~/.taito/save/root &> /dev/null
   mkdir -p ~/.taito/save/taito &> /dev/null
 

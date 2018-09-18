@@ -191,7 +191,7 @@ do
     if [[ -d "${repo_local_path}" ]]; then
       # Pull the latest version
       if [[ ${upgrade} == true ]]; then
-        echo "Pulling ${repo_local_path} from git"
+        echo "Pulling taito-cli extension from git: ${repo_local_path}"
         (
           cd "${repo_local_path}"
           git pull &> /dev/null
@@ -224,7 +224,7 @@ do
     # First replace ~ with an absolute home path.
     # Then replace home path with ${taito_container_home} for docker.
     if [[ ${upgrade} == true ]] && [[ -d "${extension}/.git" ]]; then
-      echo "Pulling ${extension} from git"
+      echo "Pulling taito-cli extension from git: ${extension}"
       (
         cd "${extension}"
         git pull &> /dev/null
