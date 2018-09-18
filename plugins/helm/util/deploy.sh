@@ -30,7 +30,8 @@ if [[ -z ${image} ]]; then
   exit 1
 fi
 
-version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)
+export taito_build_image_tag="${image}"
+export taito_build_version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)
 
 # Deploy chart located in ./scripts/helm
 if [[ -d "./scripts/helm" ]]; then
