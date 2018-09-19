@@ -2,14 +2,15 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
+: "${taito_dest_env:?}"
 : "${database_name:?}"
 : "${database_host:?}"
 : "${database_port:?}"
 
 if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
-  dest="${taito_env}"
-  source="${1:?Source not given}"
-  username="${2:-postgres}"
+  source="${taito_env}"
+  dest="${taito_dest_env}"
+  username="${1:-postgres}"
 
   echo "Copying ${source} to ${dest}. Do you want to continue (Y/n)?"
   read -r confirm

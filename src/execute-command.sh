@@ -68,9 +68,14 @@ if [[ "${env_command}" == *":"* ]]; then
       command="${sect}"
     # TODO: Remove hardcoded envs. They are currently required because
     # taito-config.sh has not been read yet at this point of execution
-    elif [[ " local dev test stag staging cana canary prod master " == *" ${sect} "* ]] || \
-         [[ "${sect}" == "feat-"* ]]; then
+    elif [[ -z "${env}" ]] && ( \
+         [[ " local dev test stag staging cana canary prod master " == *" ${sect} "* ]] || \
+         [[ "${sect}" == "feat-"* ]] ); then
       env="${sect}"
+    elif [[ -z "${dest_env}" ]] && ( \
+         [[ " local dev test stag staging cana canary prod master " == *" ${sect} "* ]] || \
+         [[ "${sect}" == "feat-"* ]] ); then
+      dest_env="${sect}"
     else
       target="${sect}"
     fi
@@ -94,9 +99,10 @@ fi
 if [[ "${env}" == "master" ]]; then
   # branch name given instead of env
   env="prod"
-elif [[ "${env}" == "f"* ]]; then
+fi
+if [[ "${dest_env}" == "master" ]]; then
   # branch name given instead of env
-  env="feature"
+  dest_env="prod"
 fi
 
 # Handle 'taito -h'
@@ -127,6 +133,7 @@ export taito_skip_override="${skip_override}"
 export taito_command="${command}"
 export taito_orig_command="${orig_command}"
 export taito_env="${env}"
+export taito_dest_env="${dest_env}"
 export taito_target_env="${env}"
 export taito_target="${target}"
 export taito_verbose=false
@@ -223,7 +230,7 @@ if [[ "${taito_env}" != "local" ]] && \
 fi
 
 # Confirm prod operations
-if [[ "${taito_env}" == "prod" ]] && \
+if ( [[ "${taito_env}" == "prod" ]] || [[ "${taito_dest_env}" == "prod" ]] ) && \
    [[ "${taito_command}" != "info" ]] && \
    [[ "${taito_command}" != "status" ]] && \
    [[ "${taito_command}" != "logs" ]] && \

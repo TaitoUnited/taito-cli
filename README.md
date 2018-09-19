@@ -97,8 +97,8 @@ Some database operation examples targetting a test environment:
     taito db rebase:test b91b7b2             # Rebase a database (db revert + db deploy) from change 'b91b7b2'
     taito db revert:test b91b7b2             # Revert a database to change 'b91b7b2'
     taito db diff:test dev                   # Compare db schemas of dev and test environments
-    taito db copy to:dev test                # Copy test database to dev
-    taito db copyquick to:dev test           # Copy test database to dev (both databases in the same cluster, users may be blocked)
+    taito db copy between:test:dev           # Copy test database to dev
+    taito db copyquick between:test:dev      # Copy test database to dev (both databases in the same cluster, users may be blocked)
 
 Storage operation examples:
 

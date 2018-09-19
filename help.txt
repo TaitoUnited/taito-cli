@@ -81,8 +81,8 @@ QUICK EXAMPLES
     db rebase:dev b91b7b2    # Rebase a database (db revert + db deploy)
     db revert:dev b91b7b2    # Revert a database
     db diff:dev test         # Compare db schemas of dev and test environments
-    db copy to:dev test      # Copy test database to dev
-    db copyquick to:dev test # Copy test database to dev (WARNING!!)
+    db copy between:test:dev       # Copy test database to dev
+    db copyquick between:test:dev  # Copy test database to dev (WARNING!!)
 
   STORAGE OPERATIONS
     storage mount:dev                  # Mount dev storage bucket to ./mnt/BUCKT
@@ -498,6 +498,9 @@ PROJECT: VERSION CONTROL OPERATIONS
     making the pull request. With rebase you can clean up commit history by
     reordering commits and selectively squashing some of them together.
 
+  vc revert
+    Revert latest commit from local and remote repo
+
 PROJECT: DATABASE OPERATIONS
 
   db add:[TARGET] NAME [-r REQUIRES] [-n DESCRIPTION]
@@ -558,13 +561,13 @@ PROJECT: DATABASE OPERATIONS
     will be run from the beginning. DB proxy connection and secrets are handled
     automatically.
 
-  db copy to[:TARGET]:ENV SOURCE_ENV
+  db copy between[:TARGET]:SOURCE_ENV:DEST_ENV
     Copy database from one environment to another. For example
-    `db copy:stag prod` or `db copy:local dev`. If you do not have enough
-    rights, ask devops personnel to do this for you. DB proxy connection and
-    secrets are handled automatically.
+    `db copy between:prod:stag` or `db copy between:dev:local`. If you do not
+    have enough rights, ask devops personnel to do this for you. DB proxy
+    connection and secrets are handled automatically.
 
-  db copyquick to[:TARGET]:ENV SOURCE_ENV
+  db copyquick between[:TARGET]:SOURCE_ENV:DEST_ENV
     Copy database quickly from one environent to another. DB proxy connection
     and secrets are handled automatically. NOTE: The command requires
     that both databases are located on the same database cluster. The command
@@ -576,17 +579,20 @@ PROJECT: STORAGE OPERATIONS
   storage mount[:TARGET]:ENV [MOUNT_PATH]
     Mount storage bucket to MOUNT_PATH or ./mnt/BUCKET
 
-  storage copy from[:TARGET]:ENV DESTINATION_DIR
-    Copy files from storage bucket to DESTINATION_DIR
+  storage copy between[:TARGET]:ENV:DEST_ENV [SOURCE] [LOCAL_DEST]
+    Copy files between storage buckets
 
-  storage copy to[:TARGET]:ENV SOURCE_DIR
-    Copy files from SOURCE_DIR to storage bucket
+  storage copy from[:TARGET]:ENV SOURCE LOCAL_DEST
+    Copy files from storage bucket to local disk
 
-  storage sync from[:TARGET]:ENV DESTINATION_DIR
-    Sync files from storage bucket to DESTINATION_DIR.
+  storage copy to[:TARGET]:ENV LOCAL_SOURCE DEST
+    Copy files from local disk to storage bucket
 
-  storage sync to[:TARGET]:ENV SOURCE_DIR
-    Sync files from SOURCE_DIR to storage bucket
+  storage sync from[:TARGET]:ENV SOURCE LOCAL_DEST
+    Sync files from storage bucket to local disk
+
+  storage sync to[:TARGET]:ENV SOURCE DEST
+    Sync files from local disk to storage bucket
 
 PROJECT: MANUAL DEPLOYMENT OPERATIONS
 

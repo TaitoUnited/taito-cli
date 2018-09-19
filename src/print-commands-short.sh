@@ -128,10 +128,12 @@ if [[ ${taito_project:-} ]]; then
     env="${env_orig}"
     suffix=":${env}"
     param=":${env}"
+    param_not_empty=":${env}"
     if [[ ${env_orig} == "loc" ]]; then
       env="local"
       suffix=""
       param=":"
+      param_not_empty=":local"
     fi
 
     echo "start${suffix}"
@@ -162,8 +164,8 @@ if [[ ${taito_project:-} ]]; then
       echo "db rebase${db}${param} CHANGE"
       echo "db revert${db}${param} CHANGE"
       echo "db diff${db}${param} SOURCE_ENV"
-      echo "db copy to${db}${param} SOURCE_ENV"
-      echo "db copyquick to${db}${param} SOURCE_ENV"
+      echo "db copy between${db}${param_not_empty}:DEST_ENV"
+      echo "db copyquick between${db}${param_not_empty}:DEST_ENV"
     done
 
     # Local-only commands
@@ -211,10 +213,11 @@ if [[ ${taito_project:-} ]]; then
         fi
         echo "storage mount${st}${suffix}"
         echo "storage mount${st}${param} MOUNT_PATH"
-        echo "storage copy from${st}${param} DEST_DIR"
-        echo "storage copy to${st}${param} SOURCE_DIR"
-        echo "storage sync from${st}${param} DEST_DIR"
-        echo "storage sync to${st}${param} SOURCE_DIR"
+        echo "storage copy between${st}${param}:DEST_ENV SOURCE DEST"
+        echo "storage copy from${st}${param} SOURCE LOCAL_DEST"
+        echo "storage copy to${st}${param} LOCAL_SOURCE DEST"
+        echo "storage sync from${st}${param} SOURCE LOCAL_DEST"
+        echo "storage sync to${st}${param} LOCAL_SOURCE DEST"
       done
     fi
 

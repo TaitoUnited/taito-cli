@@ -1,16 +1,24 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
+: "${taito_env:?}"
+: "${taito_dest_env:?}"
 : "${database_name:?}"
 : "${database_host:?}"
 : "${database_port:?}"
 
 if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
-  dest="${taito_env}"
-  source="${1:?Source not given}"
-  username="${2}"
+  source="${taito_env}"
+  dest="${taito_dest_env}"
+  username="${1:-root}"
 
   echo "TODO implement"
+  echo "${database_instance}"
+  echo "${database_name}"
+  echo "${database_host}"
+  echo "${database_proxy_port}"
+  echo "${database_port}"
+
 fi && \
 
 # Call next command on command chain

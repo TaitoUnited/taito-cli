@@ -186,10 +186,12 @@ if [[ ${taito_project:-} ]]; then
     env="${env_orig}"
     suffix=":${env}"
     param=":${env}"
+    param_not_empty=":${env}"
     if [[ ${env_orig} == "loc" ]]; then
       env="local"
       suffix=""
       param=":"
+      param_not_empty=":local"
     fi
 
     echo "start${suffix} \
@@ -242,10 +244,10 @@ if [[ ${taito_project:-} ]]; then
         # Revert ${env} environment database changes"
       echo "db diff${db}${param} SOURCE_ENV \
         # Compare (diff) source env database schema with ${env} environment"
-      echo "db copy to${db}${param} SOURCE_ENV \
-        # Copy database from source env to ${env} environment"
-      echo "db copyquick to${db}${param} SOURCE_ENV \
-        # Copy database quickly from source env to ${env} environment (WARNING!!)"
+      echo "db copy between${db}${param_not_empty}:DEST_ENV \
+        # Copy database from ${env} environment to dest env"
+      echo "db copyquick between${db}${param_not_empty}:DEST_ENV \
+        # Copy database quickly from ${env} environment to dest env (WARNING!!)"
     done
 
     # Local-only commands
@@ -316,17 +318,19 @@ if [[ ${taito_project:-} ]]; then
           st=":${storage}"
         fi
         echo "storage mount${st}${suffix} \
-          # Mount dev storage bucket to ./mnt/BUCKET"
+          # Mount ${env} storage bucket to ./mnt/BUCKET"
         echo "storage mount${st}${param} MOUNT_PATH \
-          # Mount dev storage bucket to MOUNT_PATH"
-        echo "storage copy from${st}${param} DEST_DIR \
-          # Copy files from dev bucket to DEST_DIR "
-        echo "storage copy to${st}${param} SOURCE_DIR \
-          # Copy files from SOURCE_DIR to dev bucket"
-        echo "storage sync from${st}${param} DEST_DIR \
-          # Sync files from dev bucket to DEST_DIR"
-        echo "storage sync to${st}${param} SOURCE_DIR \
-          # Sync files from SOURCE_DIR to dev bucket"
+          # Mount ${env} storage bucket to MOUNT_PATH"
+        echo "storage copy between${st}${param}:DEST_ENV SOURCE DEST \
+          # Copy files from ${env} to DEST_ENV for bucket ${st}"
+        echo "storage copy from${st}${param} SOURCE LOCAL_DEST \
+          # Copy files from ${env} to local disk"
+        echo "storage copy to${st}${param} LOCAL_SOURCE DEST \
+          # Copy files from local disk to ${env}"
+        echo "storage sync from${st}${param} SOURCE LOCAL_DEST \
+          # Sync files from ${env} to local disk"
+        echo "storage sync to${st}${param} LOCAL_SOURCE DEST \
+          # Copy files from local disk to ${env}"
       done
     fi
 
