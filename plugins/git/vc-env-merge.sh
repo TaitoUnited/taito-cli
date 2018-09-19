@@ -57,7 +57,7 @@ if [[ ! "${merges}" =~ .*${source}-.*\>${dest}.* ]]; then
 fi
 
 # Execute all merges
-source_found=false
+source_found=""
 for merge in ${merges[@]}
 do
   if [[ "${merge}" == "${source}->"* ]] || [[ "${source_found}" ]]; then
