@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
+# TODO refactor: this is duplicate code with autocomplete.sh
+
 cprefix="${1:-*}"
 
 # Basic commands
@@ -215,40 +217,44 @@ if [[ ${taito_project:-} ]]; then
     echo "status${suffix} \
       # Show application status of ${env} environment"
 
-    for database in ${taito_databases:-}
-    do
-      db=""
-      if [[ "${database}" != "database" ]]; then
-        db=":${database}"
-      fi
-      echo "db proxy${db}${suffix} \
-        # Show db conn details for ${env} environment and start a proxy if required"
-      echo "db connect${db}${suffix} \
-        &focus \
-        # Open database client for ${env} environment from command line"
-      echo "db import${db}${param} FILE \
-        # Import a file to database on ${env} environment"
-      echo "db dump${db}${suffix} FILE \
-        # Dump database of ${env} environment to a file"
-      echo "db log${db}${suffix} \
-        # View change log of ${env} environment database"
-      echo "db recreate${db}${suffix} \
-        # Recreates the ${env} environment database"
-      echo "db deploy${db}${suffix} \
-        # Deploy changes to ${env} environment database"
-      echo "db rebase${db}${suffix} \
-        # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
-      echo "db rebase${db}${param} CHANGE \
-        # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
-      echo "db revert${db}${param} CHANGE \
-        # Revert ${env} environment database changes"
-      echo "db diff${db}${param} SOURCE_ENV \
-        # Compare (diff) source env database schema with ${env} environment"
-      echo "db copy between${db}${param_not_empty}:DEST_ENV \
-        # Copy database from ${env} environment to dest env"
-      echo "db copyquick between${db}${param_not_empty}:DEST_ENV \
-        # Copy database quickly from ${env} environment to dest env (WARNING!!)"
-    done
+    if [[ "${cprefix}" == "db"* ]] || [[ "${cprefix}" == "*" ]]; then
+      for database in ${taito_databases:-}
+      do
+        db=""
+        if [[ "${database}" != "database" ]]; then
+          db=":${database}"
+        fi
+        echo "db proxy${db}${suffix} \
+          # Show db conn details for ${env} environment and start a proxy if required"
+        echo "db connect${db}${suffix} \
+          &focus \
+          # Open database client for ${env} environment from command line"
+        echo "db import${db}${param} FILE \
+          # Import a file to database on ${env} environment"
+        echo "db dump${db}${suffix} FILE \
+          # Dump database of ${env} environment to a file"
+        echo "db log${db}${suffix} \
+          # View change log of ${env} environment database"
+        echo "db recreate${db}${suffix} \
+          # Recreates the ${env} environment database"
+        echo "db deploy${db}${suffix} \
+          # Deploy changes to ${env} environment database"
+        echo "db rebase${db}${suffix} \
+          # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
+        echo "db rebase${db}${param} CHANGE \
+          # Rebases ${env} environment database by running 'db revert' and then 'db deploy'"
+        echo "db revert${db}${param} CHANGE \
+          # Revert ${env} environment database changes"
+        echo "db diff${db}${param} SOURCE_ENV \
+          # Compare (diff) source env database schema with ${env} environment"
+        for dest_env in ${taito_environments/$env/}; do
+          echo "db copy between${db}${param_not_empty}:${dest_env} \
+            # Copy database from ${env} environment to ${dest_env}"
+          echo "db copyquick between${db}${param_not_empty}:${dest_env} \
+            # Copy database quickly from ${env} environment to ${dest_env} (WARNING!!)"
+        done
+      done
+    fi
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then
@@ -311,27 +317,31 @@ if [[ ${taito_project:-} ]]; then
       echo "deployment revert${param} REVISION \
         # Revert application on ${env} environment to an another revision"
 
-      for storage in ${taito_storages:-}
-      do
-        st=""
-        if [[ "${storage}" != "${taito_storages}" ]]; then
-          st=":${storage}"
-        fi
-        echo "storage mount${st}${suffix} \
-          # Mount ${env} storage bucket to ./mnt/BUCKET"
-        echo "storage mount${st}${param} MOUNT_PATH \
-          # Mount ${env} storage bucket to MOUNT_PATH"
-        echo "storage copy between${st}${param}:DEST_ENV SOURCE DEST \
-          # Copy files from ${env} to DEST_ENV for bucket ${st}"
-        echo "storage copy from${st}${param} SOURCE LOCAL_DEST \
-          # Copy files from ${env} to local disk"
-        echo "storage copy to${st}${param} LOCAL_SOURCE DEST \
-          # Copy files from local disk to ${env}"
-        echo "storage sync from${st}${param} SOURCE LOCAL_DEST \
-          # Sync files from ${env} to local disk"
-        echo "storage sync to${st}${param} LOCAL_SOURCE DEST \
-          # Copy files from local disk to ${env}"
-      done
+      if [[ "${cprefix}" == "storage"* ]] || [[ "${cprefix}" == "*" ]]; then
+        for storage in ${taito_storages:-}
+        do
+          st=""
+          if [[ "${storage}" != "${taito_storages}" ]]; then
+            st=":${storage}"
+          fi
+          echo "storage mount${st}${suffix} \
+            # Mount ${env} storage bucket to ./mnt/BUCKET"
+          echo "storage mount${st}${param} MOUNT_PATH \
+            # Mount ${env} storage bucket to MOUNT_PATH"
+          echo "storage copy from${st}${param} SOURCE LOCAL_DEST \
+            # Copy files from ${env} to local disk"
+          echo "storage copy to${st}${param} LOCAL_SOURCE DEST \
+            # Copy files from local disk to ${env}"
+          echo "storage sync from${st}${param} SOURCE LOCAL_DEST \
+            # Sync files from ${env} to local disk"
+          echo "storage sync to${st}${param} LOCAL_SOURCE DEST \
+            # Copy files from local disk to ${env}"
+          for dest_env in ${taito_environments/$env/}; do
+            echo "storage copy between${st}${param}:${dest_env} SOURCE DEST \
+              # Copy files of bucket from ${env} to ${dest_env} "
+          done
+        done
+      fi
     fi
 
     # Stack component commands

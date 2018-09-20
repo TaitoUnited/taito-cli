@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
+# TODO refactor: this is duplicate code with descriptions.sh
+
 cprefix="${1:-*}"
 
 # Basic commands
@@ -147,26 +149,30 @@ if [[ ${taito_project:-} ]]; then
     echo "secrets${suffix}"
     echo "status${suffix}"
 
-    for database in ${taito_databases:-}
-    do
-      db=""
-      if [[ "${database}" != "database" ]]; then
-        db=":${database}"
-      fi
-      echo "db proxy${db}${suffix}"
-      echo "db connect${db}${suffix}"
-      echo "db import${db}${param}"
-      echo "db dump${db}${suffix}"
-      echo "db log${db}${suffix}"
-      echo "db recreate${db}${suffix}"
-      echo "db deploy${db}${suffix}"
-      echo "db rebase${db}${suffix}"
-      echo "db rebase${db}${param} CHANGE"
-      echo "db revert${db}${param} CHANGE"
-      echo "db diff${db}${param} SOURCE_ENV"
-      echo "db copy between${db}${param_not_empty}:DEST_ENV"
-      echo "db copyquick between${db}${param_not_empty}:DEST_ENV"
-    done
+    if [[ "${cprefix}" == "db"* ]] || [[ "${cprefix}" == "*" ]]; then
+      for database in ${taito_databases:-}
+      do
+        db=""
+        if [[ "${database}" != "database" ]]; then
+          db=":${database}"
+        fi
+        echo "db proxy${db}${suffix}"
+        echo "db connect${db}${suffix}"
+        echo "db import${db}${param}"
+        echo "db dump${db}${suffix}"
+        echo "db log${db}${suffix}"
+        echo "db recreate${db}${suffix}"
+        echo "db deploy${db}${suffix}"
+        echo "db rebase${db}${suffix}"
+        echo "db rebase${db}${param} CHANGE"
+        echo "db revert${db}${param} CHANGE"
+        echo "db diff${db}${param} SOURCE_ENV"
+        for dest_env in ${taito_environments/$env/}; do
+          echo "db copy between${db}${param_not_empty}:${dest_env}"
+          echo "db copyquick between${db}${param_not_empty}:${dest_env}"
+        done
+      done
+    fi
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then
@@ -205,20 +211,24 @@ if [[ ${taito_project:-} ]]; then
       echo "deployment revision${suffix}"
       echo "deployment revert${param} REVISION"
 
-      for storage in ${taito_storages:-}
-      do
-        st=""
-        if [[ "${storage}" != "${taito_storages}" ]]; then
-          st=":${storage}"
-        fi
-        echo "storage mount${st}${suffix}"
-        echo "storage mount${st}${param} MOUNT_PATH"
-        echo "storage copy between${st}${param}:DEST_ENV SOURCE DEST"
-        echo "storage copy from${st}${param} SOURCE LOCAL_DEST"
-        echo "storage copy to${st}${param} LOCAL_SOURCE DEST"
-        echo "storage sync from${st}${param} SOURCE LOCAL_DEST"
-        echo "storage sync to${st}${param} LOCAL_SOURCE DEST"
-      done
+      if [[ "${cprefix}" == "storage"* ]] || [[ "${cprefix}" == "*" ]]; then
+        for storage in ${taito_storages:-}
+        do
+          st=""
+          if [[ "${storage}" != "${taito_storages}" ]]; then
+            st=":${storage}"
+          fi
+          echo "storage mount${st}${suffix}"
+          echo "storage mount${st}${param} MOUNT_PATH"
+          echo "storage copy from${st}${param} SOURCE LOCAL_DEST"
+          echo "storage copy to${st}${param} LOCAL_SOURCE DEST"
+          echo "storage sync from${st}${param} SOURCE LOCAL_DEST"
+          echo "storage sync to${st}${param} LOCAL_SOURCE DEST"
+          for dest_env in ${taito_environments/$env/}; do
+            echo "storage copy between${st}${param}:${dest_env} SOURCE DEST"
+          done
+        done
+      fi
     fi
 
     # Stack component commands
