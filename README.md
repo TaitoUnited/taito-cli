@@ -723,6 +723,8 @@ This is how you implement your own custom plugin:
 
 6. Implement unit tests for your commands with [bats](https://github.com/bats-core/bats-core). See `.bats` files under `taito-cli/plugins` as an example. You can run your unit tests with the `taito unit` command.
 
+7. Optionally provide autocomplete and descriptions support for you commands by adding `autocomplete.sh` and `descriptions.sh` to the root folder of your extension. See [autocomplete.sh](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/autocomplete.sh) and [descriptions.sh](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/descriptions.sh) as an example.
+
 Now you should be able to call `taito my command`. And when you call `taito env apply`, your `env-apply#pre` and `env-apply#post` commands will be called before and after all `env-apply` commands defined by other enabled plugins. And if you defined also pre and post hooks, they will be called before and after any commands despite the command name.
 
 Note that you can also add a project specific extension to your project subdirectory and reference it like this in *taito-config.sh*:

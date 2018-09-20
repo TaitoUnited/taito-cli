@@ -6,13 +6,15 @@ _taito_commands()
   if [[ ${taito_prefix} ]]; then
     pattern="${taito_prefix} "
   fi
-  if [[ "${COMP_LINE:$COMP_POINT-1:$COMP_POINT}" == " " ]]; then
-    taito --print-commands-short "${taito_prefix}" | \
-      grep -e "${pattern}" | awk "{print \$${taito_index}}" | sed 's/:.*//'
-  else
-    taito --print-commands-short "${taito_prefix}" | \
-      grep -e "${pattern}" | awk "{print \$${taito_index}}"
+  colon_split=""
+  if [[ "${taito_full}" == *":"* ]]; then
+    colon_split=$(echo "${taito_full}" | sed 's/:[^:]*/:[^:]*/g')
   fi
+  opts=$(echo " ${taito_prefix}" | sed "s/ [a-zA-Z].*//")
+  taito --autocomplete "${taito_prefix}" | \
+    sed "s/^/${opts} /" | \
+    grep -e "${pattern}" | awk "{print \$${taito_index}}" | \
+    sed "s/\([^:]*${colon_split}:\).*/\1/"
 }
 
 _taito ()
@@ -20,6 +22,7 @@ _taito ()
   local cur=${COMP_WORDS[COMP_CWORD]}
   export taito_index="${COMP_CWORD}"
   export taito_prefix="${COMP_WORDS[@]:1:$COMP_CWORD-1}"
+  export taito_full="${COMP_WORDS[@]:1:$COMP_CWORD}"
 
   if [[ ${taito_prefix} == *"db import:"* ]] || \
      [[ ${taito_prefix} == *"db dump:"* ]]; then

@@ -22,12 +22,12 @@ do
         mode="dev"
         shift
         ;;
-        --print-commands)
-        mode="print"
+        --descriptions)
+        mode="descriptions"
         shift
         ;;
-        --print-commands-short)
-        mode="print-short"
+        --autocomplete)
+        mode="autocomplete"
         shift
         ;;
         -o|--organization)
@@ -82,6 +82,7 @@ done
 # other scripts can be called)
 export taito_home_path="${TAITO_HOME:-$HOME}"
 export taito_cli_path
+export taito_plugins_path
 export taito_src_path
 export taito_util_path
 export taito_project_path
@@ -95,6 +96,7 @@ taito_cli_path=$(
   done
   dirname "${source}"
 )
+taito_plugins_path="${taito_cli_path}/plugins" && \
 taito_src_path="${taito_cli_path}/src" && \
 taito_util_path="${taito_cli_path}/util" && \
 
@@ -123,20 +125,91 @@ cd "${taito_project_path}" && \
 # Read project specific taito-config settings
 . "${taito_util_path}/read-project-taito-config.sh" "local" && \
 
+# Determine enabled extensions and download missing remote extensions
+extension_local_paths=""
+extension_paths=""
+extension_mount_flags=""
+exts=("${taito_extensions} ${taito_global_extensions}")
+for extension in ${exts[@]}
+do
+  if [[ ${extension} == "git@"* ]]; then
+    # Git url e.g. git@github.com:TaitoUnited/webapp-template.git/my-extension
+    temp=${extension#*\/}
+    repo_url=${extension%.git*}.git # git@github.com:xxx/webapp-template.git
+    repo_name=${temp%.git*} # webapp-template
+    repo_dir=${temp#*.git} # /my-extension
+    repo_local_path="${taito_home_path}/.taito/extensions/${repo_name}"
+    if [[ -d "${repo_local_path}" ]]; then
+      # Pull the latest version
+      if [[ ${upgrade} == true ]]; then
+        echo "Pulling taito-cli extension from git: ${repo_local_path}"
+        (
+          cd "${repo_local_path}"
+          git pull &> /dev/null
+        )
+      fi
+    else
+      (
+        echo
+        echo "Checking out extension ${repo_url} from git"
+        mkdir -p ${repo_local_path}
+        cd ${repo_local_path}
+        git clone "${repo_url}" . &> /dev/null
+        git checkout &> /dev/null
+      )
+    fi
+    extension_local_paths="${extension_local_paths} ${repo_local_path}"
+    extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}${repo_dir}"
+  elif [[ ${extension} == *"gz" ]]; then
+    # Archive link e.g.
+    # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
+    folder_name=${extension%=*}
+    url=${extension##*=}
+    repo_local_path="${taito_home_path}/.taito/extensions/${folder_name}"
+    if [[ ! -d "${taito_home_path}/.taito/${folder_name}" ]]; then
+      echo
+      echo "Downloading extension ${folder_name} from ${url}"
+      ( curl -sL "${url}" | tar zxv -C ${taito_home_path}/.taito/extensions )
+    fi
+    extension_local_paths="${extension_local_paths} ${repo_local_path}"
+    extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}"
+  else
+    # Local url
+    # First replace ~ with an absolute home path.
+    # Then replace home path with ${taito_container_home} for docker.
+    if [[ ${upgrade} == true ]] && [[ -d "${extension}/.git" ]]; then
+      echo "Pulling taito-cli extension from git: ${extension}"
+      (
+        cd "${extension}"
+        git pull &> /dev/null
+      )
+    fi
+    local_path="${extension/\~/${taito_home_path}}"
+    docker_path="${extension/\~/${taito_home_path}}"
+    docker_path="${docker_path/$taito_home_path/$taito_container_home}"
+    extension_local_paths="${extension_local_paths} ${local_path}"
+    extension_paths="${extension_paths} ${docker_path}"
+    extension_mount_flags="${extension_mount_flags} \
+      -v ${local_path}:${docker_path}"
+  fi
+done
+
 # Handle special modes
-if [[ ${mode} == "print" ]]; then
-  "${taito_src_path}/print-commands.sh" "${args[*]}"
+if [[ ${mode} == "autocomplete" ]] || [[ ${mode} == "descriptions" ]]; then
+  "${taito_plugins_path}/${mode}.sh" "${args[*]}"
+  for ext_path in ${extension_local_paths[@]}
+  do
+    "${ext_path}/${mode}.sh" "${args[*]}" 2> /dev/null
+  done
   exit 0
 fi
-
-if [[ ${mode} == "print-short" ]]; then
-  "${taito_src_path}/print-commands-short.sh" "${args[*]}"
-  exit 0
-fi
-
 if [[ ${continue} == false ]]; then
   echo "Taito-cli Copyright (C) 2017 Taito United"
   echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
+fi
+if [[ ${upgrade} == true ]]; then
+  "${taito_src_path}/taito-upgrade.sh" && \
+  exit 0
 fi
 
 # Convert space command syntax to internal hyphen syntax
@@ -175,75 +248,6 @@ if [[ ${admin} == true ]]; then
   fi
 fi
 
-# Determine enabled extensions and download missing remote extensions
-extension_paths=""
-extension_mount_flags=""
-exts=("${taito_extensions} ${taito_global_extensions}")
-for extension in ${exts[@]}
-do
-  if [[ ${extension} == "git@"* ]]; then
-    # Git url e.g. git@github.com:TaitoUnited/webapp-template.git/my-extension
-    temp=${extension#*\/}
-    repo_url=${extension%.git*}.git # git@github.com:xxx/webapp-template.git
-    repo_name=${temp%.git*} # webapp-template
-    repo_dir=${temp#*.git} # /my-extension
-    repo_local_path="${taito_home_path}/.taito/extensions/${repo_name}"
-    if [[ -d "${repo_local_path}" ]]; then
-      # Pull the latest version
-      if [[ ${upgrade} == true ]]; then
-        echo "Pulling taito-cli extension from git: ${repo_local_path}"
-        (
-          cd "${repo_local_path}"
-          git pull &> /dev/null
-        )
-      fi
-    else
-      (
-        echo
-        echo "Checking out extension ${repo_url} from git"
-        mkdir -p ${repo_local_path}
-        cd ${repo_local_path}
-        git clone "${repo_url}" . &> /dev/null
-        git checkout &> /dev/null
-      )
-    fi
-    extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}${repo_dir}"
-  elif [[ ${extension} == *"gz" ]]; then
-    # Archive link e.g.
-    # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
-    folder_name=${extension%=*}
-    url=${extension##*=}
-    if [[ ! -d "${taito_home_path}/.taito/${folder_name}" ]]; then
-      echo
-      echo "Downloading extension ${folder_name} from ${url}"
-      ( curl -sL "${url}" | tar zxv -C ${taito_home_path}/.taito )
-    fi
-    extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}"
-  else
-    # Local url
-    # First replace ~ with an absolute home path.
-    # Then replace home path with ${taito_container_home} for docker.
-    if [[ ${upgrade} == true ]] && [[ -d "${extension}/.git" ]]; then
-      echo "Pulling taito-cli extension from git: ${extension}"
-      (
-        cd "${extension}"
-        git pull &> /dev/null
-      )
-    fi
-    local_path="${extension/\~/${taito_home_path}}"
-    docker_path="${extension/\~/${taito_home_path}}"
-    docker_path="${docker_path/$taito_home_path/$taito_container_home}"
-    extension_paths="${extension_paths} ${docker_path}"
-    extension_mount_flags="${extension_mount_flags} \
-      -v ${local_path}:${docker_path}"
-  fi
-done
-
-# Handle taito upgrades
-if [[ ${upgrade} == true ]]; then
-  "${taito_src_path}/taito-upgrade.sh" && \
-  exit 0
-fi
 if [[ "$(docker images -q ${taito_image:?} 2> /dev/null)" == "" ]]; then
   "${taito_src_path}/taito-upgrade.sh"
 fi

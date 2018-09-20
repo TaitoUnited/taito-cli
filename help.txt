@@ -207,14 +207,14 @@ OPTIONS
 
   --debug
     Show debug output.
+    TODO just output everything with 'set -x' ?
 
   --quiet, -q
     No logging output.
     TODO implement
 
-  --print-commands, --print-commands-short
-    Prints all project commands. You can use this to implement autocompletion
-    for taito-cli commands.
+  --autocomplete, --descriptions
+    Prints all commands.
 
   -c
     Informs taito-cli that the command is continuing from a previous command
