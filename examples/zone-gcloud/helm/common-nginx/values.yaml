@@ -6,7 +6,7 @@ nginx-ingress:
   controller:
     replicaCount: 3
     service:
-      # loadBalancerIP: 'CHANGE'
+      loadBalancerIP: '${zone_ingress_ip}'
     extraArgs:
       annotations-prefix: ingress.kubernetes.io
       # enable-dynamic-configuration: true

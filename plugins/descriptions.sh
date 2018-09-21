@@ -76,7 +76,7 @@ do
 done
 
 # Zone management
-if [[ ${taito_is_zone:-} ]]; then
+if [[ ${taito_type:-} == "zone" ]]; then
   echo "zone apply # Apply infrastructure changes to the zone"
   echo "zone status # Show status summary of the zone"
   echo "zone doctor # Analyze and repair the zone"
@@ -85,7 +85,7 @@ if [[ ${taito_is_zone:-} ]]; then
 fi
 
 # Global links
-if [[ ${taito_is_zone:-} ]]; then
+if [[ ${taito_type:-} == "zone" ]]; then
   global_links="${link_global_urls:-} ${link_urls:-}"
 else
   global_links="${link_global_urls:-}"

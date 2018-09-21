@@ -162,9 +162,21 @@ if [[ " unit scan docs ci-publish " == *"${taito_command}"* ]] && \
   exit 0
 fi
 
+# Set defaults
+# TODO set default taito_version here
+
 # Read taito-config.sh files from all locations
 . "${taito_util_path}/read-user-taito-config.sh" "${taito_env}" && \
 . "${taito_util_path}/read-project-taito-config.sh" "${taito_env}" && \
+
+# For backwards compatibility --> TODO remove!
+if [[ ! "${taito_version}" ]]; then
+  if [[ "${taito_secrets}" == *"git.github.build"* ]]; then
+    export taito_version="0"
+  else
+    export taito_version="1"
+  fi
+fi
 
 # Determine branch
 branch="${taito_env}"

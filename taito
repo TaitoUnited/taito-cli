@@ -77,6 +77,11 @@ do
   fi
 done
 
+if [[ ${continue} == false ]]; then
+  echo "Taito-cli Copyright (C) 2017 Taito United"
+  echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
+fi
+
 # Resolve taito-cli paths
 # NOTE: duplicate with ./taito_impl.sh (taito_cli_path must be resolved before
 # other scripts can be called)
@@ -101,6 +106,7 @@ taito_src_path="${taito_cli_path}/src" && \
 taito_util_path="${taito_cli_path}/util" && \
 
 # Read personal taito-config settings
+export taito_image="taitounited/taito-cli:latest"
 . "${taito_util_path}/read-user-taito-config.sh" "local" && \
 
 # Pull project specific taito-config settings from git
@@ -185,7 +191,8 @@ do
       )
     fi
     local_path="${extension/\~/${taito_home_path}}"
-    docker_path="${extension/\~/${taito_home_path}}"
+    local_path="${local_path/#.\//${taito_project_path}/}"
+    docker_path="${local_path}"
     docker_path="${docker_path/$taito_home_path/$taito_container_home}"
     extension_local_paths="${extension_local_paths} ${local_path}"
     extension_paths="${extension_paths} ${docker_path}"
@@ -202,10 +209,6 @@ if [[ ${mode} == "autocomplete" ]] || [[ ${mode} == "descriptions" ]]; then
     "${ext_path}/${mode}.sh" "${args[*]}" 2> /dev/null
   done
   exit 0
-fi
-if [[ ${continue} == false ]]; then
-  echo "Taito-cli Copyright (C) 2017 Taito United"
-  echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
 fi
 if [[ ${upgrade} == true ]]; then
   "${taito_src_path}/taito-upgrade.sh" && \

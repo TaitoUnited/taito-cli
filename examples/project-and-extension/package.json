@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "db-connect:prod": "echo 'db-connect:prod on package.json'",
+    "unit": "npm run unit:client && npm run unit:server",
+    "unit:client": "echo 'unit client!'",
+    "unit:server": "echo 'unit server!'"
+  }
+}

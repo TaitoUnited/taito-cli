@@ -45,7 +45,7 @@ do
 done
 
 # Zone management
-if [[ ${taito_is_zone:-} ]]; then
+if [[ ${taito_type:-} == "zone" ]]; then
   echo "zone apply"
   echo "zone status"
   echo "zone doctor"
@@ -54,7 +54,7 @@ if [[ ${taito_is_zone:-} ]]; then
 fi
 
 # Global links
-if [[ ${taito_is_zone:-} ]]; then
+if [[ ${taito_type:-} == "zone" ]]; then
   global_links="${link_global_urls:-} ${link_urls:-}"
 else
   global_links="${link_global_urls:-}"
@@ -184,7 +184,7 @@ if [[ ${taito_project:-} ]]; then
       echo "start${suffix} --clean --prod"
       echo "lint${suffix}"
       echo "unit${suffix}"
-      echo "unit${suffix} TEST"
+      echo "unit${suffix}: TEST"
       echo "check size${suffix}"
       echo "check deps${suffix}"
       echo "docs${suffix}"
@@ -236,7 +236,7 @@ if [[ ${taito_project:-} ]]; then
     do
       if [[ "${env}" == "local" ]]; then
         echo "unit:${stack}${suffix}"
-        echo "unit:${stack}${param} TEST"
+        echo "unit:${stack}${suffix} TEST"
       fi
       echo "test:${stack}${suffix}"
       if [[ "${cprefix}" == "test"* || "${cprefix}" == "*" ]]; then
