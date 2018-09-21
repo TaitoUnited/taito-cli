@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # taito-cli settings
-export taito_zone="CHANGE" # taito zone name/id
+export taito_zone="CHANGE"
 export taito_type="zone"
 export taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone links-global"
 
 # zone settings
 export zone_devops_email="CHANGE@CHANGE.COM"
-export zone_ingress_ip="" # TODO support for multiple
+export zone_ingress_ip="" # TODO support multiple
 
 # gcloud settings
 export gcloud_org_id="CHANGE" # NOTE: leave empty for 'no organization'
@@ -17,7 +17,7 @@ export gcloud_region="europe-west1"
 export gcloud_zone="europe-west1-c"
 export gcloud_additional_zones="europe-west1-b europe-west1-d"
 
-# kubectl settings (TODO support for multiple)
+# kubectl settings (TODO support multiple)
 export kubectl_name="common-kubernetes"
 export kubectl_cluster="gke_${taito_zone}_${gcloud_zone}_${kubectl_name}"
 export kubectl_user="${kubectl_cluster}"

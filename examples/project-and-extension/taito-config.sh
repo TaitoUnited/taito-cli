@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export taito_extensions="./extension"
-export taito_plugins="npm db-proxy db1 db2"
+export taito_plugins="npm db-proxy db1 db2 example"
 
 export taito_project="example"
 export taito_environments="dev prod"
