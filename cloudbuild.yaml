@@ -18,8 +18,8 @@ steps:
       --zone "europe-west1-c" && \
 
     # Get github token from Kubernetes secrets
-    kubectl --namespace "devops" get secret "git.github.build" -o yaml | \
-      grep "^  SECRET" | sed -e "s/^.*: //" | base64 --decode > github-token.tmp
+    kubectl --namespace "devops" get secret "github-buildbot" -o yaml | \
+      grep "^  token" | sed -e "s/^.*: //" | base64 --decode > github-token.tmp
 
 - id: release-pre
   waitFor: ['secrets']

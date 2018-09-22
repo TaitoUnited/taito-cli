@@ -3,6 +3,8 @@
 
 name=${1}
 
+"${taito_cli_path}/plugins/kubectl/util/use-context.sh"
+
 if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-dashboard" "${name}" \
   "Stop dashboard of Kubernetes as it is not needed in most cloud setups"
 then
@@ -12,7 +14,6 @@ fi && \
 if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-devops-namespace" "${name}" \
   "Create 'devops' namespace on Kubernetes"
 then
-  "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
   kubectl create namespace devops || \
     echo "Failed to create namespace 'devops'. OK if it already exists"
 fi && \
@@ -28,10 +29,11 @@ then
   echo "service account JSON key to file './tmp/sqlclient.json'." && \
   echo "The service account will be used to access database from Kubernetes." && \
   echo "You can delete the JSON file afterwards." && \
+  # TODO open gcloud console
   echo "Press enter after you have saved the file." && \
   read -r && \
-  kubectl create secret generic "gcloud.cloudsql.proxy" --namespace=devops \
-    --from-file=SECRET="tmp/sqlclient.json"
+  kubectl create secret generic "cloudsql-gserviceaccount" --namespace=devops \
+    --from-file=key="tmp/sqlclient.json"
 fi && \
 
 # TODO GitHub token handling should be implemented somewhere else?
@@ -45,11 +47,8 @@ then
   echo "It will be used for tagging git releases. You can delete the file afterwards." && \
   echo "Press enter after you have saved the file." && \
   read -r && \
-  kubectl create secret generic "git.github.build" --namespace=devops \
-    --from-file=SECRET=tmp/github && \
-
-  echo && \
-  echo "TODO: Create a function that sends build fail notifications to Slack"
+  kubectl create secret generic "github-buildbot" --namespace=devops \
+    --from-file=token=tmp/github
 fi
 
 # Call next command on command chain

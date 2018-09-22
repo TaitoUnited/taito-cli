@@ -3,10 +3,11 @@
 export taito_extensions="./extension"
 export taito_plugins="npm db-proxy db1 db2 example"
 
-export taito_project="example"
+export taito_project="example-project"
 export taito_environments="dev prod"
 export taito_targets="client server"
 export taito_databases="database reportdb"
+export taito_storages="example-project-${taito_env}"
 
 # default database
 export db_database_instance="common-postgres"

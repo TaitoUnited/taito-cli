@@ -36,7 +36,7 @@ then
   echo "Add 'Project Owner' role for the devops personnel."
   echo
   echo "Press enter to open permission management"
-  rear -t
+  read -r
   "${taito_util_path}/browser.sh" "https://console.cloud.google.com/iam-admin/iam?${opts}project=${gcloud_project_id}"
   echo
   echo "Press enter when done"
@@ -53,17 +53,17 @@ then
   echo
 
   # TODO how about these?
-  Cloud Build Viewer
-  Error Reporting Viewer
-  Cloud Security Scanner Viewer
-  Firebase Test Lab Viewer
-  Compute Viewer
-  DNS Reader
-  Genomics Viewer
-  Logs Viewer
-  Monitoring Viewer
-  Pub/Sub Viewer
-  Storage Object Creator
+  # Cloud Build Viewer
+  # Error Reporting Viewer
+  # Cloud Security Scanner Viewer
+  # Firebase Test Lab Viewer
+  # Compute Viewer
+  # DNS Reader
+  # Genomics Viewer
+  # Logs Viewer
+  # Monitoring Viewer
+  # Pub/Sub Viewer
+  # Storage Object Creator
 
   echo "Press enter when done"
   read -r
@@ -81,7 +81,7 @@ then
   echo "- Kubernetes Engine Developer"
   echo
   echo "Press enter to open permission management"
-  rear -t
+  read -r
   "${taito_util_path}/browser.sh" "https://console.cloud.google.com/iam-admin/iam?${opts}project=${gcloud_project_id}"
   echo
   echo "Press enter when done"
@@ -96,8 +96,8 @@ then
   read -r
 fi && \
 
-if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-builder-notifications" "${name}" \
-  "Configure cloud builder notifications"
+if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-build-notifications" "${name}" \
+  "Configure gcloud build notifications"
 then
   echo "TODO move implementation here: function that sends notifications on build fail"
   echo
@@ -106,7 +106,7 @@ then
 fi && \
 
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-error-log-alerts" "${name}" \
-  "Configure cloud builder notifications"
+  "Configure gcloud error log alerts"
 then
   echo "TODO configure error log notifications"
   echo

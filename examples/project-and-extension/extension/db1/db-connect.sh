@@ -10,4 +10,4 @@ echo "- proxy port: ${database_proxy_port}"
 echo "- passed env variable value: ${db_variable_value}"
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

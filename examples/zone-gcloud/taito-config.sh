@@ -7,6 +7,7 @@ export taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone links-gl
 
 # zone settings
 export zone_devops_email="CHANGE@CHANGE.COM"
+# TODO IP does not have an effect when deploying ingress the first time?
 export zone_ingress_ip="" # TODO support multiple
 
 # gcloud settings
@@ -21,6 +22,10 @@ export gcloud_additional_zones="europe-west1-b europe-west1-d"
 export kubectl_name="common-kubernetes"
 export kubectl_cluster="gke_${taito_zone}_${gcloud_zone}_${kubectl_name}"
 export kubectl_user="${kubectl_cluster}"
+
+# TODO: move postgres settings (common-postgres) here
+# TODO: postgres root password is empty at the beginning?
+# TODO: mysql also
 
 # links
 export link_urls="\
