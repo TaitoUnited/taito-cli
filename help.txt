@@ -145,12 +145,24 @@ QUICK EXAMPLES
     passwd set: movie-key    # Set movie-key passwd
     passwd rotate: movie     # Rotate all movie passwords
 
+  PROJECT MANAGEMENT:
+    taito issue add: feature api - Add user - Description...
+    taito issue open: add user
+    taito issue open: 123
+    taito issue assign: add user - john doe
+    taito issue comment: add user - Comment...
+    taito issue status: add user - in progress
+
   HOUR REPORTING:
-    taito hours add: 6,5 MRM-123 Did some work     # Entry for current project
-    taito hours add: acme chat MRM-123 6,5 Comment # Entry for acme chat
+    taito hours start: Comment...
+    taito hours stop
+    taito hours add: 6,5 Comment...
+    taito hours add: MRM-123 6,5 Comment...
+    taito hours add: acme chat MRM-123 6,5 Comment...
+    taito hours list: all this-month
+    taito hours summary: all this-month
+
     TODO bulk adds (e.g. three weeks on vacation)
-    taito hours list: all this-month               # List entries of this month
-    taito hours summary: all this-month            # Show summary for this month
 
 OPTIONS
 
@@ -420,22 +432,50 @@ PROJECT: LINKS
   > open feedback - User feedback management
   > open analytics - Usage analytics (e.g. Google Analytics)
 
+PROJECT: PROJECT MANAGEMENT
+
+  issue add: LABELS - TITLE - DESCRIPTION
+    Add a new issue.
+
+  issue open: TITLE|ID
+    Open issue on browser.
+
+  issue assign: TITLE|ID - PERSON
+    Assing issue to a user.
+
+  issue comment: TITLE|ID - COMMENT
+    Comment on issue.
+
+  issue status: TITLE|ID - STATUS
+    Change issue status.
+
 PROJECT: HOUR REPORTING
 
-  hours add: [CLIENT] [PROJECT] HOURS COMMENT...
+  hours start: [CLIENT] [PROJECT] [ISSUE] COMMENT...
+    Start working. If client and project have not been given,
+    determine client and project from taito-config.sh of current project.
+    Examples:
+    $ taito hours start: Improving documentation
+    $ taito hours start: MRM-123 Implementation
+
+  hours stop: [COMMENT]
+    Stop working. Optionally you may alter your original comment that
+    you gave when you started the work.
+
+  hours add: [CLIENT] [PROJECT] [ISSUE] HOURS COMMENT...
     Add a work hour entry. If client and project have not been given,
     determine client and project from taito-config.sh of current project.
     Examples:
     $ taito hours add: 6,5 Did some work
     $ taito hours add: acme chat 6,5 Did some work
 
-  TODO bulk adds
-
-  hours list: [CLIENT|all] [PROJECT] [this-month|last-month|this-week|last-week]
+  hours list: [CLIENT|all] [PROJECT] [ISSUE] [this-month|last-month|this-week|last-week]
     List hours
 
-  hours summary: [CLIENT|all] [PROJECT] [this-month|last-month|this-week|last-week]
+  hours summary: [CLIENT|all] [PROJECT] [ISSUE] [this-month|last-month|this-week|last-week]
     Show summary
+
+  TODO bulk adds
 
 GLOBAL: WORKSPACE OPERATIONS
 

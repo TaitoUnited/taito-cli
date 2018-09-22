@@ -30,9 +30,18 @@ echo "template create: TEMPLATE"
 # echo "passwd rotate"
 # echo "passwd rotate: FILTER"
 
+# Project management
+echo "issue add: LABELS - TITLE - DESCRIPTION"
+echo "issue open: TITLE|ID"
+echo "issue assign: TITLE|ID - PERSON"
+echo "issue comment: TITLE|ID - COMMENT"
+echo "issue status: TITLE|ID - STATUS"
+
 # Hours
 echo "hours add: HOURS COMMENT"
+echo "hours add: ISSUE HOURS COMMENT"
 echo "hours add: CLIENT PROJECT HOURS COMMENT"
+echo "hours add: CLIENT PROJECT ISSUE HOURS COMMENT"
 time_intervals="this-month last-month this-week last-week"
 for time_interval in ${time_intervals}
 do

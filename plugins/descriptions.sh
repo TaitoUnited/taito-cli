@@ -53,10 +53,26 @@ echo "template create: TEMPLATE \
 #   &focus \
 #   # Rotate some passwords"
 
+# Project management
+echo "issue add: LABELS - TITLE - DESCRIPTION \
+  # Add new issue"
+echo "issue open: TITLE|ID \
+  # Open issue on browser"
+echo "issue assign: TITLE|ID - PERSON \
+  # Assign issue to another person"
+echo "issue comment: TITLE|ID - COMMENT \
+  # Comment on issue"
+echo "issue status: TITLE|ID - STATUS \
+  # Change issue status"
+
 # Hours
 echo "hours add: HOURS COMMENT \
   # Add hour entry for current project"
+echo "hours add: ISSUE HOURS COMMENT \
+  # Add hour entry for current project"
 echo "hours add: CLIENT PROJECT HOURS COMMENT \
+  # Add hour entry for PROJECT of CLIENT"
+echo "hours add: CLIENT PROJECT ISSUE HOURS COMMENT \
   # Add hour entry for PROJECT of CLIENT"
 time_intervals="this-month last-month this-week last-week"
 for time_interval in ${time_intervals}

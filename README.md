@@ -176,13 +176,26 @@ Password sharing:
     taito passwd set: movie-key              # Set movie-key passwd
     taito passwd rotate: movie               # Rotate all movie passwords
 
+Project management:
+
+    taito issue add: feature api - Add user - Description...
+    taito issue open: add user
+    taito issue open: MRM-123
+    taito issue assign: add user - john doe
+    taito issue comment: add user - Comment...
+    taito issue status: add user - in progress
+
 Hour reporting:
 
-    taito hours add: 6,5 Did some work            # Add work hour entry for the current project
-    taito hours add: acme chat 6,5 Did some work  # Add work hour entry for the `chat` project of `acme` client.
+    taito hours start: Comment...
+    taito hours stop
+    taito hours add: 6,5 Comment...
+    taito hours add: MRM-123 6,5 Comment...
+    taito hours add: acme chat MRM-123 6,5 Comment...
+    taito hours list: all this-month
+    taito hours summary: all this-month
+
     TODO bulk adds (e.g. three weeks on vacation)
-    taito hours list: all this-month              # List hour entries of this month
-    taito hours summary: all this-month           # Show summary for this month
 
 See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all predefined taito-cli commands.
 
