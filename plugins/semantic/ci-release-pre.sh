@@ -39,16 +39,18 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
 
     echo "- Running npm script ${command}" && \
     NPM_TOKEN=none GH_TOKEN=${secret_value_github_buildbot_token} \
-      npm run "${command}" -- "${@}" > ./release-output && \
+      npm run "${command}" -- "${@}" > ./release-output || \
+      (cat ./release-output && echo ERROR && exit 1) && \
     cat ./release-output && \
 
-    # Parse version from semantic-release output
+    echo "Parse version from semantic-release output" && \
     cat ./release-output | \
       grep "next release version" | \
       grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
 
     # Support old semantic version (TODO remove support)
     if [[ ! $(cat ../taitoflag_version) ]]; then
+      echo "Support for old semantic version (TODO remove support)"
       cat ./package.json | \
         grep -o 'version[": ]*[0-9]*\.[0-9]*\.[0-9]*' | \
         grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
