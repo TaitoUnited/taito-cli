@@ -46,7 +46,8 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     echo "Parse version from semantic-release output" && \
     cat ./release-output | \
       grep "next release version" | \
-      grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version && \
+      grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version || \
+      echo "Parsing failed. Probably old semantic-release version."
 
     # Support old semantic version (TODO remove support)
     if [[ ! $(cat ../taitoflag_version) ]]; then
