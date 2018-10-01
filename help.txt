@@ -103,8 +103,6 @@ QUICK EXAMPLES
     vc feat merge            # Merge current feature branch to the original
     vc feat squash           # Squash feature branch as a single commit
     vc feat pr               # Create a pull-request for current feature branch
-    vc pull                  # Pull changes
-    vc push                  # Push changes
     vc commit revert         # Revert the latest commit by creating a new commit
     vc commit undo           # Undo latest commit from local and remote branch
     vc commit erase          # Erase latest commit from loc/rem branch and files

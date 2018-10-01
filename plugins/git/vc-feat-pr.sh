@@ -22,12 +22,15 @@ echo 'Rebase branch ${feature} before making the pull request (Y/n)?' && \
 read -r rebase && \
 git checkout ${feature} && \
 if [[ \${rebase} =~ ^[Yy]*$ ]]; then \
-  git rebase -i ${dest}; \
+  git fetch --all && \
+  git rebase -i origin/${dest}; \
 fi && \
 git push -u origin ${feature} && \
 git checkout - && \
+echo && \
 echo 'TODO: implement PR using the hub cli.' && \
-echo 'Make the pull request on GitHub. Press enter to continue.' && \
+echo && \
+echo 'Make the pull request with your web browser. Press enter to open browser.' && \
 read -r && \
 taito open-git \
 " && \

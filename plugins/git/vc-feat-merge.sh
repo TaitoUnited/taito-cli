@@ -21,7 +21,10 @@ fi
 echo 'Rebase branch ${feature} before merge (Y/n)?' && \
 read -r rebase && \
 if [[ \${rebase} =~ ^[Yy]*$ ]]; then \
-  git checkout ${feature} && git rebase -i ${dest} && git checkout -; \
+  git fetch --all && \
+  git checkout ${feature} && \
+  git rebase -i origin/${dest} && \
+  git checkout -; \
 fi && \
 git checkout ${dest} && \
 git pull && \

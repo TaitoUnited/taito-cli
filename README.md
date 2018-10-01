@@ -128,18 +128,14 @@ With taito-cli you can take an opinionated view on version control. Examples:
     taito vc feat: pricing                   # Switch to the pricing feature branch
     taito vc feat rebase                     # Rebase current feature branch with the original branch
     taito vc feat merge                      # Merge current feature branch to the original branch, but rebase first
+    taito vc feat pr                         # Create a pull-request for merging current feature branch to the original, but rebase first
     taito vc feat squash                     # Merge current feature branch to the original branch as a single commit
-    taito vc feat pr                         # Create a pull-request for merging current feature branch to the original
+
+    TODO Support for hotfix branches
 
     taito vc commit revert                   # Revert the latest commit by creating a new commit.
     taito vc commit undo                     # Undo the latest commit from local and remote branch. Leave local files untouched.
     taito vc commit erase                    # Erase the latest commit from local and remote branch. Remove the changes also from local files.
-
-    taito vc pull                            # Pull changes
-    taito vc push                            # Push changes
-
-    TODO Support for hotfix branches
-    TODO Support for release branches
 
 Manual deployment operations in case there are some problems with automated CI/CD builds:
 

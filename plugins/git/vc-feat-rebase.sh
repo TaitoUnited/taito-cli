@@ -18,7 +18,10 @@ fi
 
 # diff-index -> Commit only if there is something to commit
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-git checkout ${feature} && git rebase -i ${dest} && git checkout -; \
+git fetch --all && \
+git checkout ${feature} && \
+git rebase -i origin/${dest} && \
+git checkout -; \
 " && \
 
 # Call next command on command chain
