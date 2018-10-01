@@ -22,13 +22,15 @@ Table of contents:
 
 Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands that can be used in any project no matter the technology or infrastructure. This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
-Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a tunnel and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
+Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a tunnel and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command. TODO run on another platform -> just change one or two plugins.
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
 TODO taito-templates (taito-cli integration, kube/helm/terraform-templates, semantic-versioning), person dependency
 
 With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
+
+TODO number of commands is vast but you learn them quickly as the same commands work from project to project...
 
 Some examples of the most common predefined taito-cli commands used in local development:
 
@@ -115,7 +117,7 @@ Analyze:
     taito check deps                         # Check dependencies
     taito check deps:worker                  # Check dependencies of the worker
 
-With taito-cli you can take an opinionated view on version control. However, command usage should be optional as many developers rather use git or gui for some of these operations. Examples:
+With taito-cli you can take an opinionated view on version control. Examples:
 
     taito vc env list                        # List all environment branches
     taito vc env: dev                        # Switch to the dev environment branch
@@ -131,7 +133,7 @@ With taito-cli you can take an opinionated view on version control. However, com
 
     taito vc pull                            # Pull changes
     taito vc push                            # Push changes
-    taivo vc revert                          # Revert latest commit both from local and remote repository
+    taivo vc commit erase                          # Revert latest commit both from local and remote repository
 
     TODO Support for hotfix branches
     TODO Support for release branches
@@ -168,14 +170,6 @@ Infrastructure management for zones:
     taito zone maintenance                   # Execute supervised maintenance tasks interactively.
     taito zone destroy                       # Destroy the zone
 
-Password sharing:
-
-    taito passwd share                       # Generate a one-time magic link for sharing a password
-    taito passwd list: movie                 # List all movie passwords
-    taito passwd get: movie-key              # Get movie-key passwd
-    taito passwd set: movie-key              # Set movie-key passwd
-    taito passwd rotate: movie               # Rotate all movie passwords
-
 Project management:
 
     taito issue add: feature api - Add user - Description...
@@ -196,6 +190,14 @@ Hour reporting:
     taito hours summary: all this-month
 
     TODO bulk adds (e.g. three weeks on vacation)
+
+Password sharing:
+
+    taito passwd share                       # Generate a one-time magic link for sharing a password
+    taito passwd list: movie                 # List all movie passwords
+    taito passwd get: movie-key              # Get movie-key passwd
+    taito passwd set: movie-key              # Set movie-key passwd
+    taito passwd rotate: movie               # Rotate all movie passwords
 
 See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) for all predefined taito-cli commands.
 
@@ -267,7 +269,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
 ### Windows Subsystem for Linux
 
-> Docker cannot use the Linux file system effectively. Therefore all your software projects and taito-cli settings should be located on the Windows file system.
+> Docker cannot use the Linux file system effectively on Windows. Therefore all your software projects and taito-cli settings should be located on the Windows file system.
 
 1. Configure [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) in that way you can call `git`, `docker` and `docker-compose` commands from linux shell.
 
@@ -351,9 +353,9 @@ TODO document `template-global`, `link-global`, `git-global` and `google-global`
 Taito-cli settings:
 
 * `taito_image`: Taito-cli docker image (`taitounited/taito-cli:latest` by default).
-* `taito_version`: Version of the taito configuration file syntax. It may be used for providing backwards compatibility in case breaking changes are introduced.
-* `taito_extensions`: Enabled plugins. You can reference an extension using a local file path relative to project root directory, git repository path or an url to a **tar.gz** archive.
-* `taito_plugins`: Enabled plugins. Use this in your project specific configuration file only.
+* `taito_version`: Version of the taito configuration file syntax. It is used to provide backwards compatibility in case breaking changes are introduced in taito-config.
+* `taito_extensions`: Enabled extensions. You can reference an extension using a local file path (relative to the project root directory), git repository path or an url to a **tar.gz** archive.
+* `taito_plugins`: Enabled plugins.
 
 Project labeling:
 
@@ -398,8 +400,8 @@ Database settings:
 * `db_NAME_host`: Database host
 * `db_NAME_port`: Database port
 * `db_NAME_proxy_port`: Database proxy port
-* `db_NAME_user`: Database user (most often you should leave this empty)
-* `db_NAME_password`: Database password (most often you should leave this empty)
+* `db_NAME_user`: Database user
+* `db_NAME_password`: Database password
 
 > Define database settings for each database separately. Database names are defined with the `taito_databases` setting.
 
@@ -443,10 +445,14 @@ esac
 You can create a 'canary environment' just by renaming `canary` environment to `prod` at the beginning of the project specific configuration file (see the example below). This means that the canary release is deployed to the same namespace as production, and it also uses all the same resources as production (database, storage, 3rd party services).
 
 ```
-export taito_env="${taito_env/canary/prod}" # Canary points to prod
+export taito_env="${taito_env/canary/prod}" # canary -> prod
 ```
 
-TODO describe alternative environments for A/B testing.
+You can also make an alternative environment for A/B testing the same way. In the following example the `feature/orders-v2` uses resources of production environment. Thus, you can do A/B testing in production by routing some of the users to the `feature/orders-v2` release that is running side-by-side with the production version.
+
+```
+export taito_env="${taito_env/feat-orders-v2/prod}" # feat-orders-v2 -> prod
+```
 
 ### Feature environments
 
@@ -454,11 +460,11 @@ TODO describe
 
 ### Test suite parameters
 
-You can pass paramters for your e2e and integration test suites using the `test_TARGET` prefix. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of server-template for examples.
+You can pass parameters for your e2e and integration test suites using the `test_TARGET` prefix. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of server-template for examples.
 
 ### Secret management
 
-Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands.
+Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of server-template for examples.
 
 Secret naming convention is secret_name.property_name[/namespace]:generation_method*. For example:
 

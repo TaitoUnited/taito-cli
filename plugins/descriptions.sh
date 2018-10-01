@@ -164,7 +164,7 @@ if [[ ${taito_project:-} ]]; then
       # Pull changes"
     echo "vc push \
       # Push changes"
-    echo "vc revert \
+    echo "vc commit erase \
       # Revert latest commit from local and remote repo"
 
   else
