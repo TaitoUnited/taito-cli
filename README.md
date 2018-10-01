@@ -122,15 +122,16 @@ With taito-cli you can take an opinionated view on version control. Examples:
     taito vc env list                        # List all environment branches
     taito vc env: dev                        # Switch to the dev environment branch
     taito vc env merge                       # Merge the current environment branch to the next environment branch
-    taito vc env merge: dev stag             # Merge dev environment branch to stag branch, and all env branches in between them
+    taito vc env merge: dev stag             # Merge dev environment branch to stag branch, and to all env branches in between them
 
     taito vc feat list                       # List all feature branches
     taito vc feat: pricing                   # Switch to the pricing feature branch
     taito vc feat rebase                     # Rebase current feature branch with the original branch
-    taito vc feat merge                      # Merge current feature branch to the original branch, but rebase first
-    taito vc feat pr                         # Create a pull-request for merging current feature branch to the original, but rebase first
-    taito vc feat squash                     # Merge current feature branch to the original branch as a single commit
+    taito vc feat merge                      # Merge current feature branch to the original (optional rebase and squash)
+    taito vc feat pr                         # Create a pull-request for merging current feature branch to the original (optional rebase and squash)
+    taito vc feat squash                     # Quick command for merging a short-lived feature as a single commit (merge with squash and delete)
 
+    TODO Implement squash option
     TODO Support for hotfix branches
 
     taito vc commit revert                   # Revert the latest commit by creating a new commit.

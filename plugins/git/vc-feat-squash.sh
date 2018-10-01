@@ -21,9 +21,9 @@ git checkout ${dest} && \
 git pull && \
 git merge --squash ${feature} && \
 (git diff-index --quiet HEAD || git commit -v) && \
-(
+( \
   git push || \
-  echo NOTE: Push failed. Fix errors and the run \'git push\'.
+  echo NOTE: Push failed. Fix all errors first. echo Then push changes to ${dest} branch and delete the ${feature} branch. \
 ) && \
 git branch -D ${feature} && \
 (git push origin --delete ${feature} &> /dev/null || :) \

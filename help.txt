@@ -101,8 +101,8 @@ QUICK EXAMPLES
     vc feat: pricing         # Switch to the pricing feature branch
     vc feat rebase           # Rebase feature branch with the original branch
     vc feat merge            # Merge current feature branch to the original
-    vc feat squash           # Squash feature branch as a single commit
     vc feat pr               # Create a pull-request for current feature branch
+    vc feat squash           # Merge short-lived feature as a single commit
     vc commit revert         # Revert the latest commit by creating a new commit
     vc commit undo           # Undo latest commit from local and remote branch
     vc commit erase          # Erase latest commit from loc/rem branch and files
@@ -519,12 +519,6 @@ PROJECT: VERSION CONTROL OPERATIONS
     Rebases a feature branch. The dev branch is used as a default env branch
     that the feature branch is rebased with.
 
-  vc feat squash[:ENV] [FEATURE_NAME]
-    Merges a feature to a target branch as a single squashed commit and
-    deletes the feature branch. The dev branch is used as a default env
-    branch (destination for merge). Use this command for a short-lived feature
-    branch with a cohesive set of changes.
-
   vc feat merge[:ENV] [FEATURE_NAME]
     Merges a feature to a target branch. The dev branch is used as a
     default env branch (destination for merge). The command suggests rebase
@@ -537,6 +531,12 @@ PROJECT: VERSION CONTROL OPERATIONS
     env branch (destination for merge). The command suggests rebase before
     making the pull request. With rebase you can clean up commit history by
     reordering commits and selectively squashing some of them together.
+
+  vc feat squash[:ENV] [FEATURE_NAME]
+    Merges a feature to a target branch as a single squashed commit and
+    deletes the feature branch. The dev branch is used as a default env
+    branch (destination for merge). Use this command for a short-lived feature
+    branch with a cohesive set of changes.
 
   vc commit revert
     Revert the latest commit by creating a new commit.

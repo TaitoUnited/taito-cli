@@ -28,12 +28,20 @@ if [[ \${rebase} =~ ^[Yy]*$ ]]; then \
 fi && \
 git checkout ${dest} && \
 git pull && \
-git merge ${feature} && \
+echo && \
+echo 'Merge branch ${feature} as a squashed single commit (y/N)?' && \
+read -r squash && \
+if [[ \${squash} =~ ^[Yy]$ ]]; then \
+  git merge --squash ${feature}; \
+else \
+  git merge ${feature}; \
+fi && \
 (git diff-index --quiet HEAD || git commit -v) && \
-(
+( \
   git push || \
-  echo NOTE: Push failed. Fix errors and the run \'git push\'.
+  echo NOTE: Push failed. Fix all errors first. Then push changes to ${dest} branch and delete the ${feature} branch. \
 ) && \
+echo && \
 echo 'Delete branch ${feature} (Y/n)?' && \
 read -r del && \
 if [[ \${del} =~ ^[Yy]*$ ]]; then \
