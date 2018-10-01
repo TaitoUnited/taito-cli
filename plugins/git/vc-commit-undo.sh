@@ -8,11 +8,11 @@ echo "or merged your latest commit. In such case using 'vc commit revert' might 
 echo "a better idea. Also note that this command will not push changes to the remote"
 echo "branch if your local branch is not up-to-date."
 echo
-echo "Forcefully erase the latest commit from local and remote '${branch}' branch (y/N)?"
+echo "Forcefully undo the latest commit from local and remote '${branch}' branch (y/N)?"
 read -r confirm
 if [[ "${confirm}" =~ ^[Yy]$ ]]; then
   "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-  git reset HEAD^ --hard && git push origin --force-with-lease"
+  git reset HEAD^ --soft && git push origin --force-with-lease"
 fi && \
 
 # Call next command on command chain

@@ -131,9 +131,12 @@ With taito-cli you can take an opinionated view on version control. Examples:
     taito vc feat squash                     # Merge current feature branch to the original branch as a single commit
     taito vc feat pr                         # Create a pull-request for merging current feature branch to the original
 
+    taito vc commit revert                   # Revert the latest commit by creating a new commit.
+    taito vc commit undo                     # Undo the latest commit from local and remote branch. Leave local files untouched.
+    taito vc commit erase                    # Erase the latest commit from local and remote branch. Remove the changes also from local files.
+
     taito vc pull                            # Pull changes
     taito vc push                            # Push changes
-    taivo vc commit erase                          # Revert latest commit both from local and remote repository
 
     TODO Support for hotfix branches
     TODO Support for release branches

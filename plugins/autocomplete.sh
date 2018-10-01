@@ -114,6 +114,8 @@ if [[ ${taito_project:-} ]]; then
 
     echo "vc pull"
     echo "vc push"
+    echo "vc commit revert"
+    echo "vc commit undo"
     echo "vc commit erase"
   else
     echo "vc"
