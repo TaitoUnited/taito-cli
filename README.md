@@ -22,17 +22,15 @@ Table of contents:
 
 Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a predefined set of commands that can be used in any project no matter the technology or infrastructure. This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
-Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a tunnel and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command. TODO run on another platform -> just change one or two plugins.
+Taito-cli is designed so that plugins may execute a single command together in co-operation. For example running a remote database operation usually involves additional steps like pinpointing the correct database, retrieving secrets, establishing secure connection through a tunnel and authenticating using the retrieved secrets. Taito-cli executes all this for you with a single command.
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
-TODO taito-templates (taito-cli integration, kube/helm/terraform-templates, semantic-versioning), person dependency
+With the help of *taito-cli* and [taito templates](https://github.com/search?q=topic%3Ataito-template&type=Repositories), infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel. Person dependency of projects is greatly reduced as all projects feel familiar from the start no matter the underlying infrastucture or who has set everything up originally.
 
-With the help of *taito-cli*, infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel.
+Below are some examples of taito commands. The number of commands is vast but they are very simple to use and you'll learn them quickly as the same commands are used from project to project.
 
-TODO number of commands is vast but you learn them quickly as the same commands work from project to project...
-
-Some examples of the most common predefined taito-cli commands used in local development:
+Taito-cli commands for local development:
 
     taito install                            # Install libraries on host
     taito start                              # Start the application
@@ -84,7 +82,7 @@ All taito-cli commands target the local development environment by default. If y
     taito db proxy:dev                       # Start a proxy for accessing default remote database with a GUI tool
     taito db import:dev ./database/file.sql  # Import a file to database
 
-Some database operation examples targetting a test environment:
+Database operation examples targetting testing environment:
 
     taito db connect:test                    # Access default database on command line
     taito db connect:reportdb:test           # Access report database on command line
@@ -101,7 +99,7 @@ Some database operation examples targetting a test environment:
     taito db copy between:test:dev           # Copy test database to dev
     taito db copyquick between:test:dev      # Copy test database to dev (both databases in the same cluster, users may be blocked)
 
-Storage operation examples:
+Storage operation examples targetting development environment:
 
     taito storage mount:dev                  # Mount default dev storage bucket to ./mnt/BUCKET
     taito storage mount:dev ./mymount        # Mount default dev storage bucket to ./mymount
@@ -110,14 +108,14 @@ Storage operation examples:
     taito storage sync from:dev /sour ./dest # Sync files from default dev bucket
     taito storage sync to:dev ./source /dest # Sync files to default dev bucket
 
-Analyze:
+Commands for analyzing implementation:
 
     taito check size                         # Analyze size
     taito check size:client                  # Analyze size of the client
     taito check deps                         # Check dependencies
     taito check deps:worker                  # Check dependencies of the worker
 
-With taito-cli you can take an opinionated view on version control. Examples:
+With taito-cli you can take an opinionated view on version control:
 
     taito vc env list                        # List all environment branches
     taito vc env: dev                        # Switch to the dev environment branch
@@ -131,7 +129,6 @@ With taito-cli you can take an opinionated view on version control. Examples:
     taito vc feat pr                         # Create a pull-request for merging current feature branch to the original (optional rebase and squash)
     taito vc feat squash                     # Quick command for merging a short-lived feature as a single commit (merge with squash and delete)
 
-    TODO Implement squash option
     TODO Support for hotfix branches
 
     taito vc commit revert                   # Revert the latest commit by creating a new commit.
@@ -181,11 +178,9 @@ Project management:
 
 Hour reporting:
 
-    taito hours start: Comment...
-    taito hours stop
-    taito hours add: 6,5 Comment...
+    taito hours start
+    taito hours stop: MRM-123 Comment...
     taito hours add: MRM-123 6,5 Comment...
-    taito hours add: acme chat MRM-123 6,5 Comment...
     taito hours list: all this-month
     taito hours summary: all this-month
 

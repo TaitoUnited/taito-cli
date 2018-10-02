@@ -34,7 +34,7 @@ read -r squash && \
 if [[ \${squash} =~ ^[Yy]$ ]]; then \
   git merge --squash ${feature}; \
 else \
-  git merge ${feature}; \
+  git merge --no-ff ${feature}; \
 fi && \
 (git diff-index --quiet HEAD || git commit -v) && \
 ( \
