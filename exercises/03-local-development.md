@@ -134,7 +134,7 @@ taito workspace kill           # Kill all running processes (e.g. containers)
 taito workspace clean          # Remove all unused build artifacts (e.g. images)
 ```
 
-### 3.12. TODO some links
+### 3.12. TODO some software design links
 
 TODO General software design
 TODO API design

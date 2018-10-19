@@ -1,7 +1,6 @@
 ## 6. Remote environments
 
 TODO describe each environment
-
 TODO also staging
 
 ### 6.1. Create dev environment

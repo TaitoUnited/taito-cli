@@ -1,4 +1,4 @@
-## 23. Monitoring
+## 23. Zone monitoring
 
 TODO taito-cli commands for monitoring, anomaly detection, etc.
 

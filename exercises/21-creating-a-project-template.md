@@ -4,4 +4,4 @@ TODO Creating a taito-cli plugin. Move instructions from README.md to here?
 
 ---
 
-**Next:** [22. Maintenance](22-maintenance.md)
+**Next:** [22. Zone maintenance](22-zone-maintenance.md)

@@ -1,14 +1,10 @@
-# Taito-cli exercises
-
-These exercises guide you through common software development scenarios using taito-cli. You can consider them as a pragmatic manual that complements the instructions provided by the `taito --help` command and the taito-cli [README.md](https://github.com/TaitoUnited/taito-cli/blob/master/README.md).
-
-## 1. Prerequisites
+## 1. Setting up infrastructure
 
 ### 1.1. Install or upgrade taito-cli
 
 See [installation instructions](https://github.com/TaitoUnited/taito-cli#installation). If you have already installed taito-cli, you can upgrade it with `taito --upgrade`.
 
-### 1.2. Set up infrastructure
+### 1.2. Set up cloud environment, Kubernetes, PostgreSQL and CI/CD pipeline
 
 Taito-cli is designed to be infrastructure agnostic. That is, the same taito-cli commands can be used in any project no matter the technology or infrastructure. These exercises, however, are based on a project template that requires Kubernetes, PostgreSQL, S3 compatible storage buckets and a CI/CD pipeline that is supported by one of the taito-cli plugins. If you don't have an existing infrastructure that provides these already, you can easily set them up by creating a new **taito zone** based on examples that are located in [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples).
 

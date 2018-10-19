@@ -1,6 +1,6 @@
-## 19. Serverless on cloud
+## 19. Serverless on cloud: Serverless Framework
 
-Using AWS lambda, Azure functions and Google Cloud functions with taito-cli.
+Deploy serverless functions to AWS lambda, Azure functions and Google Cloud functions. Perhaps [Serverless Framework](https://serverless.com/framework) would be the best option to implement support for all cloud providers.
 
 ---
 

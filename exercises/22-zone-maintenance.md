@@ -1,4 +1,4 @@
-## 22. Maintenance
+## 22. Zone maintenance
 
 TODO taito-cli commands for maintenance:
 - upgrading clusters
@@ -7,4 +7,4 @@ TODO taito-cli commands for maintenance:
 
 ---
 
-**Next:** [23. Monitoring](23-monitoring.md)
+**Next:** [23. Zone monitoring](23-zone-monitoring.md)
