@@ -1,7 +1,7 @@
 TAITO-CLI TROUBLESHOOTING
 
   Any problem
-    Try to upgrade taito-cli by running 'taito --upgrade'
+    Try to upgrade taito-cli by running 'taito --upgrade'.
 
   Connection or authorization error
     If you run into a connection or authorization error during taito-cli
@@ -41,3 +41,6 @@ TAITO-CLI TROUBLESHOOTING
     is no apparent reason why the build failed, just try to retry the CI/CD
     build. If it fails again, try to build production build locally by running
     'taito start --clean --prod' and then try to fix the build problem.
+
+  Hints
+    Taito-cli exercises guide you through some common scenarios and problems.

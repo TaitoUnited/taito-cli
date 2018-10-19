@@ -42,7 +42,7 @@ The newly created zone includes:
 
 ## Create a project and deploy it to the taito zone
 
-1. Create a new project by running `taito template create: server-template` and follow instructions.
+1. Create a new project by running `taito project create: server-template` and follow instructions.
 
 2. Run `taito project apply` in the project directory. TODO sentry
 
@@ -62,7 +62,7 @@ Hooray! You are now running your app in production with all the bells and whistl
 
 Want to run software on some other infrastructure than Google Cloud and Kubernetes? Please contribute by developing taito-cli plugins for the infrastructure in question.
 
-## Create an custom extension
+## Create a custom extension
 
 TODO instructions
 

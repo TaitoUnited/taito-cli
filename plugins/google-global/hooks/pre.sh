@@ -8,6 +8,8 @@
 if [[ ${google_authuser:-} ]] && \
    ([[ "${taito_command}" == "open-"* ]] || [[ "${taito_command}" == "link-"* ]])
 then
+  export link_global_urls
+  link_global_urls=$(echo "${link_global_urls}" | sed -re "s|(google\\.com[^ ]*\\?)|\1authuser=${google_authuser}\\&|g")
   export link_urls
   link_urls=$(echo "${link_urls}" | sed -re "s|(google\\.com[^ ]*\\?)|\1authuser=${google_authuser}\\&|g")
 fi

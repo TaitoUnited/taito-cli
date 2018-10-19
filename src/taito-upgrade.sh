@@ -50,3 +50,9 @@ docker stop taito-new &> /dev/null
 docker image tag "${taito_image}" "${taito_image}save"
 docker rm taito-save taito-new &> /dev/null
 echo "DONE!"
+echo
+echo "Your taito-cli has been upgraded. It is recommended that once in while" echo "you also check that your organizational settings are up-to-date."
+echo "They are located at '~/.taito' directory. Running"
+echo "'taito open conventions' or 'taito -o ORGANIZATION open conventions'"
+echo "may give you some more details."
+echo

@@ -12,5 +12,5 @@ fi
 # Personal organization specific configuration
 if [[ -f "${taito_home_path}/.taito/taito-config-${taito_organization_param:-}.sh" ]]; then
   # shellcheck disable=SC1090
-  . "${taito_home_path}/.taito/taito-config.sh"
+  . "${taito_home_path}/.taito/taito-config-${taito_organization_param:-}.sh"
 fi

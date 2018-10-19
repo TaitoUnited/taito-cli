@@ -116,8 +116,8 @@ QUICK EXAMPLES
     deployment revert:dev 20      # Revert application on dev env to revision 20
 
   PROJECT TEMPLATES
-    template create: server-template  # Create a project based on template
-    template upgrade                  # Upgrade project using template
+    project create: server-template  # Create a project based on template
+    project upgrade                  # Upgrade project using template
 
   PROJECT CONFIGURATION
     project apply            # Migrate project to the latest configuration
@@ -146,21 +146,24 @@ QUICK EXAMPLES
     passwd rotate: movie     # Rotate all movie passwords
 
   PROJECT MANAGEMENT:
-    taito issue add: feature api - Add user - Description...
-    taito issue open: add user
-    taito issue open: 123
-    taito issue assign: add user - john doe
-    taito issue comment: add user - Comment...
-    taito issue status: add user - in progress
+    taito issue add: delete post - feature posts         # Add a new issue
+    taito issue status: delete post - in progress - me   # Change status
+    taito issue comment: delete post                     # Add a comment
+    taito issue open: delete post                        # Open issue on browser
+    taito issue list: todo                               # List todo issues
+    taito open kanban                                    # Open kanban board
 
   HOUR REPORTING:
-    taito hours start
-    taito hours stop: MRM-123 Comment...
-    taito hours add: 6,5 Comment...
-    taito hours add: MRM-123 6,5 Comment...
-    taito hours add: acme chat MRM-123 6,5 Comment...
-    taito hours list: all this-month
-    taito hours summary: all this-month
+    taito hours start                    # Start/continue the timer
+    taito hours pause                    # Pause the timer
+    taito hours stop                     # Stop the timer and create an entry
+    taito hours add: 6,5                 # Add an hour entry for today
+    taito hours add: 23.9 6,5            # Add an hour entry for 23th of sept.
+    taito hours list                     # Hour entries of this month
+    taito hours list: all                # Hour entries for all projects
+    taito hours summary                  # Hour summary for this month
+    taito hours summary: this-week       # Hour summary for this week
+    taito open hours                     # Open hour reporting on browser
 
     TODO bulk adds (e.g. three weeks on vacation)
 
@@ -434,48 +437,52 @@ PROJECT: LINKS
 
 PROJECT: PROJECT MANAGEMENT
 
-  issue add: LABELS - TITLE - DESCRIPTION
-    Add a new issue.
+  issue add: TITLE [- LABELS...]
+    Add a new issue. You'll be asked to enter issue description once you run
+    the command.
 
   issue open: TITLE|ID
     Open issue on browser.
 
-  issue assign: TITLE|ID - PERSON
-    Assing issue to a user.
+  issue status: TITLE|ID - STATUS [- PERSON]
+    Change issue status. Optionally assign the issue to another person.
+    You'll be asked for a comment once you run the command, but you can leave
+    it empty.
 
-  issue comment: TITLE|ID - COMMENT
-    Comment on issue.
+  issue comment: TITLE|ID
+    Comment on issue. You'll be asked to enter the comment once you run the
+    command.
 
-  issue status: TITLE|ID - STATUS
-    Change issue status.
+  issue list: [LANES|LABELS]
+    List open issues.
 
 PROJECT: HOUR REPORTING
 
-  hours start: [CLIENT] [PROJECT] [ISSUE] COMMENT...
-    Start working. If client and project have not been given,
-    determine client and project from taito-config.sh of current project.
-    Examples:
-    $ taito hours start: Improving documentation
-    $ taito hours start: MRM-123 Implementation
+  hours start
+    Start/continue the timer
 
-  hours stop: [COMMENT]
-    Stop working. Optionally you may alter your original comment that
-    you gave when you started the work.
+  hours pause:
+    Pause the timer
 
-  hours add: [CLIENT] [PROJECT] [ISSUE] HOURS COMMENT...
-    Add a work hour entry. If client and project have not been given,
-    determine client and project from taito-config.sh of current project.
-    Examples:
-    $ taito hours add: 6,5 Did some work
-    $ taito hours add: acme chat 6,5 Did some work
+  hours stop
+    Stop the timer and create an hour entry. You'll be asked for a comment once
+    you run the command.
 
-  hours list: [CLIENT|all] [PROJECT] [ISSUE] [this-month|last-month|this-week|last-week]
-    List hours
+  hours add: [DAY] hours
+    Add an hour entry. You'll be asked for a comment once you run the command.
+    For example:
+    $ taito hours add: 6,5
+    $ taito hours add: yesterday 5,5
+    $ taito hours add: 23.9 4,5
 
-  hours summary: [CLIENT|all] [PROJECT] [ISSUE] [this-month|last-month|this-week|last-week]
-    Show summary
+  hours list: [all]
+    List all hour entries for this month. By default lists only for current
+    project, but you can list also hour entries for all projects.
 
-  TODO bulk adds
+  hours summary: [this-month|last-month|this-week|last-week]
+    Show hour summary for all projects. Shows summary for this month by default.
+
+  TODO bulk adds (e.g. three weeks on vacation)
 
 GLOBAL: WORKSPACE OPERATIONS
 
@@ -710,6 +717,17 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
     automatically and tag the git repository with a new version number.
     TIP: Enable the 'make' or 'npm' plugin and implement release-pre:prod and
     release-post:prod scripts in your makefile/package.json.
+
+PROJECT: TEMPLATES
+
+  project create: TEMPLATE
+    Create a new project using a template.
+
+  project migrate: TEMPLATE
+    Migrate an old project to use the given template.
+
+  project upgrade
+    Upgrade current project to the latest version of the project template.
 
 PROJECT: BASIC SETUP
 

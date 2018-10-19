@@ -49,7 +49,7 @@
 
 - template projects
 
-- template create
+- project create
   -> merge: dev prod
   -> merge: dev canary
   -> wait for dev

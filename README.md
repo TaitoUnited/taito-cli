@@ -26,7 +26,7 @@ Taito-cli is designed so that plugins may execute a single command together in c
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since taito-cli is shipped as a Docker container, no tools need to be installed on the host operating system. All dependencies are shipped within the container.
 
-With the help of *taito-cli* and [taito templates](https://github.com/search?q=topic%3Ataito-template&type=Repositories), infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel. Person dependency of projects is greatly reduced as all projects feel familiar from the start no matter the underlying infrastucture or who has set everything up originally.
+With the help of *taito-cli* and [taito templates](https://github.com/search?q=topic%3Ataito-template&type=Repositories), infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel. Person dependency of projects is greatly reduced as all projects feel familiar no matter the underlying infrastucture or who has set everything up originally.
 
 Below are some examples of taito commands. The number of commands is vast but they are very simple to use and you'll learn them quickly as the same commands are used from project to project.
 
@@ -117,6 +117,8 @@ Commands for analyzing implementation:
 
 With taito-cli you can take an opinionated view on version control:
 
+    taito vc conventions                     # Display vc conventions to be followed in case 'taito vc' commands are not being used.
+
     taito vc env list                        # List all environment branches
     taito vc env: dev                        # Switch to the dev environment branch
     taito vc env merge                       # Merge the current environment branch to the next environment branch
@@ -125,15 +127,16 @@ With taito-cli you can take an opinionated view on version control:
     taito vc feat list                       # List all feature branches
     taito vc feat: pricing                   # Switch to the pricing feature branch
     taito vc feat rebase                     # Rebase current feature branch with the original branch
-    taito vc feat merge                      # Merge current feature branch to the original (optional rebase and squash)
-    taito vc feat pr                         # Create a pull-request for merging current feature branch to the original (optional rebase and squash)
+    taito vc feat merge                      # Merge current feature branch to the original with no-ff (optional rebase and delete)
+    taito vc feat pr                         # Create a pull-request for merging current feature branch to the original (optional rebase)
     taito vc feat squash                     # Quick command for merging a short-lived feature as a single commit (merge with squash and delete)
 
     TODO Support for hotfix branches
 
-    taito vc commit revert                   # Revert the latest commit by creating a new commit.
-    taito vc commit undo                     # Undo the latest commit from local and remote branch. Leave local files untouched.
-    taito vc commit erase                    # Erase the latest commit from local and remote branch. Remove the changes also from local files.
+    taito vc revert merge                    # Revert the latest merge by creating a new commit.
+    taito vc revert commit                   # Revert the latest commit by creating a new commit.
+    taito vc undo commit                     # Undo the latest commit from local and remote branch. Leave local files untouched.
+    taito vc erase commit                    # Erase the latest commit from local and remote branch. Remove the changes also from local files.
 
 Manual deployment operations in case there are some problems with automated CI/CD builds:
 
@@ -146,8 +149,8 @@ Manual deployment operations in case there are some problems with automated CI/C
 
 Creating projects based on configurable project templates:
 
-    taito template create: server-template   # Create a project based on server-template
-    taito template upgrade                   # Upgrade current project based on a template
+    taito project create: server-template    # Create a project based on server-template
+    taito project upgrade                    # Upgrade current project based on a template
 
 Infrastructure management for projects:
 
@@ -169,20 +172,25 @@ Infrastructure management for zones:
 
 Project management:
 
-    taito issue add: feature api - Add user - Description...
-    taito issue open: add user
-    taito issue open: MRM-123
-    taito issue assign: add user - john doe
-    taito issue comment: add user - Comment...
-    taito issue status: add user - in progress
+    taito issue add: delete post - feature posts        # Add a new issue with labels: feature, posts
+    taito issue status: delete post - in progress - me  # Change status: in progress, assigned to me
+    taito issue comment: delete post                    # Add a comment
+    taito issue open: delete post                       # Open issue on browser
+    taito issue list: todo                              # List all issues on todo lane
+    taito open kanban                                   # Open kanban board on browser
 
 Hour reporting:
 
-    taito hours start
-    taito hours stop: MRM-123 Comment...
-    taito hours add: MRM-123 6,5 Comment...
-    taito hours list: all this-month
-    taito hours summary: all this-month
+    taito hours start                        # Start/continue the timer
+    taito hours pause                        # Pause the timer
+    taito hours stop                         # Stop the timer and create an hour entry
+    taito hours add: 6,5                     # Add an hour entry for today
+    taito hours add: 23.9 6,5                # Add an hour entry for 23th of september
+    taito hours list                         # Hour entries of this month
+    taito hours list: all                    # Hour entries of this month for all projects
+    taito hours summary                      # Hour summary for this month
+    taito hours summary: this-week           # Hour summary for this week
+    taito open hours                         # Open hour reporting on browser
 
     TODO bulk adds (e.g. three weeks on vacation)
 
@@ -212,7 +220,7 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
 2. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
 
-3. Configure your personal settings in `~/.taito/taito-config.sh`. For example:
+3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses taito-cli, they will provide you with the correct settings. See [Advanced Usage](https://github.com/TaitoUnited/taito-cli#advanced-usage) if you work for multiple organizations.
     ```
     #!/bin/bash
 
@@ -253,8 +261,12 @@ See [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) fo
 
     # links
     export link_global_urls="\
-      home=https://www.mydomain.com
-      intra#intranet=https://intra.mydomain.com"
+      * home=https://www.mydomain.com \
+      * intra=https://intra.mydomain.com Intranet \
+      * conventions=https://intra.mydomain.com/conventions Software development conventions \
+      * hours=https://hours.mydomain.com Hour reporting \
+      * playgrounds=https://github.com/search?q=topic%3Ataito-playground+org%3AMyOrganization&type=Repositories Playground projects \
+      "
     ```
 
 4. Optional steps:
@@ -293,23 +305,27 @@ See `trouble.txt` or run `taito --trouble`.
 
 ## Usage
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for predefined commands. Note that only a very small subset of taito commands are enabled if you are located outside a project directory.
+Only a small subset of taito commands are enabled if you are located outside a project directory. However, you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file.
 
-*But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press <kbd>ctrl</kbd>+<kbd>]</kbd> (or <kbd>ctrl</kbd>+<kbd>å</kbd> for us scandinavians) and type `close`.*
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for predefined commands.
+
+[Exercises](https://github.com/TaitoUnited/taito-cli/tree/master/exercises) provide you with common scenarios that taito-cli commands are useful for. They also guide you through on setting up your infrastructure if you don't have one already.
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of the project. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
-See the [README.md](https://github.com/TaitoUnited/server-template#readme) of the [server-template](https://github.com/TaitoUnited/server-template) project as an example on how to use taito-cli with your project. Note that you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
+See the [README.md](https://github.com/TaitoUnited/server-template#readme) of the [server-template](https://github.com/TaitoUnited/server-template) project as an example on how to use taito-cli with your project. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
+
+> *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press <kbd>ctrl</kbd>+<kbd>]</kbd> (or <kbd>ctrl</kbd>+<kbd>å</kbd> for us scandinavians) and type `close`.*
 
 ### Advanced usage
 
-With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
+If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `project create` command as it will tell taito-cli to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION project create: server-template`.
+
+You can execute project specific commands outside the project directory with the `-p` option, for example `taito -p my-project open app:dev`. This works only if you have configured `git_organization` setting in you personal `taito-config.sh` file.
 
 You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on *taitounited/taito-cli*, or make a request for adding the tool to the original taito-cli image.
 
-If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `template create` command as it will tell taito-cli to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION template create: server-template`.
-
-You can execute project specific commands outside the project directory with the `-p` option, for example `taito -p my-project open app:dev`. This works only if you have configured `git_organization` setting in you personal `taito-config.sh` file.
+With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
 
 ### Admin credentials
 
@@ -515,13 +531,17 @@ See [cloudbuild.yaml](https://github.com/TaitoUnited/server-template/blob/master
 
 ## Infrastructure management
 
-Taito-cli also provides a lightweight abstraction on top of infrastructure and configuration management tools for managing a *zone*. A zone provides basic infrastructure that your projects can rely on. It usually consists of container orhestration and database clusters, logging and monitoring systems, etc. You can manage your zone using the following commands:
+Taito-cli also provides a lightweight abstraction on top of infrastructure and configuration management tools for managing a *zone*. A zone provides basic infrastructure that your projects can rely on. It usually consists of container orhestration and database clusters, logging and monitoring systems, etc. You usually have at least two taito zones: one for development and testing purposes, and another one for production usage.
+
+You can manage your zone using the following commands:
 
     taito zone apply          # Apply infrastructure changes to the zone.
     taito zone status         # Show status summary of the zone.
     taito zone doctor         # Analyze and repair the zone.
     taito zone maintenance    # Execute supervised maintenance tasks interactively.
     taito zone destroy        # Destroy the zone.
+
+> Do not confuse taito zones with cloud provider regions and zones. Each taito zone may use multiple cloud provider regions and zones to achieve high availability and regional resiliency. Taito zones are created mainly based on maintainability and security concerns instead.
 
 ## ChatOps
 

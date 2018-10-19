@@ -28,14 +28,7 @@ if [[ \${rebase} =~ ^[Yy]*$ ]]; then \
 fi && \
 git checkout ${dest} && \
 git pull && \
-echo && \
-echo 'Merge branch ${feature} as a squashed single commit (y/N)?' && \
-read -r squash && \
-if [[ \${squash} =~ ^[Yy]$ ]]; then \
-  git merge --squash ${feature}; \
-else \
-  git merge --no-ff ${feature}; \
-fi && \
+git merge --no-ff ${feature} && \
 (git diff-index --quiet HEAD || git commit -v) && \
 ( \
   git push || \

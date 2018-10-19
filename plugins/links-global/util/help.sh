@@ -17,7 +17,7 @@ while IFS='*' read -ra items; do
       echo
     fi
   done
-done <<< "${link_urls:-}"
+done <<< "${link_global_urls:-}${link_urls:-}"
 
 while IFS='*' read -ra items; do
   for item in "${items[@]}"; do
@@ -33,4 +33,4 @@ while IFS='*' read -ra items; do
       echo
     fi
   done
-done <<< "${link_urls:-}"
+done <<< "${link_global_urls:-}${link_urls:-}"

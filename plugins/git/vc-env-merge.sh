@@ -9,7 +9,7 @@ git_push_options=""
 while [[ $# -gt 0 ]]
 do
   if [[ ${1} == "--force" ]]; then
-    git_push_options="--force"
+    git_push_options="--force-with-lease"
   elif [[ ${1} == "--" ]]; then
     echo "ERROR: Invalid option ${1}"
     exit 1
@@ -77,7 +77,7 @@ do
     echo Merging... && \
     git fetch origin ${s}:${d} && \
     git push --no-verify ${git_push_options} origin ${d} || \
-    echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d}' \
+    echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d} --> TODO --force does not work yet?' \
     "
 
   fi

@@ -17,6 +17,7 @@ if ! git checkout ${dest} 2> /dev/null; then \
   git pull && \
   git checkout -b ${dest} && \
   echo && \
+  echo 'TODO explain...' && \
   echo 'Push the ${dest} branch to remote repository (y/N)?' && \
   read -r confirm && \
   if [[ \${confirm} =~ ^[Yy]$ ]]; then \

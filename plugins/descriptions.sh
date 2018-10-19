@@ -30,7 +30,7 @@ echo "workspace kill \
   # Kill all running processes (e.g. containers)"
 
 # New project from template
-echo "template create: TEMPLATE \
+echo "project create: TEMPLATE \
   &focus \
   # Create a project based on a template"
 
@@ -136,11 +136,13 @@ if [[ ${taito_project:-} ]]; then
     # Build project"
   echo "db add: NAME \
     # Add a database migration"
-  echo "template upgrade \
+  echo "project upgrade \
     # Upgrade project using template"
 
   # Version control commands
   if [[ "${cprefix}" == "vc"* ]] || [[ "${cprefix}" == "*" ]]; then
+    echo "vc conventions \
+      # Display version control conventions"
     echo "vc env list \
       # List all environment branches"
     echo "vc env merge \

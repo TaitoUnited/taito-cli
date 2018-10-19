@@ -18,7 +18,7 @@ echo "workspace clean"
 echo "workspace kill"
 
 # New project from template
-echo "template create: TEMPLATE"
+echo "project create: TEMPLATE"
 
 # Passwords
 # TODO enable only when available
@@ -91,10 +91,11 @@ if [[ ${taito_project:-} ]]; then
   echo "env"
   echo "build"
   echo "db add: NAME"
-  echo "template upgrade"
+  echo "project upgrade"
 
   # Version control commands
   if [[ "${cprefix}" == "vc"* ]] || [[ "${cprefix}" == "*" ]]; then
+    echo "vc conventions"
     echo "vc env list"
     echo "vc env merge"
     echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH"
