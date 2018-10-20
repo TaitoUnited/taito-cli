@@ -3,11 +3,23 @@
 : "${taito_cli_path:?}"
 : "${taito_image:?}"
 
-echo
-
 # Pull latest version of taito bash script
 echo "Pulling taito-cli directory from git: ${taito_cli_path}"
-(cd "${taito_cli_path}" && git pull)
+(
+  cd "${taito_cli_path}"
+  branch=$(git branch | grep \* | cut -d ' ' -f2)
+  if [[ ${branch} != "master" ]]; then
+    echo
+    echo "WARNING! You are currently using ${branch} branch of taito-cli."
+    echo "Checkout the master branch instead (Y/n)?"
+    read -r confirm
+    if [[ ${confirm} =~ ^[Yy]*$ ]]; then
+      git checkout master && \
+      git branch --set-upstream-to=origin/master master
+    fi
+  fi
+  git pull
+)
 
 # Pull taito-cli docker image
 echo "Pulling taito-cli docker image from registry: ${taito_image}"
@@ -45,11 +57,12 @@ docker commit taito-new "${taito_image}" &> /dev/null
 docker stop taito-new &> /dev/null
 docker image tag "${taito_image}" "${taito_image}save"
 docker rm taito-save taito-new &> /dev/null
-echo "DONE!"
+
 echo
-echo "NOTE: Your taito-cli has been upgraded. It is recommended that once in while"
-echo "you also check that your organizational settings are up-to-date."
-echo "They are located at '~/.taito' directory. Running"
-echo "'taito open conventions' or 'taito -o ORGANIZATION open conventions'"
-echo "may give you some more details."
+echo "DONE! Your taito-cli has been upgraded."
+echo
+echo "NOTE: It is recommended that once in while you also check that your"
+echo "organizational settings are up-to-date. They are located at '~/.taito'"
+echo "directory. You may find the recommended settings by running"
+echo "'taito open conventions' or 'taito -o ORGANIZATION open conventions'."
 echo
