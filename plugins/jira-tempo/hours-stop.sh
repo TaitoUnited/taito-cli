@@ -2,7 +2,7 @@
 : "${taito_util_path:?}"
 : "${taito_hours_description:?}"
 
-echo "TODO implement with javascript or python instead? (json handling)"
+echo "TODO implement. Use jq, python or node for json handling."
 echo "Project id: ${jira_project_id:-}"
 echo "Description: ${taito_hours_description}"
 

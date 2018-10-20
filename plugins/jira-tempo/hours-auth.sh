@@ -6,7 +6,7 @@ hours_app=${1}
 if "${taito_util_path}/confirm-execution.sh" "jira" "${hours_app}" \
   "Authenticate to JIRA"
 then
-  echo "TODO implement with javascript or python instead? (json handling)"
+  echo "TODO implement. Use jq, python or node for json handling."
 fi
 
 # Call next command on command chain

@@ -4,8 +4,6 @@
 : "${taito_setv:?}"
 : "${taito_hours_description:?}"
 
-# TODO implement with javascript or python instead? (json handling)
-
 # Command parameters
 duration_hours="${1:?duration not given}"
 weekday="${2:-today}"
@@ -19,8 +17,12 @@ fi
 
   # Gather Toggl API parameters
   . "${taito_plugin_path}/util/read-api-key.sh"
-  project_id="${toggl_project_id:?Configure toggl_project_id in taito-config.sh}"
-  task_id="${toggl_task_id:-null}"
+  . "${taito_util_path}/select-item.sh" \
+    "Projects:" "Choose project:" "${toggl_projects}" "${toggl_project_id}"
+  project_id="${item_id}"
+  . "${taito_util_path}/select-item.sh" \
+    "Tasks:" "Choose task:" "${toggl_tasks}" "${toggl_task_id}"
+  task_id="${item_id:-null}"
   duration=$(awk "BEGIN { print ${duration_hours/,/.}*3600 }")
   start="$(date -d ${weekday} --iso-8601)T05:00:00.000Z"
   description="${taito_hours_description}"
