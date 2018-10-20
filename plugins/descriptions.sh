@@ -54,41 +54,49 @@ echo "project create: TEMPLATE \
 #   # Rotate some passwords"
 
 # Project management
-echo "issue add: LABELS - TITLE - DESCRIPTION \
+echo "issue auth \
+  # Authenticate to the issue management system"
+echo "issue add: TITLE - LABELS \
   # Add new issue"
-echo "issue open: TITLE|ID \
-  # Open issue on browser"
-echo "issue assign: TITLE|ID - PERSON \
-  # Assign issue to another person"
-echo "issue comment: TITLE|ID - COMMENT \
+echo "issue status: TITLE - STATUS - PERSON \
+  # Change issues status and optionally assign it another person"
+echo "issue comment: TITLE \
   # Comment on issue"
-echo "issue status: TITLE|ID - STATUS \
-  # Change issue status"
+echo "issue open: TITLE \
+  # Open issue on browser"
+echo "issue list: LANE \
+  # List open issues by issue board lane"
+echo "issue list: LABEL \
+  # List open issues by issue label"
 
 # Hours
-echo "hours add: HOURS COMMENT \
-  # Add hour entry for current project"
-echo "hours add: ISSUE HOURS COMMENT \
-  # Add hour entry for current project"
-echo "hours add: CLIENT PROJECT HOURS COMMENT \
-  # Add hour entry for PROJECT of CLIENT"
-echo "hours add: CLIENT PROJECT ISSUE HOURS COMMENT \
-  # Add hour entry for PROJECT of CLIENT"
+echo "hours auth \
+  # Authenticate to the hour reporting system"
+echo "hours start \
+  # Start timing hours"
+echo "hours pause \
+  # Pause timing hours"
+echo "hours stop \
+  # Stop timing hours and create an hour entry"
+echo "hours add: HOURS \
+  # Add an hour entry for today"
+weekdays="today yesterday mon tue wed thu fri sat sun"
+for weekday in ${weekdays}
+do
+  echo "hours add: HOURS ${weekday} \
+    # Add an hour entry for ${weekday}"
+done
+echo "hours list \
+  # List all hour entries of current project for this month"
+echo "hours list: all \
+  # List all hour entries of all projects for this month"
+echo "hours summary \
+  # Show hour summary for this month"
 time_intervals="this-month last-month this-week last-week"
 for time_interval in ${time_intervals}
 do
-  echo "hours list: all ${time_interval} \
-    # List hour entries of ${time_interval}"
-  echo "hours list: CLIENT ${time_interval} \
-    # List hour entries of ${time_interval} for CLIENT"
-  echo "hours list: CLIENT PROJECT ${time_interval} \
-    # List hour entries of ${time_interval} for PROJECT of CLIENT"
-  echo "hours summary: all ${time_interval} \
-    # Show hour entry summary of ${time_interval}"
-  echo "hours summary: CLIENT ${time_interval} \
-    # Show hour entry summary of ${time_interval} for CLIENT"
-  echo "hours summary: CLIENT PROJECT ${time_interval} \
-    # Show hour entry summary of ${time_interval} for PROJECT of CLIENT"
+  echo "hours summary: ${time_interval} \
+    # Show hour summary for ${time-interval}"
 done
 
 # Zone management

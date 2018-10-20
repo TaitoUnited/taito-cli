@@ -12,7 +12,7 @@ if [[ -n "${database_proxy_port:-}" ]]; then
       cloud_sql_proxy "-instances=${database_id}=tcp:0.0.0.0:${database_proxy_port}" \
         &> /tmp/proxy-out.tmp &
     )
-    if [[ "${taito_verbose}" == "true" || "${taito_mode:-}" == "ci" ]]; then
+    if [[ "${taito_verbose}" == "true" ]] || [[ "${taito_mode:-}" == "ci" ]]; then
       sleep 3
       cat /tmp/proxy-out.tmp
     fi

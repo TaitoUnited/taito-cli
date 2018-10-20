@@ -31,26 +31,32 @@ echo "project create: TEMPLATE"
 # echo "passwd rotate: FILTER"
 
 # Project management
-echo "issue add: LABELS - TITLE - DESCRIPTION"
-echo "issue open: TITLE|ID"
-echo "issue assign: TITLE|ID - PERSON"
-echo "issue comment: TITLE|ID - COMMENT"
-echo "issue status: TITLE|ID - STATUS"
+echo "issue auth"
+echo "issue add: TITLE - LABELS"
+echo "issue status: TITLE - STATUS - PERSON"
+echo "issue comment: TITLE"
+echo "issue open: TITLE"
+echo "issue list: LANE"
+echo "issue list: LABEL"
 
 # Hours
-echo "hours add: HOURS COMMENT"
-echo "hours add: ISSUE HOURS COMMENT"
-echo "hours add: CLIENT PROJECT HOURS COMMENT"
-echo "hours add: CLIENT PROJECT ISSUE HOURS COMMENT"
+echo "hours auth"
+echo "hours start"
+echo "hours pause"
+echo "hours stop"
+echo "hours add: HOURS"
+weekdays="today yesterday mon tue wed thu fri sat sun"
+for weekday in ${weekdays}
+do
+  echo "hours add: HOURS ${weekday}"
+done
+echo "hours list"
+echo "hours list: all"
+echo "hours summary"
 time_intervals="this-month last-month this-week last-week"
 for time_interval in ${time_intervals}
 do
-  echo "hours list: all ${time_interval}"
-  echo "hours list: CLIENT ${time_interval}"
-  echo "hours list: CLIENT PROJECT ${time_interval}"
-  echo "hours summary: all ${time_interval}"
-  echo "hours summary: CLIENT ${time_interval}"
-  echo "hours summary: CLIENT PROJECT ${time_interval}"
+  echo "hours summary: ${time_interval}"
 done
 
 # Zone management

@@ -1,3 +1,5 @@
+# Part 1
+
 ## 1. Setting up infrastructure
 
 ### 1.1. Install or upgrade taito-cli

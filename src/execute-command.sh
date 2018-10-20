@@ -422,6 +422,16 @@ if [[ -n "${taito_admin_key}" ]]; then
   export taito_is_admin=true
 fi
 
+# Harcoded command handling
+if [[ "${command}" == "hours-add" ]]; then
+  export taito_hours_description
+  while [[ ! "${taito_hours_description}" ]]; do
+    echo
+    echo "Enter hour entry description:"
+    read -r taito_hours_description
+  done
+fi
+
 # Execute command
 exit_code=0
 if [[ "${command}" == "__shell" ]]; then

@@ -146,6 +146,7 @@ QUICK EXAMPLES
     passwd rotate: movie     # Rotate all movie passwords
 
   PROJECT MANAGEMENT:
+    taito issue auth                                     # Authenticate
     taito issue add: delete post - feature posts         # Add a new issue
     taito issue status: delete post - in progress - me   # Change status
     taito issue comment: delete post                     # Add a comment
@@ -154,11 +155,12 @@ QUICK EXAMPLES
     taito open kanban                                    # Open kanban board
 
   HOUR REPORTING:
+    taito hours auth                     # Authenticate
     taito hours start                    # Start/continue the timer
     taito hours pause                    # Pause the timer
     taito hours stop                     # Stop the timer and create an entry
-    taito hours add: 6,5                 # Add an hour entry for today
-    taito hours add: 23.9 6,5            # Add an hour entry for 23th of sept.
+    taito hours add: 6.5                 # Add an hour entry for today
+    taito hours add: 6.5 tue             # Add an hour entry for last tuesday
     taito hours list                     # Hour entries of this month
     taito hours list: all                # Hour entries for all projects
     taito hours summary                  # Hour summary for this month
@@ -437,6 +439,9 @@ PROJECT: LINKS
 
 PROJECT: PROJECT MANAGEMENT
 
+  issue auth [SYSTEM]
+    Authenticate to the issue management system.
+
   issue add: TITLE [- LABELS...]
     Add a new issue. You'll be asked to enter issue description once you run
     the command.
@@ -458,6 +463,9 @@ PROJECT: PROJECT MANAGEMENT
 
 PROJECT: HOUR REPORTING
 
+  hours auth [SYSTEM]
+    Authenticate to the hour reporting system.
+
   hours start
     Start/continue the timer
 
@@ -466,14 +474,17 @@ PROJECT: HOUR REPORTING
 
   hours stop
     Stop the timer and create an hour entry. You'll be asked for a comment once
-    you run the command.
+    you run the command. If hour reporting system has multiple tasks configured
+    for the project in question, you also need to choose one of the tasks.
 
-  hours add: [DAY] hours
+  hours add: hours [WEEKDAY|today|yesterday]
     Add an hour entry. You'll be asked for a comment once you run the command.
+    If hour reporting system has multiple tasks configured for the project in
+    question, you also need to choose one of the tasks.
     For example:
-    $ taito hours add: 6,5
-    $ taito hours add: yesterday 5,5
-    $ taito hours add: 23.9 4,5
+    $ taito hours add: 6.5
+    $ taito hours add: 5,5 yesterday
+    $ taito hours add: 4,5 tue
 
   hours list: [all]
     List all hour entries for this month. By default lists only for current

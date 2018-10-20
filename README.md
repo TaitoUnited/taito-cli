@@ -172,6 +172,7 @@ Infrastructure management for zones:
 
 Project management:
 
+    taito issue auth                                    # Authenticate
     taito issue add: delete post - feature posts        # Add a new issue with labels: feature, posts
     taito issue status: delete post - in progress - me  # Change status: in progress, assigned to me
     taito issue comment: delete post                    # Add a comment
@@ -181,11 +182,12 @@ Project management:
 
 Hour reporting:
 
+    taito hours auth                         # Authenticate
     taito hours start                        # Start/continue the timer
     taito hours pause                        # Pause the timer
     taito hours stop                         # Stop the timer and create an hour entry
-    taito hours add: 6,5                     # Add an hour entry for today
-    taito hours add: 23.9 6,5                # Add an hour entry for 23th of september
+    taito hours add: 6.5                     # Add an hour entry for today
+    taito hours add: 6.5 tue                 # Add an hour entry for last tuesday
     taito hours list                         # Hour entries of this month
     taito hours list: all                    # Hour entries of this month for all projects
     taito hours summary                      # Hour summary for this month
