@@ -71,8 +71,8 @@ do
     echo \"Merging ${s} -> ${d} ${git_push_options}\" && \
     echo \"Do you want to continue (Y/n)?\" && \
     read -r confirm && \
-    if ! [[ ${confirm:-y} =~ ^[Yy]*$ ]]; then
-      exit 130
+    if ! [[ \${confirm:-y} =~ ^[Yy]*$ ]]; then \
+      exit 130; \
     fi && \
     echo Merging... && \
     git fetch origin ${s}:${d} && \
