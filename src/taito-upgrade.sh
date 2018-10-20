@@ -3,6 +3,8 @@
 : "${taito_cli_path:?}"
 : "${taito_image:?}"
 
+echo
+
 # Pull latest version of taito bash script
 echo "Pulling taito-cli directory from git: ${taito_cli_path}"
 (cd "${taito_cli_path}" && git pull)
@@ -26,20 +28,14 @@ sleep 3
 
 # Copy credentials from old image
 if docker create --name taito-save "${taito_image}save" &> /dev/null; then
-  echo "Copying credentials from the old taito-cli image"
-  mkdir -p ~/.taito/save/root &> /dev/null
-  mkdir -p ~/.taito/save/taito &> /dev/null
+  echo "Copying settings from the old taito-cli image"
+  rm -rf ~/.taito/save &> /dev/null
+  mkdir -p ~/.taito/save &> /dev/null
 
-  docker cp taito-save:/home/taito/.config ~/.taito/save/taito &> /dev/null
-  docker cp taito-save:/home/taito/.kube ~/.taito/save/taito &> /dev/null
-  docker cp taito-save:/root/.config ~/.taito/save/root &> /dev/null
-  docker cp taito-save:/root/.kube ~/.taito/save/root &> /dev/null
-  docker cp taito-save:/root/admin_creds.enc ~/.taito/save/root &> /dev/null
-  docker cp ~/.taito/save/taito/.config taito-new:/home/taito &> /dev/null
-  docker cp ~/.taito/save/taito/.kube taito-new:/home/taito &> /dev/null
-  docker cp ~/.taito/save/root/.config taito-new:/root &> /dev/null
-  docker cp ~/.taito/save/root/.kube taito-new:/root &> /dev/null
-  docker cp ~/.taito/save/root/admin_creds.enc taito-new:/root &> /dev/null
+  docker cp taito-save:/home/taito ~/.taito/save &> /dev/null
+  docker cp taito-save:/root ~/.taito/save &> /dev/null
+  docker cp ~/.taito/save/taito taito-new:/home &> /dev/null
+  docker cp ~/.taito/save/root taito-new:/ &> /dev/null
 
   rm -rf ~/.taito/save
 fi
@@ -51,7 +47,8 @@ docker image tag "${taito_image}" "${taito_image}save"
 docker rm taito-save taito-new &> /dev/null
 echo "DONE!"
 echo
-echo "Your taito-cli has been upgraded. It is recommended that once in while" echo "you also check that your organizational settings are up-to-date."
+echo "NOTE: Your taito-cli has been upgraded. It is recommended that once in while"
+echo "you also check that your organizational settings are up-to-date."
 echo "They are located at '~/.taito' directory. Running"
 echo "'taito open conventions' or 'taito -o ORGANIZATION open conventions'"
 echo "may give you some more details."
