@@ -155,17 +155,18 @@ QUICK EXAMPLES
     taito open kanban                                    # Open kanban board
 
   HOUR REPORTING:
-    taito hours auth                     # Authenticate
-    taito hours start                    # Start/continue the timer
-    taito hours pause                    # Pause the timer
-    taito hours stop                     # Stop the timer and create an entry
-    taito hours add: 6.5                 # Add an hour entry for today
-    taito hours add: 6.5 tue             # Add an hour entry for last tuesday
-    taito hours list                     # Hour entries of this month
-    taito hours list: all                # Hour entries for all projects
-    taito hours summary                  # Hour summary for this month
-    taito hours summary: this-week       # Hour summary for this week
-    taito open hours                     # Open hour reporting on browser
+    taito hours auth                       # Authenticate
+    taito hours start                      # Start/continue the timer
+    taito hours pause                      # Pause the timer
+    taito hours stop                       # Stop the timer and create an entry
+    taito hours add: 6.5                   # Add an hour entry for today
+    taito hours add: 6.5 yesterday         # Add an hour entry for yesterday
+    taito hours add: 6.5 tue Did some work # Add an hour entry for last tuesday
+    taito hours list                       # Hour entries of this month
+    taito hours list: all                  # Hour entries for all projects
+    taito hours summary                    # Hour summary for this month
+    taito hours summary: this-week         # Hour summary for this week
+    taito open hours                       # Open hour reporting on browser
 
     TODO bulk adds (e.g. three weeks on vacation)
 
@@ -472,15 +473,16 @@ PROJECT: HOUR REPORTING
   hours pause:
     Pause the timer
 
-  hours stop
-    Stop the timer and create an hour entry. You'll be asked for a comment once
-    you run the command. If hour reporting system has multiple tasks configured
-    for the project in question, you also need to choose one of the tasks.
+  hours stop [DESCRIPTION]
+    Stop the timer and create an hour entry. You'll be asked for a description
+    once you run the command. If hour reporting system has multiple tasks
+    configured for the project in question, you also need to choose one of the
+    tasks.
 
-  hours add: hours [WEEKDAY|today|yesterday]
-    Add an hour entry. You'll be asked for a comment once you run the command.
-    If hour reporting system has multiple tasks configured for the project in
-    question, you also need to choose one of the tasks.
+  hours add: hours [WEEKDAY|today|yesterday] [DESCRIPTION]
+    Add an hour entry. You'll be asked for a description once you run the
+    command. If hour reporting system has multiple tasks configured for the
+    project in question, you also need to choose one of the tasks.
     For example:
     $ taito hours add: 6.5
     $ taito hours add: 5,5 yesterday

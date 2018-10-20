@@ -78,6 +78,8 @@ echo "hours pause \
   # Pause timing hours"
 echo "hours stop \
   # Stop timing hours and create an hour entry"
+echo "hours stop: DESCRIPTION \
+  # Stop timing hours and create an hour entry"
 echo "hours add: HOURS \
   # Add an hour entry for today"
 weekdays="today yesterday mon tue wed thu fri sat sun"
@@ -85,6 +87,8 @@ for weekday in ${weekdays}
 do
   echo "hours add: HOURS ${weekday} \
     # Add an hour entry for ${weekday}"
+  echo "hours add: HOURS ${weekday} \
+    # Add an hour entry for ${weekday} DESCRIPTION"
 done
 echo "hours list \
   # List all hour entries of current project for this month"

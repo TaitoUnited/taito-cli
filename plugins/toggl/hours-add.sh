@@ -4,6 +4,8 @@
 : "${taito_setv:?}"
 : "${taito_hours_description:?}"
 
+# TODO implement with javascript or python instead? (json handling)
+
 # Command parameters
 duration_hours="${1:?duration not given}"
 weekday="${2:-today}"

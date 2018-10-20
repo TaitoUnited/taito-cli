@@ -44,11 +44,13 @@ echo "hours auth"
 echo "hours start"
 echo "hours pause"
 echo "hours stop"
+echo "hours stop: DESCRIPTION"
 echo "hours add: HOURS"
 weekdays="today yesterday mon tue wed thu fri sat sun"
 for weekday in ${weekdays}
 do
   echo "hours add: HOURS ${weekday}"
+  echo "hours add: HOURS ${weekday} DESCRIPTION"
 done
 echo "hours list"
 echo "hours list: all"

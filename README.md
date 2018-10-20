@@ -187,7 +187,8 @@ Hour reporting:
     taito hours pause                        # Pause the timer
     taito hours stop                         # Stop the timer and create an hour entry
     taito hours add: 6.5                     # Add an hour entry for today
-    taito hours add: 6.5 tue                 # Add an hour entry for last tuesday
+    taito hours add: 6.5 yesterday           # Add an hour entry for yesterday
+    taito hours add: 6.5 tue Did some work   # Add an hour entry for last tuesday
     taito hours list                         # Hour entries of this month
     taito hours list: all                    # Hour entries of this month for all projects
     taito hours summary                      # Hour summary for this month

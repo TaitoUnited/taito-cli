@@ -423,8 +423,13 @@ if [[ -n "${taito_admin_key}" ]]; then
 fi
 
 # Harcoded command handling
-if [[ "${command}" == "hours-add" ]]; then
+if [[ "${command}" == "hours-add" ]] || [[ "${command}" == "hours-stop" ]]; then
   export taito_hours_description
+  if [[ "${command}" == "hours-add" ]]; then
+    taito_hours_description="${params[@]:2}"
+  else
+    taito_hours_description="${params[@]}"
+  fi
   while [[ ! "${taito_hours_description}" ]]; do
     echo
     echo "Enter hour entry description:"
