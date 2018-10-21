@@ -340,7 +340,7 @@ if [[ ${taito_project:-} ]]; then
       # echo "alt rotate${param} FILTER"
       # echo "alt destroy${suffix}"
 
-      echo "deployment trigger${suffix} \
+      echo "deployment start${suffix} \
         # Trigger ci build for ${env} environment"
       echo "deployment cancel${suffix} \
         # Cancel an ongoing build for ${env} environment"

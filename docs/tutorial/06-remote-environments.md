@@ -165,7 +165,7 @@ TODO link: Stackdriver log filtering instructions
 
 ### 6.14. Some additional deployment commands
 
-taito deployment trigger:dev      # Trigger ci build for dev environment
+taito deployment start:dev        # Start ci build for dev environment manually
 taito deployment cancel:dev       # Cancel an ongoing dev environment build
 taito deployment build:worker:dev # Build and deploy worker container to dev env directly from local env
 

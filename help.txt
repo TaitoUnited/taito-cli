@@ -108,7 +108,7 @@ QUICK EXAMPLES
     vc commit erase          # Erase latest commit from loc/rem branch and files
 
   MANUAL DEPLOYMENT OPERATIONS
-    deployment trigger:dev        # Trigger ci build for dev environment
+    deployment start:dev          # Start ci build for dev environment manually
     deployment cancel:dev         # Cancel an ongoing dev environment ci build
     deployment build:worker:dev   # Build and deploy worker container to dev env
     deployment deploy:dev 1.1.1   # Deploy prebuilt version to dev env
@@ -666,8 +666,8 @@ PROJECT: STORAGE OPERATIONS
 
 PROJECT: MANUAL DEPLOYMENT OPERATIONS
 
-  deployment trigger:ENV
-    Trigger ci build.
+  deployment start:ENV
+    Start ci build manually.
 
   deployment cancel:ENV [IGNORE_BUILD_ID]
     Cancel an ongoing build, but ignore the given build id.

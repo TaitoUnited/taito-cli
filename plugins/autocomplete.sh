@@ -225,7 +225,7 @@ if [[ ${taito_project:-} ]]; then
       # echo "alt rotate${param} FILTER"
       # echo "alt destroy${suffix}"
 
-      echo "deployment trigger${suffix}"
+      echo "deployment start${suffix}"
       echo "deployment cancel${suffix}"
       echo "deployment deploy${param} IMAGE_TAG"
       echo "deployment revision${suffix}"
