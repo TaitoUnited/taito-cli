@@ -116,7 +116,7 @@ QUICK EXAMPLES
     deployment revert:dev 20      # Revert application on dev env to revision 20
 
   PROJECT TEMPLATES
-    project create: server-template  # Create a project based on template
+    project create: kubernetes-template  # Create a project based on template
     project upgrade                  # Upgrade project using template
 
   PROJECT CONFIGURATION

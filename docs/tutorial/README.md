@@ -15,7 +15,7 @@ Part 1: Tutorial
 * [7. Environment variables and secrets](07-env-variables-and-secrets.md)
 * [8. Databases and files](08-databases-and-files.md)
 * [9. Cloud services and Terraform](09-cloud-services-and-terraform.md)
-* [10. Server-template specific details](10-server-template-specific.md)
+* [10. kubernetes-template specific details](10-kubernetes-template-specific.md)
 * [11. Production setup](11-production-setup.md)
 * [12. Running in production](12-running-in-production.md)
 

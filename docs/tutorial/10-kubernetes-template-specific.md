@@ -1,4 +1,4 @@
-## 10. Server-template specific details
+## 10. Kubernetes-template specific details
 
 ### 10.1. Setup authentication
 
@@ -26,7 +26,7 @@ Builds take time, upgrades are tedious for the full codebase, different parts of
 
 ### 10.6. Alternative technologies
 
-server-template-alt
+kubernetes-template-alt
 
 ---
 

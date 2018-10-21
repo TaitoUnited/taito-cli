@@ -2,7 +2,7 @@
 
 By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See [installation instructions](#installation) of taito-cli for an example of a personal configuration file.
 
-Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of server-template for an example of a project specific configuration. In addition, user specific overrides may be defined in `taito-config-user.sh` file located at project root folder. The user specific file should not be committed to version control.
+Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/kubernetes-template/blob/master/taito-config.sh) of kubernetes-template for an example of a project specific configuration. In addition, user specific overrides may be defined in `taito-config-user.sh` file located at project root folder. The user specific file should not be committed to version control.
 
 > TODO: `taito-config-user.sh` is named `taito-run-env.sh` in the current taito-cli implementation and it is used only for `docker-compose up`.
 
@@ -134,11 +134,11 @@ TODO describe
 
 ### Test suite parameters
 
-You can pass parameters for your e2e and integration test suites using the `test_TARGET` prefix. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of server-template for examples.
+You can pass parameters for your e2e and integration test suites using the `test_TARGET` prefix. See [taito-config.sh](https://github.com/TaitoUnited/kubernetes-template/blob/master/taito-config.sh) of kubernetes-template for examples.
 
 ### Secret management
 
-Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of server-template for examples.
+Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands. See [taito-config.sh](https://github.com/TaitoUnited/kubernetes-template/blob/master/taito-config.sh) of kubernetes-template for examples.
 
 Secret naming convention is secret_name.property_name[/namespace]:generation_method*. For example:
 

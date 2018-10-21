@@ -28,7 +28,7 @@ TODO separate ci command for every step (even for otherwise existing commands --
 * `taito ci publish`: Publish all artifacts to a central location (e.g. container images, libraries, docs, test results, test coverage reports, code quality reports).
 * `taito ci release post`: Typically generates release notes from git commits or issues, and tags the git repository with the new version number.
 
-See [cloudbuild.yaml](https://github.com/TaitoUnited/server-template/blob/master/cloudbuild.yaml) of server-template as an example. TODO: add local testing env and reverts to the script.
+See [cloudbuild.yaml](https://github.com/TaitoUnited/kubernetes-template/blob/master/cloudbuild.yaml) of kubernetes-template as an example. TODO: add local testing env and reverts to the script.
 
 ---
 

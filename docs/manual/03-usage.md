@@ -8,7 +8,7 @@ Run `taito -h` to show a list of all predefined commands of taito-cli and additi
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of the project. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
-See the [README.md](https://github.com/TaitoUnited/server-template#readme) of the [server-template](https://github.com/TaitoUnited/server-template) project as an example on how to use taito-cli with your project. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
+See the [README.md](https://github.com/TaitoUnited/kubernetes-template#readme) of the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) project as an example on how to use taito-cli with your project. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
 
 > *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press <kbd>ctrl</kbd>+<kbd>]</kbd> (or <kbd>ctrl</kbd>+<kbd>å</kbd> for us scandinavians) and type `close`.*
 
@@ -18,7 +18,7 @@ See `trouble.txt` or run `taito --trouble`.
 
 ### Advanced usage
 
-If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `project create` command as it will tell taito-cli to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION project create: server-template`.
+If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `project create` command as it will tell taito-cli to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION project create: kubernetes-template`.
 
 You can execute project specific commands outside the project directory with the `-p` option, for example `taito -p my-project open app:dev`. This works only if you have configured `git_organization` setting in you personal `taito-config.sh` file.
 

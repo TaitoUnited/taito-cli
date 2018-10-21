@@ -5,4 +5,4 @@ TODO taito open services
 
 ---
 
-**Next:** [10. Server-template specific details](10-server-template-specific.md)
+**Next:** [10. Kubernetes-template specific details](10-kubernetes-template-specific.md)

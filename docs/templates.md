@@ -2,7 +2,7 @@
 
 ## Infrastructure templates
 
-Taito-cli comes with some infrastucture templates that you can use to set up your infrastructure:
+Taito-cli comes with some simple infrastucture templates that you can use to set up your infrastructure:
 
 * [aws](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/aws)
 * [azure](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/azure)
@@ -14,11 +14,11 @@ You can search for more infrastructure templates on [GitHub](TODO).
 
 ## Project templates
 
-Officially recommended project templates are listed below. All of them include taito-cli configurations and CI/CD setups out-of-the-box. You can also search for more taito-cli project templates on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
+Officially recommended project templates are listed below. All of them include taito-cli configurations and CI/CD setups out-of-the-box, but you can use them also without taito-cli. You can search for more project templates preconfigured for taito-cli on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
 
-* [kubernetes-template](https://github.com/TaitoUnited/server-template): Template for applications and APIs running on Kubernetes. Support for Knative and Istio will be added once they have matured enough. TODO rename git repository.
+* [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template): Template for applications and APIs running on Kubernetes. Support for Knative and Istio will be added once they have matured enough. TODO rename git repository.
 
-* [kubernetes-template-alt](https://github.com/TaitoUnited/server-template-alt): Alternative stack components for the kubernetes-template. With these you can easily implement your application or API with any technology that fits your requirements. TODO rename git repository.
+* [kubernetes-template-alt](https://github.com/TaitoUnited/kubernetes-template-alt): Alternative stack components for the kubernetes-template. With these you can easily implement your application or API with any technology that fits your requirements. TODO rename git repository.
 
 * [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template): Run serverless functions on any cloud provider using either the Serverless Framework or the full Serverless Platform. Support for Istio will be added later, making it possible to connect all your microservices together no matter where they are deployed.
 
@@ -32,4 +32,4 @@ Officially recommended project templates are listed below. All of them include t
 
 * [npm-template](https://github.com/TaitoUnited/npm-template): Template for npm libraries.
 
-* [legacy-server-template](https://github.com/TaitoUnited/legacy-server-template): Template for applications and APIs running on server without docker or serverless based technologies. Use this template as an example when you configure taito-cli for your existing server application.
+* [legacy-kubernetes-template](https://github.com/TaitoUnited/legacy-kubernetes-template): Template for applications and APIs running on server without docker or serverless based technologies. Use this template as an example when you configure taito-cli for your existing server application.

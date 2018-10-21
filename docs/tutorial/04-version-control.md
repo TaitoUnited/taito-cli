@@ -3,7 +3,7 @@
 Taito-cli provides some version control commands that make it easier for you to follow commonly defined version control conventions. An organization may also override the default version control conventions with a custom taito-cli plugin.
 
 * TODO conventional commits
-* TODO something about code reviews (already written on server-template).
+* TODO something about code reviews (already written on kubernetes-template).
 * TODO something about referencing issues in commits.
 
 ### 4.1 Display commonly defined conventions
