@@ -98,7 +98,7 @@ Issue management plugins typically implement the following taito-cli commands:
 ## Secret management
 
 * [kube-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kube-secrets/README.md)
-* [generate-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/secrets/README.md) TODO rename git repository
+* [generate-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/generate-secrets/README.md)
 * [gcloud-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-secrets/README.md)
 
 Secret management plugins typically implement the following taito-cli commands:
