@@ -50,7 +50,7 @@ Plugins:
 * [spinnaker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/travis/README.md): Use Spinnaker as your CI/CD pipeline.
 * [travis](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/travis/README.md): Use Travis as your CI/CD pipeline.
 
-## Container orchestration
+## Container and serverless orchestration
 
 Plugins typically implement the following commands:
 
@@ -67,8 +67,10 @@ Plugins typically implement the following commands:
 
 Plugins:
 
-* [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README.md): Manage containers running on docker-compose with taito-cli commands.
-* [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl/README.md): Manage containers running on Kubernetes with taito-cli commands.
+* [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README.md): Manage containers running on docker-compose using taito-cli commands.
+* [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl/README.md): Manage containers running on Kubernetes using taito-cli commands.
+* [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README.md): Manage serverless workloads (containers, functions) running on Knative using taito-cli commands.
+* [serverless-platform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless-platform/README.md): Manage serverless workloads (containers, functions) running on Serverless Platform using taito-cli commands.
 
 ## Databases
 
@@ -164,17 +166,15 @@ Plugins:
 * [generate-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/generate-secrets/README.md): Generates secret values on demand either by generating random values or by querying secret details from user.
 * [gcloud-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-secrets/README.md): Stores secrets using Google Cloud KMS and Storage.
 
-## Services and serverless
+## Services
 
 Plugins typically implement the following commands:
 
-* TODO not implemented yet
+* TODO taito-cli commands for managing services
 
 Plugins:
 
-* [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README.md)
 * [istio](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/istio/README.md)
-* [serverless-platform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless-platform/README.md)
 
 ## Storage
 

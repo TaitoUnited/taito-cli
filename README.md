@@ -10,6 +10,10 @@ This is made possible by implementing the commands with plugins and defining pro
 
 To get started see the [manual](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md).
 
+## Contributing
+
+TODO something about taito-cli vs external extensions.
+
 ## Development
 
 Install taito-cli using the installation instructions provided by the taito-cli manual. You can run taito-cli commands in development mode by using the `-d, --dev` flag (e.g. `taito -d env apply:dev`). In the development mode your local taito-cli directory is mounted on the container. If you are working with your own fork, update your taito symlink so that it points to your forked version (you originally created the symlink during taito-cli installation).
@@ -21,10 +25,6 @@ Install taito-cli using the installation instructions provided by the taito-cli 
 5. Add description of your implementation in your plugin README.md. Concentrate on explaining how your plugin is designed to work with other plugins, e.g. which environent variables it expects and which it exports for others to use.
 6. If you did not implement any of the predefined commands, add your command usage description in plugin help.txt file.
 7. Make a pull request.
-
-## Contributing
-
-TODO something about taito-cli vs external extensions.
 
 ## License
 

@@ -251,7 +251,7 @@ if [[ ${admin} == true ]]; then
   fi
 fi
 
-if [[ "$(docker images -q ${taito_image:?} 2> /dev/null)" == "" ]]; then
+if [[ "$(docker images -q ${taito_image:?} 2> /dev/null || echo "NOT RUNNING")" == "" ]]; then
   "${taito_src_path}/taito-upgrade.sh"
 fi
 
