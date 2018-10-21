@@ -186,7 +186,7 @@ Plugins:
 
 * [aws-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-storage/README.md): taito-cli support for AWS storage buckets (S3).
 * [azure-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-storage/README.md): taito-cli support for Azure storage buckets.
-* [gcloud-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud/README.md): taito-cli support for Google Cloud storage buckets. TODO separate plugin for gcloud storage buckets.
+* [gcloud-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-storage/README.md): taito-cli support for Google Cloud storage buckets.
 
 ## Version control
 

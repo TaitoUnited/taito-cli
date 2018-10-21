@@ -151,10 +151,10 @@ Secret naming convention is secret_name.property_name[/namespace]:generation_met
 
 Responsibilities of the current default plugins:
 
-* secrets: Generates secrets when required. Secrets can be generated randomly, or read from user input or from files.
+* generate-secrets: Generates secrets when required. Secrets can be generated randomly, or read from user input or from files.
 * kube-secrets: Reads secrets from Kubernetes when required. The plugin does not store any secrets to Kubernetes because the kubectl plugin stores project specific secrets to Kubernetes anyway and all other secrets can be stored manually.
 * gcloud-secrets: Reads secrets from gcloud when required, and also stores them. This is an alternative plugin that can be used instead of kube-secrets. TODO implement
-* kubectl: Saves project specific secrets to Kubernetes so that they can be used by applications.
+* kubectl: Saves project specific secrets to Kubernetes so that they can be used by applications. TODO move this part of the implementation to kube-secrets?
 
 #### TODO
 
