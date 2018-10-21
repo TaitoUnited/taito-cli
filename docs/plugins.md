@@ -174,7 +174,7 @@ Plugins:
 
 * [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README.md)
 * [istio](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/istio/README.md)
-* [serverless](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless/README.md)
+* [serverless-platform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless-platform/README.md)
 
 ## Storage
 

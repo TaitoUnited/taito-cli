@@ -21,3 +21,4 @@ fi
 # For backwards compatibility
 # TODO remove
 export taito_plugins="${taito_plugins/ secrets/ generate-secrets}"
+export taito_plugins="${taito_plugins/ semantic / semantic-release }"
