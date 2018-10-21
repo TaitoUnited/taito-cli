@@ -4,8 +4,10 @@ title="${1}"
 question="${2}"
 items=("${3}")
 item_id="${4}"
+allow_skip="${5}"
 
-while [[ ! "${item_id}" ]] && [[ -n "${items[*]}" ]]; do
+skip=false
+while [[ ${skip} == false ]] && [[ ! "${item_id}" ]] && [[ -n "${items[*]}" ]]; do
   echo "${title}"
   for item in ${items[@]}; do echo "- ${item%:*}"; done
   echo
@@ -18,4 +20,7 @@ while [[ ! "${item_id}" ]] && [[ -n "${items[*]}" ]]; do
       item_id="${id}"
     fi
   done
+  if [[ "${selected_name}" == "-" ]] && [[ "${allow_skip}" == "true" ]]; then
+    skip=true
+  fi
 done
