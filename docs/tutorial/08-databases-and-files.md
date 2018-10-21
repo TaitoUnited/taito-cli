@@ -31,8 +31,8 @@ taito storage sync from:dev /sour ./dest # Sync files from default dev bucket
 taito storage sync to:dev ./source /dest # Sync files to default dev bucket
 ```
 
-TODO links to sql tutorials
-TODO warn about sql injections
+* TODO links to sql tutorials
+* TODO warn about sql injections
 
 ---
 

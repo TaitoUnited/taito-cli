@@ -1,16 +1,16 @@
 # Taito-cli website
 
-Implement with Gatsby v2. Layout should probably be something between [reactjs.org](https://reactjs.org/) and [gatsbyjs.org](https://gatsbyjs.org/). Most of the content already exists:
+Implement with Gatsby v2. Layout should probably be something between [reactjs.org](https://reactjs.org/) and [gatsbyjs.org](https://gatsbyjs.org/). Most of the content already exists in docs folder as markdown files.
 
 ## Center area of the page
 
-**Taito**
+Big title: **Taito**
 
-An extensible toolkit for developers, devops personnel and build automation.
+Subtitle: An extensible toolkit for developers, devops personnel and build automation.
 
-[Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or [see the tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md).
+Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or [see the tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md).
 
-## Slogans at the bottom
+## Slogans at the bottom of the page
 
 ### Predefined command set
 
@@ -24,7 +24,7 @@ No need to install development and infrastructure management tools on you own co
 
 Taito-cli support any technology. Just just need to provide support with a plugin. You can also create custom taito-cli commands and easily share them with your friends and colleagues.
 
-## Tabs on top
+## Tabs on top of the page
 
 * [Docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md)
 * [Tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md)

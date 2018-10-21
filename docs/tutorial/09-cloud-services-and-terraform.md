@@ -1,7 +1,7 @@
 ## 9. Cloud services and Terraform
 
-TODO taito open serviceaccounts
-TODO taito open services
+* TODO taito open serviceaccounts
+* TODO taito open services
 
 ---
 

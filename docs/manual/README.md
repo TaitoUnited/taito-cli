@@ -11,8 +11,7 @@ Table of contents:
 * [7. ChatOps](07-chatops.md)
 * [8. Custom commands](08-custom-commands.md)
 * [9. Custom plugins](09-custom-plugins.md)
-* [10. Custom templates](10-custom-templates.md)
-* [11. Taito-cli development](11-taito-cli-development.md)
+* [10. Taito-cli development](10-taito-cli-development.md)
 
 ---
 

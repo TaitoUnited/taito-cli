@@ -1,5 +1,7 @@
 ## 3. Usage
 
+### The basics
+
 Only a small subset of taito commands are enabled if you are located outside a project directory. However, you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file.
 
 Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for predefined commands.

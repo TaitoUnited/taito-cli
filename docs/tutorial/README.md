@@ -1,10 +1,8 @@
 # Tutorial
 
-This tutorial guides you through common software development scenarios using taito-cli. You can consider it as a pragmatic chronological manual that complements the instructions provided by the taito-cli [manual](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/README.md) and the `taito --help` command.
+This tutorial guides you through common software development scenarios in a chronological order using taito-cli. You can consider it as a chronological version of the actual taito-cli [manual](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/README.md).
 
 ## Table of contents
-
-Part 1: Tutorial
 
 * [1. Setting up infrastructure](01-setting-up-infrastructure.md)
 * [2. Creating a project](02-creating-a-project.md)
@@ -18,6 +16,10 @@ Part 1: Tutorial
 * [10. kubernetes-template specific details](10-kubernetes-template-specific.md)
 * [11. Production setup](11-production-setup.md)
 * [12. Running in production](12-running-in-production.md)
+* [13. Zone maintenance](13-zone-maintenance.md)
+* [14. Zone monitoring](14-zone-monitoring.md)
+* [15. Zone recovery](15-zone-recovery.md)
+* [16. Creating a plugin](16-creating-a-plugin.md)
 
 ---
 

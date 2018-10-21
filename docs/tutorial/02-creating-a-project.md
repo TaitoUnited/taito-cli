@@ -6,7 +6,7 @@
 
 TODO something about project templates...
 
-Create a new project based on [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template). Use `acme` as company name to differentiate it from real customers. You can choose the application name however you like, but if you are using a shared infrastucture, try to avoid naming conflicts with your colleagues. The example application should consist of `web user interface`, `API`, `relational database` and `object storage bucket`. The kubernetes-template supports multiple technologies, but during these exercises it is recommended for you to use the default `react` + `node.js` stack.
+Create a new project based on the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template). Use **acme** as company name to differentiate it from real customers. You can choose the application name however you like, but if you are using a shared infrastucture, try to avoid naming conflicts with your colleagues. The example application should consist of **web user interface**, **API**, **relational database** and **object storage bucket**. The kubernetes-template supports multiple technologies, but during these exercises it is recommended for you to use the default **react** + **node.js** stack.
 
 Create the project by running one of the following commands:
 

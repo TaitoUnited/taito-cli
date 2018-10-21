@@ -1,6 +1,6 @@
 ## 6. Infrastructure management
 
-Taito-cli also provides a lightweight abstraction on top of infrastructure and configuration management tools for managing a *zone*. A zone provides basic infrastructure that your projects can rely on. It usually consists of container orhestration and database clusters, logging and monitoring systems, etc. You usually have at least two taito zones: one for development and testing purposes, and another one for production usage.
+Taito-cli provides a lightweight abstraction on top of infrastructure and configuration management tools for managing a *zone*. A zone provides basic infrastructure that your projects can rely on. It usually consists of container orhestration and database clusters, logging and monitoring systems, etc. You usually have at least two taito zones: one for development and testing purposes, and another one for production usage.
 
 You can manage your zone using the following commands:
 

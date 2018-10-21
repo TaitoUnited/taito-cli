@@ -1,7 +1,7 @@
-## 24. Zone monitoring
+## 14. Zone monitoring
 
 TODO taito-cli commands for monitoring, anomaly detection, etc.
 
 ---
 
-**Next:** [25. Recovery](25-recovery.md)
+**Next:** [15. Zone recovery](15-zone-recovery.md)

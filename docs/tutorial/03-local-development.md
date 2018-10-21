@@ -119,7 +119,9 @@ taito init:dev --clean         # Populate init data to dev database
 
 > If you don't want to erase all existing data, you can import only the data changes with `taito db import: data.sql` and `taito db import:dev data.sql` commands.
 
-### 3.11. Try some additional commands
+### 3.11. Create a custom command
+
+### 3.12. Try some additional commands
 
 ```shell
 taito open kanban              # Open project kanban board on browser
@@ -134,11 +136,11 @@ taito workspace kill           # Kill all running processes (e.g. containers)
 taito workspace clean          # Remove all unused build artifacts (e.g. images)
 ```
 
-### 3.12. TODO some software design links
+### 3.13. TODO some software design links
 
-TODO General software design
-TODO API design
-TODO Database design
+* TODO General software design
+* TODO API design
+* TODO Database design
 
 ---
 

@@ -173,4 +173,4 @@ TODO add documentation
 
 ---
 
-**Next:** [10. Custom templates](10-custom-templates.md)
+**Next:** [10. Taito-cli-development](10-taito-cli-development.md)

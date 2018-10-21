@@ -156,18 +156,22 @@ TODO
 
 ### 6.13. Debugging
 
+```
 taito open logs:dev              # Open logs of dev environment
 taito logs:server:dev            # Tail logs of a container named 'worker'
 taito shell:server:dev           # Start shell on a container named 'server'
 taito exec:server:dev echo foo   # Execute a command inside the server container
+```
 
 TODO link: Stackdriver log filtering instructions
 
 ### 6.14. Some additional deployment commands
 
+```
 taito deployment start:dev        # Start ci build for dev environment manually
 taito deployment cancel:dev       # Cancel an ongoing dev environment build
 taito deployment build:worker:dev # Build and deploy worker container to dev env directly from local env
+```
 
 ---
 
