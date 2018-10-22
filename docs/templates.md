@@ -22,9 +22,11 @@ Officially recommended project templates are listed below. All of them include t
 
 * [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template): Run serverless functions on any cloud provider using either the Serverless Framework or the full Serverless Platform. Support for [Istio](https://istio.io/) will be added later, making it possible to connect all your microservices together no matter where they are deployed.
 
+* TODO machine learning, kubeflow
+
 * [gatsby-template](https://github.com/TaitoUnited/gatsby-template): Implement static websites with Gatsby and deploy them to Kubernetes, GitHub Pages, Netlify, AWS or Google Cloud. If your system consists of static pages, dynamic UI snippets and backend services, you can easily run the [gatsby-template](https://github.com/TaitoUnited/gatsby-template) alongside with the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template).
 
-* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Deploy WordPress on Kubernetes.
+* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Run WordPress on Kubernetes.
 
 * [react-native-template](https://github.com/TaitoUnited/react-native-template): Implement mobile applications with React Native. Continuously build, test, release, and monitor them using the Visual Studio App Center.
 

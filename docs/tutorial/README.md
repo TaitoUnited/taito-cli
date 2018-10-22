@@ -1,6 +1,6 @@
 # Tutorial
 
-This tutorial guides you through common software development scenarios in a chronological order using taito-cli. You can consider it as a chronological version of the actual taito-cli [manual](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/README.md).
+This tutorial guides you through common software development scenarios in a chronological order. You may consider it as a chronological taito-cli manual.
 
 ## Table of contents
 

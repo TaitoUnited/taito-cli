@@ -20,6 +20,8 @@ TODO few examples
 
 With the help of *taito-cli* and [taito templates](https://github.com/search?q=topic%3Ataito-template&type=Repositories), infrastucture may freely evolve to a flexible hybrid cloud without causing too much headache for developers and devops personnel. Person dependency of projects is greatly reduced as all projects feel familiar no matter the underlying infrastucture or who has set everything up originally.
 
+TODO command reference (help.txt)
+
 ---
 
 **Next:** [2. Installation and upgrade](02-installation.md)

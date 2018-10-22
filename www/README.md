@@ -1,12 +1,12 @@
 # Taito-cli website
 
-Implement with Gatsby v2. Layout should probably be something between [reactjs.org](https://reactjs.org/) and [gatsbyjs.org](https://gatsbyjs.org/). Most of the content already exists in docs folder as markdown files.
+Implement with Gatsby v2. Layout should probably be something between [reactjs.org](https://reactjs.org/) and [gatsbyjs.org](https://gatsbyjs.org/). Most of the content already exists in the docs folder as markdown files.
 
 ## Center area of the page
 
 Big title: **Taito**
 
-Subtitle: An extensible toolkit for developers, devops personnel and build automation.
+Subtitle: An extensible toolkit for DevOps and NoOps.
 
 Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or [see the tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md).
 
@@ -14,15 +14,19 @@ Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/d
 
 ### Predefined command set
 
-You can execute the same command set from project to project no matter the technology or infrastructure. Run `taito db deploy:dev` to, run `taito hours add: ` to. TODO...
+Use the same command set from project to project no matter the technology or infrastructure. For example, run `taito env apply:test` to create a test environment, `taito open logs:prod` to open production logs on browser, `taito db connect` to connect to a local database and `taito db connect:test` to connect to a test environment database. And while you are working on a project, report your working hours with `taito hours add: 6,5 DESCRIPTION` or by using a start/stop timer.
 
 ### All tools included
 
-No need to install development and infrastructure management tools on you own computer. Taito-cli is shipped as a Docker container image that contains all the tools you need. And if it doesn't, you can always build your own taito-cli container image. And when you need to upgrade the tools, just run `taito --upgrade`.
+Working with modern hybrid cloud environments requires lots of tools. Taito-cli Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito --upgrade`. If you need something special, you can always build your own customized taito-cli container image with Docker.
 
 ### Extensible
 
-Taito-cli support any technology. Just just need to provide support with a plugin. You can also create custom taito-cli commands and easily share them with your friends and colleagues.
+Add taito-cli support for any technology or system by implementing a taito-cli plugin. Create custom commands and share them with your colleagues as taito-cli extensions. Implement project specific taito-cli commands as npm, make or pipenv scripts.
+
+### Minimal configuration
+
+Use preconfigured templates to set up your infrastructure and deploy new projects on top of it. Everything works out-of-the-box with minimal configuration.
 
 ## Tabs on top of the page
 
