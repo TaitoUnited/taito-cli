@@ -10,7 +10,9 @@ for env in ${envs[@]}
 do
   output=$( (
     export taito_env="${env}"
+    set -a
     . "${taito_project_path}/taito-config.sh"
+    set +a
     while IFS='*' read -ra items; do
       for item in "${items[@]}"; do
         words=(${item})

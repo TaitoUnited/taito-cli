@@ -7,8 +7,10 @@ export taito_target_env="${taito_target_env:-$taito_env}"
 
 if [[ -f "${taito_project_path}/taito-config.sh" ]]; then
   # Project specific configuration
-  # shellcheck disable=SC1091
+  set -a
+  # shellcheck disable=SC1090
   . "${taito_project_path}/taito-config.sh"
+  set +a
 fi
 
 # For backwards compatibility
