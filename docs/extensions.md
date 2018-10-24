@@ -1,8 +1,8 @@
 # Extensions
 
-## Taito-cli command extensions
+## For Taito-cli
 
-You can search for taito-cli command extensions on [GitHub](https://github.com/search?q=topic%3Ataito-extension&type=Repositories).
+You can search for taito-cli extensions on [GitHub](https://github.com/search?q=topic%3Ataito-extension&type=Repositories).
 
 ## For code editors
 

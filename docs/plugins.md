@@ -1,5 +1,7 @@
 # Plugins
 
+This page describes all the plugins that are bundled with taito-cli by default. You may find more plugins by browsing taito-cli [extensions](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/extensions.md).
+
 ## Application control
 
 Plugins typically implement the following commands:

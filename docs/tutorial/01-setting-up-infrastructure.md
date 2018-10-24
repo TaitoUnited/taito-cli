@@ -8,6 +8,8 @@ See the [installation instructions](https://github.com/TaitoUnited/taito-cli/blo
 
 Taito-cli is designed to be infrastructure agnostic. That is, the same taito-cli commands can be used in any project no matter the technology or infrastructure. These exercises, however, are based on a project template that requires Kubernetes, PostgreSQL, S3 compatible storage bucket and a CI/CD pipeline that is supported by one of the taito-cli plugins. If you don't have an existing infrastructure that provides these already, you can easily set them up by creating a new **taito zone** based on examples that are located in [taito-cli/examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples).
 
+TODO register a domain name
+
 You can create a taito zone based on the Google Cloud example with the following commands. Replace `EDIT` with your favorite editor.
 
 ```shell

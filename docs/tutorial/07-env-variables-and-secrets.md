@@ -50,6 +50,8 @@ taito deployment deploy:stag
 taito deployment deploy:prod
 ```
 
+> TODO: Currently you always need to give image tag as a parameter. See the latest image tag deployed successfully for the branch in question by running `taito open builds`.
+
 ### 7.4. Define a secret
 
 taito-config.sh:
@@ -74,7 +76,7 @@ environment:
   MY_SECRET_KEY: ${acme-myproject-dev-my-secret-key}
 ```
 
-Create the secret for each environment:
+Set secret value for each environment:
 
 ```
 taito env rotate:dev my-secret
