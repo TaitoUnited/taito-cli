@@ -90,13 +90,21 @@ const STATUS_COLOR = {
 
 // createSlackMessage create a message from a build object.
 const createSlackMessage = (build, channel, project) => {
+  const icon_emoji = project ? project.iconEmoji : null;
+  let icon_url = project ? project.iconUrl : null;
+
+  if (!icon_emoji && !icon_url) {
+    icon_url =
+      'https://www.google.com/permissions/images/logo/google-cloud-logo.png';
+  }
+
   let message = {
     username: 'Google Cloud Build',
     channel,
-    icon_emoji: project ? project.iconEmoji : null,
-    icon_url: project ? project.iconUrl : null,
+    icon_emoji,
+    icon_url,
     text: shortProjectName(build.source.repoSource.repoName)
-      + ' \`' + build.source.repoSource.branchName + '\`',
+      + ': *' + build.source.repoSource.branchName + '*',
     mrkdwn: true,
     attachments: [
       {
