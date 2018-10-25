@@ -33,7 +33,7 @@ taito open logs:dev            # Open logs
 
 ```bash
 # NOTE: enable tests once you have implemented some integration or e2e tests
-export ci_exec_test=true
+ci_exec_test=true
 ```
 
 2) Push the change to dev branch: `git push`
@@ -113,7 +113,7 @@ And how this works exactly? Well, the canary environment is mapped to production
 
 ```
 # Environment mappings (for canary releases and A/B testing)
-export taito_env="${taito_env/canary/prod}" # canary -> prod
+taito_env="${taito_env/canary/prod}" # canary -> prod
 ```
 
 ### 6.7. Deploy changes through multiple environments (dev -> canary)

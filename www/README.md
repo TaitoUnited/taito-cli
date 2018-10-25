@@ -14,11 +14,11 @@ Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/d
 
 ### Predefined command set
 
-Use the same command set from project to project no matter the technology or infrastructure. Run `taito env apply:test` to create a test environment, `taito deployment deploy:test 1.1.0` to deploy version 1.1.0 to it, `taito open logs:prod` to open production logs on browser, `taito db connect` to connect to a local database and `taito db connect:test` to connect to a test environment database. And while you are working on a project, report your working hours with `taito hours add: 6,5 DESCRIPTION` or by using a timer.
+Use the same command set from project to project no matter the technology or infrastructure. For example, run `taito env apply:test` to create a test environment, `taito deployment deploy:test 1.1.0` to deploy version 1.1.0 to it, `taito open logs:prod` to open production logs on browser, `taito db connect` to connect to a local database and `taito db connect:test` to connect to the test environment database. And while you are working on a project, report your working hours with `taito hours add: 6,5 DESCRIPTION` or by using a timer.
 
 ### Extensible
 
-Add taito-cli support for any technology by implementing a taito-cli plugin. Create custom commands and share them with your colleagues as taito-cli extensions. Implement project specific taito-cli commands as npm, make or pipenv scripts.
+Add taito-cli support for any technology by implementing a taito-cli plugin. Create custom commands and share them with your colleagues as taito-cli extensions. Implement project specific taito-cli commands with npm, make or pipenv.
 
 ### All tools included
 

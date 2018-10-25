@@ -4,17 +4,18 @@
 
 Taito-cli comes with some simple infrastucture templates that you can use to set up your infrastructure:
 
-* [aws](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/aws): Kubernetes and database clusters running on AWS, and Jenkins for CI/CD.
-* [azure](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/azure): Kubernetes and database clusters running on Azure, and Jenkins for CI/CD.
-* [bare](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/bare): Kubernetes and database clusters running on virtual machines or dedicated servers, and Jenkins for CI/CD.
-* [digital-ocean](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/digital-ocean): Kubernetes and database clusters running on Digital Ocean, and Jenkins for CI/CD.
-* [gcloud](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/gcloud): Kubernetes and database clusters running on Google Cloud, and Google Cloud Build for CI/CD.
+* [aws](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/aws): Managed Kubernetes, database clusters and object storage on AWS, Jenkins for CI/CD.
+* [azure](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/azure): Managed Kubernetes, database clusters and object storage on Azure, Jenkins for CI/CD.
+* [bare](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/bare): Self-managed Kubernetes, database clusters and object storage on any virtual machines or dedicated servers, Jenkins for CI/CD.
+* [digital-ocean](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/digital-ocean): Managed Kubernetes, database clusters and object storage on Digital Ocean, Jenkins for CI/CD.
+* [gcloud](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/gcloud): Managed Kubernetes, database clusters and object storage on Google Cloud, Google Cloud Build for CI/CD.
+* [scaleway](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/scaleway): Managed Kubernetes, database clusters and object storage on Scaleway, Jenkins for CI/CD.
 
 You can search for more infrastructure templates on [GitHub](TODO).
 
 ## Project templates
 
-Officially recommended project templates are listed below. All of them include taito-cli configurations, Terraform scripts, and build scripts for various CI/CD systems. You may find more project templates preconfigured for taito-cli on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
+Officially recommended project templates are listed below. All of them include taito-cli configurations, Terraform scripts, and build scripts for various CI/CD systems. You may also find more project templates preconfigured for taito-cli on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
 
 * [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template): Template for applications and APIs running on Kubernetes. Support for [Knative](https://pivotal.io/knative) and [Istio](https://istio.io/) will be added once they have matured enough. TODO rename the git repository.
 

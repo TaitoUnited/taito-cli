@@ -57,7 +57,7 @@ taito deployment deploy:prod
 taito-config.sh:
 
 ```
-export taito_secrets="
+taito_secrets="
   ${taito_project}-${taito_env}-my-secret.key:manual
 "
 ```

@@ -10,7 +10,7 @@ This chapter describes common taito-cli settings that are shared among plugins. 
 
 Settings are defined as environment variables. If the setting is an array, just give all the values separated by whitespace, for example:
 
-`export taito_environments="dev test canary prod"`
+`taito_environments="dev test canary prod"`
 
 ### Personal and organizational settings
 
@@ -119,13 +119,13 @@ esac
 You can create a 'canary environment' just by renaming `canary` environment to `prod` at the beginning of the project specific configuration file (see the example below). This means that the canary release is deployed to the same namespace as production, and it also uses all the same resources as production (database, storage, 3rd party services).
 
 ```
-export taito_env="${taito_env/canary/prod}" # canary -> prod
+taito_env="${taito_env/canary/prod}" # canary -> prod
 ```
 
 You can also make an alternative environment for A/B testing the same way. In the following example the `feature/orders-v2` uses resources of production environment. Thus, you can do A/B testing in production by routing some of the users to the `feature/orders-v2` release that is running side-by-side with the production version.
 
 ```
-export taito_env="${taito_env/feat-orders-v2/prod}" # feat-orders-v2 -> prod
+taito_env="${taito_env/feat-orders-v2/prod}" # feat-orders-v2 -> prod
 ```
 
 ### Feature environments

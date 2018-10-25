@@ -17,44 +17,45 @@
 3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses taito-cli, they will provide you with the correct settings. See [Advanced Usage](https://github.com/TaitoUnited/taito-cli#advanced-usage) if you work for multiple organizations.
     ```
     #!/bin/bash
+    # shellcheck disable=SC2034
 
     # NOTE: These are example settings! Replace them with your personal
     # settings or with the settings defined by your organization.
 
-    export taito_image="taitounited/taito-cli:latest"
-    export taito_global_plugins="docker-global fun-global \
+    taito_image="taitounited/taito-cli:latest"
+    taito_global_plugins="docker-global fun-global \
       google-global gcloud-global links-global template-global"
 
     # git settings
-    export git_organization="git@github.com:MyOrganization"
+    git_organization="git@github.com:MyOrganization"
 
     # google settings
-    export google_authuser="1"
+    google_authuser="1"
 
     # template plugin default settings
-    export template_default_taito_image="taitounited/taito-cli:latest"
-    export template_default_organization="myorganization"
-    export template_default_domain="mydevdomain.com"
-    export template_default_domain_prod="mydomain.com"
-    export template_default_zone="my-zone"
-    export template_default_zone_prod="my-prod-zone"
-    export template_default_provider="gcloud"
-    export template_default_provider_billing_account="123456-123456-123456"
-    export template_default_provider_org_id="123456789"
-    export template_default_provider_region="europe-west1"
-    export template_default_provider_zone="europe-west1-b"
-    export template_default_provider_org_id_prod="123456789"
-    export template_default_provider_region_prod="europe-west2"
-    export template_default_provider_zone_prod="europe-west2-a"
-    export template_default_registry="eu.gcr.io"
-    export template_default_source_git="git@github.com:TaitoUnited"
-    export template_default_dest_git="git@github.com:MyOrganization"
-    export template_default_kubernetes="my-kubernetes"
-    export template_default_postgres="my-postgres"
-    export template_default_mysql="my-mysql"
+    template_default_taito_image="taitounited/taito-cli:latest"
+    template_default_organization="myorganization"
+    template_default_domain="mydevdomain.com"
+    template_default_domain_prod="mydomain.com"
+    template_default_zone="my-zone"
+    template_default_zone_prod="my-prod-zone"
+    template_default_provider="gcloud"
+    template_default_provider_billing_account="123456-123456-123456"
+    template_default_provider_org_id="123456789"
+    template_default_provider_region="europe-west1"
+    template_default_provider_zone="europe-west1-b"
+    template_default_provider_org_id_prod="123456789"
+    template_default_provider_region_prod="europe-west2"
+    template_default_provider_zone_prod="europe-west2-a"
+    template_default_registry="eu.gcr.io"
+    template_default_source_git="git@github.com:TaitoUnited"
+    template_default_dest_git="git@github.com:MyOrganization"
+    template_default_kubernetes="my-kubernetes"
+    template_default_postgres="my-postgres"
+    template_default_mysql="my-mysql"
 
     # links
-    export link_global_urls="\
+    link_global_urls="\
       * home=https://www.mydomain.com \
       * intra=https://intra.mydomain.com Intranet \
       * conventions=https://intra.mydomain.com/conventions Software development conventions \

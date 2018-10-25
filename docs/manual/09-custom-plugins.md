@@ -28,8 +28,9 @@ This is how you implement your own custom plugin:
 
     ```
     #!/bin/sh
-    export taito_image="taitounited/taito-cli:latest"
-    export taito_plugins="npm"
+    # shellcheck disable=SC2034
+    taito_image="taitounited/taito-cli:latest"
+    taito_plugins="npm"
     ```
 
 3. Add some executable commands to one of the plugins as `.sh`, `.py`, `.js` or `.x` files). Optionally add also documentation in help.txt, trouble.txt and README.md files. With the #pre and #post prefixes you can define that your command should be run in pre or post phase instead of the normal execute phase (more on that later).
@@ -63,8 +64,8 @@ This is how you implement your own custom plugin:
 5. Add the extension directory to your *taito_global_extensions* or *taito_extensions* definition and the plugin to your *taito_global_plugins* or *taito_plugins* definition. You can reference extension either by file path or git url.
 
     ```
-    export taito_extensions="git@github.com:JohnDoe/my-extension.git"
-    export taito_plugins="my-plugin"
+    taito_extensions="git@github.com:JohnDoe/my-extension.git"
+    taito_plugins="my-plugin"
     ```
 
 6. Implement unit tests for your commands with [bats](https://github.com/bats-core/bats-core). See `.bats` files under `taito-cli/plugins` as an example. You can run your unit tests with the `taito unit` command.
@@ -76,8 +77,8 @@ Now you should be able to call `taito my command`. And when you call `taito env 
 Note that you can also add a project specific extension to your project subdirectory and reference it like this in *taito-config.sh*:
 
     ```
-    export taito_extensions="./scripts/my-extension"
-    export taito_plugins="my-plugin"
+    taito_extensions="./scripts/my-extension"
+    taito_plugins="my-plugin"
     ```
 
 NOTE: Always remember to call the next command of the command chain at some point during command execution (usually at the end) unless you want to stop the command chain execution:

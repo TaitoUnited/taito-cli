@@ -1,5 +1,10 @@
 # Bare-metal example zone (TODO)
 
+Self-hosted services (Kubernetes, databases, object storage) on virtual machines or dedicated servers.
+
+https://stefanprodan.com/2018/kubernetes-scaleway-baremetal-arm-terraform-installer/
+https://www.upcloud.com/support/deploy-kubernetes-coreos/
+
 ## Links
 
 [//]: # (GENERATED LINKS START)
