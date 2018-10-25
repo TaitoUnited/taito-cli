@@ -1,5 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 
 name=${1}
 
@@ -99,10 +100,7 @@ fi && \
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-build-notifications" "${name}" \
   "Configure gcloud build notifications"
 then
-  echo "TODO move implementation here: function that sends notifications on build fail"
-  echo
-  echo "Press enter when done"
-  read -r
+  "${taito_plugin_path}/util/setup-build-slack-notifications.sh"
 fi && \
 
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-error-log-alerts" "${name}" \

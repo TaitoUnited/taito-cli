@@ -1,0 +1,7 @@
+{
+  "server-template": {
+    "slackChannel": "random",
+    "iconEmoji": null,
+    "iconUrl": null
+  }
+}

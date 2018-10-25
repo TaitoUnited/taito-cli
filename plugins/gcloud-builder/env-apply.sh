@@ -13,7 +13,11 @@ then
   echo "Create a new build trigger with these settings if one does not exist already:"
   echo "- Source: GitHub"
   echo "- Repository: ${taito_repo_name}"
-  echo "- Name: ${taito_project}"
+  if [[ "${taito_project_messaging_channel:-}" ]]; then
+    echo "- Name: ${taito_project} #${taito_project_messaging_channel}"
+  else
+    echo "- Name: ${taito_project}"
+  fi
   echo "- Type: Branch"
   echo "- Branch regex: 'dev|test' or 'stag|canary|master' depending on zone"
   echo "- Build configuration: cloudbuild.yaml"

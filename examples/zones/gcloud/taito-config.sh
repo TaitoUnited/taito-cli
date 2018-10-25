@@ -1,34 +1,39 @@
 #!/bin/bash
+# shellcheck disable=SC2034
 
 # taito-cli settings
-export taito_zone="CHANGE"
-export taito_type="zone"
-export taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone links-global"
+taito_zone="CHANGE"
+taito_type="zone"
+taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone links-global"
 
 # zone settings
-export zone_devops_email="CHANGE@CHANGE.COM"
+zone_devops_email="CHANGE@CHANGE.COM"
+zone_devops_bucket="${taito_zone}-devops"
 # TODO IP does not have an effect when deploying ingress the first time?
-export zone_ingress_ip="" # TODO support multiple
+zone_ingress_ip="" # TODO support multiple
+zone_slack_webhook="CHANGE"
+zone_monitoring_slack_channel="#monitoring"
+zone_builds_slack_channel="#builds"
 
 # gcloud settings
-export gcloud_org_id="CHANGE" # NOTE: leave empty for 'no organization'
-export gcloud_billing_account_id="CHANGE"
-export gcloud_project_id="${taito_zone}"
-export gcloud_region="europe-west1"
-export gcloud_zone="europe-west1-c"
-export gcloud_additional_zones="europe-west1-b europe-west1-d"
+gcloud_org_id="CHANGE" # NOTE: leave empty for 'no organization'
+gcloud_billing_account_id="CHANGE"
+gcloud_project_id="${taito_zone}"
+gcloud_region="europe-west1"
+gcloud_zone="europe-west1-c"
+gcloud_additional_zones="europe-west1-b europe-west1-d"
 
 # kubectl settings (TODO support multiple)
-export kubectl_name="common-kubernetes"
-export kubectl_cluster="gke_${taito_zone}_${gcloud_zone}_${kubectl_name}"
-export kubectl_user="${kubectl_cluster}"
+kubectl_name="common-kubernetes"
+kubectl_cluster="gke_${taito_zone}_${gcloud_zone}_${kubectl_name}"
+kubectl_user="${kubectl_cluster}"
 
 # TODO: move postgres settings (common-postgres) here
 # TODO: postgres root password is empty at the beginning?
 # TODO: mysql also
 
 # links
-export link_urls="\
+link_urls="\
   * dashboard=https://console.cloud.google.com/apis/dashboard?project=${gcloud_project_id} Google Cloud Dashboard \
   * kubernetes=https://console.cloud.google.com/kubernetes/list?project=gcloud-temp1 Kubernetes clusters \
   * databases=https://console.cloud.google.com/sql/instances?project=gcloud-temp1 Database clusters \
