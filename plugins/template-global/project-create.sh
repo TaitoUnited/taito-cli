@@ -16,8 +16,8 @@ echo "Please wait..."
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
   export GIT_PAGER="" && \
-  git clone -q -b master --single-branch --depth 1 ${template_source_git}/${template}.git ${taito_repo_name:?} && \
-  cd ${taito_repo_name} && \
+  git clone -q -b master --single-branch --depth 1 ${template_source_git}/${template}.git ${taito_vc_repository:?} && \
+  cd ${taito_vc_repository} && \
   # Write project migrate settings to a temporary config file
   # TODO remove unnecessary settings
   echo 'export template=${template}' >> _template-config.sh && \
@@ -30,7 +30,7 @@ echo "Please wait..."
   echo 'export taito_family=${taito_family:-}' >> _template-config.sh && \
   echo 'export taito_application=${taito_application:?}' >> _template-config.sh && \
   echo 'export taito_suffix=${taito_suffix:-}' >> _template-config.sh && \
-  echo 'export taito_repo_name=${taito_repo_name}' >> _template-config.sh && \
+  echo 'export taito_vc_repository=${taito_vc_repository}' >> _template-config.sh && \
   rm -rf .git && \
   taito -c project-create-continue"
 

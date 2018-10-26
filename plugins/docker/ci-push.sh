@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
-: "${taito_registry:?}"
+: "${taito_image_registry:?}"
 : "${taito_env:?}"
 
 name=${taito_target:?Target not given}
@@ -15,7 +15,7 @@ if [[ "${name}" != "." ]]; then
 fi
 
 if [[ "${image_path}" == "" ]]; then
-  image_path="${taito_registry}"
+  image_path="${taito_image_registry}"
 fi
 
 version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)

@@ -3,7 +3,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 : "${taito_env:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
 
 dir="${taito_target:?Target not given}"
 suite_filter="${1}"
@@ -58,9 +58,9 @@ if [[ "${taito_env}" != "local" ]]; then
   image_src="${container_test}er:latest"
   if [[ "${taito_mode:-}" != "ci" ]]; then
     # Use development image for testing
-    # NOTE: does not exist if project dir is not named after taito_repo_name
-    # NOTE: was ${taito_repo_name/-/}
-    image_src="${taito_repo_name}_${taito_project}-${dir}"
+    # NOTE: does not exist if project dir is not named after taito_vc_repository
+    # NOTE: was ${taito_vc_repository/-/}
+    image_src="${taito_vc_repository}_${taito_project}-${dir}"
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run. HINT: taito start && (exit 1))) && "

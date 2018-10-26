@@ -1,15 +1,15 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
-: "${taito_repo_name:?}"
-: "${taito_registry:?}"
+: "${taito_vc_repository:?}"
+: "${taito_image_registry:?}"
 
 name=${taito_target:?Target not given}
 image_tag=${1}
 image_path=${2}
 
 if [[ "${image_path}" == "" ]]; then
-  image_path="${taito_registry}"
+  image_path="${taito_image_registry}"
 fi
 
 echo "Checking if image already exists in the container registry"

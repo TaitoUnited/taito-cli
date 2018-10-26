@@ -11,7 +11,7 @@ export taito_company
 export taito_family
 export taito_application
 export taito_suffix
-export taito_repo_name
+export taito_vc_repository
 
 echo
 echo "Repository name, namespace and labels will be constituted from the following"
@@ -58,7 +58,7 @@ if ! [[ "${taito_suffix}" =~ ^[a-zA-Z]*$ ]] || \
 fi
 
 if [[ "${taito_suffix}" != "" ]]; then
-  taito_repo_name="${taito_family:-$taito_company}-${taito_application}-${taito_suffix}"
+  taito_vc_repository="${taito_family:-$taito_company}-${taito_application}-${taito_suffix}"
 else
-  taito_repo_name="${taito_family:-$taito_company}-${taito_application}"
+  taito_vc_repository="${taito_family:-$taito_company}-${taito_application}"
 fi

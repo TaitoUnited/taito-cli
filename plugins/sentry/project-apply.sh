@@ -1,11 +1,11 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
 : "${sentry_organization:?}"
 : "${taito_project_path:?}"
 
 echo "Create a new Sentry project with these settings:"
-echo "- Name: ${taito_repo_name}"
+echo "- Name: ${taito_vc_repository}"
 echo "- Default environment: prod"
 echo "- Alert when: 'An event is seen AND An event's environment equals prod'"
 echo "- Enable Slack integration: Send alerts to monitoring channel"

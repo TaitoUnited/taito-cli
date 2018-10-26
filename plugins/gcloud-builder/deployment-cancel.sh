@@ -1,11 +1,12 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
+: "${taito_vc_repository_base:?}"
 
 ignore_build_id=${1}
 
-full_repo_name="github-taitounited-${taito_repo_name}"
+full_repo_name="${taito_vc_repository_base}-${taito_vc_repository}"
 if [[ ${taito_env} == "prod" ]]; then
   branch_name="master"
 else
