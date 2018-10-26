@@ -12,7 +12,7 @@ echo "Forcefully erase the latest commit from local and remote '${branch}' branc
 read -r confirm
 if [[ "${confirm}" =~ ^[Yy]$ ]]; then
   "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-  git reset HEAD^ --hard && git push origin --force-with-lease"
+  git reset HEAD^ --hard && git push origin --no-verify --force-with-lease"
 fi && \
 
 # Call next command on command chain

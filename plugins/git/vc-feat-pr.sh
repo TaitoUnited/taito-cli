@@ -25,7 +25,7 @@ if [[ \${rebase} =~ ^[Yy]*$ ]]; then \
   git fetch --all && \
   git rebase -i origin/${dest}; \
 fi && \
-git push -u origin ${feature} && \
+git push --no-verify -u origin ${feature} && \
 git checkout - && \
 echo && \
 echo 'TODO: implement PR using the hub cli.' && \

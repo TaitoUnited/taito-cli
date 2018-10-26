@@ -22,11 +22,11 @@ git pull && \
 git merge --squash ${feature} && \
 (git diff-index --quiet HEAD || git commit -v) && \
 ( \
-  git push || \
+  git push --no-verify || \
   echo NOTE: Push failed. Fix all errors first. echo Then push changes to ${dest} branch and delete the ${feature} branch. \
 ) && \
 git branch -D ${feature} && \
-(git push origin --delete ${feature} &> /dev/null || :) \
+(git push origin --no-verify --delete ${feature} &> /dev/null || :) \
 " && \
 
 # Call next command on command chain

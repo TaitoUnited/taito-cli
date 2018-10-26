@@ -18,7 +18,7 @@ if ! git checkout ${dest} 2> /dev/null; then \
   git checkout ${source} && \
   git pull && \
   git checkout -b ${dest} && \
-  git push -u origin ${dest}; \
+  git push --no-verify -u origin ${dest}; \
 fi" && \
 
 # Call next command on command chain

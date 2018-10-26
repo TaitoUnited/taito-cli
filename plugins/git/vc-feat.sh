@@ -18,10 +18,10 @@ if ! git checkout ${dest} 2> /dev/null; then \
   git checkout -b ${dest} && \
   echo && \
   echo 'TODO explain...' && \
-  echo 'Push the ${dest} branch to remote repository (y/N)?' && \
+  echo 'Push the ${dest} branch to the remote repository (y/N)?' && \
   read -r confirm && \
   if [[ \${confirm} =~ ^[Yy]$ ]]; then \
-    git push -u origin ${dest} || \
+    git push --no-verify -u origin ${dest} || \
     echo NOTE: Push failed. Fix errors and the run \'push -u origin ${dest}\'.
   fi \
 fi \

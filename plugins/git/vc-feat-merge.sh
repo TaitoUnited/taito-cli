@@ -31,14 +31,14 @@ git pull && \
 git merge --no-ff ${feature} && \
 (git diff-index --quiet HEAD || git commit -v) && \
 ( \
-  git push || \
+  git push --no-verify || \
   echo NOTE: Push failed. Fix all errors first. Then push changes to ${dest} branch and delete the ${feature} branch. \
 ) && \
 echo && \
 echo 'Delete branch ${feature} (Y/n)?' && \
 read -r del && \
 if [[ \${del} =~ ^[Yy]*$ ]]; then \
-  git push origin --delete ${feature} &> /dev/null; \
+  git push origin --no-verify --delete ${feature} &> /dev/null; \
   git branch -d ${feature}; \
 else \
   git checkout -; \
