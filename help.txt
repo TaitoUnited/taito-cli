@@ -5,6 +5,7 @@ QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
     install                  # Install libraries on host
+    (link)                   # Link libraries
     (env)                    # Initialize shell environment (e.g. for pipenv)
     (build)                  # Build project (if not built autom. by start)
     start                    # Start containers / watch / application
@@ -147,27 +148,27 @@ QUICK EXAMPLES
     passwd rotate: movie     # Rotate all movie passwords
 
   PROJECT MANAGEMENT:
-    taito issue auth                                     # Authenticate
-    taito issue add: delete post - feature posts         # Add a new issue
-    taito issue status: delete post - in progress - me   # Change status
-    taito issue comment: delete post                     # Add a comment
-    taito issue open: delete post                        # Open issue on browser
-    taito issue list: todo                               # List todo issues
-    taito open kanban                                    # Open kanban board
+    issue auth                                     # Authenticate
+    issue add: delete post - feature posts         # Add a new issue
+    issue status: delete post - in progress - me   # Change status
+    issue comment: delete post                     # Add a comment
+    issue open: delete post                        # Open issue on browser
+    issue list: todo                               # List todo issues
+    open kanban                                    # Open kanban board
 
   HOUR REPORTING:
-    taito hours auth                       # Authenticate
-    taito hours start                      # Start/continue the timer
-    taito hours pause                      # Pause the timer
-    taito hours stop                       # Stop the timer and create an entry
-    taito hours add: 6.5                   # Add an hour entry for today
-    taito hours add: 6.5 yesterday         # Add an hour entry for yesterday
-    taito hours add: 6.5 tue Did some work # Add an hour entry for last tuesday
-    taito hours list                       # Hour entries of this month
-    taito hours list: all                  # Hour entries for all projects
-    taito hours summary                    # Hour summary for this month
-    taito hours summary: this-week         # Hour summary for this week
-    taito open hours                       # Open hour reporting on browser
+    hours auth                         # Authenticate
+    hours start                        # Start/continue the timer
+    hours pause                        # Pause the timer
+    hours stop                         # Stop the timer and create an entry
+    hours add: 6.5                     # Add an hour entry for today
+    hours add: 6.5 yesterday           # Add an hour entry for yesterday
+    hours add: 6.5 tue Did some work   # Add an hour entry for last tuesday
+    hours list                         # Hour entries of this month
+    hours list: all                    # Hour entries for all projects
+    hours summary                      # Hour summary for this month
+    hours summary: this-week           # Hour summary for this week
+    open hours                         # Open hour reporting on browser
 
     TODO bulk adds (e.g. three weeks on vacation)
 
@@ -269,6 +270,9 @@ PROJECT: BASIC OPERATIONS
     Use the '--all' flag to request for a full install in case you need all
     libraries to be installed on host for autocompletion, etc.
     TIP: Enable the 'make', 'npm' or 'pipenv' plugin.
+
+  link
+    Link libraries.
 
   env
     Initialize the development environment. This command is for non-dockerized

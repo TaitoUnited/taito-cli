@@ -3,6 +3,7 @@
 
 branch=$(git symbolic-ref --short HEAD)
 
+echo
 echo "Try to avoid using this command if it is likely that someone else has already pulled"
 echo "or merged your latest commit. In such case using 'vc commit revert' might be"
 echo "a better idea. Also note that this command will not push changes to the remote"

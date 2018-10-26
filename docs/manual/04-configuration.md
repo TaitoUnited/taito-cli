@@ -1,6 +1,6 @@
 ## 4. Configuration
 
-By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See [installation instructions](#installation) of taito-cli for an example of a personal configuration file.
+By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [2. Installation and upgrade](02-installation.md) chapter for an example of a personal configuration file.
 
 Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/kubernetes-template/blob/master/taito-config.sh) of kubernetes-template for an example of a project specific configuration. In addition, user specific overrides may be defined in `taito-config-user.sh` file located at project root folder. The user specific file should not be committed to version control.
 
@@ -23,6 +23,8 @@ Settings are defined as environment variables. If the setting is an array, just 
 TODO document `template-global`, `link-global`, `git-global` and `google-global` settings.
 
 ### Project specific settings
+
+TODO not up-to-date
 
 Taito-cli settings:
 
@@ -50,11 +52,11 @@ Namespaces:
 * `taito_resource_namespace`: Namespace for additional project specific resources (e.g. AWS, Azure or Google Cloud project name).
 * `taito_environments`: Environments (e.g dev, test, stag, canary, prod).
 
-Repositories (TODO rename these):
+Repositories:
 
-* `taito_repo_location`: Version control root location (e.g. `github-myorganization`).
-* `taito_repo_name`: Version control repository name (e.g. git repository name).
-* `taito_registry`: Docker container image registry.
+* `taito_vc_repository`: Version control repository name (e.g. git repository name).
+* `taito_vc_repository_base`: Version control root location (e.g. `github-myorganization`).
+* `taito_image_registry`: Docker container image registry.
 
 Urls:
 

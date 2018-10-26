@@ -22,6 +22,7 @@ Plugins:
 * [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README.md): Manage containers running on docker-compose using taito-cli commands.
 * [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl/README.md): Manage containers running on Kubernetes using taito-cli commands.
 * [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README.md): Manage serverless workloads (containers/functions) running on Knative using taito-cli commands.
+* [telepresence](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/telepresence/README.md): Manage microservices running locally and connected to a remote Kubernetes cluster.
 * [serverless-platform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless-platform/README.md): Manage serverless workloads (containers/functions) running on Serverless Platform using taito-cli commands.
 
 > TIP: It is quite common to run docker-compose in local development and Kubernetes on server environments. You can do this by enabling the docker-compose plugin for local environment and the kubectl plugin for all other environments.
@@ -189,9 +190,10 @@ Plugins typically implement the following commands:
 
 Plugins:
 
-* [kube-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kube-secrets/README.md): Uses Kubernetes to store secrets.
 * [generate-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/generate-secrets/README.md): Generates secret values on demand either by generating random values or by querying secret details from user.
 * [gcloud-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-secrets/README.md): Uses Google Cloud KMS and Google Cloud Storage to store secrets.
+* [kube-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kube-secrets/README.md): Uses Kubernetes to store secrets.
+* [vault-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/vault-secrets/README.md): Uses [Vault](https://www.vaultproject.io/) to manage secrets.
 
 > TIP: You can enable multiple secret plugins at the same time. For example, enable the kube-secrets plugin so that secrets are available for Kubernetes deployments. Additionally, enable the gcloud-secrets plugin so that at least non-random secrets will be saved to a storage bucket just in case you accidentally delete secrets from Kubernetes.
 
@@ -203,6 +205,7 @@ Plugins typically implement the following commands:
 
 Plugins:
 
+* [ambassador](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ambassador/README.md) TODO
 * [istio](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/istio/README.md)
 
 ## Storage

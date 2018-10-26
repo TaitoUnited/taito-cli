@@ -21,6 +21,7 @@ fi
 git fetch --all && \
 git checkout ${feature} && \
 git rebase -i origin/${dest} && \
+echo TODO git push origin --no-verify --force-with-lease ? && \
 git checkout -; \
 " && \
 

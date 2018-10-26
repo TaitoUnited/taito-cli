@@ -4,15 +4,13 @@
 
 Only a small subset of taito commands are enabled if you are located outside a project directory. However, you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file.
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito clean -h` or `taito test -h`. Write `taito ` and hit tab, and you'll get autocompletion for predefined commands.
-
-[Exercises](https://github.com/TaitoUnited/taito-cli/tree/master/exercises) provide you with common scenarios that taito-cli commands are useful for. They also guide you through on setting up your infrastructure if you don't have one already.
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito vc feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for predefined commands.
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of the project. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
 
-See the [README.md](https://github.com/TaitoUnited/kubernetes-template#readme) of the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) project as an example on how to use taito-cli with your project. For a quickstart guide, see the [examples](https://github.com/TaitoUnited/taito-cli/tree/master/examples) directory. You can also [search GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories) for more taito-cli project templates. If you want to make your own, use **taito-template** as a label.
+[Tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order, including setting up your own infrastructure and creating your first taito-cli project. You may consider it as a chronological taito-cli manual.
 
-> *But is it fun to use? Oh, yes! Enable the **fun** plugin, run `taito fun starwars` and grab a cup of coffee ;) TIP: To close telnet, press <kbd>ctrl</kbd>+<kbd>]</kbd> (or <kbd>ctrl</kbd>+<kbd>å</kbd> for us scandinavians) and type `close`.*
+See the [README.md](https://github.com/TaitoUnited/kubernetes-template#readme) of the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) project as an example on how to use taito-cli with your project.
 
 ### Troubleshooting
 
