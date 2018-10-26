@@ -31,9 +31,10 @@ do
 
     # TODO remove once all projects have been converted
     secret_property="SECRET"
-    if [[ "${taito_version:-}" -ge "1" ]]; then
-      secret_property="${secret_name##*.}"
-      secret_name="${secret_name%.*}"
+    if [[ "${taito_version:-}" -ge "1" ]] || [[ "${secret_name:0:12}" != *"."* ]]; then
+      # TODO: ugly hack that currently occurs in 3 places
+      secret_property=$(echo ${secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
+      secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')
     fi
 
     if [[ ${secret_method} == "copy/"* ]]; then
@@ -45,18 +46,33 @@ do
     if [[ ${secret_method} != "read/"* ]]; then
       (
         ${taito_setv:?}
-        kubectl create namespace "${secret_namespace}" &> /dev/null
-        kubectl delete secret "${secret_name}" \
-          --namespace="${secret_namespace}" 2> /dev/null
         secret_source="literal"
         if [[ ${secret_method} == "file" ]] || \
+           [[ ${secret_method} == "csrkey" ]] || \
            [[ ${secret_method} == "htpasswd"* ]]; then
           secret_source="file"
         fi
-        kubectl create secret generic "${secret_name}" \
+
+        # Secrets as json
+        json=$(kubectl create secret generic "${secret_name}" \
           --namespace="${secret_namespace}" \
           --from-${secret_source}=${secret_property}="${secret_value}" \
-          --from-literal=METHOD="${secret_method}"
+          --from-literal=${secret_property}.METHOD="${secret_method}" \
+          --dry-run -o json)
+
+        if kubectl get secret "${secret_name}" \
+             --namespace="${secret_namespace}" &> /dev/null; then
+          # Patch an existing secret
+          data_only=$(echo "${json}" | jq '.data')
+          kubectl patch secret "${secret_name}" \
+            --namespace="${secret_namespace}" \
+            -p "{ \"data\": ${data_only} }"
+        else
+          # Create new secret
+          kubectl create namespace "${secret_namespace}" &> /dev/null
+          echo "${json}" | kubectl apply -f -
+        fi
+
       )
       # shellcheck disable=SC2181
       if [[ $? -gt 0 ]]; then

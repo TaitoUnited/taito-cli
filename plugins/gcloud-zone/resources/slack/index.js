@@ -40,6 +40,8 @@ module.exports.subscribe = (event, callback) => {
   const project = projects[build.source.repoSource.repoName] ||
     projects[shortProjectName(build.source.repoSource.repoName)];
 
+  console.log(`Repository: ${build.source.repoSource.repoName}`);
+
   // If project channel has not been configured, we determine customer name
   // from the repository name and try to use it as a channel name.
   const projectChannel = project && project.slackChannel
@@ -47,9 +49,8 @@ module.exports.subscribe = (event, callback) => {
     : build.source.repoSource.repoName.split('-')[2];
 
   // Send message to the project channel
-  console.log(`Project channel: ${projectChannel}`);
   if (projectChannel && shoudSendToProjectChannel(build)) {
-    console.log(`Sending to project channel: ${projectChannel}`);
+    console.log(`Sending message to project channel: ${projectChannel}`);
     const message = createSlackMessage(build, projectChannel, project);
     new IncomingWebhook(config.SLACK_WEBHOOK_URL).send(message);
   }
@@ -59,15 +60,13 @@ module.exports.subscribe = (event, callback) => {
     // TODO we need Jenkins for this?
     const person = null;
     if (person) {
-      const message = createSlackMessage(build, person, project);
-      new IncomingWebhook(config.SLACK_WEBHOOK_URL).send(message);
+      console.log(`Sending message to person: ${person}`);
     }
   }
 
   // Send message to the builds channel
-  console.log(`Builds channel: ${buildsChannel}`);
   if (buildsChannel && shoudSendToBuildsChannel(build)) {
-    console.log(`Sending to builds channel: ${buildsChannel}`);
+    console.log(`Sending message to builds channel: ${buildsChannel}`);
     const message = createSlackMessage(build, buildsChannel, project);
     new IncomingWebhook(config.SLACK_WEBHOOK_URL).send(message, callback);
   } else {

@@ -8,13 +8,15 @@ do
   . "${taito_cli_path}/util/secret-by-index.sh"
 
   if [[ ${secret_method} != "copy/"* ]] && \
-     [[ ${secret_method} != "file" ]]; then
+     [[ ${secret_method} != "file" ]] && \
+     [[ ${secret_method} != "csrkey" ]]; then
 
     # TODO remove once all project have been converted
     secret_property="SECRET"
-    if [[ "${taito_version:-}" -ge "1" ]]; then
-      secret_property="${secret_name##*.}"
-      secret_name="${secret_name%.*}"
+    if [[ "${taito_version:-}" -ge "1" ]] || [[ "${secret_name:0:12}" != *"."* ]]; then
+      # TODO: ugly hack that currently occurs in 3 places
+      secret_property=$(echo ${secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
+      secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')
     fi
 
     echo "+ kubectl get secret ${secret_name}" \

@@ -1,5 +1,8 @@
 #!/bin/bash
 : "${secret_method:?}"
+: "${taito_setv:?}"
+
+set -e
 
 secret_value=""
 secret_value2=""
@@ -28,6 +31,42 @@ case "${secret_method}" in
       echo "File path (for example 'secret.json'):"
       read -r secret_value
     done
+    ;;
+  csrkey)
+    while [[ ! "${domain}" ]]; do
+      echo "Enter domain name (e.g. 'app.mydomain.com'):"
+      read -r domain
+    done
+    echo "Next you'll have to enter details of the organization that owns the"
+    echo "domain. You can usually leave the email and all the 'extra attributes'"
+    echo "empty. Enter the domain name again when you are asked for a 'common name'."
+    echo
+    echo "If you are not sure of the details, try to find an existing website of the"
+    echo "organization and use its certificate details as an example."
+    echo
+    echo "Press enter to continue"
+    echo read -r
+    mkdir -p ./tmp
+    key_file="./tmp/${domain}.key"
+    csr_file="./tmp/${domain}.csr"
+    rm -f "${key_file}"
+    rm -f "${csr_file}"
+    (
+      ${taito_setv}
+      openssl req -new -newkey rsa:2048 -nodes \
+        -keyout "${key_file}" -out "${csr_file}"
+    )
+    secret_value="${key_file}"
+    echo
+    echo "The generated secret key will be saved to Kubernetes and deleted from"
+    echo "local disk during this command execution."
+    echo
+    echo "After this command has been executed successfully, you should send the"
+    echo "generated '${csr_file}' file to the Certificate Authority. If someone"
+    echo "else does that instead, it is ok to send the csr file to him by email."
+    echo
+    echo "Press enter to continue"
+    echo read -r
     ;;
   htpasswd|htpasswd-plain)
     mkdir -p ./tmp
