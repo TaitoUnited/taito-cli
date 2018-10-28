@@ -1,8 +1,13 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
-"${taito_plugin_path:?}/util/confirm-file-delete.sh"
+name="${1}"
+
+if "${taito_util_path}/confirm-execution.sh" "generate-secrets" "${name}" \
+    "Clean up secrets"; then
+  "${taito_plugin_path:?}/util/confirm-file-delete.sh"
+fi
 
 # Call next command on command chain. Exported variables:
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

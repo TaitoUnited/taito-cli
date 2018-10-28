@@ -142,6 +142,8 @@ taito workspace clean          # Remove all unused build artifacts (e.g. images)
 * TODO API design
 * TODO Database design
 
+### Architecture validation
+
 ---
 
 **Next:** [4. Version control](04-version-control.md)

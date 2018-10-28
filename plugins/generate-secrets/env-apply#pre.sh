@@ -1,11 +1,15 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
-echo "Creating secrets"
+name="${1}"
 
-# shellcheck disable=SC1090
-. "${taito_plugin_path}/util/create.sh" && \
+if "${taito_util_path}/confirm-execution.sh" "generate-secrets" "${name}" \
+    "Generate secrets"; then
+  echo "Creating secrets"
+  # shellcheck disable=SC1090
+  . "${taito_plugin_path}/util/create.sh"
+fi && \
 
 # Call next command on command chain. Exported variables:
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"
