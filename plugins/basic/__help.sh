@@ -14,6 +14,13 @@ if [[ -z "${filter}" ]]; then
   "${taito_plugin_path}/util/show_file.sh" help.txt | \
     sed -e "s|PROJECT: DATABASE OPERATIONS|${links}\nPROJECT: DATABASE OPERATIONS|"
 else
+  echo QUICK EXAMPLES
+  echo
+  awk '/^QUICK EXAMPLES/,/^OPTIONS/' "${taito_cli_path}/help.txt" | \
+    grep "^    ${filter//-/ }" | sed "s/^    /  taito /g"
+  echo
+  echo COMMANDS
+  echo
   "${taito_plugin_path}/util/show_file.sh" help.txt | \
     sed -e "s|PROJECT: DATABASE OPERATIONS|${links}\nPROJECT: DATABASE OPERATIONS|" | \
     awk "/^  [a-z]+/ && /${filter//-/ }/,/^$/"
