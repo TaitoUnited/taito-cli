@@ -93,10 +93,11 @@ QUICK EXAMPLES
     storage sync to:dev ./sour /dest   # Sync files to dev bucket
 
   VERSION CONTROL
+    vc conventions           # Show version control conventions
     vc env list              # List all environment branches
     vc env: dev              # Switch to the dev environment branch
     vc env merge             # Merge current env branch to the next env branch
-    vc env merge: dev stag   # Merge dev to stag and all env branches in between
+    vc env merge: dev stag   # Merge changes: dev -> ... -> stag
     vc feat list             # List all feature branches
     vc feat: pricing         # Switch to the pricing feature branch
     vc feat rebase           # Rebase feature branch with the original branch
@@ -508,6 +509,9 @@ GLOBAL: WORKSPACE OPERATIONS
     ports).
 
 PROJECT: VERSION CONTROL OPERATIONS
+
+  vc env conventions
+    Show version control conventions.
 
   vc env list
     List all environment branches.
