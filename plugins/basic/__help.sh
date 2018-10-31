@@ -17,7 +17,7 @@ else
   echo QUICK EXAMPLES
   echo
   awk '/^QUICK EXAMPLES/,/^OPTIONS/' "${taito_cli_path}/help.txt" | \
-    grep "^    ${filter//-/ }" | sed "s/^    /  taito /g"
+    grep "^    ${filter//-/ }" | sed "s/^    /  /g"
   echo
   echo COMMANDS
   echo

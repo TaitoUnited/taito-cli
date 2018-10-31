@@ -358,7 +358,8 @@ fi
 # `trouble` or `readme`. We need to also filter some control characters for
 # a cleaner output.
 output=""
-if [[ " ${options[*]} " == *" -h "* ]] || \
+if [[ " ${params[@]} " == *" -h "* ]] || \
+   [[ " ${options[*]} " == *" -h "* ]] || \
    [[ " ${options[*]} " == *" --help "* ]] || \
    [[ " ${options[*]} " == *" --trouble "* ]] || \
    [[ " ${options[*]} " == *" --readme "* ]]; then
