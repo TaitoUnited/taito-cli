@@ -2,6 +2,7 @@
 # NOTE: This bash script is run directly on host.
 : "${taito_cli_path:?}"
 : "${taito_image:?}"
+: "${taito_home_path:?}"
 
 # Pull latest version of taito bash script
 echo "Pulling taito-cli directory from git: ${taito_cli_path}"
@@ -57,6 +58,9 @@ docker commit taito-new "${taito_image}" &> /dev/null
 docker stop taito-new &> /dev/null
 docker image tag "${taito_image}" "${taito_image}save"
 docker rm taito-save taito-new &> /dev/null
+
+echo "Deleting old temp files"
+rm -rf "${taito_home_path}/.taito/tmp" &> /dev/null
 
 echo
 echo "DONE! Your taito-cli has been upgraded."

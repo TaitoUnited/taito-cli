@@ -262,6 +262,12 @@ log_file_fg=$(mktemp "${taito_home_path}/.taito/tmp/taito-cli.XXXXXX")
 touch "${log_file}"
 touch "${log_file_fg}"
 
+function cleanup {
+  rm -f "${log_file}" &> /dev/null
+  rm -f "${log_file_fg}" &> /dev/null
+}
+trap cleanup EXIT
+
 # Set some variables to be used later
 taito_host_uname="$(uname)"
 taito_run="${log_file/${taito_home_path}/${taito_container_home}}"
@@ -408,10 +414,6 @@ if [[ ${exit_code} == 0 ]]; then
   eval "$(cat "${log_file_fg}")"
   exit_code=$?
 fi
-
-# Cleanup
-rm -f "${log_file}" &> /dev/null
-rm -f "${log_file_fg}" &> /dev/null
 
 if [[ "${exit_code}" != "0" ]]; then
   echo
