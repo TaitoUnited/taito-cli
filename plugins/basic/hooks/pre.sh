@@ -3,11 +3,11 @@
 : "${taito_plugin_path:?}"
 
 # --auth command pre-handling
-if [[ "${taito_command:-}" == "__auth" ]]; then
-  echo
-  echo "### basic/pre: Deleting old credentials (but not committing the change yet!)"
-  rm -rf ~/.config ~/.kube
-fi
+# if [[ "${taito_command:-}" == "__auth" ]]; then
+#   echo
+#   echo "### basic/pre: Deleting old credentials (but not committing the change yet!)"
+#   rm -rf ~/.config ~/.kube
+# fi
 
 # env-destroy command pre-handling
 if [[ ${taito_command:-} == "env-destroy" ]] || \
