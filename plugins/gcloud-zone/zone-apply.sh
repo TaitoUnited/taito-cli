@@ -32,7 +32,7 @@ then
 fi && \
 
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-personnel-rights" "${name}" \
-  "Configure cloud builder rights"
+  "Configure personnel rights"
 then
   echo "Add 'Project Owner' role for the devops personnel."
   echo

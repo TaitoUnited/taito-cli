@@ -14,11 +14,12 @@ then
   # TODO: helm v3 will remove tiller so from what i understood the permissions will be by the user who apply it --> no need for service account
   kubectl apply -f "${taito_plugin_path}/resources/service-account.yaml" && \
   sleep 5 && \
-  helm init --upgrade --service-account --tiller-tls-verify tiller && \
-  # NOTE: --tiller-tls-verify added recently
+  helm init --upgrade --service-account tiller && \
+  # TODO: https://docs.helm.sh/using_helm/#securing-your-helm-installation
+  # TODO: --tiller-tls-verify
   echo "Helm starting up. Please wait for a while..." && \
   sleep 15
-fi
+fi && \
 
 # Deploy Helm charts
 if [[ -d "./helm" ]]; then

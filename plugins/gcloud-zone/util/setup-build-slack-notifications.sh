@@ -8,25 +8,25 @@
 : "${zone_builds_slack_channel:?}"
 
 function finish {
-  rm -rf "${taito_plugin_path}/resources/slack/projects.json"
-  rm -rf "${taito_plugin_path}/resources/slack/config.json"
+  rm -rf /tmp/gcloud-zone-slack
 }
 trap finish EXIT
 
-cat "${taito_plugin_path}/resources/slack/config-template.json" | \
+cp -r "${taito_plugin_path}/resources/slack" /tmp/gcloud-zone-slack
+cat "/tmp/gcloud-zone-slack/config-template.json" | \
   sed "s|\\[SLACK_WEBHOOK_URL\\]|${zone_slack_webhook}|" | \
   sed "s|\\[BUILDS_CHANNEL\\]|${zone_builds_slack_channel}|" \
-  > "${taito_plugin_path}/resources/slack/config.json"
+  > "/tmp/gcloud-zone-slack/config.json"
 
-cp "${taito_project_path}/projects.json" "${taito_plugin_path}/resources/slack"
+cp "${taito_project_path}/projects.json" "/tmp/gcloud-zone-slack"
 
 echo "Deploying the following settings:"
-cat "${taito_plugin_path}/resources/slack/config.json"
-cat "${taito_plugin_path}/resources/slack/projects.json"
+cat "/tmp/gcloud-zone-slack/config.json"
+cat "/tmp/gcloud-zone-slack/projects.json"
 
 gcloud --project "${gcloud_project_id}" \
   functions deploy cloudBuildSlackNotifications \
-  --source "${taito_plugin_path}/resources/slack" \
+  --source "/tmp/gcloud-zone-slack" \
   --stage-bucket "${zone_devops_bucket}" \
   --trigger-topic cloud-builds \
   --entry-point subscribe \

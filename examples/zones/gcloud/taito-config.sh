@@ -33,10 +33,10 @@ kubectl_user="${kubectl_cluster}"
 # TODO: mysql also
 
 # links
-link_urls="\
-  * dashboard=https://console.cloud.google.com/apis/dashboard?project=${gcloud_project_id} Google Cloud Dashboard \
-  * kubernetes=https://console.cloud.google.com/kubernetes/list?project=gcloud-temp1 Kubernetes clusters \
-  * databases=https://console.cloud.google.com/sql/instances?project=gcloud-temp1 Database clusters \
-  * logs=https://console.cloud.google.com/logs/viewer?project=${gcloud_project_id} Logs \
-  * networking=https://console.cloud.google.com/networking/addresses/list?project=${gcloud_project_id} Google Cloud networking \
+link_urls="
+  * dashboard=https://console.cloud.google.com/apis/dashboard?project=${gcloud_project_id} Google Cloud Dashboard
+  * kubernetes=https://console.cloud.google.com/kubernetes/list?project=${gcloud_project_id} Kubernetes clusters
+  * databases=https://console.cloud.google.com/sql/instances?project=${gcloud_project_id} Database clusters
+  * logs=https://console.cloud.google.com/logs/viewer?project=${gcloud_project_id} Logs
+  * networking=https://console.cloud.google.com/networking/addresses/list?project=${gcloud_project_id} Google Cloud networking
 "
