@@ -13,21 +13,27 @@ if [[ -n "${kubectl_name:-}" ]]; then
   if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-auth" "${name}" \
     "Authenticate to Kubernetes ${kubectl_name:-}"
   then
-      "${taito_cli_path}/plugins/gcloud/util/get-credentials-kube.sh"
+      "${taito_cli_path}/plugins/gcloud/util/get-credentials-kube.sh" && \
+      "${taito_cli_path}/util/docker-commit.sh"
   fi
 fi && \
 
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-external-ip" "${name}" \
   "Reserve an external IP address"
 then
-  echo "Reserve a static ip address. Press enter to open Google Cloud networking."
+  echo "Reserve a static ip address. Leave it unattached. Press enter to open Google Cloud networking."
   read -r
   "${taito_util_path}/browser.sh" "https://console.cloud.google.com/networking/addresses/list?${opts}project=${gcloud_project_id}"
   echo
-  echo "Add the IP address to taito-config.sh. Press enter when done."
+  echo "Enter the IP:"
+  export zone_ingress_ip
+  read -r zone_ingress_ip
+  echo
+  echo "Add the IP address ${zone_ingress_ip} to taito-config.sh. Press enter when done."
   read -r
   echo
-  echo "Now configure DNS for IP, for example '*.mydevcomain.com'. Press enter when done."
+  echo "Now configure domain name for IP ${zone_ingress_ip}."
+  echo "For example '*.mydevcomain.com'. Press enter when done."
   read -r
 fi && \
 
@@ -88,10 +94,14 @@ then
   echo "Press enter when done"
   read -r
   echo
-  echo "If you are not using a public taito-cli image, give XXX@cloudbuild.gserviceaccount.com"
-  echo "a Storage Object Viewer role for the image repository bucket that contains taito-cli"
-  echo "images. NOTE: Pulling taito-cli images from Docker Hub slows down your builds."
-  # TODO create taito-public project that provides read access to images for allAuthenticatedUsers
+  echo "TODO create taito-public project that provides read access to taito-images for allAuthenticatedUsers"
+  echo
+  echo "Pulling a taito-cli container image from Docker Hub is slow. If you want"
+  echo "to optimize your builds or you want to use a customized taito-cli image,"
+  echo "you can save taito-cli container image to your own container image"
+  echo "registry. If the image is not public, however, you need to give the"
+  echo "service account XXX@cloudbuild.gserviceaccount.com a Storage Object Viewer"
+  echo "role for the image repository bucket that contains the taito-cli image."
   echo
   echo "Press enter when done"
   read -r

@@ -26,14 +26,14 @@ then
   echo "Service account for database access:" && \
   echo && \
   echo "Create a service account with role 'Cloud SQL Client' and save the" && \
-  echo "service account JSON key to file './tmp/sqlclient.json'." && \
+  echo "service account JSON key to file './tmp/cloudsql.json'." && \
   echo "The service account will be used to access database from Kubernetes." && \
   echo "You can delete the JSON file afterwards." && \
   # TODO open gcloud console
   echo "Press enter after you have saved the file." && \
   read -r && \
   kubectl create secret generic "cloudsql-gserviceaccount" --namespace=devops \
-    --from-file=key="tmp/sqlclient.json"
+    --from-file=key="tmp/cloudsql.json"
 fi && \
 
 # TODO GitHub token handling should be implemented somewhere else?
