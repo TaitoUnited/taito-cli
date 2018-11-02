@@ -1,4 +1,5 @@
 #!/bin/bash
+: "${taito_cli_path:?}"
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
@@ -10,7 +11,7 @@ name="${1}"
 if "${taito_util_path}/confirm-execution.sh" "helm" "${name}" \
   "Delete and purge helm release ${taito_project}-${taito_target_env}"
 then
-  "${taito_util_path}/plugins/kubectl/util/use-context.sh" && \
+  "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
   (${taito_setv:?}; helm delete --purge "${taito_project}-${taito_target_env}") || \
   echo "WARNING: Deleting helm release failed. Have you ever deployed?"
 fi && \

@@ -66,6 +66,8 @@ do
     d="${merge##*->}"
     echo "${s}->${d} ${git_push_options}"
 
+    # TODO execution should end if one merge fails
+
     "${taito_cli_path}/util/execute-on-host-fg.sh" "\
     echo && \
     echo \"Merging ${s} -> ${d} ${git_push_options}\" && \
@@ -77,7 +79,7 @@ do
     echo Merging... && \
     git fetch origin ${s}:${d} && \
     git push --no-verify ${git_push_options} origin ${d} || \
-    echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d} --> TODO --force does not work yet?' \
+    (echo && echo 'ERROR: MERGING FAILED!!!!' && echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d} --> TODO --force does not work yet?') \
     "
 
   fi

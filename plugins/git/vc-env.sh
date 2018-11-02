@@ -6,6 +6,9 @@
 source="${2:-dev}"
 dest="${1:?Destination branch name not given}"
 
+source="${source/prod/master}"
+dest="${dest/prod/master}"
+
 # TODO duplicate code with git-feat.sh?
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
 if ! git checkout ${dest} 2> /dev/null; then \
@@ -19,6 +22,8 @@ if ! git checkout ${dest} 2> /dev/null; then \
   git pull && \
   git checkout -b ${dest} && \
   git push --no-verify -u origin ${dest}; \
+else \
+  git branch --set-upstream-to=origin/${dest} ${dest}; \
 fi" && \
 
 # Call next command on command chain
