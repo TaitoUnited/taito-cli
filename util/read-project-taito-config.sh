@@ -24,3 +24,12 @@ fi
 # TODO remove
 export taito_plugins="${taito_plugins/ secrets/ generate-secrets}"
 export taito_plugins="${taito_plugins/ semantic / semantic-release }"
+
+# For backwards compatibility
+# TODO remove
+export dockerfile=Dockerfile
+if [[ ${taito_repo_name:-} ]]; then
+  export taito_vc_repository=${taito_repo_name:?}
+  export taito_vc_repository_base=${taito_repo_location:?}
+  export taito_image_registry=${taito_registry:-}
+fi

@@ -1,22 +1,30 @@
 #!/bin/sh
+# shellcheck disable=SC2034
+: "${taito_env:?}"
+: "${taito_target_env:?}"
 
-# Taito-cli settings
-export taito_image="taitounited/taito-cli:latest"
-export taito_extensions=""
-export taito_plugins="npm git link"
+# Taito-cli
+taito_version=1
+taito_plugins="npm git link"
 
-# Common project settings for all plugins
-export taito_environments="dev prod"
-export taito_organization="taitounited"
-export taito_repo_location="github-${taito_organization}"
-export taito_repo_name="taito-cli"
-export taito_project="taito-cli"
-export taito_namespace="${taito_project}-${taito_env}"
+# Project
+taito_organization=taitounited
+taito_project=taito-cli
+
+# Environments
+taito_environments="dev prod"
+
+# Provider and namespaces
+taito_namespace=${taito_project}-${taito_env}
+
+# Repositories
+taito_vc_repository=taito-cli
+taito_vc_repository_base=github-${taito_organization}
 
 # Link plugin
-export link_urls="\
-  * project=https://github.com/${taito_organization}/${taito_repo_name}/projects \
-  * builds=https://hub.docker.com/r/taitounited/taito-cli/builds/ \
-  * artifacts=https://hub.docker.com/r/taitounited/taito-cli/tags/ \
-  * git=https://github.com/TaitoUnited/taito-cli GitHub repository \
-  "
+link_urls="
+  * project=https://github.com/${taito_organization}/${taito_vc_repository}/projects
+  * builds=https://hub.docker.com/r/taitounited/taito-cli/builds/
+  * artifacts=https://hub.docker.com/r/taitounited/taito-cli/tags/
+  * git=https://github.com/TaitoUnited/taito-cli GitHub repository
+"

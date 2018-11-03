@@ -1,13 +1,13 @@
 #!/bin/bash
 
 : "${taito_cli_path:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
 : "${template_source_git:?}"
 : "${template_default_dest_git:?}"
 : "${template:?}"
 
 export mode=${1}
-export taito_repo_name_alt="${taito_repo_name//-/_}"
+export taito_vc_repository_alt="${taito_vc_repository//-/_}"
 
 # Call create/migrate/upgrade script implemented in template
 echo

@@ -1,7 +1,7 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
 
 echo "TODO implement"
 

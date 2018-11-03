@@ -3,7 +3,7 @@
 : "${taito_target_env:?}"
 : "${taito_branch:?}"
 : "${taito_organization:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
 : "${taito_project_path:?}"
 
 # NOTE: for backwards compatibility. can be removed later.
@@ -28,7 +28,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     echo "- Cloning git repo to a separate release directory because builder"
     echo "workspace does not necessarily point to the original repository"
     ${taito_setv:?}
-    git clone "https://${secret_value_github_buildbot_token}@github.com/${taito_organization}/${taito_repo_name}.git" release && \
+    git clone "https://${secret_value_github_buildbot_token}@github.com/${taito_organization}/${taito_vc_repository}.git" release && \
     cd "${taito_project_path}/release" && \
     git checkout ${taito_branch} && \
 

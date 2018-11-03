@@ -86,6 +86,10 @@ taito env rotate:prod my-secret
 
 > TODO: How to use the same secret value for local and dev environment without committing it to git.
 
+### 7.5. User specific variables
+
+
+
 ---
 
 **Next:** [8. Databases and files](08-databases-and-files.md)

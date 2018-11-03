@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 : "${taito_zone:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
 : "${taito_project:?}"
 
 name=${1}
@@ -12,12 +12,8 @@ if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-builder-trigger" "${nam
 then
   echo "Create a new build trigger with these settings if one does not exist already:"
   echo "- Source: GitHub"
-  echo "- Repository: ${taito_repo_name}"
-  if [[ "${taito_project_messaging_channel:-}" ]]; then
-    echo "- Name: ${taito_project} #${taito_project_messaging_channel}"
-  else
-    echo "- Name: ${taito_project}"
-  fi
+  echo "- Repository: ${taito_vc_repository}"
+  echo "- Name: ${taito_project}"
   echo "- Type: Branch"
   echo "- Branch regex: 'dev|test' or 'stag|canary|master' depending on zone"
   echo "- Build configuration: cloudbuild.yaml"

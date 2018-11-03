@@ -28,7 +28,7 @@ echo export taito_company="${taito_company:?}" >> _template-config.sh && \
 echo export taito_family="${taito_family:-}" >> _template-config.sh && \
 echo export taito_application="${taito_application:?}" >> _template-config.sh && \
 echo export taito_suffix="${taito_suffix:-}" >> _template-config.sh && \
-echo export taito_repo_name="${taito_repo_name:?}" >> _template-config.sh && \
+echo export taito_vc_repository="${taito_vc_repository:?}" >> _template-config.sh && \
 
 # Clone template git repo to a temporary template-tmp directory
 rm -rf "${template_project_path}/template-tmp"

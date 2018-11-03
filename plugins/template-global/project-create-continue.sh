@@ -4,7 +4,7 @@
 
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
 : "${template_dest_git:?}"
 # TODO: separate setting for git organization
 : "${template_default_organization:?}"
@@ -17,7 +17,7 @@ rm -f ./_template-config.sh && \
 taito project-docs && \
 
 echo && \
-echo Create a new repository: ${template_dest_git}/${taito_repo_name} && \
+echo Create a new repository: ${template_dest_git}/${taito_vc_repository} && \
 echo Leave the README.md uninitialized. After you have created the empty repository, && \
 echo continue by pressing enter. && \
 read -r && \
@@ -28,7 +28,7 @@ echo "Please wait..." && \
   git init -q && \
   git add . && \
   git commit -q -m 'First commit' && \
-  git remote add origin ${template_dest_git}/${taito_repo_name}.git && \
+  git remote add origin ${template_dest_git}/${taito_vc_repository}.git && \
   git push -q -u origin master > /dev/null && \
   git tag v0.0.0 && \
   git push -q origin v0.0.0 && \
@@ -39,7 +39,7 @@ echo "Please wait..." && \
   echo Press enter to open the configuration chapter of README.md && \
   read -r && \
   echo && \
-  taito -c util-browser https://github.com/${template_default_organization}/${taito_repo_name}/#configuration"
+  taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/#configuration"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

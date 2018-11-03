@@ -2,30 +2,42 @@
 
 ## Infrastructure templates
 
-Taito-cli comes with some simple infrastucture templates that you can use to set up your infrastructure:
+Taito-cli comes with some simple infrastucture templates that you can use as an example to set up your infrastructure. You may also find more infrastructure templates on [GitHub](TODO).
 
-* [aws](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/aws): Managed Kubernetes, database clusters and object storage on AWS, Jenkins for CI/CD.
-* [azure](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/azure): Managed Kubernetes, database clusters and object storage on Azure, Jenkins for CI/CD.
-* [bare](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/bare): Self-managed Kubernetes, database clusters and object storage on any virtual machines or dedicated servers, Jenkins for CI/CD.
-* [digital-ocean](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/digital-ocean): Managed Kubernetes, database clusters and object storage on Digital Ocean, Jenkins for CI/CD.
-* [gcloud](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/gcloud): Managed Kubernetes, database clusters and object storage on Google Cloud, Google Cloud Build for CI/CD.
-* [scaleway](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/scaleway): Managed Kubernetes, database clusters and object storage on Scaleway, Jenkins for CI/CD.
+### Managed public cloud infrastructure
 
-You can search for more infrastructure templates on [GitHub](TODO).
+* [AWS](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/aws)
+* [Azure](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/azure)
+* [DigitalOcean](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/digital-ocean)
+* [Google Cloud](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/gcloud)
+* [Scaleway](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/scaleway)
+
+### Self-managed infrastructure
+
+The self-managed examples can be deployed anywhere, on-premise or public cloud. They include Kubernetes, PostgreSQL and Minio.
+
+* [Kubeadm](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/kubeadm): Basic Kubernetes setup with Kubeadm and Ansible.
+
+> [kubernetes.io: pick-right-solution](https://kubernetes.io/docs/setup/pick-right-solution/)
+
+### CI/CD
+
+If you have special requirements for your CI/CD pipeline, you may choose to install [Jenkins](https://github.com/helm/charts/tree/master/stable/jenkins) and/or [Spinnaker](https://github.com/helm/charts/tree/master/stable/spinnaker) to your Kubernetes cluster. For simple cases, however, services like [GitHub actions](https://github.com/features/actions), [GitLab CI/CD](https://about.gitlab.com/product/continuous-integration/) and [Google Cloud Build](https://cloud.google.com/cloud-build/) do just fine.
 
 ## Project templates
 
-Officially recommended project templates are listed below. All of them include taito-cli configurations, Terraform scripts, and build scripts for various CI/CD systems. You may also find more project templates preconfigured for taito-cli on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
+Officially recommended project templates are listed below. All of them include taito configurations for taito-cli support, Terraform scripts for infrastucture management, and build scripts for CI/CD. You may also find more project templates preconfigured for taito-cli on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
 
-* [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template): Template for applications and APIs running on Kubernetes. Support for [Knative](https://pivotal.io/knative) and [Istio](https://istio.io/) will be added once they have matured enough. TODO rename the git repository.
+* [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template): Template for applications and APIs running on Kubernetes. Support for [Knative](https://pivotal.io/knative), [Istio](https://istio.io/) and [Telepresence](https://www.telepresence.io/) will be added once they have matured enough. TODO rename the git repository.
 
 * [kubernetes-template-alt](https://github.com/TaitoUnited/kubernetes-template-alt): Alternative stack components for the kubernetes-template. With these you can easily implement your application or API with any technology that fits your requirements. TODO rename the git repository.
 
 * [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template): Run serverless functions on any cloud provider using either the Serverless Framework or the full Serverless Platform. Support for [Istio](https://istio.io/) will be added later, making it possible to connect all your microservices together no matter where they are deployed.
 
-* [website-template](https://github.com/TaitoUnited/website-template): Implement a website with a static site generator of your choice (e.g. Gatsby, Hugo or Jekyll). Deploy the website to Kubernetes, GitHub Pages, Netlify, AWS or Google Cloud, and setup an automated multistage publishing process for the website. You can easily run this template alongside with the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) or the [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template) to build dynamic functionality to your website.
+* [website-template](https://github.com/TaitoUnited/website-template): Implement a website with a static site generator of your choice (e.g. Gatsby, Hugo or Jekyll). Deploy the website to Kubernetes, GitHub Pages, Netlify, or any S3-compatible object storage with CDN support (AWS, Azure, Google Cloud, DigitalOcean). Setup an automated multistage publishing process for the website. Optionally use the Netlify CMS to edit your site. You can easily run the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) or the [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template)
+alongside with this template to implement dynamic functionality to your website.
 
-* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Deploy WordPress on Kubernetes. You can easily run this template alongside with the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) or the [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template) to build dynamic non-PHP functionality to your website.
+* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Deploy WordPress on Kubernetes. You can easily run the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) alongside with this template to implement dynamic non-PHP functionality to your website.
 
 * TODO machine learning, kubeflow
 
@@ -39,4 +51,4 @@ Officially recommended project templates are listed below. All of them include t
 
 * TODO tool-template
 
-* [legacy-server-template](https://github.com/TaitoUnited/legacy-server-template): Template for applications and APIs running on server without docker or serverless based technologies. Use this template as an example when you configure taito-cli for your existing server application.
+* [legacy-server-template](https://github.com/TaitoUnited/legacy-server-template): Template for applications and APIs running on server without container or serverless based technologies. Use this template as an example when you configure taito-cli for your existing legacy server application.

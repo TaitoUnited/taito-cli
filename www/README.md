@@ -12,7 +12,7 @@ Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/d
 
 ## Slogans at the bottom of the page
 
-### Predefined command set
+### Standard command set
 
 Use the same command set from project to project no matter the technology or infrastructure. For example, run `taito env apply:test` to create a test environment, `taito deployment deploy:test 1.1.0` to deploy version 1.1.0 to it, `taito open logs:prod` to open production logs on browser, `taito db connect` to connect to a local database and `taito db connect:test` to connect to the test environment database. And while you are working on a project, report your working hours with `taito hours add: 6,5 DESCRIPTION` or by using a timer.
 

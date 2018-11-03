@@ -8,7 +8,7 @@
 : "${taito_branch:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
-: "${taito_repo_name:?}"
+: "${taito_vc_repository:?}"
 
 image="${1}"
 options=("${@:2}")
