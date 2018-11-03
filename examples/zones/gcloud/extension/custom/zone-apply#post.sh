@@ -21,6 +21,7 @@ echo "- Prepare for high usage spikes with autoscaling and CDN."
 echo "- Prepare for DDoS attacks with services like Cloudflare."
 echo "- Use monitoring and anomaly detection tools for detecting hacking"
 echo "  attempts."
+echo "https://cloud.google.com/blog/products/networking/bringing-enterprise-network-security-controls-to-your-kubernetes-clusters-on-gke"
 echo
 
 # Call next command on command chain

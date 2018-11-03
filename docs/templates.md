@@ -22,7 +22,7 @@ The self-managed examples can be deployed anywhere, on-premise or public cloud. 
 
 ### CI/CD
 
-If you have special requirements for your CI/CD pipeline, you may choose to install [Jenkins](https://github.com/helm/charts/tree/master/stable/jenkins) and/or [Spinnaker](https://github.com/helm/charts/tree/master/stable/spinnaker) to your Kubernetes cluster. For simple cases, however, services like [GitHub actions](https://github.com/features/actions), [GitLab CI/CD](https://about.gitlab.com/product/continuous-integration/) and [Google Cloud Build](https://cloud.google.com/cloud-build/) do just fine.
+3rd party services like [GitHub actions](https://github.com/features/actions), [GitLab CI/CD](https://about.gitlab.com/product/continuous-integration/) and [Google Cloud Build](https://cloud.google.com/cloud-build/) suffice for simple cases. If you have special requirements for your CI/CD pipeline, you may choose to install [Spinnaker](https://github.com/helm/charts/tree/master/stable/spinnaker) or [Jenkins](https://github.com/helm/charts/tree/master/stable/jenkins) to your Kubernetes cluster. For example, you might want to use 3rd party CI/CD services during development to build and test you containers, and Spinnaker/Jenkins to deploy them to production in a more secure and controlled manner.
 
 ## Project templates
 

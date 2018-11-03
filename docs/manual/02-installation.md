@@ -52,6 +52,10 @@
     # NOTE: These are used as defaults when you create a new project
     template_default_taito_image=taitounited/taito-cli:latest
     template_default_organization=myorganization
+    template_default_organization_abbr=myorg
+    template_default_github_organization=myorganization
+    template_default_sentry_organization=myorganization
+    template_default_appcenter_organization=myorganization
     template_default_domain=mydevdomain.com
     template_default_domain_prod=mydomain.com
     template_default_zone=my-zone
