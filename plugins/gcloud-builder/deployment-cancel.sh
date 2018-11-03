@@ -14,17 +14,17 @@ else
 fi
 
 echo "Canceling all previous ongoing builds targetting branch ${branch_name}"
+echo
 
 (
   ${taito_setv:?}
   gcloud builds list --ongoing | \
     grep "${full_repo_name}@${branch_name}" | \
-    grep -v "${ignore_build_id}" | \
+    grep -v "${ignore_build_id:-OR_DO_NOT_IGNORE}" | \
     cut -d ' ' -f 1 | \
-    xargs -L1 gcloud container builds cancel 2> /dev/null
+    xargs -L1 gcloud container builds cancel &> /dev/null && \
+    echo CANCELLED
 )
-
-echo "NOTE: All fails on cancel operation are intentionally ignored."
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
