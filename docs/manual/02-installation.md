@@ -20,15 +20,24 @@
     # shellcheck disable=SC2034
 
     # taito-cli
-    taito_image=taitounited/taito-cli:latest
     taito_global_plugins="docker-global fun-global
       google-global gcloud-global links-global template-global"
+
+    # default zone
+    taito_zone=my-zone
 
     # git
     git_organization=git@github.com:MyOrganization
 
-    # google
-    google_authuser=1
+    # google (personal settings)
+    google_authuser=
+
+    # toggl (personal settings)
+    toggl_projects="myproject:12345678 someproject:87654321"
+
+    # docker (personal settings)
+    # NOTE: set to true if you get networking errors when running 'taito db' commands
+    docker_legacy_networking=false
 
     # links
     link_global_urls="
