@@ -19,49 +19,48 @@
     #!/bin/bash
     # shellcheck disable=SC2034
 
-    # NOTE: These are example settings! Replace them with your personal
-    # settings or with the settings defined by your organization.
-
-    taito_image="taitounited/taito-cli:latest"
-    taito_global_plugins="docker-global fun-global \
+    # taito-cli
+    taito_image=taitounited/taito-cli:latest
+    taito_global_plugins="docker-global fun-global
       google-global gcloud-global links-global template-global"
 
-    # git settings
-    git_organization="git@github.com:MyOrganization"
+    # git
+    git_organization=git@github.com:MyOrganization
 
-    # google settings
-    google_authuser="1"
-
-    # template plugin default settings
-    template_default_taito_image="taitounited/taito-cli:latest"
-    template_default_organization="myorganization"
-    template_default_domain="mydevdomain.com"
-    template_default_domain_prod="mydomain.com"
-    template_default_zone="my-zone"
-    template_default_zone_prod="my-prod-zone"
-    template_default_provider="gcloud"
-    template_default_provider_billing_account="123456-123456-123456"
-    template_default_provider_org_id="123456789"
-    template_default_provider_region="europe-west1"
-    template_default_provider_zone="europe-west1-b"
-    template_default_provider_org_id_prod="123456789"
-    template_default_provider_region_prod="europe-west2"
-    template_default_provider_zone_prod="europe-west2-a"
-    template_default_registry="eu.gcr.io"
-    template_default_source_git="git@github.com:TaitoUnited"
-    template_default_dest_git="git@github.com:MyOrganization"
-    template_default_kubernetes="my-kubernetes"
-    template_default_postgres="my-postgres"
-    template_default_mysql="my-mysql"
+    # google
+    google_authuser=1
 
     # links
-    link_global_urls="\
-      * home=https://www.mydomain.com \
-      * intra=https://intra.mydomain.com Intranet \
-      * conventions=https://intra.mydomain.com/conventions Software development conventions \
-      * hours=https://hours.mydomain.com Hour reporting \
-      * playgrounds=https://github.com/search?q=topic%3Ataito-playground+org%3AMyOrganization&type=Repositories Playground projects \
-      "
+    link_global_urls="
+      * home=https://www.mydomain.com
+      * intra=https://intra.mydomain.com Intranet
+      * conventions=https://intra.mydomain.com/conventions Software development conventions
+      * hours=https://hours.mydomain.com Hour reporting
+      * playgrounds=https://github.com/search?q=topic%3Ataito-playground+org%3AMyOrganization&type=Repositories Playground projects
+    "
+
+    # template default settings
+    # NOTE: These are used as defaults when you create a new project
+    template_default_taito_image=taitounited/taito-cli:latest
+    template_default_organization=myorganization
+    template_default_domain=mydevdomain.com
+    template_default_domain_prod=mydomain.com
+    template_default_zone=my-zone
+    template_default_zone_prod=my-prod-zone
+    template_default_provider=gcloud
+    template_default_provider_billing_account=123456-123456-123456
+    template_default_provider_org_id=123456789
+    template_default_provider_region=europe-west1
+    template_default_provider_zone=europe-west1-b
+    template_default_provider_org_id_prod=123456789
+    template_default_provider_region_prod=europe-west2
+    template_default_provider_zone_prod=europe-west2-a
+    template_default_registry=eu.gcr.io
+    template_default_source_git=git@github.com:TaitoUnited
+    template_default_dest_git=git@github.com:MyOrganization
+    template_default_kubernetes=my-kubernetes
+    template_default_postgres=my-postgres
+    template_default_mysql=my-mysql
     ```
 
 4. Optional steps:
