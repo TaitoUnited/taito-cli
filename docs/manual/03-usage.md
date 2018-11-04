@@ -2,15 +2,15 @@
 
 ### The basics
 
-Only a small subset of taito commands are enabled if you are located outside a project directory. However, you don't need to be located at project root when you run a taito-cli command since taito-cli determines project root by the location of the `taito-config.sh` file.
+Taito-cli is configured with a `taito-config.sh` file placed at your project root directory. You can execute taito commands anywhere in the project directory hierarcy (project root dir, or subdirectories). If you are located outside a project directory, only global taito-cli plugins are enabled and therefore only a small subset of taito commands are enabled.
 
 Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito vc feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for predefined commands.
 
-Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of the project. Note that your credentials are saved on the container image, as you don't need them lying on your host file system anymore.
+Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito --auth:dev`). Note that your credentials are saved on the taito-cli container image, as you don't need them lying on your host file system anymore.
 
-[Tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order, including setting up your own infrastructure and creating your first taito-cli project. You may consider it as a chronological taito-cli manual.
+[Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order, including setting up your own infrastructure and creating your first taito-cli project. You may consider it as a chronological taito-cli manual.
 
-See the [README.md](https://github.com/TaitoUnited/kubernetes-template#readme) of the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) project as an example on how to use taito-cli with your project.
+See the [DEVELOPMENT.md](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md) of the [kubernetes-template](https://github.com/TaitoUnited/server-template) as an example on how to use taito-cli with your project.
 
 ### Troubleshooting
 

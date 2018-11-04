@@ -2,17 +2,35 @@
 
 ### Prerequisites
 
-* Docker
-* Git
-* Bash
+The following software needs to be installed on your computer before you can install taito-cli.
+
+* [Docker](https://docs.docker.com/install/)
+* [Git](https://git-scm.com/)
+* [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) or bash-like shell.
+
+**Special note for Windows**
+
+You can install bash-like shell on Windows either by installing [cygwin](https://www.cygwin.com/) or the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about). Cygwin is probably the better option of the two since Docker cannot use the Linux file system effectively on Windows. Configure your system in that way you can call `git`, `docker` and `docker-compose` commands directly from shell. Also make sure that `pkill` command is available. You can install it on cygwin by running `apt-cyg install procps-ng`.
+
+> WARNING: taito-cli has not been tested on Windows yet.
 
 ### Linux / macOS / Windows with cygwin
 
-> Docker for Windows: Taito-cli requires [cygwin](https://www.cygwin.com/) with the procps-ng package installed: `apt-cyg install procps-ng`. Configure cygwin in that way you can call `git`, `docker` and `docker-compose` commands from cygwin shell. If you would rather use [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about), see the next chapter.
+1. Clone taito-cli git repository and checkout the master branch:
 
-1. Clone this git repository and checkout the master branch.
+    ```
+    git clone https://github.com/TaitoUnited/taito-cli.git
+    cd taito-cli
+    git checkout master
+    ```
 
-2. Symlink the file named `taito` to your path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
+2. Symlink the file named **taito** to your PATH. It's a bash script that runs taito-cli as a Docker container. For example:
+
+   ```
+   sudo ln -s /home/myname/projects/taito-cli/taito /usr/local/bin/taito
+   ```
+
+   > TODO: move taito executables to taito-cli/bin directory so that the whole directory can be added to PATH.
 
 3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses taito-cli, they will provide you the correct settings. See [Advanced Usage](https://github.com/TaitoUnited/taito-cli#advanced-usage) if you need to configure settings for multiple organizations.
     ```
@@ -87,19 +105,33 @@
 
 > Docker cannot use the Linux file system effectively on Windows. Therefore all your software projects and taito-cli settings should be located on the Windows file system.
 
-1. Configure [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) in that way you can call `git`, `docker` and `docker-compose` commands from linux shell.
+1. Mount your windows drive to `/c` instead of the default `/mnt/c`. This way the same file paths work both on Windows and on Linux. NOTE: If your software projects are located on some other drive than `c:`, mount also that drive.
 
-2. Mount your windows drive to `/c` instead of the default `/mnt/c`. This way the same file paths work both on Windows and on Linux. NOTE: If your software projects are located on some other drive than `c:`, mount also that drive.
+2. Clone the [taito-cli](https://github.com/TaitoUnited/taito-cli) git repository on the Linux file system:
 
-3. Clone the [taito-cli](https://github.com/TaitoUnited/taito-cli) git repository on the Linux file system.
+    ```
+    git clone https://github.com/TaitoUnited/taito-cli.git
+    cd taito-cli
+    git checkout master
+    ```
 
-4. Symlink the file named `taito` to your shell path (e.g. `ln -s ~/projects/taito-cli/taito /usr/local/bin/taito`). It's a bash script that runs taito-cli as a Docker container.
+3. Symlink the file named **taito** to your PATH. It's a bash script that runs taito-cli as a Docker container. For example:
 
-5. Choose a folder from Windows drive that will act as your home directory when running taito-cli. Set `TAITO_HOME` environment variable for your linux shell, for example: `export TAITO_HOME="/c/users/myusername"`.
+   ```
+   sudo ln -s /home/myname/projects/taito-cli/taito /usr/local/bin/taito
+   ```
 
-6. Configure your personal settings in `${TAITO_HOME}/.taito/taito-config.sh`. See previous chapter for an example.
+   > TODO: move taito executables to taito-cli/bin directory so that the whole directory can be added to PATH.
 
-7. Optional steps:
+4. Choose a folder from Windows drive that will act as your home directory when running taito-cli. Set `TAITO_HOME` environment variable for your linux shell, for example:
+
+    ```
+    export TAITO_HOME="/c/users/myusername"
+    ```
+
+5. Configure your personal settings in `${TAITO_HOME}/.taito/taito-config.sh`. See the previous chapter for an example.
+
+6. Optional steps:
 
     * Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
     * Install taito-cli plugin for your editor: [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)

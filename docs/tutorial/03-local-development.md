@@ -16,7 +16,7 @@ taito info        # Show info required for signing in to the application
 
 Make some changes to the implementation. The implementation should build automatically in the background and if build fails for some reason, you should see errors on your console. If you make changes to the GUI implementation, also the web interface should update automatically.
 
-For now, you should commit all your changes to the dev branch as feature branches are introduced later. Remember to structure your git commit messages according to the [Conventional Commits](https://github.com/TaitoUnited/kubernetes-template#commit-messages) convention. Otherwise your commits will fail.
+For now, you should commit all your changes to the dev branch as feature branches are introduced later. Remember to structure your git commit messages according to the [Conventional Commits](https://github.com/TaitoUnited/server-template#commit-messages) convention. Otherwise your commits will fail.
 
 The following resources might be useful if you are not yet familiar with React or ES6/7:
 

@@ -1,6 +1,6 @@
 # Taito-cli website
 
-Implement with Gatsby v2. Layout should probably be something between [reactjs.org](https://reactjs.org/) and [gatsbyjs.org](https://gatsbyjs.org/). Most of the content already exists in the docs folder as markdown files.
+Implement with Gatsby v2. Layout should probably be something between [reactjs.org](https://reactjs.org/) and [gatsbyjs.org](https://gatsbyjs.org/). Use [Taito United](http://taitounited.fi/) brand for appearance. Site content already exists in the docs folder as markdown files.
 
 ## Center area of the page
 
@@ -14,7 +14,7 @@ Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/d
 
 ### Standard command set
 
-Use the same command set from project to project no matter the technology or infrastructure. For example, run `taito env apply:test` to create a test environment, `taito deployment deploy:test 1.1.0` to deploy version 1.1.0 to it, `taito open logs:prod` to open production logs on browser, `taito db connect` to connect to a local database and `taito db connect:test` to connect to the test environment database. And while you are working on a project, report your working hours with `taito hours add: 6,5 DESCRIPTION` or by using a timer.
+Use the same simple command set from project to project no matter the technology or infrastructure. Easily manage your containers, functions, databases and object storages running on anywhere. Just add taito configuration file to your project, and you're good to go. And it works with legacy applications too. See the [command reference](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt).
 
 ### Extensible
 
@@ -35,5 +35,5 @@ Use preconfigured templates to set up your infrastructure and to deploy new proj
 * [Plugins](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/plugins.md)
 * [Templates](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/templates.md)
 * [Extensions](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/extensions.md)
-* Search
+* Search (optional)
 * [GitHub](https://github.com/TaitoUnited/taito-cli)

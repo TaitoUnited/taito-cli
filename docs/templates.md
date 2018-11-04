@@ -4,6 +4,8 @@
 
 Taito-cli comes with some simple infrastucture templates that you can use as an example to set up your infrastructure. You may also find more infrastructure templates on [GitHub](TODO).
 
+> NOTE: Currently the Google Cloud example works, but the others are still work in progress. Contributions are welcome.
+
 ### Managed public cloud infrastructure
 
 * [AWS](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/aws)
@@ -28,16 +30,16 @@ The self-managed examples can be deployed anywhere, on-premise or public cloud. 
 
 Officially recommended project templates are listed below. All of them include taito configurations for taito-cli support, Terraform scripts for infrastucture management, and build scripts for CI/CD. You may also find more project templates preconfigured for taito-cli on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
 
-* [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template): Template for applications and APIs running on Kubernetes. Support for [Knative](https://pivotal.io/knative), [Istio](https://istio.io/) and [Telepresence](https://www.telepresence.io/) will be added once they have matured enough. TODO rename the git repository.
+* [kubernetes-template](https://github.com/TaitoUnited/server-template): Template for applications and APIs running on Kubernetes. Support for [Knative](https://pivotal.io/knative), [Istio](https://istio.io/) and [Telepresence](https://www.telepresence.io/) will be added once they have matured enough. TODO rename the git repository.
 
-* [kubernetes-template-alt](https://github.com/TaitoUnited/kubernetes-template-alt): Alternative stack components for the kubernetes-template. With these you can easily implement your application or API with any technology that fits your requirements. TODO rename the git repository.
+* [kubernetes-template-alt](https://github.com/TaitoUnited/server-template-alt): Alternative stack components for the kubernetes-template. With these you can easily implement your application or API with any technology that fits your requirements. TODO rename the git repository.
 
 * [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template): Run serverless functions on any cloud provider using either the Serverless Framework or the full Serverless Platform. Support for [Istio](https://istio.io/) will be added later, making it possible to connect all your microservices together no matter where they are deployed.
 
-* [website-template](https://github.com/TaitoUnited/website-template): Implement a website with a static site generator of your choice (e.g. Gatsby, Hugo or Jekyll). Deploy the website to Kubernetes, GitHub Pages, Netlify, or any S3-compatible object storage with CDN support (AWS, Azure, Google Cloud, DigitalOcean). Setup an automated multistage publishing process for the website. Optionally use the Netlify CMS to edit your site. You can easily run the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) or the [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template)
+* [website-template](https://github.com/TaitoUnited/website-template): Implement a website with a static site generator of your choice (e.g. Gatsby, Hugo or Jekyll). Deploy the website to Kubernetes, GitHub Pages, Netlify, or any S3-compatible object storage with CDN support (AWS, Azure, Google Cloud, DigitalOcean). Setup an automated multistage publishing process for the website. Optionally use the Netlify CMS to edit your site. You can easily run the [kubernetes-template](https://github.com/TaitoUnited/server-template) or the [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template)
 alongside with this template to implement dynamic functionality to your website.
 
-* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Deploy WordPress on Kubernetes. You can easily run the [kubernetes-template](https://github.com/TaitoUnited/kubernetes-template) alongside with this template to implement dynamic non-PHP functionality to your website.
+* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Deploy WordPress on Kubernetes. You can easily run the [kubernetes-template](https://github.com/TaitoUnited/server-template) alongside with this template to implement dynamic non-PHP functionality to your website.
 
 * TODO machine learning, kubeflow
 

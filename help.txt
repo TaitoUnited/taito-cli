@@ -38,10 +38,10 @@ QUICK EXAMPLES
     workspace clean          # Remove all unused build artifacts (e.g. images)
     shell:server             # Start shell inside a container named 'server'
     exec:server echo foo     # Execute a command in a container named 'server'
-    copy to:server ./asdf /app   # Copy a file/folder to server container
-    copy from:server /app/asdf . # Copy a file/folder from server container
-    sync to:server ./asdf /app   # Sync folder to server container
-    sync from:server /app/asdf . # Sync folder from server container
+    copy to:server ./loc /sr # Copy a file/folder to server container
+    copy from:server /sr .   # Copy a file/folder from server container
+    sync to:server ./loc /sr # Sync folder to server container
+    sync from:server /sr .   # Sync folder from server container
     commit:client            # Commit changes to client container image
     clean:server             # Clean server container by deleting it
     docs                     # Generate documentation
@@ -61,20 +61,20 @@ QUICK EXAMPLES
     kill:worker:dev          # Kill a container named 'worker'
     shell:server:dev         # Start a shell on a container named 'server'
     exec:server:dev echo foo # Execute a command in a container named 'server'
-    copy to:server:dev ./file /app   # Copy a file/folder to server container
-    copy from:server:dev /app/file . # Copy a file/folder from server container
-    sync to:server:dev ./asdf /app   # Sync folder to server container
-    sync from:server:dev /app/asdf . # Sync folder from server container
     open logs:dev            # Open logs on browser (e.g. Stackdriver or EFK)
     open storage:dev         # Open storage bucket on browser
     init:dev --clean         # Reinitialize databases and storages
+    copy to:server:dev ./file /app     # Copy a file/folder to server container
+    copy from:server:dev /app/file .   # Copy a file/folder from server containr
+    sync to:server:dev ./asdf /app     # Sync folder to server container
+    sync from:server:dev /app/asdf .   # Sync folder from server container
 
   DATABASE OPERATIONS
     db connect:dev           # Access default database on command line
     db connect:reportdb:dev  # Access report database on command line
     db proxy:dev             # Start a database proxy for a GUI tool access
-    db import:dev ./database/file.sql   # Import a file to default database
-    db dump:dev ./tmp/dump.sql          # Dump default database to a file
+    db import:dev ./file.sql # Import a file to default database
+    db dump:dev ./dump.sql   # Dump default database to a file
     db log:dev               # View change log of default database
     db recreate:dev          # Recreate the default database
     db deploy:dev            # Deploy changes to default database
@@ -82,8 +82,8 @@ QUICK EXAMPLES
     db rebase:dev b91b7b2    # Rebase a database (db revert + db deploy)
     db revert:dev b91b7b2    # Revert a database
     db diff:dev test         # Compare db schemas of dev and test environments
-    db copy between:test:dev       # Copy test database to dev
-    db copyquick between:test:dev  # Copy test database to dev (WARNING!!)
+    db copy between:test:dev           # Copy test database to dev
+    db copyquick between:test:dev      # Copy test database to dev (WARNING!!)
 
   STORAGE OPERATIONS
     storage mount:dev                  # Mount dev storage bucket to ./mnt/BUCKT
@@ -118,8 +118,8 @@ QUICK EXAMPLES
     deployment revert:dev 20      # Revert application on dev env to revision 20
 
   PROJECT TEMPLATES
-    project create: kubernetes-template  # Create a project based on template
-    project upgrade                  # Upgrade project using template
+    project create: my-template   # Create a project based on template
+    project upgrade               # Upgrade project using template
 
   PROJECT CONFIGURATION
     project apply            # Migrate project to the latest configuration
@@ -244,6 +244,18 @@ OPTIONS
     Skip taito command overrides during execution.
 
 ARGUMENTS
+
+  Target pod (TARGET) and environment (ENV) are included in the command itself.
+  Colon is used as delimiter. ENV is local by default if omitted. For example:
+    $ taito shell:worker
+    $ taito shell:worker:dev
+    $ taito status:dev
+    $ taito open app:dev
+
+  All other arguments are given after the command. For example:
+    $ taito exec:worker:dev echo jee
+    $ taito db import:dev file.sql
+    $ taito hours add: 6.5
 
   ENV
     Environment: For example 'local', 'feat-orders', 'dev', 'test', 'stag',

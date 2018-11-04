@@ -4,7 +4,7 @@ This page describes all the plugins that are bundled with taito-cli by default. 
 
 ## Application control
 
-Plugins typically implement the following commands:
+Application control plugins typically implement the following commands:
 
 * `taito start`: Start the application.
 * `taito stop`: Stop the application.
@@ -31,7 +31,7 @@ Plugins:
 
 ## Build tools
 
-Plugins typically implement the following:
+Build tool plugins typically implement the following:
 
 * Pre-hook for running user defined scripts with taito-cli (e.g. scripts in *package.json*, *Makefile* or *Pipfile*).
 * `taito install`: Install libraries and setup git hooks.
@@ -46,7 +46,7 @@ Plugins:
 * [pipenv](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/pipenv/README.md): Execute pipenv scripts with taito-cli.
 * [semantic-release](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/semantic-release/README.md): Make a new release using the `taito ci release` command. The [semantic-release](https://github.com/semantic-release/semantic-release) library will handle semantic versioning and release notes automatically based on your git commit messages.
 
-You typically need to implement the following taito-cli commands in *package.json*, *Makefile* or *Pipfile* of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/kubernetes-template/blob/master/package.json) of the kubernetes-template as an example.
+You typically need to implement the following taito-cli commands in *package.json*, *Makefile* or *Pipfile* of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/server-template/blob/master/package.json) of the kubernetes-template as an example.
 
 * `taito init`: Populate data sources with example data (databases, storages).
 * `taito info`: Show info required for logging in to the application.
@@ -58,7 +58,7 @@ You typically need to implement the following taito-cli commands in *package.jso
 
 ## Cloud providers
 
-Plugins typically implement the following commands:
+Cloud provider plugins typically implement the following commands:
 
 * `taito --auth`: Authenticate to the cloud environment.
 * `taito db proxy`: Start a proxy for accessing a remote database.
@@ -74,7 +74,7 @@ Plugins:
 
 ## CI/CD
 
-Plugins typically implement the following commands:
+CI/CD plugins typically implement the following commands:
 
 * `taito env apply`: Create a build trigger (if build triggers are not managed with terraform)
 * `taito env destroy`: Delete a build trigger (if build triggers are not managed with terraform)
@@ -91,7 +91,7 @@ Plugins:
 
 ## Databases
 
-Plugins typically implement the following commands:
+Database plugins typically implement the following commands:
 
 * `taito db *`: Manage database with taito-cli commands.
 * `taito env apply`: Create a database and database users (if not managed with terraform)
@@ -106,7 +106,7 @@ Plugins:
 
 ## Hour reporting
 
-Plugins typically implement the following commands:
+Hour reporting plugins typically implement the following commands:
 
 * `taito hours *`: Hour reporting with taito-cli commands.
 
@@ -119,7 +119,7 @@ TIP: You can report your work hours to multiple hour reporting systems at once w
 
 ## Infrastructure management for projects
 
-Plugins typically implement the following commands:
+Project infrastructure management plugins typically implement the following commands:
 
 * `taito env apply`: Apply infrastructure changes for a project environment.
 * `taito env destroy`: Remove project environment.
@@ -130,7 +130,7 @@ Plugins:
 
 ## Infrastructure management for zones
 
-Plugins typically implement the following commands:
+Zone infrastructure management plugins typically implement the following commands:
 
 * `taito zone *`: Manage zone with taito-cli commands.
 
@@ -143,7 +143,7 @@ Plugins:
 
 ## Issue management
 
-Plugins typically implement the following commands:
+Issue management plugins typically implement the following commands:
 
 * `taito issue *`: Issue management with taito-cli commands.
 
@@ -180,7 +180,7 @@ You can open monitoring systems on your browser with the following commands, if 
 
 ## Secret management
 
-Plugins typically implement the following commands:
+Secret management plugins typically implement the following commands:
 
 * `taito env apply`: Create and store secrets on `env apply`.
 * `taito env rotate`: Create and store secrets on `env rotate`.
@@ -199,7 +199,7 @@ Plugins:
 
 ## Services
 
-Plugins typically implement the following commands:
+Service plugins typically implement the following commands:
 
 * TODO taito-cli commands for managing services
 
@@ -210,7 +210,7 @@ Plugins:
 
 ## Storage
 
-Plugins typically implement the following commands:
+Storage plugins typically implement the following commands:
 
 * `taito storage *`: Manage storage buckets.
 
@@ -222,7 +222,7 @@ Plugins:
 
 ## Version control
 
-Plugins typically implement the following commands:
+Version control plugins typically implement the following commands:
 
 * `taito vc *`: Version control commands for taito-cli (manage environment, feature and hotfix branches).
 

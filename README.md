@@ -2,31 +2,39 @@
 
 [taito-cli website](https://github.com/TaitoUnited/taito-cli/blob/dev/www/README.md)
 
-Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a standard set of commands that can be used in any project no matter the technology or infrastructure. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. Some examples:
+Taito command line interface is an extensible toolkit for developers and devops personnel. It defines a standard set of commands that can be used in any project no matter the technology or infrastructure. Thus, developers and devops personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+
+Some examples:
 
 ```
-TODO
+taito vc feat list              # List all feature branches
+taito vc feat: orders           # Switch to feature/orders branch (or create it)
+taito start                     # Start the local development environment
+taito init                      # Initialize local db with database tables and development data
+taito open app                  # Open application web UI running on local environment
+taito info                      # Show user credentials required for signing in
+taito vc feat merge             # Rebase, merge and delete the feature branch, switch to dev branch.
+taito open builds               # Show build status on browser
+taito status:dev                # Show status of dev environment
+taito open app:dev              # Open application web UI running on dev environment
+taito logs:worker:dev           # Tail logs of worker container running on dev environment
+taito db connect:dev            # Connect to the dev environment database
+taito vc env merge: dev canary  # Merge changes between multiple environments: dev -> ... -> canary
+taito open logs:canary          # Open canary environment logs on browser
+taito hours add: 6.5            # Add an work hour entry for current project (to multiple systems)
 ```
 
-This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+To get started see the [docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md).
 
-To get started see the [manual](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md).
+For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt) or run `taito -h`.
 
-For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt)
+## Container images
 
-## Images
-
-TODO: To speed up builds, use own image repository. Use the smaller images.
-
-* aws
-* azure
-* gcloud
-* appcenter
-* all
+TODO: The default taito-cli docker image contains all the tools. Slimmed down images are optimized for CI/CD builds.
 
 ## Contributing
 
-TODO something about taito-cli vs external extensions.
+TODO: Something about taito-cli vs external extensions.
 
 ## Development
 

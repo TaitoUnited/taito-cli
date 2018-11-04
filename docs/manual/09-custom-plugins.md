@@ -6,6 +6,8 @@
 
 You can implement your plugin with almost any programming language. The only requirement is that your plugin provides taito command implementations as executable files. Bash is good for simple plugins. Python or Go is preferred for more complex stuff. And you can use JavaScript too.
 
+> See [project-and-extension](https://github.com/TaitoUnited/taito-cli/tree/dev/examples/project-and-extension) as an example. It is a project that uses a custom extension.
+
 This is how you implement your own custom plugin:
 
 1. First create a directory that works as a taito-cli extension. It is basically a collection of plugins:
@@ -141,7 +143,7 @@ If you need to alter default behaviour of a plugin in some way, you can override
 
 #### Common variables
 
-All settings defined in `taito-config.sh` are visible for plugins. See [configuration](#configuration) chapter for more info. Additionally the following environment variables are defined by taito-cli:
+All settings defined in `taito-config.sh` are visible for plugins. See [configuration](04-configuration.md) chapter for more info. Additionally the following environment variables are defined by taito-cli:
 
 * **taito_env**: The selected environment (e.g. local, feat-NAME, dev, test, stag, canary, prod)
 * **taito_target_env**: TODO ....

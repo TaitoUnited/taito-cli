@@ -2,7 +2,9 @@
 
 Taito-cli is designed so that in most cases your CI/CD tool needs only to execute a bunch of taito-cli commands without any arguments to get the job done. Everything is already configured in taito-config.sh, and taito-cli provides support for various infrastructures by plugins. You can also run any of the steps manually from command line using *taito-cli*. A typical CI/CD process would consist of the following steps, many of which can be run parallel.
 
-TODO separate ci command for every step (even for otherwise existing commands --> avoid accidental overrides in package.json, ci mode, etc)
+> TODO: separate ci command for every step (even for otherwise existing commands --> avoid accidental overrides in package.json, ci mode, etc)
+
+> TODO: command list is not up-to-date.
 
 * `taito --auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
 * `taito deployment cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
@@ -28,7 +30,7 @@ TODO separate ci command for every step (even for otherwise existing commands --
 * `taito ci publish`: Publish all artifacts to a central location (e.g. container images, libraries, docs, test results, test coverage reports, code quality reports).
 * `taito ci release post`: Typically generates release notes from git commits or issues, and tags the git repository with the new version number.
 
-See [cloudbuild.yaml](https://github.com/TaitoUnited/kubernetes-template/blob/master/cloudbuild.yaml) of kubernetes-template as an example. TODO: add local testing env and reverts to the script.
+See [cloudbuild.yaml](https://github.com/TaitoUnited/server-template/blob/master/cloudbuild.yaml) of kubernetes-template as an example. TODO: add local testing env and reverts to the script.
 
 ---
 
