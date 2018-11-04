@@ -1,3 +1,3 @@
 ## 11. Taito-cli development
 
-See the taito-cli [README.md](https://github.com/TaitoUnited/taito-cli/blob/master/README.md).
+See the [development](https://github.com/TaitoUnited/taito-cli/blob/dev/README.md#development) section of the taito-cli README.md.

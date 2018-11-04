@@ -24,7 +24,7 @@ You can execute project specific commands outside the project directory with the
 
 You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on one of the taito-cli images, or make a request for adding the tool to the original taito-cli image.
 
-> TIP: `taito --auth:ENV` command not only authenticates, but also sets default Kubernetes cluster and namespace for kubectl. Therefore you can first run `taito --auth:ENV` to set the default context for kubectl and then execute `taito -- kubect get pods`, and it will execute in the default context.
+> TIP: If the kubectl plugin is enabled, you can first run `taito --auth:ENV` to set the default context for kubectl (Kubernetes cluster and namespace). Then you can execute some kubectl commands (e.g. `taito -- kubect get pods`), and they will execute in the default context set by the auth command.
 
 With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
 

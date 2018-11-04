@@ -15,6 +15,11 @@ echo "- Configure alert: Alert every time 'all' of these conditions are met: \
 '30 minutes' for an issue."
 
 echo
+echo "NOTE: If you don't want to create the Sentry project right now,"
+echo "just press enter for all Sentry related questions. You can run"
+echo "'taito project apply' again later when you are ready to create the"
+echo "Sentry project."
+echo
 echo "Press enter to open Sentry"
 read -r
 
@@ -27,13 +32,13 @@ read -r
 echo "Sentry public DSN url?"
 read -r dsn_public
 if [[ -z "${dsn_public}" ]]; then
-  dsn_public="TODO"
+  dsn_public="#sentryPublicDSN"
 fi
 
 echo "Sentry private DSN url?"
 read -r dsn
 if [[ -z "${dsn}" ]]; then
-  dsn="TODO"
+  dsn="#sentryDSN"
 fi
 
 echo "Replacing Sentry DSN keys in heml.yaml and Dockerfile.build"

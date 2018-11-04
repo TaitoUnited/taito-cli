@@ -14,7 +14,7 @@ Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/d
 
 ### Standard command set
 
-Use the same simple command set from project to project no matter the technology or infrastructure. Easily manage your containers, functions, databases and object storages deployed anywhere. Just add taito configuration file to your project, and you're good to go. And it works with legacy applications too. See the [command reference](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt).
+Use the same simple command set from project to project no matter the technology or infrastructure. Easily manage your containers, functions, databases, object storages, and legacy applications wherever they are deployed. Just add a taito configuration file to your project, and you're good to go. See the [command reference](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt).
 
 ### Extensible
 
@@ -28,13 +28,9 @@ Working with modern hybrid cloud environments requires lots of tools. Taito-cli 
 
 Use preconfigured templates to set up your infrastructure and to deploy new projects on top of it. Everything works out-of-the-box with minimal configuration.
 
-### Conventions / Conventional
+### Enforce conventions
 
-TODO: maintain multiple projects (templates, labeling, taito vc)
-
-## Sweet!
-
-...
+Enforce good and uniform conventions by providing reusable project templates. Enforce version control conventions with the taito version control commands, and customize your version control workflow, if necessary.
 
 ## Tabs on top of the page
 

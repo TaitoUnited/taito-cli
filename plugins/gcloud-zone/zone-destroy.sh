@@ -5,7 +5,7 @@
 name=${1}
 
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-build-notifications" "${name}" \
-  "Configure gcloud build notifications"
+  "Destroy gcloud build notifications"
 then
   "${taito_plugin_path}/util/teardown-build-slack-notifications.sh"
 fi && \
