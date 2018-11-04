@@ -8,12 +8,13 @@ Some examples:
 
 ```
 taito vc feat list              # List all feature branches
-taito vc feat: orders           # Switch to feature/orders branch (or create it)
+taito vc feat: orders           # Switch to 'feature/orders' branch (and create it first, if it does not exist already)
+taito install                   # Install linters and other dependencies
 taito start                     # Start the local development environment
-taito init                      # Initialize local db with database tables and development data
+taito init                      # Initialize the local database with database tables and development data
 taito open app                  # Open application web UI running on local environment
 taito info                      # Show user credentials required for signing in
-taito vc feat merge             # Rebase, merge and delete the feature branch, switch to dev branch.
+taito vc feat merge             # Rebase, merge and delete the current feature branch, switch back to dev branch.
 taito open builds               # Show build status on browser
 taito status:dev                # Show status of dev environment
 taito open app:dev              # Open application web UI running on dev environment
@@ -21,12 +22,10 @@ taito logs:worker:dev           # Tail logs of worker container running on dev e
 taito db connect:dev            # Connect to the dev environment database
 taito vc env merge: dev canary  # Merge changes between multiple environments: dev -> ... -> canary
 taito open logs:canary          # Open canary environment logs on browser
-taito hours add: 6.5            # Add an work hour entry for current project (to multiple systems)
+taito hours add: 6.5            # Add an work hour entry for current project (to multiple systems if necessary)
 ```
 
-To get started see the [docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md).
-
-For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt) or run `taito -h`.
+To get started see the [docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md). For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt) or run `taito -h`.
 
 ## Container images
 
@@ -38,7 +37,7 @@ TODO: Something about taito-cli vs external extensions.
 
 ## Development
 
-Install taito-cli using the installation instructions provided by the taito-cli manual. You can run taito-cli commands in development mode by using the `-d, --dev` flag (e.g. `taito -d env apply:dev`). In the development mode your local taito-cli directory is mounted in the container. If you are working with your own fork, update your taito symlink so that it points to your forked version (you originally created the symlink during taito-cli installation).
+Install taito-cli normally using the [taito-cli installation instructions](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md). You can run a taito-cli command in development mode by using the `-d, --dev` flag (e.g. `taito -d env apply:dev`). In the development mode your local taito-cli directory is mounted in the taito-cli container. If you are working with your own fork, update your PATH or taito symlink so that it points to your forked version of the taito-cli.
 
 How to implement a command:
 

@@ -8,12 +8,13 @@ Some examples:
 
 ```
 taito vc feat list              # List all feature branches
-taito vc feat: orders           # Switch to feature/orders branch (or create it)
+taito vc feat: orders           # Switch to 'feature/orders' branch (and create it first, if it does not exist already)
+taito install                   # Install linters and other dependencies
 taito start                     # Start the local development environment
-taito init                      # Initialize local db with database tables and development data
+taito init                      # Initialize the local database with database tables and development data
 taito open app                  # Open application web UI running on local environment
 taito info                      # Show user credentials required for signing in
-taito vc feat merge             # Rebase, merge and delete the feature branch, switch to dev branch.
+taito vc feat merge             # Rebase, merge and delete the current feature branch, switch back to dev branch.
 taito open builds               # Show build status on browser
 taito status:dev                # Show status of dev environment
 taito open app:dev              # Open application web UI running on dev environment
@@ -21,7 +22,7 @@ taito logs:worker:dev           # Tail logs of worker container running on dev e
 taito db connect:dev            # Connect to the dev environment database
 taito vc env merge: dev canary  # Merge changes between multiple environments: dev -> ... -> canary
 taito open logs:canary          # Open canary environment logs on browser
-taito hours add: 6.5            # Add an work hour entry for current project (to multiple systems)
+taito hours add: 6.5            # Add an work hour entry for current project (to multiple systems if necessary)
 ```
 
 For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt) or run `taito -h`.
