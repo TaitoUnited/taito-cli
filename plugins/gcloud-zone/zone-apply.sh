@@ -40,7 +40,7 @@ fi && \
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-personnel-rights" "${name}" \
   "Configure personnel rights"
 then
-  echo "Add 'Project Owner' role for the devops personnel."
+  echo "Add 'Project Owner' role for DevOps personnel."
   echo
   echo "Press enter to open permission management"
   read -r

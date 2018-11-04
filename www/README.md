@@ -14,7 +14,7 @@ Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/d
 
 ### Standard command set
 
-Use the same simple command set from project to project no matter the technology or infrastructure. Easily manage your containers, functions, databases and object storages running on anywhere. Just add taito configuration file to your project, and you're good to go. And it works with legacy applications too. See the [command reference](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt).
+Use the same simple command set from project to project no matter the technology or infrastructure. Easily manage your containers, functions, databases and object storages deployed anywhere. Just add taito configuration file to your project, and you're good to go. And it works with legacy applications too. See the [command reference](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt).
 
 ### Extensible
 
