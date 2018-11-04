@@ -29,11 +29,11 @@ echo "Please wait..." && \
   git add . && \
   git commit -q -m 'First commit' && \
   git remote add origin ${template_dest_git}/${taito_vc_repository}.git && \
-  git push -q -u origin master > /dev/null && \
+  git push -q -u origin master &> /dev/null && \
   git tag v0.0.0 && \
   git push -q origin v0.0.0 && \
   git checkout -q -b dev && \
-  git push -q -u origin dev > /dev/null && \
+  git push -q -u origin dev &> /dev/null && \
   echo && \
   echo DONE! Now configure your project! && \
   echo Press enter to open the configuration chapter of DEVELOPMENT.md && \

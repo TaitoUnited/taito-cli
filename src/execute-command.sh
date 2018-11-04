@@ -241,6 +241,23 @@ if [[ "${taito_env}" != "local" ]] && \
   exit 1
 fi
 
+# Validate zone operations
+if [[ "${taito_command}" == "zone-"* ]] && [[ "${taito_type:-}" != "zone" ]]; then
+  echo
+  echo "ERROR: You can run zone commands only inside a zone directory."
+  exit 130
+fi
+
+# Confirm zone operations
+if [[ "${taito_command}" == "zone-"* ]]; then
+  echo
+  echo "The operation is targetting zone ${taito_zone:-}. Do you want to continue (y/N)?"
+  read -r confirm
+  if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+    exit 130
+  fi
+fi
+
 # Confirm prod operations
 if ( [[ "${taito_env}" == "prod" ]] || [[ "${taito_dest_env}" == "prod" ]] ) && \
    [[ "${taito_command}" != "info" ]] && \

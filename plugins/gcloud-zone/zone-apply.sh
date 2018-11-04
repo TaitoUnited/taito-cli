@@ -21,6 +21,9 @@ fi && \
 if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-external-ip" "${name}" \
   "Reserve an external IP address"
 then
+  echo
+  echo "TODO IP should not be reserved at this point? Reserve it after ingress has been deployed?"
+  echo
   echo "Reserve a static ip address. Leave it unattached. Press enter to open Google Cloud networking."
   read -r
   "${taito_util_path}/browser.sh" "https://console.cloud.google.com/networking/addresses/list?${opts}project=${gcloud_project_id}"
