@@ -82,7 +82,6 @@ Provider and namespaces:
 Repositories:
 
 * **taito_vc_repository:** Version control repository name (e.g. git repository name).
-* **taito_vc_repository_base:** Version control root location (e.g. `github-myorganization`).
 * **taito_image_registry:** Docker container image registry.
 
 Stack:

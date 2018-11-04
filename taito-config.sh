@@ -19,7 +19,6 @@ taito_namespace=${taito_project}-${taito_env}
 
 # Repositories
 taito_vc_repository=taito-cli
-taito_vc_repository_base=github-${taito_organization}
 
 # Link plugin
 link_urls="
