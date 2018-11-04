@@ -28,6 +28,14 @@ Working with modern hybrid cloud environments requires lots of tools. Taito-cli 
 
 Use preconfigured templates to set up your infrastructure and to deploy new projects on top of it. Everything works out-of-the-box with minimal configuration.
 
+### Conventions / Conventional
+
+TODO: maintain multiple projects (templates, labeling, taito vc)
+
+## Sweet!
+
+...
+
 ## Tabs on top of the page
 
 * [Docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md)

@@ -12,7 +12,8 @@ TODO:
 
 * Register a domain name
 * Get a Google Cloud account, and authenticate with taito-cli
-* OPTIONAL: setup remote state for terraform
+* OPTIONAL: setup remote state for Terraform
+* use some text from the old example.
 
 You can create a taito zone based on the Google Cloud example with the following commands. Replace `EDIT` with your favorite editor.
 
@@ -27,7 +28,7 @@ A **taito zone** provides an infrastructure that your projects are deployed on (
 
 Do not confuse taito zones with cloud provider regions and zones. Each taito zone may use multiple cloud provider regions and zones to achieve high availability and regional resiliency. Taito zones are created mainly based on maintainability and security concerns instead.
 
-TODO: use some text from the old example.
+If you want to know more, see [Appendix A: Modern infrastructure](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-modern-infrastructure.md).
 
 ---
 

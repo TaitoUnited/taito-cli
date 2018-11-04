@@ -2,9 +2,7 @@
 
 Taito-cli provides some version control commands that make it easier for you to follow commonly defined version control conventions. An organization may also override the default version control conventions with a custom taito-cli plugin.
 
-* TODO conventional commits
-* TODO something about code reviews (already written on kubernetes-template).
-* TODO something about referencing issues in commits.
+TODO `taito vc env -h`, `taito vc feat -h`
 
 ### 4.1 Display commonly defined conventions
 
@@ -40,6 +38,16 @@ Hotfix branches:
 There is a lot to remember. However, if you use taito-cli for managing your branches, you don't have to remember all these conventions.
 
 ### 4.2 Feature branches
+
+Using feature branches is optional, but they are recommended to be used at least in the following situations:
+
+* **Making changes to existing production functionality**: Use feature branches and pull-requests for code reviews. This will decrease the likelyhood that the change will brake something in production. It is also easier to keep the release log clean by using separate feature branches.
+* **A new project team member**: Use pull-requests for code reviews. This way you can help the new developer in getting familiar with the coding conventions and application logic of the project.
+* **Teaching a new technology**: Pull-requests can be very useful in teaching best practices for an another developer.
+
+Code reviews are very important at the beginning of a new software project, because this is the time when the basic foundation is built for the future development. At the beginning, however, it is usually more sensible to do occasional code reviews across the entire codebase instead of feature specific code reviews based on pull-requests.
+
+Note that most feature branches should be short-lived and located only on your local git repository, unless you are going to make a pull-request.
 
 #### Create a new feature branch
 
@@ -113,6 +121,20 @@ TODO:
 * Erased a commit from dev branch that was already merged to test branch -> prevents fast-forward merge.
 * Premature feature branch merge to dev (merge commit on top vs. other commits on top of it)
 * Premature env branch merge
+
+### TODO Advanced deployment options?
+
+> Some of the advanced operations might require admin credentials (e.g. staging/canary/production operations). If you don't have an admin account, ask devops personnel to execute the operation for you.
+
+Advanced features (TODO not all implemented yet):
+
+* **Quickly deploy settings**: If you are in a hurry, you can deploy Helm/Kubernetes changes directly to an environment with the `taito deployment deploy:ENV`.
+* **Quickly deploy a container**: If you are in a hurry, you can build, push and deploy a single container directly to server with the `taito deployment build:TARGET:ENV` command e.g. `taito deployment build:client:dev`.
+* **Copy production data to staging**: Often it's a good idea to copy production database to staging before merging changes to the stag branch: `taito db copy between:prod:stag`, `taito storage copy between:prod:stag`. If you are sure nobody is using the production database, you can alternatively use the quick copy (`taito db copyquick between:prod:stag`), but it disconnects all other users connected to the production database until copying is finished and also requires that both databases are located in the same database cluster.
+* **Feature branch**: You can create an environment also for a feature branch: `taito env apply:feat-NAME`. The feature should reside in a branch named `feature/NAME`.
+* **Revert application**: Revert application to the previous revision by running `taito deployment revert:ENV`. If you need to revert to a specific revision, check current revision by running `taito deployment revision:ENV` first and then revert to a specific revision by running `taito deployment revert:ENV REVISION`. You can also deploy a specific version with `taito deployment deploy:ENV IMAGE_TAG|SEMANTIC_VERSION`.
+* **Debugging CI builds**: You can build and start production containers locally with the `taito start --clean --prod` command. You can also run any CI build steps defined in cloudbuild.yaml locally with taito-cli.
+
 
 ---
 

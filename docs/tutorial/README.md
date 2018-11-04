@@ -15,12 +15,19 @@ This tutorial guides you through common software development scenarios in a chro
 * [9. Cloud services and Terraform](09-cloud-services-and-terraform.md)
 * [10. Kubernetes-template specific details](10-kubernetes-template-specific.md)
 * [11. Production setup](11-production-setup.md)
-* [12. Configuring certificate](12-configuring-certificate.md)
-* [13. Running in production](13-running-in-production.md)
-* [14. Zone maintenance](14-zone-maintenance.md)
-* [15. Zone monitoring](15-zone-monitoring.md)
-* [16. Zone recovery](16-zone-recovery.md)
-* [17. Creating a taito-cli plugin](17-creating-a-plugin.md)
+* [12. Running in production](12-running-in-production.md)
+* [13. Zone maintenance](13-zone-maintenance.md)
+* [14. Zone monitoring](14-zone-monitoring.md)
+* [15. Zone recovery](15-zone-recovery.md)
+* [16. Creating a taito-cli plugin](16-creating-a-plugin.md)
+
+## Appendixes
+
+* [A. Modern infrastructure](a-modern-infrastructure.md)
+* [B. Code structure](b-code-structure.md)
+* [C. SSL/TLS certificates](c-certificates.md)
+* [D. Security](d-security.md)
+* [E. Data protection and privacy (GDPR)](e-data-protection-and-privacy.md)
 
 ---
 
