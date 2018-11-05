@@ -11,6 +11,9 @@ while [[ ${skip} == false ]] && [[ ! "${item_id}" ]] && [[ -n "${items[*]}" ]]; 
   echo "${title}"
   for item in ${items[@]}; do echo "- ${item%:*}"; done
   echo
+  if [[ "${allow_skip}" == "true" ]]; then
+    echo "You can enter hyphen(-) to skip."
+  fi
   echo "${question}"
   read -r selected_name
   for item in ${items[@]}; do

@@ -20,8 +20,7 @@ fi
   . "${taito_plugin_path}/util/read-api-token.sh"
 
   # hour entry: project id
-  . "${taito_util_path}/select-item.sh" "Projects:" \
-    "Choose project or enter - to skip Toggl:" \
+  . "${taito_util_path}/select-item.sh" "Projects:" "Enter project name:" \
     "${toggl_projects}" "${toggl_project_id}" true
   project_id="${item_id}"
   if [[ ! ${project_id} ]]; then
