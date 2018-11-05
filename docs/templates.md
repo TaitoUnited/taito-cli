@@ -4,7 +4,7 @@
 
 Taito-cli comes with some simple infrastucture templates that you can use as an example to set up your infrastructure. You may also find more infrastructure templates on [GitHub](TODO).
 
-> NOTE: Currently the Google Cloud example works, but the others are still work in progress. Contributions are welcome.
+> NOTE: Only the Google Cloud example has currently been implemented. Contributions are welcome.
 
 ### Managed public cloud infrastructure
 

@@ -1,24 +1,16 @@
 ## 4. Configuration
 
-By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [2. Installation and upgrade](02-installation.md) chapter for an example of a personal configuration file.
+By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](02-installation.md) chapter for an example of a personal configuration file.
 
-Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of kubernetes-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control.
+Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of kubernetes-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control. *TODO: `taito-user-config.sh` is named `taito-run-env.sh` in the current taito-cli implementation and it is used only for `docker-compose up`.*
 
-> TODO: `taito-user-config.sh` is named `taito-run-env.sh` in the current taito-cli implementation and it is used only for `docker-compose up`.
-
-### Common settings
-
-This chapter describes the common taito-cli settings that are shared among plugins. Most of them are named with `taito` prefix and all of them are optional, unless such plugin is enabled that requires some of them. Plugin specific settings are prefixed with plugin name and documented in `README.md` file of [each plugin](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md).
-
-> TODO: README.md for each plugin
-
-Settings are defined as environment variables. If the setting can contain multiple values, just give them separated by whitespace, for example:
+Settings are defined as environment variables. If an environment variable can contain multiple values, just give them separated by whitespace, for example:
 
 ```
 taito_environments="dev test canary prod"
 ```
 
-TIP: You can easily use the values defined in `taito-config.sh` also in your own scripts ([example](https://github.com/TaitoUnited/react-native-template/blob/dev/scripts/appcenter/post-build.sh#L9)):
+TIP: You can easily use the values defined in `taito-config.sh` also in your own scripts. This example is from  [react-native-template](https://github.com/TaitoUnited/react-native-template/blob/dev/scripts/appcenter/post-build.sh#L9):
 
 ```
 # Read settings from taito-config.sh
@@ -27,33 +19,38 @@ taito_target_env=$APPCENTER_BRANCH
 . ./taito-config.sh
 ```
 
-#### Personal and organizational settings
+### Common settings in personal or organizational configuration file
 
-* **taito_image:** Taito-cli docker image (`taitounited/taito-cli:latest` by default).
-* **taito_zone:** Default taito zone. You can usually leave this empty.
-* **taito_global_extensions:** Globally enabled extensions. You can reference an extension using a local file path, git repository path or an url to a **tar.gz** archive.
-* **taito_global_plugins:** Globally enabled plugins.
+The following settings are shared among plugins. All of them are optional.
 
-> TIP: See `README.md` file of [plugins](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) named with the `global` suffix. Those plugins are designed to be used globally and thus, you configure them in your personal or organization specific configuration file.
+* **taito_image:** Taito-cli Docker image that is used for running the taito-cli commands. The default value is `taitounited/taito-cli:latest`.
+* **taito_zone:** The default taito zone. You can usually leave this empty.
+* **taito_global_extensions:** Globally enabled taito-cli extensions. You can reference an extension by using a local file path, git repository path or an url to a **tar.gz** archive. TODO example values.
+* **taito_global_plugins:** Globally enabled taito-cli plugins.
 
-#### Project specific settings
+[Plugins](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) named with a `-global` suffix are designed to be used globally. That is, you configure them in your personal or organizational configuration file.
 
-Taito-cli settings:
+### Common settings in project specific configuration file
 
-* **taito_image:** Taito-cli docker image (`taitounited/taito-cli:latest` by default).
-* **taito_version:** Version of the taito configuration file syntax. It is used to provide backwards compatibility in case breaking changes are introduced in taito-config.
-* **taito_extensions:** Enabled extensions. You can reference an extension using a local file path (relative to the project root directory), git repository path or an url to a **tar.gz** archive.
-* **taito_plugins:** Enabled plugins.
+The following settings are shared among plugins. All of them are optional.
+
+Basic settings:
+
+* **taito_image:** Taito-cli Docker image that is used for running the taito-cli commands. The default value is `taitounited/taito-cli:latest`.
+* **taito_version:** Version of the taito configuration file syntax. It is used to provide backwards compatibility in case taito-cli implementation is changed. The current version is `1`.
+* **taito_extensions:** Enabled taito-cli extensions. You can reference an extension using a local file path (relative to the project root directory), git repository path or an url to a **tar.gz** archive. TODO example values.
+* **taito_plugins:** Enabled taito-cli plugins.
 
 Project labeling:
 
 * **taito_organization:** Name of the organization that is hosting the project.
 * **taito_organization_abbr:** Organization name abbreviation.
 * **taito_project:** Name of the project.
-* **taito_company:** Company of the project (customer).
-* **taito_family:** Product family of the project.
+* **taito_project_abbr:** Project name abbreviation.
+* **taito_company:** Company of the project (customer company).
+* **taito_family:** Product family name of the project (you can usually leave this empty)
 * **taito_application:** Application name.
-* **taito_suffix:** Additional suffix (e.g. `api`)
+* **taito_suffix:** Additional suffix, for example `api` (you can usually leave this empty)
 
 Assets:
 
@@ -68,14 +65,14 @@ URLs:
 * **taito_domain:** Domain name for your application. For example `my-project-dev.mydomain.com`.
 * **taito_app_url:** URL of the application web user interface. For example `https://my-project-dev.mydomain.com`.
 * **taito_admin_url:** URL of the administration web user interface. For example `https://my-project-dev.mydomain.com/admin/`.
-* **taito_cdn_url:** Public base URL for static CDN assets, if static assets are published to a separate CDN. For example `https://cdn-dev.mydomain.com/my-project-dev/`.
+* **taito_static_url:** Public base URL for static assets, if static assets are published to another location than the application domain. For example `https://cdn-dev.mydomain.com/my-project-dev/`.
 
 Provider and namespaces:
 
-* **taito_provider:** Provider (e.g. `aws`, `azure`, `gcloud`, `bare`).
+* **taito_provider:** Provider (e.g. `aws`, `azure`, `gcloud`, `onpremise`).
 * **taito_provider_region:** Region of the provider.
 * **taito_provider_zone:** Zone of the provider.
-* **taito_zone:** Taito zone that contains the clusters/services that your application is deployed on. (TODO explain taito zone).
+* **taito_zone:** Taito zone that contains the clusters/services that your application is deployed on. TODO explain taito zone.
 * **taito_namespace:** Namespace for the project (For example a Kubernetes namespace).
 * **taito_resource_namespace:** Namespace for additional project specific resources (e.g. AWS, Azure or Google Cloud project name).
 
@@ -124,8 +121,14 @@ Continuos integration settings:
 * **ci_exec_test_init:** Run 'init --clean' before each test suite (true/false).
 * **ci_exec_revert:** Revert deploy automatically on fail (true/false).
 * **ci_static_assets_location:** Location where the static assets should be published (e.g. storage bucket).
-`
-#### Environment specific project settings
+
+### Plugin specific settings
+
+Plugin specific settings are prefixed with the plugin name and documented in README.md file of [each plugin](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md).
+
+*TODO: Write README.md for each plugin.*
+
+### Environment specific project settings
 
 You can use bash script constructs to define different values for different environments, for example:
 
@@ -150,7 +153,7 @@ case $taito_env in
 esac
 ```
 
-#### Feature environments
+### Feature environments
 
 > TODO: feature environment support is still work-in-progress
 
@@ -169,7 +172,7 @@ You can also create an environment for your your feature branch. See the example
       ...
       ...
       dev|f-orders)
-        # settings for development and feature/orders
+        # settings for dev and feature/orders
         ;;
       ...
       ...
@@ -180,9 +183,9 @@ You can also create an environment for your your feature branch. See the example
 
 3. Push some changes to `feature/orders` branch and your application should be deployed automatically.
 
-#### Alternative environments
+### Alternative environments
 
-You can create a **canary environment** by renaming `canary` environment to `prod` at the beginning of the project specific configuration file (see the example below). This means that the canary release is deployed to the same namespace as production, and it also uses all the same resources as production (database, storage, 3rd party services).
+You can create a **canary environment** by renaming `canary` environment to `prod` at the beginning of the project specific configuration file (see the example below). This means that the canary release is deployed to the same cluster and namespace as production, and it also uses all the same resources as production (database, storage, 3rd party services).
 
 ```
 # Environments
@@ -205,7 +208,7 @@ case $taito_env in
 esac
 ```
 
-#### Alternative environments
+### Alternative environments
 
 You can make an alternative environment for A/B testing the same way that you do with canary. In the following example the `feature/orders-b` uses resources of production environment. Thus, you can do A/B testing in production by routing some of the users to the `feature/orders-b` release that is running side-by-side with the production version.
 
@@ -230,15 +233,15 @@ case $taito_env in
 esac
 ```
 
-#### Test suite parameters
+### Test suite parameters
 
-You can pass parameters for your e2e and integration test suites using the `test_TARGET` prefix. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of kubernetes-template for examples.
+You can define parameters for your e2e and integration test suites by using `test_TARGET_` as prefix. See the end of [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) file of kubernetes-template as an example.
 
-#### Secret management
+### Secret management
 
 Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of kubernetes-template for examples.
 
-Secret naming convention is secret_name.property_name[/namespace]:generation_method*. For example:
+Secret naming convention is **name.property[/namespace]:method**. For example:
 
 * *silicon-valley-prod-basic-auth.auth:htpasswd*: User credentials for basic authentication. Use `htpasswd-plain` instead of `htpasswd` if you want to store the passwords in plain text (e.g. for development purposes).
 * *silicon-valley-prod-twilio.apikey:manual*: API key for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.

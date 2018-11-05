@@ -490,13 +490,13 @@ PROJECT: HOUR REPORTING
   hours pause:
     Pause the timer
 
-  hours stop [DESCRIPTION]
+  hours stop
     Stop the timer and create an hour entry. You'll be asked for a description
     once you run the command. If hour reporting system has multiple tasks
     configured for the project in question, you also need to choose one of the
     tasks.
 
-  hours add: hours [WEEKDAY|today|yesterday] [DESCRIPTION]
+  hours add: hours [WEEKDAY|today|yesterday]
     Add an hour entry. You'll be asked for a description once you run the
     command. If hour reporting system has multiple tasks configured for the
     project in question, you also need to choose one of the tasks.

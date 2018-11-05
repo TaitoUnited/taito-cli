@@ -4,9 +4,9 @@
 
 ### The basics
 
-You can implement your plugin with almost any programming language. The only requirement is that your plugin provides taito command implementations as executable files. Bash is good for simple plugins. Python or Go is preferred for more complex stuff. And you can use JavaScript too.
+You can implement your plugin with almost any programming language. The only requirement is that your plugin provides taito command implementations as executable files. Bash is a good choice for a simple implementation that gets the job done by calling an existing command line tool. Python or JavaScript are preferred for more complex stuff, especially if you need to interract with a REST/JSON API.
 
-> See [project-and-extension](https://github.com/TaitoUnited/taito-cli/tree/dev/examples/project-and-extension) as an example. It is a project that uses a custom extension.
+> See [project-and-extension](https://github.com/TaitoUnited/taito-cli/tree/dev/examples/project-and-extension) as an example. It is a project that uses a custom extension that is located in the project subdirectory. TODO examples for Python and JavaScript.
 
 This is how you implement your own custom plugin:
 
@@ -78,10 +78,8 @@ Now you should be able to call `taito my command`. And when you call `taito env 
 
 Note that you can also add a project specific extension to your project subdirectory and reference it like this in *taito-config.sh*:
 
-    ```
     taito_extensions="./scripts/my-extension"
     taito_plugins="my-plugin"
-    ```
 
 NOTE: Always remember to call the next command of the command chain at some point during command execution (usually at the end) unless you want to stop the command chain execution:
 

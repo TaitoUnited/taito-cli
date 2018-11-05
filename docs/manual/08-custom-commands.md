@@ -2,7 +2,7 @@
 
 You can run any script defined in your project root *package.json* or *makefile* with taito-cli. Just add scripts to your file, and enable the `npm` or `make` plugin in your taito-config.sh. Thus, you can use *taito-cli* with any project, even those that use technologies that are not supported by any of the existing taito-cli plugins.
 
-> NOTE: When adding commands to your package.json or makefile, you are encouraged to follow the predefined command set that is shown by running `taito -h`. The main idea behind *taito-cli* is that the same predefined command set works from project to project, no matter the technology or infrastructure. For example:
+> When adding commands to your package.json or makefile, you are encouraged to follow the predefined command set that is shown by running `taito -h`. The main idea behind *taito-cli* is that the same predefined command set works from project to project, no matter the technology or infrastructure. For example:
 
     "taito-install": "npm install && ant retrieve",
     "start": "java -cp . com.domain.app.MyServer",
@@ -27,7 +27,7 @@ You can also override any existing taito-cli command in your file by using `tait
 
     "taito-init": "less init.txt; taito -z init"
 
-> NOTE: Instead of custom commands, you can also implement a set of taito-cli plugins for the infrastructure in question (see the next chapter).
+> Instead of custom commands, you can also implement a set of taito-cli plugins for the infrastructure in question (see the next chapter).
 
 ---
 

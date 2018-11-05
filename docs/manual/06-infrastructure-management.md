@@ -10,7 +10,7 @@ You can manage your zone using the following commands:
     taito zone maintenance    # Execute supervised maintenance tasks interactively.
     taito zone destroy        # Destroy the zone.
 
-> Do not confuse taito zones with cloud provider regions and zones. Each taito zone may use multiple cloud provider regions and zones to achieve high availability and regional resiliency. Taito zones are created mainly based on maintainability and security concerns instead.
+Do not confuse taito zones with cloud provider regions and zones. Each taito zone may use multiple cloud provider regions and zones to achieve high availability and regional resiliency. Taito zones are created mainly based on maintainability and security concerns instead.
 
 ---
 

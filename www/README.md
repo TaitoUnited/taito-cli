@@ -28,9 +28,9 @@ Working with modern hybrid cloud environments requires lots of tools. Taito-cli 
 
 Use preconfigured templates to set up your infrastructure and to deploy new projects on top of it. Everything works out-of-the-box with minimal configuration.
 
-### Enforce conventions
+### Uniform conventions
 
-Enforce good and uniform conventions by providing reusable project templates. Enforce version control conventions with the taito version control commands, and customize your version control workflow, if necessary.
+Maintain good and uniform conventions by providing reusable project templates. Enforce version control conventions with the taito version control commands. Customize your version control workflow, if necessary.
 
 ## Tabs on top of the page
 

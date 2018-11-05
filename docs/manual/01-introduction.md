@@ -4,25 +4,30 @@
 
 Taito command line interface is an extensible toolkit for developers and DevOps personnel. It defines a standard set of commands that can be used in any project no matter the technology or infrastructure. Thus, developers and DevOps personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
-Some examples:
+Example:
 
 ```
-taito vc feat list              # List all feature branches
-taito vc feat: orders           # Switch to 'feature/orders' branch (and create it first, if it does not exist already)
-taito install                   # Install linters and other dependencies
-taito start                     # Start the local development environment
-taito init                      # Initialize the local database with database tables and development data
-taito open app                  # Open application web UI running on local environment
-taito info                      # Show user credentials required for signing in
-taito vc feat merge             # Rebase, merge and delete the current feature branch, switch back to dev branch.
-taito open builds               # Show build status on browser
-taito status:dev                # Show status of dev environment
-taito open app:dev              # Open application web UI running on dev environment
-taito logs:worker:dev           # Tail logs of worker container running on dev environment
-taito db connect:dev            # Connect to the dev environment database
-taito vc env merge: dev canary  # Merge changes between multiple environments: dev -> ... -> canary
-taito open logs:canary          # Open canary environment logs on browser
-taito hours add: 6.5            # Add an work hour entry for current project (to multiple systems if necessary)
+taito zone apply                   # Setup your infrastructure (e.g. Kubernetes and database clusters)
+...
+taito project create: my-template  # Create a new project based on a reusable template
+taito install                      # Install linters and other dependencies on host
+taito start                        # Start the local development environment
+taito init                         # Initialize the local database with database tables and development data
+taito open app                     # Open application web UI running on local environment
+taito info                         # Show user credentials required for signing in
+taito vc feat: posts               # Switch to 'feature/posts' branch (and create it, as it does not exist yet)
+taito vc feat merge                # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch.
+taito env apply:dev                # Create dev environment
+taito env apply:test               # Create test environment
+taito env apply:canary             # Create canary environment
+taito open builds                  # Show build status on browser
+taito status:dev                   # Show status of dev environment
+taito open app:dev                 # Open application web UI running on dev environment
+taito logs:server:dev              # Tail logs of server container running on dev environment
+taito db connect:dev               # Connect to the dev environment database
+taito vc env merge: dev canary     # Merge changes between environments: dev -> test -> canary
+taito open logs:canary             # Open canary environment logs on browser
+taito hours add: 6.5               # Add an work hour entry for today for the current project (to 1-N hour reporting systems)
 ```
 
 For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt) or run `taito -h`.
