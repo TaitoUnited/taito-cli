@@ -1,3 +1,0 @@
-# Travis
-
-TODO Travis plugin

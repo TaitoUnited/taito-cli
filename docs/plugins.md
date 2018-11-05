@@ -85,9 +85,10 @@ CI/CD plugins typically implement the following commands:
 Plugins:
 
 * [gcloud-builder](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-builder/README.md): Use Google Cloud Build as your CI/CD pipeline.
+* [github-actions](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-actions/README.md): Use GitHub actions as your CI/CD pipeline.
+* [gitlab-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-ci/README.md): Use GitLab CI/CD as your CI/CD pipeline.
 * [jenkins](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jenkins/README.md): Use Jenkins as your CI/CD pipeline.
 * [spinnaker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/travis/README.md): Use Spinnaker as your CI/CD pipeline.
-* [travis](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/travis/README.md): Use Travis as your CI/CD pipeline.
 
 ## Databases
 
@@ -126,6 +127,7 @@ Project infrastructure management plugins typically implement the following comm
 
 Plugins:
 
+* [ansible](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ansible/README.md)
 * [terraform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/terraform/README.md)
 
 ## Infrastructure management for zones
@@ -134,12 +136,18 @@ Zone infrastructure management plugins typically implement the following command
 
 * `taito zone *`: Manage zone with taito-cli commands.
 
-Plugins:
+Tool plugins:
 
+* [ansible-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ansible-zone/README.md)
 * [helm-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm-zone/README.md)
 * [kubectl-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl-zone/README.md)
-* [gcloud-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-zone/README.md)
 * [terraform-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/terraform-zone/README.md)
+
+Cloud provider plugins:
+
+* [aws-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-zone/README.md)
+* [azure-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-zone/README.md)
+* [gcloud-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-zone/README.md)
 
 ## Issue management
 
@@ -167,7 +175,7 @@ Plugins:
 
 Plugins:
 
-* [gcloud-monitoring](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-monitoring/README.md): Sets up uptime monitoring and log alert rules on (TODO `taito env finalize`? or just released=true + env apply).
+* [gcloud-monitoring](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-monitoring/README.md): Sets up uptime monitoring and log alert rules on (TODO `taito env finalize`? or just released=true + env apply). You can use Stackdriver also with AWS. TODO how about Azure?
 * [sentry](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sentry/README.md): Creates a Sentry project on `taito project apply`.
 
 You can open monitoring systems on your browser with the following commands, if the links have been configured in `taito-config.sh` file of your project.

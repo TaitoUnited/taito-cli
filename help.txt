@@ -98,13 +98,13 @@ QUICK EXAMPLES
     vc env list              # List all environment branches
     vc env: dev              # Switch to the dev environment branch
     vc env merge             # Merge current env branch to the next env branch
-    vc env merge: dev stag   # Merge changes: dev -> ... -> stag
+    vc env merge: dev stag   # Merge changes between envs: dev -> ... -> stag
     vc feat list             # List all feature branches
-    vc feat: pricing         # Switch to the pricing feature branch
-    vc feat rebase           # Rebase feature branch with the original branch
+    vc feat: pricing         # Switch to feature/pricing (create if not exists)
+    vc feat rebase           # Rebase current feature branch with the original
     vc feat merge            # Merge current feature branch to the original
-    vc feat pr               # Create a pull-request for current feature branch
-    vc feat squash           # Merge short-lived feature as a single commit
+    vc feat pr               # Create a pull-req for the current feature branch
+    vc feat squash           # Merge current feature branch as a single commit
     vc commit revert         # Revert the latest commit by creating a new commit
     vc commit undo           # Undo latest commit from local and remote branch
     vc commit erase          # Erase latest commit from loc/rem branch and files
