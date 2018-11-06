@@ -4,7 +4,7 @@ By default only the *basic* plugin is enabled. You can configure your personal s
 
 Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of kubernetes-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control. *TODO: `taito-user-config.sh` is named `taito-run-env.sh` in the current taito-cli implementation and it is used only for `docker-compose up`.*
 
-Settings are defined as environment variables. If an environment variable can contain multiple values, just give them separated by whitespace, for example:
+Settings are defined as environment variables. If an environment variable contains multiple values, just write them using whitespace as delimiter, for example:
 
 ```
 taito_environments="dev test canary prod"
@@ -183,7 +183,7 @@ You can also create an environment for your your feature branch. See the example
 
 3. Push some changes to `feature/orders` branch and your application should be deployed automatically.
 
-### Alternative environments
+### Canary environment
 
 You can create a **canary environment** by renaming `canary` environment to `prod` at the beginning of the project specific configuration file (see the example below). This means that the canary release is deployed to the same cluster and namespace as production, and it also uses all the same resources as production (database, storage, 3rd party services).
 

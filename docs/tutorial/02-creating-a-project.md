@@ -14,7 +14,6 @@ taito project create: kubernetes-template
 ```shell
 # Or create the project using default settings of an organization:
 taito -o ORGANIZATION project create: TaitoUnited/server-template
-# NOTE: TaitoUnited/server-template does not work yet
 ```
 ---
 

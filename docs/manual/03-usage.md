@@ -2,9 +2,9 @@
 
 ### The basics
 
-Taito-cli is configured with a `taito-config.sh` file placed at your project root directory. You can execute taito commands anywhere in the project directory hierarchy, that is, at the project root directory or any of its subdirectories. If you are not located inside a project directory, only global taito-cli plugins are enabled and therefore only a small subset of taito commands are enabled.
+Taito-cli is configured with a `taito-config.sh` file placed at your project root directory. You can execute taito commands anywhere in the project directory hierarchy, that is, at the project root directory or any of its subdirectories. When you are not located inside a project directory, only global taito-cli plugins are enabled and therefore only a small subset of taito commands are enabled.
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito vc feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for taito-cli commands, if you installed the autocompletion support.
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito vc feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for taito-cli commands, if you have installed the autocompletion support.
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito --auth:dev`). Note that your credentials are saved on the taito-cli container image, as you don't need them lying on your host file system anymore.
 
@@ -22,7 +22,7 @@ If you work for multiple organizations, you may define organization specific ove
 
 You can execute project specific commands also outside the project directory with the `-p` option, for example `taito -p my-project open logs:prod`. This works only if you have configured `git_organization` setting in you personal or organizational `taito-config.sh` file.
 
-You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use docker hub to build a custom image that is dependent on one of the taito-cli images, or make a request for adding the tool to the original taito-cli image.
+You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use Docker Hub to build a custom image that is dependent on one of the taito-cli images, or make a request for adding the tool to the original taito-cli image.
 
 > TIP: If the kubectl plugin is enabled, you can run `taito --auth:ENV` to set the default context for kubectl (Kubernetes cluster and namespace). After that you can execute a bunch of kubectl commands, and all of them will execute in the default context previously set by the auth command. For example: `taito -- kubectl get secrets`, `taito -- kubectl get secret my-secret -o yaml`.
 
