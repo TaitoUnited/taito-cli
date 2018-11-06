@@ -1,6 +1,10 @@
 ## 7. Environment variables and secrets
 
-TODO describe docker-compose.yaml, helm.yaml and helm-ENV.yaml
+TODO describe:
+
+* docker-compose.yaml
+* scripts/helm.yaml
+* scripts/helm-ENV.yaml
 
 ### 7.1. Define an environment variable: same value for all environments
 
@@ -84,11 +88,11 @@ taito env rotate:test my-secret
 taito env rotate:prod my-secret
 ```
 
-> TODO: How to use the same secret value for local and dev environment without committing it to git.
+> TODO: Describe how to use the same secret value for local and dev environment without committing it to git.
 
 ### 7.5. User specific variables
 
-
+TODO
 
 ---
 

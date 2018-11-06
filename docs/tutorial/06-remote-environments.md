@@ -1,7 +1,14 @@
 ## 6. Remote environments
 
-TODO describe each environment
-TODO also staging
+TODO describe environments:
+
+* **f-NAME:** feature
+* **local:** local development
+* **dev:** development
+* **test:** testing
+* **stag:** staging
+* **canary:** canary (runs side-by-side with production)
+* **prod:** production
 
 ### 6.1. Create dev environment
 
@@ -25,16 +32,16 @@ taito open storage:dev         # Open storage bucket
 taito open logs:dev            # Open logs
 ```
 
-> The first CI/CD build will take some time. Subsequent builds are faster as they use the previous build as cache.
+The first CI/CD build will take some time. Subsequent builds are faster as they use a previous build as cache.
 
 ### 6.2. Enable automatic integration and e2e tests for dev environment
 
 1) Enable `ci_exec_test` for `dev` environment in `taito-config.sh`:
 
-```bash
-# NOTE: enable tests once you have implemented some integration or e2e tests
-ci_exec_test=true
-```
+    ```bash
+    # NOTE: enable tests once you have implemented some integration or e2e tests
+    ci_exec_test=true
+    ```
 
 2) Push the change to dev branch: `git push`
 3) See build and test execution with `taito open builds`

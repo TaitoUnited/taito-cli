@@ -1,5 +1,7 @@
 ## 5. Project management
 
+> TODO: These commands have not yet been implemented.
+
 ### 5.1. Issues
 
 Whether you are working alone or as a team, it's best to document, coordinate and prioritize the work somehow. Taito-cli provides you commands that you can use to quickly manage issues directly from command line.

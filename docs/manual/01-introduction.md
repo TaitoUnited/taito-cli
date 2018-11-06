@@ -16,7 +16,7 @@ taito init                         # Initialize the local database with database
 taito open app                     # Open application web UI running on local environment
 taito info                         # Show user credentials required for signing in
 taito vc feat: posts               # Switch to 'feature/posts' branch (and create it, as it does not exist yet)
-taito vc feat merge                # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch.
+taito vc feat merge                # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
 taito env apply:dev                # Create dev environment
 taito env apply:test               # Create test environment
 taito env apply:canary             # Create canary environment
