@@ -29,16 +29,23 @@ const shouldSendToPerson = (build) => {
   return failStatus.indexOf(build.status) !== -1;
 };
 
-const shortProjectName = (repoName) => {
-  return repoName.split('-').slice(2).join('-');
+const shortName = (repoName) => {
+  if (repoName.startsWith('github-')) {
+    return repoName.split('-').slice(2).join('-');
+  }
+  if (repoName.startsWith('github_')) {
+    return repoName.split('_').slice(2).join('_');
+  }
+  return repoName;
 };
 
 // subscribe is the main function called by Cloud Functions.
 module.exports.subscribe = (event, callback) => {
   const build = eventToBuild(event.data.data);
   const buildsChannel = config.BUILDS_CHANNEL;
+  const shortRepoName = shortName(build.source.repoSource.repoName);
   const project = projects[build.source.repoSource.repoName] ||
-    projects[shortProjectName(build.source.repoSource.repoName)];
+    projects[shortRepoName];
 
   console.log(`Repository: ${build.source.repoSource.repoName}`);
 
@@ -46,7 +53,7 @@ module.exports.subscribe = (event, callback) => {
   // from the repository name and try to use it as a channel name.
   const projectChannel = project && project.slackChannel
     ? project.slackChannel
-    : build.source.repoSource.repoName.split('-')[2];
+    : shortRepoName.split('-')[0];
 
   // Send message to the project channel
   if (projectChannel && shoudSendToProjectChannel(build)) {
@@ -102,7 +109,7 @@ const createSlackMessage = (build, channel, project) => {
     channel,
     icon_emoji,
     icon_url,
-    text: shortProjectName(build.source.repoSource.repoName)
+    text: shortName(build.source.repoSource.repoName)
       + ': *' + build.source.repoSource.branchName + '*',
     mrkdwn: true,
     attachments: [
