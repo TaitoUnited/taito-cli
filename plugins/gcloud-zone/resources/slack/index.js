@@ -51,15 +51,17 @@ module.exports.subscribe = (event, callback) => {
 
   // If project channel has not been configured, we determine customer name
   // from the repository name and try to use it as a channel name.
-  const projectChannel = project && project.slackChannel
-    ? project.slackChannel
-    : shortRepoName.split('-')[0];
+  const projectChannels = project && project.slackChannel
+    ? [ project.slackChannel ]
+    : [ shortRepoName, shortRepoName.split('-')[0] ];
 
-  // Send message to the project channel
-  if (projectChannel && shoudSendToProjectChannel(build)) {
-    console.log(`Sending message to project channel: ${projectChannel}`);
-    const message = createSlackMessage(build, projectChannel, project);
-    new IncomingWebhook(config.SLACK_WEBHOOK_URL).send(message);
+  // Send message to the project channels
+  if (shoudSendToProjectChannel(build)) {
+    projectChannels.each(projectChannel => {
+      console.log(`Sending message to project channel: ${projectChannel}`);
+      const message = createSlackMessage(build, projectChannel, project);
+      new IncomingWebhook(config.SLACK_WEBHOOK_URL).send(message);
+    });
   }
 
   // Send message to the person who broke the build
