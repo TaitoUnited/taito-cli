@@ -293,7 +293,7 @@ fi
 link_flags=""
 if [[ "${taito_env}" == "local" ]] && \
    [[ "${command}" != "db-add"* ]] && \
-   [[ " ${taito_plugins} " == *"-db "* ]] && \
+   [[ " ${taito_plugins} " == *"-db"* ]] && \
    [[ " ${params[@]} " != *" -h "* ]] && \
    [[ " ${params[@]} " != *" --help "* ]] && \
    (
