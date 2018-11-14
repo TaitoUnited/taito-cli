@@ -34,7 +34,9 @@ Officially recommended project templates are listed below. All of them include t
 
 * [kubernetes-template-alt](https://github.com/TaitoUnited/server-template-alt): Alternative stack components for the kubernetes-template. With these you can easily implement your application or API with any technology that fits your requirements. TODO rename the git repository.
 
-* [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template): Run serverless functions on any cloud provider using either the Serverless Framework or the full Serverless Platform. Support for [Istio](https://istio.io/) will be added later, making it possible to connect all your microservices together no matter where they are deployed.
+* [serverless-template](https://github.com/TaitoUnited/serverless-template): This is essentially the same as [kubernetes-template](https://github.com/TaitoUnited/server-template), but Kubernetes has been replaced with the [Serverless Framework](https://serverless.com/framework/). Using this template you can easily deploy serverless functions on any cloud provider. Support for [Istio](https://istio.io/) will likely be added later, making it possible to connect all your microservices together no matter where they have been deployed.
+
+* [legacy-server-template](https://github.com/TaitoUnited/legacy-server-template): This is essentially the same as [kubernetes-template](https://github.com/TaitoUnited/server-template), but software is run directly on host instead of containers on remote environments. Docker Compose is, however, used for local development. You can use this template as an example when you need to configure taito-cli for your existing legacy server application.
 
 * [website-template](https://github.com/TaitoUnited/website-template): Implement a website with a static site generator of your choice (e.g. Gatsby, Hugo or Jekyll). Deploy the website to Kubernetes, GitHub Pages, Netlify, or any S3-compatible object storage with CDN support (AWS, Azure, Google Cloud, DigitalOcean). Setup an automated multistage publishing process for the website. Optionally use the Netlify CMS to edit your site. You can easily run the [kubernetes-template](https://github.com/TaitoUnited/server-template) or the [serverless-platform-template](https://github.com/TaitoUnited/serverless-platform-template)
 alongside with this template to implement dynamic functionality to your website.
@@ -49,8 +51,6 @@ alongside with this template to implement dynamic functionality to your website.
 
 * TODO desktop-app-template: electron, javafx, ...
 
-* [npm-template](https://github.com/TaitoUnited/npm-template): Template for npm libraries.
+* [npm-template](https://github.com/TaitoUnited/npm-template): Template for npm libraries. Includes monorepo support.
 
 * TODO tool-template
-
-* [legacy-server-template](https://github.com/TaitoUnited/legacy-server-template): Template for applications and APIs running on server without container or serverless based technologies. Use this template as an example when you configure taito-cli for your existing legacy server application.

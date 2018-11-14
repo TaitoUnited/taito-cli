@@ -4,4 +4,4 @@ TODO Creating a taito-cli plugin.
 
 ---
 
-**Next:** [APPENDIX A: Modern infrastructure](a-modern-infrastructure.md)
+**Next:** [APPENDIX A: Modern server infrastructure](a-modern-server-infrastructure.md)

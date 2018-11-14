@@ -27,7 +27,7 @@ A **taito zone** provides infrastructure that your projects are deployed on. The
 
 Do not confuse taito zones with cloud provider regions and zones. One **taito zone** may use multiple cloud provider regions and zones to achieve high availability and regional resiliency.
 
-If you want to know more, see [Appendix A: Modern infrastructure](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-modern-infrastructure.md).
+If you want to know more, see [Appendix A: Modern server infrastructure](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-modern-server-infrastructure.md).
 
 TODO:
 * use some text from the old example.

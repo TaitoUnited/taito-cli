@@ -57,7 +57,7 @@ module.exports.subscribe = (event, callback) => {
 
   // Send message to the project channels
   if (shoudSendToProjectChannel(build)) {
-    projectChannels.each(projectChannel => {
+    projectChannels.forEach(projectChannel => {
       console.log(`Sending message to project channel: ${projectChannel}`);
       const message = createSlackMessage(build, projectChannel, project);
       new IncomingWebhook(config.SLACK_WEBHOOK_URL).send(message);

@@ -37,7 +37,7 @@ TODO
 
 For now, you should commit all your changes to the dev branch as feature branches are introduced only later in the tutorial.
 
-All commit messages must be structured according to the [Conventional Commits](http://conventionalcommits.org/) convention as application version number and release notes are generated automatically during release by the [semantic-release](https://github.com/semantic-release/semantic-release) library. Commit messages are automatically validated on commit, and thus, your commit will fail if you don't follow the convention.
+All commit messages must be structured according to the [Angular git commit convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines) (see also [Conventional Commits](http://conventionalcommits.org/)). This is because application version number and release notes are generated automatically for production release by the [semantic-release](https://github.com/semantic-release/semantic-release) library.
 
 Some commit message examples:
 

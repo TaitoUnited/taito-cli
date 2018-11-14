@@ -1,4 +1,4 @@
-## APPENDIX A: Modern infrastructure
+## APPENDIX A: Modern server infrastructure
 
 TODO explain very briefly:
 

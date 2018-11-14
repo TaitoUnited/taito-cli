@@ -1,5 +1,13 @@
 ## APPENDIX B: Code structure
 
+TODO:
+
+* DRY
+* KISS
+* YAGNI
+* GRASP
+* SOLID
+
 An implementation should be divided in loosely coupled highly cohesive parts by using a modular directory structure. Some benefits of this kind of structure:
 
 * When making a change, it's easier to see how widely the change might affect the application.

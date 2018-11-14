@@ -12,6 +12,17 @@ The following software needs to be installed on your computer before you can ins
 
 You can install bash-like shell on Windows either by installing [cygwin](https://www.cygwin.com/) or the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about). Cygwin is probably the better option of the two since Docker cannot use the Linux file system effectively on Windows. Configure your system in that way you can call `git`, `docker` and `docker-compose` commands directly from shell. Also make sure that `pkill` command is available. You can install it on cygwin by running `apt-cyg install procps-ng`.
 
+TODO existing problems with cygwin:
+
+1. Required before git clone: `git config --global core.autocrlf input`
+2. Because of `docker -it`, docker command should be prefixed with `winpty`, but it does not exist in `cygwin`
+3. taito cannot find any `taito-config.sh` files --> some problems with mount directory paths?
+4. /taito-cli/util/execute-on-host.sh: line 16: /home/taito/.taito/tmp/taito-cli.RAESzA: No such file or directory
+
+TODO would Git BASH suffice? winpty works with it, but there are issues with windows paths and the symlink does not work.
+
+TODO ssh preferred on git clone
+
 > WARNING: taito-cli has not been tested on Windows yet.
 
 ### Linux / macOS / Windows with cygwin
