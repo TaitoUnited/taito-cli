@@ -36,8 +36,15 @@ fi
 export taito_build_image_tag="${image}"
 export taito_build_version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)
 
+function cleanup {
+  rm -f scripts/*.tmp
+}
+
 # Deploy chart located in ./scripts/helm
+# TODO: shoulfd we return with error code if ./scripts/helm not found?
 if [[ -d "./scripts/helm" ]]; then
+  trap cleanup EXIT
+
   helm_deploy_options="${helm_deploy_options:-}"
 
   # Substitute environment variables in helm.yaml
@@ -100,6 +107,4 @@ if [[ -d "./scripts/helm" ]]; then
       ${helm_deploy_options:-} \
       "${taito_project}-${taito_target_env}" "./scripts/helm"
   )
-
-  rm -f scripts/*.tmp
 fi
