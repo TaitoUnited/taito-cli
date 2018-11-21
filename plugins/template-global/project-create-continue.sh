@@ -24,7 +24,7 @@ read -r && \
 
 echo "Please wait..." && \
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-  export GIT_PAGER="" && \
+  export GIT_PAGER='' && \
   git init -q && \
   git add . && \
   git commit -q -m 'First commit' && \

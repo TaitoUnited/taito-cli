@@ -34,7 +34,7 @@ echo export taito_vc_repository="${taito_vc_repository:?}" >> _template-config.s
 rm -rf "${template_project_path}/template-tmp"
 mkdir "${template_project_path}/template-tmp"
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-  export GIT_PAGER="" && \
+  export GIT_PAGER='' && \
   git clone -q -b master --single-branch --depth 1 \
     ${template_source_git}/${template}.git ./template-tmp/${template} && \
   taito -o '${taito_organization_param:-}' -c project-migrate-continue"

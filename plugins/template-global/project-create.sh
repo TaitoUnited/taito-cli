@@ -15,7 +15,7 @@ echo
 echo "Please wait..."
 
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\
-  export GIT_PAGER="" && \
+  export GIT_PAGER='' && \
   git clone -q -b master --single-branch --depth 1 ${template_source_git}/${template}.git ${taito_vc_repository:?} && \
   cd ${taito_vc_repository} && \
   # Write project migrate settings to a temporary config file
