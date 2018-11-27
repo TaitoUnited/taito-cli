@@ -28,16 +28,11 @@ docker pull "${taito_image}"
 
 # Prepare taito-new image for modificaions
 docker rm taito-save taito-new &> /dev/null
-docker create --name taito-new "${taito_image}"
 
 echo "Creating taito user with local user uid and gid on taito-cli image"
-docker start taito-new &> /dev/null
-docker exec -it taito-new /bin/sh -c "\
+docker run -it --name taito-new --entrypoint /bin/sh "${taito_image}" -c "\
   /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g) && \
   /taito-cli-deps/tools/user-init.sh taito"
-
-# NOTE: just in case
-sleep 3
 
 # Copy credentials from old image
 if docker create --name taito-save "${taito_image}save" &> /dev/null; then
