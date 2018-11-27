@@ -9,6 +9,7 @@ envs=("${taito_environments:-}")
 for env in ${envs[@]}
 do
   output=$( (
+    export taito_target_env="${env}"
     export taito_env="${env}"
     set -a
     . "${taito_project_path}/taito-config.sh"
