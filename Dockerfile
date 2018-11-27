@@ -11,4 +11,6 @@ RUN npm run verify
 
 EXPOSE 5000-6000
 # USER taito
-ENTRYPOINT ["taito"]
+# ENTRYPOINT ["taito"]
+
+CMD sleep 20
