@@ -241,6 +241,14 @@ if [[ "${taito_env}" != "local" ]] && \
   exit 1
 fi
 
+# Validate vc operations
+if [[ "${taito_command}" == "vc-"* ]] && [[  "${taito_env}" != "local" ]]; then
+  echo
+  echo "ERROR: You can run version control commands only in local environment."
+  echo "Run 'taito vc -h' for more instructions."
+  exit 130
+fi
+
 # Validate zone operations
 if [[ "${taito_command}" == "zone-"* ]] && [[ "${taito_type:-}" != "zone" ]]; then
   echo
