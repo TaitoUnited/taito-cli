@@ -12,8 +12,10 @@ if [[ -n "${database_proxy_port:-}" ]]; then
       cloud_sql_proxy "-instances=${database_id}=tcp:0.0.0.0:${database_proxy_port}" \
         &> /tmp/proxy-out.tmp &
     )
+    # TODO: Implement robust wait for 'ready for connections' status
+    sleep 1
     if [[ "${taito_verbose}" == "true" ]] || [[ "${taito_mode:-}" == "ci" ]]; then
-      sleep 3
+      sleep 2
       cat /tmp/proxy-out.tmp
     fi
   else
