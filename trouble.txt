@@ -12,13 +12,20 @@ TAITO-CLI TROUBLESHOOTING
   'No space left on device'
     Try cleaning your local workspace by running 'taito workspace kill' and
     'taito workspace clean'. You can also try to enlarge the docker virtual
-    disk in your docker preferences. Also check that you have disk space on
-    your computer.
+    disk in your docker preferences. Also check that you have disk space
+    available on your computer.
 
   Taito-cli hangs after displaying the copyright notice
     First try restarting your Docker daemon. If the problem persists after
     Docker restart, try Docker reset as your Docker virtual disk might have
     been corrupted.
+
+  Some library directories (e.g. node_modules) are owned by root
+    You probably have run `taito start` before installing libraries with
+    'taito install' and library directory Docker mounts have failed because
+    of a missing directory. This problem seems to occur only on Linux.
+    Delete the directories using sudo and try again in the correct order:
+    'taito install', 'taito start'.
 
   'command not found'
     - Try running 'taito --upgrade'
@@ -43,7 +50,7 @@ TAITO-CLI TROUBLESHOOTING
     build. If it fails again, try to build production build locally by running
     'taito start --clean --prod' and then try to fix the build problem.
 
-  'Error: UPGRADE FAILED: "..." has no deployed releases
+  'Error: UPGRADE FAILED: "..." has no deployed releases'
     Helm release has been corrupted somehow. Try deleting Helm release with
     'taito env destroy:ENV helm' and then deploy the Helm release with
     'taito deployment deploy:ENV' or 'taito deployment start:ENV'.
