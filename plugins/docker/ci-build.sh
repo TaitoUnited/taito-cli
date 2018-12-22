@@ -77,9 +77,12 @@ else
     echo "- Building image"
 
     dockerfile="Dockerfile"
-    # NOTE: For backwards compatibility
     if [[ -f "${service_dir}/Dockerfile.build" ]]; then
       dockerfile="Dockerfile.build"
+    fi
+
+    if [[ -d "./shared" ]]; then
+      cp -r ./shared ${service_dir}
     fi
 
     (
