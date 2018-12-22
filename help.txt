@@ -718,8 +718,12 @@ PROJECT: AUTOMATIC CI/CD OPERATIONS
     will be skipped since all images have already been built and tested
     by some previous CI build.
 
-  ci build:TARGET[:ENV] IMAGE_TAG [PROJECT_REPOSITORY]
-    Builds image. Example: 'taito ci build:client:dev test1'.
+  ci build:TARGET[:ENV] IMAGE_TAG [BUILD_CONTEXT] [SERVICE_DIR] [PROJECT_REPOSITORY]
+    Builds image. Build context and service dir are './TARGET' by default unless
+    specified otherwise. Examples:
+    $ taito ci build:client:dev test1
+    $ taito ci build:client:dev test1 . ./client
+    $ taito ci build:client:dev test1 . ./server eu.gcr.io/my-zone/my-project
 
   ci push:TARGET[:ENV] IMAGE_TAG [PROJECT_REPOSITORY]
     Pushes image to image registry. Example: 'taito ci push:client test1'.

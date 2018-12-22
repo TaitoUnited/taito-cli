@@ -7,15 +7,32 @@
 
 name=${taito_target:?Target not given}
 image_tag=${1:-dry-run}
-image_path=${2}
+build_context=${2}
+service_dir=${3}
+image_path=${4}
 
-path_suffix=""
-if [[ "${name}" != "." ]]; then
-  path_suffix="/${name}"
+# NOTE: For backwards compatibility
+if [[ "${2}" == "eu.gcr.io"* ]]; then
+  image_path=${2}
+  build_context=${3}
+  service_dir=${4}
+fi
+
+if [[ "${build_context}" == "" ]]; then
+  build_context="./${name}"
+fi
+
+if [[ "${service_dir}" == "" ]]; then
+  service_dir="./${name}"
 fi
 
 if [[ "${image_path}" == "" ]]; then
   image_path="${taito_image_registry}"
+fi
+
+path_suffix=""
+if [[ "${name}" != "." ]]; then
+  path_suffix="/${name}"
 fi
 
 prefix="${image_path}${path_suffix}"
@@ -58,6 +75,13 @@ else
   else
     # Image does not exist. Build it.
     echo "- Building image"
+
+    dockerfile="Dockerfile"
+    # NOTE: For backwards compatibility
+    if [[ -f "${service_dir}/Dockerfile.build" ]]; then
+      dockerfile="Dockerfile.build"
+    fi
+
     (
       ${taito_setv:?}
       # Pull latest builder and production image to be used as cache
@@ -68,17 +92,17 @@ else
       # 2) Integration and e2e test executioner
       docker build \
         --target builder \
-        -f "./${name}/Dockerfile.build" \
+        -f "${service_dir}/${dockerfile}" \
         --build-arg BUILD_VERSION="UNKNOWN" \
         --build-arg BUILD_IMAGE_TAG="${image_tag}" \
         --cache-from "${image_builder}" \
         --tag "${image_builder}" \
         --tag "${image_tester}" \
-        "./${name}" && \
+        "${build_context}" && \
       # Build the production runtime
       # TODO use also latest production container as cache?
       docker build \
-        -f "./${name}/Dockerfile.build" \
+        -f "${service_dir}/${dockerfile}" \
         --cache-from "${image_builder}" \
         --cache-from "${image_latest}" \
         --build-arg BUILD_VERSION="UNKNOWN" \
@@ -86,7 +110,7 @@ else
         --tag "${image}" \
         --tag "${image_untested}" \
         --tag "${image_latest}" \
-        "./${name}"
+        "${build_context}"
     )
   fi && \
   if [[ "${taito_mode:-}" == "ci" ]]; then
