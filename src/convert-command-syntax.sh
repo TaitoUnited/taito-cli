@@ -12,16 +12,16 @@ if [[ "${args[0]}" != *"-"* ]]; then
   do
     if [[ "${arg}" == "-"* ]] || [[ ${mark_found} == "true" ]]; then
       mark_found="true"
-      space_args+=(${arg})
+      space_args+=("${arg}")
     elif [[ "${arg}" == *":"* ]] && [[ ${mark_found} == "false" ]]; then
       mark_found="true"
-      space_cmd+=(${arg})
+      space_cmd+=("${arg}")
     elif [[ ${mark_found} == "false" ]]; then
-      space_cmd+=(${arg})
+      space_cmd+=("${arg}")
     fi
   done
   space_cmd="${space_cmd[@]}"
-  args=("${space_cmd// /-}" ${space_args[@]})
+  args=("${space_cmd// /-}" "${space_args[@]}")
 fi
 
-echo "${args[@]}"
+printf "%s\\n" "${args[@]}"

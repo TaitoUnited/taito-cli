@@ -4,8 +4,6 @@
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
-command=("${@}")
-
 # Change namespace
 "${taito_plugin_path}/util/use-context.sh"
 
@@ -17,5 +15,5 @@ if [[ -z "${pod}" ]]; then
   (${taito_setv:?}; kubectl get pods)
 else
   # Kubernetes
-  (${taito_setv:?}; kubectl exec -it "${pod}" -c "${container}" -- "${command[@]}")
+  (${taito_setv:?}; kubectl exec -it "${pod}" -c "${container}" -- "${@}")
 fi

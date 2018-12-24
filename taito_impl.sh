@@ -1,13 +1,6 @@
 #!/bin/bash
 # NOTE: This bash script is run inside docker container.
 
-if [[ ! "${@}" ]]; then
-  # TODO remove
-  echo "Temporary sleep for debugging Ubuntu"
-  sleep 20
-  exit 0
-fi
-
 # Resolve paths
 # NOTE: duplicate with ./taito (taito_cli_path must be resolved before
 # other scripts can be called)

@@ -53,14 +53,12 @@ if [[ "${taito_mode:-}" == "ci" ]] && [[ "${continue}" == "false" ]]; then
   echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
 fi
 
-# Convert space command syntax to internal hyphen syntax
-# TODO
-# args=($("${taito_src_path}/convert-command-syntax.sh" ${args[@]}))
+# TODO Convert space command syntax to internal hyphen syntax
 
 # Determine command, target, env and parameters from args
 env_command="${args[0]}"
 env_command="${env_command,,}"
-params=(${args[@]:1})
+params=("${args[@]:1}")
 if [[ "${env_command}" == *":"* ]]; then
   IFS=':' read -ra ADDR <<< "${env_command}"
   for sect in "${ADDR[@]}"; do
