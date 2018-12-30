@@ -44,6 +44,7 @@ docker_env_vars="\
   -e taito_running_tests='true' \
   -e taito_target_env='${taito_target_env}' \
   -e taito_env='${taito_target_env}' \
+  -e taito_mode='${taito_mode}' \
   ${d_all_env_vars} ${d_target_env_vars}"
 export_env_vars=""
 if [[ ${e_all_env_vars} ]] || [[ ${e_target_env_vars} ]]; then
@@ -53,6 +54,7 @@ export_env_vars="\
   export taito_running_tests=true && \
   export taito_target_env=${taito_target_env} && \
   export taito_env=${taito_env} && \
+  export taito_mode=${taito_mode} && \
   ${export_env_vars}"
 
 # Determine pod
