@@ -3,16 +3,12 @@
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 : "${taito_env:?}"
+: "${taito_target_env:?}"
 : "${taito_vc_repository:?}"
 
 dir="${taito_target:?Target not given}"
 suite_filter="${1}"
 test_filter="${2}"
-
-# TODO Using remote database connection during tests does not currently
-# work because db proxy is either started on host (local development) or
-# inside taito container (ci runs), and tests are run inside the test container
-# and therefore has not access to the proxied connection.
 
 echo "# Running tests for ${dir} in ${taito_env} environment"
 echo
@@ -29,19 +25,35 @@ if [[ "${ci_exec_test_init:-}" == "true" ]]; then
 fi && \
 
 # Determine test suite parameters
-# Pass all environment variables with the "test_${dir}_" prefix for the test.
 # Creates docker parameters: -e ENV_VAR='value' -e ENV_VAR2='value2' ...
-docker_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/-e /" \
+
+# Pass all environment variables with the "test_all_" prefix for the test.
+d_all_env_vars=$(env | grep "test_all_" | grep -v "npm_package_scripts" | sed "s/^test_all_/-e /" \
   | sed "s/=/='/" | sed "s/$/'/" | tr '\n' ' ' | sed 's/.$//') && \
-export_env_vars=$(env | grep "test_${dir}_" | sed "s/^test_${dir}_/export /" \
+e_all_env_vars=$(env | grep "test_all_" | grep -v "npm_package_scripts" | sed "s/^test_all_/export /" \
   | tr '\n' ' && ' | sed 's/.$//') && \
 
-if [[ ${export_env_vars} ]]; then
-  export_env_vars="${export_env_vars} && "
-fi
+# Pass all environment variables with the "test_${dir}_" prefix for the test.
+# TODO duplicate code
+d_target_env_vars=$(env | grep "test_${dir}_" | grep -v "npm_package_scripts" | sed "s/^test_${dir}_/-e /" \
+  | sed "s/=/='/" | sed "s/$/'/" | tr '\n' ' ' | sed 's/.$//') && \
+e_target_env_vars=$(env | grep "test_${dir}_" | grep -v "npm_package_scripts" | sed "s/^test_${dir}_/export /" \
+  | tr '\n' ' && ' | sed 's/.$//') && \
 
-docker_env_vars="-e taito_running_tests='true' ${docker_env_vars}"
-export_env_vars="export taito_running_tests=true && ${export_env_vars}"
+docker_env_vars="\
+  -e taito_running_tests='true' \
+  -e taito_target_env='${taito_target_env}' \
+  -e taito_env='${taito_target_env}' \
+  ${d_all_env_vars} ${d_target_env_vars}"
+export_env_vars=""
+if [[ ${e_all_env_vars} ]] || [[ ${e_target_env_vars} ]]; then
+  export_env_vars="${e_all_env_vars} ${e_target_env_vars} && "
+fi
+export_env_vars="\
+  export taito_running_tests=true && \
+  export taito_target_env=${taito_target_env} && \
+  export taito_env=${taito_env} && \
+  ${export_env_vars}"
 
 # Determine pod
 # shellcheck disable=SC1090
@@ -80,11 +92,10 @@ if [[ "${taito_env}" != "local" ]]; then
 fi && \
 
 # Create test suite template from init and test phase commands
-template="echo 'SUITE START' && ${init_command} && ${compose_cmd} && echo 'SUITE END'" && \
+template="echo && echo '### START: SUITE' && ${init_command} && ${compose_cmd}" && \
 
 # Generate commands to be run by traversing all test suites
 commands="" && \
-echo "Reading test suites from ./${dir}/test-suites" && \
 suites=( $(grep "${suite_filter}" "./${dir}/test-suites" 2> /dev/null) ) && \
 for suite in "${suites[@]}"
 do

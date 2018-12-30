@@ -46,6 +46,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   # Read command names from package.json
   commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
 
+  # TODO refactor: this is awful!
   if [[ ${taito_skip_override} == false ]] && \
      [[ $(echo "${commands}" | grep "^taito-${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
     # Use overriding command from package.json
@@ -56,6 +57,18 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     # Use overriding command from package.json without enviroment target
     npm_command="taito-${taito_command}${target}${options}"
     skip_remaining_commands=true
+  elif [[ ${taito_skip_override} == false ]] && \
+     [[ $(echo "${commands}" | grep "^taito-host-${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
+    # Use overriding command from package.json
+    npm_command="taito-host-${taito_command}${target}:${taito_env}${options}"
+    skip_remaining_commands=true
+    run_on_host=true
+  elif [[ ${taito_skip_override} == false ]] && \
+     [[ $(echo "${commands}" | grep "^taito-host-${taito_command}${target}${options}$") != "" ]]; then
+    # Use overriding command from package.json without enviroment target
+    npm_command="taito-host-${taito_command}${target}${options}"
+    skip_remaining_commands=true
+    run_on_host=true
   elif [[ $(echo "${commands}" | grep "^${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
     # Use normal command from package.json
     npm_command="${taito_command}${target}:${taito_env}${options}"
@@ -95,8 +108,14 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     #       Perhaps some npm scripts should also be run on host to avoid
     #       compatibilty issues.
     taito_hook_command_executed=true
-    (${taito_setv:?}; npm run -s ${npm_command}${params})
-    exit_code=$?
+    if [[ "${run_on_host}" == "true" ]]; then
+      "${taito_util_path}/execute-on-host-fg.sh" "\
+        npm run -s ${npm_command}${params}"
+      exit_code=0
+    else
+      (${taito_setv:?}; npm run -s ${npm_command}${params})
+      exit_code=$?
+    fi
   fi
 
   # taito test posthandling

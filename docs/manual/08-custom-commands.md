@@ -27,6 +27,10 @@ You can also override any existing taito-cli command in your file by using `tait
 
     "taito-init": "less init.txt; taito -z init"
 
+All npm commands are run inside taito-cli by default. Use `taito-host-` prefix to run command on host instead:
+
+    "taito-host-example": "echo 'taito example' command is run on host"
+
 > Instead of custom commands, you can also implement a set of taito-cli plugins for the infrastructure in question (see the next chapter).
 
 ---

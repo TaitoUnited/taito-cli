@@ -105,9 +105,20 @@ taito_plugins_path="${taito_cli_path}/plugins" && \
 taito_src_path="${taito_cli_path}/src" && \
 taito_util_path="${taito_cli_path}/util" && \
 
+# Determine environment
+# TODO: This is a quick hack. This is done also later.
+taito_hack_env="local"
+if [[ "${args[0]}" == *":"* ]] && [[ "${args[0]}" != *":" ]]; then
+  sect="${args[0]##*:}"
+  if [[ " local dev test stag canary master " == *" ${sect} "* ]] || \
+     [[ "${sect}" == "feat-"* ]]; then
+    taito_hack_env="${sect}"
+  fi
+fi
+
 # Read personal taito-config settings
 export taito_image="taitounited/taito-cli:latest"
-. "${taito_util_path}/read-user-taito-config.sh" "local" && \
+. "${taito_util_path}/read-user-taito-config.sh" "${taito_hack_env}" && \
 
 # Pull project specific taito-config settings from git
 if [[ "${project}" ]]; then
@@ -129,7 +140,7 @@ taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
 cd "${taito_project_path}" && \
 
 # Read project specific taito-config settings
-. "${taito_util_path}/read-project-taito-config.sh" "local" && \
+. "${taito_util_path}/read-project-taito-config.sh" "${taito_hack_env}" && \
 
 # Determine enabled extensions and download missing remote extensions
 extension_local_paths=""
