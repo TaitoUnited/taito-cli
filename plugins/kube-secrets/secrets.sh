@@ -7,11 +7,14 @@ flag=${1}
 
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
 
+kubectl get secrets && \
+echo && \
+
 # shellcheck disable=SC1090
 . "${taito_plugin_path}/util/get-secrets.sh" && \
 
 # Print secret values
-echo 'Showing secrets from Kubernetes:' && \
+echo 'Showing secret values from Kubernetes:' && \
 echo && \
 rm taito-secrets.sh &> /dev/null || : && \
 secret_index=0 && \
