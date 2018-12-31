@@ -346,7 +346,7 @@ if [[ ${taito_project:-} ]]; then
         # Cancel an ongoing build for ${env} environment"
       echo "deployment deploy${param} IMAGE_TAG \
         # Deploy prebuilt version to ${env} environment"
-      echo "deployment revision${suffix} \
+      echo "deployment revisions${suffix} \
         # Show current revision of ${env} environment"
       echo "deployment revert${param} REVISION \
         # Revert application on ${env} environment to an another revision"

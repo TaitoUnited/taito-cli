@@ -228,7 +228,7 @@ if [[ ${taito_project:-} ]]; then
       echo "deployment start${suffix}"
       echo "deployment cancel${suffix}"
       echo "deployment deploy${param} IMAGE_TAG"
-      echo "deployment revision${suffix}"
+      echo "deployment revisions${suffix}"
       echo "deployment revert${param} REVISION"
 
       if [[ "${cprefix}" == "storage"* ]] || [[ "${cprefix}" == "*" ]]; then

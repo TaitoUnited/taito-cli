@@ -114,7 +114,7 @@ QUICK EXAMPLES
     deployment cancel:dev         # Cancel an ongoing dev environment ci build
     deployment build:worker:dev   # Build and deploy worker container to dev env
     deployment deploy:dev 1.1.1   # Deploy prebuilt version to dev env
-    deployment revision:dev       # Show current revision on dev env
+    deployment revisions:dev       # Show current revision on dev env
     deployment revert:dev 20      # Revert application on dev env to revision 20
 
   PROJECT TEMPLATES
@@ -702,13 +702,13 @@ PROJECT: MANUAL DEPLOYMENT OPERATIONS
     configuration. Uses the latest prebuilt version of the environment
     in question by default.
 
-  deployment revision[:ENV]
-    Show current revision.
+  deployment revisions[:ENV]
+    Show revision history.
 
   deployment revert[:ENV] [REVISION]
     Reverts application to another revision. Reverts to the previous version
     if revision has not been given as argument. You can see current revision
-    number by running `taito deployment revision[:ENV]`.
+    number by running `taito deployment revisions[:ENV]`.
 
 PROJECT: AUTOMATIC CI/CD OPERATIONS
 
