@@ -239,6 +239,14 @@ if [[ "${taito_env}" != "local" ]] && \
   exit 1
 fi
 
+# Validate auth operations
+if [[ "${taito_command}" == "__auth" ]] && [[  "${taito_env}" == "local" ]]; then
+  echo
+  echo "ERROR: You cannot authenticate to local environment."
+  echo "Specify environment: taito --auth:ENV".
+  exit 130
+fi
+
 # Validate vc operations
 if [[ "${taito_command}" == "vc-"* ]] && [[  "${taito_env}" != "local" ]]; then
   echo
