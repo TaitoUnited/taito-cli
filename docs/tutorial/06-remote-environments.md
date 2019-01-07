@@ -10,6 +10,8 @@ TODO describe environments:
 * **canary:** canary (runs side-by-side with production)
 * **prod:** production
 
+TODO hotfix branches
+
 TODO existing playground project -> destroy environments first.
 
 ### 6.1. Create dev environment

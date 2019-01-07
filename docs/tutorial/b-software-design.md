@@ -1,4 +1,19 @@
-## APPENDIX B: Code structure
+## APPENDIX B: Software design
+
+https://www.tutorialspoint.com/software_engineering/software_design_basics.htm
+
+### Stateless services
+
+The API should be implemented as stateless services. Stateless means that a service does not keep any state in memory or on local disk between requests. That is, all state resides either on UI, on database, or on some other external system. Services should be stateless because multiple instances of the same service will be run in parallel, and the request that the UI makes, may be forwarded to any them. In addition, you should be able to publish a new version of the service without causing interruptions, which is harder to do if service is stateful. A stateless service should not:
+
+- Cache data in local memory (tip: use Redis as cache, or keep state in UI and use JWT tokens if necessary)
+- Use local disk for permanent data (tip: use object storage buckets)
+- Define request rate limits (tip: define rate limits in Kubernetes ingress)
+- Use local timers to execute jobs (tip: use Kubernetes cron jobs)
+- TODO stateless websockets
+
+### Code structure
+
 
 TODO:
 

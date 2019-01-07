@@ -24,7 +24,7 @@ This tutorial guides you through common software development scenarios in a chro
 ## Appendixes
 
 * [A. Modern server infrastructure](a-modern-server-infrastructure.md)
-* [B. Code structure](b-code-structure.md)
+* [B. Software design](b-software-design.md)
 * [C. SSL/TLS certificates](c-certificates.md)
 * [D. Security](d-security.md)
 * [E. Data protection and privacy (GDPR)](e-data-protection-and-privacy.md)

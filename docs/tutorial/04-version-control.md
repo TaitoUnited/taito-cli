@@ -37,6 +37,59 @@ Hotfix branches:
 
 There is a lot to remember. However, if you use taito-cli for managing your branches, you don't have to remember all these conventions.
 
+##### TODO COMMIT MESSAGES!
+
+All commit messages must be structured according to the [Angular git commit convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines) (see also [Conventional Commits](http://conventionalcommits.org/)). This is because application version number and release notes are generated automatically for production release by the [semantic-release](https://github.com/semantic-release/semantic-release) library.
+
+Some commit message examples:
+
+```
+feat(dashboard): news
+```
+
+```
+docs: installation instructions
+
+[skip ci]
+```
+
+```
+fix(login): fix header alignment
+
+Problem persists with IE9, but IE9 is no longer supported.
+
+Closes #87, #76
+```
+
+```
+feat(ux): new look and feel
+
+BREAKING CHANGE: Not really breaking anything, but it's a good time to
+increase the major version number.
+```
+
+Meanings:
+* Closes #xx, #xx: Closes issues
+* Issues #xx, #xx: References issues
+* BREAKING CHANGE: Introduces a breaking change that causes major version number to be increased in the next production release.
+* [skip ci]: Skips continuous integration build when the commit is pushed.
+
+You can use any of the following types in your commit message. Use at least types `fix` and `feat`. Normally you shouldn't use the `wip` type with dev branch, but you can use it in this tutorial.
+
+* `wip`: Work-in-progress (small commits that will be squashed later to one larger commit before merging them to one of the environment branches)
+* `feat`: A new feature
+* `fix`: A bug fix
+* `docs`: Documentation only changes
+* `style`: Code formatting
+* `refactor`: Refactoring
+* `perf`: Performance tuning
+* `test`: Implementing missing tests or correcting existing ones
+* `revert`: Revert previous commit.
+* `build`: Build system changes
+* `ci`: Continuous integration changes (cloudbuild.yaml)
+* `chore`: maintenance
+
+
 ### 4.2 Feature branches
 
 Feature branches are handy especially in the following situations:

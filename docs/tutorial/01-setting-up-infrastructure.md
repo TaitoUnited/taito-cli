@@ -2,11 +2,13 @@
 
 ### 1.1. Install or upgrade taito-cli
 
-See the [installation instructions](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md) of the taito-cli manual. If you have already installed taito-cli, you can upgrade it with `taito --upgrade`.
+Read [introduction](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/01-introduction.md) and [installation](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md) chapters of the taito-cli manual, and install taito-cli according to the instructions. If you have already installed taito-cli before, you should upgrade it with `taito --upgrade`.
 
 ### 1.2. Set up cloud environment, Kubernetes, database cluster and CI/CD pipeline
 
-Taito-cli is designed to be infrastructure agnostic. That is, the same taito-cli commands can be used in any project no matter the technology or infrastructure. These exercises, however, are based on [kubernetes-template](https://github.com/TaitoUnited/server-template) that requires Kubernetes, PostgreSQL, S3 compatible storage bucket, and a CI/CD pipeline that is supported by the project template. If you don't have an existing infrastructure that provides these already, you can easily set them up by creating a new **taito zone** based on one of the [infrastructure templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md#infrastructure-templates):
+> You can skip this step if your organization already provides a suitable infrastructure for this tutorial. However, you might still like to browse through [Appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-modern-server-infrastructure.md) to famirialize yourself with basic concepts of modern server infrastructure.
+
+Taito-cli is designed to be infrastructure agnostic. That is, the same taito-cli commands can be used in any project no matter the technology or infrastructure. These exercises, however, are based on [kubernetes-template](https://github.com/TaitoUnited/server-template) that requires Kubernetes, PostgreSQL, a S3 compatible storage bucket, and a kubernetes-template compatible CI/CD pipeline. If you don't have an existing infrastructure that provides these already, you can easily set them up by creating a new **taito zone** based on one of the [infrastructure templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md#infrastructure-templates):
 
 > WARNING: Not tested yet.
 
@@ -23,7 +25,7 @@ Taito-cli is designed to be infrastructure agnostic. That is, the same taito-cli
     taito zone apply
     ```
 
-A **taito zone** provides infrastructure that your projects are deployed on. The Google Cloud example creates you Kubernetes and PostgreSQL clusters among other things. You usually have at least two **taito zones**: one for development and testing purposes, and an another one for production usage. In these exercises, however, you require only one **taito zone**.
+A **taito zone** provides an infrastructure that your projects are deployed on. The Google Cloud example creates you Kubernetes and PostgreSQL clusters among other things. You usually have at least two **taito zones**: one for development and testing purposes, and an another one for production usage. In these exercises, however, you require only one **taito zone**.
 
 Do not confuse taito zones with cloud provider regions and zones. One **taito zone** may use multiple cloud provider regions and zones to achieve high availability and regional resiliency.
 

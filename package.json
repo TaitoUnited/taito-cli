@@ -16,7 +16,7 @@
   "scripts": {
     "__clean": "docker build --no-cache -t taito .",
     "lint": "echo 'TODO lint'",
-    "compile": "echo 'TODO compilation for Go'",
+    "compile": "echo 'TODO compilation if required for some parts'",
     "unit": "taito -- find . -name \"*.bats\" -type f -prune -exec bats '{}' +",
     "test": "echo 'TODO integration tests (cd test; ./all.sh)'",
     "commitmsg": "commitlint -E GIT_PARAMS",

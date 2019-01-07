@@ -17,4 +17,4 @@ TODO explain very briefly:
 
 ---
 
-**Next:** [APPENDIX B: Code structure](b-code-structure.md)
+**Next:** [APPENDIX B: Software design](b-software-design.md)

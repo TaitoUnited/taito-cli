@@ -20,7 +20,7 @@ TAITO-CLI TROUBLESHOOTING
     Docker restart, try Docker reset as your Docker virtual disk might have
     been corrupted.
 
-  Some library directories (e.g. node_modules) are owned by root
+  Some library directories are owned by root (e.g. node_modules)
     You probably have run `taito start` before installing libraries with
     'taito install' and library directory Docker mounts have failed because
     of a missing directory. This problem seems to occur only on Linux.
@@ -35,6 +35,11 @@ TAITO-CLI TROUBLESHOOTING
     - Check your plugin configuration in your taito-config.sh files.
     - Make sure that you have set all the environment variables correctly:
       TODO...
+
+  Application continuously crashes or restarts
+    Liveness probe is probably failing. Check logs with `taito logs:TARGET:ENV`
+    or `taito open logs:ENV`. If you cannot figure out a reason, try to kill
+    the container with `taito kill:TARGET:ENV` to see if it helps.
 
   Application does not work locally
     - Try clean start by running:
@@ -55,6 +60,6 @@ TAITO-CLI TROUBLESHOOTING
     'taito env destroy:ENV helm' and then deploy the Helm release with
     'taito deployment deploy:ENV' or 'taito deployment start:ENV'.
 
-  Hints
+  Tutorial
     Taito-cli tutorial guides you through some common software development
     scenarios and problems.

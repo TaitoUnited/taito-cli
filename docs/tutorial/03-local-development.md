@@ -1,8 +1,8 @@
 ## 3. Local development
 
-### 3.1. Start your project
+### 3.1. Start the application
 
-Start your project with the following commands:
+Start the application with the following commands:
 
 ```shell
 taito install     # Install linters and some libraries on host
@@ -12,190 +12,264 @@ taito open app    # Open application web user interface
 taito info        # Show info required for signing in to the application
 ```
 
-Installation and starting up might take some time the first time you run the commands, as libraries and Docker containers need to be downloaded first.
+Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first.
 
-### 3.2. Make some changes
+### 3.2. Implement a new page with React
 
-Make some changes to the implementation. The application should build automatically in the background when you make changes. If the build fails for some reason, you should see errors on your console. If you make changes to the GUI implementation, also the web interface should update automatically.
+Make up some simple idea that you would like implement, and add a new page for it on the user interface. Or if you don't come up with anything, just reimplement the posts page that lets you add new posts, but replace posts with articles, for example. Don't worry about API or database for now. Just implement a dummy user interface that looks like it's fully working, but doesn't actually store data permanently anywhere.
 
-The following resources might be useful if you are not yet familiar with React or ES6/7:
+The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your console.
 
+The following resources might be useful, if you are not yet familiar with React or JavaScript:
+
+* TODO JavaScript basics: The Good Parts?
 * [ES6 for beginners](https://codeburst.io/es6-tutorial-for-beginners-5f3c4e7960be)
-* [ES7: Async/Await](https://codeburst.io/javascript-es-2017-learn-async-await-by-example-48acc58bad65)
-* [React: Getting Started](https://reactjs.org/docs/getting-started.html)
+* [ES2017: Async/Await](https://codeburst.io/javascript-es-2017-learn-async-await-by-example-48acc58bad65)
+* [React: Main Concepts](https://reactjs.org/docs/hello-world.html)
 * [Egghead: React](https://egghead.io/browse/frameworks/react)
-* [Redux](https://redux.js.org/)
-* [redux-saga](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html)
 
-### 3.3. Commit changes
+You should also check the following resources, as they are used in examples:
 
-Commit and push your changes to git:
+* [Styled components](https://www.styled-components.com/)
+* [Material-UI](https://material-ui.com/)
 
-```
-TODO
-```
+If you are not yet familiar with React, you should implement the UI state management using functionality that React provides out-of-the-box. However, if you already know React, and you are up for an extra challenge, you may choose to use [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects. Redux and redux-saga initialization already exists in the `client/src/` directory as some examples already use them.
 
-For now, you should commit all your changes to the dev branch as feature branches are introduced only later in the tutorial.
+> TODO: Some tips for debugging.
 
-All commit messages must be structured according to the [Angular git commit convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines) (see also [Conventional Commits](http://conventionalcommits.org/)). This is because application version number and release notes are generated automatically for production release by the [semantic-release](https://github.com/semantic-release/semantic-release) library.
+> TODO: Use React hooks instead of Redux? Or use Redux with React hooks? Provide React hooks tutorials.
 
-Some commit message examples:
+### 3.3. Commit and push changes to git
 
-```
-feat(dashboard): Added news on the dashboard.
-```
+Once in a while commit and push your changes to git. You can do this either with a GUI tool of some sort (e.g. your code editor) or on command line with the following commands.
+
+Committing changes to a local git repository:
 
 ```
-docs: Added news on the dashboard.
-
-[skip ci]
+git add -A                                     # Add all changed files to staging area
+git commit -m 'wip(articles): user interface'  # Commit all staged changes to the local git repository
 ```
 
-```
-fix(login): Fixed header alignment.
-
-Problem persists with IE9, but IE9 is no longer supported.
-
-Closes #87, #76
-```
+Pulling changes from and pushing changes to a remote git repository:
 
 ```
-feat(ux): New look and feel
-
-BREAKING CHANGE: Not really breaking anything, but it's a good time to
-increase the major version number.
+git pull -r           # Pull changes from remote git repository using rebase
+git push              # Push changes to remote git repository
 ```
 
-Meanings:
-* Closes #xx, #xx: Closes issues
-* Issues #xx, #xx: References issues
-* BREAKING CHANGE: Introduces a breaking change that causes major version number to be increased in the next production release.
-* [skip ci]: Skips continuous integration build when the commit is pushed.
+For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): short lowercase message`. Branches and commit message conventions are explained later in chapter [4. Version control](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/04-version-control.md).
 
-You can use any of the following types in your commit message. Use at least types `fix` and `feat`.
+> TIP: `git pull -r` will refuse to run if your worktree is dirty. In such case, you can run `git pull -r --autostash` if you don't want to commit or stash your changes before pull.
 
-* `wip`: Work-in-progress (small commits that will be squashed later to one larger commit before merging them to one of the environment branches)
-* `feat`: A new feature
-* `fix`: A bug fix
-* `docs`: Documentation only changes
-* `style`: Code formatting
-* `refactor`: Refactoring
-* `perf`: Performance tuning
-* `test`: Implementing missing tests or correcting existing ones
-* `revert`: Revert previous commit.
-* `build`: Build system changes
-* `ci`: Continuous integration changes (cloudbuild.yaml)
-* `chore`: maintenance
+> TIP: You can configure git to always rebase by default on git pull with `git config --global pull.rebase true`.
 
-### 3.4. Create a unit test
+### 3.4. Add a database table
 
-The kubernetes-template differentiates unit tests from integration and end-to-end tests by using `unit` as filename suffix instead of `test`. A unit test must work within boundaries of a single Docker container. That is, no database or external services are involved in the test execution. You can achieve this by [mocking](TODO-link). TODO mock link.
+Your implementation needs to store data somewhere. For this, you create 1-N database tables to PostgreSQL database. You add a new database table by adding a database migration. You can do this with the following commands:
 
 ```shell
-TODO
-taito unit:server mytest
+taito db add: articles -n 'add articles table'  # Add migration
+EDIT database/deploy/articles.sql               # Edit deploy script
+EDIT database/revert/articles.sql               # Edit revert script
+EDIT database/verify/articles.sql               # Edit verify script
+taito init                                      # Deploy to local db
 ```
 
-You should not test implementation in your unit test. Instead, you should test behaviour of a public API that is designed not to change very often, that is, public API of a class, module, library or a service for example. This way you can make changes to the underlying implementation, and the existing unit tests protect you from breaking anything.
+The deploy script creates a database table, the verify script verifies that the database table exists, and the revert script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions.
 
-Although browser tests cannot be considered as unit tests, you can execute also them with the *unit test* mechanism, if you like. You just have to mock the API calls so that the whole test can be run within one container.
+TODO: reference to sql tutorial (database tables)
 
-### 3.5. Create an integration test
+### 3.5. Add some example data to database
+
+Often it's a good idea to add some example data to database, as it makes development and testing easier. Try to add some example data to the newly created database table with the following commands:
 
 ```shell
-TODO
-taito test:server mytest
+EDIT database/data/dev.sql     # Modify data used for local and dev environments
+taito init --clean             # Populate migrations and init data to local database
 ```
 
-### 3.6. Create an end-to-end test
+Note that `taito init --clean` erases all existing data from you local database. If you don't want that, you can alternatively run `taito init` and ignore all the **already exists** error messages.
 
-```shell
-TODO
-taito test:client mytest
-```
+> TODO: `taito init:dev --clean`
 
-### 3.7. Connect to the local database
+### 3.6. Connect to the local database
+
+Now you should connect to your local database to check that the example data exists there. You can do this with the following commands:
 
 ```shell
 taito db connect        # Connect to the local database
 \dt                     # Show all database tables (postgres)
-select * from posts;    # Show all posts
+select * from articles; # Show all articles
 \?                      # Show help for backslash commands (postgres)
 \q                      # Quit (postgres)
 ```
 
-### 3.8. Add a new database table
+TIP: If you have installed some database GUI tool, you can run `taito db proxy` to display database connection details and you can use those details to connect to the local database.
 
-Add a new database migration with the following commands. You can find example deploy, revert and verify scripts in the `database` directory.
+### 3.7. Modify an existing database table
+
+Normally all database changes must be made using database migrations. However, if you are modifying a database table that does not exist in production environment yet, you can keep the scripts located in `database/deploy/` cleaner by modifying them direcly. Try the both approaches:
+
+#### a) With migrations
+
+Add a new column to your newly created database table as a new database migration. You do this just like you added the database table, but this time you use `ALTER TABLE` clause instead of `CREATE TABLE`:
 
 ```shell
-taito db add -h                                         # Show help
-taito db add: articles -n 'Add articles database table' # Add migration
-EDIT database/deploy/articles.sql                       # Edit deploy script
-EDIT database/revert/articles.sql                       # Edit revert script
-EDIT database/verify/articles.sql                       # Edit verify script
-taito init                                              # Deploy to local db
+taito db add: articles-foobar -n 'add foobar column to articles table'  # Add migration
+EDIT database/deploy/articles-foobar.sql                                # Edit deploy script
+EDIT database/revert/articles-foobar.sql                                # Edit revert script
+EDIT database/verify/articles-foobar.sql                                # Edit verify script
+taito init                                                              # Deploy to local db
 ```
 
-> See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions.
+The deploy script creates the column, the verify script verifies that the column exists, and the revert script reverts the changes by dropping the column. You can find example deploy, revert and verify scripts in the `database/` directory. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions.
 
-### 3.9. Add a new database column without using migrations
+The upside of this approach is that the new column is deployed to all environments automatically. Other developers need to run `taito init` however.
 
-Since we have not made a production release yet, it is ok to edit the existing sql scripts. However, after editing an existing sql script we need to reinitialize the database manually for each environment with the `taito init --clean` command.
+TODO example: posts-foobar
 
-```shell
-EDIT database/deploy/posts.sql  # Add a new column to posts.sql
-taito init --clean              # Reinitialize local db
-** Use the new column in server and client implementation **
-taito init:dev --clean          # Reinitialize dev before pushing changes to dev
-taito init:ENV --clean          # Reinitialize ENV before merging changes to each ENV
+#### b) Without migrations
+
+Add a new column to your newly created database table by modifying the existing deploy script directly:
+
+```
+EDIT database/deploy/articles.sql  # Edit deploy script
+taito init --clean                 # Deploy to local db
 ```
 
-> Note that the `init --clean` command erases all data from database and deploys init data located in `database/data`. If this is not ok, you should either add the change as a new database migration (see the next exercise), or restore the old data manually using the `taito db export` and `taito db import` commands.
+The downside of this approach is that the `taito init:ENV --clean` command deletes all existing data from database, and the command must be run manually to all environments that already contain the database table that was modified.
 
-### 3.10. Add a new database column as a database migration
+### 3.8. Implement API
 
-After we have made our first production release, the existing deploy sql scripts must not be modified. Therefore you need to add the new column as a new database migration.
+Your UI implementation needs to access the data located in database. However, accessing database directly from UI is a bad approach for many reasons. Therefore you need to implement an API that exist between the UI and the database:
 
-```shell
-taito db add -h
-taito db add: posts-my_column -r posts -n 'Add my_column to posts table'
-EDIT database/deploy posts-my_column
-EDIT database/revert posts-my_column
-EDIT database/verify posts-my_column
+```
+UI (on browser)  ->  API (on server)  ->  database
 ```
 
-It is ok to make multiple changes in one migration script. Just name your migration accordingly. (TODO recommended migration naming).
+The API should be stateless. That is, services that implement the API should not keep any state in memory or on local disk between requests. This is explained in more detail in [Appendix B](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/b-software-design.md).
 
-See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions.
+#### Exercise: RESTful API
 
-### 3.11. Modify init data
+Implement a RESTful API endpoint for your UI and modify you UI implementation to use the API endpoint. See `server/src/content/posts.*` as an example. In REST a HTTP URL (e.g */posts*) defines a resource, and HTTP methods (GET, POST, PUT, PATCH, DELETE) operate on that resource. For example:
 
-```shell
-EDIT database/data/dev.sql     # Modify data used for local and dev environments
-taito init --clean             # Populate init data to local database
-taito init:dev --clean         # Populate init data to dev database
+* `GET /articles`: Fetch all articles from the articles collection
+* `POST /articles`: Create a new article to the articles collection
+* `GET /articles/432`: Read article 432
+* `PUT /articles/432`: Update article 432 (all fields)
+* `PATCH /articles/432`: Update article 432 (only given fields)
+* `DELETE /articles/432`: Delete article 432
+
+You can find more tips from the following articles:
+
+* [10 Best Practices for Better RESTful API](https://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/)
+* [Best Practices for Designing a Pragmatic RESTful API](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
+
+> TODO: Some tips for debugging.
+
+#### Exercise: GraphQL API
+
+TODO
+
+### 3.9. Use transactions to preserve data integrity
+
+Data changes made by a service should be atomic to preserve data integrity. That is, if `PUT /articles/432` modifies data located in multiple database tables, either all data updates should be completed or none of them should.
+
+With relational databases you can use transactions to achieve atomicity. The kubernetes-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. Kubernetes-template specific details](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/10-kubernetes-template-specific.md) if you'd like to know how to customize your transactions.
+
+However, using database transactions is not enough in every case. For example, if service makes data changes to multiple systems at once (e.g. database + object storage), you usually have to try to preserve data integrity by executing data updates to those systems in a specific order and, if necessary, compensate by reverting some of the data changes in case of an error.
+
+> Some systems also support distributed transactions. That is, you can make changes to multiple systems at once, and all of them engage to the same transaction.
+
+#### Exercise
+
+Try if transactions work like they should:
+
+1) Add few posts using the UI. Also check that they appear in the database: `taito db connect`, `select * from posts order by created_at desc`
+2) Edit `posts.service.js` and add a line that throws an error after post has been added to database:
+
+    ```
+    async create(state, post) {
+      authorize(state).role('admin', 'user');
+      const id = await this.postDB.create(state.getTx(), post);
+      if (true) throw new Error('error');
+      return this.postDB.read(state.getTx(), id);
+    }
+    ```
+
+3) Try adding posts on the UI. You should notice that the posts won't be created in database even though the error was thrown only after the post was added to database.
+
+### 3.10. Use environment variables for configuration
+
+TODO
+
+### 3.11. Store files to object storage
+
+TODO: As noted previously, no local disk
+
+### 3.12. Use 3rd party services
+
+TODO 3rd party services and secrets
+
+### 3.13. Automatic testing
+
+TODO: CI runs automatically...
+
+```
+taito test
+taito unit
 ```
 
-> If you don't want to erase all existing data, you can import only the data changes with `taito db import: data.sql` and `taito db import:dev data.sql` commands.
+```
+taito test:client
+taito test:client cypress
+taito unit:server
+```
 
-### 3.12 Stateless services
+> TIP: Also run against remote envs...
 
-TODO explain:
+TODO You should not test implementation in your (unit) tests. Instead, you should test behaviour of a public API that is designed not to change very often, that is, public API of a class, module, library or a service for example. This way you can make changes to the underlying implementation, and the existing unit tests protect you from breaking anything.
 
-- No in-memory caching
-- No local timers
-- No local disk
+### Create user interface test
 
-### 3.13 Transactions
+Kubernetes-template uses [Cypress](https://www.cypress.io/) for automatic user interface tests.
 
-### 3.14 Object storage
+1) Open the Cypress UI with `taito cypress:client` and run all existing Cypress tests by pressing the `Run all specs` -button.
+2) Create tests for you UI. See the `client/test/integration/posts.spec.js` as an example. The following resources provide some useful instructions for writing Cypress tests:
+    ```
+    [writing-your-first-test](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html)
+    [best-practices](https://docs.cypress.io/guides/references/best-practices.html)
+    ```
 
-### 3.15. Create a custom command
+> TIP: By default, Cypress tests are end-to-end tests. That is, they test functionality all the way from the UI to the database. This is not always a good thing. Your tests may become fragile if they are dependent on 3rd party services or data that you cannot easily control, your test may perform poorly, and you easily test the same functionality twice if you already have API tests in place. See [Network Requests
+](https://docs.cypress.io/guides/guides/network-requests.html) for more information.
 
-### 3.16. Try some additional commands
+### Create API test
+
+Kubernetes-template uses TODO for automatic API tests.
+
+1) Run all existing API tests with `taito test:server`.
+2) Create tests for your API endpoint. See the `server/src/content/posts.test.js` as an example. The following resources provide some useful instructions for writing tests:
+    ```
+    TODO
+    ```
+
+### Create unit test
+
+The kubernetes-template differentiates unit tests from all other tests by using `unit` as filename suffix instead of `test`. A unit test does not require a running environment. That is, no database or external services are involved as unit test typically test only a bunch of code. You can achieve this by [mocking](TODO-link). TODO mock link.
+
+Kubernetes-template uses TODO for automatic API tests.
+
+1) Run all existing unit tests with `taito unit`.
+2) Create unit tests for your TODO. See the `TODO` as an example. The following resources provide some useful instructions for writing tests:
+    ```
+    TODO
+    ```
+
+### 3.14. Try some additional taito commands
 
 ```shell
+taito open git
 taito open kanban              # Open project kanban board on browser
 taito open docs                # Open project documentation on browser
 taito open ux                  # Open UX guides and layouts on browser
@@ -208,13 +282,13 @@ taito workspace kill           # Kill all running processes (e.g. containers)
 taito workspace clean          # Remove all unused build artifacts (e.g. images)
 ```
 
-### 3.17. TODO some software design links
+### 3.15. Read some software design basics
+
+Just link to appendix B?
 
 * TODO General software design
-* TODO API design
+* TODO API design, GraphQL
 * TODO Database design
-
-### 3.18. Architecture validation and code reviews
 
 ---
 

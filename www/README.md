@@ -4,7 +4,7 @@ Implement with Gatsby v2. Layout should probably be something between [reactjs.o
 
 ## Center area of the page
 
-Big title: **Taito**
+Big title: **Taito** (or **Taito CLI** ?)
 
 Subtitle: An extensible toolkit for DevOps and NoOps.
 
@@ -22,7 +22,11 @@ Add taito-cli support for any technology by implementing a taito-cli plugin. Cre
 
 ### All tools included
 
-Working with modern hybrid cloud environments requires lots of tools. Taito-cli Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito --upgrade`. And if you need something special, you can always build your own customized taito-cli container image with Docker.
+Working with modern hybrid cloud environments requires lots of tools. Taito-cli Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito --upgrade`. And if you need something special, it is very easy to customize the taito-cli image with your own requirements.
+
+### No lock-in
+
+Taito-cli is a wrapper that reduces technology and vendor lock-in by providing a standard command set on top of various tools. However, you can use those tools also directly without taito-cli.
 
 ### Minimal configuration
 
