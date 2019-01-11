@@ -13,6 +13,9 @@ if [[ -f "${taito_project_path}/taito-config.sh" ]]; then
   set +a
 fi
 
+# Set defaults
+export taito_build_targets=${taito_build_targets:-$taito_targets}
+
 # For backwards compatibility
 # TODO remove gcloud_sql_proxy_port from all projects
 if [[ -n "${gcloud_sql_proxy_port:-}" ]] && \

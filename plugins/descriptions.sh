@@ -144,8 +144,6 @@ if [[ ${taito_project:-} ]]; then
     # Install libraries on host"
   echo "env \
     # Initialize shell environment (e.g. pipenv)"
-  echo "build \
-    # Build project"
   echo "db add: NAME \
     # Add a database migration"
   echo "project upgrade \
@@ -195,6 +193,15 @@ if [[ ${taito_project:-} ]]; then
   do
     echo "vc feat: ${feature} \
       # Switch to the ${feature} feature branch"
+  done
+
+  # Build target commands
+  echo "build \
+    # Build all"
+  for stack in ${taito_build_targets:-}
+  do
+    echo "build:${stack} \
+      # Build ${stack} module"
   done
 
   # Stack component commands

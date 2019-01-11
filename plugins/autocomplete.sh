@@ -97,7 +97,6 @@ if [[ ${taito_project:-} ]]; then
   echo "install"
   echo "install --clean"
   echo "env"
-  echo "build"
   echo "db add: NAME"
   echo "project upgrade"
 
@@ -129,6 +128,13 @@ if [[ ${taito_project:-} ]]; then
   else
     echo "vc"
   fi
+
+  # Build target commands
+  echo "build"
+  for stack in ${taito_build_targets:-}
+  do
+    echo "build:${stack}"
+  done
 
   # Stack component commands
   for stack in ${taito_targets:-}

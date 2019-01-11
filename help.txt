@@ -292,7 +292,7 @@ PROJECT: BASIC OPERATIONS
     For example the 'pipenv' plugin uses this command to initialize the python
     virtualenv.
 
-  build
+  build[:BUILD_TARGET]
     Builds a project. This command is for non-dockerized projects that need to
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.

@@ -201,11 +201,15 @@ fi
 if [[ ${taito_target} ]] && \
    [[ "${taito_mode:-}" != "ci" ]] && \
    [[ "${taito_targets:-}" != *"${taito_target}"* ]] && \
+   [[ "${taito_build_targets:-}" != *"${taito_target}"* ]] && \
    [[ "${taito_databases:-}" != *"${taito_target}"* ]]; then
   echo
   echo "ERROR: Unknown target '${taito_target}'"
+  echo
   echo "Valid environments: local ${taito_environments}"
   echo "Valid targets: ${taito_targets}"
+  echo "Valid build targets: ${taito_build_targets}"
+  echo "Valid databases: ${taito_databases}"
   exit 1
 fi
 
