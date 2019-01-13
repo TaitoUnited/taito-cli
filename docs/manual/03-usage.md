@@ -2,7 +2,7 @@
 
 ### Setting up a project
 
-If you are not working with an existing taito-cli project, see the first chapters of [Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) on how to setup your infrastructure and create a new project. If you would rather migrate an existing project, see the [configuration](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/04-configuration.md) chapter. Also some of the [project templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md##project-templates) provide instructions on how to migrate an existing project.
+If you are not working with an existing taito-cli project, see the first chapters of [Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) on how to setup your infrastructure and create a new project. If you would rather migrate an existing project, see the [configuration](04-configuration.md) chapter. Also some of the [project templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md##project-templates) provide instructions on how to migrate an existing project.
 
 ### The basics
 

@@ -12,7 +12,7 @@ Bucket versioning on/off, etc.
 
 ### 11.5. Setup domain name
 
-TODO: DV certificate automatically. For OV/EV certficate, see [Appendix F: SSL/TLS certificates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/f-certificates.md).
+TODO: DV certificate automatically. For OV/EV certficate, see [Appendix F: SSL/TLS certificates](f-certificates.md).
 
 ### 11.7. Disable basic auth
 

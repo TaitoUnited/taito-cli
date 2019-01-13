@@ -16,13 +16,13 @@ Installation and starting up takes some time the first time you run the commands
 
 ### 2.2. Implement a new page with React
 
-Make up some simple idea that you would like implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data permanently anywhere.
+Make up some simple idea that you would like to implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data permanently anywhere.
 
-If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-technology-tutorials.md) provides some React tutorials and other resources that might be very useful while learning React, HTML and CSS. If you already know React, you may choose additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
+If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A](a-technology-tutorials.md) provides some React tutorials and other resources that might be very useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
 
-The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. You should also install eslint and prettier plugins to your code editor.
+The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. You should also install eslint and prettier plugins to your code editor. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
 
-You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser, but other browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug code execution by setting breakpoints and executing code line by line. Note that you can find source code of your UI implementation under the webpack folder: Chrome DevTools -> Sources tab -> `webpack://` -> `.` -> `src`. See [appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-technology-tutorials.md) for some additional browser extensions that might also be useful.
+You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials.md#react) for some additional browser extensions that might also be useful.
 
 ### 2.3. Commit and push changes to git
 
@@ -42,7 +42,7 @@ git pull -r           # Pull changes from remote git repository using rebase
 git push              # Push changes to remote git repository
 ```
 
-For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/03-version-control.md).
+For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](03-version-control.md).
 
 > TIP: `git pull -r` will refuse to run if your worktree is dirty. In such case, you can run `git pull -r --autostash` if you don't want to commit or stash your changes before pull.
 
@@ -62,7 +62,7 @@ taito init                                      # Deploy to local db
 
 The deploy script creates a database table, the verify script verifies that the database table exists, and the revert script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
 
-Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [Appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-technology-tutorials.md) for some SQL and relational database tutorials.
+Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [Appendix A](a-technology-tutorials.md) for some SQL and relational database tutorials.
 
 ### 2.5. Add some example data to database
 
@@ -89,7 +89,7 @@ select * from articles; # Show all articles (SQL command)
 \q                      # Quit (postgres)
 ```
 
-If you are not yet familiar with SQL, you should try to execute also some additional SQL commands just for the fun of it. See [Appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-technology-tutorials.md) for some SQL tutorials.
+If you are not yet familiar with SQL, you should try to execute also some additional SQL commands just for the fun of it. See [Appendix A](a-technology-tutorials.md) for some SQL tutorials.
 
 > TIP: If you have installed some database GUI tool, you can run `taito db proxy` to display database connection details and you can use those details to connect to the local database.
 
@@ -134,7 +134,7 @@ Your UI implementation needs to access the data located in database. However, ac
 UI (on browser)  ->  API (on server)  ->  database
 ```
 
-The API should be stateless. That is, services that implement the API should not keep any state in memory or on local disk between requests. This is explained in more detail in [Appendix B](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/b-software-design.md#stateless-api).
+The API should be stateless. That is, services that implement the API should not keep any state in memory or on local disk between requests. This is explained in more detail in [Appendix B](b-software-design.md#stateless-api).
 
 TODO: Some tips for debugging.
 
@@ -149,13 +149,13 @@ Implement a RESTful API endpoint for your UI and modify you UI implementation to
 * `PATCH /articles/432`: Update article 432 (only given fields)
 * `DELETE /articles/432`: Delete article 432
 
-See [Appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-technology-tutorials.md#restful-api) for some RESTful API tutorials.
+See [Appendix A](a-technology-tutorials.md#restful-api) for some RESTful API tutorials.
 
 #### b) GraphQL API
 
 TODO
 
-See [Appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-technology-tutorials.md#graphql-api) for some GraphQL API tutorials.
+See [Appendix A](a-technology-tutorials.md#graphql-api) for some GraphQL API tutorials.
 
 ### 2.9. Use environment variables for configuration
 
@@ -175,7 +175,7 @@ Data changes made by a service should be atomic to preserve data integrity. That
 
 #### a) Transactions with a relational database
 
-With relational databases you can use transactions to achieve atomicity. The kubernetes-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. Kubernetes-template specific details](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/10-kubernetes-template-specific.md) if you'd like to know how to customize your transactions.
+With relational databases you can use transactions to achieve atomicity. The kubernetes-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. Kubernetes-template specific details](10-kubernetes-template-specific.md) if you'd like to know how to customize your transactions.
 
 Try if transactions work like they should:
 
@@ -280,7 +280,7 @@ taito workspace clean          # Remove all unused build artifacts (e.g. images)
 
 ### 2.15. Read some software design basics
 
-See [appendix B: Software design](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/b-software-design.md) for some tips on how to design your application.
+See [appendix B: Software design](b-software-design.md) for some tips on how to design your application.
 
 Requirements analysis and UX design are out of scope for this technology oriented tutorial. However, they are certainly concepts that you should familiarize yourself with, if you want to make good software that fulfills the needs of users.
 

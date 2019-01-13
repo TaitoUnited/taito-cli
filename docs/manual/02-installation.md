@@ -46,7 +46,7 @@ TODO would Git BASH suffice? winpty works with it, but there are issues with win
 
     > TODO: move taito executables to taito-cli/bin directory so that the whole directory can be added to PATH.
 
-3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses taito-cli, they will provide you the correct settings. See [Advanced Usage](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/03-usage.md#advanced-usage) if you need to configure settings for multiple organizations.
+3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses taito-cli, they will provide you the correct settings. See [Advanced Usage](03-usage.md#advanced-usage) if you need to configure settings for multiple organizations.
     ```
     #!/bin/bash
     # shellcheck disable=SC2034
