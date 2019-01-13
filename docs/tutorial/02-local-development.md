@@ -282,6 +282,8 @@ taito workspace clean          # Remove all unused build artifacts (e.g. images)
 
 See [appendix B: Software design](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/b-software-design.md) for some tips on how to design your application.
 
+Requirements analysis and UX design are out of scope for this technology oriented tutorial. However, they are certainly concepts that you should familiarize yourself with, if you want to make good software that fulfills the needs of users.
+
 ---
 
 **Next:** [3. Version control](03-version-control.md)

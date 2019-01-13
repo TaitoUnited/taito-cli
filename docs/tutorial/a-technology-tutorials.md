@@ -91,7 +91,6 @@ Additional resources:
 ### RESTful API
 
 * [10 Best Practices for Better RESTful API](https://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/)
-* [Best Practices for Designing a Pragmatic RESTful API](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
 
 ### GraphQL API
 
