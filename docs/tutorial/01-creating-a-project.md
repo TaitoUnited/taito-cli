@@ -1,8 +1,10 @@
-## 2. Creating a project
+# PART I: Basics
+
+## 1. Creating a project
 
 > Instead of creating a new project, you can alternatively use an existing playground project provided by your organization. You can list all playground projects with `taito open playgrounds` or `taito -o ORGANIZATION open playgrounds`. Choose the one that has been created based on the [server-template](https://github.com/TaitoUnited/server-template) and seems to be up-to-date.
 
-> TODO: rename server-template -> kubernetes-template
+First make sure that your taito-cli is up-to-date by running `taito --upgrade`. If you haven't installed taito-cli yet, read [introduction](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/01-introduction.md) and [installation](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md) chapters of the taito-cli manual, and install taito-cli according to the instructions.
 
 Create a new project based on the [server-template](https://github.com/TaitoUnited/server-template) by running one of the following commands:
 
@@ -21,4 +23,4 @@ Follow the instructions provided by the command. Use **acme** as company name to
 
 ---
 
-**Next:** [3. Local development](03-local-development.md)
+**Next:** [2. Local development](02-local-development.md)

@@ -84,6 +84,7 @@ Repositories:
 Stack:
 
 * **taito_targets:** For example `"client server database storage"`.
+* **taito_build_targets:** Targets for the `taito build[:BUILD_TARGET]` command. By default **taito_targets** are used as **taito_build_targets**.
 * **taito_databases:** For example `"database reportdb"`. The default database is named `database`.
 * **taito_storages:** For example `"my-project-dev"`.
 * **taito_networks:** Networks defined in your `docker-compose.yaml`. Usually just `"default"`.

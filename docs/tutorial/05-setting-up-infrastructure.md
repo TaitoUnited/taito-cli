@@ -1,12 +1,8 @@
-## 1. Setting up infrastructure
+# PART II: Infrastucture
 
-### 1.1. Install or upgrade taito-cli
+## 5. Setting up infrastructure
 
-Read [introduction](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/01-introduction.md) and [installation](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md) chapters of the taito-cli manual, and install taito-cli according to the instructions. If you have already installed taito-cli before, you should upgrade it with `taito --upgrade`.
-
-### 1.2. Set up cloud environment, Kubernetes, database cluster and CI/CD pipeline
-
-> You can skip this step if your organization already provides a suitable infrastructure for this tutorial. However, you might still like to browse through [Appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-modern-server-infrastructure.md) to famirialize yourself with basic concepts of modern server infrastructure.
+> You can skip this step if your organization already provides a suitable infrastructure for this tutorial. However, you might still like to browse through [Appendix A](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/c-modern-server-infrastructure.md) to famirialize yourself with basic concepts of modern server infrastructure.
 
 Taito-cli is designed to be infrastructure agnostic. That is, the same taito-cli commands can be used in any project no matter the technology or infrastructure. These exercises, however, are based on [kubernetes-template](https://github.com/TaitoUnited/server-template) that requires Kubernetes, PostgreSQL, a S3 compatible storage bucket, and a kubernetes-template compatible CI/CD pipeline. If you don't have an existing infrastructure that provides these already, you can easily set them up by creating a new **taito zone** based on one of the [infrastructure templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md#infrastructure-templates):
 
@@ -29,7 +25,7 @@ A **taito zone** provides an infrastructure that your projects are deployed on. 
 
 Do not confuse taito zones with cloud provider regions and zones. One **taito zone** may use multiple cloud provider regions and zones to achieve high availability and regional resiliency.
 
-If you want to know more, see [Appendix A: Modern server infrastructure](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/a-modern-server-infrastructure.md).
+If you want to know more, see [Appendix A: Modern server infrastructure](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/tutorial/c-modern-server-infrastructure.md).
 
 TODO:
 * use some text from the old example.
@@ -37,4 +33,4 @@ TODO:
 
 ---
 
-**Next:** [2. Creating a project](02-creating-a-project.md)
+**Next:** [6. Remote environments](06-remote-environments.md)

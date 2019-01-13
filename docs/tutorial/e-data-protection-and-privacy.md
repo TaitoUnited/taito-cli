@@ -57,3 +57,7 @@ Links:
 * [gdpr-info.eu](https://gdpr-info.eu/)
 * [glossary-of-terms](https://www.eugdpr.org/glossary-of-terms.html)
 * [gdpr-for-software-devs](https://www.infoq.com/articles/gdpr-for-software-devs)
+
+---
+
+**Next:** [APPENDIX F: SSL/TLS certificates](f-certificates.md)

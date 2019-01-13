@@ -184,6 +184,19 @@ taito deployment cancel:dev       # Cancel an ongoing dev environment build
 taito deployment build:worker:dev # Build and deploy worker container to dev env directly from local env
 ```
 
+### TODO Something about advanced deployment options?
+
+> Some of the advanced operations might require admin credentials (e.g. staging/canary/production operations). If you don't have an admin account, ask devops personnel to execute the operation for you.
+
+Advanced features (TODO not all implemented yet):
+
+* **Quickly deploy settings**: If you are in a hurry, you can deploy Helm/Kubernetes changes directly to an environment with the `taito deployment deploy:ENV`.
+* **Quickly deploy a container**: If you are in a hurry, you can build, push and deploy a single container directly to server with the `taito deployment build:TARGET:ENV` command e.g. `taito deployment build:client:dev`.
+* **Copy production data to staging**: Often it's a good idea to copy production database to staging before merging changes to the stag branch: `taito db copy between:prod:stag`, `taito storage copy between:prod:stag`. If you are sure nobody is using the production database, you can alternatively use the quick copy (`taito db copyquick between:prod:stag`), but it disconnects all other users connected to the production database until copying is finished and also requires that both databases are located in the same database cluster.
+* **Feature branch**: You can create an environment also for a feature branch: `taito env apply:f-NAME`. The feature should reside in a branch named `feature/NAME`.
+* **Revert application**: Revert application to the previous revision by running `taito deployment revert:ENV`. If you need to revert to a specific revision, check current revision by running `taito deployment revisions:ENV` first and then revert to a specific revision by running `taito deployment revert:ENV REVISION`. You can also deploy a specific version with `taito deployment deploy:ENV IMAGE_TAG|SEMANTIC_VERSION`.
+* **Debugging CI builds**: You can build and start production containers locally with the `taito start --clean --prod` command. You can also run any CI build steps defined in cloudbuild.yaml locally with taito-cli.
+
 ---
 
 **Next:** [7. Environment variables and secrets](07-env-variables-and-secrets.md)

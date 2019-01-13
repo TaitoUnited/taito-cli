@@ -32,8 +32,6 @@ Officially recommended project templates are listed below. All of them include t
 
 * [kubernetes-template](https://github.com/TaitoUnited/server-template): Template for applications and APIs running on Kubernetes. Support for [Knative](https://pivotal.io/knative), [Istio](https://istio.io/) and [Telepresence](https://www.telepresence.io/) will be added once they have matured enough. TODO rename the git repository.
 
-* [kubernetes-template-alt](https://github.com/TaitoUnited/server-template-alt): Alternative stack components for the kubernetes-template. With these you can easily implement your application or API with any technology that fits your requirements. TODO rename the git repository.
-
 * [serverless-template](https://github.com/TaitoUnited/serverless-template): This is essentially the same as [kubernetes-template](https://github.com/TaitoUnited/server-template), but Kubernetes has been replaced with the [Serverless Framework](https://serverless.com/framework/). Using this template you can easily deploy serverless functions on any cloud provider. Support for [Istio](https://istio.io/) will likely be added later, making it possible to connect all your microservices together no matter where they have been deployed.
 
 * [server-template](https://github.com/TaitoUnited/server-template): This is essentially the same as [kubernetes-template](https://github.com/TaitoUnited/server-template), but software is run directly on host instead of containers on remote environments. Docker Compose is, however, used for local development. You can use this template as an example when you need to configure taito-cli for your existing legacy server application.

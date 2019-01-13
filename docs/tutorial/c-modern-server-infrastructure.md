@@ -1,4 +1,4 @@
-## APPENDIX A: Modern server infrastructure
+## APPENDIX C: Modern server infrastructure
 
 TODO explain very briefly:
 
@@ -17,4 +17,4 @@ TODO explain very briefly:
 
 ---
 
-**Next:** [APPENDIX B: Software design](b-software-design.md)
+**Next:** [APPENDIX D: Security](d-security.md)

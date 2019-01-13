@@ -1,4 +1,4 @@
-## APPENDIX C: SSL/TLS certificates
+## APPENDIX D: SSL/TLS certificates
 
 Production environment uses a domain validated SSL/TLS certificate by default. It was acquired from Let's Encrypt when you deployed your application to the production environment the first time, and it will be renewed automatically every 3 months.
 
@@ -91,4 +91,4 @@ You can revert back to the default DV certificate just by removing the `certSecr
 
 ---
 
-**Next:** [APPENDIX D: Security](d-security.md)
+**Next:** [APPENDIX E: Security](e-security.md)

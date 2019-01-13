@@ -1,10 +1,10 @@
-## 4. Version control
+## 3. Version control
 
 Taito-cli provides some version control commands that make it easier for you to follow commonly defined version control conventions. An organization may also override the default version control conventions with a custom taito-cli plugin.
 
 > All commit messages must be structured according to the [Angular git commit convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines) (see also [Conventional Commits](http://conventionalcommits.org/)). This is because application version number and release notes are generated automatically for production release by the [semantic-release](https://github.com/semantic-release/semantic-release) library.
 
-### 4.1 Display commonly defined conventions
+### 3.1 Display commonly defined conventions
 
 If you would rather use GUI tools or git commands for managing your branches, you can display the version control conventions by running:
 
@@ -90,7 +90,7 @@ You can use any of the following types in your commit message. Use at least type
 * `chore`: maintenance
 
 
-### 4.2 Feature branches
+### 3.2 Feature branches
 
 Feature branches are handy especially in the following situations:
 
@@ -149,7 +149,7 @@ taito vc feat: reporting
 taito vc feat pr
 ```
 
-### 4.3 Environment branches
+### 3.3 Environment branches
 
 Display commands:
 
@@ -175,11 +175,11 @@ Merge changes from dev branch to canary, and to all environment branches in betw
 taito vc env merge: dev canary
 ```
 
-### 4.4 Hotfix branches
+### 3.4 Hotfix branches
 
 TODO
 
-### 4.5 Some common mistakes
+### 3.5 Some common mistakes
 
 TODO:
 * Most common mistake so far: An accidental commit to an environment branch other than dev -> prevents fast-forward merge.
@@ -187,20 +187,6 @@ TODO:
 * Premature feature branch merge to dev (merge commit on top vs. other commits on top of it)
 * Premature env branch merge
 
-### TODO Something about advanced deployment options?
-
-> Some of the advanced operations might require admin credentials (e.g. staging/canary/production operations). If you don't have an admin account, ask devops personnel to execute the operation for you.
-
-Advanced features (TODO not all implemented yet):
-
-* **Quickly deploy settings**: If you are in a hurry, you can deploy Helm/Kubernetes changes directly to an environment with the `taito deployment deploy:ENV`.
-* **Quickly deploy a container**: If you are in a hurry, you can build, push and deploy a single container directly to server with the `taito deployment build:TARGET:ENV` command e.g. `taito deployment build:client:dev`.
-* **Copy production data to staging**: Often it's a good idea to copy production database to staging before merging changes to the stag branch: `taito db copy between:prod:stag`, `taito storage copy between:prod:stag`. If you are sure nobody is using the production database, you can alternatively use the quick copy (`taito db copyquick between:prod:stag`), but it disconnects all other users connected to the production database until copying is finished and also requires that both databases are located in the same database cluster.
-* **Feature branch**: You can create an environment also for a feature branch: `taito env apply:f-NAME`. The feature should reside in a branch named `feature/NAME`.
-* **Revert application**: Revert application to the previous revision by running `taito deployment revert:ENV`. If you need to revert to a specific revision, check current revision by running `taito deployment revisions:ENV` first and then revert to a specific revision by running `taito deployment revert:ENV REVISION`. You can also deploy a specific version with `taito deployment deploy:ENV IMAGE_TAG|SEMANTIC_VERSION`.
-* **Debugging CI builds**: You can build and start production containers locally with the `taito start --clean --prod` command. You can also run any CI build steps defined in cloudbuild.yaml locally with taito-cli.
-
-
 ---
 
-**Next:** [5. Project management](05-project-management.md)
+**Next:** [4. Project management](04-project-management.md)

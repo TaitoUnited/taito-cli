@@ -6,6 +6,12 @@
 
 Log alerts on by default...
 
+### 12.3. Security updates
+
+### 12.4. Project template upgrade
+
+`taito project upgrade` (TODO also in chapters 1. and 2.)
+
 ---
 
 **Next:** [13. Zone maintenance](13-zone-maintenance.md)

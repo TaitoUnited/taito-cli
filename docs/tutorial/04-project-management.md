@@ -1,8 +1,10 @@
-## 5. Project management
+## 4. Project management
 
 > TODO: These commands have not yet been implemented.
 
-### 5.1. Issues
+TODO scrum + kanban references.
+
+### 4.1. Issues
 
 Whether you are working alone or as a team, it's best to document, coordinate and prioritize the work somehow. Taito-cli provides you commands that you can use to quickly manage issues directly from command line.
 
@@ -38,7 +40,7 @@ taito issue open: delete post
 
 TODO autocomplete at least for status, labels and personnel?
 
-### 5.2. Hour reporting
+### 4.2. Hour reporting
 
 You can also do work hour reporting with taito-cli directly from command line. This is especially handy if you need to enter the same hour entries to multiple hour reporting systems. With taito-cli you can input your work hours to multiple systems at once with a single command. You just need to enable multiple taito-cli hour reporting plugins in your project `taito-config.sh`.
 
@@ -63,4 +65,4 @@ TODO bulk adds (e.g. three weeks on vacation)
 
 ---
 
-**Next:** [6. Remote environments](06-remote-environments.md)
+**Next:** [5. Setting up infrastructure](05-setting-up-infrastructure.md)
