@@ -206,7 +206,7 @@ Try this yourself by modifying the implementation that you made in exercise 2.10
 
 ### 2.13. Automatic testing
 
-Automatic scripts are run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production). You can also run these tests manually with the following commands:
+Test scripts are run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production). You can also run these tests manually with the following commands:
 
 ```
 taito unit                  # Run all unit tests
