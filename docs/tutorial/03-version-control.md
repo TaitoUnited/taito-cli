@@ -29,6 +29,7 @@ Feature branches:
 - You should rebase your feature branch with the `dev` branch before
   merging or creating a pull-request. It is recommended to squash some of your
   commits during rebase to keep a clean version history.
+- You should run all tests before merging or creating a pull-request.
 - You should delete a feature branch once it is no longer needed.
 
 Hotfix branches:

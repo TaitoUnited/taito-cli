@@ -22,7 +22,11 @@ If you are not yet familiar with [React](https://reactjs.org/), you should imple
 
 The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. Note that you should also install eslint and prettier plugins to your code editor. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
 
-You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials.md#react) for some additional browser extensions that might also be useful.
+You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials.md#browser-extensions) for some additional browser extensions that might also be useful.
+
+### TODO add a npm library
+
+TODO: add new npm library and install it without running `start --clean`
 
 ### 2.3. Commit and push changes to git
 
@@ -59,6 +63,8 @@ EDIT database/revert/articles.sql               # Edit revert script
 EDIT database/verify/articles.sql               # Edit verify script
 taito init                                      # Deploy to local db
 ```
+
+TODO: or `taito init --clean`?
 
 The deploy script creates a database table, the verify script verifies that the database table exists, and the revert script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
 
@@ -134,13 +140,13 @@ Your UI implementation needs to access the data located in database. However, ac
 UI (on browser)  ->  API (on server)  ->  database
 ```
 
-The API should be stateless. That is, services that implement the API should not keep any state in memory or on local disk between requests. This is explained in more detail in [Appendix B](b-software-design.md#stateless-api).
+The API should be stateless. That is, services that implement the API should not keep any state in memory or on local disk between requests. This is explained in more detail in [Appendix B](b-software-design.md#api-design).
 
 TODO: Some tips for debugging.
 
 #### a) RESTful API
 
-Implement a RESTful API endpoint for your UI and modify you UI implementation to use the API endpoint. See `server/src/content/posts.*` as an example. In RESTful service a HTTP URL (e.g */posts*) defines a resource, and HTTP methods (GET, POST, PUT, PATCH, DELETE) operate on that resource. For example:
+Implement a RESTful API endpoint for your UI and modify your UI implementation to use the API endpoint. See `server/src/content/posts.*` as an example. In a RESTful API a HTTP URL (e.g */posts*) defines a resource, and HTTP methods (GET, POST, PUT, PATCH, DELETE) operate on that resource. For example:
 
 * `GET /articles`: Fetch all articles from the articles collection
 * `POST /articles`: Create a new article to the articles collection
@@ -224,7 +230,7 @@ taito test:client cypress   # Run all cypress UI tests of client against locally
 
 You can run UI and API tests also against remote environments, but this is explained in chapter [6. Remote environments](#06-remote-environments.md).
 
-You should not test implementation in your test scripts. Instead, you should always find some kind 'public API' that is designed not to change very often, and test behaviour of that API. Here public API can be provided by class, module, library, service or UI for example. This way you can make changes to the underlying implementation, and the existing tests protect you from breaking anything.
+You should not test implementation in your test scripts. Instead, you should always find some kind of 'public API' that is designed not to change very often, and test behaviour of that API. Here public API can be provided by a class, module, library, service or UI for example. This way you can make changes to the underlying implementation, and the existing tests protect you from breaking anything.
 
 #### a) Create user interface test
 
@@ -232,12 +238,10 @@ Kubernetes-template uses [Cypress](https://www.cypress.io/) for automatic user i
 
 1) Open the Cypress UI with `taito cypress:client` and run all existing Cypress tests by pressing the `Run all specs` -button.
 2) Create tests for you UI. See the `client/test/integration/posts.spec.js` as an example. The following resources provide some useful instructions for writing Cypress tests:
-    ```
-    [writing-your-first-test](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html)
-    [best-practices](https://docs.cypress.io/guides/references/best-practices.html)
-    ```
+    * [writing-your-first-test](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html)
+    * [best-practices](https://docs.cypress.io/guides/references/best-practices.html)
 
-> TIP: By default, Cypress tests are end-to-end tests. That is, they test functionality all the way from the UI to the database. This is not always a good thing. Your tests may become fragile if they are dependent on 3rd party services or data that you cannot easily control, your test may perform poorly, and you easily test the same functionality twice if you already have API tests in place. See [Network Requests
+> TIP: By default, Cypress tests are end-to-end tests. That is, they test functionality all the way from the UI to the database. This is not always a good thing. Your tests may become fragile if they are dependent on 3rd party services or on data that you cannot easily control during the test run. Your tests may also perform poorly, and you easily test the same functionality twice if you already have API tests in place. See [Network Requests
 ](https://docs.cypress.io/guides/guides/network-requests.html) for more information.
 
 #### b) Create API test
@@ -282,7 +286,7 @@ taito workspace clean          # Remove all unused build artifacts (e.g. images)
 
 See [appendix B: Software design](b-software-design.md) for some tips on how to design your application.
 
-Requirements analysis and UX design are out of scope for this technology oriented tutorial. However, they are certainly concepts that you should familiarize yourself with, if you want to make good software that fulfills the needs of users.
+Requirements analysis and UX design are out of scope for this technology oriented tutorial. However, they are certainly concepts that you should familiarize yourself with, if you want to make good software that fulfills the needs of users. Normally you would start your project with some requirements analysis and UX design before you have written even a single line of code.
 
 ### 2.16. Validate design decisions
 

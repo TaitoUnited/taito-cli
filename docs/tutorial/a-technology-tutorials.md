@@ -64,7 +64,7 @@ Most of these components should be presentational. That is, they know nothing ab
 
 Some of the components are containers. Container components know about application state, and about operations that are used to alter that state. In a simple application each container component may implement application logic and hold application state inside the component itself by using the state mechanism provided by React. In a more complex application, however, the application state and logic should reside outside the container component, and this is what libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) are meant for: [When should I use Redux](https://redux.js.org/faq/general#when-should-i-use-redux).
 
-Tutorials:
+#### Tutorials:
 
 * [React: Tutorial](https://reactjs.org/tutorial/tutorial.html)
 * [React: Main Concepts](https://reactjs.org/docs/hello-world.html)
@@ -79,12 +79,12 @@ Additional libraries used in example implementation:
 
 > TODO: In the future, use React hooks instead of Redux? Or use Redux with React hooks? Provide React hooks tutorials?
 
-Browser extensions:
+#### Browser extensions:
 
 * [React DevTools](https://github.com/facebook/react-devtools)
 * [Redux DevTools](https://github.com/reduxjs/redux-devtools)
 
-Additional resources:
+#### Additional resources:
 
 * [React Bits](https://vasanthk.gitbooks.io/react-bits/): TODO is this good?
 
