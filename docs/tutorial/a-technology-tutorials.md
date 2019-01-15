@@ -21,9 +21,9 @@ Fixes for some common issues:
 Introductions/tutorials:
 
 * [JavaScript: The Good Parts](http://shop.oreilly.com/product/9780596517748.do) is an old classic and provides a good introduction to the language. It covers only the ES3 JavaScript specification, but it's a good read anyway.
-* [ES6 for beginners](https://codeburst.io/es6-tutorial-for-beginners-5f3c4e7960be)
+* [ES6 for beginners](https://codeburst.io/es6-tutorial-for-beginners-5f3c4e7960be): This teaches you the new ES6 features.
 
-JavaScript is typically executed in one thread only. This means that all long running operations like API calls and database queries should be executed asynchronously. That is, the single execution thread should not wait for an API call or database query to complete. The simplest way to achieve this is to use async/await:
+JavaScript is typically executed in one thread only. This means that long running operations like API calls, database queries and file reads/writes should be executed asynchronously. That is, the single execution thread should not wait for an API call or database query to complete. The simplest way to achieve this is to use async/await:
 
 * [ES2017 Async/Await](http://rossboucher.com/await/#/)
 * [Learn Async/Await by Example](https://codeburst.io/javascript-es-2017-learn-async-await-by-example-48acc58bad65)

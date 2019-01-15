@@ -65,4 +65,4 @@ TODO bulk adds (e.g. three weeks on vacation)
 
 ---
 
-**Next:** [5. Setting up infrastructure](05-setting-up-infrastructure.md)
+**Next:** [PART II: Infrastucture](05-setting-up-infrastructure.md)

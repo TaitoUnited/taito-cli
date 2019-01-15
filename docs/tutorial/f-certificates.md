@@ -1,4 +1,4 @@
-## APPENDIX D: SSL/TLS certificates
+## APPENDIX F: SSL/TLS certificates
 
 Production environment uses a domain validated SSL/TLS certificate by default. It was acquired from Let's Encrypt when you deployed your application to the production environment the first time, and it will be renewed automatically every 3 months.
 
@@ -88,7 +88,3 @@ TODO
 #### 6. Revert back to the default DV certificate
 
 You can revert back to the default DV certificate just by removing the `certSecret` setting for the domain from `helm-prod.yaml`.
-
----
-
-**Next:** [APPENDIX E: Security](e-security.md)

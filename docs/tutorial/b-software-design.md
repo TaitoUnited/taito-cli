@@ -2,7 +2,7 @@
 
 ### Code structure
 
-An implementation should be divided in loosely coupled highly cohesive parts by using a modular directory structure. One way to do this, is to imagine that your API implementation is going to be split in multiple microservices in the future, and your UI implementation is going to be split in multiple chunks that are loaded to browser separately. Even if this would not happen in the future, this kind of loosely coupled structure has also many other benefits:
+An implementation should be divided in loosely coupled highly cohesive parts by using a modular directory structure. One way to do this, is to imagine that your API implementation is going to be split in multiple microservices in the future, and your UI implementation is going to be split in multiple chunks that are loaded to browser separately. Even if this would not happen, this kind of loosely coupled structure has also many other benefits:
 
 * When making a change, it's easier to see how widely the change might affect the application.
 * When implementing a new feature, there is no need to jump around in the codebase as much.

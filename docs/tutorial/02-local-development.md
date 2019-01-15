@@ -18,9 +18,9 @@ Installation and starting up takes some time the first time you run the commands
 
 Make up some simple idea that you would like to implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data permanently anywhere.
 
-If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A](a-technology-tutorials.md) provides some React tutorials and other resources that might be very useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
+If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A](a-technology-tutorials.md) provides some React tutorials and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
 
-The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. You should also install eslint and prettier plugins to your code editor. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
+The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. Note that you should also install eslint and prettier plugins to your code editor. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
 
 You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials.md#react) for some additional browser extensions that might also be useful.
 
@@ -191,18 +191,18 @@ Try if transactions work like they should:
     }
     ```
 
-3) Try adding posts on the UI. You should notice that the posts won't be created in database even though the error was thrown only after the post was added to database.
+3) Try adding some posts on the UI. You should notice that new posts won't appear in database even though the error is thrown only after each post is created.
 
 #### b) Transactions and multiple systems
 
 Using a database transaction does not always suffice if an operation makes data changes to multiple systems. However, if only two systems are involved (e.g. database + object storage), you can often mitigate this issue just by executing the updates in a correct order. You should make all database updates first and only then write data to object storage. This way database updates will be rolled back automatically if the object storage write fails. In a more complex scenario, you might need to catch some errors yourself and revert data changes manually.
 
-Try this yourself by modifying the implementation that you made in exercise 2.10. Try both a and b, and see how they behave when an error occurs during database update or object storage write:
+Try this yourself by modifying the implementation that you made in exercise 2.10. Try both a and b, and see how they behave when an error occurs during either database update or object storage write:
 
 * a) write to database, write to object storage
 * b) write to object storage, write to database
 
-> Some systems support distributed transactions. That is, you can make changes to multiple systems at once, and all of them engage to the same transaction. But distributed transactions come with extra complexity and are rarely needed.
+> Some systems support distributed transactions. That is, you can make changes to multiple systems at once, and all of them engage to the same transaction. Distributed transactions come with extra complexity and are rarely needed.
 
 ### 2.13. Automatic testing
 
@@ -226,7 +226,7 @@ You can run UI and API tests also against remote environments, but this is expla
 
 You should not test implementation in your test scripts. Instead, you should always find some kind 'public API' that is designed not to change very often, and test behaviour of that API. Here public API can be provided by class, module, library, service or UI for example. This way you can make changes to the underlying implementation, and the existing tests protect you from breaking anything.
 
-### Create user interface test
+#### a) Create user interface test
 
 Kubernetes-template uses [Cypress](https://www.cypress.io/) for automatic user interface tests.
 
@@ -240,7 +240,7 @@ Kubernetes-template uses [Cypress](https://www.cypress.io/) for automatic user i
 > TIP: By default, Cypress tests are end-to-end tests. That is, they test functionality all the way from the UI to the database. This is not always a good thing. Your tests may become fragile if they are dependent on 3rd party services or data that you cannot easily control, your test may perform poorly, and you easily test the same functionality twice if you already have API tests in place. See [Network Requests
 ](https://docs.cypress.io/guides/guides/network-requests.html) for more information.
 
-### Create API test
+#### b) Create API test
 
 Kubernetes-template uses TODO for automatic API tests.
 
@@ -250,7 +250,7 @@ Kubernetes-template uses TODO for automatic API tests.
     TODO
     ```
 
-### Create unit test
+#### c) Create unit test
 
 The kubernetes-template differentiates unit tests from all other tests by using `unit` as filename suffix instead of `test`. A unit test does not require a running environment. That is, no database or external services are involved as unit test typically test only a bunch of code. You can achieve this by [mocking](TODO-link). TODO mock link.
 
@@ -283,6 +283,10 @@ taito workspace clean          # Remove all unused build artifacts (e.g. images)
 See [appendix B: Software design](b-software-design.md) for some tips on how to design your application.
 
 Requirements analysis and UX design are out of scope for this technology oriented tutorial. However, they are certainly concepts that you should familiarize yourself with, if you want to make good software that fulfills the needs of users.
+
+### 2.16. Validate design decisions
+
+TODO
 
 ---
 

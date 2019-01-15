@@ -40,4 +40,4 @@ This tutorial guides you through common software development scenarios in a chro
 
 ---
 
-**Next:** [1. Creating a project](01-creating-a-project.md)
+**Next:** [PART I: Basics](01-creating-a-project.md)

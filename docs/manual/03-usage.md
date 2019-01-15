@@ -2,7 +2,7 @@
 
 ### Setting up a project
 
-If you are not working with an existing taito-cli project, see the first chapters of [Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) on how to setup your infrastructure and create a new project. If you would rather migrate an existing project, see the [configuration](04-configuration.md) chapter. Also some of the [project templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md##project-templates) provide instructions on how to migrate an existing project.
+If you are not working with an existing taito-cli project, see the first chapters of [Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) on how to create a new project and setup your infrastructure. If you would rather migrate an existing project, see the [configuration](04-configuration.md) chapter. Also some of the [project templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md##project-templates) provide instructions on how to migrate an existing project.
 
 ### The basics
 
@@ -12,7 +12,7 @@ Run `taito -h` to show a list of all predefined commands of taito-cli and additi
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito --auth:dev`). Note that your credentials are saved on the taito-cli container image, as you don't need them lying on your host file system anymore.
 
-[Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order, including setting up your own infrastructure and creating your first taito-cli project. You may consider it as a chronological taito-cli manual.
+[Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order, including creating your first taito-cli project and setting up your own infrastructure. You may consider it as a chronological taito-cli manual.
 
 See the [DEVELOPMENT.md](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md) of the [kubernetes-template](https://github.com/TaitoUnited/server-template) as an example on how to use taito-cli with your project.
 
