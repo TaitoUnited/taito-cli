@@ -44,7 +44,7 @@ echo "Please wait..." && \
   echo Press enter to open the configuration chapter of DEVELOPMENT.md. && \
   read -r && \
   echo && \
-  taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/blob/dev/${doc}.md#configuration"
+  taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/blob/dev/${doc}#configuration"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
