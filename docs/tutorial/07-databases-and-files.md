@@ -1,4 +1,4 @@
-## 8. Databases and files
+## 7. Databases and files
 
 ```
 taito db connect:dev
@@ -36,4 +36,4 @@ taito storage sync to:dev ./source /dest # Sync files to default dev bucket
 
 ---
 
-**Next:** [9. Cloud services and Terraform](09-cloud-services-and-terraform.md)
+**Next:** [8. Cloud services and Terraform](08-cloud-services-and-terraform.md)

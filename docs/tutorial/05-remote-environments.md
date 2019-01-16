@@ -1,4 +1,8 @@
-## 6. Remote environments
+# PART II: Infrastructure
+
+## 5. Remote environments
+
+> NOTE: If zone does not yet exist, see chapter...
 
 TODO describe environments:
 
@@ -14,7 +18,7 @@ TODO hotfix branches
 
 TODO existing playground project -> destroy environments first.
 
-### 6.1. Create dev environment
+### 5.1. Create dev environment
 
 Create the dev environment:
 
@@ -38,7 +42,7 @@ taito open logs:dev            # Open logs
 
 The first CI/CD build will take some time. Subsequent builds are faster as they use a previous build as cache.
 
-### 6.2. Enable automatic integration and e2e tests for dev environment
+### 5.2. Enable automatic integration and e2e tests for dev environment
 
 1) Enable `ci_exec_test` for `dev` environment in `taito-config.sh`:
 
@@ -50,7 +54,7 @@ The first CI/CD build will take some time. Subsequent builds are faster as they 
 2) Push the change to dev branch: `git push`
 3) See build and test execution with `taito open builds`
 
-### 6.3. Run integration and e2e tests manually againts the dev environment
+### 5.3. Run integration and e2e tests manually againts the dev environment
 
 TODO some notes about docker-compose-test.yaml -> taito-cli is used as proxy to access dev database.
 
@@ -58,7 +62,7 @@ TODO some notes about docker-compose-test.yaml -> taito-cli is used as proxy to 
 taito test:dev
 ```
 
-### 6.4. Create test environment
+### 5.4. Create test environment
 
 Create the test environment:
 
@@ -76,7 +80,7 @@ taito open status:test         # Check status of test environment
 taito open app:test            # Open application GUI
 ```
 
-### 6.5. Create production environment
+### 5.5. Create production environment
 
 Create the environment:
 
@@ -96,7 +100,7 @@ taito open app:prod            # Open application GUI
 
 > At this point your production environment already exists. However, before releasing it to the real end-users you need to do some additional tasks that are explained in chapter [9. Production setup](#09-production-setup.md).
 
-### 6.6. Create canary environment
+### 5.6. Create canary environment
 
 Canary environment is a special environment that uses production environment resources: databases, storage buckets, secrets and external services. That is, if you deploy your application to the canary environment, your application will run side-by-side with the production version of the application, and it will also use all the same resources.
 
@@ -127,7 +131,7 @@ And how this works exactly? Well, the canary environment is mapped to production
 taito_env="${taito_env/canary/prod}" # canary -> prod
 ```
 
-### 6.7. Deploy changes through multiple environments (dev -> canary)
+### 5.7. Deploy changes through multiple environments (dev -> canary)
 
 ```
 git push                         # Push some changes to the dev branch
@@ -135,37 +139,37 @@ taito vc env merge: dev canary   # Merge changes: dev -> test -> canary
 taito open builds                # See them build and deploy
 ```
 
-### 6.8. Create a feature environment
+### 5.8. Create a feature environment
 
 ```
 TODO
 ```
 
-### 6.9. Delete the feature environment
+### 5.9. Delete the feature environment
 
 ```
 TODO
 ```
 
-### 6.10. Revert application to the previous revision
+### 5.10. Revert application to the previous revision
 
 ```
 taito deployment revert:prod
 ```
 
-### 6.11. Deploy a specific version of the application
+### 5.11. Deploy a specific version of the application
 
 ```
 taito deployment deploy:dev 1.1.0
 ```
 
-### 6.12 Make a hotfix for production
+### 5.12 Make a hotfix for production
 
 ```
 TODO
 ```
 
-### 6.13. Debugging
+### 5.13. Debugging
 
 ```
 taito open logs:dev              # Open logs of dev environment
@@ -176,7 +180,7 @@ taito exec:server:dev echo foo   # Execute a command inside the server container
 
 TODO link: Stackdriver log filtering instructions
 
-### 6.14. Some additional deployment commands
+### 5.14. Some additional deployment commands
 
 ```
 taito deployment start:dev        # Start ci build for dev environment manually
@@ -199,4 +203,4 @@ Advanced features (TODO not all implemented yet):
 
 ---
 
-**Next:** [7. Environment variables and secrets](07-env-variables-and-secrets.md)
+**Next:** [6. Environment variables and secrets](06-env-variables-and-secrets.md)

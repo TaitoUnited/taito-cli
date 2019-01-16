@@ -1,4 +1,4 @@
-## 7. Environment variables and secrets
+## 6. Environment variables and secrets
 
 TODO describe:
 
@@ -6,7 +6,7 @@ TODO describe:
 * scripts/helm.yaml
 * scripts/helm-ENV.yaml
 
-### 7.1. Define an environment variable: same value for all environments
+### 6.1. Define an environment variable: same value for all environments
 
 Add the variable to docker-compose.yaml for local development:
 
@@ -22,7 +22,7 @@ env:
   MY_VARIABLE: my_value
 ```
 
-### 7.2. Define an environment variable: different value for each environment
+### 6.2. Define an environment variable: different value for each environment
 
 Add the variable to docker-compose.yaml for local development:
 
@@ -45,7 +45,7 @@ env:
   MY_VARIABLE: my_value
 ```
 
-### 7.3. Deploy a configuration changes without rebuilding
+### 6.3. Deploy a configuration changes without rebuilding
 
 First make the configuration changes and push them to dev branch. Then deploy the configuration changes directly to different environments:
 
@@ -56,7 +56,7 @@ taito deployment deploy:prod
 
 > TODO: Currently you always need to give image tag as a parameter. See the latest image tag deployed successfully for the branch in question by running `taito open builds`.
 
-### 7.4. Define a secret
+### 6.4. Define a secret
 
 taito-config.sh:
 
@@ -90,10 +90,10 @@ taito env rotate:prod my-secret
 
 > TODO: Describe how to use the same secret value for local and dev environment without committing it to git.
 
-### 7.5. User specific variables
+### 6.5. User specific variables
 
 TODO
 
 ---
 
-**Next:** [8. Databases and files](08-databases-and-files.md)
+**Next:** [7. Databases and files](07-databases-and-files.md)

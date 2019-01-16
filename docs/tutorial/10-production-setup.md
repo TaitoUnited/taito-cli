@@ -1,20 +1,20 @@
-## 11. Production setup
+## 10. Production setup
 
-### 11.1. Backups and GDPR
+### 10.1. Backups and GDPR
 
 Bucket versioning on/off, etc.
 
-### 11.2. Set resource limits and autoscaling
+### 10.2. Set resource limits and autoscaling
 
-### 11.3. Performance testing
+### 10.3. Performance testing
 
-### 11.4. Security audit
+### 10.4. Security audit
 
-### 11.5. Setup domain name
+### 10.5. Setup domain name
 
 TODO: DV certificate automatically. For OV/EV certficate, see [Appendix F: SSL/TLS certificates](f-certificates.md).
 
-### 11.7. Disable basic auth
+### 10.7. Disable basic auth
 
 Basic authentication is enabled in all environments by default to keep the environment hidden. You can disable the basic auth by...
 
@@ -27,8 +27,8 @@ acme-myapp:
     basicAuth: false
 ```
 
-### 11.8. Setup uptime monitoring
+### 10.8. Setup uptime monitoring
 
 ---
 
-**Next:** [12. Running in production](12-running-in-production.md)
+**Next:** [11. Running in production](11-running-in-production.md)

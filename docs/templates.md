@@ -43,6 +43,8 @@ alongside with this template to implement dynamic functionality to your website.
 
 * TODO machine learning, kubeflow
 
+* TODO data warehouse, analytics
+
 * [react-native-template](https://github.com/TaitoUnited/react-native-template): Implement mobile applications with React Native. Continuously build, test, release, and monitor them using the Visual Studio App Center.
 
 * [flutter-template](https://github.com/TaitoUnited/flutter-template): Implement mobile applications with Flutter.

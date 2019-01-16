@@ -1,6 +1,4 @@
-# PART III: Advanced
-
-## 13. Zone maintenance
+## 16. Zone maintenance
 
 > NOTE: For DevOps personnel. you can skip if using organization infrastructure.
 
@@ -11,4 +9,4 @@ TODO taito-cli commands for maintenance:
 
 ---
 
-**Next:** [14. Zone monitoring](14-zone-monitoring.md)
+**Next:** [17. Zone monitoring](17-zone-monitoring.md)

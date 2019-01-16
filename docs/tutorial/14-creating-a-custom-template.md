@@ -1,4 +1,4 @@
-## 16. Creating a taito-cli plugin
+## 14. Creating a custom template
 
 TODO Creating a taito-cli plugin.
 
@@ -6,4 +6,4 @@ TODO Also creating a custom zone? -> using taito-cli with custom infrastucture.
 
 ---
 
-**Next:** [APPENDIX A: Technology tutorials](a-technology-tutorials.md)
+**Next:** [PART IV: Zones](15-creating-a-zone.md)

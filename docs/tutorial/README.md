@@ -6,28 +6,33 @@ This tutorial guides you through common software development scenarios in a chro
 
 ### PART I: Basics
 
-* [1. Creating a project](01-creating-a-project.md)
+* [1. Starting a new project](01-starting-a-new-project.md)
 * [2. Local development](02-local-development.md)
 * [3. Version control](03-version-control.md)
 * [4. Project management](04-project-management.md)
 
 ### PART II: Infrastructure
 
-* [5. Setting up infrastructure](05-setting-up-infrastructure.md)
-* [6. Remote environments](06-remote-environments.md)
-* [7. Environment variables and secrets](07-env-variables-and-secrets.md)
-* [8. Databases and files](08-databases-and-files.md)
-* [9. Cloud services and Terraform](09-cloud-services-and-terraform.md)
-* [10. Kubernetes-template specific details](10-kubernetes-template-specific.md)
-* [11. Production setup](11-production-setup.md)
-* [12. Running in production](12-running-in-production.md)
+* [5. Remote environments](05-remote-environments.md)
+* [6. Environment variables and secrets](06-env-variables-and-secrets.md)
+* [7. Databases and files](07-databases-and-files.md)
+* [8. Cloud services and Terraform](08-cloud-services-and-terraform.md)
+* [9. Kubernetes-template specific details](09-kubernetes-template-specific.md)
+* [10. Production setup](10-production-setup.md)
+* [11. Running in production](11-running-in-production.md)
 
-### PART III: Advanced
+### PART III: Customizing Taito CLI
 
-* [13. Zone maintenance](13-zone-maintenance.md)
-* [14. Zone monitoring](14-zone-monitoring.md)
-* [15. Zone recovery](15-zone-recovery.md)
-* [16. Creating a taito-cli plugin](16-creating-a-plugin.md)
+* [12. Creating a custom taito-cli command](12-creating-a-custom-command.md)
+* [13. Creating a custom taito-cli plugin](13-creating-a-custom-plugin.md)
+* [14. Creating a custom taito-cli template](14-creating-a-custom-template.md)
+
+### PART IV: Zones
+
+* [15. Creating a zone](15-creating-a-zone.md)
+* [16. Zone maintenance](16-zone-maintenance.md)
+* [17. Zone monitoring](17-zone-monitoring.md)
+* [18. Zone recovery](18-zone-recovery.md)
 
 ### Appendixes
 
@@ -40,4 +45,4 @@ This tutorial guides you through common software development scenarios in a chro
 
 ---
 
-**Next:** [PART I: Basics](01-creating-a-project.md)
+**Next:** [PART I: Basics](01-starting-a-new-project.md)

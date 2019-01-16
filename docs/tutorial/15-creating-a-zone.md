@@ -1,6 +1,6 @@
-# PART II: Infrastucture
+# PART IV: Zones
 
-## 5. Setting up infrastructure
+## 15. Creating a zone
 
 > You can skip this step if your organization already provides a suitable infrastructure for this tutorial. However, you might still like to browse through [Appendix C](c-modern-server-infrastructure.md) to famirialize yourself with basic concepts of modern server infrastructure.
 
@@ -33,4 +33,4 @@ TODO:
 
 ---
 
-**Next:** [6. Remote environments](06-remote-environments.md)
+**Next:** [16. Zone maintenance](16-zone-maintenance.md)

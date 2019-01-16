@@ -18,7 +18,7 @@ Installation and starting up takes some time the first time you run the commands
 
 Make up some simple idea that you would like to implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data permanently anywhere.
 
-If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A](a-technology-tutorials.md) provides some React tutorials and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
+If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A](a-technology-tutorials.md) provides some tips and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
 
 The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. Note that you should also install eslint and prettier plugins to your code editor. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
 
@@ -68,7 +68,7 @@ TODO: or `taito init --clean`?
 
 The deploy script creates a database table, the verify script verifies that the database table exists, and the revert script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
 
-Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [Appendix A](a-technology-tutorials.md) for some SQL and relational database tutorials.
+Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [appendix A](a-technology-tutorials.md#sql-and-relational-databases) for some SQL and relational database tutorials.
 
 ### 2.5. Add some example data to database
 
@@ -95,7 +95,7 @@ select * from articles; # Show all articles (SQL command)
 \q                      # Quit (postgres)
 ```
 
-If you are not yet familiar with SQL, you should try to execute also some additional SQL commands just for the fun of it. See [Appendix A](a-technology-tutorials.md) for some SQL tutorials.
+If you are not yet familiar with SQL, you should try to execute also some additional SQL commands just for the fun of it. See [appendix A](a-technology-tutorials.md#sql-and-relational-databases) for some SQL tutorials.
 
 > TIP: If you have installed some database GUI tool, you can run `taito db proxy` to display database connection details and you can use those details to connect to the local database.
 
@@ -140,7 +140,7 @@ Your UI implementation needs to access the data located in database. However, ac
 UI (on browser)  ->  API (on server)  ->  database
 ```
 
-The API should be stateless. That is, services that implement the API should not keep any state in memory or on local disk between requests. This is explained in more detail in [Appendix B](b-software-design.md#api-design).
+The API should be stateless. That is, services that implement the API should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](b-software-design.md#api-design).
 
 TODO: Some tips for debugging.
 
@@ -155,13 +155,13 @@ Implement a RESTful API endpoint for your UI and modify your UI implementation t
 * `PATCH /articles/432`: Update article 432 (only given fields)
 * `DELETE /articles/432`: Delete article 432
 
-See [Appendix A](a-technology-tutorials.md#restful-api) for some RESTful API tutorials.
+See [appendix A](a-technology-tutorials.md#restful-api) for some RESTful API tutorials.
 
 #### b) GraphQL API
 
 TODO
 
-See [Appendix A](a-technology-tutorials.md#graphql-api) for some GraphQL API tutorials.
+See [appendix A](a-technology-tutorials.md#graphql-api) for some GraphQL API tutorials.
 
 ### 2.9. Use environment variables for configuration
 
@@ -181,7 +181,7 @@ Data changes made by a service should be atomic to preserve data integrity. That
 
 #### a) Transactions with a relational database
 
-With relational databases you can use transactions to achieve atomicity. The kubernetes-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. Kubernetes-template specific details](10-kubernetes-template-specific.md) if you'd like to know how to customize your transactions.
+With relational databases you can use transactions to achieve atomicity. The kubernetes-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. Kubernetes-template specific details](09-kubernetes-template-specific.md) if you'd like to know how to customize your transactions.
 
 Try if transactions work like they should:
 
@@ -231,6 +231,9 @@ taito test:client cypress   # Run all cypress UI tests of client against locally
 You can run UI and API tests also against remote environments, but this is explained in chapter [6. Remote environments](#06-remote-environments.md).
 
 You should not test implementation in your test scripts. Instead, you should always find some kind of 'public API' that is designed not to change very often, and test behaviour of that API. Here public API can be provided by a class, module, library, service or UI for example. This way you can make changes to the underlying implementation, and the existing tests protect you from breaking anything.
+
+> TODO: TDD
+> TODO: Running tests in production
 
 #### a) Create user interface test
 
@@ -284,11 +287,9 @@ taito workspace clean          # Remove all unused build artifacts (e.g. images)
 
 ### 2.15. Read some software design basics
 
-See [appendix B: Software design](b-software-design.md) for some tips on how to design your application.
+TODO: If you did not already... [Appendix B: Software design](b-software-design.md) provides some technical tips on how to design your application. You should read it through.
 
-Requirements analysis and UX design are out of scope for this technology oriented tutorial. However, they are certainly concepts that you should familiarize yourself with, if you want to make good software that fulfills the needs of users. Normally you would start your project with some requirements analysis and UX design before you have written even a single line of code.
-
-### 2.16. Validate design decisions
+### 2.16. Validate core technical decisions
 
 TODO
 
