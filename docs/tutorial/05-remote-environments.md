@@ -1,8 +1,9 @@
 # PART II: Infrastructure
 
-## 5. Remote environments
+> TODO: If zone does not yet exist, see chapter...
+> TODO: Project configs not ok if zone has not yet been created
 
-> NOTE: If zone does not yet exist, see chapter...
+## 5. Remote environments
 
 TODO describe environments:
 

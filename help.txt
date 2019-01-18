@@ -17,7 +17,7 @@ QUICK EXAMPLES
     open app                 # Open application on browser
     open admin               # Open admin GUI on browser
     open builds              # Open build logs on browser
-    open boards              # Open project kanban board(s) on browser
+    open project             # Open project management on browser
     open -h                  # List all links
     info                     # Show info required for logging in to app
     lint                     # Lint code
@@ -154,7 +154,7 @@ QUICK EXAMPLES
     issue comment: delete post                     # Add a comment
     issue open: delete post                        # Open issue on browser
     issue list: todo                               # List todo issues
-    open kanban                                    # Open kanban board
+    open project                                   # Open project management
 
   HOUR REPORTING:
     hours auth                         # Authenticate
@@ -442,7 +442,7 @@ PROJECT: LINKS
   > open admin[:ENV] - GUI of application admin tool
   > open storage - Storage bucket used by the app
   > open docs - Built docs
-  > open boards - Kanban/scrum board(s)
+  > open project - Project management
   > open git - Git repository (e.g. GitHub)
   > open vc - Version control repository (e.g. GitHub)
   > open builds - List of builds (e.g. Jenkins, Google container builder)

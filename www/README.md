@@ -1,10 +1,10 @@
-# Taito-cli website
+# Taito CLI website
 
 Implement with Gatsby v2. Layout should probably be something between [reactjs.org](https://reactjs.org/) and [gatsbyjs.org](https://gatsbyjs.org/). Use [Taito United](http://taitounited.fi/) brand for appearance. Site content already exists in the docs folder as markdown files.
 
 ## Center area of the page
 
-Big title: **Taito** (or **Taito CLI** ?)
+Big title: **Taito CLI**
 
 Subtitle: An extensible toolkit for DevOps and NoOps.
 
@@ -18,15 +18,15 @@ Use the same simple command set from project to project no matter the technology
 
 ### Extensible
 
-Add taito-cli support for any technology by implementing a taito-cli plugin. Create custom commands and share them with your colleagues as taito-cli extensions. Implement project specific taito-cli commands with npm, make or pipenv.
+Add Taito CLI support for any technology by implementing a Taito CLI plugin. Create custom commands and share them with your colleagues as Taito CLI extensions. Implement project specific Taito CLI commands with npm, make or pipenv.
 
 ### All tools included
 
-Working with modern hybrid cloud environments requires lots of tools. Taito-cli Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito --upgrade`. And if you need something special, it is very easy to customize the taito-cli image with your own requirements.
+Working with modern hybrid cloud environments requires lots of tools. Taito CLI Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito --upgrade`. And if you need something special, it is very easy to customize the Taito CLI image with your own requirements.
 
 ### No lock-in
 
-Taito-cli is a wrapper that reduces technology and vendor lock-in by providing a standard command set on top of various tools. However, you can use those tools also directly without taito-cli.
+Taito CLI is a wrapper that reduces technology and vendor lock-in by providing a standard command set on top of various tools. However, you can use those tools also directly without Taito CLI, and therefore you can stop using Taito CLI at any time, if you like.
 
 ### Minimal configuration
 

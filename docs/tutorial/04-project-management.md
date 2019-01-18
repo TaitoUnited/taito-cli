@@ -2,7 +2,7 @@
 
 > TODO: These commands have not yet been implemented.
 
-TODO scrum + kanban references.
+TODO scrum + kanban + safe references.
 
 ### 4.1. Issues
 
@@ -11,8 +11,8 @@ Whether you are working alone or as a team, it's best to document, coordinate an
 Try the following commands. Note that the given issue title don't have to be an exact match. If no exact match is found, command finds the closest matching issue title and confirms that it is the correct issue.
 
 ```shell
-# Open kanban board on browser
-taito open kanban
+# Open project management on browser
+taito open project
 
 # Authenticate to the issue management system
 taito issue auth
