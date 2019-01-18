@@ -2,6 +2,8 @@
 
 ### 2.1. Start the application
 
+The template uses Docker Compose to run your application. All parts of the application, including the database, are run inside containers so that the running environment closely resembles the actual production environment.
+
 Start the application with the following commands:
 
 ```shell
@@ -12,7 +14,7 @@ taito open app    # Open application web user interface
 taito info        # Show info required for signing in to the application
 ```
 
-Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first.
+Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first. While waiting, browse through the `Quick start` section of the DEVELOPMENT.md file to get an quick overview of the taito-cli commands.
 
 ### 2.2. Implement a new page with React
 
@@ -20,15 +22,13 @@ Make up some simple idea that you would like to implement, and add a new empty p
 
 If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A](a-technology-tutorials.md) provides some tips and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
 
-The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. Note that you should also install eslint and prettier plugins to your code editor. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
+The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. Note that you should also install [eslint](https://eslint.org/docs/user-guide/integrations#editors) and [prettier](https://prettier.io/docs/en/editors.html) plugins to your code editor. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
 
 You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials.md#browser-extensions) for some additional browser extensions that might also be useful.
 
-### 2.3. Adding a new npm library
+### 2.3. Add a new npm library dependency
 
-Add a npm library to `client/package.json` dependencies and restart the application with `ctrl-c`, `taito start`. The npm library will be installed automatically on start. If you need your code editor to see the added library also (e.g. for linting or code completion purposes), run `taito install`.
-
-> Automatic npm install is run on the last line of `client/Dockerfile`.
+Add some npm library to the dependencies section of the `client/package.json`, run `taito install`, and restart the application with `ctrl-c`, `taito start`. Now you should be able to use the npm library in your implementation.
 
 ### 2.4. Commit and push changes to git
 
@@ -78,12 +78,12 @@ Often it's a good idea to add some example data to database, as it makes develop
 
 ```shell
 EDIT database/data/dev.sql     # Modify data used for local and dev environments
-taito init --clean             # Populate migrations and init data to local database
+taito init --clean             # Populate all migrations and init data to local database
 ```
 
 Note that `taito init --clean` erases all existing data from your local database. If you don't want that, you can alternatively run `taito init` and ignore all the **already exists** error messages.
 
-> TODO: note about `taito init:dev --clean`
+> TODO: note about remote environments and `taito init:dev --clean`.
 
 ### 2.7. Connect to the local database
 
@@ -103,7 +103,7 @@ If you are not yet familiar with SQL, you should try to execute also some additi
 
 ### 2.8. Modify an existing database table
 
-Normally all database changes must be made using database migrations. However, if you are modifying a database table that does not exist in production environment yet, you can keep the scripts located in `database/deploy/` cleaner by modifying them direcly. Try the both approaches:
+Normally all database changes must be made using database migrations. However, if you are modifying a database table that does not exist in production environment yet, you can keep the scripts located in `database/deploy/` cleaner by modifying them directly. Try the both approaches:
 
 #### a) With migrations
 
@@ -161,13 +161,22 @@ See [appendix A](a-technology-tutorials.md#restful-api) for some RESTful API tut
 
 #### b) GraphQL API
 
-TODO
+TODO: Later
 
 See [appendix A](a-technology-tutorials.md#graphql-api) for some GraphQL API tutorials.
 
 ### 2.10. Use environment variables for configuration
 
-TODO
+In addition to your local environment, your implementation will be run also in many other environments (testing environment and production environment, for example). Some settings, like database settings, change depending on the environment. You can define these settings with environment variables.
+
+1) Add a new environment variable for server container in `docker-compose.yaml`.
+2) Add the new environment variable to `server/src/common/config.js`.
+3) Try using the environment variable in your server implementation. For example add the environment variable to the `/config` endpoint in `server/src/infra/infra.route.js` and see if `/api/config` endpoint returns the configured value to your browser.
+4) Add the environment variable also to `scripts/helm.yaml`. The helm.yaml file is used for Kubernetes running on remote environments, but you should add the environment variable right away, so that you don't forget to do it later. You can use `TODO` as value, if you don't know the correct value yet.
+
+Note that you should not use environment variables to define passwords or other secrets. Configuring remote environments and secrets are explained in part II of the tutorial.
+
+TODO: change current docker-compose.yaml implementation -> mount secrets
 
 ### 2.11. Use 3rd party services and define secrets
 
@@ -175,7 +184,7 @@ You should not worry about 3rd party services and secrets for now. These are exp
 
 ### 2.12. Store files to object storage
 
-TODO: As noted previously, no local disk
+TODO: As noted previously, no local disk.
 
 ### 2.13. Use transactions to preserve data integrity
 
