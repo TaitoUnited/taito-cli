@@ -180,7 +180,11 @@ taito vc env merge: dev canary
 
 TODO
 
-### 3.5 Some common mistakes
+### 3.5 Feature flags
+
+TODO
+
+### 3.6 Some common mistakes
 
 TODO:
 * Most common mistake so far: An accidental commit to an environment branch other than dev -> prevents fast-forward merge.

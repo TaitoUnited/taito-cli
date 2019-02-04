@@ -34,6 +34,8 @@ taito storage sync to:dev ./source /dest # Sync files to default dev bucket
 * TODO links to sql tutorials
 * TODO warn about sql injections
 
+* TODO: https://cloud.google.com/storage/docs/access-control/signing-urls-manually
+
 ---
 
 **Next:** [8. Cloud services and Terraform](08-cloud-services-and-terraform.md)

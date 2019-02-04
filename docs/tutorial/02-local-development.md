@@ -14,17 +14,19 @@ taito open app    # Open application web user interface
 taito info        # Show info required for signing in to the application
 ```
 
-Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first. While waiting, browse through the `Quick start` section of the DEVELOPMENT.md file to get an quick overview of the taito-cli commands.
+Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first. While waiting, browse through the [Quick start](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md#quick-start) section of the DEVELOPMENT.md file to get an quick overview of the Taito CLI commands.
 
 ### 2.2. Implement a new page with React
 
-Make up some simple idea that you would like to implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data permanently anywhere.
+Make up some simple idea that you would like to implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data anywhere permanently.
 
-If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A](a-technology-tutorials.md) provides some tips and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
+If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A: Technology tutorials](a-technology-tutorials.md) provides some tips and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
 
-The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. Note that you should also install [eslint](https://eslint.org/docs/user-guide/integrations#editors) and [prettier](https://prettier.io/docs/en/editors.html) plugins to your code editor. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
+The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. Note that you should also install [eslint](https://eslint.org/docs/user-guide/integrations#editors) and [prettier](https://prettier.io/docs/en/editors.html) plugins to your code editor *(TODO: tslint instead of eslint?)*. This way you see linting errors directly in your editor, and code will be formatted automatically according to predefined rules.
 
 You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials.md#browser-extensions) for some additional browser extensions that might also be useful.
+
+> If web development is new for you, just take your time learning the basics before continuing to the next chapter.
 
 ### 2.3. Add a new npm library dependency
 
@@ -48,9 +50,9 @@ git pull -r           # Pull changes from remote git repository using rebase
 git push              # Push changes to remote git repository
 ```
 
-For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](03-version-control.md).
+For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): my short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](03-version-control.md).
 
-> TIP: `git pull -r` will refuse to run if your worktree is dirty. In such case, you can run `git pull -r --autostash` if you don't want to commit or stash your changes before pull.
+> TIP: `git pull -r` refuses to run if your worktree is dirty. In such case, you can run `git pull -r --autostash` if you don't want to commit or stash your changes before pull.
 
 > TIP: You can configure git to always rebase by default on pull with `git config --global pull.rebase true`.
 
@@ -68,13 +70,13 @@ taito init                                      # Deploy to local db
 
 TODO: or `taito init --clean`?
 
-The deploy script creates a database table, the verify script verifies that the database table exists, and the revert script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
+The *deploy.sql* script creates a database table, the *verify.sql* script verifies that the database table exists, and the *revert.sql* script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
 
 Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [appendix A](a-technology-tutorials.md#sql-and-relational-databases) for some SQL and relational database tutorials.
 
 ### 2.6. Add some example data to database
 
-Often it's a good idea to add some example data to database, as it makes development and testing easier. Folder `database/data/` contains example data for each environment. Try to add some example data to the newly created database table with the following commands:
+Often it's a good idea to add some example data to database, as it makes development and testing easier. Folder `database/data/` contains example data for each environment. Try to add some example data to the newly created database table(s) with the following commands:
 
 ```shell
 EDIT database/data/dev.sql     # Modify data used for local and dev environments
@@ -103,7 +105,7 @@ If you are not yet familiar with SQL, you should try to execute also some additi
 
 ### 2.8. Modify an existing database table
 
-Normally all database changes must be made using database migrations. However, if you are modifying a database table that does not exist in production environment yet, you can keep the scripts located in `database/deploy/` cleaner by modifying them directly. Try the both approaches:
+Normally all database changes must be made using database migrations (option a). However, if you are modifying a database table that does not exist in production environment yet, you can keep the scripts located in `database/deploy/` cleaner by modifying them directly (option b). Try the both approaches:
 
 #### a) With migrations
 
@@ -117,13 +119,13 @@ EDIT database/verify/articles-foobar.sql                                # Edit v
 taito init                                                              # Deploy to local db
 ```
 
-The deploy script creates the column, the verify script verifies that the column exists, and the revert script reverts the changes by dropping the column. You can find example deploy, revert and verify scripts in the `database/` directory. Note that you can also add multiple columns in a single migration script, if necessary. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions.
+The *deploy.sql* script creates the column, the *verify.sql* script verifies that the column exists, and the *revert.sql* script reverts the changes by dropping the column. You can find example deploy, revert and verify scripts in the `database/` directory. Note that you can also add multiple columns in a single migration script, if necessary. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions.
 
 The upside of this approach is that the new column is deployed to all environments automatically. Other developers need to run `taito init` manually, but `taito init --clean` is not required, and therefore all data is preserved.
 
 TODO example: posts-images
 
-#### b) Without migrations
+#### b) By modifying existing scripts
 
 Add a new column to your newly created database table by modifying the existing deploy script directly:
 
@@ -142,7 +144,7 @@ Your UI implementation needs to access the data located in database. However, ac
 UI (on browser)  ->  API (on server)  ->  database
 ```
 
-The API should be stateless. That is, services that implement the API should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](b-software-design.md#api-design).
+The API should be stateless. That is, the API implementatino should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](b-software-design.md#api-design).
 
 TODO: Some tips for debugging.
 
@@ -167,7 +169,7 @@ See [appendix A](a-technology-tutorials.md#graphql-api) for some GraphQL API tut
 
 ### 2.10. Use environment variables for configuration
 
-In addition to your local environment, your implementation will be run also in many other environments (testing environment and production environment, for example). Some settings, like database settings, change depending on the environment. You can define these settings with environment variables.
+Your implementation will be run in many other environments in In addition to your local environment (testing environment and production environment, for example). Some settings, like database settings, change depending on the environment. You can define these settings with environment variables.
 
 1) Add a new environment variable for server container in `docker-compose.yaml`.
 2) Add the new environment variable to `server/src/common/config.js`.
@@ -185,6 +187,9 @@ You should not worry about 3rd party services and secrets for now. These are exp
 ### 2.12. Store files to object storage
 
 TODO: As noted previously, no local disk.
+
+TODO: https://cloud.google.com/storage/docs/access-control/signing-urls-manually
+TODO: minio -> S3 compatible (google cloud, etc.)
 
 ### 2.13. Use transactions to preserve data integrity
 
@@ -214,10 +219,10 @@ Try if transactions work like they should:
 
 Using a database transaction does not always suffice if an operation makes data changes to multiple systems. However, if only two systems are involved (e.g. database + object storage), you can often mitigate this issue just by executing the updates in a correct order. You should make all database updates first and only then write data to object storage. This way database updates will be rolled back automatically if the object storage write fails. In a more complex scenario, you might need to catch some errors yourself and revert data changes manually.
 
-Try this yourself by modifying the implementation that you made in exercise 2.10. Try both a and b, and see how they behave when an error occurs during either database update or object storage write:
+Try this yourself by modifying the implementation that you made in exercise 2.10. Try both 1. and 2., and see how they behave when an error occurs during either database update or object storage write:
 
-* a) write to database, write to object storage
-* b) write to object storage, write to database
+* 1) write to database, write to object storage
+* 2) write to object storage, write to database
 
 > Some systems support distributed transactions. That is, you can make changes to multiple systems at once, and all of them engage to the same transaction. Distributed transactions come with extra complexity and are rarely needed.
 
