@@ -382,14 +382,15 @@ if [[ " ${params[@]} " == *" -h "* ]] || \
     tr '\275\276' '\r\n' | tail -n +3 | less -XFR"
 fi
 
-uname_sr="$(uname -sr)"
-# For windows we need to make sure that all mounted directories exist
-if [[ "${uname_sr}" == *"Microsoft"* ]] || \
-   [[ "${uname_sr}" == *"CYGWIN"* ]]; then
-  mkdir -p "${taito_home_path}/.taito"
-  mkdir -p "${taito_home_path}/.ssh"
-  mkdir -p "${taito_home_path}/.terraform.d"
-fi
+# TODO: remove?
+# uname_sr="$(uname -sr)"
+# # For windows we need to make sure that all mounted directories exist
+# if [[ "${uname_sr}" == *"Microsoft"* ]] || \
+#    [[ "${uname_sr}" == *"CYGWIN"* ]]; then
+#   mkdir -p "${taito_home_path}/.taito"
+#   mkdir -p "${taito_home_path}/.ssh"
+#   mkdir -p "${taito_home_path}/.terraform.d"
+# fi
 
 # Execute command in taito docker container
 # TODO do not pass taito_admin_key as command line argument

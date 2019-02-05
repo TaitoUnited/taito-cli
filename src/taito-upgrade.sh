@@ -4,6 +4,12 @@
 : "${taito_image:?}"
 : "${taito_home_path:?}"
 
+# Make sure that mounted directories exist
+echo "Checking mount directories"
+mkdir -p "${taito_home_path}/.taito"
+mkdir -p "${taito_home_path}/.ssh"
+mkdir -p "${taito_home_path}/.terraform.d"
+
 # Pull latest version of taito bash script
 echo "Pulling taito-cli directory from git: ${taito_cli_path}"
 (
