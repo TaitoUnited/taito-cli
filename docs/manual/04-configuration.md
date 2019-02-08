@@ -17,6 +17,8 @@ TIP: You can easily use the values defined in `taito-config.sh` also in your own
 taito_env=$APPCENTER_BRANCH
 taito_target_env=$APPCENTER_BRANCH
 . ./taito-config.sh
+
+# Use taito-config values
 ```
 
 ### Common settings in personal or organizational configuration file

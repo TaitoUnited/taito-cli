@@ -1,7 +1,10 @@
 TAITO-CLI TROUBLESHOOTING
 
   Any problem
-    Try to upgrade taito-cli by running 'taito --upgrade'.
+    - Try to upgrade taito-cli by running 'taito --upgrade'. With the
+    - With the `-v` or `--verbose` flag you can see the commands that plugins
+      run during command execution. If you want to see even more output, use
+      the `--debug` flag.
 
   Connection or authorization error
     If you run into a connection or authorization error during taito-cli
@@ -36,7 +39,7 @@ TAITO-CLI TROUBLESHOOTING
     - Make sure that you have set all the environment variables correctly:
       TODO...
 
-  Application continuously crashes or restarts
+  My application continuously crashes or restarts
     Liveness probe is probably failing. Check logs with `taito logs:TARGET:ENV`
     or `taito open logs:ENV`. If you cannot figure out a reason, try to kill
     the container with `taito kill:TARGET:ENV` to see if it helps.

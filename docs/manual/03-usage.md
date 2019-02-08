@@ -2,7 +2,9 @@
 
 ### Setting up a project
 
-If you are not working with an existing taito-cli project, see the first chapters of [Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) on how to create a new project and setup your infrastructure. If you would rather migrate an existing project, see the [configuration](04-configuration.md) chapter. Also some of the [project templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md##project-templates) provide instructions on how to migrate an existing project.
+If you are not working with an existing taito-cli project, see the first chapters of [Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) on how to create a new project, and [chapter 15. Creating a zone](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/15-creating-a-zone.md) for instructions on how to setup your infrastructure.
+
+If you would rather add Taito CLI support for an existing project, see the [configuration](04-configuration.md) chapter. Note that some of the [project templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md##project-templates) provide instructions on how to migrate an existing project to use the template.
 
 ### The basics
 
@@ -18,7 +20,7 @@ See the [DEVELOPMENT.md](https://github.com/TaitoUnited/server-template/blob/mas
 
 ### Troubleshooting
 
-See `trouble.txt` or run `taito --trouble`.
+Run `taito --trouble`.
 
 With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
 
@@ -30,11 +32,11 @@ If you work for multiple organizations, you may define organization specific ove
 
 #### Project references
 
-You can execute project specific commands also outside the project directory with the `-p` option, for example `taito -p my-project open logs:prod`. This works only if you have configured `git_organization` setting in you personal or organizational `taito-config.sh` file.
+You can execute project specific commands also outside the project directory with the `-p` option, for example `taito -p my-project open logs:prod`. The command reads the `taito-config.sh` file directly from remote git repository, and therefore the git repository need not be cloned to your local disk. The `-p` options works only if you have configured `git_organization` setting in you personal or organizational `taito-config.sh` file.
 
 #### Running shell commands
 
-You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, use Docker Hub to build a custom image that is dependent on one of the taito-cli images, or make a request for adding the tool to the original taito-cli image. --> TODO: `~/.taito/install.sh`
+You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, see [customizing taito-cli](#customizing-taito-cli).
 
 #### Setting current context for shell commands
 
@@ -42,7 +44,9 @@ Running `taito --auth:ENV` also sets the default context for currently enabled p
 
 #### Customizing taito-cli
 
-TODO: `~/.taito/install.sh`
+If file `~/.taito/install.sh` exists (TODO), it will be run inside Taito CLI container as root during `taito --upgrade`. You can use it to install additional tools to your Taito CLI container, or to make some personal customizations to Taito CLI behavior. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install.sh`.
+
+You can also use Docker Hub or some other registry to build and distribute a custom Taito CLI image that is dependent on one of the official Taito CLI images. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.
 
 #### Admin credentials
 

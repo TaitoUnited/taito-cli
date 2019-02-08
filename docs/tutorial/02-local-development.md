@@ -26,7 +26,7 @@ The application is built automatically in the background when you make changes. 
 
 You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials.md#browser-extensions) for some additional browser extensions that might also be useful.
 
-> If web development is new for you, just take your time learning the basics before continuing to the next chapter.
+> If web development is new for you and you are insterested, just take your time learning the web development basics before continuing the Taito CLI tutorial.
 
 ### 2.3. Add a new npm library dependency
 
