@@ -6,4 +6,4 @@ TODO Also creating a custom zone? -> using taito-cli with custom infrastucture.
 
 ---
 
-**Next:** [PART IV: Zones](15-creating-a-zone.md)
+**Next:** [PART IV: Infrastructure](15-creating-a-zone.md)

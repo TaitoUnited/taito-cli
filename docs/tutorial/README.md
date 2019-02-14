@@ -11,7 +11,7 @@ This tutorial guides you through common software development scenarios in a chro
 * [3. Version control](03-version-control.md)
 * [4. Project management](04-project-management.md)
 
-### PART II: Infrastructure
+### PART II: Environments
 
 * [5. Remote environments](05-remote-environments.md)
 * [6. Environment variables and secrets](06-env-variables-and-secrets.md)
@@ -27,7 +27,7 @@ This tutorial guides you through common software development scenarios in a chro
 * [13. Creating a custom taito-cli plugin](13-creating-a-custom-plugin.md)
 * [14. Creating a custom taito-cli template](14-creating-a-custom-template.md)
 
-### PART IV: Zones
+### PART IV: Infrastructure
 
 * [15. Creating a zone](15-creating-a-zone.md)
 * [16. Zone maintenance](16-zone-maintenance.md)
