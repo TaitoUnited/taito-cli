@@ -28,28 +28,27 @@ if [[ "${switch}" == "--all" ]]; then
   echo
   echo "--- Jobs ---"
   (${taito_setv:?}; kubectl get jobs "${params[@]}")
-  echo
-  echo "--- CronJobs ---"
-  (${taito_setv:?}; kubectl get cronjobs "${params[@]}")
-  echo
-  echo "--- Pods ---"
-  (${taito_setv:?}; kubectl get pods "${params[@]}" | grep -e "${taito_target_env}\\|RESTARTS")
-elif [[ "${taito_version:-}" -ge "1" ]]; then
-  echo
-  echo "--- CronJobs ---"
-  (${taito_setv:?}; kubectl get cronjobs "${params[@]}")
+fi
+
+echo
+echo "--- Cron jobs ---"
+(${taito_setv:?}; kubectl get cronjobs "${params[@]}")
+
+if [[ "${taito_version:-}" -ge "1" ]]; then
   echo
   echo "--- Pods ---"
-  (${taito_setv:?}; kubectl get pods "${params[@]}" | grep -e "${taito_target_env}\\|RESTARTS")
+  (${taito_setv:?}; kubectl get pods "${params[@]}" | grep -e "${taito_target_env}\\|NAME")
+  echo
+  echo "--- Resource usage ---"
+  (${taito_setv:?}; kubectl top pod "${params[@]}" | grep -e "${taito_target_env}\\|NAME")
 else
-  echo
-  echo "--- CronJobs ---"
-  (${taito_setv:?}; kubectl get cronjobs "${params[@]}")
   echo
   echo "--- Pods ---"
   (${taito_setv:?}; kubectl get pods "${params[@]}")
+  echo
+  echo "--- Resource usage ---"
+  (${taito_setv:?}; kubectl top pod "${params[@]}")
 fi
-
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
