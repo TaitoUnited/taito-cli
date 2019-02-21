@@ -5,6 +5,8 @@
 : "${taito_namespace:?}"
 : "${kubectl_skip_restart:-}"
 
+script_dir=$(dirname "$0")
+
 # Validate secret values
 secret_index=0
 secret_names=(${taito_secret_names})
@@ -69,7 +71,7 @@ do
             -p "{ \"data\": ${data_only} }"
         else
           # Create new secret
-          kubectl create namespace "${secret_namespace}" &> /dev/null
+          "${script_dir}/ensure-namespace.sh" "${secret_namespace}"
           echo "${json}" | kubectl apply -f -
         fi
 

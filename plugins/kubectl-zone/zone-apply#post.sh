@@ -1,5 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 
 name=${1}
 
@@ -14,8 +15,7 @@ fi && \
 if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-devops-namespace" "${name}" \
   "Create 'devops' namespace on Kubernetes"
 then
-  kubectl create namespace devops || \
-    echo "Failed to create namespace 'devops'. OK if it already exists"
+  "${taito_plugin_path}/../kubectl/util/ensure-namespace.sh" devops
 fi && \
 
 # TODO create the service account with terraform?
