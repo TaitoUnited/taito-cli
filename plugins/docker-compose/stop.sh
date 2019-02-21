@@ -4,7 +4,7 @@
 options=" ${*} "
 
 command="stop"
-if [[ "${options}" == *"--down"* ]]; then
+if [[ "${options}" == *" --down "* ]]; then
   command="down -v"
 fi
 
