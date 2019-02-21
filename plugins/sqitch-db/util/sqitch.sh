@@ -47,8 +47,7 @@ fi
   SQITCH_PASSWORD="${sqitch_password}"
   (
     ${taito_setv:?}
-    # TODO remove engine=pg default
-    sqitch --engine "${sqitch_engine:-pg}" \
+    sqitch \
       -h "${database_host}" -p "${database_port}" \
       -d "${database_name}" \
       -u "${database_user}" "${command}" "${@:2}"
