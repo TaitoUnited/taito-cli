@@ -9,13 +9,20 @@ name=${taito_target:?Target not given}
 image_tag=${1:-dry-run}
 build_context=${2}
 service_dir=${3}
-image_path=${4}
+dockerfile=${4}
+image_path=${5}
 
 # NOTE: For backwards compatibility
 if [[ "${2}" == "eu.gcr.io"* ]]; then
   image_path=${2}
   build_context=${3}
   service_dir=${4}
+fi
+
+# NOTE: For backwards compatibility
+if [[ "${4}" == "eu.gcr.io"* ]]; then
+  image_path=${4}
+  dockerfile=""
 fi
 
 if [[ "${build_context}" == "" ]]; then
@@ -76,9 +83,12 @@ else
     # Image does not exist. Build it.
     echo "- Building image"
 
-    dockerfile="Dockerfile"
-    if [[ -f "${service_dir}/Dockerfile.build" ]]; then
-      dockerfile="Dockerfile.build"
+    if [[ -z "${dockerfile}" ]]; then
+      if [[ -f "${service_dir}/Dockerfile.build" ]]; then
+        dockerfile="Dockerfile.build"
+      else
+        dockerfile="Dockerfile"
+      fi
     fi
 
     if [[ -d "./shared" ]]; then
