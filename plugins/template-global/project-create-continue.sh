@@ -22,9 +22,12 @@ echo Leave the README.md uninitialized. After you have created the empty reposit
 echo continue by pressing enter. && \
 read -r && \
 
-doc="README.md"
+doc="README.md#configuration"
 if [[ -f "DEVELOPMENT.md" ]]; then
-  doc="DEVELOPMENT.md"
+  doc="DEVELOPMENT.md#configuration"
+fi
+if [[ -f "CONFIGURATION.md" ]]; then
+  doc="CONFIGURATION.md"
 fi
 
 echo "Please wait..." && \
@@ -44,7 +47,7 @@ echo "Please wait..." && \
   echo Press enter to open the configuration chapter of DEVELOPMENT.md. && \
   read -r && \
   echo && \
-  taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/blob/dev/${doc}#configuration"
+  taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/blob/dev/${doc}"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

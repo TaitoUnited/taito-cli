@@ -53,6 +53,18 @@ if [[ "${taito_mode:-}" == "ci" ]] && [[ "${continue}" == "false" ]]; then
   echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
 fi
 
+# Execute some additional check only once in a while
+if (( RANDOM % 4 == 0 )); then
+  if [[ $(grep "\\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
+    echo
+    echo "--------------------------------------------------------"
+    echo "WARNING! The project has not yet been fully configured."
+    echo "See the '[ ] All done' checkboxes in CONFIGURATION.md."
+    echo "--------------------------------------------------------"
+  fi
+fi
+
+
 # TODO Convert space command syntax to internal hyphen syntax
 
 # Determine command, target, env and parameters from args
