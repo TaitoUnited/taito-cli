@@ -44,7 +44,7 @@ echo "Please wait..." && \
   git push -q -u origin dev &> /dev/null && \
   echo && \
   echo DONE! Now configure your project! && \
-  echo Press enter to open the configuration chapter of DEVELOPMENT.md. && \
+  echo Press enter to open configuration instructions. && \
   read -r && \
   echo && \
   taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/blob/dev/${doc}"
