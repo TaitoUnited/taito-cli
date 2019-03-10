@@ -42,6 +42,12 @@ TODO: Something about taito-cli vs external extensions.
 
 ## Development
 
+### Website development
+
+For website development, see the [WEBSITE.md](WEBSITE.md).
+
+### Taito-cli development
+
 Install taito-cli normally using the [installation instructions](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md). You can run a taito-cli command in development mode by using the `-d, --dev` flag (e.g. `taito -d status`). In the development mode your local taito-cli directory is mounted in the taito-cli container. If you are working with your own fork, update your PATH or taito symlink so that it points to your forked version of the taito-cli.
 
 How to implement a command:

@@ -1,0 +1,21 @@
+version: '3.5'
+services:
+  taito-cli-www:
+    container_name: taito-cli-www
+    build:
+      context: ./www
+      dockerfile: ${dockerfile}
+    restart: unless-stopped
+    networks:
+      - default
+    ports:
+      - "9417:8080"
+    volumes:
+      - "./www:/service:delegated"
+      - "./docs:/service/docs:delegated"
+      - "/service/node_modules"
+      # FOR GATSBY ONLY:
+      # - "/service/site/node_modules"
+
+networks:
+  default:

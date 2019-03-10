@@ -5,7 +5,11 @@
 
 # Taito-cli
 taito_version=1
-taito_plugins="npm git link"
+taito_plugins="
+  docker docker-compose:local
+  npm git links-global
+"
+# TODO: semantic-release plugin
 
 # Project
 taito_organization=taitounited
@@ -20,8 +24,13 @@ taito_namespace=${taito_project}-${taito_env}
 # Repositories
 taito_vc_repository=taito-cli
 
+# Stack
+taito_targets="www"
+taito_networks="default"
+
 # Link plugin
 link_urls="
+  * www=http://localhost:9417
   * project=https://github.com/${taito_organization}/${taito_vc_repository}/projects
   * builds=https://hub.docker.com/r/taitounited/taito-cli/builds/
   * artifacts=https://hub.docker.com/r/taitounited/taito-cli/tags/
