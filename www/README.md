@@ -2,9 +2,11 @@
 
 Implement with Gatsby v2. Layout should probably be something between [reactjs.org](https://reactjs.org/) and [gatsbyjs.org](https://gatsbyjs.org/). Use [Taito United](http://taitounited.fi/) brand for appearance. Site content already exists in the docs folder as markdown files.
 
-See [Website configuration](../WEBSITE.md#configuration) on how to create and configure the site.
+See [website configuration](../WEBSITE.md#configuration) on how to create and configure the site.
 
 ## Content
+
+All content can already be found from `docs` folder as markdown files.
 
 ### Tabs on top of the page
 
