@@ -16,7 +16,7 @@ taito_organization=taitounited
 taito_project=taito-cli
 
 # Environments
-taito_environments="dev prod"
+taito_environments="dev canary prod"
 
 # Provider and namespaces
 taito_namespace=${taito_project}-${taito_env}
