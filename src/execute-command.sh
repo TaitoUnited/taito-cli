@@ -55,10 +55,10 @@ fi
 
 # Execute some additional check only once in a while
 if (( RANDOM % 4 == 0 )); then
-  if [[ $(grep "\\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
+  if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
     echo
     echo "--------------------------------------------------------"
-    echo "WARNING! The project has not yet been fully configured."
+    echo "WARNING! This project has not yet been fully configured."
     echo "See the '[ ] All done' checkboxes in CONFIGURATION.md."
     echo "--------------------------------------------------------"
   fi
