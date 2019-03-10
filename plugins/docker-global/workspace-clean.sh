@@ -11,7 +11,7 @@ docker volume prune; \
 echo ; \
 echo docker system prune: ; \
 docker system prune -a --filter 'label!=fi.taitounited.taito-cli' ; \
-docker rmi $(docker images | grep "<none>" | tr -s ' ' | cut -d ' ' -f 3)"
+docker rmi \$(docker images | grep '<none>' | tr -s ' ' | cut -d ' ' -f 3)"
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"
