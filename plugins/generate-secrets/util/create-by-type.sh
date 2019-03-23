@@ -116,5 +116,6 @@ case "${secret_method}" in
     ;;
 esac
 
+echo Secret value created
 echo
 exports="${exports}export ${secret_value_var}=\"${secret_value}\"; export ${secret_changed_var}=\"true\"; "
