@@ -21,7 +21,7 @@ echo
     grep "${full_repo_name}@${branch_name}" | \
     grep -v "${ignore_build_id:-OR_DO_NOT_IGNORE}" | \
     cut -d ' ' -f 1 | \
-    xargs -L1 gcloud container builds cancel &> /dev/null && \
+    xargs -L1 gcloud builds cancel &> /dev/null && \
     echo CANCELLED
 )
 
