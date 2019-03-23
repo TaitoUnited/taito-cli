@@ -17,18 +17,22 @@ case "${secret_method}" in
     done
     ;;
   file)
-    echo "Give file path for ${secret_name} relative to project root folder."
-    if [[ "${secret_name}" == *"gcloud"* ]]; then
+    if [[ "${taito_provider:-}" == "gcloud" ]] && \
+       [[ "${secret_name}" == *"serviceaccount"* ]]; then
       opts=""
       if [[ ${google_authuser:-} ]]; then
         opts="authuser=${google_authuser}&"
       fi
-      echo "You most likely can download the secret key file from the following url:"
-      echo "https://console.cloud.google.com/iam-admin/serviceaccounts?${opts}project=${taito_resource_namespace_id:-}"
+      echo ------------------------------------------------------------------------------
+      echo "You most likely can download the service account key as json file from"
+      echo "the following web page by pressing the 'create credentials' button."
+      echo
+      echo "https://console.cloud.google.com/apis/credentials?${opts}project=${taito_resource_namespace_id:-}"
+      echo ------------------------------------------------------------------------------
       echo
     fi
     while [[ ! -f ${secret_value} ]]; do
-      echo "File path (for example 'secret.json'):"
+      echo "File path relative to project root folder (for example './secret.json'):"
       read -r secret_value
     done
     ;;
