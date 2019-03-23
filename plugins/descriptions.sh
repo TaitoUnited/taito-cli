@@ -150,50 +150,44 @@ if [[ ${taito_project:-} ]]; then
     # Upgrade project using template"
 
   # Version control commands
-  if [[ "${cprefix}" == "vc"* ]] || [[ "${cprefix}" == "*" ]]; then
-    echo "vc conventions \
-      # Display version control conventions"
-    echo "vc env list \
-      # List all environment branches"
-    echo "vc env merge \
-      # Merge current env branch to the next env branch"
-    echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH \
-      # Merge source env branch to the destination env branch"
-    echo "vc feat list \
-      # List all feature branches"
-    echo "vc feat rebase \
-      # Rebase feature branch with the original branch"
-    echo "vc feat squash \
-      # Squash feature branch as a single commit"
-    echo "vc feat merge \
-      &focus \
-      # Merge current feature branch to the original"
-    echo "vc feat pr \
-      # Create a pull-request for current feature branch"
-    echo "vc feat: FEATURE \
-      # Switch to a feature branch"
-    echo "vc pull \
-      # Pull changes"
-    echo "vc push \
-      # Push changes"
-    echo "vc commit revert \
-      # Revert the latest commit by creating a new commit"
-    echo "vc commit undo \
-      # Undo the latest commit from local and remote branch. Leave local files untouched."
-    echo "vc commit erase \
-      # Erase the latest commit from local and remote branch."
-
-  else
-    echo "vc"
-  fi
-
+  echo "conventions \
+    # Display version control conventions"
+  echo "env list \
+    # List all environment branches"
+  echo "env merge \
+    # Merge current env branch to the next env branch"
+  echo "feat list \
+    # List all feature branches"
+  echo "feat rebase \
+    # Rebase feature branch with the original branch"
+  echo "feat squash \
+    # Squash feature branch as a single commit"
+  echo "feat merge \
+    &focus \
+    # Merge current feature branch to the original"
+  echo "feat pr \
+    # Create a pull-request for current feature branch"
+  echo "feat: FEATURE \
+    # Switch to a feature branch"
+  echo "pull \
+    # Pull changes"
+  echo "push \
+    # Push changes"
+  echo "commit revert \
+    # Revert the latest commit by creating a new commit"
+  echo "commit undo \
+    # Undo the latest commit from local and remote branch. Leave local files untouched."
+  echo "commit erase \
+    # Erase the latest commit from local and remote branch."
+  if [[ "${cprefix}" == "feat"* ]]; then
   features=$(git branch -a 2> /dev/null | \
     grep " feature/" | sed -e 's|feature/||')
   for feature in ${features}
   do
-    echo "vc feat: ${feature} \
+    echo "feat: ${feature} \
       # Switch to the ${feature} feature branch"
   done
+  fi
 
   # Build target commands
   echo "build \
@@ -236,6 +230,9 @@ if [[ ${taito_project:-} ]]; then
       param=":"
       param_not_empty=":local"
     fi
+
+    echo "env merge${suffix} DESTINATION_BRANCH \
+      # Merge source env branch to the destination env branch"
 
     echo "start${suffix} \
       # Start app / watch on ${env} environment"
@@ -328,7 +325,7 @@ if [[ ${taito_project:-} ]]; then
       echo "--auth${suffix} \
         &focus \
         # Authenticate for the ${env} environment"
-      echo "vc env: ${env} \
+      echo "env:${env} \
         # Switch to the ${env} environment branch"
 
       # NOTE: Advanced

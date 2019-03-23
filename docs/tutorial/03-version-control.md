@@ -9,7 +9,7 @@ Taito-cli provides some version control commands that make it easier for you to 
 If you would rather use GUI tools or git commands for managing your branches, you can display the version control conventions by running:
 
 ```shell
-taito vc conventions
+taito conventions
 ```
 
 The aforementioned command should display the following version control conventions defined by taito-cli, unless your organization has overridden some of them.
@@ -106,7 +106,7 @@ Note that most feature branches should be short-lived and located only on your l
 #### Display commands
 
 ```
-taito vc feat -h
+taito feat -h
 ```
 
 #### Create a new feature branch
@@ -114,7 +114,7 @@ taito vc feat -h
 Create a public feature branch and make some changes to it:
 
 ```
-taito vc feat: delete-post
+taito feat: delete-post
 ** Commit and push some changes **
 ```
 
@@ -123,21 +123,21 @@ taito vc feat: delete-post
 Create a private feature branch, commit some changes to it as multiple commits, merge all changes to the dev branch as a single commit, and delete the feature branch:
 
 ```
-taito vc feat: delete-image
+taito feat: delete-image
 ** Commit some changes as multiple commits **
-taito vc feat squash
+taito feat squash
 ```
 
-> The `taito vc feat squash` is a handy command when you are working alone and want to keep version history clean by using feature branches. For team work it is recommended to use `taito vc feat merge` or `taito vc feat pr` instead.
+> The `taito feat squash` is a handy command when you are working alone and want to keep version history clean by using feature branches. For team work it is recommended to use `taito feat merge` or `taito feat pr` instead.
 
 #### Merge the existing delete-post feature branch to dev
 
 Switch back to the `delete-post` feature branch, make some changes to it, rebase it with the dev branch and merge it using fast-forward:
 
 ```
-taito vc feat: delete-post
+taito feat: delete-post
 ** Commit and push some changes **
-taito vc feat merge
+taito feat merge
 ```
 
 #### Create a new feature branch and merge it with a pull-request
@@ -145,9 +145,9 @@ taito vc feat merge
 Create a public feature branch, make some changes to it, rebase it with dev branch, and create a pull-request:
 
 ```
-taito vc feat: reporting
+taito feat: reporting
 ** Commit and push some changes **
-taito vc feat pr
+taito feat pr
 ```
 
 ### 3.3 Environment branches
@@ -155,25 +155,25 @@ taito vc feat pr
 Display commands:
 
 ```
-taito vc env -h
+taito env -h
 ```
 
 Change to dev branch:
 
 ```
-taito vc env: dev
+taito env:dev
 ```
 
 Merge changes from current environment branch (dev) to the next (test):
 
 ```
-taito vc env merge
+taito env merge
 ```
 
 Merge changes from dev branch to canary, and to all environment branches in between them:
 
 ```
-taito vc env merge: dev canary
+taito env merge:dev canary
 ```
 
 ### 3.4 Hotfix branches

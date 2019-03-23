@@ -232,7 +232,9 @@ Plugins:
 
 Version control plugins typically implement the following commands:
 
-* `taito vc *`: Version control commands for taito-cli (manage environment, feature and hotfix branches).
+* `taito env`: Version control commands for taito-cli (manage environment, feature and hotfix branches).
+* `taito feat`: Version control commands for taito-cli (manage environment, feature and hotfix branches).
+* `taito commit`: Version control commands for taito-cli (manage environment, feature and hotfix branches).
 
 Plugins:
 

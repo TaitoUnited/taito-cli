@@ -1,13 +1,16 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
-: "${taito_env:?}"
+: "${taito_target_env:?}"
 
-source="${2:-dev}"
-dest="${1:?Destination branch name not given}"
-
+source="${1:-dev}"
 source="${source/prod/master}"
-dest="${dest/prod/master}"
+dest="${taito_branch:-}"
+
+if [[ ! ${dest} ]]; then
+  echo "ERROR: You cannot use the 'local' env with the env command."
+  exit 1
+fi
 
 # TODO duplicate code with git-feat.sh?
 "${taito_cli_path}/util/execute-on-host-fg.sh" "\

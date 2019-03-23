@@ -101,32 +101,27 @@ if [[ ${taito_project:-} ]]; then
   echo "project upgrade"
 
   # Version control commands
-  if [[ "${cprefix}" == "vc"* ]] || [[ "${cprefix}" == "*" ]]; then
-    echo "vc conventions"
-    echo "vc env list"
-    echo "vc env merge"
-    echo "vc env merge: SOURCE_BRANCH DESTINATION_BRANCH"
-    echo "vc feat list"
-    echo "vc feat rebase"
-    echo "vc feat squash"
-    echo "vc feat merge"
-    echo "vc feat pr"
-    echo "vc feat: FEATURE"
-
+  echo "conventions"
+  echo "env list"
+  echo "env merge"
+  echo "feat list"
+  echo "feat rebase"
+  echo "feat squash"
+  echo "feat merge"
+  echo "feat pr"
+  echo "feat: FEATURE"
+  echo "pull"
+  echo "push"
+  echo "commit revert"
+  echo "commit undo"
+  echo "commit erase"
+  if [[ "${cprefix}" == "feat"* ]]; then
     features=$(git branch -a 2> /dev/null | \
       grep " feature/" | sed -e 's|feature/||')
     for feature in ${features}
     do
-      echo "vc feat: ${feature}"
+      echo "feat: ${feature}"
     done
-
-    echo "vc pull"
-    echo "vc push"
-    echo "vc commit revert"
-    echo "vc commit undo"
-    echo "vc commit erase"
-  else
-    echo "vc"
   fi
 
   # Build target commands
@@ -163,6 +158,8 @@ if [[ ${taito_project:-} ]]; then
       param=":"
       param_not_empty=":local"
     fi
+
+    echo "env merge${suffix} DESTINATION_BRANCH"
 
     echo "start${suffix}"
     echo "restart${suffix}"
@@ -220,7 +217,7 @@ if [[ ${taito_project:-} ]]; then
     # Remote-only commands
     if [[ "${env}" != "local" ]]; then
       echo "--auth${suffix}"
-      echo "vc env: ${env}"
+      echo "env:${env}"
 
       # NOTE: Advanced
       echo "env apply${suffix}"

@@ -70,7 +70,7 @@ Create the test environment:
 ```shell
 EDIT taito-config.sh           # Add 'test' to 'taito_environments'
 taito env apply:test           # Create the test environment
-taito vc env merge: dev test   # Merge changes from dev to test
+taito env merge:dev test       # Merge changes from dev to test
 ```
 
 Make sure it works:
@@ -88,7 +88,7 @@ Create the environment:
 ```
 ( EDIT taito-config.sh )       # No need to edit (prod is already configured)
 taito env apply:prod           # Create the prod environment
-taito vc env merge: test prod  # Merge changes from test to prod
+taito env merge:test prod      # Merge changes from test to prod
 ```
 
 Make sure it works:
@@ -111,7 +111,7 @@ Create the canary environment:
 
 ```shell
 EDIT taito-config.sh             # Add 'canary' to 'taito_environments'
-taito vc env merge: test canary  # Merge changes from test to canary
+taito env merge:test canary      # Merge changes from test to canary
 ```
 
 Make sure it works:
@@ -136,7 +136,7 @@ taito_env="${taito_env/canary/prod}" # canary -> prod
 
 ```
 git push                         # Push some changes to the dev branch
-taito vc env merge: dev canary   # Merge changes: dev -> test -> canary
+taito env merge:dev canary       # Merge changes: dev -> test -> canary
 taito open builds                # See them build and deploy
 ```
 

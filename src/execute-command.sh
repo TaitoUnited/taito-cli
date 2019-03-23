@@ -264,10 +264,12 @@ if [[ "${taito_command}" == "__auth" ]] && [[  "${taito_env}" == "local" ]]; the
 fi
 
 # Validate vc operations
-if [[ "${taito_command}" == "vc-"* ]] && [[  "${taito_env}" != "local" ]]; then
+if [[ "${taito_command}" == "vc-"* ]]; then
   echo
-  echo "ERROR: You can run version control commands only in local environment."
-  echo "Run 'taito vc -h' for more instructions."
+  echo "NOTE: 'taito vc' commands have been removed. See help:"
+  echo "$ taito env -h"
+  echo "$ taito feat -h"
+  echo "$ taito commit -h"
   exit 130
 fi
 

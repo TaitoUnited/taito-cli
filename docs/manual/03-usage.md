@@ -2,6 +2,8 @@
 
 ### Setting up a project
 
+TODO: A separate quick spin chapter: Quick infrastructure setup and commands example (list of commands). Also tutorial reference.
+
 If you are not working with an existing taito-cli project, see the first chapters of [Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) on how to create a new project, and [chapter 15. Creating a zone](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/15-creating-a-zone.md) for instructions on how to setup your infrastructure.
 
 If you would rather add Taito CLI support for an existing project, see the [configuration](04-configuration.md) chapter. Note that some of the [project templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md##project-templates) provide instructions on how to migrate an existing project to use the template.
@@ -10,7 +12,7 @@ If you would rather add Taito CLI support for an existing project, see the [conf
 
 Taito-cli is configured with a `taito-config.sh` file placed at your project root directory. You can execute taito commands anywhere in the project directory hierarchy, that is, at the project root directory or any of its subdirectories. When you are not located inside a project directory, only global taito-cli plugins are enabled and therefore only a small subset of taito commands are enabled.
 
-Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito vc feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for taito-cli commands, if you have installed the autocompletion support.
+Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for taito-cli commands, if you have installed the autocompletion support.
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito --auth:dev`). Note that your credentials are saved on the taito-cli container image, as you don't need them lying on your host file system anymore.
 

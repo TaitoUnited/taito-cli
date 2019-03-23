@@ -75,7 +75,7 @@ acme-myapp:
         certSecret: myapp-mydomain-com-1
 ```
 
-Either merge the change to master branch with `taito vc env merge: dev prod`, or deploy the configuration change directly to production:
+Either merge the change to master branch with `taito env merge:dev prod`, or deploy the configuration change directly to production:
 
 ```
 taito deployment deploy:prod

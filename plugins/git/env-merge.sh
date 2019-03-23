@@ -1,9 +1,9 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_environments:?}"
+: "${taito_target_env:?}"
 
 # Parse arguments
-source=""
 dest=""
 git_push_options=""
 while [[ $# -gt 0 ]]
@@ -13,8 +13,6 @@ do
   elif [[ ${1} == "--" ]]; then
     echo "ERROR: Invalid option ${1}"
     exit 1
-  elif [[ ! ${source} ]]; then
-    source=${1/prod/master}
   elif [[ ! ${dest} ]]; then
     dest=${1/prod/master}
   else
@@ -39,7 +37,9 @@ do
 done
 
 # Determine source branch
-if [[ ! ${source} ]]; then
+source="${taito_branch:-}"
+if [[ ! "${source}" ]]; then
+  # use current git branch as source
   source=$(git symbolic-ref --short HEAD)
 fi
 

@@ -96,20 +96,20 @@ QUICK EXAMPLES
     storage sync to:dev ./sour /dest   # Sync files to dev bucket
 
   VERSION CONTROL
-    vc conventions           # Show version control conventions
-    vc env list              # List all environment branches
-    vc env: dev              # Switch to the dev environment branch
-    vc env merge             # Merge current env branch to the next env branch
-    vc env merge: dev stag   # Merge changes between envs: dev -> ... -> stag
-    vc feat list             # List all feature branches
-    vc feat: pricing         # Switch to feature/pricing (create if not exists)
-    vc feat rebase           # Rebase current feature branch with the original
-    vc feat merge            # Merge current feature branch to the original
-    vc feat pr               # Create a pull-req for the current feature branch
-    vc feat squash           # Merge current feature branch as a single commit
-    vc commit revert         # Revert the latest commit by creating a new commit
-    vc commit undo           # Undo latest commit from local and remote branch
-    vc commit erase          # Erase latest commit from loc/rem branch and files
+    conventions           # Show version control conventions
+    env list              # List all environment branches
+    env:dev               # Switch to the dev environment branch
+    env merge             # Merge current env branch to the next env branch
+    env merge:dev stag    # Merge changes between envs: dev -> ... -> stag
+    feat list             # List all feature branches
+    feat: pricing         # Switch to feature/pricing (create if not exists)
+    feat rebase           # Rebase current feature branch with the original
+    feat merge            # Merge current feature branch to the original
+    feat pr               # Create a pull-req for the current feature branch
+    feat squash           # Merge current feature branch as a single commit
+    commit revert         # Revert the latest commit by creating a new commit
+    commit undo           # Undo latest commit from local and remote branch
+    commit erase          # Erase latest commit from loc/rem branch and files
 
   MANUAL DEPLOYMENT OPERATIONS
     deployment start:dev          # Start ci build for dev environment manually
@@ -451,7 +451,7 @@ PROJECT: LINKS
   > open docs - Built docs
   > open project - Project management
   > open git - Git repository (e.g. GitHub)
-  > open vc - Version control repository (e.g. GitHub)
+  > open - Version control repository (e.g. GitHub)
   > open builds - List of builds (e.g. Jenkins, Google container builder)
   > open artifacts - Build artifacts
   > open reports - CI/CD reports (e.g. testing and code analysis)
@@ -533,67 +533,67 @@ GLOBAL: WORKSPACE OPERATIONS
 
 PROJECT: VERSION CONTROL OPERATIONS
 
-  vc conventions
+  conventions
     Show version control conventions.
 
-  vc env list
+  env list
     List all environment branches.
 
-  vc env: BRANCH [SOURCE_BRANCH]
+  env:ENV [SOURCE_ENV]
     Creates a new environment branch or executes a normal branch checkout if
     the branch already exists. The dev branch is used as a default source
     branch.
 
-  vc env merge [SOURCE_BRANCH] [DESTINATION_BRANCH] [--force]
+  env merge[:SOURCE_ENV] [DESTINATION_ENV] [--force]
     Merges source env branch to target env branch and all env branches in
     between them without making changes to the current local git workspace.
-    Current branch is used as the default source branch and the next env branch
+    Current branch is used as the default source env and the next env branch
     as the default destination branch. The command fails if fast-forward is not
     possible. Merge operations between environment branches should always be
     fast-forwarded so that a container is first built for dev environment and
     then the same container is deployed to other environments as well once
     environment branches are merged.
 
-  vc feat list
+  feat list
     List all feature branches.
 
-  vc feat:[ENV] FEATURE_NAME
+  feat:[ENV] FEATURE_NAME
     Creates a new branch for a feature or executes a normal branch checkout if
     the branch already exists. The dev branch is used as a default env branch
     (source branch).
 
-  vc feat rebase[:ENV] [FEATURE_NAME]
+  feat rebase[:ENV] [FEATURE_NAME]
     Rebases a feature branch. The dev branch is used as a default env branch
     that the feature branch is rebased with.
 
-  vc feat merge[:ENV] [FEATURE_NAME]
+  feat merge[:ENV] [FEATURE_NAME]
     Merges a feature to a target branch. The dev branch is used as a
     default env branch (destination for merge). The command suggests rebase
     before merge and delete feature after merge. With rebase you can clean up
     commit history before merge e.g. by reordering commits and selectively
     squashing some of them together.
 
-  vc feat pr[:ENV] [FEATURE_NAME]
+  feat pr[:ENV] [FEATURE_NAME]
     Creates a pull request for a feature. The dev branch is used as a default
     env branch (destination for merge). The command suggests rebase before
     making the pull request. With rebase you can clean up commit history by
     reordering commits and selectively squashing some of them together.
 
-  vc feat squash[:ENV] [FEATURE_NAME]
+  feat squash[:ENV] [FEATURE_NAME]
     Merges a feature to a target branch as a single squashed commit and
     deletes the feature branch. The dev branch is used as a default env
     branch (destination for merge). Use this command for a short-lived feature
     branch with a cohesive set of changes.
 
-  vc commit revert
+  commit revert
     Revert the latest commit by creating a new commit.
 
-  vc commit undo
+  commit undo
     Undo the latest commit from local and remote repository, but leave the
     local files untouched. The command will fail if your local branch is not
     up-to-date with the remote repository.
 
-  vc commit erase
+  commit erase
     Erase the latest commit from local and remote repository, and remove the
     changes also from local files. The command will fail if your local branch
     is not up-to-date with the remote repository.

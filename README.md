@@ -15,8 +15,8 @@ taito start                        # Start the local development environment
 taito init                         # Initialize the local database with database tables and development data
 taito open app                     # Open application web UI running on local environment
 taito info                         # Show user credentials required for signing in
-taito vc feat: posts               # Switch to 'feature/posts' branch (and create it, as it does not exist yet)
-taito vc feat merge                # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
+taito feat: posts               # Switch to 'feature/posts' branch (and create it, as it does not exist yet)
+taito feat merge                # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
 taito env apply:dev                # Create dev environment
 taito env apply:test               # Create test environment
 taito env apply:canary             # Create canary environment
@@ -25,7 +25,7 @@ taito status:dev                   # Show status of dev environment
 taito open app:dev                 # Open application web UI running on dev environment
 taito logs:server:dev              # Tail logs of server container running on dev environment
 taito db connect:dev               # Connect to the dev environment database
-taito vc env merge: dev canary     # Merge changes between environments: dev -> test -> canary
+taito env merge:dev canary         # Merge changes between environments: dev -> test -> canary
 taito open logs:canary             # Open canary environment logs on browser
 taito hours add: 6.5               # Add an work hour entry for today for the current project (to 1-N hour reporting systems)
 ```
