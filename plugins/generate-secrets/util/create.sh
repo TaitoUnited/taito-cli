@@ -16,7 +16,7 @@ do
      ) && ( \
        [[ ${skip_confirm} == "true" ]] || \
        "${taito_cli_path}/util/confirm-execution.sh" "${secret_name}" "" \
-         "Create new value for secret '${secret_name}'\\nwith method: ${secret_method:-}"
+         "Create new value for secret '${secret_name}' with method: ${secret_method:-}"
      )
   then
     if [[ ${skip_confirm} == "true" ]]; then
