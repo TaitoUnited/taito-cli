@@ -211,6 +211,7 @@ do
       -v ${local_path}:${docker_path}"
   fi
 done
+extension_paths="${extension_paths:1}"
 
 # Handle special modes
 if [[ ${mode} == "autocomplete" ]] || [[ ${mode} == "descriptions" ]]; then
@@ -288,11 +289,6 @@ trap cleanup EXIT
 taito_host_uname="$(uname)"
 taito_run="${log_file/${taito_home_path}/${taito_container_home}}"
 taito_run_fg="${log_file_fg/${taito_home_path}/${taito_container_home}}"
-if [[ "${taito_host_uname}" == "Darwin" ]]; then
-  ctrl_filter=" tr -d '[:cntrl:]' "
-else
-  ctrl_filter=" grep -axv '.*' "
-fi
 
 # Start a background process that will run commands on host in the
 # background while the container is still running on foregound.
@@ -370,19 +366,6 @@ if [[ "${command}" == "storage"* ]]; then
   misc_flags="--privileged"
 fi
 
-# Forward taito docker container output to 'less' in case the command is `help`,
-# `trouble` or `readme`. We need to also filter some control characters for
-# a cleaner output.
-output=""
-if [[ " ${params[@]} " == *" -h "* ]] || \
-   [[ " ${options[*]} " == *" -h "* ]] || \
-   [[ " ${options[*]} " == *" --help "* ]] || \
-   [[ " ${options[*]} " == *" --trouble "* ]] || \
-   [[ " ${options[*]} " == *" --readme "* ]]; then
-  output="| tr '\r\n' '\275\276' | ${ctrl_filter} | \
-    tr '\275\276' '\r\n' | tail -n +3 | less -XFR"
-fi
-
 # TODO: remove?
 # uname_sr="$(uname -sr)"
 # # For windows we need to make sure that all mounted directories exist
@@ -393,33 +376,54 @@ fi
 #   mkdir -p "${taito_home_path}/.terraform.d"
 # fi
 
-# Execute command in taito docker container
 # TODO do not pass taito_admin_key as command line argument
-# shellcheck disable=SC2086
-docker run ${docker_it} \
-  -v "${taito_home_path}/.taito:${taito_container_home}/.taito" \
-  -v "${taito_home_path}/.ssh:${taito_container_home}/.ssh" \
-  -v "${taito_home_path}/.terraform.d:${taito_container_home}/.terraform.d" \
-  -v "$(pwd):/project" \
-  -w /project \
-  ${docker_user_opts} \
-  ${proxy_flags} \
-  ${extension_mount_flags} \
-  ${link_flags} \
-  ${misc_flags} \
-  -e taito_enabled_extensions="${extension_paths}" \
-  -e taito_run=${taito_run} \
-  -e taito_run_fg=${taito_run_fg} \
-  -e taito_host_uname="${taito_host_uname}" \
-  -e taito_host_project_path="${taito_project_path}" \
-  -e taito_mode="${mode}" \
-  -e taito_docker="true" \
-  -e taito_image_name="${taito_image_name}" \
-  -e taito_admin_key="${admin_key}" \
-  -e taito_organization_param="${taito_organization_param}" \
-  --entrypoint taito \
-  ${image_flag} \
-  "${params[@]}" ${output}
+docker_command="
+  docker run ${docker_it}
+    -v ${taito_home_path}/.taito:${taito_container_home}/.taito
+    -v ${taito_home_path}/.ssh:${taito_container_home}/.ssh
+    -v ${taito_home_path}/.terraform.d:${taito_container_home}/.terraform.d
+    -v $(pwd):/project
+    -w /project
+    ${docker_user_opts}
+    ${proxy_flags}
+    ${extension_mount_flags}
+    ${link_flags}
+    ${misc_flags}
+    -e taito_enabled_extensions=${extension_paths}
+    -e taito_run=${taito_run}
+    -e taito_run_fg=${taito_run_fg}
+    -e taito_host_uname=${taito_host_uname}
+    -e taito_host_project_path=${taito_project_path}
+    -e taito_mode=${mode}
+    -e taito_docker=true
+    -e taito_image_name=${taito_image_name}
+    -e taito_admin_key=${admin_key}
+    -e taito_organization_param=${taito_organization_param}
+    --entrypoint taito
+    ${image_flag}
+"
+
+# Execute command in Taito CLI docker container
+# Forward taito docker container output to 'less' in case the command is `help`,
+# `trouble` or `readme`.
+if [[ " ${params[@]} " == *" -h "* ]] || \
+   [[ " ${options[*]} " == *" -h "* ]] || \
+   [[ " ${options[*]} " == *" --help "* ]] || \
+   [[ " ${options[*]} " == *" --trouble "* ]] || \
+   [[ " ${options[*]} " == *" --readme "* ]]; then
+  # Filter some control characters for a cleaner output
+  if [[ "${taito_host_uname}" == "Darwin" ]]; then
+   ctrl_filter=" tr -d '[:cntrl:]' "
+  else
+   ctrl_filter=" grep -axv '.*' "
+  fi
+  ${docker_command} "${params[@]}" | \
+    tr '\r\n' '\275\276' | ${ctrl_filter} | \
+    tr '\275\276' '\r\n' | tail -n +3 | less -XFR
+else
+  ${docker_command} "${params[@]}"
+fi
+
 exit_code=$?
 
 # Kill the background execution process
