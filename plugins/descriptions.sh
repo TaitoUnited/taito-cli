@@ -313,10 +313,12 @@ if [[ ${taito_project:-} ]]; then
         # Run all unit tests"
       echo "unit${suffix} TEST \
         # Run an unit test"
-      echo "check size${suffix} \
-        # Check size"
       echo "check deps${suffix} \
         # Check dependencies"
+      echo "check code${suffix} \
+        # check code quality"
+      echo "check size${suffix} \
+        # Check size"
       echo "docs${suffix} \
         # Generate documentation"
     fi

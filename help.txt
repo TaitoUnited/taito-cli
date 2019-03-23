@@ -45,10 +45,12 @@ QUICK EXAMPLES
     commit:client            # Commit changes to client container image
     clean:server             # Clean server container by deleting it
     docs                     # Generate documentation
-    check size               # Analyze size
-    check size:client        # Analyze size of the client
     check deps               # Check dependencies
     check deps:worker        # Check dependencies of the worker
+    check code               # Check code quality
+    check code:client        # Check code quality of the client
+    check size               # Check size
+    check size:client        # Check size of the client
 
   ACCESSING A REMOTE ENVIRONMENT
     open app:dev             # Open application on browser
@@ -351,12 +353,6 @@ PROJECT: BASIC OPERATIONS
     available to your script as environment variables. At least implement tests
     for dev environment.
 
-  analyze
-    Analyzes implementation and gives you feedback accordingly (webpack
-    bundle analysis, code quality analysis, vulnerability analysis, etc.)
-    TIP: Enable the 'make' or 'npm' plugin and implement analyze script
-    in your makefile/package.json
-
   scan
     Lint code, scan for vulnerabilities, etc.
     TIP: Enable the 'make' or 'npm' plugin and implement scan script in your
@@ -366,6 +362,15 @@ PROJECT: BASIC OPERATIONS
     Lint code
     TIP: Enable the 'make' or 'npm' plugin and implement lint script in your
     makefile/package.json.
+
+  check deps[:TARGET]
+    Check dependencies
+
+  check code[:TARGET]
+    Check code quality
+
+  check size[:TARGET]
+    Check size
 
   docs
     Generate docs e.g. API docs from API definitions and PDF files from
@@ -528,7 +533,7 @@ GLOBAL: WORKSPACE OPERATIONS
 
 PROJECT: VERSION CONTROL OPERATIONS
 
-  vc env conventions
+  vc conventions
     Show version control conventions.
 
   vc env list
@@ -798,22 +803,6 @@ PROJECT: ENVIRONMENT SETUP
     TODO: remove once implemented with terraform
 
   env rotate:ENV [NAME_FILTER]
-    Rotate secrets for an environment.
-
-PROJECT: ALTERNATIVE ENVIRONMENT SETUP
-
-  > An alternative environment uses the same database as the main environment,
-  > but containers are built from an alternative branch. You can use alternative
-  > environments for canary releases, A/B testing, etc.
-
-  alt apply:ENV
-    Migrate environment to the latest configuration.
-    TODO: implement using terraform.
-
-  alt destroy:ENV
-    Destroy alternative environment. TODO not implemented.
-
-  alt rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.
 
 ZONE
