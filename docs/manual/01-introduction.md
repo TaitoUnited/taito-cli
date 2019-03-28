@@ -13,7 +13,7 @@ taito project create: my-template  # Create a new project based on a reusable te
 taito install                      # Install linters and other dependencies on host
 taito start                        # Start the local development environment
 taito init                         # Initialize the local database with database tables and development data
-taito open app                     # Open application web UI running on local environment
+taito open client                  # Open application web UI running on local environment
 taito info                         # Show user credentials required for signing in
 taito feat: posts                  # Switch to 'feature/posts' branch (and create it, as it does not exist yet)
 taito feat merge                   # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
@@ -22,7 +22,7 @@ taito env apply:test               # Create test environment
 taito env apply:canary             # Create canary environment
 taito open builds                  # Show build status on browser
 taito status:dev                   # Show status of dev environment
-taito open app:dev                 # Open application web UI running on dev environment
+taito open client:dev              # Open application web UI running on dev environment
 taito logs:server:dev              # Tail logs of server container running on dev environment
 taito db connect:dev               # Connect to the dev environment database
 taito env merge:dev canary         # Merge changes between environments: dev -> test -> canary

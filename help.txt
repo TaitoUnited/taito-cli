@@ -252,7 +252,7 @@ ARGUMENTS
     $ taito shell:worker
     $ taito shell:worker:dev
     $ taito status:dev
-    $ taito open app:dev
+    $ taito open client:dev
 
   All other arguments are given after the command. For example:
     $ taito exec:worker:dev echo jee

@@ -10,7 +10,7 @@ Start the application with the following commands:
 taito install     # Install linters and some libraries on host
 taito start       # Start the local development environment
 taito init        # Initialize database with database tables and example data
-taito open app    # Open application web user interface
+taito open client # Open application web user interface
 taito info        # Show info required for signing in to the application
 ```
 

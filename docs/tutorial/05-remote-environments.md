@@ -34,7 +34,7 @@ Make sure it works ok:
 ```shell
 taito open builds              # Watch it build and deploy automatically
 taito open status:dev          # Check status of dev environment
-taito open app:dev             # Open application GUI
+taito open client:dev          # Open application GUI
 taito info:dev                 # Show details for logging in
 taito db connect:dev           # Connect to database
 taito open storage:dev         # Open storage bucket
@@ -78,7 +78,7 @@ Make sure it works:
 ```shell
 taito open builds              # Watch it build and deploy automatically
 taito open status:test         # Check status of test environment
-taito open app:test            # Open application GUI
+taito open client:test         # Open application GUI
 ```
 
 ### 5.5. Create production environment
@@ -96,7 +96,7 @@ Make sure it works:
 ```
 taito open builds              # Watch it build and deploy automatically
 taito open status:prod         # Check status of prod environment
-taito open app:prod            # Open application GUI
+taito open client:prod         # Open application GUI
 ```
 
 > At this point your production environment already exists. However, before releasing it to the real end-users you need to do some additional tasks that are explained in chapter [9. Production setup](#09-production-setup.md).
@@ -119,8 +119,8 @@ Make sure it works:
 ```shell
 taito open builds                # Watch it build and deploy automatically
 taito open status:canary         # Check status of canary environment
-taito open app:canary            # Open canary application GUI
-taito open app:prod              # Open production application GUI
+taito open client:canary         # Open canary application GUI
+taito open client:prod           # Open production application GUI
 ** Create some posts in the production app **
 ** Resfresh the posts page in the canary app -> you'll see the new posts **
 ```
