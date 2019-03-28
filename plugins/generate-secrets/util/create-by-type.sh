@@ -77,14 +77,17 @@ case "${secret_method}" in
     secret_value="./tmp/${secret_name}"
     rm -f "${secret_value}"
     touch "${secret_value}"
-    echo "Enter all usernames and passwords for the htpasswd file."
-    echo "Enter empty username when you are done."
+    echo
+    echo "BASIC AUTH CREDENTIALS"
+    echo
+    echo "Basic autentication is typically used for hiding non-production"
+    echo "environments from the public. Enter usernames and passwords below."
+    echo "Enter an empty username when you are done."
     echo
     if [[ "${secret_method}" == "htpasswd-plain" ]]; then
       htpasswd_options="-p"
       echo "NOTE: All passwords will be stored in plain text. You should not use"
-      echo "them for anything important. Use method 'htpasswd' instead if you"
-      echo "want to encrypt all passwords"
+      echo "them for anything important."
     else
       htpasswd_options=""
       echo "NOTE: All passwords will be encrypted. Thus, you should store all credentials"
