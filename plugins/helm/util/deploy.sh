@@ -9,6 +9,7 @@
 : "${taito_project:?}"
 : "${taito_project_path:?}"
 : "${taito_vc_repository:?}"
+: "${taito_vout:?}"
 
 image="${1}"
 options=("${@:2}")
@@ -66,6 +67,9 @@ if [[ -d "./scripts/helm" ]]; then
   fi
 
   echo "- Deploying ${image} of ${taito_project}-${taito_target_env} using Helm"
+  echo > "${taito_vout}"
+  cat ./scripts/helm.yaml.tmp > "${taito_vout}"
+  echo > "${taito_vout}"
   (
     ${taito_setv:?}
     helm init --client-only
