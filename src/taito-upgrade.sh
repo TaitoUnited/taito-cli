@@ -48,6 +48,11 @@ if docker create --name taito-save "${taito_image}save" &> /dev/null; then
 
   docker cp taito-save:/home/taito ~/.taito/save &> /dev/null
   docker cp taito-save:/root ~/.taito/save &> /dev/null
+
+  # a quick fix to preserve repositories installed in user-init.sh
+  rm -f ~/.taito/save/taito/.helm/repository/repositories.yaml
+  rm -f ~/.taito/save/root/.helm/repository/repositories.yaml
+
   docker cp ~/.taito/save/taito taito-new:/home &> /dev/null
   docker cp ~/.taito/save/root taito-new:/ &> /dev/null
 
