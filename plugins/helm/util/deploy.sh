@@ -66,6 +66,11 @@ if [[ -d "./scripts/helm" ]]; then
     helm_deploy_options="${helm_deploy_options} -f ${override_file}.tmp"
   fi
 
+  # For Google Cloud builder
+  if [[ "${HOME}" == "/builder/home" ]]; then
+    export HELM_HOME="/root/.helm"
+  fi
+
   echo "- Deploying ${image} of ${taito_project}-${taito_target_env} using Helm"
   echo > "${taito_vout}"
   cat ./scripts/helm.yaml.tmp > "${taito_vout}"
@@ -74,7 +79,8 @@ if [[ -d "./scripts/helm" ]]; then
     ${taito_setv:?}
     helm init --client-only
 
-    echo ~
+    echo $HELM_HOME
+    echo ~ "${HOME}"
     whoami
     echo "Repositories from ~/.helm/repository/repositories.yaml:"
     cat ~/.helm/repository/repositories.yaml || :
