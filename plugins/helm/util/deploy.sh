@@ -73,6 +73,12 @@ if [[ -d "./scripts/helm" ]]; then
   (
     ${taito_setv:?}
     helm init --client-only
+
+    echo ~
+    whoami
+    echo "Repositories from ~/.helm/repository/repositories.yaml:"
+    cat ~/.helm/repository/repositories.yaml || :
+
     helm dependency update "./scripts/helm"
     # TODO remove non-globals
     helm upgrade "${options[@]}" --debug --install \
