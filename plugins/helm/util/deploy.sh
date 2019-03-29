@@ -67,8 +67,18 @@ if [[ -d "./scripts/helm" ]]; then
   fi
 
   # For Google Cloud builder
-  if [[ "${HOME}" == "/builder/home" ]]; then
+  if [[ "${taito_mode:-}" == "ci" ]] && [[ "${HOME}" == "/builder/home" ]]; then
     export HELM_HOME="/root/.helm"
+  fi
+
+  if [[ "${taito_mode:-}" == "ci" ]]; then
+    echo
+    echo "USER: $(whoami)"
+    echo "HOME: $HOME"
+    echo "HELM_HOME: $HELM_HOME"
+    echo "Repositories from $HELM_HOME/.helm/repository/repositories.yaml:"
+    cat ~/.helm/repository/repositories.yaml || :
+    echo
   fi
 
   echo "- Deploying ${image} of ${taito_project}-${taito_target_env} using Helm"
@@ -78,13 +88,6 @@ if [[ -d "./scripts/helm" ]]; then
   (
     ${taito_setv:?}
     helm init --client-only
-
-    echo $HELM_HOME
-    echo ~ "${HOME}"
-    whoami
-    echo "Repositories from ~/.helm/repository/repositories.yaml:"
-    cat ~/.helm/repository/repositories.yaml || :
-
     helm dependency update "./scripts/helm"
     # TODO remove non-globals
     helm upgrade "${options[@]}" --debug --install \
