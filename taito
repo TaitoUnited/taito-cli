@@ -7,6 +7,7 @@ mode="normal"
 shell_command=false
 continue=false
 admin=false
+root=false
 upgrade=false
 skip_rest=false
 taito_organization_param=""
@@ -46,6 +47,10 @@ do
         ;;
         -a|--admin)
         admin=true
+        shift
+        ;;
+        -r|--root)
+        root=true
         shift
         ;;
         --upgrade)
@@ -256,9 +261,12 @@ fi
 # Determine user details
 taito_container_home="/home/taito"
 docker_user_opts="--user $(id -u):$(id -g)"
-if [[ ${admin} == true ]]; then
+if [[ ${admin} == true ]] || [[ ${root} == true ]]; then
   taito_container_home="/root"
   docker_user_opts=""
+fi
+
+if [[ ${admin} == true ]]; then
   echo "Admin encryption/decryption key:"
   read -s admin_key
   if [[ ${#admin_key} -lt 16 ]]; then

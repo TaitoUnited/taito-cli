@@ -213,6 +213,9 @@ OPTIONS
   --admin, -a
     Execute as admin.
 
+  --root, -r
+    Execute as root user.
+
   --project PROJECT, -p PROJECT
     Execute command in the context of given project. This command allows
     you to execute a taito-cli command without cloning the project repository
