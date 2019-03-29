@@ -14,7 +14,7 @@ QUICK EXAMPLES
     init                     # Initialize databases and storages
     init --clean             # Clean and reinitialize databases and storages
     (run)                    # Run the application (if not run autom. by start)
-    open app                 # Open application on browser
+    open client              # Open application GUI on browser
     open admin               # Open admin GUI on browser
     open builds              # Open build logs on browser
     open project             # Open project management on browser
@@ -53,8 +53,8 @@ QUICK EXAMPLES
     check size:client        # Check size of the client
 
   ACCESSING A REMOTE ENVIRONMENT
-    open app:dev             # Open application on browser
-    open admin:dev           # Open application admin GUI on browser
+    open client:dev          # Open application GUI on browser
+    open admin:dev           # Open admin GUI on browser
     info:dev                 # Show information required for signing in
     status:dev               # Show application status
     secrets:dev              # Show secrets
@@ -217,7 +217,7 @@ OPTIONS
     Execute command in the context of given project. This command allows
     you to execute a taito-cli command without cloning the project repository
     to your local disk. Examples:
-      taito -p my-project open app:dev
+      taito -p my-project open client:dev
       taito -p org@another-project open info:prod
       TODO implement
 
@@ -445,8 +445,8 @@ PROJECT: LINKS
   > Here are some recommended link names that are also included in the
   > taito-cli autocomplete scripts:
   >
-  > open app[:ENV] - GUI of app
-  > open admin[:ENV] - GUI of application admin tool
+  > open client[:ENV] - Application GUI
+  > open admin[:ENV] - Admin GUI
   > open storage - Storage bucket used by the app
   > open docs - Built docs
   > open project - Project management
