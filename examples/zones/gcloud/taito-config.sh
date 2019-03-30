@@ -11,9 +11,13 @@ zone_devops_email="CHANGE@CHANGE.COM"
 zone_devops_bucket="${taito_zone}-devops"
 # TODO IP does not have an effect when deploying ingress the first time?
 zone_ingress_ip="" # TODO support multiple
-zone_slack_webhook="CHANGE"
-zone_monitoring_slack_channel="#monitoring"
-zone_builds_slack_channel="#builds"
+
+# messaging
+taito_messaging_app="slack"
+taito_messaging_webhook="CHANGE"
+taito_messaging_builds_channel="#builds"
+taito_messaging_critical_channel="#critical"
+taito_messaging_monitoring_channel="#monitoring"
 
 # gcloud settings
 gcloud_org_id="CHANGE" # NOTE: leave empty for 'no organization'

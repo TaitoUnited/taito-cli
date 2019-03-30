@@ -106,10 +106,11 @@ Database settings:
 Messaging:
 
 * **taito_messaging_app:** Messaging app used for notifications (e.g. `slack`).
-* **taito_messaging_channel:** Messaing channel used for project discussion.
-* **taito_messaging_builds_channel:** Messaging channel used for monitoring builds.
-* **taito_messaging_monitoring_channel:** Messaging channel used for monitoring apps.
 * **taito_messaging_webhook:** Webhook for sending messaging notifications.
+* **taito_messaging_channel:** Messaging channel used for project discussion.
+* **taito_messaging_builds_channel:** Messaging channel used for monitoring builds. Default value: '#builds'.
+* **taito_messaging_critical_channel:** Messaging channel used for critical alerts. Default value: '#critical'.
+* **taito_messaging_monitoring_channel:** Messaging channel used for monitoring apps. Default value: '#monitoring'.
 
 Monitoring:
 
