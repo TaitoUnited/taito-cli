@@ -3,7 +3,7 @@
 : "${gcloud_region:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project_path:?}"
-: "${zone_devops_bucket:?}"
+: "${taito_zone_functions_bucket:?}"
 : "${taito_messaging_webhook:?}"
 : "${taito_messaging_builds_channel:?}"
 
@@ -29,7 +29,7 @@ if [[ ${taito_messaging_app:-} == "slack" ]]; then
   gcloud --project "${gcloud_project_id}" \
     functions deploy cloudBuildSlackNotifications \
     --source "/tmp/gcloud-zone-slack" \
-    --stage-bucket "${zone_devops_bucket}" \
+    --stage-bucket "${taito_zone_functions_bucket}" \
     --trigger-topic cloud-builds \
     --entry-point subscribe \
     --region "europe-west1"

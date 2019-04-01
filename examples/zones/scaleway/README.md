@@ -1,5 +1,7 @@
 # Scaleway example zone (TODO)
 
+Example for a taito zone located in Scaleway. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
+
 https://www.scaleway.com/betas/#anchor_k8s
 
 ## Links

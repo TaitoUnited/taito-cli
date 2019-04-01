@@ -1,5 +1,7 @@
 # DigitalOcean example zone (TODO)
 
+Example for a taito zone located in Digital Ocean. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
+
 https://www.digitalocean.com/products/kubernetes/
 
 ## Links

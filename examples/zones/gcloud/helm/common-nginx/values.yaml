@@ -1,4 +1,6 @@
 nginx-ingress:
+  podSecurityPolicy:
+    enabled: true
   rbac:
     create: true
   serviceAccount:
@@ -6,7 +8,8 @@ nginx-ingress:
   controller:
     replicaCount: 3
     service:
-      loadBalancerIP: '${zone_ingress_ip}'
+      loadBalancerIP: '${taito_zone_default_ip}'
+      externalTrafficPolicy: Local
     extraArgs:
       annotations-prefix: ingress.kubernetes.io
       # enable-dynamic-configuration: true

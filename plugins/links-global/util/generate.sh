@@ -4,8 +4,13 @@
 
 # Generate markdown links
 markdown_links=""
-# An environment specific link
+
+# Generate links for every environment
 envs=("${taito_environments:-}")
+if ! [[ ${taito_environments:-} ]]; then
+  envs=("dummyenv")
+fi
+
 for env in ${envs[@]}
 do
   output=$( (

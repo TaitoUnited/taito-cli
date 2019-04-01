@@ -1,5 +1,7 @@
 # Azure example zone (TODO)
 
+Example for a taito zone located in Azure. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
+
 ## Links
 
 [//]: # (GENERATED LINKS START)

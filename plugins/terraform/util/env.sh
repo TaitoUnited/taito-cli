@@ -29,6 +29,6 @@ while IFS='=' read -r name value ; do
     env_exports="${env_exports}export TF_VAR_${name}='${value_formatted}'; "
     echo "- ${name}=${value_formatted}" > "${taito_vout}"
   fi
-done < <(env | sort)
+done < <(env | sed -z 's/\n  / /g' | sort)
 
 eval "${env_exports}"
