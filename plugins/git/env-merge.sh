@@ -66,6 +66,19 @@ do
     d="${merge##*->}"
     echo "${s}->${d} ${git_push_options}"
 
+    # Check if production env has been configured
+    if [[ ${d} == "master" ]] && ( \
+         [[ $(grep "\\* \\[ \\] Production done" CONFIGURATION.md 2> /dev/null) != "" ]] || \
+         [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]] \
+      ); then
+      echo
+      echo "----------------------------------------------------------------------"
+      echo "WARNING! The production environment has not yet been fully configured."
+      echo "See the '[ ] Production done' and '[ ] All done' checkboxes in"
+      echo "CONFIGURATION.md."
+      echo "----------------------------------------------------------------------"
+    fi
+
     # TODO execution should end if one merge fails
 
     "${taito_cli_path}/util/execute-on-host-fg.sh" "\
