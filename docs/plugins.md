@@ -175,7 +175,7 @@ Plugins:
 
 Plugins:
 
-* [gcloud-monitoring](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-monitoring/README.md): Sets up uptime monitoring and log alert rules on (TODO `taito env finalize`? or just released=true + env apply). You can use Stackdriver also with AWS. TODO how about Azure?
+* [gcloud-monitoring](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-monitoring/README.md): Lists available monitoring channels, etc.
 * [sentry](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sentry/README.md): Creates a Sentry project on `taito project apply`.
 
 You can open monitoring systems on your browser with the following commands, if the links have been configured in `taito-config.sh` file of your project.

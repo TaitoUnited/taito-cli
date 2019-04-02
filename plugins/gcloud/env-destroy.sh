@@ -3,10 +3,9 @@
 : "${taito_env:?}"
 
 if [[ "${taito_target_env}" == "prod" ]]; then
-  echo "TODO not implemented. Delete these manually:"
+  echo "NOTE: Delete these manually:"
   echo "- DNS settings"
-  echo "- Uptime check"
-  echo "- Log alert rules"
+  echo "- Optional: Custom log alert rules defined for the project"
   echo
   echo "Press enter when done"
   read -r

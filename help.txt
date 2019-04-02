@@ -130,6 +130,7 @@ QUICK EXAMPLES
     project destroy          # Destroy project
 
   PROJECT INFRASTRUCTURE MANAGEMENT
+    env info:dev             # Show environment information
     env apply:dev            # Apply project specific changes to dev env
     env rotate:dev           # Rotate project specific secrets in dev env
     env rotate:dev gcloud    # Rotate project specific gcloud secrets in dev env
@@ -794,16 +795,14 @@ PROJECT: BASIC SETUP
 
 PROJECT: ENVIRONMENT SETUP
 
+  env info:ENV [NAME]
+    Show environment information
+
   env apply:ENV [NAME]
     Migrate environment to the latest configuration.
-    TODO: implement using terraform.
 
   env destroy:ENV [NAME]
     Destroy an environment.
-
-  env finalize:prod [NAME]
-    Finalize production environment by setting up DNS and monitoring.
-    TODO: remove once implemented with terraform
 
   env rotate:ENV [NAME_FILTER]
     Rotate secrets for an environment.

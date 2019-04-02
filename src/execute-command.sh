@@ -263,6 +263,16 @@ if [[ "${taito_command}" == "__auth" ]] && [[  "${taito_env}" == "local" ]]; the
   exit 130
 fi
 
+# Validate env operations
+if [[ "${taito_command}" == "env-apply" ]] && [[ -z "${taito_domain:-}" ]] && \
+   grep -q taito_domain taito-config.sh; then
+  echo
+  echo "ERROR: taito_domain has not been set."
+  echo "Configure DNS and set taito_domain for ${taito_target_env} environment"
+  echo "in taito-config.sh"
+  exit 130
+fi
+
 # Validate vc operations
 if [[ "${taito_command}" == "vc-"* ]]; then
   echo

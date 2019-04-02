@@ -102,6 +102,7 @@ TODO would Git BASH suffice? winpty works with it, but there are issues with win
     template_default_provider_org_id_prod=123456789
     template_default_provider_region_prod=europe-west2
     template_default_provider_zone_prod=europe-west2-a
+    template_default_monitoring_uptime_channels_prod=projects/my-prod-zone/notificationChannels/1234567890
     template_default_registry=eu.gcr.io
     template_default_source_git=git@github.com:TaitoUnited
     template_default_dest_git=git@github.com:MyOrganization
