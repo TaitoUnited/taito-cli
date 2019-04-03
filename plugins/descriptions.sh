@@ -12,7 +12,7 @@ echo "--help \
 echo "--readme \
   &focus \
   # Show README.md of current project and taito-cli"
-echo "--shell \
+echo "shell \
   &focus \
   # Start interactive shell on the taito-cli container"
 echo "--trouble \

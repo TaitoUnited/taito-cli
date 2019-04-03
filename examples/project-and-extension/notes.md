@@ -32,7 +32,7 @@
 - taito_image="taitounited/taito-cli:latest"
 - upgrade
 - -- command
-- --shell
+- shell
 
 - reusable commands: db connect, status, shell, exec
 - command syntax

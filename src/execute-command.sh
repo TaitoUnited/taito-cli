@@ -512,7 +512,7 @@ fi
 
 # Execute command
 exit_code=0
-if [[ "${command}" == "__shell" ]]; then
+if [[ "${command}" == "shell" ]] && [[ -z ${taito_target} ]]; then
   # Start interactive shell
   /bin/bash
   exit_code=${?}

@@ -8,7 +8,7 @@ cprefix="${1:-*}"
 # Basic commands
 echo "--help"
 echo "--readme"
-echo "--shell"
+echo "shell"
 echo "--trouble"
 echo "upgrade"
 echo "-- COMMANDS"

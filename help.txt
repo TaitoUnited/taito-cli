@@ -202,9 +202,6 @@ OPTIONS
     Execute any command inside the taito-cli container. Example:
     taito -- kubectl get pods
 
-  --shell
-    Start interactive shell on the taito-cli container.
-
   --admin, -a
     Execute as admin.
 
@@ -276,6 +273,9 @@ TAITO: BASIC OPERATIONS
     Authenticate in the context of the given environment. Also sets the
     default context for shell commands like 'taito -- kubectl get pods'
     or 'taito shell'.
+
+  shell
+    Start interactive shell on the taito-cli container.
 
   upgrade
     Upgrade taito-cli and its extensions to the latest version.
@@ -853,7 +853,7 @@ GLOBAL: UTILS
 
   util commit
     Commits current changes to the taito-cli container. For example, you
-    can start a shell running 'taito --shell', make some changes and then
+    can start a shell running 'taito shell', make some changes and then
     commit all changes by running 'taito util-commit' inside the container.
 
   util test:TARGET [SUITE_FILTER]

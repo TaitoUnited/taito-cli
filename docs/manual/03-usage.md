@@ -38,7 +38,7 @@ You can execute project specific commands also outside the project directory wit
 
 #### Running shell commands
 
-You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito --shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, see [customizing taito-cli](#customizing-taito-cli).
+You can easily run any shell command inside the taito-cli container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that taito-cli container doesn't provide by default, see [customizing taito-cli](#customizing-taito-cli).
 
 #### Setting current context for shell commands
 
