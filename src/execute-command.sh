@@ -267,9 +267,12 @@ fi
 if [[ "${taito_command}" == "env-apply" ]] && [[ -z "${taito_domain:-}" ]] && \
    grep -q taito_domain taito-config.sh; then
   echo
-  echo "ERROR: taito_domain has not been set."
+  echo "ERROR: taito_domain has not been set for ${taito_target_env} environment."
   echo "Configure DNS and set taito_domain for ${taito_target_env} environment"
-  echo "in taito-config.sh"
+  echo "in taito-config.sh. The default IP address for this zone is shown below."
+  echo "You can use it as IP address if unique IP address is not required."
+  echo
+  getent hosts "${taito_default_domain:-}" | awk '{ print $1 }'
   exit 130
 fi
 
