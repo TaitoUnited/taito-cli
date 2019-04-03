@@ -273,6 +273,13 @@ if [[ "${taito_command}" == "env-apply" ]] && [[ -z "${taito_domain:-}" ]] && \
   exit 130
 fi
 
+# Validate old --upgrade
+if [[ "${taito_command}" == "__upgrade" ]]; then
+  echo
+  echo "NOTE: 'taito --upgrade' is no longer. Run 'taito upgrade'."
+  exit 130
+fi
+
 # Validate vc operations
 if [[ "${taito_command}" == "vc-"* ]]; then
   echo

@@ -46,7 +46,7 @@ Running `taito --auth:ENV` also sets the default context for currently enabled p
 
 #### Customizing taito-cli
 
-If file `~/.taito/install.sh` exists (TODO), it will be run inside Taito CLI container as root during `taito --upgrade`. You can use it to install additional tools to your Taito CLI container, or to make some personal customizations to Taito CLI behavior. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install.sh`.
+If file `~/.taito/install.sh` exists (TODO), it will be run inside Taito CLI container as root during `taito upgrade`. You can use it to install additional tools to your Taito CLI container, or to make some personal customizations to Taito CLI behavior. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install.sh`.
 
 You can also use Docker Hub or some other registry to build and distribute a custom Taito CLI image that is dependent on one of the official Taito CLI images. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.
 

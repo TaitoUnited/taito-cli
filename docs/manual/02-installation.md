@@ -163,7 +163,7 @@ TODO would Git BASH suffice? winpty works with it, but there are issues with win
 
 ### Upgrade
 
-You can upgrade taito-cli and its extensions anytime by running `taito --upgrade`.
+You can upgrade taito-cli and its extensions anytime by running `taito upgrade`.
 
 ---
 

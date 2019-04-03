@@ -1,7 +1,7 @@
 TAITO-CLI TROUBLESHOOTING
 
   Any problem
-    - Try to upgrade taito-cli by running 'taito --upgrade'. With the
+    - Try to upgrade taito-cli by running 'taito upgrade'. With the
     - With the `-v` or `--verbose` flag you can see the commands that plugins
       run during command execution. If you want to see even more output, use
       the `--debug` flag.
@@ -31,7 +31,7 @@ TAITO-CLI TROUBLESHOOTING
     'taito install', 'taito start'.
 
   'command not found'
-    - Try running 'taito --upgrade'
+    - Try running 'taito upgrade'
     - Try upgrading docker and docker-compose
     - Did you give the correct environment as argument? Commands always use the
       local environment by default.

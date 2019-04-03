@@ -18,7 +18,7 @@ echo "--shell \
 echo "--trouble \
   &focus \
   # Show trouble.txt of current project and taito-cli"
-echo "--upgrade \
+echo "upgrade \
   # Upgrade taito-cli and its extensions to the latest version"
 echo "-- COMMANDS \
   # Run commands inside the taito-cli container"

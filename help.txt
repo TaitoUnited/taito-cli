@@ -193,9 +193,6 @@ OPTIONS
   --readme
     Show README.md of current project.
 
-  --upgrade
-    Upgrade taito-cli and its extensions to the latest version.
-
   --auth:ENV
     Authenticate in the context of the given environment.
 
@@ -276,10 +273,12 @@ ALTERNATIVE HYPHEN SYNTAX
 
   You can also use hyphen instead of space e.g. `taito db-connect:dev`
 
-PROJECT: BASIC OPERATIONS
+TAITO: BASIC OPERATIONS
 
-  > All basic operation commands use 'oper' as a command grouping prefix but
-  > you can leave it out if you like.
+  upgrade
+    Upgrade taito-cli and its extensions to the latest version.
+
+PROJECT: BASIC OPERATIONS
 
   install [--clean] [--lock]
     Install everything that needs to installed locally on host (e.g. libraries

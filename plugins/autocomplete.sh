@@ -10,7 +10,7 @@ echo "--help"
 echo "--readme"
 echo "--shell"
 echo "--trouble"
-echo "--upgrade"
+echo "upgrade"
 echo "-- COMMANDS"
 
 # Workspace

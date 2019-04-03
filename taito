@@ -53,7 +53,7 @@ do
         root=true
         shift
         ;;
-        --upgrade)
+        upgrade)
         # TODO upgrade should be mode?
         upgrade=true
         shift

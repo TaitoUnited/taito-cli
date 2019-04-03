@@ -40,7 +40,7 @@ Already supported: (AWS), (Azure), Google Cloud, (Digital Ocean), Kubernetes, He
 
 #### All tools included
 
-Working with modern hybrid cloud environments requires lots of tools. Taito CLI Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito --upgrade`. And if you need something special, it is very easy to customize the Taito CLI image with your own requirements.
+Working with modern hybrid cloud environments requires lots of tools. Taito CLI Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito upgrade`. And if you need something special, it is very easy to customize the Taito CLI image with your own requirements.
 
 #### No lock-in
 

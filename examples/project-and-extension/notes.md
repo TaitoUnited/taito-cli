@@ -30,7 +30,7 @@
 - open source
 - installed software
 - taito_image="taitounited/taito-cli:latest"
-- --upgrade
+- upgrade
 - -- command
 - --shell
 
