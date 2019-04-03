@@ -60,7 +60,7 @@ You typically need to implement the following taito-cli commands in *package.jso
 
 Cloud provider plugins typically implement the following commands:
 
-* `taito --auth`: Authenticate to the cloud environment.
+* `taito auth`: Authenticate to the cloud environment.
 * `taito db proxy`: Start a proxy for accessing a remote database.
 * Pre-hook that starts a db proxy automatically on demand and post-hook that stops the db proxy.
 

@@ -322,7 +322,7 @@ if [[ ${taito_project:-} ]]; then
 
     # Remote-only commands
     if [[ "${env}" != "local" ]]; then
-      echo "--auth${suffix} \
+      echo "auth${suffix} \
         &focus \
         # Authenticate for the ${env} environment"
       echo "env:${env} \

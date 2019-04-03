@@ -193,9 +193,6 @@ OPTIONS
   --readme
     Show README.md of current project.
 
-  --auth:ENV
-    Authenticate in the context of the given environment.
-
   --dev, -d
     Run in development mode. In the development mode your local taito-cli
     directory is mounted on the container.
@@ -275,6 +272,11 @@ ALTERNATIVE HYPHEN SYNTAX
 
 TAITO: BASIC OPERATIONS
 
+  auth[:ENV]
+    Authenticate in the context of the given environment. Also sets the
+    default context for shell commands like 'taito -- kubectl get pods'
+    or 'taito shell'.
+
   upgrade
     Upgrade taito-cli and its extensions to the latest version.
 
@@ -290,12 +292,6 @@ PROJECT: BASIC OPERATIONS
 
   link
     Link libraries.
-
-  env
-    Initialize the development environment. This command is for non-dockerized
-    projects that require project specific environment variables to be set.
-    For example the 'pipenv' plugin uses this command to initialize the python
-    virtualenv.
 
   build[:BUILD_TARGET]
     Builds a project. This command is for non-dockerized projects that need to

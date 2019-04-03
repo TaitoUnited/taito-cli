@@ -256,10 +256,10 @@ if [[ "${taito_env}" != "local" ]] && \
 fi
 
 # Validate auth operations
-if [[ "${taito_command}" == "__auth" ]] && [[  "${taito_env}" == "local" ]]; then
+if [[ "${taito_command}" == "auth" ]] && [[  "${taito_env}" == "local" ]]; then
   echo
   echo "ERROR: You cannot authenticate to local environment."
-  echo "Specify environment: taito --auth:ENV".
+  echo "Specify environment: taito auth:ENV".
   exit 130
 fi
 
@@ -277,6 +277,13 @@ fi
 if [[ "${taito_command}" == "__upgrade" ]]; then
   echo
   echo "NOTE: 'taito --upgrade' is no longer. Run 'taito upgrade'."
+  exit 130
+fi
+
+# Validate old --auth
+if [[ "${taito_command}" == "__auth" ]]; then
+  echo
+  echo "NOTE: 'taito --auth' is no longer. Run 'taito auth:ENV'."
   exit 130
 fi
 
@@ -454,7 +461,7 @@ if [[ -n "${taito_admin_key}" ]]; then
     exit 1
   fi
 
-  if [[ ! -f ~/admin_creds.enc ]] && [[ "${command}" != "__auth" ]]; then
+  if [[ ! -f ~/admin_creds.enc ]] && [[ "${command}" != "auth" ]]; then
     echo
     echo "ERROR: Admin credentials file missing. Authenticate as admin first."
     exit 1
@@ -464,7 +471,7 @@ if [[ -n "${taito_admin_key}" ]]; then
   mv ~/.config ~/.config_normal
   mv ~/.kube ~/.kube_normal
 
-  if [[ "${command}" != "__auth" ]]; then
+  if [[ "${command}" != "auth" ]]; then
     # Decrypt admin credentials
     # TODO use something else than openssl:
     # https://cryptosense.com/weak-key-derivation-in-openssl/
@@ -534,7 +541,7 @@ fi
 
 # Admin credentials post-handling (just in case)
 # NOTE: In case of auth command this was already run before docker commit
-if [[ -n "${taito_admin_key_orig}" ]] && [[ "${command}" != "__auth" ]]; then
+if [[ -n "${taito_admin_key_orig}" ]] && [[ "${command}" != "auth" ]]; then
   # Delete admin credentials
   rm -rf ~/.config ~/.kube
   # Move normal user credentials back

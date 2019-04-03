@@ -216,7 +216,7 @@ if [[ ${taito_project:-} ]]; then
 
     # Remote-only commands
     if [[ "${env}" != "local" ]]; then
-      echo "--auth${suffix}"
+      echo "auth${suffix}"
       echo "env:${env}"
 
       # NOTE: Advanced

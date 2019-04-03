@@ -14,7 +14,7 @@ Taito-cli is configured with a `taito-config.sh` file placed at your project roo
 
 Run `taito -h` to show a list of all predefined commands of taito-cli and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for taito-cli commands, if you have installed the autocompletion support.
 
-Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito --auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito --auth:dev`). Note that your credentials are saved on the taito-cli container image, as you don't need them lying on your host file system anymore.
+Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito auth:dev`). Note that your credentials are saved on the taito-cli container image, as you don't need them lying on your host file system anymore.
 
 [Taito-cli tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order, including creating your first taito-cli project and setting up your own infrastructure. You may consider it as a chronological taito-cli manual.
 
@@ -42,7 +42,7 @@ You can easily run any shell command inside the taito-cli container, for example
 
 #### Setting current context for shell commands
 
-Running `taito --auth:ENV` also sets the default context for currently enabled plugins. For example, if the kubectl plugin is enabled, you can run `taito --auth:ENV` to set the default context for kubectl (Kubernetes cluster and namespace). After that you can execute a bunch of kubectl commands, and all of them will execute in the default context previously set by the auth command. For example: `taito -- kubectl get secrets`, `taito -- kubectl get secret my-secret -o yaml`.
+Running `taito auth:ENV` also sets the default context for currently enabled plugins. For example, if the kubectl plugin is enabled, you can run `taito auth:ENV` to set the default context for kubectl (Kubernetes cluster and namespace). After that you can execute a bunch of kubectl commands, and all of them will execute in the default context previously set by the auth command. For example: `taito -- kubectl get secrets`, `taito -- kubectl get secret my-secret -o yaml`.
 
 #### Customizing taito-cli
 
@@ -54,7 +54,7 @@ You can also use Docker Hub or some other registry to build and distribute a cus
 
 Many tools require you to authenticate only once and then you can run any command without supplying your password again. For this reason taito-cli supports a separate admin account for accessing critical resources.
 
-With the `-a, --admin` option you specify that you would like to run the given command as admin. For example, you can authenticate as admin by running `taito -a --auth:prod` and then execute a command as admin by running `taito -a status:prod`. Your admin credentials are stored in taito-cli container image using `aes-256-cbc` encryption and you need to enter the decryption key everytime you execute a command as admin. Keep the decryption key in a safe place.
+With the `-a, --admin` option you specify that you would like to run the given command as admin. For example, you can authenticate as admin by running `taito -a auth:prod` and then execute a command as admin by running `taito -a status:prod`. Your admin credentials are stored in taito-cli container image using `aes-256-cbc` encryption and you need to enter the decryption key everytime you execute a command as admin. Keep the decryption key in a safe place.
 
 TODO support for U2F/YubiKey?
 

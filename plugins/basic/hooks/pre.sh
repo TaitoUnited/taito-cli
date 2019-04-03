@@ -2,8 +2,8 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-# --auth command pre-handling
-# if [[ "${taito_command:-}" == "__auth" ]]; then
+# auth command pre-handling
+# if [[ "${taito_command:-}" == "auth" ]]; then
 #   echo
 #   echo "### basic/pre: Deleting old credentials (but not committing the change yet!)"
 #   rm -rf ~/.config ~/.kube

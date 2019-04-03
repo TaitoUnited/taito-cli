@@ -6,7 +6,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 
 > TODO: command list is not up-to-date.
 
-* `taito --auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
+* `taito auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
 * `taito deployment cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
 * `taito ci prepare`: Set ci flags by status check. The ci flags are used to control the following ci steps. For example if taitoflag_images_exist is set, many of the ci steps will be skipped since all images have already been built and tested by some previous CI build.
 * `taito install`: Install required libraries.

@@ -15,7 +15,7 @@ TODO OPTIONAL: first setup remote state for terraform
 
 1. Configure `taito_zone` and `gcloud_org_id` in the `zone-gcloud/taito-config.sh` file. (TODO configure all places that say...) (TODO installing without organization?)
 
-2. Authenticate by running `taito --auth` in the `zone-gcloud` directory.
+2. Authenticate by running `taito auth` in the `zone-gcloud` directory.
 
 3. Create taito zone by running `taito zone apply` in the `zone-gcloud` directory.
 

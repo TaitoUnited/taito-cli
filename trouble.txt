@@ -10,7 +10,7 @@ TAITO-CLI TROUBLESHOOTING
     If you run into a connection or authorization error during taito-cli
     command execution, the command probably requires authentication and you
     either have not authenticated or your authentication has expired. In such
-    case, run 'taito --auth:ENV' to authenticate.
+    case, run 'taito auth:ENV' to authenticate.
 
   'No space left on device'
     Try cleaning your local workspace by running 'taito workspace kill' and

@@ -7,7 +7,7 @@ account=$(gcloud config get-value account 2> /dev/null)
 
 if [[ ${account} ]]; then
   echo "You are already logged in as ${account}."
-  echo "In case of trouble, you can run 'taito --auth:${taito_env} reset'"
+  echo "In case of trouble, you can run 'taito auth:${taito_env} reset'"
   echo
 fi
 
