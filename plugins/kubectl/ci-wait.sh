@@ -5,7 +5,7 @@
 "${taito_plugin_path}/util/use-context.sh"
 
 # Wait until all containers have been deployed
-sleep 5
+sleep 15
 while [[ -n $(kubectl get pods | grep ContainerCreating) ]]
 do
   echo "Waiting until all containers have been deployed"
