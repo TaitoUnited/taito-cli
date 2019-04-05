@@ -43,14 +43,17 @@ fi
     fi
   fi
 
+  sqitch_options=
+  if [[ ${command} != "add" ]]; then
+    sqitch_options="-h ${database_host} -p ${database_port} \
+      -d ${database_name} -u ${database_user}"
+  fi
+
   export SQITCH_PASSWORD
   SQITCH_PASSWORD="${sqitch_password}"
   (
     ${taito_setv:?}
-    sqitch \
-      -h "${database_host}" -p "${database_port}" \
-      -d "${database_name}" \
-      -u "${database_user}" "${command}" "${@:2}"
+    sqitch ${sqitch_options} "${command}" "${@:2}"
   )
 )
 # shellcheck disable=SC2181
