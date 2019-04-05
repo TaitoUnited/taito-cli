@@ -115,8 +115,9 @@ QUICK EXAMPLES
     deployment start:dev          # Start ci build for dev environment manually
     deployment cancel:dev         # Cancel an ongoing dev environment ci build
     deployment build:worker:dev   # Build and deploy worker container to dev env
+    deployment deploy:dev         # Deploy latest dev version to dev env
     deployment deploy:dev 1.1.1   # Deploy prebuilt version to dev env
-    deployment revisions:dev       # Show current revision on dev env
+    deployment revisions:dev      # Show current revision on dev env
     deployment revert:dev 20      # Revert application on dev env to revision 20
 
   PROJECT TEMPLATES
