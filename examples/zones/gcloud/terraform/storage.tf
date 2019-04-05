@@ -10,4 +10,5 @@ resource "google_storage_bucket" "functions" {
   versioning {
     enabled = true
   }
+  prevent_destroy = true
 }
