@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 secret_index=0
 secret_names=(${taito_secret_names})
@@ -10,11 +10,10 @@ do
       [[ "${secret_method:-}" == "csrkey" ]] || \
       [[ "${secret_method:-}" == "htpasswd"* ]] \
      ) && [[ "${secret_changed:-}" ]] && [[ "${secret_value:-}" ]]; then
-    echo "Delete file '${secret_value:-}' (Y/n)?"
-    read -r confirm
-    if [[ "${confirm}" =~ ^[Yy]*$ ]]; then
-      rm -f "${secret_value:-}"
-    fi
+    set -e
+    echo "Deleting file '${secret_value:-}'"
+    rm -f "${secret_value:-}"
+    echo "File '${secret_value:-}' deleted successfully"
   fi
   secret_index=$((${secret_index}+1))
 done

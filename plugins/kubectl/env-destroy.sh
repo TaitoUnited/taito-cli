@@ -18,7 +18,7 @@ fi && \
 if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-delete-namespace" "${name}" \
   "Delete namespace ${taito_namespace} from Kubernetes"
 then
-  (${taito_setv:?}; kubectl delete namespace "${taito_namespace}")
+  (${taito_setv:?}; kubectl delete namespace "${taito_namespace}" || :)
 fi && \
 
 # Call next command on command chain
