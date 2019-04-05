@@ -20,15 +20,7 @@ if [[ -z "${container}" ]] || \
    [[ "${container}" == "--" ]] || \
    [[ "${container}" == "-" ]]; then
   # No container name was given. Determine container name.
-  if [[ "${pod}" == *"wordpress"* ]]; then
-    # Required for wordpress-template based projects
-    # --> env is in container name also
-    # TODO remove this hack
-    container=$(echo "${pod}" | \
-      sed -e 's/\([^0-9]*\)*/\1/;s/-[a-z0-9]*-[a-z0-9]*$//')
-  else
-    container=$(echo "${pod}" | \
-      sed -e 's/\([^0-9]*\)*/\1/;s/-[a-z0-9]*-[a-z0-9]*$//' | \
-      sed -e "s/-${taito_target_env}//")
-  fi
+  container=$(echo "${pod}" | \
+    sed -e 's/\([^0-9]*\)*/\1/;s/-[a-z0-9]*-[a-z0-9]*$//' | \
+    sed -e "s/-${taito_target_env}//")
 fi
