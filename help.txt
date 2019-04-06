@@ -109,6 +109,8 @@ QUICK EXAMPLES
     commit revert         # Revert the latest commit by creating a new commit
     commit undo           # Undo latest commit from local and remote branch
     commit erase          # Erase latest commit from loc/rem branch and files
+    pull                  # Pull changes (e.g. 'git pull --rebase --autostash')
+    push                  # Push changes (e.g. 'git push')
 
   DEPLOYMENT OPERATIONS
     deployment start:dev          # Start ci build for dev environment manually
