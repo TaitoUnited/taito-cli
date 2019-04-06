@@ -10,7 +10,10 @@ resource "google_storage_bucket" "functions" {
   versioning {
     enabled = true
   }
-  prevent_destroy = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "google_storage_bucket_acl" "functions" {

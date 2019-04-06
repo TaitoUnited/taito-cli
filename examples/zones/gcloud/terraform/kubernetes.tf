@@ -72,6 +72,9 @@ resource "google_container_cluster" "kubernetes" {
     ]
   }
 
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "google_container_node_pool" "kubernetes-pool" {

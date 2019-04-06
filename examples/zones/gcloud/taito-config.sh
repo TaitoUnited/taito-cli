@@ -38,7 +38,7 @@ kubectl_user="${kubectl_cluster}"
 
 # links
 link_urls="
-  * dashboard=https://console.cloud.google.com/apis/dashboard?project=${gcloud_project_id} Google Cloud Dashboard
+  * dashboard=https://console.cloud.google.com/home/dashboard?project=${gcloud_project_id} Google Cloud Dashboard
   * kubernetes=https://console.cloud.google.com/kubernetes/list?project=${gcloud_project_id} Kubernetes clusters
   * databases=https://console.cloud.google.com/sql/instances?project=${gcloud_project_id} Database clusters
   * logs=https://console.cloud.google.com/logs/viewer?project=${gcloud_project_id} Logs

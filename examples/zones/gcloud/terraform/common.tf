@@ -14,6 +14,10 @@ resource "google_project" "taito-zone" {
   org_id = "${var.gcloud_org_id}"
   billing_account = "${var.gcloud_billing_account_id}"
   auto_create_network = "${var.taito_zone_private_network == "false" ? true : false}"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 data "google_project" "taito-zone" {

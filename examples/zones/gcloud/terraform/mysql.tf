@@ -41,6 +41,10 @@ resource "google_sql_database_instance" "mysql" {
       start_time = "04:00"
     }
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 /* TODO create user
