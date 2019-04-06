@@ -1,7 +1,3 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
-
-echo "TODO implement" && \
-
-# Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+echo "NOTE: ci publish is deprecated"
+"${taito_plugin_path:?}/artifact-publish.sh" "${@}"

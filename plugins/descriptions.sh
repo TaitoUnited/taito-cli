@@ -350,12 +350,27 @@ if [[ ${taito_project:-} ]]; then
         # Trigger ci build for ${env} environment"
       echo "deployment cancel${suffix} \
         # Cancel an ongoing build for ${env} environment"
+      echo "deployment deploy${suffix} \
+        # Deploy latest built version of ${env} to ${env} environment"
       echo "deployment deploy${param} IMAGE_TAG \
-        # Deploy prebuilt version to ${env} environment"
+        # Deploy prebuilt IMAGE_TAG version to ${env} environment"
+      echo "deployment wait${suffix} \
+        # Wait for deployment to ${env} succeed"
+      echo "deployment verify${suffix} \
+        # Verify deployment of ${env} environment by test results. Revert if required."
       echo "deployment revisions${suffix} \
         # Show current revision of ${env} environment"
       echo "deployment revert${param} REVISION \
         # Revert application on ${env} environment to an another revision"
+
+      echo "artifact prepare${suffix} \
+        # Prepare artifacts for ${env} environment"
+      echo "artifact publish${suffix} \
+        # Publish artifacts for ${env} environment"
+      if [[ "${env}" == "prod" ]]; then
+        echo "artifact release${suffix} \
+          # Release artifacts for ${env} environment"
+      fi
 
       if [[ "${cprefix}" == "storage"* ]] || [[ "${cprefix}" == "*" ]]; then
         for storage in ${taito_storages:-}
@@ -422,7 +437,11 @@ if [[ ${taito_project:-} ]]; then
       echo "kill:${stack}${suffix} \
         # Kill the ${stack} container running on ${env} environment"
       echo "deployment build:${stack}${suffix} \
-        # Build and deploy the ${stack} container to ${env} environment"
+        # Build and deploy the ${stack} artifact to ${env} environment"
+      echo "artifact build:${stack}${suffix} \
+        # Build ${stack} artifact for ${env} environment"
+      echo "artifact push:${stack}${suffix} \
+        # Push ${stack} artifact for ${env} environment"
     done
 
     # Links

@@ -5,9 +5,8 @@ QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
     install                  # Install libraries on host
-    (link)                   # Link libraries
-    (env)                    # Initialize shell environment (e.g. for pipenv)
-    (build)                  # Build project (if not built autom. by start)
+    (link)                   # Link libraries (if not linked automatically)
+    (build)                  # Build project (if not built automatically)
     start                    # Start containers / watch / application
     restart                  # Restart containers / watch / application
     restart:client           # Restart client container
@@ -111,14 +110,23 @@ QUICK EXAMPLES
     commit undo           # Undo latest commit from local and remote branch
     commit erase          # Erase latest commit from loc/rem branch and files
 
-  MANUAL DEPLOYMENT OPERATIONS
+  DEPLOYMENT OPERATIONS
     deployment start:dev          # Start ci build for dev environment manually
     deployment cancel:dev         # Cancel an ongoing dev environment ci build
     deployment build:worker:dev   # Build and deploy worker container to dev env
     deployment deploy:dev         # Deploy latest dev version to dev env
     deployment deploy:dev 1.1.1   # Deploy prebuilt version to dev env
+    deployment wait
+    deployment verify
     deployment revisions:dev      # Show current revision on dev env
     deployment revert:dev 20      # Revert application on dev env to revision 20
+
+  ARTIFACTS (mainly for CI/CD only)
+    artifact prepare              # Make some build preparations if required.
+    artifact build:server:dev TAG # Build server artifact for dev environment
+    artifact push:server:dev TAG  # Push server artifact for dev environment
+    artifact publish:dev          # Publish artifacts for dev environment
+    artifact release:prod         # Make a release for prod environment
 
   PROJECT TEMPLATES
     project create: my-template   # Create a project based on template
@@ -691,7 +699,7 @@ PROJECT: STORAGE OPERATIONS
   storage sync to[:TARGET]:ENV SOURCE DEST
     Sync files from local disk to storage bucket
 
-PROJECT: MANUAL DEPLOYMENT OPERATIONS
+PROJECT: DEPLOYMENT OPERATIONS
 
   deployment start:ENV
     Start ci build manually.
@@ -709,6 +717,17 @@ PROJECT: MANUAL DEPLOYMENT OPERATIONS
     configuration. Uses the latest prebuilt version of the environment
     in question by default.
 
+  deployment wait[:ENV]
+    Waits until application has been succesfully deployed to server.
+    For example polls the app url until version number changes to something
+    else. This is used by CI/CD scripts to wait deployment before running the
+    api and e2e tests.
+
+  deployment verify[:ENV]
+    Verifies that everything went ok e.g. by checking test results. If something
+    went wrong and autorevert is enabled for the environment, runs
+    `taito db revert[:ENV]` and `taito deployment revert[:ENV]`.
+
   deployment revisions[:ENV]
     Show revision history.
 
@@ -717,46 +736,27 @@ PROJECT: MANUAL DEPLOYMENT OPERATIONS
     if revision has not been given as argument. You can see current revision
     number by running `taito deployment revisions[:ENV]`.
 
-PROJECT: AUTOMATIC CI/CD OPERATIONS
+PROJECT: ARTIFACTS (mainly for CI/CD only)
 
-  ci prepare
-    Set ci flags by status check. The ci flags are used to control the following
-    ci steps. For example if taitoflag_images_exist is set, many of the ci steps
-    will be skipped since all images have already been built and tested
-    by some previous CI build.
+  artifact prepare
+    Make some preparations if required. Typically this step determines if the
+    artifacts (e.g. container images) have already been built, and the new
+    version number for the release by the type of commits (feature, fix, etc).
 
-  ci build:TARGET[:ENV] IMAGE_TAG [BUILD_CONTEXT] [SERVICE_DIR] [PROJECT_REPOSITORY]
+  artifact build:TARGET[:ENV] IMAGE_TAG [BUILD_CONTEXT] [SERVICE_DIR] [PROJECT_REPOSITORY]
     Builds image. Build context and service dir are './TARGET' by default unless
     specified otherwise. Examples:
-    $ taito ci build:client:dev test1
-    $ taito ci build:client:dev test1 . ./client
-    $ taito ci build:client:dev test1 . ./server eu.gcr.io/my-zone/my-project
+    $ taito artifact build:client:dev test1
+    $ taito artifact build:client:dev test1 . ./client
+    $ taito artifact build:client:dev test1 . ./server eu.gcr.io/my-zone/my-project
 
-  ci push:TARGET[:ENV] IMAGE_TAG [PROJECT_REPOSITORY]
-    Pushes image to image registry. Example: 'taito ci push:client test1'.
+  artifact push:TARGET[:ENV] IMAGE_TAG [PROJECT_REPOSITORY]
+    Pushes image to image registry. Example: 'taito artifact push:client test1'.
 
-  ci deploy[:ENV] [IMAGE_TAG] [--dry-run]
-    Deploy the application either by using IMAGE_TAG given as parameter or
-    using the latest image found for the environment in question. Use dry-run
-    switch to execute a dry run. Example: 'taito ci deploy:dev test1'.
-    NOTE: Does not deploy database changes (TIP: 'taito db deploy[:ENV]')
-
-  ci wait[:ENV]
-    Waits until application has been succesfully deployed to server.
-    For example polls the app url until version number changes to something
-    else. This is used by CI/CD scripts to wait deployment before running the
-    api and e2e tests.
-
-  ci verify[:ENV]
-    Verifies that everything went ok e.g. by checking test results. If something
-    went wrong and autorevert is enabled for the environment, runs
-    `taito db revert[:ENV]` and `taito deployment revert[:ENV]`.
-
-  ci publish
+  artifact publish:ENV
     Publishes build artifacts (e.g. docs, test reports) to a central location.
 
-  ci release pre:ENV
-  ci release post:ENV
+  artifact release:ENV
     Release pre and post handling. These commands usually generate release notes
     automatically and tag the git repository with a new version number.
     TIP: Enable the 'make' or 'npm' plugin and implement release-pre:prod and

@@ -35,16 +35,16 @@ Build tool plugins typically implement the following:
 
 * Pre-hook for running user defined scripts with taito-cli (e.g. scripts in *package.json*, *Makefile* or *Pipfile*).
 * `taito install`: Install libraries and setup git hooks.
-* Participate in the CI/CD process by implementing some of the `taito ci *` commands.
+* Participate in the CI/CD process by implementing some of the taito commands.
 
 Plugins:
 
-* [docker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker/README.md): Build and push Docker container images using the `taito ci build` and `taito ci push` commands.
-* [helm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm/README.md): Manage Helm deployments on Kubernetes using the `taito ci deploy` and `taito deployment *` commands.
+* [docker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker/README.md): Build and push Docker container images using the `taito artifact build` and `taito artifact push` commands.
+* [helm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm/README.md): Manage Helm deployments on Kubernetes using the `taito deployment *` commands.
 * [make](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/make/README.md): Execute make scripts with taito-cli.
 * [npm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/npm/README.md): Execute npm scripts with taito-cli.
 * [pipenv](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/pipenv/README.md): Execute pipenv scripts with taito-cli.
-* [semantic-release](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/semantic-release/README.md): Make a new release using the `taito ci release` command. The [semantic-release](https://github.com/semantic-release/semantic-release) library will handle semantic versioning and release notes automatically based on your git commit messages.
+* [semantic-release](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/semantic-release/README.md): Make a new release using the `taito artifact release` command. The [semantic-release](https://github.com/semantic-release/semantic-release) library will handle semantic versioning and release notes automatically based on your git commit messages.
 
 You typically need to implement the following taito-cli commands in *package.json*, *Makefile* or *Pipfile* of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/server-template/blob/master/package.json) of the kubernetes-template as an example.
 
@@ -80,7 +80,7 @@ CI/CD plugins typically implement the following commands:
 * `taito env destroy`: Delete a build trigger (if build triggers are not managed with terraform)
 * `taito deployment start`: Start a build manually.
 * `taito deployment cancel`: Cancel an ongoing build.
-* `taito ci prepare`: Execute some additional preparations, if required.
+* `taito artifact prepare`: Execute some additional preparations, if required.
 
 Plugins:
 

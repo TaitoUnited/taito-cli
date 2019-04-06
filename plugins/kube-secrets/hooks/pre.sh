@@ -2,9 +2,11 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
+# NOTE: ci-release is deprecated
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
+   [[ ${taito_commands_only_chain:-} == *"artifact-release"* ]] || \
    [[ ${taito_commands_only_chain:-} == *"ci-release"* ]]; then
-  # TODO fetch db secrets only? does ci-release still require secrets?
+  # TODO fetch db secrets only? does artifact-release still require secrets?
   echo
   echo "### kube-secrets/pre: Getting secrets from Kubernetes"
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \

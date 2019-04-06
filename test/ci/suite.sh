@@ -5,20 +5,18 @@
 
 export tests="\
 taito secrets:dev;\
-taito ci-build;\
-taito ci-deploy:dev;\
-taito ci-canary;\
+taito artifact-build;\
+taito deployment-deploy:dev;\
 taito depl-revision:dev;\
 taito depl-revert:dev;\
-taito ci-wait:dev;\
-taito ci-verify:dev;\
+taito deployment-wait:dev;\
+taito deployment-verify:dev;\
 taito docs;\
 taito scan;\
 taito unit;\
 taito test;\
-taito ci-publish;\
-taito ci-release-pre;\
-taito ci-release-post;\
+taito artifact-publish;\
+taito artifact-release;\
 "
 
 if ! ../util/verify.sh; then

@@ -92,8 +92,10 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     taito_hook_command_executed=true
   fi
 
-  if [[ "${taito_command}" == "ci-release"* ]]; then
-    echo "TODO: remove this ci-release skip hack"
+  # NOTE: ci-release is deprecated
+  if [[ "${taito_command}" == "artifact-release"* ]] || \
+     [[ "${taito_command}" == "ci-release"* ]]; then
+    echo "TODO: remove this artifact-release skip hack"
     npm_command=""
   fi
 

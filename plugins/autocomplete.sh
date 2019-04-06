@@ -231,9 +231,18 @@ if [[ ${taito_project:-} ]]; then
 
       echo "deployment start${suffix}"
       echo "deployment cancel${suffix}"
+      echo "deployment deploy${suffix}"
       echo "deployment deploy${param} IMAGE_TAG"
+      echo "deployment wait${suffix}"
+      echo "deployment verify${suffix}"
       echo "deployment revisions${suffix}"
       echo "deployment revert${param} REVISION"
+
+      echo "artifact prepare${suffix}"
+      echo "artifact publish${suffix}"
+      if [[ "${env}" == "prod" ]]; then
+        echo "artifact release${suffix}"
+      fi
 
       if [[ "${cprefix}" == "storage"* ]] || [[ "${cprefix}" == "*" ]]; then
         for storage in ${taito_storages:-}
@@ -279,6 +288,8 @@ if [[ ${taito_project:-} ]]; then
       echo "copy from:${stack}${param} SOURCE_PATH DESTINATION_PATH"
       echo "kill:${stack}${suffix}"
       echo "deployment build:${stack}${suffix}"
+      echo "artifact build:${stack}${suffix}"
+      echo "artifact push:${stack}${suffix}"
     done
 
     # Links

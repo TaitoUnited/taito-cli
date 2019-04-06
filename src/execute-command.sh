@@ -164,7 +164,8 @@ if [[ ${debug} == true ]]; then
   echo taito_env: "${taito_env}"
 fi
 
-if [[ " unit scan docs ci-publish " == *"${taito_command}"* ]] && \
+# NOTE: ci-publish is deprecated
+if [[ " unit scan docs ci-publish artifact-publish " == *"${taito_command}"* ]] && \
    [[ -f ./taitoflag_images_exist ]]; then
   echo
   echo "### Skipping ${taito_command}. Image already exists."
