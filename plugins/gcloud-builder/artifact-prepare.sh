@@ -4,7 +4,6 @@
 : "${taito_vc_repository:?}"
 : "${taito_image_registry:?}"
 
-name=${taito_target:?Target not given}
 image_tag=${1}
 image_path=${2}
 
@@ -16,9 +15,12 @@ echo "Checking if image already exists in the container registry"
 echo "TODO check from container registry instead as there might be manual \
 builds also"
 
-check=$(gcloud builds list --limit=1 \
-  --filter="STATUS=SUCCESS AND IMAGES=${image_path}/${name}:${image_tag}" \
-  | grep "${image_tag}")
+check=$( \
+  gcloud -q builds list --limit=1 \
+  --filter="status:SUCCESS AND \
+            source.repoSource.repoName~.*${taito_project:?} AND \
+            images~.*\\:${image_tag}" \
+)
 
 export taito_images_exist
 if [[ ${check} == "" ]]; then

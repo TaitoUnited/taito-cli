@@ -5,24 +5,19 @@
 
 ignore_build_id=${1}
 
-full_repo_name="${taito_vc_repository}"
-if [[ ${taito_env} == "prod" ]]; then
-  branch_name="master"
-else
-  branch_name=${taito_env}
-fi
-
-echo "Canceling all previous ongoing builds targetting branch ${branch_name}"
+echo "Canceling all previous ongoing builds targetting branch ${taito_branch:?}"
 echo
 
 (
   ${taito_setv:?}
-  gcloud builds list --ongoing | \
-    grep "${full_repo_name}@${branch_name}" | \
-    grep -v "${ignore_build_id:-OR_DO_NOT_IGNORE}" | \
-    cut -d ' ' -f 1 | \
-    xargs -L1 gcloud builds cancel &> /dev/null && \
-    echo CANCELLED
+  gcloud -q builds list --ongoing \
+    --filter=" \
+      source.repoSource.repoName~.*${taito_project:?} AND \
+      source.repoSource.branchName:${taito_branch:?}" | \
+  grep -v "${ignore_build_id:-OR_DO_NOT_IGNORE}" | \
+  cut -d ' ' -f 1 | \
+  xargs -L1 gcloud builds cancel &> /dev/null && \
+  echo CANCELLED
 )
 
 # Call next command on command chain

@@ -7,7 +7,7 @@ if [[ -z $1 ]]; then
   # Detetermine target image automatically
   export taito_target_image
   taito_target_image=$( \
-    gcloud builds list \
+    gcloud -q builds list \
       --sort-by="~createTime" --format="value(images)" --limit=1 \
       --filter=" \
         status:SUCCESS AND \

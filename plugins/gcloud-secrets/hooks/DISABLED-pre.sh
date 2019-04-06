@@ -38,7 +38,7 @@ if [[ "${taito_is_admin:-}" == true ]] && \
    # TODO remove env name hardcoding
    export postgres_password && \
    postgres_password=$( \
-     gcloud kms decrypt --keyring "${taito_secrets_keyring}" \
+     gcloud -q kms decrypt --keyring "${taito_secrets_keyring}" \
        --key "${taito_secrets_key}" \
        --location "${taito_secrets_region}" \
        --plaintext-file '-' \

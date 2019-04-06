@@ -5,7 +5,7 @@ name=$1
 
 if [[ -z $name ]] || [[ $name == "monitoring" ]]; then
   echo "Google Stackdriver monitoring channels:"
-  gcloud alpha monitoring channels list
+  gcloud -q alpha monitoring channels list
 fi
 
 # Call next command on command chain
