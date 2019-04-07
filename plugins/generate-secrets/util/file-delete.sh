@@ -5,15 +5,13 @@ secret_names=(${taito_secret_names})
 for secret_name in ${secret_names[@]}
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
-  if ( \
-      [[ "${secret_method:-}" == "file" ]] || \
-      [[ "${secret_method:-}" == "csrkey" ]] || \
-      [[ "${secret_method:-}" == "htpasswd"* ]] \
-     ) && [[ "${secret_changed:-}" ]] && [[ "${secret_value:-}" ]]; then
+  if [[ "${secret_changed:-}" ]] && \
+     [[ "${secret_value:-}" == "secret_file:"* ]]; then
     set -e
-    echo "Deleting file '${secret_value:-}'"
-    rm -f "${secret_value:-}"
-    echo "File '${secret_value:-}' deleted successfully"
+    file="${secret_value#secret_file:}"
+    echo "Deleting file '${file}'"
+    rm -f "${file}"
+    echo "File '${file}' deleted successfully"
   fi
   secret_index=$((${secret_index}+1))
 done

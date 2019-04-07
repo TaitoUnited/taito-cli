@@ -50,10 +50,9 @@ do
       (
         ${taito_setv:?}
         secret_source="literal"
-        if [[ ${secret_method} == "file" ]] || \
-           [[ ${secret_method} == "csrkey" ]] || \
-           [[ ${secret_method} == "htpasswd"* ]]; then
+        if [[ ${secret_value} == "secret_file:*" ]]; then
           secret_source="file"
+          secret_value=${secret_value#secret_file:}
         fi
 
         # Secrets as json

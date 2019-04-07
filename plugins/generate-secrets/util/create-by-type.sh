@@ -46,6 +46,7 @@ if [[ -z "${secret_value}" ]]; then
         echo "File path relative to project root folder (for example './secret.json'):"
         read -r secret_value
       done
+      secret_value="secret_file:${secret_value}"
       ;;
     csrkey)
       while [[ ! "${domain}" ]]; do
@@ -71,7 +72,7 @@ if [[ -z "${secret_value}" ]]; then
         openssl req -new -newkey rsa:2048 -nodes \
           -keyout "${key_file}" -out "${csr_file}"
       )
-      secret_value="${key_file}"
+      secret_value="secret_file:${key_file}"
       echo
       echo "The generated secret key will be saved to Kubernetes and deleted from"
       echo "local disk during this command execution."
@@ -85,7 +86,7 @@ if [[ -z "${secret_value}" ]]; then
       ;;
     htpasswd|htpasswd-plain)
       mkdir -p ./tmp
-      secret_value="./tmp/${secret_name}"
+      secret_value="secret_file:./tmp/${secret_name}"
       rm -f "${secret_value}"
       touch "${secret_value}"
       echo

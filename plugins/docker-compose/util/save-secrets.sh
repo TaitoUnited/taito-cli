@@ -21,10 +21,8 @@ do
       secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')
     fi
 
-    if [[ ${secret_method} == "file" ]] || \
-       [[ ${secret_method} == "csrkey" ]] || \
-       [[ ${secret_method} == "htpasswd"* ]]; then
-      yes | cp -f "${secret_value}" \
+    if [[ ${secret_value} == "secret_file:"* ]]; then
+      yes | cp -f "${secret_value#secret_file:}" \
         "${taito_project_path}/secrets/${secret_name}.${secret_property:?}"
     else
       printf "%s" "${secret_value}" > \

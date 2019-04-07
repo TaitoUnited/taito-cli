@@ -23,15 +23,13 @@ for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh" && \
 
-  if [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
-    if [[ "${flag}" == "--save-as-taito-secrets" ]]; then
-      echo "export ${secret_value_var}=\"${secret_value}\"; " >> taito-secrets.sh
-    else
-      echo "Secret ${secret_name}:"
-      echo "${secret_value}"
-      echo
-    fi
-  fi && \
+  if [[ "${flag}" == "--save-as-taito-secrets" ]]; then
+    echo "export ${secret_value_var}=\"${secret_value}\"; " >> taito-secrets.sh
+  else
+    echo "Secret ${secret_name}:"
+    echo "${secret_value}"
+    echo
+  fi
   secret_index=$((${secret_index}+1))
 done && \
 
