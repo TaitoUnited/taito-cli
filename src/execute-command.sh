@@ -282,6 +282,11 @@ if [[ "${taito_command}" == "env-apply" ]] && [[ -z "${taito_domain:-}" ]] && \
   exit 130
 fi
 
+if [[ "${taito_command}" == "env" ]] && [[ "${taito_env}" == "local" ]]; then
+  echo "ERROR: You cannot use the 'local' env with the env command."
+  exit 1
+fi
+
 # Validate old --upgrade
 if [[ "${taito_command}" == "__upgrade" ]]; then
   echo

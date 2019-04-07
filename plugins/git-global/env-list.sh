@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_cli_path:?}"
 
 echo "${taito_environments/prod/master}"

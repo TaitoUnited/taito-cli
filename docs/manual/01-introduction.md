@@ -10,14 +10,16 @@ Example:
 taito zone apply                   # Setup your infrastructure (e.g. Kubernetes and database clusters)
 ...
 taito project create: my-template  # Create a new project based on a reusable template
-taito install                      # Install linters and other dependencies on host
+taito env apply                    # Create local development environment
 taito start                        # Start the local development environment
 taito init                         # Initialize the local database with database tables and development data
 taito open client                  # Open application web UI running on local environment
 taito info                         # Show user credentials required for signing in
 taito feat: posts                  # Switch to 'feature/posts' branch (and create it, as it does not exist yet)
+taito stage                        # Stage some changes
+taito commit                       # Commit staged changes
 taito feat merge                   # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
-taito env apply:dev                # Create dev environment
+taito env apply:dev                # Create dev environment (TODO trigger!)
 taito env apply:test               # Create test environment
 taito env apply:canary             # Create canary environment
 taito open builds                  # Show build status on browser

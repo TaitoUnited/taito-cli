@@ -1,7 +1,13 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_cli_path:?}"
-: "${taito_environments:?}"
+: "${taito_environments:?Environments not set in taito config}"
 : "${taito_target_env:?}"
+
+if ! git rev-parse --is-inside-work-tree &> /dev/null; then
+  # Not a git repository -> call next command on command chain and exit
+  "${taito_cli_path}/util/call-next.sh" "${@}"
+  exit
+fi
 
 # Parse arguments
 dest=""
