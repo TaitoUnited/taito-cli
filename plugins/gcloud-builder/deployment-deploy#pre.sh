@@ -8,11 +8,12 @@ if [[ -z $1 ]]; then
   export taito_target_image
   taito_target_image=$( \
     gcloud -q builds list \
-      --sort-by="~createTime" --format="value(images)" --limit=1 \
+      --sort-by="~createTime" --format="value(images)" \
       --filter=" \
         status:SUCCESS AND \
         source.repoSource.repoName~.*${taito_project:?} AND \
         source.repoSource.branchName:${taito_branch:?}" | \
+      head -1 | \
       sed "s/^.*:\([^;]*\)*;.*$/\1/" \
   )
   echo "Using tag: ${taito_target_image}"

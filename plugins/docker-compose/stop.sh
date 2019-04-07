@@ -2,13 +2,12 @@
 : "${taito_util_path:?}"
 
 options=" ${*} "
-
-command="stop"
 if [[ "${options}" == *" --down "* ]]; then
-  command="down -v"
+  echo "ERROR: 'taito stop --down' is deprecated. Run 'taito down' instead".
+  exit 1
 fi
 
-"${taito_util_path}/execute-on-host-fg.sh" "docker-compose ${command}" && \
+"${taito_util_path}/execute-on-host-fg.sh" "docker-compose stop" && \
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"

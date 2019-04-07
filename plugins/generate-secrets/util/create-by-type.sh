@@ -1,6 +1,7 @@
 #!/bin/bash
 : "${secret_method:?}"
 : "${taito_setv:?}"
+: "${taito_env:?}"
 
 set -e
 
@@ -10,9 +11,9 @@ secret_value2=""
 case "${secret_method}" in
   manual)
     while [[ ${#secret_value} -lt 8 ]] || [[ "${secret_value}" != "${secret_value2}" ]]; do
-      echo "New secret for ${secret_name} (min 8 characters):"
+      echo "New secret value (min 8 characters):"
       read -r -s secret_value
-      echo "New secret for ${secret_name} again:"
+      echo "New secret value again:"
       read -r -s secret_value2
     done
     ;;
@@ -103,12 +104,17 @@ case "${secret_method}" in
     fi
     ;;
   random)
-    # TODO better tool for this?
-    secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
-    if [[ ${#secret_value} -gt 30 ]]; then
-      secret_value="${secret_value: -30}"
+    if [[ "${taito_env}" == "local" ]]; then
+      echo "Using 'secret' as random value for local environment"
+      secret_value=secret
+    else
+      # TODO better tool for this?
+      secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
+      if [[ ${#secret_value} -gt 30 ]]; then
+        secret_value="${secret_value: -30}"
+      fi
+      echo "Random value generated"
     fi
-    echo "random value generated"
     ;;
   *)
     if [[ "${secret_method}" != "read/"* ]] && \
@@ -119,6 +125,5 @@ case "${secret_method}" in
     ;;
 esac
 
-echo Secret value created
 echo
 exports="${exports}export ${secret_value_var}=\"${secret_value}\"; export ${secret_changed_var}=\"true\"; "

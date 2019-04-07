@@ -16,7 +16,7 @@ echo "TODO check from container registry instead as there might be manual \
 builds also"
 
 check=$( \
-  gcloud -q builds list --limit=1 \
+  gcloud -q builds list \
   --filter="status:SUCCESS AND \
             source.repoSource.repoName~.*${taito_project:?} AND \
             images~.*\\:${image_tag}" \

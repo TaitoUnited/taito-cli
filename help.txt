@@ -338,11 +338,14 @@ PROJECT: BASIC OPERATIONS
     Make sure that everything has been initialized after start (database, etc.).
     Use the '--clean' flag to delete all existing data before init.
 
-  stop[:ENV] [--down]
-    Stop. Stops the application in the defined environment e.g 'taito stop'
+  stop[:ENV]
+    Stops the application in the defined environment e.g 'taito stop'
     or 'taito stop:dev'.
-    .
-    --down: Take stop even further by removing some data and resources.
+
+  down[:ENV]
+    Stops the application in the defined environment e.g 'taito down'
+    or 'taito down:dev'. Take stop even further by removing some data and
+    resources.
 
   info[:ENV]
     Show some useful information about the environment (e.g. shared user

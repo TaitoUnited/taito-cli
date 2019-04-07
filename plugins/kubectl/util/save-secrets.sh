@@ -8,6 +8,7 @@
 script_dir=$(dirname "$0")
 
 # Validate secret values
+# TODO: why here? should be in generate secrets.
 secret_index=0
 secret_names=(${taito_secret_names})
 for secret_name in "${secret_names[@]}"

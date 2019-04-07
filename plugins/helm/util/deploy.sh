@@ -24,8 +24,6 @@ elif [[ ${image} == "--dry-run" ]]; then
 elif [[ -z "${image}" ]]; then
   # Image not given as param and using 'latest' causes problems
   echo "ERROR: image tag not given"
-  echo "Later image tag will be determined automatically but until then"
-  echo "image tag is mandatory"
   exit 1
 fi
 

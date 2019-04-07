@@ -16,12 +16,11 @@ do
      ) && ( \
        [[ ${skip_confirm} == "true" ]] || \
        "${taito_cli_path}/util/confirm-execution.sh" "${secret_name}" "" \
-         "Create new value for secret '${secret_name}' with method: ${secret_method:-}"
+         "Create new value for '${secret_name}' with method ${secret_method:-}"
      )
   then
     if [[ ${skip_confirm} == "true" ]]; then
-      echo "Creating new value for secret '${secret_name}'"
-      echo "with method: ${secret_method:-}"
+      echo "${secret_name} (${secret_method:-}):"
     fi
     . "${taito_plugin_path}/util/create-by-type.sh"
   fi
