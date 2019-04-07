@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 
 name=${1}
+
+export kubectl_skip_restart="true";
 
 if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-save-secrets" "${name}" \
   "Save secrets to Kubernetes"
@@ -12,10 +14,9 @@ then
   "${taito_plugin_path}/util/use-context.sh"
   "${taito_plugin_path}/util/ensure-namespace.sh" "${taito_namespace}"
 
-  export kubectl_skip_restart="true";
-  "${taito_plugin_path}/util/use-context.sh" && \
+  "${taito_plugin_path}/util/use-context.sh"
   "${taito_plugin_path}/util/save-secrets.sh"
-fi && \
+fi
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

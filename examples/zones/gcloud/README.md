@@ -1,6 +1,7 @@
 # gcloud example zone
 
 TODO:
+* Add stackdriver slack channel with terraform?
 * Configure devops project
 * Wait for terraform 0.12 https://releases.hashicorp.com/terraform/ (for each -> taito_zone_authorized_networks)
 * Not supported yet: vertical_pod_autoscaling, kms secrets
