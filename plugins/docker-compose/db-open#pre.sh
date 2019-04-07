@@ -19,7 +19,7 @@ echo "- host: 127.0.0.1"
 echo "- port: ${database_external_port}"
 echo "- database: ${database_name}"
 echo "- username: ${username}"
-echo "- password: ${database_password:-secret}"
+echo "- password: ${database_password:-$taito_default_password}"
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"

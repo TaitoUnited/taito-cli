@@ -12,7 +12,7 @@ secret_names=(${taito_secret_names})
 for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
-  if [[ "${secret_name}" == "${find_secret_name//_/-}" ]]; then
+  if [[ "${secret_name}" == "${find_secret_name}" ]]; then
     found_index=${secret_index}
     break
   fi

@@ -13,7 +13,7 @@ psql_username="${database_name}_app"
 if [[ "${database_username:-}" ]]; then
   psql_username="${database_username}"
 fi
-psql_password="${database_password:-secret}"
+psql_password="${database_password:-$taito_default_password}"
 
 if [[ "${username}" != "" ]]; then
   psql_username="${username}"

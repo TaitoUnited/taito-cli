@@ -34,14 +34,15 @@ do
 
     # TODO remove once all projects have been converted
     secret_property="SECRET"
-    if [[ "${taito_version:-}" -ge "1" ]] || [[ "${secret_name:0:12}" != *"."* ]]; then
+    formatted_secret_name=${secret_name//_/-}
+    if [[ "${taito_version:-}" -ge "1" ]] || [[ "${formatted_secret_name:0:12}" != *"."* ]]; then
       # TODO: ugly hack that currently occurs in 3 places
-      secret_property=$(echo ${secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
-      secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')
+      secret_property=$(echo ${formatted_secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
+      formatted_secret_name=$(echo ${formatted_secret_name} | sed 's/\([^\.]*\).*/\1/')
     fi
 
     if [[ ${secret_method} == "copy/"* ]]; then
-      secret_value=$(kubectl get secret "${secret_name}" -o yaml \
+      secret_value=$(kubectl get secret "${formatted_secret_name}" -o yaml \
         --namespace="${secret_source_namespace}" | grep "^  ${secret_property}" | \
         sed -e "s/^.*: //" | base64 --decode)
     fi
@@ -56,17 +57,17 @@ do
         fi
 
         # Secrets as json
-        json=$(kubectl create secret generic "${secret_name}" \
+        json=$(kubectl create secret generic "${formatted_secret_name}" \
           --namespace="${secret_namespace}" \
           --from-${secret_source}=${secret_property}="${secret_value}" \
           --from-literal=${secret_property}.METHOD="${secret_method}" \
           --dry-run -o json)
 
-        if kubectl get secret "${secret_name}" \
+        if kubectl get secret "${formatted_secret_name}" \
              --namespace="${secret_namespace}" &> /dev/null; then
           # Patch an existing secret
           data_only=$(echo "${json}" | jq '.data')
-          kubectl patch secret "${secret_name}" \
+          kubectl patch secret "${formatted_secret_name}" \
             --namespace="${secret_namespace}" \
             -p "{ \"data\": ${data_only} }"
         else

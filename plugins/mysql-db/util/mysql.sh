@@ -14,7 +14,7 @@ mysql_username="${database_name}a"
 if [[ "${database_username:-}" ]]; then
   mysql_username="${database_username}"
 fi
-mysql_password="${database_password:-secret}"
+mysql_password="${database_password:-$taito_default_password}"
 
 if [[ "${username}" != "" ]]; then
   mysql_username="${username}"

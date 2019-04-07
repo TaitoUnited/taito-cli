@@ -451,5 +451,8 @@ if [[ "${exit_code}" != "0" ]]; then
   echo
 fi
 
+# Remove temporary secrets
+rm -rf ./tmp/secrets &> /dev/null
+
 # Exit
 exit ${exit_code}

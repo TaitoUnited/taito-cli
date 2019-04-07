@@ -12,16 +12,17 @@ do
 
   # TODO remove once all projects have been converted
   secret_property="SECRET"
-  if [[ "${taito_version:-}" -ge "1" ]] || [[ "${secret_name:0:12}" != *"."* ]]; then
+  formatted_secret_name=${secret_name//_/-}
+  if [[ "${taito_version:-}" -ge "1" ]] || [[ "${formatted_secret_name:0:12}" != *"."* ]]; then
     # TODO: ugly hack that currently occurs in 3 places
-    secret_property=$(echo ${secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
-    secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')
+    secret_property=$(echo ${formatted_secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
+    formatted_secret_name=$(echo ${formatted_secret_name} | sed 's/\([^\.]*\).*/\1/')
   fi
 
   if [[ ${secret_method:?} != "read/"* ]]; then
     (
       ${taito_setv:?}
-      kubectl patch secret "${secret_name}" \
+      kubectl patch secret "${formatted_secret_name}" \
         --namespace="${secret_namespace}" \
         -p "{ \"data\": { \"${secret_property}\": null, \"${secret_property}.METHOD\": null } }"
     )

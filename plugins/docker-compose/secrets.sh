@@ -2,6 +2,7 @@
 : "${taito_util_path:?}"
 : "${taito_project_path:?}"
 : "${taito_setv:?}"
+: "${taito_env:?}"
 
 flag=${1}
 
@@ -18,7 +19,7 @@ fi
 . "${taito_plugin_path}/util/get-secrets.sh" && \
 
 # Print secret values
-echo 'Secrets in ./secrets:' && \
+echo "Secrets in ./secrets/${taito_env}:" && \
 echo && \
 rm taito-secrets.sh &> /dev/null || : && \
 secret_index=0 && \

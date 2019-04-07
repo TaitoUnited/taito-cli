@@ -1,9 +1,10 @@
 #!/bin/bash
 : "${taito_project_path:?}"
+: "${taito_env:?}"
 
 # Read secret values from ./secrets
 secret_index=0
-secret_names=(${taito_unformatted_secret_names})
+secret_names=(${taito_secret_names})
 for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
@@ -17,10 +18,10 @@ do
   fi
 
   echo "+ reading ${secret_name} from " \
-    "${taito_project_path}/secrets/${secret_name}.${secret_property:?}" > \
+    "${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}" > \
     "${taito_vout:?}"
 
-  file="${taito_project_path}/secrets/${secret_name}.${secret_property:?}"
+  file="${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
   if [[ "${secret_method}" == "random" ]] || \
      [[ "${secret_method}" == "manual" ]]; then
     secret_value=$(cat "${file}" 2> /dev/null)

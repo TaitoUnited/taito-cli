@@ -10,8 +10,13 @@ flag=${1}
 kubectl get secrets && \
 echo && \
 
+save_to_disk=false
+if [[ "${flag}" == "--save-as-taito-secrets" ]]; then
+  save_to_disk=true
+fi
+
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/get-secrets.sh" && \
+. "${taito_plugin_path}/util/get-secrets.sh" "${save_to_disk}" && \
 
 # Print secret values
 echo 'Showing secret values from Kubernetes:' && \

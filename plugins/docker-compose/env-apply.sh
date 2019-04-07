@@ -2,13 +2,14 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
+: "${taito_env:?}"
 
 name=${1}
 
 export docker_compose_skip_restart="true"
 
 if "${taito_cli_path}/util/confirm-execution.sh" "docker-save-secrets" "${name}" \
-  "Save secrets to ./secrets"
+  "Save secrets to ./secrets/${taito_env}"
 then
   "${taito_plugin_path}/util/save-secrets.sh"
 fi

@@ -8,7 +8,7 @@
 name=${1}
 
 if "${taito_cli_path}/util/confirm-execution.sh" "docker-delete-secrets" "${name}" \
-  "Delete secrets of from ./secrets"
+  "Delete secrets of from ./secrets/${taito_env}"
 then
   "${taito_plugin_path}/util/delete-secrets.sh"
 fi && \

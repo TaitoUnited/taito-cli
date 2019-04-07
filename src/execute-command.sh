@@ -138,6 +138,7 @@ if [[ "${command}" == "--"* ]]; then
 fi
 
 # Export some variables to be used in configs and command execution
+export taito_default_password="${taito_default_password:-secret}"
 export taito_continue="true"
 export taito_skip_override="${skip_override}"
 export taito_command="${command}"
@@ -357,7 +358,6 @@ fi
 # Create environment variables for secrets
 secret_index=0
 export taito_secret_names=""
-export taito_unformatted_secret_names=""
 secret_exports=""
 secrets=("${taito_secrets}")
 for secret in ${secrets[@]}
@@ -373,8 +373,6 @@ do
   # Create env var name by replacing illegal characters
   secret_suffix="${secret##*:}"
   secret_name="${secret_suffix%/*}"
-  secret_unformatted_name="${secret_name}"
-  secret_name="${secret_name//_/-}"
   secret_method="${secret%:*}"
   if [[ "${secret_suffix}" == *"/"* ]]; then
     secret_namespace="${secret_suffix##*/}"
@@ -382,7 +380,6 @@ do
     secret_namespace="${taito_namespace:?}"
   fi
   taito_secret_names="${taito_secret_names} ${secret_name}"
-  taito_unformatted_secret_names="${taito_unformatted_secret_names} ${secret_unformatted_name}"
   secret_exports="${secret_exports}export \
     secret_name_${secret_index}='${secret_name}'; "
   secret_exports="${secret_exports}export \

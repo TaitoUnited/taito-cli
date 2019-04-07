@@ -86,9 +86,9 @@ if [[ -z "${secret_value}" ]]; then
       ;;
     htpasswd|htpasswd-plain)
       mkdir -p ./tmp
-      secret_value="secret_file:./tmp/${secret_name}"
-      rm -f "${secret_value}"
-      touch "${secret_value}"
+      file="./tmp/${secret_name}"
+      rm -f "${file}"
+      touch "${file}"
       echo
       echo "BASIC AUTH CREDENTIALS"
       echo
@@ -108,19 +108,17 @@ if [[ -z "${secret_value}" ]]; then
       fi
       while echo && echo "username: " && read -r username && [[ ${username} ]]
       do
-        until htpasswd ${htpasswd_options} "${secret_value}" "${username}"; do :; done
+        until htpasswd ${htpasswd_options} "${file}" "${username}"; do :; done
       done
       if [[ "${secret_method}" == "htpasswd-plain" ]]; then
-        sed -i -- "s/:/:{PLAIN}/" "${secret_value}"
+        sed -i -- "s/:/:{PLAIN}/" "${file}"
       fi
+      secret_value="secret_file:./tmp/${file}"
       ;;
     random)
-      if [[ "${taito_env}" == "local" ]] && [[ "${secret_name}" == *"-db-"* ]]; then
-        echo "Using 'secret' as random value for local environment"
-        secret_value=secret
-      elif [[ "${taito_env}" == "local" ]]; then
-        echo "Using 'secret1234' as random value for local environment"
-        secret_value=secret1234
+      if [[ "${taito_env}" == "local" ]]; then
+        echo "Using '${taito_default_password:?}' as random value for local environment"
+        secret_value="${taito_default_password}"
       else
         # TODO better tool for this?
         secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')

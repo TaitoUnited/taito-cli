@@ -28,7 +28,7 @@ fi
   if [[ "${database_username:-}" ]]; then
     database_user="${database_username}"
   fi
-  sqitch_password="${database_password:-secret}"
+  sqitch_password="${database_password:-$taito_default_password}"
 
   if [[ "${taito_env}" != "local" ]];then
     # TODO do not reference postgres plugin util directly
