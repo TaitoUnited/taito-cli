@@ -14,8 +14,10 @@ secret_name=${!secret_name_var}
 
 secret_value_var="secret_value_${secret_index}"
 secret_value=${!secret_value_var}
-
 secret_value_var2="secret_value_${secret_name//[-.]/_}"
+
+secret_default_value_var="default_secret_value_${secret_index}"
+secret_default_value=${!secret_default_value_var}
 
 secret_method_var="secret_method_${secret_index}"
 secret_method=${!secret_method_var}

@@ -4,7 +4,8 @@ TAITO-CLI
 QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
-    install                  # Install libraries on host
+    env apply                # Create local environment
+    env apply --clean        # Clean and create local environment
     (link)                   # Link libraries (if not linked automatically)
     (build)                  # Build project (if not built automatically)
     start                    # Start containers / watch / application
