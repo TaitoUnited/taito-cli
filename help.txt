@@ -106,11 +106,15 @@ QUICK EXAMPLES
     feat merge            # Merge current feature branch to the original
     feat pr               # Create a pull-req for the current feature branch
     feat squash           # Merge current feature branch as a single commit
+    pull                  # Pull changes
+    push                  # Push changes
+    stage                 # Stage all changes
+    unstage               # Unstage all changes
+    discard               # Discard unstaged changes
+    commit                # Commit staged changes
     commit revert         # Revert the latest commit by creating a new commit
     commit undo           # Undo latest commit from local and remote branch
     commit erase          # Erase latest commit from loc/rem branch and files
-    pull                  # Pull changes (e.g. 'git pull --rebase --autostash')
-    push                  # Push changes (e.g. 'git push')
 
   DEPLOYMENT OPERATIONS
     deployment start:dev          # Start ci build for dev environment manually
@@ -597,6 +601,24 @@ PROJECT: VERSION CONTROL OPERATIONS
     deletes the feature branch. The dev branch is used as a default env
     branch (destination for merge). Use this command for a short-lived feature
     branch with a cohesive set of changes.
+
+  pull
+    Pull changes
+
+  push
+    Push changes
+
+  stage
+    Stage all changes
+
+  unstage
+    Unstage all changes
+
+  discard
+    Discard unstaged changes
+
+  commit
+    Commit staged changes
 
   commit revert
     Revert the latest commit by creating a new commit.

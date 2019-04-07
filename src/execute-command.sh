@@ -387,6 +387,9 @@ done
 
 eval "$secret_exports"
 
+# NOTE: For backwards compatibility (git plugin was renamed -> deprecated)
+export taito_plugins="${taito_plugins// git / git-global }"
+
 # Determine enabled plugins
 enabled_plugins=""
 plugins_string=$(echo "${taito_global_plugins:-} ${taito_plugins:-} basic " \
