@@ -5,6 +5,7 @@ requested_name=${2}
 prompt=${3}
 
 if [[ "${requested_name}" == "" ]] || \
+   [[ "${requested_name}" == "-"* ]] || \
    [[ "${requested_name}" == "${current_name}" ]]; then
   if [[ "${prompt}" ]]; then
     echo "${prompt} (Y/n)?"

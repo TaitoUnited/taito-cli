@@ -6,7 +6,7 @@
 flag=${1}
 
 echo "Secrets in docker-compose.yaml:"
-(${taito_setv}; cat docker-compose.yaml | grep -i "SECRET\|PASSWORD\|KEY\|ID")
+(${taito_setv}; cat docker-compose.yaml | grep -i "SECRET:\|PASSWORD:\|KEY:\|ID:")
 echo
 
 if [[ -f ./taito-run-env.sh ]]; then
@@ -18,7 +18,7 @@ fi
 . "${taito_plugin_path}/util/get-secrets.sh" && \
 
 # Print secret values
-echo 'Showing in ./secrets:' && \
+echo 'Secrets in ./secrets:' && \
 echo && \
 rm taito-secrets.sh &> /dev/null || : && \
 secret_index=0 && \

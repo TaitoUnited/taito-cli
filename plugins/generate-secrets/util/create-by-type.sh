@@ -104,9 +104,12 @@ case "${secret_method}" in
     fi
     ;;
   random)
-    if [[ "${taito_env}" == "local" ]]; then
+    if [[ "${taito_env}" == "local" ]] && [[ "${secret_name}" == *"-db-"* ]]; then
       echo "Using 'secret' as random value for local environment"
       secret_value=secret
+    elif [[ "${taito_env}" == "local" ]]; then
+      echo "Using 'secret1234' as random value for local environment"
+      secret_value=secret1234
     else
       # TODO better tool for this?
       secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')

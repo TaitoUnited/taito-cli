@@ -17,11 +17,6 @@ then
   echo "exists and has '${taito_resource_namespace_id}' as an id."
   echo "You also might need to enable billing for it."
   echo
-  if [[ "${taito_provider}" == "gcloud" ]]; then
-    echo "NOTE: Also make sure that the Compute Engine API is enabled for"
-    echo "'${taito_resource_namespace}' project before continuing"
-  fi
-  echo
   echo "Continue (Y/n)?"
   read -r confirm
   if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
