@@ -32,7 +32,7 @@ do
     echo "export ${secret_value_var}=\"${secret_value}\"; " >> taito-secrets.sh
   else
     echo "Secret ${secret_name}:"
-    echo "${secret_value}"
+    echo "${secret_value:-HIDDEN}"
     echo
   fi
   secret_index=$((${secret_index}+1))
