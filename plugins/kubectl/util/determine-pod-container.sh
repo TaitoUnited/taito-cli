@@ -8,12 +8,20 @@ if [[ "${taito_version:-}" -ge "1" ]]; then
   prefix="${taito_project}-${taito_target_env}"
 fi
 
-if [[ ${taito_target} != *"-"* ]]; then
-  # Short pod name was given. Determine the full pod name.
-  pod=$(kubectl get pods | grep "${prefix}" | \
+function get_pods() {
+  kubectl get pods ${1} | \
+    grep "${prefix}" | \
     sed -e "s/${prefix}-//" | \
     grep "${taito_target}" | \
-    head -n1 | awk "{print \"${prefix}-\" \$1;}")
+    head -n1 | awk "{print \"${prefix}-\" \$1;}"
+}
+
+if [[ ${taito_target} != *"-"* ]]; then
+  # Short pod name was given. Determine the full pod name.
+  pod=$(get_pods "--field-selector=status.phase=Running")
+  if [[ ! ${pod} ]]; then
+    pod=$(get_pods)
+  fi
 fi
 
 if [[ -z "${container}" ]] || \
