@@ -50,5 +50,10 @@ else
   (${taito_setv:?}; kubectl top pod "${params[@]}")
 fi
 
+if [[ "${switch}" != "--all" ]]; then
+  echo
+  echo "NOTE: See more info with '--all'"
+fi
+
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"
