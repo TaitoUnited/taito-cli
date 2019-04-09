@@ -21,9 +21,9 @@ Table of contents:
 
 ## Quick start
 
-Install linters and some libraries on host for code autocompletion purposes (add `--clean` to make a clean reinstall):
+Create local environment by installing some libraries and generating secrets (add `--clean` to recreate clean environment):
 
-    taito install
+    taito env apply
 
 Start containers (add `--clean` to make a clean rebuild, and to discard all data and db tables):
 
@@ -177,7 +177,7 @@ Remove static site generators that you do not use from `www/install.sh`.
 
 Start containers, and start a shell inside the www Docker container:
 
-    taito install
+    taito env apply
     taito start
     taito shell:www
 

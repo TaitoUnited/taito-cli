@@ -45,7 +45,7 @@ if [[ "${task_postinstall}" ]]; then
       echo \"Install all libraries on host for autocompletion purposes (Y/n)?\"
       read -r confirm
     fi
-    if [[ ! ${do_confirm} ]] || [[ \${confirm} =~ ^[Yy]$ ]]; then
+    if [[ ! ${do_confirm} ]] || [[ \${confirm} =~ ^[Yy]*$ ]]; then
       echo \"Running 'npm run ${task_postinstall}'\"
       npm run ${task_postinstall}
     fi

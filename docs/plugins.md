@@ -34,7 +34,7 @@ Plugins:
 Build tool plugins typically implement the following:
 
 * Pre-hook for running user defined scripts with taito-cli (e.g. scripts in *package.json*, *Makefile* or *Pipfile*).
-* `taito install`: Install libraries and setup git hooks.
+* `taito env apply`: Install libraries and setup git hooks.
 * Participate in the CI/CD process by implementing some of the taito commands.
 
 Plugins:
