@@ -24,21 +24,32 @@ fi && \
 
 # Run postinstall script: install-all, install-ci or install-dev
 task_postinstall=""
+do_confirm=false
 task_install_ci_exists="$(npm run | grep 'install-ci$')"
 task_install_dev_exists="$(npm run | grep 'install-dev$')"
 if [[ "${switches}" == *" --all "* ]]; then
   task_postinstall="install-all"
+  do_confirm=true
 elif [[ "${taito_mode:-}" == "ci" ]] && [[ "${task_install_ci_exists:-}" ]]; then
   task_postinstall="install-ci"
 elif [[ "${taito_mode:-}" != "ci" ]] && [[ "${task_install_dev_exists:-}" ]]; then
   task_postinstall="install-dev"
+  do_confirm=true
 fi && \
 
 if [[ "${task_postinstall}" ]]; then
   # TODO add '--python=${npm_python}' for npm run?
-  "${taito_util_path}/execute-on-host-fg.sh" "\
-    echo \"# Running 'npm run ${task_postinstall}'\" && \
-    npm run ${task_postinstall}"
+  "${taito_util_path}/execute-on-host-fg.sh" "
+    if [[ ${do_confirm} ]]; then
+      echo
+      echo \"Install all libraries on host for autocompletion purposes (Y/n)?\"
+      read -r confirm
+    fi
+    if [[ ! ${do_confirm} ]] || [[ \${confirm} =~ ^[Yy]$ ]]; then
+      echo \"Running 'npm run ${task_postinstall}'\"
+      npm run ${task_postinstall}
+    fi
+  "
 fi && \
 
 # Call next command on command chain
