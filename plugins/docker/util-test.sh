@@ -99,6 +99,13 @@ template="echo && echo '### TEST ${taito_target}:${taito_env} suite=SUITE' && ${
 # Generate commands to be run by traversing all test suites
 commands="" && \
 suites=( $(grep "${suite_filter}" "./${dir}/test-suites" 2> /dev/null) ) && \
+if [[ ${#suites[@]} == 0 ]]; then
+  suites=( $(cat "./${dir}/test-suites" | head -1) )
+  echo
+  echo "WARN: No suite found with '${suite_filter}' filter.'."
+  echo "Running the default test suite: ${suites[0]}"
+  echo
+fi
 for suite in "${suites[@]}"
 do
   commands="${commands} && ${template//SUITE/$suite}"
