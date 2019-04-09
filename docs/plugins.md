@@ -186,6 +186,20 @@ You can open monitoring systems on your browser with the following commands, if 
 * `taito open errors`: Error tracking.
 * `taito open feedback`: User feedback.
 
+## Password management
+
+Password management plugins are meant for managing commonly shared passwords. Typically they implement the following commands:
+
+* `taito passwd share`: Share a password with anymore (e.g. with a one-time magic link).
+* `taito passwd list`: List passwords.
+* `taito passwd get`: Get password.
+* `taito passwd set`: Set password.
+* `taito passwd rotate`: Rotate passwords.
+
+Plugins:
+
+* [gcloud-passwd-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-passwd-global/README.md):
+
 ## Secret management
 
 Secret management plugins typically implement the following commands:
@@ -193,17 +207,17 @@ Secret management plugins typically implement the following commands:
 * `taito env apply`: Create and store secrets on `env apply`.
 * `taito env rotate`: Create and store secrets on `env rotate`.
 * `taito secrets`: Load and show the secrets.
-* `taito passwd *`: Manage commonly shared passwords.
 * Pre-hook for reading a secret on demand.
 
 Plugins:
 
+* [default-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/default-secrets/README.md): Uses stag environent secrets as default values for prod secrets, prod environent secrets as default values for stag secrets, and dev secrets as default values for all other environments.
 * [generate-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/generate-secrets/README.md): Generates secret values on demand either by generating random values or by querying secret details from user.
-* [gcloud-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-secrets/README.md): Uses Google Cloud KMS and Google Cloud Storage to store secrets.
-* [kube-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kube-secrets/README.md): Uses Kubernetes to store secrets.
+* [gcloud-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-secrets/README.md): Uses Google Cloud KMS and Google Cloud Storage to store or backup secrets.
+* [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kube-secrets/README.md): Uses Kubernetes to store secrets.
 * [vault-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/vault-secrets/README.md): Uses [Vault](https://www.vaultproject.io/) to manage secrets.
 
-> TIP: You can enable multiple secret plugins at the same time. For example, enable the kube-secrets plugin so that secrets are available for Kubernetes deployments. Additionally, enable the gcloud-secrets plugin so that at least non-random secrets will be saved to a storage bucket just in case you accidentally delete secrets from Kubernetes.
+> TIP: You can enable multiple secret plugins at the same time. For example, enable the kubectl plugin so that secrets are available for Kubernetes deployments. Additionally, enable the gcloud-secrets plugin so that at least non-random secrets will be saved to a storage bucket just in case you accidentally delete secrets from Kubernetes.
 
 ## Services
 
