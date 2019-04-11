@@ -4,17 +4,24 @@
 : "${taito_command:?}"
 : "${taito_env:?}"
 
-# NOTE: ci-release is deprecated
-if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
-   [[ ${taito_commands_only_chain:-} == *"artifact-release"* ]] || \
-   [[ ${taito_commands_only_chain:-} == *"ci-release"* ]] || \
+# TODO: tighter filter
+secret_filter=
+if [[ ${taito_command} == "artifact-prepare" ]] || \
+   [[ ${taito_command} == "artifact-release" ]] || \
+   [[ ${taito_command} == "ci-release" ]]; then
+  secret_filter="git"
+elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
    [[ ${taito_command} == "test" ]]; then
-  # TODO fetch db secrets only? does artifact-release still require secrets?
+  secret_filter="db"
+fi
+
+# NOTE: ci-release is deprecated
+if [[ ${secret_filter} ]]; then
   echo
   echo "### kubectl/pre: Getting secrets from Kubernetes"
-  "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
+  "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/get-secrets.sh" "true" "-db-"
+  . "${taito_plugin_path}/util/get-secrets.sh" "true" ${secret_filter}
 fi
 
 # Call next command on command chain

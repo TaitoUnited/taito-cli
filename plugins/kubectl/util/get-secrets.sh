@@ -12,13 +12,8 @@ for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
 
-  # TODO: remove complexity caused by github release token
   if [[ -n ${filter} ]] && \
-     [[ "${secret_name}" != *"${filter}"* ]] && ( \
-       [[ "${taito_mode:-}" != "ci" ]] || \
-       [[ "${taito_env}" != "prod" ]] || \
-       [[ "${secret_method:?}" != "read/"* ]]
-     ); then
+     [[ "${secret_name}" != *"${filter}"* ]]; then
     secret_index=$((${secret_index}+1))
     continue
   fi

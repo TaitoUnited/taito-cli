@@ -10,6 +10,9 @@ fi
 if [[ -z "${secret_value_github_buildbot_token:-}" ]]; then
   secret_value_github_buildbot_token="${secret_value_ext_github_build:-}"
 fi
+if [[ $secret_value_github_buildbot_token == "secret_file:"* ]]; then
+  secret_value_github_buildbot_token="$(cat ${secret_value_github_buildbot_token#secret_file:})"
+fi
 
 # Determine npm command based on environment
 command=release-post:${taito_target_env}
