@@ -125,10 +125,6 @@ else
         --tag "${image_latest}" \
         "${build_context}"
     )
-  fi && \
-  if [[ "${taito_mode:-}" == "ci" ]]; then
-    echo "Docker images after build:" && \
-    docker images
   fi
 fi && \
 

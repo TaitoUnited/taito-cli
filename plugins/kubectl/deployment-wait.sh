@@ -11,7 +11,7 @@ do
   echo "Waiting until all containers have been deployed"
   sleep 5
 done
-sleep 5
+sleep 15
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

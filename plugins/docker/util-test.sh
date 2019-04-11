@@ -13,11 +13,6 @@ test_filter="${2}"
 echo "# Running tests for ${dir} in ${taito_env} environment"
 echo
 
-if [[ "${taito_mode:-}" == "ci" ]]; then
-  echo "Docker images before test:"
-  docker images
-fi
-
 # Determine command to be run on init phase
 init_command="echo 'Not running init (ci_exec_test_init=false)'" && \
 if [[ "${ci_exec_test_init:-}" == "true" ]]; then
@@ -89,6 +84,7 @@ if [[ "${taito_env}" != "local" ]]; then
   # NOTE: Quick hack for gcloud builder -> run tests directly inside taito-cli because
   # sql proxy fails to connect in docker-compose
   if [[ "${taito_plugins}" == *"gcloud-builder"* ]] && [[ "${taito_mode:-}" == "ci" ]]; then
+    docker_compose="false"
     compose_cmd="${export_env_vars} cd ./${dir} && npm install && ./test.sh SUITE ${test_filter}"
   fi
 fi && \
