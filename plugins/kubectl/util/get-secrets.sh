@@ -1,6 +1,7 @@
 #!/bin/bash
 : "${taito_project_path:?}"
 : "${taito_env:?}"
+: "${taito_vout:?}"
 
 save_to_disk=$1
 filter=$2
@@ -28,7 +29,7 @@ do
   fi
 
   echo "+ kubectl get secret ${formatted_secret_name}" \
-    "--namespace=${secret_source_namespace} ..." > "${taito_vout:?}"
+    "--namespace=${secret_source_namespace} ..." > "${taito_vout}"
 
   secret_value=""
   base64=$(kubectl get secret "${formatted_secret_name}" -o yaml \
@@ -39,6 +40,7 @@ do
   if [[ "${save_to_disk}" == "true" ]]; then
     mkdir -p "${taito_project_path}/tmp/secrets/${taito_env}"
     file="${taito_project_path}/tmp/secrets/${taito_env}/${secret_name}"
+    echo "Saving secret to ${file}" > "${taito_vout}"
     echo "${base64}" | base64 --decode > "${file}"
     # TODO: save to a separate env var (secret_value should always be value)
     secret_value="secret_file:${file}"
