@@ -42,7 +42,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
 
     echo "- Running npm script ${command}" && \
     NPM_TOKEN=none GH_TOKEN=${secret_value_github_buildbot_token} \
-      npm run "${command}" -- "${@}" > ./release-output || \
+      npm run "${command}" > ./release-output || \
       (cat ./release-output && echo ERROR && exit 1) && \
     cat ./release-output && \
 

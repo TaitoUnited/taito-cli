@@ -25,7 +25,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     cd "${taito_project_path}/release" || exit 1
     ${taito_setv:?}
     NPM_TOKEN=none GH_TOKEN=${secret_value_github_buildbot_token} \
-      npm run "${command}" -- "${@}" && \
+      npm run "${command}" && \
     rm -f .npmrc
   )
 fi && \
