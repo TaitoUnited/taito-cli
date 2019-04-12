@@ -47,14 +47,8 @@ do
   fi
 done
 
-# CI/CD runs taito_impl directly so we need to print this here also
-if [[ "${taito_mode:-}" == "ci" ]] && [[ "${continue}" == "false" ]]; then
-  echo "Taito-cli Copyright (C) 2017 Taito United"
-  echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
-fi
-
 # Execute some additional check only once in a while
-if (( RANDOM % 4 == 0 )); then
+if (( RANDOM % 4 == 0 )) && [[ "${taito_mode:-}" != "ci" ]]; then
   if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
     echo
     echo "--------------------------------------------------------"

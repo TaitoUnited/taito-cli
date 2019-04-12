@@ -5,6 +5,7 @@
 : "${taito_env:?}"
 
 # TODO: tighter filter
+# NOTE: ci-release is deprecated
 secret_filter=
 if [[ ${taito_command} == "artifact-prepare" ]] || \
    [[ ${taito_command} == "artifact-release" ]] || \
@@ -15,7 +16,6 @@ elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
   secret_filter="db"
 fi
 
-# NOTE: ci-release is deprecated
 if [[ ${secret_filter} ]]; then
   echo
   echo "### kubectl/pre: Getting secrets from Kubernetes"
