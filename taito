@@ -12,6 +12,7 @@ upgrade=false
 skip_rest=false
 taito_organization_param=""
 project=""
+user_mount_options=""
 options=()
 args=()
 while [[ $# -gt 0 ]]
@@ -19,6 +20,11 @@ do
   key="$1"
   if [[ ${skip_rest} == false ]]; then
     case $key in
+        -m|--mount)
+        shift
+        user_mount_options="${user_mount_options} -v $1"
+        shift
+        ;;
         -d|--dev)
         mode="dev"
         shift
@@ -394,6 +400,7 @@ docker_command="
     -w /project
     ${docker_user_opts}
     ${proxy_flags}
+    ${user_mount_options}
     ${extension_mount_flags}
     ${link_flags}
     ${misc_flags}

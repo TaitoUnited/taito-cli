@@ -235,6 +235,10 @@ OPTIONS
   --organization ORG, -o ORG
     Use taito configuration overrides defined in '~/.taito/taito-config-ORG.sh'.
 
+  --mount HOST_PATH:CONTAINER_PATH, -m HOST_PATH:CONTAINER_PATH
+    Mount directory inside Taito CLI container. For example:
+      taito -m ~/myfolder:/myfolder shell
+
   --verbose, -v
     Show commands that plugins execute.
 
