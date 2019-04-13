@@ -440,7 +440,7 @@ if [[ " ${params[@]} " == *" -h "* ]] || \
   fi
   ${docker_command} "${params[@]}" | \
     tr '\r\n' '\275\276' | ${ctrl_filter} | \
-    tr '\275\276' '\r\n' | tail -n +3 | less -XFR
+    tr '\275\276' '\r\n' | tail -n +3 | less -XFRS
 else
   ${docker_command} "${params[@]}"
 fi

@@ -4,86 +4,87 @@ TAITO-CLI
 QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
-    env apply                # Create local environment
-    env apply --clean        # Clean and create local environment
-    (link)                   # Link libraries (if not linked automatically)
-    (build)                  # Build project (if not built automatically)
-    start                    # Start containers / watch / application
-    restart                  # Restart containers / watch / application
-    restart:client           # Restart client container
-    init                     # Initialize databases and storages
-    init --clean             # Clean and reinitialize databases and storages
-    (run)                    # Run the application (if not run autom. by start)
-    open client              # Open application GUI on browser
-    open admin               # Open admin GUI on browser
-    open builds              # Open build logs on browser
-    open project             # Open project management on browser
-    open -h                  # List all links
-    info                     # Show info required for logging in to app
-    lint                     # Lint code
-    unit                     # Run all unit tests
-    unit:client              # Run all unit tests of client container
-    unit:client car          # Run the 'car' unit test of client container
-    test                     # Run all integration and e2e tests
-    test:server              # Run all integration and e2e tests of server c...
-    test:server trip car     # Run the 'car' test of 'trip' test suite on...
-    db connect               # Access default database from command line
-    db connect:reportdb      # Access report database from command line
-    db proxy                 # Show db conn details. Start a proxy if required.
-    db add: role_enum        # Add a migration for default database
-    db add:report role_enum  # Add a migration for report database
-    db deploy                # Deploy migrations to default database
-    db import: ./file.sql    # Import a file to default database
-    workspace kill           # Kill all running processes (e.g. containers)
-    workspace clean          # Remove all unused build artifacts (e.g. images)
-    shell:server             # Start shell inside a container named 'server'
-    exec:server echo foo     # Execute a command in a container named 'server'
-    copy to:server ./loc /sr # Copy a file/folder to server container
-    copy from:server /sr .   # Copy a file/folder from server container
-    sync to:server ./loc /sr # Sync folder to server container
-    sync from:server /sr .   # Sync folder from server container
-    commit:client            # Commit changes to client container image
-    clean:server             # Clean server container by deleting it
-    docs                     # Generate documentation
-    check deps               # Check dependencies
-    check deps:worker        # Check dependencies of the worker
-    check code               # Check code quality
-    check code:client        # Check code quality of the client
-    check size               # Check size
-    check size:client        # Check size of the client
+    env apply                          # Create local environment
+    env apply --clean                  # Clean and create local environment
+    (link)                             # Link libraries (if not linked automatically)
+    (build)                            # Build project (if not built automatically)
+    start                              # Start containers / watch / application
+    restart                            # Restart containers / watch / application
+    restart:client                     # Restart client container
+    init                               # Initialize databases and storages
+    init --clean                       # Clean and reinitialize databases and storages
+    (run)                              # Run the application (if not run autom. by start)
+    open client                        # Open application GUI on browser
+    open admin                         # Open admin GUI on browser
+    open builds                        # Open build logs on browser
+    open project                       # Open project management on browser
+    open -h                            # List all links
+    info                               # Show info required for logging in to app
+    lint                               # Lint code
+    unit                               # Run all unit tests
+    unit:client                        # Run all unit tests of client container
+    unit:client car                    # Run the 'car' unit test of client container
+    test                               # Run all integration and e2e tests
+    test:server                        # Run all integration and e2e tests of server
+    test:server trip car               # Run the 'car' test of 'trip' test suite
+    db connect                         # Access default database from command line
+    db connect:reportdb                # Access report database from command line
+    db proxy                           # Show db conn details. Start a proxy if required.
+    db proxy:reportdb                  # Show db conn details for report db. Start a proxy if required.
+    db add: role_enum                  # Add a migration for default database
+    db add:report role_enum            # Add a migration for report database
+    db deploy                          # Deploy migrations to default database
+    db import: ./file.sql              # Import a file to default database
+    workspace kill                     # Kill all running processes (e.g. containers)
+    workspace clean                    # Remove all unused build artifacts (e.g. images)
+    shell:server                       # Start shell inside a container named 'server'
+    exec:server echo foo               # Execute a command in a container named 'server'
+    copy to:server ./loc /sr           # Copy a file/folder to server container
+    copy from:server /sr .             # Copy a file/folder from server container
+    sync to:server ./loc /sr           # Sync folder to server container
+    sync from:server /sr .             # Sync folder from server container
+    commit:client                      # Commit changes to client container image
+    clean:server                       # Clean server container by deleting it
+    docs                               # Generate documentation
+    check deps                         # Check dependencies
+    check deps:worker                  # Check dependencies of the worker
+    check code                         # Check code quality
+    check code:client                  # Check code quality of the client
+    check size                         # Check size
+    check size:client                  # Check size of the client
 
   ACCESSING A REMOTE ENVIRONMENT
-    open client:dev          # Open application GUI on browser
-    open admin:dev           # Open admin GUI on browser
-    info:dev                 # Show information required for signing in
-    status:dev               # Show application status
-    secrets:dev              # Show secrets
-    test:dev                 # Run integration/e2e tests against dev env
-    logs:worker:dev          # Tail logs of a container named 'worker'
-    kill:worker:dev          # Kill a container named 'worker'
-    shell:server:dev         # Start a shell on a container named 'server'
-    exec:server:dev echo foo # Execute a command in a container named 'server'
-    open logs:dev            # Open logs on browser (e.g. Stackdriver or EFK)
-    open storage:dev         # Open storage bucket on browser
-    init:dev --clean         # Reinitialize databases and storages
+    open client:dev                    # Open application GUI on browser
+    open admin:dev                     # Open admin GUI on browser
+    info:dev                           # Show information required for signing in
+    status:dev                         # Show application status
+    secrets:dev                        # Show secrets
+    test:dev                           # Run integration/e2e tests against dev env
+    logs:worker:dev                    # Tail logs of a container named 'worker'
+    kill:worker:dev                    # Kill a container named 'worker'
+    shell:server:dev                   # Start a shell on a container named 'server'
+    exec:server:dev echo foo           # Execute a command in a container named 'server'
+    open logs:dev                      # Open logs on browser (e.g. Stackdriver or EFK)
+    open storage:dev                   # Open storage bucket on browser
+    init:dev --clean                   # Reinitialize databases and storages
     copy to:server:dev ./file /app     # Copy a file/folder to server container
     copy from:server:dev /app/file .   # Copy a file/folder from server containr
-    sync to:server:dev ./asdf /app     # Sync folder to server container
-    sync from:server:dev /app/asdf .   # Sync folder from server container
+    sync to:server:dev ./dir /app      # Sync folder to server container
+    sync from:server:dev /app/dir .    # Sync folder from server container
 
   DATABASE OPERATIONS
-    db connect:dev           # Access default database on command line
-    db connect:reportdb:dev  # Access report database on command line
-    db proxy:dev             # Start a database proxy for a GUI tool access
-    db import:dev ./file.sql # Import a file to default database
-    db dump:dev ./dump.sql   # Dump default database to a file
-    db log:dev               # View change log of default database
-    db recreate:dev          # Recreate the default database
-    db deploy:dev            # Deploy changes to default database
-    db rebase:dev            # Rebase a database (db revert + db deploy)
-    db rebase:dev b91b7b2    # Rebase a database (db revert + db deploy)
-    db revert:dev b91b7b2    # Revert a database
-    db diff:dev test         # Compare db schemas of dev and test environments
+    db connect:dev                     # Access default database on command line
+    db connect:reportdb:dev            # Access report database on command line
+    db proxy:dev                       # Start a database proxy for a GUI tool access
+    db import:dev ./file.sql           # Import a file to default database
+    db dump:dev ./dump.sql             # Dump default database to a file
+    db log:dev                         # View change log of default database
+    db recreate:dev                    # Recreate the default database
+    db deploy:dev                      # Deploy changes to default database
+    db rebase:dev                      # Rebase a database (db revert + db deploy)
+    db rebase:dev b91b7b2              # Rebase a database (db revert + db deploy)
+    db revert:dev b91b7b2              # Revert a database
+    db diff:dev test                   # Compare db schemas of dev and test environments
     db copy between:test:dev           # Copy test database to dev
     db copyquick between:test:dev      # Copy test database to dev (WARNING!!)
 
@@ -96,84 +97,84 @@ QUICK EXAMPLES
     storage sync to:dev ./sour /dest   # Sync files to dev bucket
 
   VERSION CONTROL
-    conventions           # Show version control conventions
-    env list              # List all environment branches
-    env:dev               # Switch to the dev environment branch
-    env merge             # Merge current env branch to the next env branch
-    env merge:dev stag    # Merge changes between envs: dev -> ... -> stag
-    feat list             # List all feature branches
-    feat: pricing         # Switch to feature/pricing (create if not exists)
-    feat rebase           # Rebase current feature branch with the original
-    feat merge            # Merge current feature branch to the original
-    feat pr               # Create a pull-req for the current feature branch
-    feat squash           # Merge current feature branch as a single commit
-    pull                  # Pull changes
-    push                  # Push changes
-    stage                 # Stage all changes
-    unstage               # Unstage all changes
-    discard               # Discard unstaged changes
-    commit                # Commit staged changes
-    commit revert         # Revert the latest commit by creating a new commit
-    commit undo           # Undo latest commit from local and remote branch
-    commit erase          # Erase latest commit from loc/rem branch and files
+    conventions                        # Show version control conventions
+    env list                           # List all environment branches
+    env:dev                            # Switch to the dev environment branch
+    env merge                          # Merge current env branch to the next env branch
+    env merge:dev stag                 # Merge changes between envs: dev -> ... -> stag
+    feat list                          # List all feature branches
+    feat: pricing                      # Switch to feature/pricing (create if not exists)
+    feat rebase                        # Rebase current feature branch with the original
+    feat merge                         # Merge current feature branch to the original
+    feat pr                            # Create a pull-req for the current feature branch
+    feat squash                        # Merge current feature branch as a single commit
+    pull                               # Pull changes
+    push                               # Push changes
+    stage                              # Stage all changes
+    unstage                            # Unstage all changes
+    discard                            # Discard unstaged changes
+    commit                             # Commit staged changes
+    commit revert                      # Revert the latest commit by creating a new commit
+    commit undo                        # Undo latest commit from local and remote branch
+    commit erase                       # Erase latest commit from loc/rem branch and files
 
   DEPLOYMENT OPERATIONS
-    deployment start:dev          # Start ci build for dev environment manually
-    deployment cancel:dev         # Cancel an ongoing dev environment ci build
-    deployment build:worker:dev   # Build and deploy worker container to dev env
-    deployment deploy:dev         # Deploy latest dev version to dev env
-    deployment deploy:dev 1.1.1   # Deploy prebuilt version to dev env
-    deployment wait
-    deployment verify
-    deployment revisions:dev      # Show current revision on dev env
-    deployment revert:dev 20      # Revert application on dev env to revision 20
+    deployment start:dev               # Start ci build for dev environment manually
+    deployment cancel:dev              # Cancel an ongoing dev environment ci build
+    deployment build:worker:dev        # Build and deploy worker container to dev env
+    deployment deploy:dev              # Deploy latest dev version to dev env
+    deployment deploy:dev 1.1.1        # Deploy prebuilt version to dev env
+    deployment wait                    # Wait for deployment
+    deployment verify                  # Verify deployment, autorevert if necessary
+    deployment revisions:dev           # Show current revision on dev env
+    deployment revert:dev 20           # Revert application on dev env to revision 20
 
   ARTIFACTS (mainly for CI/CD only)
-    artifact prepare              # Make some build preparations if required.
-    artifact build:server:dev TAG # Build server artifact for dev environment
-    artifact push:server:dev TAG  # Push server artifact for dev environment
-    artifact publish:dev          # Publish artifacts for dev environment
-    artifact release:prod         # Make a release for prod environment
+    artifact prepare                   # Make some build preparations if required.
+    artifact build:server:dev TAG      # Build server artifact for dev environment
+    artifact push:server:dev TAG       # Push server artifact for dev environment
+    artifact publish:dev               # Publish artifacts for dev environment
+    artifact release:prod              # Make a release for prod environment
 
   PROJECT TEMPLATES
-    project create: my-template   # Create a project based on template
-    project upgrade               # Upgrade project using template
+    project create: my-template        # Create a project based on template
+    project upgrade                    # Upgrade project using template
 
   PROJECT CONFIGURATION
-    project apply            # Migrate project to the latest configuration
-    project docs             # Populate taito settings to project documentation
-    project contact          # List project contacts
-    project destroy          # Destroy project
+    project apply                      # Migrate project to the latest configuration
+    project docs                       # Populate taito settings to project documentation
+    project contact                    # List project contacts
+    project destroy                    # Destroy project
 
   PROJECT INFRASTRUCTURE MANAGEMENT
-    env info:dev             # Show environment information
-    env apply:dev            # Apply project specific changes to dev env
-    env rotate:dev           # Rotate project specific secrets in dev env
-    env rotate:dev gcloud    # Rotate project specific gcloud secrets in dev env
-    env destroy:dev          # Destroy dev environment of the current project
+    env info:dev                       # Show environment information
+    env apply:dev                      # Apply project specific changes to dev env
+    env rotate:dev                     # Rotate project specific secrets in dev env
+    env rotate:dev gcloud              # Rotate project specific gcloud secrets in dev env
+    env destroy:dev                    # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
-    zone apply               # Apply infrastructure changes to the zone
-    zone status              # Show status summary of the zone
-    zone doctor              # Analyze and repair the zone
-    zone maintenance         # Execute maintenance tasks interactively
-    zone destroy             # Destroy the zone
+    zone apply                         # Apply infrastructure changes to the zone
+    zone status                        # Show status summary of the zone
+    zone doctor                        # Analyze and repair the zone
+    zone maintenance                   # Execute maintenance tasks interactively
+    zone destroy                       # Destroy the zone
 
   PASSWORD SHARING
-    passwd share             # Share a password using a one-time magic link
-    passwd list: movie       # List all movie passwords
-    passwd get: movie-key    # Get movie-key passwd
-    passwd set: movie-key    # Set movie-key passwd
-    passwd rotate: movie     # Rotate all movie passwords
+    passwd share                       # Share a password using a one-time magic link
+    passwd list: movie                 # List all movie passwords
+    passwd get: movie-key              # Get movie-key passwd
+    passwd set: movie-key              # Set movie-key passwd
+    passwd rotate: movie               # Rotate all movie passwords
 
   PROJECT MANAGEMENT:
-    issue auth                                     # Authenticate
-    issue add: delete post - feature posts         # Add a new issue
-    issue status: delete post - in progress - me   # Change status
-    issue comment: delete post                     # Add a comment
-    issue open: delete post                        # Open issue on browser
-    issue list: todo                               # List todo issues
-    open project                                   # Open project management
+    issue auth                         # Authenticate
+    issue add: delete post - feature posts         # Add a new issue 'delete post'
+    issue status: delete post - in progress - me   # Change status of issue 'delete post'
+    issue comment: delete post         # Add a comment
+    issue open: delete post            # Open issue on browser
+    issue list: todo                   # List todo issues
+    open project                       # Open project management
 
   HOUR REPORTING:
     hours auth                         # Authenticate
@@ -192,11 +193,11 @@ QUICK EXAMPLES
     TODO bulk adds (e.g. three weeks on vacation)
 
   UTILS:
-    taito util browser: https://google.com    # Launch browser
-    taito util commit                         # Commit changes to Taito CLI
-    taito -q util random string: 30           # Generate a random string
-    taito -q util random words: 3             # Generate random words
-    taito util test:client:dev cypress posts  # Run posts test of cypress suite
+    taito util browser: https:/hs.fi   # Launch browser
+    taito util commit                  # Commit changes to Taito CLI
+    taito -q util random string: 30    # Generate a random string
+    taito -q util random words: 3      # Generate random words
+    taito util test:client:dev jest    # Run all tests of jest test suite
 
 OPTIONS
 
