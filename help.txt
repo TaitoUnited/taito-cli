@@ -191,6 +191,13 @@ QUICK EXAMPLES
 
     TODO bulk adds (e.g. three weeks on vacation)
 
+  UTILS:
+    taito util browser: https://google.com    # Launch browser
+    taito util commit                         # Commit changes to Taito CLI
+    taito -q util random string: 30           # Generate a random string
+    taito -q util random words: 3             # Generate random words
+    taito util test:client:dev cypress posts  # Run posts test of cypress suite
+
 OPTIONS
 
   --help, -h
@@ -403,8 +410,9 @@ PROJECT: BASIC OPERATIONS
   secrets[:ENV]
     Retrieves all secrets that might be needed by a developer or CI/CD build.
 
-  status[:ENV]
+  status[:ENV] [--all] [--all-namespaces]
     Show status summary of environment (status of services, pods, etc.).
+    Show more details with '--all'. Show all namespaces with '--all-namespaces'.
 
   logs[:TARGET][:ENV]
     Follow logs of a pod. Examples:
@@ -878,7 +886,7 @@ GLOBAL: PASSWORDS
     An interactive command for rotating passwords of a collection one by one.
     TODO implement.
 
-GLOBAL: UTILS
+UTILS
 
   util browser: URL
     Opens the given url in default web browser. You can use this command in
@@ -889,5 +897,11 @@ GLOBAL: UTILS
     can start a shell running 'taito shell', make some changes and then
     commit all changes by running 'taito util-commit' inside the container.
 
-  util test:TARGET [SUITE_FILTER]
+  util random string: LENGTH
+    Generate a random string.
+
+  util random words: NUM_OF_WORDS
+    Generate random words.
+
+  util test:TARGET:ENV [SUITE_FILTER] [TEST_FILTER]
     Run test suites for the given container.

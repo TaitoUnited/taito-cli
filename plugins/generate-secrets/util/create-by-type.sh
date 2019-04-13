@@ -2,7 +2,7 @@
 : "${secret_method:?}"
 : "${taito_setv:?}"
 : "${taito_env:?}"
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 set -e
 
@@ -11,7 +11,7 @@ secret_value2=""
 
 if [[ "${secret_default_value:-}" ]] && \
    [[ "${secret_method}" != "random" ]] && \
-  "${taito_cli_path}/util/confirm-execution.sh" "" "" \
+  "${taito_util_path}/confirm-execution.sh" "" "" \
   "Default value exists. Use the default value for ${taito_env} environment?"
 then
   secret_value="${secret_default_value}"
@@ -120,11 +120,7 @@ if [[ -z "${secret_value}" ]]; then
         echo "Using '${taito_default_password:?}' as random value for local environment"
         secret_value="${taito_default_password}"
       else
-        # TODO better tool for this?
-        secret_value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
-        if [[ ${#secret_value} -gt 30 ]]; then
-          secret_value="${secret_value: -30}"
-        fi
+        secret_value=$("$taito_util_path/random-string.sh" 30)
         echo "Random value generated"
       fi
       ;;

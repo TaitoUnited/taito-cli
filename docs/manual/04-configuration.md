@@ -48,7 +48,7 @@ Project labeling:
 * **taito_organization:** Name of the organization that is hosting the project.
 * **taito_organization_abbr:** Organization name abbreviation.
 * **taito_project:** Name of the project.
-* **taito_project_abbr:** Project name abbreviation.
+* **taito_random_name:** Random name for the project. Use this when real project name cannot be used.
 * **taito_company:** Company of the project (customer company).
 * **taito_family:** Product family name of the project (you can usually leave this empty)
 * **taito_application:** Application name.
@@ -114,7 +114,10 @@ Messaging:
 
 Monitoring:
 
-* **taito_monitoring_paths:** Public paths that should be monitored, for example `/uptimez /admin/uptimez /api/uptimez`.
+* **taito_monitoring_targets:** Targets to be monitored, for example `admin client server`.
+* **taito_monitoring_paths:** Public paths to be monitored, for example `/admin/uptimez /uptimez /api/uptimez`.
+* **taito_monitoring_timeouts:** Monitoring timeouts, for example `2s 2s 5s`.
+* **taito_monitoring_channels:** Monitoring channels, for example `projects/myproject/notificationChannels/1234567890`.
 
 Continuos integration settings:
 

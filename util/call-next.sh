@@ -9,7 +9,9 @@ next="${chain[0]}"
 if [[ "${next}" != "" ]]; then
   name="${next//\/taito-cli\/plugins\//}"
   name=$(echo "${name}" | cut -f 1 -d '.')
-  if [[ "${taito_debug}" == "true" ]] || [[ "${next}" != *"/hooks/"* ]]; then
+  if [[ ${taito_quiet:-} != "true" ]] && ( \
+       [[ "${taito_debug}" == "true" ]] || [[ "${next}" != *"/hooks/"* ]] \
+     ); then
     echo
     echo "### ${name}"
   fi

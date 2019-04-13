@@ -8,6 +8,7 @@ shell_command=false
 continue=false
 admin=false
 root=false
+quiet=false
 upgrade=false
 skip_rest=false
 taito_organization_param=""
@@ -27,6 +28,11 @@ do
         ;;
         -d|--dev)
         mode="dev"
+        shift
+        ;;
+        -q|--quiet)
+        quiet=true
+        options+=("$1")
         shift
         ;;
         --descriptions)
@@ -88,7 +94,7 @@ do
   fi
 done
 
-if [[ ${continue} == false ]]; then
+if [[ ${continue} == false ]] && [[ ${quiet} == false ]]; then
   echo "Taito-cli Copyright (C) 2017 Taito United"
   echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
 fi
@@ -269,7 +275,7 @@ taito_container_home="/home/taito"
 docker_user_opts="--user $(id -u):$(id -g)"
 if [[ ${admin} == true ]] || [[ ${root} == true ]]; then
   taito_container_home="/root"
-  docker_user_opts=""
+  docker_user_opts="--user 0:0"
 fi
 
 if [[ ${admin} == true ]]; then

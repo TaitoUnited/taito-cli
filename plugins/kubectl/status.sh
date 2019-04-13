@@ -1,59 +1,69 @@
-#!/bin/bash
+#!/bin/sh -e
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 : "${taito_target_env:?}"
+: "${taito_setv:?}"
 
-switch="${1}"
-if [[ "${switch}" == "--all" ]]; then
-  params=("${@:2}")
-else
-  params=("${@:1}")
-fi
+all=false
+kubectl_params=""
+while [ $# -gt 0 ]
+do
+  case $1 in
+    --all)
+      all=true
+      shift
+      ;;
+    --all-namespaces)
+      kubectl_params="--all-namespaces"
+      shift
+      ;;
+  esac
+done
 
-"${taito_plugin_path}/util/use-context.sh"
+"$taito_plugin_path/util/use-context.sh"
 
-if [[ "${switch}" == "--all" ]]; then
+if [ $all = true ]; then
   echo "--- Node details ---"
-  (${taito_setv:?}; kubectl describe nodes)
+  ($taito_setv; kubectl describe nodes)
   echo
   echo "--- Nodes ---"
-  (${taito_setv:?}; kubectl top nodes)
+  ($taito_setv; kubectl top nodes)
   echo
   echo "--- Ingress ---"
-  (${taito_setv:?}; kubectl get ingress "${params[@]}")
-  echo
-  echo "--- Services ---"
-  (${taito_setv:?}; kubectl get services "${params[@]}")
+  ($taito_setv; kubectl get ingress $kubectl_params)
   echo
   echo "--- Jobs ---"
-  (${taito_setv:?}; kubectl get jobs "${params[@]}")
+  ($taito_setv; kubectl get jobs $kubectl_params)
 fi
 
 echo
 echo "--- Cron jobs ---"
-(${taito_setv:?}; kubectl get cronjobs "${params[@]}")
+($taito_setv; kubectl get cronjobs $kubectl_params)
 
-if [[ "${taito_version:-}" -ge "1" ]]; then
+if [ "${taito_version:-}" -ge "1" ]; then
   echo
   echo "--- Pods ---"
-  (${taito_setv:?}; kubectl get pods "${params[@]}" | grep -e "${taito_target_env}\\|NAME")
+  ($taito_setv; kubectl get pods $kubectl_params | grep -e "${taito_target_env}\\|NAME")
   echo
   echo "--- Resource usage ---"
-  (${taito_setv:?}; kubectl top pod "${params[@]}" | grep -e "${taito_target_env}\\|NAME")
+  ($taito_setv; kubectl top pod $kubectl_params | grep -e "${taito_target_env}\\|NAME")
 else
   echo
   echo "--- Pods ---"
-  (${taito_setv:?}; kubectl get pods "${params[@]}")
+  ($taito_setv; kubectl get pods $kubectl_params)
   echo
   echo "--- Resource usage ---"
-  (${taito_setv:?}; kubectl top pod "${params[@]}")
+  ($taito_setv; kubectl top pod $kubectl_params)
 fi
 
-if [[ "${switch}" != "--all" ]]; then
-  echo
+echo
+if [ $all = false ]; then
   echo "NOTE: See more info with '--all'"
+fi
+if [ ! $kubectl_params ]; then
+  echo "NOTE: See all namespaces with '--all-namespaces'"
 fi
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"$taito_cli_path/util/call-next.sh" "$@"

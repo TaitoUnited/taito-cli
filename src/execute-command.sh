@@ -4,6 +4,7 @@
 # Parse options
 verbose="${taito_verbose:-false}"
 debug="${taito_debug:-false}"
+quiet="${taito_quiet:-false}"
 continue="${taito_continue:-false}"
 skip_override=false
 skip_rest=false
@@ -19,6 +20,10 @@ do
         ;;
         -v|--verbose)
         verbose=true
+        shift
+        ;;
+        -q|--quiet)
+        quiet=true
         shift
         ;;
         --debug)
@@ -48,7 +53,9 @@ do
 done
 
 # Execute some additional check only once in a while
-if (( RANDOM % 4 == 0 )) && [[ "${taito_mode:-}" != "ci" ]]; then
+if (( RANDOM % 4 == 0 )) && \
+   [[ "${taito_mode:-}" != "ci" ]] && \
+   [[ ${quiet} != "true" ]]; then
   if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
     echo
     echo "--------------------------------------------------------"
@@ -143,6 +150,7 @@ export taito_target_env="${env}"
 export taito_target="${target}"
 export taito_verbose=false
 export taito_debug=false
+export taito_quiet=${quiet}
 export taito_setv=":"
 export taito_vout="/dev/null" # verbode mode output
 export taito_dout="/dev/null" # debug mode output
@@ -314,7 +322,7 @@ if [[ "${taito_command}" == "zone-"* ]] && [[ "${taito_type:-}" != "zone" ]]; th
 fi
 
 # Confirm zone operations
-if [[ "${taito_command}" == "zone-"* ]]; then
+if [[ "${taito_command}" == "zone-"* ]] && [[ ${quiet} != "true" ]]; then
   echo
   echo "The operation is targetting zone ${taito_zone:-}. Do you want to continue (y/N)?"
   read -r confirm
@@ -329,7 +337,8 @@ if ( [[ "${taito_env}" == "prod" ]] || [[ "${taito_dest_env}" == "prod" ]] ) && 
    [[ "${taito_command}" != "status" ]] && \
    [[ "${taito_command}" != "logs" ]] && \
    [[ "${taito_command}" != "open-"* ]] && \
-   [[ "${taito_mode:-}" != "ci" ]]; then
+   [[ "${taito_mode:-}" != "ci" ]] && \
+   [[ ${quiet} != "true" ]]; then
   echo
   echo "The operation is targetting prod environment of ${taito_project:-}. Do you want to continue (y/N)?"
   read -r confirm
