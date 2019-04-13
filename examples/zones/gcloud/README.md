@@ -3,6 +3,7 @@
 TODO:
 * Add stackdriver slack channel with terraform?
 * Configure devops project
+* https://github.com/terraform-providers/terraform-provider-google/issues/3369
 * Wait for terraform 0.12 https://releases.hashicorp.com/terraform/ (for each -> taito_zone_authorized_networks)
 * Not supported yet: vertical_pod_autoscaling, kms secrets
 https://github.com/terraform-providers/terraform-provider-google/issues/3315

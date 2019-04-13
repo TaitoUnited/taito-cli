@@ -36,6 +36,10 @@ kubectl_user="${kubectl_cluster}"
 # TODO: postgres root password is empty at the beginning?
 # TODO: mysql also
 
+# logging sinks
+# logging_sinks="acme-logging"
+# logging_namespace_companies="acme"
+
 # links
 link_urls="
   * dashboard=https://console.cloud.google.com/home/dashboard?project=${gcloud_project_id} Google Cloud Dashboard
