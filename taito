@@ -159,6 +159,14 @@ cd "${taito_project_path}" && \
 # Read project specific taito-config settings
 . "${taito_util_path}/read-project-taito-config.sh" "${taito_hack_env}" && \
 
+# Determine project mount options passed to Docker
+project_mount_options=""
+mounts=("${taito_mounts:-} ${taito_global_mounts}")
+for mount in ${mounts[@]}
+do
+  project_mount_options="${project_mount_options} -v $mount"
+done
+
 # Determine enabled extensions and download missing remote extensions
 extension_local_paths=""
 extension_paths=""
@@ -407,6 +415,7 @@ docker_command="
     ${docker_user_opts}
     ${proxy_flags}
     ${user_mount_options}
+    ${project_mount_options}
     ${extension_mount_flags}
     ${link_flags}
     ${misc_flags}
