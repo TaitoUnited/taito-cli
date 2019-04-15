@@ -37,7 +37,9 @@ export taito_build_version=$(cat "${taito_project_path}/taitoflag_version" 2> /d
 
 function cleanup {
   rm -f scripts/*.tmp || :
-  helm tiller stop > /dev/null || :
+  if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+    helm tiller stop > /dev/null || :
+  fi
 }
 
 # Deploy chart located in ./scripts/helm
@@ -87,8 +89,10 @@ if [[ -d "./scripts/helm" ]]; then
   echo > "${taito_vout}"
   (
     ${taito_setv:?}
-    helm tiller start-ci > /dev/null
-    export HELM_HOST=127.0.0.1:44134
+    if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+      helm tiller start-ci > /dev/null
+      export HELM_HOST=127.0.0.1:44134
+    fi
     helm init --client-only
     helm repo update
     helm dependency update "./scripts/helm"
