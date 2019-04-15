@@ -51,7 +51,7 @@ do
       (
         ${taito_setv:?}
         secret_source="literal"
-        if [[ ${secret_value} == "secret_file:*" ]]; then
+        if [[ ${secret_value} == "secret_file:"* ]]; then
           secret_source="file"
           secret_value=${secret_value#secret_file:}
         fi

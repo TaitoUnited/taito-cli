@@ -113,7 +113,7 @@ if [[ -z "${secret_value}" ]]; then
       if [[ "${secret_method}" == "htpasswd-plain" ]]; then
         sed -i -- "s/:/:{PLAIN}/" "${file}"
       fi
-      secret_value="secret_file:./tmp/${file}"
+      secret_value="secret_file:${file}"
       ;;
     random)
       if [[ "${taito_env}" == "local" ]]; then
