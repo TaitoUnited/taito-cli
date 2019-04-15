@@ -8,7 +8,7 @@ name=${1}
 if "${taito_cli_path}/util/confirm-execution.sh" "helm" "${name}" \
   "Show Helm status"
 then
-  helm list
+  "${taito_plugin_path}/../helm/util/helm.sh" list
 fi
 
 # Call next command on command chain

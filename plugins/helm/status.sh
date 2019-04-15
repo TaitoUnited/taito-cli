@@ -6,7 +6,7 @@
 options=" ${*} "
 if [[ "${options}" == *" --all "* ]]; then
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
-  (${taito_setv:?}; helm list --namespace "${taito_namespace}")
+  "${taito_plugin_path}/util/helm.sh" list --namespace "${taito_namespace}"
 fi
 
 # Call next command on command chain

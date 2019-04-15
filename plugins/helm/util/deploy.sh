@@ -14,6 +14,10 @@
 image="${1:-$taito_target_image}"
 options=("${@:2}")
 
+function finish {
+  helm tiller stop > /dev/null
+}
+
 # Determine image
 # TODO: this is a quick hack
 if [[ "${taito_mode:-}" == "ci" ]] && [[ ! -f ./taitoflag_images_exist ]]; then
@@ -85,8 +89,12 @@ if [[ -d "./scripts/helm" ]]; then
   cat ./scripts/helm.yaml.tmp > "${taito_vout}"
   echo > "${taito_vout}"
   (
+    trap finish EXIT
     ${taito_setv:?}
+    helm tiller start-ci > /dev/null
+    export HELM_HOST=127.0.0.1:44134
     helm init --client-only
+    helm repo update
     helm dependency update "./scripts/helm"
     # TODO remove non-globals
     helm upgrade "${options[@]}" --debug --install \

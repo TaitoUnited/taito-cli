@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
@@ -7,6 +7,7 @@
 
 all=false
 kubectl_params=""
+args=( "$@"  )
 while [ $# -gt 0 ]
 do
   case $1 in
@@ -66,4 +67,4 @@ if [ ! $kubectl_params ]; then
 fi
 
 # Call next command on command chain
-"$taito_cli_path/util/call-next.sh" "$@"
+"$taito_cli_path/util/call-next.sh" "${args[@]}"

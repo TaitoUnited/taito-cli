@@ -5,24 +5,9 @@
 
 name=${1}
 
-# Initialize Helm
-if "${taito_cli_path}/util/confirm-execution.sh" "helm-init" "${name}" \
-  "Init helm by installing/upgrading helm tiller on Kubernetes"
-then
-  "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
-  echo "Initializing helm..." && \
-  # TODO: helm v3 will remove tiller so from what i understood the permissions will be by the user who apply it --> no need for service account
-  kubectl apply -f "${taito_plugin_path}/resources/service-account.yaml" && \
-  sleep 5 && \
-  helm init --upgrade --service-account tiller && \
-  # TODO: https://docs.helm.sh/using_helm/#securing-your-helm-installation
-  # TODO: --tiller-tls-verify
-  echo "Helm starting up. Please wait for a while..." && \
-  sleep 15
-fi && \
-
 # Deploy Helm charts
 if [[ -d "./helm" ]]; then
+  "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
   charts=($(cd helm && ls)) && \
   for chart in ${charts[@]}
   do
