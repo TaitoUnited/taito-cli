@@ -14,10 +14,6 @@
 image="${1:-$taito_target_image}"
 options=("${@:2}")
 
-function finish {
-  helm tiller stop > /dev/null
-}
-
 # Determine image
 # TODO: this is a quick hack
 if [[ "${taito_mode:-}" == "ci" ]] && [[ ! -f ./taitoflag_images_exist ]]; then
@@ -40,7 +36,8 @@ export taito_build_image_tag="${image}"
 export taito_build_version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)
 
 function cleanup {
-  rm -f scripts/*.tmp
+  rm -f scripts/*.tmp || :
+  helm tiller stop > /dev/null || :
 }
 
 # Deploy chart located in ./scripts/helm
@@ -89,7 +86,6 @@ if [[ -d "./scripts/helm" ]]; then
   cat ./scripts/helm.yaml.tmp > "${taito_vout}"
   echo > "${taito_vout}"
   (
-    trap finish EXIT
     ${taito_setv:?}
     helm tiller start-ci > /dev/null
     export HELM_HOST=127.0.0.1:44134

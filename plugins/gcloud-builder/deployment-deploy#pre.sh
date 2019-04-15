@@ -6,6 +6,7 @@ if [[ -z $1 ]]; then
   echo "Fetching latest image tag from build history..."
   # Detetermine target image automatically
   export taito_target_image
+  ${taito_setv:?}
   taito_target_image=$( \
     gcloud -q builds list \
       --sort-by="~createTime" --format="value(images)" \
