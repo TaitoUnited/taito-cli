@@ -2,6 +2,7 @@
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
+: "${taito_project:?}"
 
 switches=" ${*} "
 
@@ -26,7 +27,28 @@ if [[ "${switches}" == *"-b"* ]]; then
   flags="${flags} --detach"
 fi
 
-"${taito_util_path}/execute-on-host-fg.sh" "\
-  if [ -f ./taito-run-env.sh ]; then . ./taito-run-env.sh; fi && \
-  ${setenv}docker-compose ${compose_cmd} ${flags} \
+conditional_commands=
+if [[ "${switches}" == *"--init"* ]]; then
+  # Run 'taito init' automatically after database container has started
+  conditional_commands="
+    ${conditional_commands}
+    init() {
+      count=0
+      while [[ \$count < 2000 ]] && \
+            [[ ! \$(docker ps -q --filter 'status=running' --filter 'name=${taito_project}-database') ]]
+      do
+        sleep 2
+        count=\$((\${count}+1))
+      done
+      sleep 3
+      taito -q init | cat
+    }
+    init &
+  "
+fi
+
+"${taito_util_path}/execute-on-host-fg.sh" "
+  if [ -f ./taito-run-env.sh ]; then . ./taito-run-env.sh; fi
+  ${conditional_commands}
+  ${setenv}docker-compose ${compose_cmd} ${flags}
 "

@@ -7,11 +7,11 @@ The template uses Docker Compose to run your application. All parts of the appli
 Start the application with the following commands:
 
 ```shell
-taito env apply   # Create local development environment
-taito start       # Start the local development environment
-taito init        # Initialize database with database tables and example data
-taito open client # Open application web user interface
-taito info        # Show info required for signing in to the application
+taito env apply     # Create local development environment
+taito start --init  # Start the local development environment and once started,
+                    # initialize database with database tables and example data
+taito open client   # Open application web user interface
+taito info          # Show info required for signing in to the application
 ```
 
 Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first. While waiting, browse through the [Quick start](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md#quick-start) section of the DEVELOPMENT.md file to get an quick overview of the Taito CLI commands.

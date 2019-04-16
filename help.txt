@@ -9,8 +9,7 @@ QUICK EXAMPLES
     (link)                             # Link libraries (if not linked automatically)
     (build)                            # Build project (if not built automatically)
     start                              # Start containers / watch / application
-    restart                            # Restart containers / watch / application
-    restart:client                     # Restart client container
+    start --clean --init               # Clean start and run init after start
     init                               # Initialize databases and storages
     init --clean                       # Clean and reinitialize databases and storages
     (run)                              # Run the application (if not run autom. by start)
@@ -35,6 +34,8 @@ QUICK EXAMPLES
     db add:report role_enum            # Add a migration for report database
     db deploy                          # Deploy migrations to default database
     db import: ./file.sql              # Import a file to default database
+    restart                            # Restart containers / watch / application
+    restart:client                     # Restart client container
     workspace kill                     # Kill all running processes (e.g. containers)
     workspace clean                    # Remove all unused build artifacts (e.g. images)
     shell:server                       # Start shell inside a container named 'server'
@@ -326,12 +327,13 @@ PROJECT: BASIC OPERATIONS
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.
 
-  start[:TARGET][:ENV] [--background] [--clean] [--prod] [ARGS]
+  start[:TARGET][:ENV] [--background] [--clean] [--init] [--prod] [ARGS]
     Starts the defined environment e.g 'taito start' or 'taito start:dev'.
     Optional arguments for local environment:
     .
     --backgroud: Run in background.
     --clean: Clean everything before start.
+    --init: Run 'taito init' after start.
     --prod: Run production build instead of development build.
     TARGET: Start only the given pod/container/function/module/program
     ARGS: Additional arguments
