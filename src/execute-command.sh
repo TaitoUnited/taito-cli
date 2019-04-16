@@ -196,8 +196,8 @@ export taito_branch="${branch}"
 if (( RANDOM % 4 == 0 )) && \
    [[ "${taito_mode:-}" != "ci" ]] && \
    [[ ${quiet} != "true" ]] && \
-   [[ ${taito_command} != "project-create" ]] && \
-   [[ ${taito_command} != "project-migrate" ]]; then
+   [[ ${taito_command} != "project-"* ]] && \
+   [[ ${taito_command} != "env-apply" ]]; then
   if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
     echo
     echo "--------------------------------------------------------"
