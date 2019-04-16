@@ -52,20 +52,6 @@ do
   fi
 done
 
-# Execute some additional check only once in a while
-if (( RANDOM % 4 == 0 )) && \
-   [[ "${taito_mode:-}" != "ci" ]] && \
-   [[ ${quiet} != "true" ]]; then
-  if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
-    echo
-    echo "--------------------------------------------------------"
-    echo "NOTE: This project has not yet been fully configured."
-    echo "See the '[ ] All done' checkboxes in CONFIGURATION.md."
-    echo "--------------------------------------------------------"
-  fi
-fi
-
-
 # TODO Convert space command syntax to internal hyphen syntax
 
 # Determine command, target, env and parameters from args
@@ -205,6 +191,21 @@ elif [[ "${branch}" == "local" ]]; then
   branch=""
 fi
 export taito_branch="${branch}"
+
+# Execute some additional check only once in a while
+if (( RANDOM % 4 == 0 )) && \
+   [[ "${taito_mode:-}" != "ci" ]] && \
+   [[ ${quiet} != "true" ]] && \
+   [[ ${taito_command} != "project-create" ]] && \
+   [[ ${taito_command} != "project-migrate" ]]; then
+  if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
+    echo
+    echo "--------------------------------------------------------"
+    echo "NOTE: This project has not yet been fully configured."
+    echo "See the '[ ] All done' checkboxes in CONFIGURATION.md."
+    echo "--------------------------------------------------------"
+  fi
+fi
 
 # Validate args
 if [[ " local ${taito_environments:-} " != *" ${taito_target_env} "* ]]; then
