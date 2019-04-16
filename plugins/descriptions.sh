@@ -138,10 +138,6 @@ fi
 
 # Project
 if [[ ${taito_project:-} ]]; then
-  echo "install \
-    # Install libraries on host"
-  echo "install --clean \
-    # Install libraries on host"
   echo "env \
     # Initialize shell environment (e.g. pipenv)"
   echo "db add: NAME \
@@ -234,6 +230,37 @@ if [[ ${taito_project:-} ]]; then
     echo "env merge${suffix} DESTINATION_BRANCH \
       # Merge source env branch to the destination env branch"
 
+    echo "env apply${suffix} \
+      &focus \
+      # Apply project specific changes to ${env} environment"
+    if [[ "${env}" == "local" ]]; then
+      # TOOD: Handle all option permutations nicely
+      echo "env apply${suffix} --clean \
+        &focus \
+        # Clean and apply changes to ${env} environment"
+      echo "env apply${suffix} --clean --start \
+        &focus \
+        # Clean and apply changes to ${env} environment, start"
+      echo "env apply${suffix} --clean --start --init \
+        &focus \
+        # Clean and apply changes to ${env}, start and initialize"
+      echo "env apply${suffix} --start \
+        &focus \
+        # Apply changes to ${env} environment, start"
+      echo "env apply${suffix} --start --init \
+        &focus \
+        # Apply changes to ${env}, start and initialize"
+    fi
+    echo "env rotate${suffix} \
+      &focus \
+      # Rotate project specific secrets in ${env} environment"
+    echo "env rotate${param} FILTER \
+      &focus \
+      # Rotate project specific secrets in ${env} environment"
+    echo "env destroy${suffix} \
+      &focus \
+      # Destroy the ${env} environment of the current project"
+
     echo "start${suffix} \
       # Start app / watch on ${env} environment"
     echo "restart${suffix} \
@@ -298,12 +325,18 @@ if [[ ${taito_project:-} ]]; then
     if [[ "${env}" == "local" ]]; then
       echo "start${suffix} --background \
         # Start containers in background"
-      echo "start${suffix} --background --clean \
-        # Clean and start containers in background"
       echo "start${suffix} --clean \
         # Clean and start containers"
-      echo "start${suffix} --prod --clean \
-        # Clean and start containers in production mode"
+      echo "start${suffix} --init \
+        # Run 'taito init' after start"
+      echo "start${suffix} --clean --init \
+        # Clean, start and init containers"
+      echo "start${suffix} --clean --init --prod \
+        # Clean, start and init production containers"
+      echo "start${suffix} --background --clean \
+        # Clean and start containers in background"
+      echo "start${suffix} --clean --prod \
+        # Clean and start production containers"
       echo "lint${suffix} \
         # Lint code"
       echo "unit${suffix} \
@@ -327,24 +360,6 @@ if [[ ${taito_project:-} ]]; then
         # Authenticate for the ${env} environment"
       echo "env:${env} \
         # Switch to the ${env} environment branch"
-
-      # NOTE: Advanced
-      echo "env apply${suffix} \
-        &focus \
-        # Apply project specific changes to ${env} environment"
-      echo "env rotate${suffix} \
-        &focus \
-        # Rotate project specific secrets in ${env} environment"
-      echo "env rotate${param} FILTER \
-        &focus \
-        # Rotate project specific secrets in ${env} environment"
-      echo "env destroy${suffix} \
-        &focus \
-        # Destroy the ${env} environment of the current project"
-      # echo "alt apply${suffix}"
-      # echo "alt rotate${suffix}"
-      # echo "alt rotate${param} FILTER"
-      # echo "alt destroy${suffix}"
 
       echo "deployment start${suffix} \
         # Trigger ci build for ${env} environment"

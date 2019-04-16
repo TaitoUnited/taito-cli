@@ -94,8 +94,6 @@ fi
 
 # Project
 if [[ ${taito_project:-} ]]; then
-  echo "install"
-  echo "install --clean"
   echo "env"
   echo "db add: NAME"
   echo "project upgrade"
@@ -161,6 +159,19 @@ if [[ ${taito_project:-} ]]; then
 
     echo "env merge${suffix} DESTINATION_BRANCH"
 
+    echo "env apply${suffix}"
+    if [[ "${env}" == "local" ]]; then
+      # TOOD: Handle all option permutations nicely
+      echo "env apply${suffix} --clean --start --init"
+      echo "env apply${suffix} --start --init"
+      echo "env apply${suffix} --init"
+      echo "env apply${suffix} --init --start"
+      echo "env apply${suffix} --init --start --clean"
+    fi
+    echo "env rotate${suffix}"
+    echo "env rotate${param} FILTER"
+    echo "env destroy${suffix}"
+
     echo "start${suffix}"
     echo "restart${suffix}"
     echo "stop${suffix}"
@@ -201,9 +212,10 @@ if [[ ${taito_project:-} ]]; then
     if [[ "${env}" == "local" ]]; then
       echo "start${suffix} --background"
       echo "start${suffix} --clean"
+      echo "start${suffix} --init"
+      echo "start${suffix} --clean --init"
+      echo "start${suffix} --clean --init --prod"
       echo "start${suffix} --background --clean"
-      echo "start${suffix} --clean --background"
-      echo "start${suffix} --prod --clean"
       echo "start${suffix} --clean --prod"
       echo "lint${suffix}"
       echo "unit${suffix}"
@@ -219,11 +231,6 @@ if [[ ${taito_project:-} ]]; then
       echo "auth${suffix}"
       echo "env:${env}"
 
-      # NOTE: Advanced
-      echo "env apply${suffix}"
-      echo "env rotate${suffix}"
-      echo "env rotate${param} FILTER"
-      echo "env destroy${suffix}"
       # echo "alt apply${suffix}"
       # echo "alt rotate${suffix}"
       # echo "alt rotate${param} FILTER"

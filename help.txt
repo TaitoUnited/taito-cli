@@ -5,7 +5,7 @@ QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
     env apply                          # Create local environment
-    env apply --clean                  # Clean and create local environment
+    env apply --clean --start --init   # Startup in a cleaned and initialized environment
     (link)                             # Link libraries (if not linked automatically)
     (build)                            # Build project (if not built automatically)
     start                              # Start containers / watch / application

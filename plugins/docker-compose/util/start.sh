@@ -28,7 +28,14 @@ if [[ "${switches}" == *"-b"* ]]; then
 fi
 
 conditional_commands=
-if [[ "${switches}" == *"--init"* ]]; then
+if [[ "${switches}" == *"--restart"* ]]; then
+  # Run 'docker-compose stop' before start
+  conditional_commands="
+    ${conditional_commands}
+    docker-compose stop
+  "
+fi
+if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database "* ]]; then
   # Run 'taito init' automatically after database container has started
   conditional_commands="
     ${conditional_commands}
