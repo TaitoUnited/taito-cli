@@ -38,7 +38,7 @@ echo "Please wait..." && \
   git add .
   git commit -q -m 'First commit'
   git remote add origin ${template_dest_git}/${taito_vc_repository}.git
-  while ! git push -q -u origin master &> /dev/null
+  while ! echo Pushing to git... && git push -q -u origin master &> /dev/null
   do
     echo Failed pushing to ${template_dest_git}/${taito_vc_repository}.
     echo Make sure the repository exists and press enter.

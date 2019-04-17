@@ -38,21 +38,25 @@ fi
 if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database "* ]]; then
   # Run 'taito init' automatically after database container has started
   init_flags=
+  init_wait=20
   if [[ "${switches}" == *"--clean"* ]]; then
     init_flags="--clean"
+    init_wait=40
   fi
 
+  # TODO: how to avoid hardcoded 'sleep 40'? DB container does not provide health checks.
   conditional_commands="
     ${conditional_commands}
     init() {
       count=0
-      while [[ \$count < 2000 ]] && \
+      sleep 15
+      while [[ \$count < 1000 ]] && \
             [[ ! \$(docker ps -q --filter 'status=running' --filter 'name=${taito_project}-database') ]]
       do
-        sleep 2
+        sleep 5
         count=\$((\${count}+1))
       done
-      sleep 15
+      sleep ${init_wait}
       taito -q init ${init_flags} | cat
     }
     init &
