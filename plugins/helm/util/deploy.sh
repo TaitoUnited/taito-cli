@@ -72,16 +72,6 @@ if [[ -d "./scripts/helm" ]]; then
     export HELM_HOME="/root/.helm"
   fi
 
-  if [[ "${taito_mode:-}" == "ci" ]]; then
-    echo
-    echo "USER: $(whoami)"
-    echo "HOME: $HOME"
-    echo "HELM_HOME: $HELM_HOME"
-    echo "Repositories from $HELM_HOME/.helm/repository/repositories.yaml:"
-    cat ~/.helm/repository/repositories.yaml || :
-    echo
-  fi
-
   echo "Deploying ${image} of ${taito_project}-${taito_target_env} using Helm"
   echo
   echo > "${taito_vout}"
