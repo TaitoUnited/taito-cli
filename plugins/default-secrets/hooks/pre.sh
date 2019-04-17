@@ -27,13 +27,14 @@ if ( [[ ${taito_command} == "env-apply" ]] || \
     echo
     echo "### default-secrets/pre: Reading default secret values from ${source_env} environment"
 
+    rm -f "${taito_project_path}/taito-secrets.sh" &> /dev/null
     taito secrets:${source_env} --save-as-taito-secrets &> /dev/null
     sed -i 's/^export /export default_/' "${taito_project_path}/taito-secrets.sh" &> /dev/null
     . "${taito_project_path}/taito-secrets.sh" &> /dev/null
     if [[ -f "${taito_project_path}/taito-secrets.sh" ]]; then
       echo "Secrets were read successfully"
     else
-      echo "Read failed"
+      echo "No default values found"
     fi
     rm -f "${taito_project_path}/taito-secrets.sh" &> /dev/null
   fi

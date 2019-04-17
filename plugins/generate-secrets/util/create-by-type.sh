@@ -134,4 +134,5 @@ if [[ -z "${secret_value}" ]]; then
   esac
 fi
 
+echo
 exports="${exports}export ${secret_value_var}=\"${secret_value}\"; export ${secret_changed_var}=\"true\"; "
