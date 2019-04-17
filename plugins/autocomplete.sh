@@ -210,6 +210,7 @@ if [[ ${taito_project:-} ]]; then
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then
+      echo "kaboom"
       echo "start${suffix} --background"
       echo "start${suffix} --clean"
       echo "start${suffix} --init"

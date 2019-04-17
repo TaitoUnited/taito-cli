@@ -323,6 +323,8 @@ if [[ ${taito_project:-} ]]; then
 
     # Local-only commands
     if [[ "${env}" == "local" ]]; then
+      echo "kaboom${suffix} \
+        # Start application in a cleaned and initialized local environment with a single command"
       echo "start${suffix} --background \
         # Start containers in background"
       echo "start${suffix} --clean \

@@ -37,6 +37,11 @@ if [[ "${switches}" == *"--restart"* ]]; then
 fi
 if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database "* ]]; then
   # Run 'taito init' automatically after database container has started
+  init_flags=
+  if [[ "${switches}" == *"--clean"* ]]; then
+    init_flags="--clean"
+  fi
+
   conditional_commands="
     ${conditional_commands}
     init() {
@@ -48,7 +53,7 @@ if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database
         count=\$((\${count}+1))
       done
       sleep 15
-      taito -q init | cat
+      taito -q init ${init_flags} | cat
     }
     init &
   "
