@@ -49,7 +49,7 @@ if [[ $taito_command == "env-apply" ]] && \
     gcloud projects create "${taito_resource_namespace:?}" \
       "--organization=${gcloud_org_id:?}" && \
     gcloud beta billing projects link "${taito_resource_namespace:?}" \
-      "--billing-account ${billing_id}"
+      --billing-account "${billing_id}"
   else
     exit 130
   fi
