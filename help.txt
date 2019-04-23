@@ -4,21 +4,18 @@ TAITO-CLI
 QUICK EXAMPLES
 
   LOCAL DEVELOPMENT
-    env apply                          # Create local environment
-    env apply --clean --start --init   # Startup in a cleaned and initialized environment
-    (link)                             # Link libraries (if not linked automatically)
-    (build)                            # Build project (if not built automatically)
-    start                              # Start containers / watch / application
-    start --clean --init               # Clean start and run init after start
+    kaboom                             # Full clean start (env apply, start, init with --clean)
+    env apply                          # Configure local environment
+    start                              # Start the application
+    start --clean --init               # Clean start. Run init after start.
     init                               # Initialize databases and storages
-    init --clean                       # Clean and reinitialize databases and storages
-    (run)                              # Run the application (if not run autom. by start)
+    init --clean                       # Reinitialize databases and storages
     open client                        # Open application GUI on browser
     open admin                         # Open admin GUI on browser
     open builds                        # Open build logs on browser
     open project                       # Open project management on browser
     open -h                            # List all links
-    info                               # Show info required for logging in to app
+    info                               # Show info required for signing in to the application
     lint                               # Lint code
     unit                               # Run all unit tests
     unit:client                        # Run all unit tests of client container
@@ -53,6 +50,9 @@ QUICK EXAMPLES
     check code:client                  # Check code quality of the client
     check size                         # Check size
     check size:client                  # Check size of the client
+    link                               # Link libraries (if not linked automatically by 'taito start')
+    build                              # Build project (if not built automatically by 'taito start')
+    run                                # Run the application (if not run automatically by 'taito start')
 
   ACCESSING A REMOTE ENVIRONMENT
     open client:dev                    # Open application GUI on browser
@@ -311,12 +311,19 @@ TAITO: BASIC OPERATIONS
 
 PROJECT: BASIC OPERATIONS
 
+  kaboom
+    The command executes a full clean startup by executing 'env apply', 'start',
+    and 'init' commands consecutively with the '--clean' option.
+
+  env apply: [NAME]
+    Configure the local environment.
+
   install [--clean] [--lock]
     Install everything that needs to installed locally on host (e.g. libraries
     for linting and autocompletion purposes). Use the '--clean' flag to execute
     a clean install. Use the '--lock' flag to install version locked packages.
-    Use the '--all' flag to request for a full install in case you need all
-    libraries to be installed on host for autocompletion, etc.
+    NOTE: Usually you don't run this command as 'env apply' executes also
+    install.
     TIP: Enable the 'make', 'npm' or 'pipenv' plugin.
 
   link
