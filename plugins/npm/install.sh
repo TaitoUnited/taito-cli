@@ -6,7 +6,7 @@ switches=" ${*} "
 
 # Run postinstall script: install-all, install-ci or install-dev
 task_postinstall=""
-do_confirm=false
+do_confirm=
 task_install_ci_exists="$(npm run | grep 'install-ci$')"
 task_install_dev_exists="$(npm run | grep 'install-dev$')"
 if [[ "${switches}" == *" --all "* ]]; then
@@ -20,7 +20,7 @@ elif [[ "${taito_mode:-}" != "ci" ]] && [[ "${task_install_dev_exists:-}" ]]; th
 fi && \
 
 install_all=false
-if [[ ${do_confirm} ]]; then
+if [[ ${do_confirm} ]] && [[ ! $RUNNING_TESTS ]]; then
   echo
   echo "Install all libraries on host for autocompletion purposes (Y/n)?"
   read -r confirm
