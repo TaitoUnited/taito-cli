@@ -11,6 +11,7 @@ Table of contents:
 * [Version control](#version-control)
 * [Deployment](#deployment)
 * [Usage without Taito CLI](#usage-without-taito-cli)
+* [Configuration](#configuration)
 
 ## Prerequisites
 
@@ -181,10 +182,12 @@ Start containers, and start a shell inside the www Docker container:
     taito start
     taito shell:www
 
-*FOR GATSBY ONLY:* Create a new Gatsby site based on one of the [starters](https://www.gatsbyjs.org/starters?v=2):
+*FOR GATSBY ONLY:* Create a new Gatsby site based on one of the [starters](https://www.gatsbyjs.org/starters?v=2) (NOTE: Select 'npm' as package manager and ignore the 'git commit' error):
 
+    su node
     npx gatsby new site STARTER-SOURCE-URL-OF-MY-CHOICE
     rm -rf site/.git
+    exit
     exit
 
 *FOR GATSBY ONLY:* Enable `/service/site/node_modules` mount in `docker-compose.yaml`:

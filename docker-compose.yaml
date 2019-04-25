@@ -12,7 +12,7 @@ services:
       - "9417:8080"
     volumes:
       - "./www:/service:delegated"
-      - "./docs:/service/docs:delegated"
+      - "./docs:/docs:delegated"
       - "/service/node_modules"
       # FOR GATSBY ONLY:
       # - "/service/site/node_modules"

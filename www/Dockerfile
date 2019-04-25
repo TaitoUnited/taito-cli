@@ -1,7 +1,9 @@
 # Builder, tester and runtime container for local development
-FROM taitounited/cypress:3.14-node10
+FROM taitounited/cypress:3.2.0-node10
 ARG SERVICE_DIR=.
 ENV NODE_ENV development
+
+RUN mkdir /service && chown node:node /service
 
 WORKDIR /service
 COPY ${SERVICE_DIR}/install.sh \

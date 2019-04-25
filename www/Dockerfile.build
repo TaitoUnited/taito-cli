@@ -1,5 +1,5 @@
 # Builder and tester container for production build
-FROM taitounited/cypress:3.14-node10 as builder
+FROM taitounited/cypress:3.2.0-node10 as builder
 ARG SERVICE_DIR=.
 ARG TARGET_ENV=prod
 ARG BUILD_VERSION
@@ -7,6 +7,8 @@ ENV TARGET_ENV ${TARGET_ENV}
 ENV BUILD_VERSION ${BUILD_VERSION}
 ENV NODE_ENV development
 ENV APP_SENTRY_PUBLIC_DSN #sentryPublicDSN
+
+RUN mkdir /service && chown node:node /service
 
 WORKDIR /service
 COPY ${SERVICE_DIR}/*.sh \
