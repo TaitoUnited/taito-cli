@@ -19,7 +19,7 @@
     "compile": "echo 'TODO compilation if required for some parts'",
     "unit": "taito -- find . -name \"*.bats\" -type f -prune -exec bats '{}' +",
     "test": "echo 'TODO integration tests (cd test; ./all.sh)'",
-    "verify": "taito -d lint && taito -d -c compile && taito -d -c unit",
+    "verify": "taito lint && taito -c compile && taito -c unit",
     "check-deps": "npm-check",
     "check-deps:www": "cd www && npm-check",
     "precommit:branch": "if git-branch-is -q test || git-branch-is -q stag || git-branch-is -q master; then echo 'ERROR: You cannot commit changes directly to this environment branch. Only fast-forward merge is allowed.' && echo && exit 1; fi",

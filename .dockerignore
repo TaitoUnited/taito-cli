@@ -2,5 +2,6 @@ docs
 examples
 node_modules
 support
-test
+# NOTE: test directory required for unit tests
+# test
 www
