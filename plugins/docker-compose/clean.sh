@@ -10,7 +10,7 @@ elif [[ ${taito_target:-} ]]; then
   . "${taito_plugin_path}/util/determine-pod.sh"
 
   # Docker-compose uses directory name as image prefix by default
-  dir_name="${taito_host_project_path:?}"
+  dir_name="${taito_host_project_path:-/project}"
   # Leave only directory name
   dir_name="${dir_name##*/}"
   # Remove special characters
