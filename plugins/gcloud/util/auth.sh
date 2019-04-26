@@ -34,6 +34,6 @@ if [[ -n "${kubectl_name:-}" ]]; then
   then
     echo "# gcloud container clusters get-credentials"
     "${taito_plugin_path}/util/get-credentials-kube.sh" || \
-      "WARN: Kubernetes authentication failed. OK if the cluster does not exist yet."
+      echo "WARN: Kubernetes authentication failed. This is OK if the cluster does not exist yet."
   fi
 fi

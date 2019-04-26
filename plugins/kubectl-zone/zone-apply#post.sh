@@ -7,13 +7,13 @@ name=${1}
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
 
 # TODO: Already stopped on gcloud?
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-dashboard" "${name}" \
-  "Stop dashboard of Kubernetes as it is not needed in most cloud setups"
-then
-  kubectl scale --replicas=0 --namespace kube-system deployment/kubernetes-dashboard || :
-  echo "NOTE: It's ok if this failed to 'not found' error."
-  echo
-fi
+# if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-dashboard" "${name}" \
+#   "Stop dashboard of Kubernetes as it is not needed in most cloud setups"
+# then
+#   kubectl scale --replicas=0 --namespace kube-system deployment/kubernetes-dashboard || :
+#   echo "NOTE: It's ok if this failed to 'not found' error."
+#   echo
+# fi
 
 # TODO: Only needed if database manager and github token are saved on Kubernetes.
 # But extra namespace does not matter either.

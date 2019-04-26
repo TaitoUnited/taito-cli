@@ -330,11 +330,14 @@ if [[ "${taito_command}" == "zone-"* ]] && [[ "${taito_type:-}" != "zone" ]]; th
 fi
 
 # Confirm zone operations
-if [[ "${taito_command}" == "zone-"* ]] && [[ ${quiet} != "true" ]]; then
+if [[ "${taito_command}" == "zone-"* ]] && \
+   [[ "${taito_command}" != "zone-status" ]] && \
+   [[ ${quiet} != "true" ]]; then
   echo
-  echo "The operation is targetting zone ${taito_zone:-}. Do you want to continue (y/N)?"
+  echo "The operation is targetting zone ${taito_zone:-}. Do you want to continue (Y/n)?"
   read -r confirm
-  if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+  if ! [[ ${confirm} =~ ^[Yy]*$ ]]; then
+    echo Cancelled
     exit 130
   fi
 fi
