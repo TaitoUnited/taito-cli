@@ -254,6 +254,11 @@ if [[ -n "${postgres_name:-}" ]]; then
   export database_port="${postgres_port:-}"
 fi
 
+# TODO remove: for backwards compatibility
+export kubectl_name=${kubectl_name:-$kubernetes_name}
+export kubectl_cluster=${kubectl_cluster:-$kubernetes_cluster}
+export kubectl_user=${kubectl_user:-$kubernetes_user}
+
 # TODO ^^^^^ clean up code ^^^^^
 
 
@@ -266,7 +271,9 @@ if [[ "${taito_env}" != "local" ]] && \
 fi
 
 # Validate auth operations
-if [[ "${taito_command}" == "auth" ]] && [[  "${taito_env}" == "local" ]]; then
+if [[ "${taito_command}" == "auth" ]] && \
+   [[ "${taito_env}" == "local" ]] && \
+   [[ "${taito_type:-}" != "zone" ]]; then
   echo
   echo "ERROR: You cannot authenticate to local environment."
   echo "Specify environment: taito auth:ENV".

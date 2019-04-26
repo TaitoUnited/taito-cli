@@ -8,6 +8,10 @@ if "${taito_cli_path}/util/confirm-execution.sh" "kubectl" "${name}" \
 then
   echo
   echo
+  echo --- Cluster ---
+  kubectl get componentstatus
+  echo
+  echo
   echo --- Nodes ---
   kubectl describe nodes
   echo

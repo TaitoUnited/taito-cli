@@ -298,7 +298,7 @@ ALTERNATIVE HYPHEN SYNTAX
 
 TAITO: BASIC OPERATIONS
 
-  auth[:ENV]
+  auth[:ENV] [--reset]
     Authenticate in the context of the given environment. Also sets the
     default context for shell commands like 'taito -- kubectl get pods'
     or 'taito shell'.

@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_enabled_plugins:?}"
 
-if [[ "${taito_enabled_plugins}" != *"gcloud"* ]]; then
+if [[ " ${taito_enabled_plugins} " != *" gcloud "* ]]; then
   echo "gcloud plugin not enabled. authenticate using gcloud util."
   taito_plugin_path="${taito_cli_path}/plugins/gcloud" \
     "${taito_cli_path}/plugins/gcloud/util/auth.sh" "${@}"

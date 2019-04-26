@@ -2,6 +2,8 @@
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 
+# TODO: support for '--reset'
+
 type=${1}
 account=$(gcloud config get-value account 2> /dev/null)
 
