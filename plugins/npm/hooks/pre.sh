@@ -79,9 +79,14 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
 
   # taito test prehandling
 
+  # TODO: 'npm_command == test' and 'npm_command == taito-test' can be removed?
   running_ci_test=false
   if [[ "${taito_mode:-}" == "ci" ]] && \
-     [[ "${npm_command%%:*}" == "test" ]]; then
+     ( \
+       [[ "${taito_command}" == "test" ]] || \
+       [[ "${npm_command%%:*}" == "test" ]] || \
+       [[ "${npm_command%%:*}" == "taito-test" ]] \
+     ); then
      running_ci_test=true
   fi
 
