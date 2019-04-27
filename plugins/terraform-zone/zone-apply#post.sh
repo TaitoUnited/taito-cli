@@ -1,9 +1,10 @@
 #!/bin/bash
 : "${taito_util_path:?}"
-: "${taito_plugin_path:?}"
+: "${taito_env:?}"
 
-echo "Generating links to README.md"
-"${taito_plugin_path}/util/generate.sh" && \
+echo "Displaying some zone details..."
+
+(cd terraform && terraform output)
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"

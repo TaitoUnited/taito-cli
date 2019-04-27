@@ -2,7 +2,15 @@
 
 Example for a taito zone located in Digital Ocean. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
 
-https://www.digitalocean.com/products/kubernetes/
+---
+
+TODO: Implement by using gcloud as an example.
+
+- https://www.digitalocean.com/products/kubernetes/
+- https://blog.digitalocean.com/announcing-managed-databases-for-postgresql/
+- https://www.digitalocean.com/products/spaces/
+
+---
 
 ## Links
 

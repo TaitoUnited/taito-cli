@@ -24,11 +24,14 @@ if [[ ${found} != "" ]]; then
           url="$( cut -d '=' -f 2- <<< "$link" )"
           ${echo_command}
           if [[ "${mode}" == "open" ]]; then
-            ${echo_command} "### links/pre: Opening ${name}"
-            ${echo_command} Opening link "${url}"
+            if [[ ${taito_quiet:-} != "true" ]]; then
+              ${echo_command} "### links/pre: Opening ${name}"
+              ${echo_command} Opening link "${url}"
+            fi
             "${taito_cli_path}/util/${open_command}" "${url}"
           else
-            ${echo_command} "### links/pre: Showing link ${name}"
+            [[ ${taito_quiet:-} != "true" ]] && \
+              ${echo_command} "### links/pre: Showing link ${name}"
             ${echo_command} "${url}"
           fi
           exit 0

@@ -29,7 +29,7 @@ if [ $all = true ]; then
   ($taito_setv; kubectl describe nodes)
   echo
   echo "--- Nodes ---"
-  ($taito_setv; kubectl top nodes)
+  ($taito_setv; kubectl top nodes 2> /dev/null)
   echo
   echo "--- Ingress ---"
   ($taito_setv; kubectl get ingress $kubectl_params)
@@ -48,14 +48,14 @@ if [ "${taito_version:-}" -ge "1" ]; then
   ($taito_setv; kubectl get pods $kubectl_params | grep -e "${taito_target_env}\\|NAME")
   echo
   echo "--- Resource usage ---"
-  ($taito_setv; kubectl top pod $kubectl_params | grep -e "${taito_target_env}\\|NAME")
+  ($taito_setv; kubectl top pod $kubectl_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME")
 else
   echo
   echo "--- Pods ---"
   ($taito_setv; kubectl get pods $kubectl_params)
   echo
   echo "--- Resource usage ---"
-  ($taito_setv; kubectl top pod $kubectl_params)
+  ($taito_setv; kubectl top pod $kubectl_params 2> /dev/null)
 fi
 
 echo

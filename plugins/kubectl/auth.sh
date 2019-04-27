@@ -2,7 +2,7 @@
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
-echo "Setting default namespace: ${taito_namespace:-kube-system}"
+echo "Setting default context for Kubernetes: ${taito_namespace:-kube-system}"
 "${taito_plugin_path}/util/use-context.sh"
 
 # Call next command on command chain

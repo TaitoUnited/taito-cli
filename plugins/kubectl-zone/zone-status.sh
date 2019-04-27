@@ -1,32 +1,41 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 
-name=${1}
+"${taito_cli_path}/plugins/kubectl/util/use-context.sh"
 
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl" "${name}" \
-  "Show Kubernetes status"
-then
-  echo --- Cluster ---
-  kubectl get componentstatus
-  echo
-  echo --- Nodes ---
-  kubectl describe nodes
-  echo
-  echo --- Top nodes ---
-  kubectl top nodes
-  echo
-  echo --- Ingresses ---
-  kubectl get ingress --all-namespaces
-  echo
-  echo --- Services ---
-  kubectl get services --all-namespaces
-  echo
-  echo --- Pods ---
-  kubectl get pods --all-namespaces
-  echo
-  echo --- Top pods ---
-  kubectl top pods --all-namespaces
-fi && \
+echo --- Cluster ---
+kubectl get componentstatus
+echo
+echo --- Nodes ---
+kubectl describe nodes
+echo
+echo --- Top nodes ---
+kubectl top nodes 2> /dev/null
+echo
+echo --- Ingresses ---
+kubectl get ingress --all-namespaces
+echo
+echo --- Services ---
+kubectl get services --all-namespaces
+echo
+echo --- Pods ---
+kubectl get pods --all-namespaces
+echo
+echo --- Top pods ---
+kubectl top pods --all-namespaces 2> /dev/null
+echo
+echo --- Load Balancer IPs ---
+kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.spec.loadBalancerIP,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
+  --no-headers --all-namespaces 2> /dev/null | \
+  grep -v "<none>.*<none>" | \
+  sed s/\\s*\<none\>\\s*//g
+echo
+echo "Your load balancer IP addresses are presented above. You should configure"
+echo "DNS for them if you have not done so already. If a hostname is shown above"
+echo "instead of an IP, you can resolve the IP by running 'taito -- host HOSTNAME'".
+echo "Example DNS entry:"
+echo
+echo "          A  *.mydomain.com  ->  123.123.123.123"
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

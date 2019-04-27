@@ -8,15 +8,15 @@ type=${1}
 account=$(gcloud config get-value account 2> /dev/null)
 
 if [[ ${account} ]]; then
-  echo "You are already logged in as ${account}."
-  echo "In case of trouble, you can run 'taito auth:${taito_env} reset'"
+  echo "You are already authenticated as ${account}."
+  echo "You can reauthenticate with 'taito auth:${taito_env} reset'."
   echo
 fi
 
 if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || \
     [[ ${type} == "init" ]] || [[ ${type} == "reset" ]]
 then
-  echo "# gcloud init"
+  echo "gcloud init"
   # TODO run 'gcloud auth revoke ${account}' ?
   (${taito_setv:?}; gcloud init --console-only)
 fi && \
@@ -24,7 +24,7 @@ fi && \
 if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || \
     [[ ${type} == "login" ]] || [[ ${type} == "reset" ]]
 then
-  echo "# gcloud auth application-default login"
+  echo "gcloud auth application-default login"
   # TODO run 'gcloud auth revoke ${account}' ?
   (${taito_setv:?}; gcloud auth application-default login)
 fi && \
@@ -32,8 +32,9 @@ fi && \
 if [[ -n "${kubectl_name:-}" ]]; then
   if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]] || [[ ${type} == "reset" ]]
   then
-    echo "# gcloud container clusters get-credentials"
-    "${taito_plugin_path}/util/get-credentials-kube.sh" || \
-      echo "WARN: Kubernetes authentication failed. This is OK if the cluster does not exist yet."
+    "${taito_cli_path}/plugins/gcloud/util/get-credentials-kube.sh" || (
+      echo "WARN: Kubernetes authentication failed. This is OK if the Kubernetes cluster"
+      echo "does not exist yet."
+    )
   fi
 fi
