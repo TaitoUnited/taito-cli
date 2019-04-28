@@ -5,9 +5,9 @@
 
 options=" ${*} "
 
-profile=${taito_provider_user_profile:-default}
+. "${taito_cli_path}/plugins/aws/util/aws-options.sh"
 
-if ! aws configure --profile "$profile" list &> /dev/null || \
+if ! aws configure $aws_options list &> /dev/null || \
    [[ "${options}" == *" --reset "* ]]; then
   echo "Authenticating with profile name '$profile'."
   echo
@@ -24,7 +24,7 @@ if ! aws configure --profile "$profile" list &> /dev/null || \
   read -r
   "${taito_util_path}/browser.sh" "https://console.aws.amazon.com/iam/home?#home"
   echo
-  aws configure --profile "$profile"
+  aws configure $aws_options
   # TODO: docker-commit is called twice on 'taito auth'
   "${taito_util_path}/docker-commit.sh"
 else
@@ -38,3 +38,8 @@ if [[ -n "${kubectl_name:-}" ]]; then
     echo "cluster does not exist yet."
   )
 fi
+
+# TODO authenticate also to ECR
+# echo
+# echo "Getting credentials for Elastic Container Registry"
+# "${taito_plugin_path}/util/get-credentials-ecr.sh"

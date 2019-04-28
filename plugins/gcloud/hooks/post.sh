@@ -4,7 +4,7 @@
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
     [[ "${taito_command:-}" == "test" ]] &&
-    [[ "${taito_plugins:-}" == *"gcloud-builder"* ]] &&
+    [[ "${taito_plugins:-}" == *"gcloud-ci"* ]] &&
     [[ "${taito_mode:-}" == "ci" ]] \
   ); then
   echo

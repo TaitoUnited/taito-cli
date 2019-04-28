@@ -83,7 +83,7 @@ if [[ "${taito_env}" != "local" ]]; then
 
   # NOTE: Quick hack for gcloud builder -> run tests directly inside taito-cli because
   # sql proxy fails to connect in docker-compose
-  if [[ "${taito_plugins}" == *"gcloud-builder"* ]] && [[ "${taito_mode:-}" == "ci" ]]; then
+  if [[ "${taito_plugins}" == *"gcloud-ci"* ]] && [[ "${taito_mode:-}" == "ci" ]]; then
     docker_compose="false"
     compose_cmd="${export_env_vars} cd ./${dir} && npm install && ./test.sh SUITE ${test_filter}"
   fi

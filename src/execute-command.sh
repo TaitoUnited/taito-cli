@@ -408,6 +408,7 @@ eval "$secret_exports"
 # NOTE: For backwards compatibility (plugins were renamed)
 export taito_plugins="${taito_plugins// git / git-global }"
 export taito_plugins="${taito_plugins// dev-secrets / default-secrets }"
+export taito_plugins="${taito_plugins// gcloud-builder:-local / gcloud-builder:-local gcloud-ci:-local }"
 
 # Determine enabled plugins
 enabled_plugins=""

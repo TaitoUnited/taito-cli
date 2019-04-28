@@ -84,7 +84,7 @@ CI/CD plugins typically implement the following commands:
 
 Plugins:
 
-* [gcloud-builder](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-builder/README.md): Use Google Cloud Build as your CI/CD pipeline.
+* [gcloud-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-ci/README.md): Use Google Cloud Build as your CI/CD pipeline.
 * [github-actions](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-actions/README.md): Use GitHub actions as your CI/CD pipeline.
 * [gitlab-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-ci/README.md): Use GitLab CI/CD as your CI/CD pipeline.
 * [jenkins](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jenkins/README.md): Use Jenkins as your CI/CD pipeline.
