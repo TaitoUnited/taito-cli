@@ -53,13 +53,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: CI/CD provider"
   echo "template_default_ci_provider=$taito_ci_provider"
   echo "template_default_ci_deploy_with_spinnaker=false"
-  if [[ $taito_provider == "gcloud" ]]; then
-    echo "template_default_registry=eu.gcr.io"
-  elif [[ $taito_provider == "aws" ]]; then
-    echo "template_default_registry=TODO"
-  else
-    echo "template_default_registry=TODO"
-  fi
+  echo "template_default_container_registry=$taito_provider_container_registry"
   echo
   echo "# Template: Misc providers"
   echo "template_default_sentry_organization=$taito_organization"

@@ -105,7 +105,7 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
     # Template: CI/CD provider
     template_default_ci_provider=gcloud
     template_default_ci_deploy_with_spinnaker=false
-    template_default_registry=eu.gcr.io
+    template_default_container_registry=eu.gcr.io
 
     # Template: Misc providers
     template_default_sentry_organization=myorganization
