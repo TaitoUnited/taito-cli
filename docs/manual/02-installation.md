@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-The following software needs to be installed on your computer before you can install taito-cli.
+The following software needs to be installed on your computer before you can install Taito CLI.
 
 * [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) (or bash-like shell)
 * [Git](https://git-scm.com/)
@@ -14,41 +14,27 @@ See [Docker Post-installation steps for Linux](https://docs.docker.com/install/l
 
 **Note for Windows:**
 
-> WARNING: taito-cli has not been tested on Windows yet.
+Taito CLI has not been tested on Windows. It won't probably work yet.
 
-You can install bash-like shell on Windows either by installing [cygwin](https://www.cygwin.com/) or the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about). Cygwin is probably the better option of the two since Docker cannot use the Linux file system effectively on Windows. Configure your system in that way you can call `git`, `docker` and `docker-compose` commands directly from shell. Also make sure that `pkill` command is available. You can install it on cygwin by running `apt-cyg install procps-ng`.
+### Installation
 
-TODO existing problems with cygwin:
-
-1. Required before git clone: `git config --global core.autocrlf input`
-2. Because of `docker -it`, docker command should be prefixed with `winpty`, but it does not exist in `cygwin`
-3. taito cannot find any `taito-config.sh` files --> some problems with mount directory paths?
-4. /taito-cli/util/execute-on-host.sh: line 16: /home/taito/.taito/tmp/taito-cli.RAESzA: No such file or directory
-
-TODO would Git BASH suffice? winpty works with it, but there are issues with windows paths and the symlink does not work.
-
-### Installation for Linux / macOS / Windows with bash-like shell
-
-1. Install [prerequisites](#prerequisites)
-
-2. Clone taito-cli git repository and checkout the master branch:
+1. Clone taito-cli git repository and checkout the master branch:
 
     ```
     git clone git@github.com:TaitoUnited/taito-cli.git
     # Or with HTTPS: git clone https://github.com/TaitoUnited/taito-cli.git
+
     cd taito-cli
     git checkout master
     ```
 
-3. Symlink the file named **taito** to your PATH. It's a bash script that runs taito-cli as a Docker container. For example:
+2. Symlink the file named **taito** to your PATH. It's a bash script that runs taito-cli as a Docker container. For example:
 
     ```
     sudo ln -s /home/myname/projects/taito-cli/taito /usr/local/bin/taito
     ```
 
-    > TODO: move taito executables to taito-cli/bin directory so that the whole directory can be added to PATH.
-
-4. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses taito-cli, they will provide you the correct settings. See [Advanced Usage](03-usage.md#advanced-usage) if you need to configure settings for multiple organizations.
+3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses Taito CLI, they will provide you the correct settings. See [Advanced Usage](03-usage.md#advanced-usage) if you need to configure settings for multiple organizations.
     ```
     #!/bin/bash
     # shellcheck disable=SC2034
@@ -81,6 +67,9 @@ TODO would Git BASH suffice? winpty works with it, but there are issues with win
       * hours=https://hours.myorganization.com Hour reporting
       * playgrounds=https://github.com/search?q=topic%3Ataito-playground+org%3AMyOrganization&type=Repositories Playground projects
     "
+
+    # --- Project template settings ---
+    # (default settings for newly created projects)
 
     # Template: Taito CLI image
     # TIP: Pull taito image from private registry to keep CI/CD fast.
@@ -155,53 +144,12 @@ TODO would Git BASH suffice? winpty works with it, but there are issues with win
     template_default_monitoring_uptime_channels_prod=
     ```
 
-5. Optional steps:
+4. Optional steps:
 
     * Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
     * Install taito-cli plugin for your editor (TODO: not implemented yet): [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
 
-6. Try it:
-
-   * Run `taito -h` to show taito help.
-
-### Installation for Windows Subsystem for Linux
-
-> Docker cannot use the Linux file system effectively on Windows. Therefore all your software projects and taito-cli settings should be located on the Windows file system.
-
-1. Install [prerequisites](#prerequisites)
-
-2. Mount your windows drive to `/c` instead of the default `/mnt/c`. This way the same file paths work both on Windows and on Linux. NOTE: If your software projects are located on some other drive than `c:`, mount also that drive.
-
-3. Clone the [taito-cli](https://github.com/TaitoUnited/taito-cli) git repository on the Linux file system:
-
-    ```
-    git clone https://github.com/TaitoUnited/taito-cli.git
-    cd taito-cli
-    git checkout master
-    ```
-
-4. Symlink the file named **taito** to your PATH. It's a bash script that runs taito-cli as a Docker container. For example:
-
-   ```
-   sudo ln -s /home/myname/projects/taito-cli/taito /usr/local/bin/taito
-   ```
-
-   > TODO: move taito executables to taito-cli/bin directory so that the whole directory can be added to PATH.
-
-5. Choose a folder from Windows drive that will act as your home directory when running taito-cli. Set `TAITO_HOME` environment variable for your linux shell, for example:
-
-    ```
-    export TAITO_HOME="/c/users/myusername"
-    ```
-
-6. Configure your personal settings in `${TAITO_HOME}/.taito/taito-config.sh`. See the previous chapter for an example.
-
-7. Optional steps:
-
-    * Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
-    * Install taito-cli plugin for your editor: [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
-
-8. Try it:
+5. Try it:
 
    * Run `taito -h` to show taito help.
 

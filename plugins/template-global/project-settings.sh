@@ -15,7 +15,8 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "2) Create a new project based on server-template by running"
   echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: server-template'"
   echo
-  echo "# --- Example settings ---"
+  echo "# --- Project template settings ---"
+  echo "# (default settings for newly created projects)"
   echo
   echo "# Template: Taito CLI image"
   echo "# TIP: Pull taito image from private registry to keep CI/CD fast."

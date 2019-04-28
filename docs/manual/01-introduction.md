@@ -2,7 +2,7 @@
 
 > Taito is a Finnish word meaning "ability" or "skill".
 
-Taito command line interface is an extensible toolkit for developers and DevOps personnel. It defines a standard set of commands that can be used in any project no matter the technology or infrastructure. Thus, developers and DevOps personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. This is made possible by implementing the commands with plugins and defining project specific settings in a configuration file. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
+Taito command line interface is an extensible toolkit for developers and DevOps personnel. It defines a standard set of commands that can be used in any project no matter the technology or infrastructure. Thus, developers and DevOps personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. This is made possible by shipping all required tools as a Docker container image, implementing the commands with plugins, and defining project specific settings in a configuration file. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
 Example:
 
@@ -19,16 +19,17 @@ taito feat: posts                  # Switch to 'feature/posts' branch (and creat
 taito stage                        # Stage some changes
 taito commit                       # Commit staged changes
 taito feat merge                   # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
-taito env apply:dev                # Create dev environment (TODO trigger!)
+taito env apply:dev                # Create dev environment (TODO trigger build)
 taito env apply:test               # Create test environment
-taito env apply:canary             # Create canary environment
+taito env apply:prod               # Create production environment
 taito open builds                  # Show build status on browser
 taito status:dev                   # Show status of dev environment
 taito open client:dev              # Open application web UI running on dev environment
 taito logs:server:dev              # Tail logs of server container running on dev environment
 taito db connect:dev               # Connect to the dev environment database
-taito env merge:dev canary         # Merge changes between environments: dev -> test -> canary
-taito open logs:canary             # Open canary environment logs on browser
+taito env merge:dev prod           # Merge changes between environments: dev -> test -> prod
+taito open client:prod             # Open application web UI running on prod environment
+taito open logs:prod               # Open canary environment logs on browser
 taito hours add: 6.5               # Add an work hour entry for today for the current project (to 1-N hour reporting systems)
 ```
 
