@@ -35,3 +35,12 @@ if [[ ${taito_repo_name:-} ]]; then
   export taito_vc_repository=${taito_repo_name:?}
   export taito_image_registry=${taito_registry:-}
 fi
+
+# For backwards compatibility
+# TODO remove
+if [[ ! "${kubernetes_name}" ]]; then
+  export kubernetes_name=$kubectl_name
+  export kubernetes_replicas=$kubectl_replicas
+  export kubernetes_cluster=$kubectl_cluster
+  export kubernetes_user=$kubectl_user
+fi
