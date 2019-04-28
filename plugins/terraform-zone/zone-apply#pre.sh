@@ -30,7 +30,7 @@ then
     if [[ -f import_state.sh ]]; then
       ./import_state.sh
     fi && \
-    terraform apply
+    terraform apply && \
 
     if [[ "${taito_zone_initial_database_password:-}" ]]; then
       echo

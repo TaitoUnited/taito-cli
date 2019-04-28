@@ -75,40 +75,84 @@ TODO would Git BASH suffice? winpty works with it, but there are issues with win
 
     # links
     link_global_urls="
-      * home=https://www.mydomain.com
-      * intra=https://intra.mydomain.com Intranet
-      * conventions=https://intra.mydomain.com/conventions Software development conventions
-      * hours=https://hours.mydomain.com Hour reporting
+      * home=https://www.myorganization.com
+      * intra=https://intra.myorganization.com Intranet
+      * conventions=https://intra.myorganization.com/conventions Software development conventions
+      * hours=https://hours.myorganization.com Hour reporting
       * playgrounds=https://github.com/search?q=topic%3Ataito-playground+org%3AMyOrganization&type=Repositories Playground projects
     "
 
-    # template default settings
-    # NOTE: These are used as defaults when you create a new project
+    # Template: Taito CLI image
+    # TIP: Pull taito image from private registry to keep CI/CD fast.
     template_default_taito_image=taitounited/taito-cli:latest
+    template_default_taito_image_username=
+    template_default_taito_image_password=
+    template_default_taito_image_email=
+
+    # Template: Labeling
+    template_default_zone=my-zone
     template_default_organization=myorganization
     template_default_organization_abbr=myorg
-    template_default_github_organization=myorganization
+
+    # Template: Domains
+    template_default_domain=dev.myorganization.com
+
+    # Template: Project defaults
+    template_default_environments="dev prod"
+
+    # Template: Cloud provider
+    template_default_provider=gcloud
+    template_default_provider_org_id=0123456789
+    template_default_provider_region=europe-west1
+    template_default_provider_zone=europe-west1-c
+
+    # Template: Git provider
+    template_default_git_provider=github.com
+    template_default_git_organization=myorganization
+    template_default_git_url=github.com/myorganization
+    template_default_source_git=git@github.com:TaitoUnited
+    template_default_dest_git=github.com/myorganization
+
+    # Template: CI/CD provider
+    template_default_ci_provider=gcloud
+    template_default_ci_deploy_with_spinnaker=false
+    template_default_registry=eu.gcr.io
+
+    # Template: Misc providers
     template_default_sentry_organization=myorganization
     template_default_appcenter_organization=myorganization
-    template_default_domain=mydevdomain.com
-    template_default_domain_prod=mydomain.com
-    template_default_zone=my-zone
-    template_default_zone_prod=my-prod-zone
-    template_default_provider=gcloud
-    template_default_provider_billing_account=123456-123456-123456
-    template_default_provider_org_id=123456789
-    template_default_provider_region=europe-west1
-    template_default_provider_zone=europe-west1-b
-    template_default_provider_org_id_prod=123456789
-    template_default_provider_region_prod=europe-west2
-    template_default_provider_zone_prod=europe-west2-a
-    template_default_monitoring_uptime_channels_prod=projects/my-prod-zone/notificationChannels/1234567890
-    template_default_registry=eu.gcr.io
-    template_default_source_git=git@github.com:TaitoUnited
-    template_default_dest_git=git@github.com:MyOrganization
-    template_default_kubernetes=my-kubernetes
+
+    # Template: Kubernetes
+    template_default_kubernetes=my-kube
+
+    # Template: Databases
     template_default_postgres=my-postgres
     template_default_mysql=my-mysql
+
+    # Template: Storage
+    template_default_storage_class=REGIONAL
+    template_default_storage_location=europe-west1
+    template_default_storage_days=60
+
+    # Template: Backups
+    template_default_backup_location=
+    template_default_backup_days=
+
+    # Template: Production zone
+    # TIP: If you want to deploy staging, canary, and production environments
+    # to a different zone than feature, development, and testing environments,
+    # configure alternative prod zone settings here.
+    template_default_zone_prod=my-zone
+    template_default_domain_prod=myorganization.com
+    template_default_provider_org_id_prod=0123456789
+    template_default_provider_region_prod=europe-west1
+    template_default_provider_zone_prod=europe-west1-c
+    template_default_storage_class_prod=REGIONAL
+    template_default_storage_location_prod=europe-west1
+    template_default_storage_days_prod=60
+    template_default_backup_location_prod=europe-west1
+    template_default_backup_days_prod=60
+    template_default_monitoring_uptime_channels_prod=
     ```
 
 5. Optional steps:

@@ -5,7 +5,7 @@
 
 options=" ${*} "
 
-profile=${aws_user_profile:-default}
+profile=${taito_provider_user_profile:-default}
 
 if ! aws configure --profile "$profile" list &> /dev/null || \
    [[ "${options}" == *" --reset "* ]]; then
@@ -17,7 +17,7 @@ if ! aws configure --profile "$profile" list &> /dev/null || \
   echo "Recommended settings:"
   echo "- Access type: Programmatic access"
   echo "- Policies: AdministratorAccess (TODO)"
-  echo "- Default region: ${aws_region:-}"
+  echo "- Default region: ${taito_provider_region:-}"
   echo "- Default output format: text"
   echo
   aws configure --profile "$profile"
