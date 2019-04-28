@@ -13,7 +13,8 @@ then
       echo "configure remote backend in ./terraform/main.tf before continuing."
       echo "If you already have configured the remote state, you can delete"
       echo "./terraform/terraform.tfstate and ./terraform/terraform.tfstate.backup"
-      echo "from your local disk."
+      echo "from your local disk once the state has been transferred to a remote"
+      echo "backend."
       echo
       echo "Do you want to continue anyway (y/N)?"
       read -r confirm

@@ -20,6 +20,10 @@ if ! aws configure --profile "$profile" list &> /dev/null || \
   echo "- Default region: ${taito_provider_region:-}"
   echo "- Default output format: text"
   echo
+  echo "Press enter to open the AWS IAM console for retrieving the access keys"
+  read -r
+  "${taito_util_path}/browser.sh" "https://console.aws.amazon.com/iam/home?#home"
+  echo
   aws configure --profile "$profile"
   # TODO: docker-commit is called twice on 'taito auth'
   "${taito_util_path}/docker-commit.sh"
@@ -30,7 +34,7 @@ fi
 
 if [[ -n "${kubectl_name:-}" ]]; then
   "${taito_cli_path}/plugins/aws/util/get-credentials-kube.sh" || (
-    echo "WARN: Kubernetes authentication failed. This is OK if the Kubernetes cluster"
-    echo "does not exist yet."
+    echo "WARNING: Kubernetes authentication failed. This is OK if the Kubernetes"
+    echo "cluster does not exist yet."
   )
 fi

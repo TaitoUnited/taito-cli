@@ -99,7 +99,7 @@ if [[ ${#suites[@]} == 0 ]]; then
   suites=( $(cat "./${dir}/test-suites" | head -1) )
   echo
   echo "---------------------------------------------------------"
-  echo "WARN: No suite found with filter: ${suite_filter}"
+  echo "WARNING: No suite found with filter: ${suite_filter}"
   echo "Running the default test suite: ${suites[0]}"
   echo "---------------------------------------------------------"
   echo

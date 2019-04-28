@@ -32,7 +32,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_organization_abbr=${taito_organization_abbr:-$taito_organization}"
   echo
   echo "# Template: Domains"
-  echo "template_default_domain=dev.$taito_organization.com"
+  echo "template_default_domain=$taito_default_domain"
   echo
   echo "# Template: Project defaults"
   echo "template_default_environments=\"dev prod\""

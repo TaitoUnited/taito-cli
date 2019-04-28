@@ -75,7 +75,7 @@ else
         echo "- ERROR: Image ${image_tag} not found from registry even after multiple retries. Not building a new image because ci_exec_build is set to false for this environment."
         exit 1
       else
-        echo "- WARN: Image ${image_tag} not found from registry. Not building a new image because ci_exec_build is set to false for this environment. Retry in 30 secs."
+        echo "- WARNING: Image ${image_tag} not found from registry. Not building a new image because ci_exec_build is set to false for this environment. Retry in 30 secs."
         sleep 30
       fi
     done

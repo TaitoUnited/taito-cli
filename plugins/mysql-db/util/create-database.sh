@@ -30,6 +30,6 @@
       -e "source ./${taito_target:-database}/db.sql ;" > ${taito_vout}
     )
   else
-    echo "WARN: File ./${taito_target:-database}/db.sql does not exist"
+    echo "WARNING: File ./${taito_target:-database}/db.sql does not exist"
   fi
 )

@@ -31,11 +31,14 @@ kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.spec.loadBalancerIP,LOA
   sed s/\\s*\<none\>\\s*//g
 echo
 echo "Your load balancer IP addresses are presented above. You should configure"
-echo "DNS for them if you have not done so already. If a hostname is shown above"
-echo "instead of an IP, you can resolve the IP by running 'taito -- host HOSTNAME'".
-echo "Example DNS entry:"
+echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"
+echo "if you have not done so already. Example DNS entry:"
 echo
 echo "          A  *.mydomain.com  ->  123.123.123.123"
+echo
+echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to"
+echo "make sure that a static IP has been reserved for the hostname. Then resolve"
+echo "the IP by running 'taito -- host HOSTNAME' and add a DNS entry for that IP."
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -11,7 +11,8 @@ echo "   according to the example settings displayed below."
 echo "2) Create a new project based on server-template by running"
 echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: server-template'"
 echo
-echo "You can display this tip also later by running 'taito project settings'."
+echo "This is only a tip. You don't have to do this right now, and you can display"
+echo "this tip also later by running 'taito project settings'."
 echo "Press enter to continue."
 read -r
 

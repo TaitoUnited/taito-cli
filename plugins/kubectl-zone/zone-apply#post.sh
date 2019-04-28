@@ -65,11 +65,14 @@ if [[ "${lb_ips}" ]]; then
   echo "${lb_ips}"
   echo
   echo "Your load balancer IP addresses are presented above. You should configure"
-  echo "DNS for them if you have not done so already. If a hostname is shown above"
-  echo "instead of an IP, you can resolve the IP by running 'taito -- host HOSTNAME'".
-  echo "Example DNS entry:"
+  echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"
+  echo "if you have not done so already. Example DNS entry:"
   echo
-  echo "          A  *.mydomain.com  ->  123.123.123.123"
+  echo "          A  *.myorganization.com  ->  123.123.123.123"
+  echo
+  echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to "
+  echo "make sure that a static IP has been reserved for the hostname. Then resolve"
+  echo "the IP by running 'taito -- host HOSTNAME' and add a DNS entry for that IP."
   echo
   echo "Press enter to continue"
   read -r
@@ -79,12 +82,14 @@ else
   echo "of the cluster. Once this command execution ends, you should install"
   echo "nginx-ingress, ambassador, or some other ingress controller to your"
   echo "Kubernetes cluster. You can install them by configuring helm releases"
-  echo "in taito-config.sh and running 'taito zone apply' again."
+  echo "in taito-config.sh and running 'taito zone apply' again. TIP: Also "
+  echo "enable Terraform remote backend in terraform/main.tf before running"
+  echo "the 'taito zone apply' command, if you didn't do that already."
   echo
-  echo "If you just installed the ingress controller, wait for a couple of"
-  echo "minutes and then run 'taito zone status' to see if your Kubernetes"
-  echo "cluster have received a load balancer IP. Then configure DNS for the"
-  echo "load balancer IP according to instructions given by 'taito zone status'"
+  echo "( If you already installed the ingress controller a moment ago, wait for a"
+  echo "couple of minutes and then run 'taito zone status' to see if your Kubernetes"
+  echo "cluster has received a load balancer IP. Then configure DNS for the"
+  echo "load balancer IP according to instructions given by 'taito zone status' )"
   echo
   echo "Press enter to continue"
   read -r
