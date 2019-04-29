@@ -31,6 +31,11 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo "### aws/pre: Getting credentials for kubernetes"
     "${taito_plugin_path}/util/get-credentials-kube.sh"
   fi
+
+  echo ------------------------------------ > ${taito_vout:-}
+  cat ~/.kube/config > ${taito_vout:-}
+  echo ------------------------------------ > ${taito_vout:-}
+
 fi && \
 
 # DB proxy
