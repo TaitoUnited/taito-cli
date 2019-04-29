@@ -10,6 +10,13 @@ dir="${taito_target:?Target not given}"
 suite_filter="${1}"
 test_filter="${2}"
 
+# TODO: should be in taito-cli core only?
+if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
+  # Call next command on command chain
+  "${taito_cli_path}/util/call-next.sh" "${@}"
+  exit 0
+fi
+
 echo "# Running tests for ${dir} in ${taito_env} environment"
 echo
 

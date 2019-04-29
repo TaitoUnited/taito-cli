@@ -80,17 +80,19 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   # taito test prehandling
 
   # TODO: 'npm_command == test' and 'npm_command == taito-test' can be removed?
-  running_ci_test=false
+  running_ci_test="false"
   if [[ "${taito_mode:-}" == "ci" ]] && \
      ( \
        [[ "${taito_command}" == "test" ]] || \
+       [[ "${npm_command}" == "test" ]] || \
        [[ "${npm_command%%:*}" == "test" ]] || \
        [[ "${npm_command%%:*}" == "taito-test" ]] \
      ); then
-     running_ci_test=true
+     running_ci_test="true"
   fi
 
-  if [[ ${running_ci_test} == true ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
+  # TODO: should be in taito-cli core only?
+  if [[ "${running_ci_test}" == "true" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
     echo "Skipping test because ci_exec_test != true"
     npm_command=""
     running_ci_test=false
@@ -105,6 +107,12 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   fi
 
   # run npm command
+
+  if [[ "${taito_mode:-}" == "ci" ]]; then
+    echo "taito_mode: ${taito_mode:-}"
+    echo "taito_command: ${taito_command}"
+    echo "npm_command: ${taito_command}"
+  fi
 
   if [[ "${npm_command}" != "" ]]; then
     # Run it
