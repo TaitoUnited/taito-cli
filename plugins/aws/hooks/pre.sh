@@ -32,9 +32,23 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     "${taito_plugin_path}/util/get-credentials-kube.sh"
   fi
 
-  echo ------------------------------------ > ${taito_vout:-}
-  cat ~/.kube/config > ${taito_vout:-}
-  echo ------------------------------------ > ${taito_vout:-}
+  echo ------------------------------------
+  echo home ${HOME}
+  echo tilde ~
+  echo pwd
+  pwd
+  echo
+  echo ------------------------------------
+  cat /builder/home/.kube/config
+  echo ------------------------------------
+  echo
+  echo ------------------------------------
+  cat ~/.kube/config
+  echo ------------------------------------
+  echo
+  echo ------------------------------------
+  cat ${HOME}/.kube/config
+  echo ------------------------------------
 
 fi && \
 
