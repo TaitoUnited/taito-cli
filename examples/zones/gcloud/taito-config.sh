@@ -28,9 +28,9 @@ gcloud_zone="europe-west1-c"
 gcloud_additional_zones="europe-west1-b europe-west1-d"
 
 # kubectl settings (TODO support multiple)
-kubectl_name="common-kubernetes"
-kubectl_cluster="gke_${taito_zone}_${gcloud_zone}_${kubectl_name}"
-kubectl_user="${kubectl_cluster}"
+kubernetes_name="common-kubernetes"
+kubernetes_cluster="gke_${taito_zone}_${gcloud_zone}_${kubernetes_name}"
+kubernetes_user="${kubernetes_cluster}"
 
 # TODO: move postgres settings (common-postgres) here
 # TODO: postgres root password is empty at the beginning?

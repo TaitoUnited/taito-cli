@@ -3,7 +3,7 @@
 : "${taito_env:?}"
 : "${taito_project:?}"
 : "${taito_namespace:?}"
-: "${kubectl_skip_restart:-}"
+: "${kubernetes_skip_restart:-}"
 
 script_dir=$(dirname "$0")
 
@@ -86,7 +86,7 @@ do
   secret_index=$((${secret_index}+1))
 done && \
 
-if [[ ${kubectl_skip_restart:-} != "true" ]]; then
+if [[ ${kubernetes_skip_restart:-} != "true" ]]; then
   echo && \
   echo "Restart all pods in namespace ${taito_namespace} (Y/n)?" && \
   read -r confirm && \

@@ -32,7 +32,7 @@ else
   echo "You can reauthenticate with 'taito auth --reset'."
 fi
 
-if [[ -n "${kubectl_name:-}" ]]; then
+if [[ -n "${kubernetes_name:-}" ]]; then
   "${taito_cli_path}/plugins/aws/util/get-credentials-kube.sh" || (
     echo "WARNING: Kubernetes authentication failed. This is OK if the Kubernetes"
     echo "cluster does not exist yet."

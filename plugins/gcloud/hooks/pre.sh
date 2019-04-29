@@ -33,7 +33,7 @@ if [[ $taito_command == "env-apply" ]] && \
   echo "### gcloud/pre: Creating new Google Cloud project"
   echo
   billing_var="gcloud_billing_account_${taito_organization:-}"
-  billing_id=${!billing_var:-$gcloud_billing_account_id}
+  billing_id=${!billing_var:-$taito_provider_billing_account_id}
   if [[ ! ${billing_id} ]]; then
     echo "Enter billing account id for the new project:"
     read -r billing_id
@@ -47,7 +47,7 @@ if [[ $taito_command == "env-apply" ]] && \
 
   if [[ ${billing_id} ]] && [[ ${#billing_id} -gt 10 ]]; then
     gcloud projects create "${taito_resource_namespace:?}" \
-      "--organization=${gcloud_org_id:?}" && \
+      "--organization=${taito_provider_org_id:?}" && \
     gcloud beta billing projects link "${taito_resource_namespace:?}" \
       --billing-account "${billing_id}"
   else

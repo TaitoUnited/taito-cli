@@ -11,7 +11,7 @@ resource "google_container_cluster" "kubernetes" {
     "google_compute_subnetwork.default",
   ]
 
-  name = "${var.kubectl_name}"
+  name = "${var.kubernetes_name}"
   location = "${var.taito_zone_high_availability == "false" ? var.gcloud_zone : var.gcloud_region}"
   node_locations = ["${split(",", var.taito_zone_high_availability == "false" ? join(",", var.gcloud_additional_zones) : join(",", list()))}"]
 
@@ -78,14 +78,14 @@ resource "google_container_cluster" "kubernetes" {
 }
 
 resource "google_container_node_pool" "kubernetes-pool" {
-  name       = "${var.kubectl_name}-default"
+  name       = "${var.kubernetes_name}-default"
   location   = "${var.gcloud_region}"
   cluster    = "${google_container_cluster.kubernetes.name}"
-  node_count = "${var.kubectl_node_count}"
+  node_count = "${var.kubernetes_node_count}"
 
   node_config {
-    machine_type = "${var.kubectl_machine_type}"
-    disk_size_gb = "${var.kubectl_disk_size_gb}"
+    machine_type = "${var.kubernetes_machine_type}"
+    disk_size_gb = "${var.kubernetes_disk_size_gb}"
 
     service_account = "kubernetes@${data.google_project.taito-zone.number}.iam.gserviceaccount.com"
 

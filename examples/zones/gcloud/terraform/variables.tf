@@ -69,16 +69,16 @@ variable "gcloud_additional_zones" {
 
 /* Kubernetes settings */
 
-variable "kubectl_name" {
+variable "kubernetes_name" {
   type = "string"
 }
-variable "kubectl_node_count" {
+variable "kubernetes_node_count" {
   type = "string" /* number */
 }
-variable "kubectl_machine_type" {
+variable "kubernetes_machine_type" {
   type = "string"
 }
-variable "kubectl_disk_size_gb" {
+variable "kubernetes_disk_size_gb" {
   type = "string" /* number */
 }
 

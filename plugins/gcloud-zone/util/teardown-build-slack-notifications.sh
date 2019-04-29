@@ -1,6 +1,6 @@
 #!/bin/bash -e
-: "${gcloud_project_id:?}"
+: "${taito_zone:?}"
 
-gcloud --project "${gcloud_project_id}" \
+gcloud --project "${taito_zone}" \
   functions delete cloudBuildSlackNotifications \
   --region "europe-west1"

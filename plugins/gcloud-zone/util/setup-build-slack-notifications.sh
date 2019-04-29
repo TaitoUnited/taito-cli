@@ -1,6 +1,5 @@
 #!/bin/bash -e
-: "${gcloud_project_id:?}"
-: "${gcloud_region:?}"
+: "${taito_zone:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project_path:?}"
 : "${taito_zone_functions_bucket:?}"
@@ -26,7 +25,7 @@ if [[ ${taito_messaging_app:-} == "slack" ]]; then
   cat "/tmp/gcloud-zone-slack/config.json"
   cat "/tmp/gcloud-zone-slack/projects.json"
 
-  gcloud --project "${gcloud_project_id}" \
+  gcloud --project "${taito_zone}" \
     functions deploy cloudBuildSlackNotifications \
     --source "/tmp/gcloud-zone-slack" \
     --stage-bucket "${taito_zone_functions_bucket}" \

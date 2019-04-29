@@ -29,7 +29,7 @@ then
   (${taito_setv:?}; gcloud auth application-default login)
 fi && \
 
-if [[ -n "${kubectl_name:-}" ]]; then
+if [[ -n "${kubernetes_name:-}" ]]; then
   if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]] || [[ ${type} == "reset" ]]
   then
     "${taito_cli_path}/plugins/gcloud/util/get-credentials-kube.sh" || (

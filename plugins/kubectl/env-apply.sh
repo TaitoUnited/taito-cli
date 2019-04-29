@@ -5,7 +5,7 @@
 
 name=${1}
 
-export kubectl_skip_restart="true";
+export kubernetes_skip_restart="true";
 
 if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-save-secrets" "${name}" \
   "Save secrets to Kubernetes"

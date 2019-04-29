@@ -2,8 +2,6 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
-: "${gcloud_project:?}"
-: "${gcloud_zone:?}"
 : "${database_name:?}"
 
 port="${1}"

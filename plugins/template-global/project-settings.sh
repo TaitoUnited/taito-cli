@@ -61,6 +61,15 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Kubernetes"
   echo "template_default_kubernetes=${kubernetes_name:-}"
+
+  if [[ $taito_provider == "gcloud" ]]; then
+    echo "template_default_kubernetes_cluster_prefix=gke_${taito_zone}_${taito_provider_zone}_"
+  elif [[ $taito_provider == "aws" ]]; then
+    echo "template_default_kubernetes_cluster_prefix=arn:aws:eks:$taito_provider_region:$taito_provider_org_id:cluster/"
+  else
+    echo "template_default_kubernetes_cluster_prefix=???"
+  fi
+
   echo
   echo "# Template: Databases"
   echo "template_default_postgres=${postgres_instance}"
@@ -90,6 +99,15 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_backup_location_prod=$taito_provider_region"
   echo "template_default_backup_days_prod=60"
   echo "template_default_monitoring_uptime_channels_prod="
+
+  if [[ $taito_provider == "gcloud" ]]; then
+    echo "template_default_kubernetes_cluster_prefix_prod=gke_${taito_zone}_${taito_provider_zone}_"
+  elif [[ $taito_provider == "aws" ]]; then
+    echo "template_default_kubernetes_cluster_prefix_prod=arn:aws:eks:$taito_provider_region:$taito_provider_org_id:cluster/"
+  else
+    echo "template_default_kubernetes_cluster_prefix_prod=???"
+  fi
+
   echo
 fi
 

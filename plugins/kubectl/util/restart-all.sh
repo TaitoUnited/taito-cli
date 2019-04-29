@@ -1,7 +1,7 @@
 #!/bin/bash
 : "${taito_namespace:?}"
 
-if [[ ${kubectl_skip_restart:-} != "true" ]]; then
+if [[ ${kubernetes_skip_restart:-} != "true" ]]; then
   echo && \
   echo "Restart all pods in namespace ${taito_namespace} (Y/n)?" && \
   read -r confirm && \

@@ -4,7 +4,7 @@
 
 name=${1}
 
-if [[ -n "${kubectl_name:-}" ]]; then
+if [[ -n "${kubernetes_name:-}" ]]; then
   if "${taito_cli_path}/util/confirm-execution.sh" "gcloud-build-notifications" "${name}" \
     "Destroy gcloud build notifications"
   then

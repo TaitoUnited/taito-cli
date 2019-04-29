@@ -19,7 +19,7 @@ if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || [[ ${type} == "default" ]]; 
   (${taito_setv:?}; gcloud auth application-default login)
 fi && \
 
-if [[ -n "${kubectl_name:-}" ]]; then
+if [[ -n "${kubernetes_name:-}" ]]; then
   if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]]; then
     echo "---- gcloud container clusters get-credentials -----"
     "${taito_plugin_path}/util/get-credentials-kube.sh" || (

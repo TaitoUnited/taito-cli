@@ -256,8 +256,17 @@ fi
 
 # TODO remove: for backwards compatibility
 export kubectl_name=${kubectl_name:-$kubernetes_name}
+export kubectl_replicas=${kubectl_replicas:-$kubernetes_replicas}
 export kubectl_cluster=${kubectl_cluster:-$kubernetes_cluster}
 export kubectl_user=${kubectl_user:-$kubernetes_user}
+export kubernetes_name=${kubectl_name}
+export kubernetes_replicas=${kubectl_replicas}
+export kubernetes_cluster=${kubectl_cluster}
+export kubernetes_user=${kubectl_user}
+export gcloud_project=${gcloud_project:-$taito_zone}
+export gcloud_region=${gcloud_region:-$taito_provider_region}
+export gcloud_zone=${gcloud_zone:-$taito_provider_zone}
+export gcloud_sql_proxy_port=${db_database_proxy_port:-5001}
 
 # TODO ^^^^^ clean up code ^^^^^
 

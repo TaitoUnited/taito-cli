@@ -6,7 +6,7 @@
 : "${taito_setv:?}"
 
 all=false
-kubectl_params=""
+kubernetes_params=""
 args=( "$@"  )
 while [ $# -gt 0 ]
 do
@@ -16,7 +16,7 @@ do
       shift
       ;;
     --all-namespaces)
-      kubectl_params="--all-namespaces"
+      kubernetes_params="--all-namespaces"
       shift
       ;;
   esac
@@ -32,37 +32,37 @@ if [ $all = true ]; then
   ($taito_setv; kubectl top nodes 2> /dev/null)
   echo
   echo "--- Ingress ---"
-  ($taito_setv; kubectl get ingress $kubectl_params)
+  ($taito_setv; kubectl get ingress $kubernetes_params)
   echo
   echo "--- Jobs ---"
-  ($taito_setv; kubectl get jobs $kubectl_params)
+  ($taito_setv; kubectl get jobs $kubernetes_params)
 fi
 
 echo
 echo "--- Cron jobs ---"
-($taito_setv; kubectl get cronjobs $kubectl_params)
+($taito_setv; kubectl get cronjobs $kubernetes_params)
 
 if [ "${taito_version:-}" -ge "1" ]; then
   echo
   echo "--- Pods ---"
-  ($taito_setv; kubectl get pods $kubectl_params | grep -e "${taito_target_env}\\|NAME")
+  ($taito_setv; kubectl get pods $kubernetes_params | grep -e "${taito_target_env}\\|NAME")
   echo
   echo "--- Resource usage ---"
-  ($taito_setv; kubectl top pod $kubectl_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME")
+  ($taito_setv; kubectl top pod $kubernetes_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME")
 else
   echo
   echo "--- Pods ---"
-  ($taito_setv; kubectl get pods $kubectl_params)
+  ($taito_setv; kubectl get pods $kubernetes_params)
   echo
   echo "--- Resource usage ---"
-  ($taito_setv; kubectl top pod $kubectl_params 2> /dev/null)
+  ($taito_setv; kubectl top pod $kubernetes_params 2> /dev/null)
 fi
 
 echo
 if [ $all = false ]; then
   echo "NOTE: See more info with '--all'"
 fi
-if [ ! $kubectl_params ]; then
+if [ ! $kubernetes_params ]; then
   echo "NOTE: See all namespaces with '--all-namespaces'"
 fi
 
