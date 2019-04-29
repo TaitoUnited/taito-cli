@@ -3,7 +3,9 @@
 
 if [[ ${taito_type:-} == "zone" ]]; then
   postgres_instance=$(echo "${postgres_instances:-}" | awk '{print $1;}')
+  postgres_host=$(echo "${postgres_hosts:-}" | awk '{print $1;}')
   mysql_instance=$(echo "${mysql_instances:-}" | awk '{print $1;}')
+  mysql_host=$(echo "${mysql_hosts:-}" | awk '{print $1;}')
 
   echo
   echo "Once you have configured the zone, you can create a new project on"
@@ -73,7 +75,9 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Databases"
   echo "template_default_postgres=${postgres_instance}"
+  echo "template_default_postgres_host=${postgres_host}"
   echo "template_default_mysql=${mysql_instance}"
+  echo "template_default_mysql_host=${mysql_host}"
   echo
   echo "# Template: Storage"
   echo "template_default_storage_class=REGIONAL"
