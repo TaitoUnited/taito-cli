@@ -66,5 +66,3 @@ TAITO-CLI TROUBLESHOOTING
   Tutorial
     Taito-cli tutorial guides you through some common software development
     scenarios and problems.
-
-  ...
