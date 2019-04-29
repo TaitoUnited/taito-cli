@@ -2,10 +2,10 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-if [[ ${gcloud_db_proxy_enabled:-} != "false" ]] && \
+if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   echo
-  echo "### gcloud/post: Stopping all db proxies"
+  echo "### kubectl/post: Stopping all db proxies"
   "${taito_plugin_path}/util/db-proxy-stop.sh"
 fi
 

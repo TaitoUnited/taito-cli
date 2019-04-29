@@ -25,9 +25,11 @@ fi
 
 ${taito_setv:?}
 psql -h "${database_host}" -p "${database_port}" \
+  -d postgres \
   -U "${database_username}" \
   -f "${taito_plugin_path}/resources/users.sql" \
   -v "database=${database_name}" \
+  -v "dbusermaster=${database_master_username:-postgres}" \
   -v "dbuserapp=${database_name}_app" \
   -v "passwordapp=${database_app_password}" \
   -v "passwordbuild=${database_build_password}" \

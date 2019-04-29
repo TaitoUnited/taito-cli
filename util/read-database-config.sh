@@ -44,6 +44,14 @@ if [[ -n "${target}" ]] && [[ -n "${!env_var_name}" ]]; then
   export database_external_port="${!env_var_name}"
   echo "- database_external_port: ${database_external_port}" > "${taito_dout:-/dev/null}"
 
+  env_var_name="db_${target}_master_username"
+  export database_master_username="${!env_var_name}"
+  echo "- database_master_username: ${database_master_username}" > "${taito_dout:-/dev/null}"
+
+  env_var_name="db_${target}_master_password_hint"
+  export database_master_password_hint="${!env_var_name}"
+  echo "- database_master_password_hint: ${database_master_password_hint}" > "${taito_dout:-/dev/null}"
+
   env_var_name="db_${target}_username"
   export database_username="${!env_var_name}"
   echo "- database_username: ${database_username}" > "${taito_dout:-/dev/null}"

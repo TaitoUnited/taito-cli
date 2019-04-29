@@ -22,7 +22,9 @@ if [[ "${taito_env}" != "local" ]]; then
           if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" \
             "Set new passwords for postgres database ${database_name:-}"
           then
-            export database_username=postgres
+            export database_username=${database_master_username:-postgres}
+            echo "HINT: You can get the ${database_username} user password from:"
+            echo "${database_master_password_hint:-}"
             "${taito_plugin_path}/util/create-users.sh" && \
             echo "Altered database user passwords for database ${database_name:-}"
           fi

@@ -1,6 +1,6 @@
 -- used by: db-copyquick
 
-\c postgres
+\c :dbusermaster
 
 \set qdest '\'' :dest '\''
 \set qsource '\'' :source '\''
@@ -21,16 +21,16 @@ CREATE DATABASE :dest TEMPLATE :source;
 
 -- Grants rights to new db
 GRANT ALL PRIVILEGES ON DATABASE :dest TO
-  admin, postgres, :dest;
+  admin, :dbusermaster, :dest;
 GRANT CONNECT, TEMPORARY ON DATABASE :dest TO developer,
   :dest_app;
 
 -- Tables
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO
-  admin, postgres, :dest;
+  admin, :dbusermaster, :dest;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON TABLES TO
-    admin, postgres, :dest;
+    admin, :dbusermaster, :dest;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO
   developer, :dest_app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
@@ -39,10 +39,10 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 
 -- Sequences
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO
-  admin, postgres, :dest;
+  admin, :dbusermaster, :dest;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON SEQUENCES TO
-    admin, postgres, :dest;
+    admin, :dbusermaster, :dest;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO
   developer, :dest_app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
@@ -51,10 +51,10 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 
 -- Functions
 GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO
-  admin, postgres, :dest;
+  admin, :dbusermaster, :dest;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON FUNCTIONS TO
-    admin, postgres, :dest;
+    admin, :dbusermaster, :dest;
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO
   developer, :dest_app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public

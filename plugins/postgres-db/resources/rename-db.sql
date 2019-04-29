@@ -1,6 +1,6 @@
 -- used by: db-copyquick
 
-\c postgres
+\c :dbusermaster
 
 \set qdatabase '\'' :database '\''
 

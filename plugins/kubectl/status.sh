@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"

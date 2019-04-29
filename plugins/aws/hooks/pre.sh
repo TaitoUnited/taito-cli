@@ -32,18 +32,5 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
   fi
 fi && \
 
-# DB proxy
-if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
-  proxy_running=$(pgrep "cloud_sql_proxy")
-  if [[ "${proxy_running:-}" == "" ]]; then
-    echo
-    echo "### aws/pre: Starting db proxy"
-    echo "TODO implement"
-  else
-    echo
-    echo "### aws/pre: Not Starting db proxy. It is already running."
-  fi
-fi && \
-
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"

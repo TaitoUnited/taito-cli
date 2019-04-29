@@ -11,7 +11,9 @@
 ${taito_setv:?}
 psql -h "${database_host}" \
   -p "${database_port}" \
+  -d postgres \
   -U "${database_username}" \
   -f "${taito_plugin_path}/resources/drop-users.sql" \
   -v "database=${database_name}" \
+  -v "dbusermaster=${database_master_username:-postgres}" \
   -v "dbuserapp=${database_name}_app" > ${taito_vout}

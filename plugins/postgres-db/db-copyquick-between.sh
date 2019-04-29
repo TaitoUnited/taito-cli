@@ -24,6 +24,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   db_prefix=${database_name%_*}
 
   flags="-f ${taito_plugin_path}/resources/copyquick.sql \
+    -v dbusermaster=${database_master_username:-postgres} \
     -v source=${database_name} \
     -v dest=${db_prefix}_${dest} \
     -v dest_old=${db_prefix}_${dest}_old \

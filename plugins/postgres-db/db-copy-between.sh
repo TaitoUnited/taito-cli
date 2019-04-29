@@ -32,9 +32,13 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   "${taito_plugin_path}/util/psql.sh" "" "-f ${dump_file}" "pg_dump" && \
 
   echo "- 2. Rename the old database" && \
-  database_username=postgres && \
+  database_username=${database_master_username:-postgres} && \
+  echo "HINT: You can get the ${database_username} user password from:"
+  echo "${database_master_password_hint:-}"
   . "${taito_plugin_path}/util/ask-password.sh" && \ # TODO Does not work. Why?
-  flags="-f ${taito_plugin_path}/resources/rename-db.sql -v database=${db_dest} \
+  flags="-f ${taito_plugin_path}/resources/rename-db.sql \
+    -v dbusermaster=${database_master_username:-postgres} \
+    -v database=${db_dest} \
     -v database_new=${db_dest}_old" && \
   "${taito_plugin_path}/util/psql.sh" "${username}" "${flags}" && \
 

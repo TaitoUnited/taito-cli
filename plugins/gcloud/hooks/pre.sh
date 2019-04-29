@@ -2,11 +2,8 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 
-if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
-    [[ "${taito_command:-}" == "test" ]] &&
-    [[ "${taito_plugins:-}" == *"gcloud-ci"* ]] &&
-    [[ "${taito_mode:-}" == "ci" ]] \
-  ); then
+if [[ ${gcloud_db_proxy_enabled:-} != "false" ]] && \
+   [[ ${taito_requires_database_connection:-} == "true" ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
   if [[ "${proxy_running}" == "" ]]; then
     echo

@@ -4,6 +4,20 @@
 : "${taito_command:?}"
 : "${taito_env:?}"
 
+if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
+   [[ ${taito_requires_database_connection:-} == "true" ]]; then
+  proxy_running=$(pgrep "kubectl")
+  if [[ "${proxy_running}" == "" ]]; then
+    echo
+    echo "### kubectl/pre: Starting db proxy"
+    "${taito_plugin_path}/util/use-context.sh"
+    "${taito_plugin_path}/util/db-proxy-start.sh" "true"
+  else
+    echo
+    echo "### kubectl/pre: Not Starting db proxy. It is already running."
+  fi
+fi && \
+
 # TODO: tighter filter
 # NOTE: ci-release is deprecated
 secret_filter=

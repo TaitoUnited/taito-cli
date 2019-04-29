@@ -15,8 +15,9 @@
     ${taito_setv:?}
     mysql -h "${database_host}" \
       -P "${database_port}" \
+      -D mysql \
       -u "${database_username}" \
-      -e "set @database='${database_name}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source ${taito_plugin_path}/resources/create.sql ;" \
+      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source ${taito_plugin_path}/resources/create.sql ;" \
       > ${taito_vout}
   ) && \
 
