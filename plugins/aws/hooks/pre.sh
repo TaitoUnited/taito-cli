@@ -15,7 +15,6 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo "Configure AWS_SECRET_ACCESS_KEY in your CI/CD settings."
     exit 1
   fi
-  # TODO: AWS_DEFAULT_REGION and AWS_DEFAULT_OUTPUT not required?
 
   # Container registry (ECR) authentication
   if [[ ${taito_commands_only_chain:-} == *"docker/"* ]]; then
@@ -31,25 +30,6 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo "### aws/pre: Getting credentials for kubernetes"
     "${taito_plugin_path}/util/get-credentials-kube.sh"
   fi
-
-  echo ------------------------------------
-  echo home ${HOME}
-  echo tilde ~
-  echo pwd
-  pwd
-  echo
-  echo ------------------------------------
-  cat /builder/home/.kube/config
-  echo ------------------------------------
-  echo
-  echo ------------------------------------
-  cat ~/.kube/config
-  echo ------------------------------------
-  echo
-  echo ------------------------------------
-  cat ${HOME}/.kube/config
-  echo ------------------------------------
-
 fi && \
 
 # DB proxy
