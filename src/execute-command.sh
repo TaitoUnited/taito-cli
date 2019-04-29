@@ -162,7 +162,9 @@ if [[ " unit scan docs ci-publish artifact-publish " == *"${taito_command}"* ]] 
   exit 0
 fi
 
-if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
+if [[ "${taito_command}" == "test" ]] && \
+   [[ "${taito_mode:-}" == "ci" ]] && \
+   [[ "${ci_exec_test:-}" != "true" ]]; then
   echo
   echo "### Skipping ${taito_command} in ci mode. ci_exec_test is false."
   echo
