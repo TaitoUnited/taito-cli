@@ -17,13 +17,6 @@ fi
 export taito_build_targets=${taito_build_targets:-$taito_targets}
 
 # For backwards compatibility
-# TODO remove gcloud_sql_proxy_port from all projects
-if [[ -n "${gcloud_sql_proxy_port:-}" ]] && \
-   [[ -z "${database_proxy_port}" ]]; then
-  export database_proxy_port="${gcloud_sql_proxy_port}"
-fi
-
-# For backwards compatibility
 # TODO remove
 export taito_plugins="${taito_plugins/ secrets/ generate-secrets}"
 export taito_plugins="${taito_plugins/ semantic / semantic-release }"

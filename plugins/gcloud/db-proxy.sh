@@ -9,7 +9,6 @@ port="${1}"
 (
   if [[ "${port}" ]]; then
     export database_port="${port}"
-    export database_proxy_port="${port}"
   fi
 
   echo "Database connection details:"

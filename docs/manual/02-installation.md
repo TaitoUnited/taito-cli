@@ -114,9 +114,17 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
     # Template: Kubernetes
     template_default_kubernetes=my-kube
 
-    # Template: Databases
+    # Template: Postgres
     template_default_postgres=my-postgres
+    template_default_postgres_host="postgres.myorganization.com"
+    template_default_postgres_master_username=postgres
+    template_default_postgres_master_password_hint="Hint where to get the password"
+
+    # Template: MySQL
     template_default_mysql=my-mysql
+    template_default_mysql_host="mysql.myorganization.com"
+    template_default_mysql_master_username=root
+    template_default_mysql_master_password_hint="Hint where to get the password"
 
     # Template: Storage
     template_default_storage_class=REGIONAL
@@ -136,6 +144,8 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
     template_default_provider_org_id_prod=0123456789
     template_default_provider_region_prod=europe-west1
     template_default_provider_zone_prod=europe-west1-c
+    template_default_postgres_host_prod="postgres.myorganization.com"
+    template_default_mysql_host_prod="mysql.myorganization.com"
     template_default_storage_class_prod=REGIONAL
     template_default_storage_location_prod=europe-west1
     template_default_storage_days_prod=60

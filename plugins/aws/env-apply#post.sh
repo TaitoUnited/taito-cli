@@ -23,6 +23,10 @@ then
   echo
   echo "Now add AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) to your"
   echo "CI/CD pipeline according to your CI/CD provider instructions."
+  echo
+  echo "TODO: FOR NOW YOU SHOULD USE THE SAME CREDENTIALS THAT YOU USED TO CREATE"
+  echo "THE KUBERNETES CLUSTER. RUN: taito -- cat /home/taito/.aws/credentials"
+  ecoh
   echo "Press enter when done."
   read -r
 fi

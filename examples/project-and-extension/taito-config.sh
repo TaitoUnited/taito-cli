@@ -14,7 +14,6 @@ export db_database_instance="common-postgres"
 export db_database_type="pg"
 export db_database_name="example_${taito_env}"
 export db_database_host="localhost"
-export db_database_proxy_port="5432"
 export db_database_port="5001"
 
 # report database

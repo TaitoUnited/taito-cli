@@ -6,7 +6,6 @@ echo "- instance: ${database_instance}"
 echo "- name: ${database_name}"
 echo "- host: ${database_host}"
 echo "- port: ${database_port}"
-echo "- proxy port: ${database_proxy_port}"
 echo "- passed env variable value: ${db_variable_value}"
 
 # Call next command on command chain

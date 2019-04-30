@@ -2,14 +2,14 @@
 : "${taito_verbose:?}"
 : "${taito_vout:?}"
 
-if [[ -n "${database_proxy_port:-}" ]]; then
+if [[ ${gcloud_db_proxy_enabled:-} != "false" ]]; then
   database_id="${taito_zone:?}:${taito_provider_region:?}:${database_instance:?}"
 
   if [[ $1 == "true" ]]; then
     # Run in background
     (
       ${taito_setv:?}
-      cloud_sql_proxy "-instances=${database_id}=tcp:0.0.0.0:${database_proxy_port}" \
+      cloud_sql_proxy "-instances=${database_id}=tcp:0.0.0.0:${database_port}" \
         &> /tmp/proxy-out.tmp &
     )
     # TODO: Implement robust wait for 'ready for connections' status
@@ -30,7 +30,7 @@ if [[ -n "${database_proxy_port:-}" ]]; then
     (
       ${taito_setv:?}
       cloud_sql_proxy \
-        "-instances=${database_id}=tcp:${bind_address}:${database_proxy_port}"
+        "-instances=${database_id}=tcp:${bind_address}:${database_port}"
     )
   fi
 

@@ -4,8 +4,10 @@
 if [[ ${taito_type:-} == "zone" ]]; then
   postgres_instance=$(echo "${postgres_instances:-}" | awk '{print $1;}')
   postgres_host=$(echo "${postgres_hosts:-}" | awk '{print $1;}')
+  postgres_admin=$(echo "${postgres_admins:-}" | awk '{print $1;}')
   mysql_instance=$(echo "${mysql_instances:-}" | awk '{print $1;}')
   mysql_host=$(echo "${mysql_hosts:-}" | awk '{print $1;}')
+  mysql_admin=$(echo "${mysql_admins:-}" | awk '{print $1;}')
 
   echo
   echo "Once you have configured the zone, you can create a new project on"
@@ -73,11 +75,17 @@ if [[ ${taito_type:-} == "zone" ]]; then
   fi
 
   echo
-  echo "# Template: Databases"
-  echo "template_default_postgres=${postgres_instance}"
-  echo "template_default_postgres_host=${postgres_host}"
-  echo "template_default_mysql=${mysql_instance}"
-  echo "template_default_mysql_host=${mysql_host}"
+  echo "# Template: Postgres"
+  echo "template_default_postgres=common-postgres"
+  echo "template_default_postgres_host=\"${postgres_host}\""
+  echo "template_default_postgres_master_username=${postgres_admin}"
+  echo "template_default_postgres_master_password_hint=\"Hint from where to get the password\""
+  echo
+  echo "# Template: MySQL"
+  echo "template_default_mysql=common-mysql"
+  echo "template_default_mysql_host=\"${mysql_host}\""
+  echo "template_default_mysql_master_username=${mysql_admin}"
+  echo "template_default_mysql_master_password_hint=\"Hint from where to get the password\""
   echo
   echo "# Template: Storage"
   echo "template_default_storage_class=REGIONAL"
@@ -97,6 +105,8 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_org_id_prod=$taito_provider_org_id"
   echo "template_default_provider_region_prod=$taito_provider_region"
   echo "template_default_provider_zone_prod=$taito_provider_zone"
+  echo "template_default_postgres_host_prod=\"${postgres_host}\""
+  echo "template_default_mysql_host_prod=\"${mysql_host}\""
   echo "template_default_storage_class_prod=REGIONAL"
   echo "template_default_storage_location_prod=$taito_provider_region"
   echo "template_default_storage_days_prod=60"

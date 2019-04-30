@@ -7,30 +7,34 @@ Taito command line interface is an extensible toolkit for developers and DevOps 
 Example:
 
 ```
-taito zone apply                   # Setup your infrastructure (e.g. Kubernetes and database clusters)
+taito zone apply                       # Setup your infrastructure based on some configuration files.
+                                       # You can copy one of the examples located in examples/zones.
+                                       # Change at least zone name (taito_zone) to avoid naming conflicts.
 ...
-taito project create: my-template  # Create a new project based on a reusable template
-taito env apply                    # Create local development environment
-taito start                        # Start the local development environment
-taito init                         # Initialize the local database with database tables and development data
-taito open client                  # Open application web UI running on local environment
-taito info                         # Show user credentials required for signing in
-taito feat: posts                  # Switch to 'feature/posts' branch (and create it, as it does not exist yet)
-taito stage                        # Stage some changes
-taito commit                       # Commit staged changes
-taito feat merge                   # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
-taito env apply:dev                # Create dev environment (TODO trigger build)
-taito env apply:test               # Create test environment
-taito env apply:prod               # Create production environment
-taito open builds                  # Show build status on browser
-taito status:dev                   # Show status of dev environment
-taito open client:dev              # Open application web UI running on dev environment
-taito logs:server:dev              # Tail logs of server container running on dev environment
-taito db connect:dev               # Connect to the dev environment database
-taito env merge:dev prod           # Merge changes between environments: dev -> test -> prod
-taito open client:prod             # Open application web UI running on prod environment
-taito open logs:prod               # Open canary environment logs on browser
-taito hours add: 6.5               # Add an work hour entry for today for the current project (to 1-N hour reporting systems)
+taito project create: server-template  # Create a new project based on a reusable template
+taito env apply                        # Create local development environment
+taito start                            # Start the local development environment
+taito init                             # Initialize the local database with database tables and development data
+taito open client                      # Open application web UI running on local environment
+taito info                             # Show user credentials required for signing in, or some other info
+taito feat: posts                      # Switch to 'feature/posts' git branch (and create it, as it does not exist yet)
+taito stage                            # Stage some changes
+taito commit                           # Commit staged changes
+taito feat merge                       # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
+taito env apply:dev                    # Create remote dev environment
+...                                    # Push some changes to dev branch to trigger the dev environment build
+taito open builds                      # Show build status on browser
+taito status:dev                       # Show status of dev environment
+taito open client:dev                  # Open application web UI running on dev environment
+taito info:dev                         # Show user credentials required for signing in, or some other info
+taito logs:server:dev                  # Tail logs of server container running on dev environment
+taito db connect:dev                   # Connect to the dev environment database
+taito env apply:prod                   # Create production environment
+taito env merge:dev prod               # Merge changes between environments: dev -> ... -> prod
+taito open builds:prod                 # Show production build status on browser
+taito open client:prod                 # Open application web UI running on prod environment
+taito open logs:prod                   # Open production environment logs on browser
+taito hours add: 6.5                   # Add an work hour entry for today for the current project (to 1-N hour reporting systems)
 ```
 
 For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt) or run `taito -h`.

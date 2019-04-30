@@ -16,7 +16,6 @@ if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
   echo "${database_instance}"
   echo "${database_name}"
   echo "${database_host}"
-  echo "${database_proxy_port}"
   echo "${database_port}"
 
 fi && \
