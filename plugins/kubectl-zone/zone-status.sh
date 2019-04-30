@@ -39,6 +39,10 @@ echo
 echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to"
 echo "make sure that a static IP has been reserved for the hostname. Then resolve"
 echo "the IP by running 'taito -- host HOSTNAME' and add a DNS entry for that IP."
+echo
+echo "TODO: For AWS use the lowest IP:s only (e.g. starting with 3.) as they seem"
+echo "to be static."
+echo
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

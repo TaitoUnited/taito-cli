@@ -74,6 +74,9 @@ if [[ "${lb_ips}" ]]; then
   echo "make sure that a static IP has been reserved for the hostname. Then resolve"
   echo "the IP by running 'taito -- host HOSTNAME' and add a DNS entry for that IP."
   echo
+  echo "TODO: For AWS use the lowest IP:s only (e.g. starting with 3.) as they seem"
+  echo "to be static."
+  echo
   echo "Press enter to continue"
   read -r
 else
