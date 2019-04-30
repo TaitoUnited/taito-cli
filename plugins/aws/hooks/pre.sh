@@ -25,7 +25,10 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
 
   # Kubernetes (EKS) authentication
   if [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]] || \
-     [[ ${taito_commands_only_chain:-} == *"helm/"* ]]; then
+     [[ ${taito_commands_only_chain:-} == *"helm/"* ]] || ( \
+        [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
+        [[ ${taito_requires_database_connection:-} == "true" ]] \
+     ); then
     echo
     echo "### aws/pre: Getting credentials for kubernetes"
     "${taito_plugin_path}/util/get-credentials-kube.sh"
