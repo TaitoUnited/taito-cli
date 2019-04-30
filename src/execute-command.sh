@@ -505,15 +505,12 @@ export taito_original_command_chain="${concat_full_chain[@]}"
 export taito_commands_only_chain="${concat_commands_only_chain[@]}"
 export taito_enabled_plugins="${enabled_plugins}"
 
-echo REQUIRES DB CONNECTION?
-echo "taito_commands_only_chain: ${taito_commands_only_chain:-}"
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
     [[ "${taito_command:-}" == "test" ]] &&
     [[ "${taito_plugins:-}" == *"gcloud-ci"* ]] &&
     [[ "${taito_mode:-}" == "ci" ]] \
   ); then
   export taito_requires_database_connection="true"
-  echo REQUIRES DB CONNECTION TRUE!
 fi
 
 # Admin credentials pre-handling
