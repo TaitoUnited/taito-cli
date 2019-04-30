@@ -18,7 +18,7 @@ taito project-docs && \
 
 echo && \
 echo "Create a new repository: ${template_dest_git}/${taito_vc_repository}" && \
-echo "The new repository must be completely empty (No README.md, LICENSE, or"
+echo "The new repository must be completely empty (no README.md, LICENSE, or"
 echo ".gitignore). After you have created the empty repository, continue by"
 echo "pressing enter." && \
 read -r && \
@@ -39,7 +39,7 @@ echo "Please wait..." && \
   git add .
   git commit -q -m 'First commit'
   git remote add origin ${template_dest_git}/${taito_vc_repository}.git
-  while ! (echo Pushing to git... && git push -q -u origin master &> /dev/null)
+  while ! (echo Pushing to git... && git push --force -q -u origin master &> /dev/null)
   do
     echo Failed pushing to ${template_dest_git}/${taito_vc_repository}.
     echo Make sure the repository exists and press enter.
@@ -54,7 +54,11 @@ echo "Please wait..." && \
   echo Press enter to open configuration instructions.
   read -r
   echo
-  taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/blob/dev/${doc}
+  if [[ \"${template_dest_git}\" == *\"bitbucket.org:\"* ]]; then
+    taito -c util-browser https://bitbucket.org/${template_default_organization}/${taito_vc_repository}/src/dev/${doc}
+  else
+    taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/blob/dev/${doc}
+  fi
 "
 
 # Call next command on command chain
