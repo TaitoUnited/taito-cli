@@ -4,6 +4,8 @@
 : "${taito_command:?}"
 : "${taito_env:?}"
 
+# kubernetes database proxy
+
 if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   proxy_running=$(pgrep "kubectl")
@@ -18,6 +20,7 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
   fi
 fi && \
 
+# kubernetes secrets
 # TODO: tighter filter
 # NOTE: ci-release is deprecated
 secret_filter=
@@ -29,7 +32,6 @@ elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
    [[ ${taito_command} == "test" ]]; then
   secret_filter="db"
 fi
-
 if [[ ${secret_filter} ]]; then
   echo
   echo "### kubectl/pre: Getting secrets from Kubernetes"

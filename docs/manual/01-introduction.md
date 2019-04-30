@@ -9,7 +9,7 @@ Example:
 ```
 taito zone apply                       # Setup your infrastructure based on some configuration files.
                                        # You can copy one of the examples located in examples/zones.
-                                       # Change at least zone name (taito_zone) to avoid naming conflicts.
+                                       # Change at least the zone name (taito_zone) to avoid naming conflicts.
 ...
 taito project create: server-template  # Create a new project based on a reusable template
 taito env apply                        # Create local development environment
