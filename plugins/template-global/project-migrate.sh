@@ -12,6 +12,12 @@ export template_dest_git="${template_default_dest_git:?}"
 
 # TODO read template_source_git from template_name if it has been given as prefix
 
+echo
+if [[ "${taito_organization_param:-}" ]]; then
+  echo "Migrating project with '${taito_organization_param:-}' settings"
+else
+  echo "Migrating project with personal default settings"
+fi
 . "${taito_plugin_path}/util/ask-details.sh"
 
 # Validate current git repository name

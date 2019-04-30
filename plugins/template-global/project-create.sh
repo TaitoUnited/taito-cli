@@ -9,6 +9,12 @@ export template_dest_git="${template_default_dest_git:?}"
 
 # TODO read template_source_git from template_name if it has been given as prefix
 
+echo
+if [[ "${taito_organization_param:-}" ]]; then
+  echo "Creating project with '${taito_organization_param:-}' settings"
+else
+  echo "Creating project with personal default settings"
+fi
 . "${taito_plugin_path}/util/ask-details.sh"
 
 echo

@@ -26,7 +26,7 @@ then
   echo
   echo "TODO: FOR NOW YOU SHOULD USE THE SAME CREDENTIALS THAT YOU USED TO CREATE"
   echo "THE KUBERNETES CLUSTER. RUN: taito -- cat /home/taito/.aws/credentials"
-  ecoh
+  echo
   echo "Press enter when done."
   read -r
 fi
