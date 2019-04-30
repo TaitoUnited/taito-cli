@@ -246,10 +246,10 @@ if [[ ${taito_project:-} ]]; then
       echo "deployment revisions${suffix}"
       echo "deployment revert${param} REVISION"
 
-      echo "artifact prepare${suffix}"
-      echo "artifact publish${suffix}"
+      echo "build prepare${suffix}"
+      echo "build publish${suffix}"
       if [[ "${env}" == "prod" ]]; then
-        echo "artifact release${suffix}"
+        echo "build release${suffix}"
       fi
 
       if [[ "${cprefix}" == "storage"* ]] || [[ "${cprefix}" == "*" ]]; then

@@ -24,7 +24,9 @@ fi && \
 # TODO: tighter filter
 # NOTE: ci-release is deprecated
 secret_filter=
-if [[ ${taito_command} == "artifact-prepare" ]] || \
+if [[ ${taito_command} == "build-prepare" ]] || \
+   [[ ${taito_command} == "build-release" ]] || \
+   [[ ${taito_command} == "artifact-prepare" ]] || \
    [[ ${taito_command} == "artifact-release" ]] || \
    [[ ${taito_command} == "ci-release" ]]; then
   secret_filter="git"

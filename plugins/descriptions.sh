@@ -380,12 +380,12 @@ if [[ ${taito_project:-} ]]; then
       echo "deployment revert${param} REVISION \
         # Revert application on ${env} environment to an another revision"
 
-      echo "artifact prepare${suffix} \
+      echo "build prepare${suffix} \
         # Prepare artifacts for ${env} environment"
-      echo "artifact publish${suffix} \
+      echo "build publish${suffix} \
         # Publish artifacts for ${env} environment"
       if [[ "${env}" == "prod" ]]; then
-        echo "artifact release${suffix} \
+        echo "build release${suffix} \
           # Release artifacts for ${env} environment"
       fi
 

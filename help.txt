@@ -130,12 +130,15 @@ QUICK EXAMPLES
     deployment revisions:dev           # Show current revision on dev env
     deployment revert:dev 20           # Revert application on dev env to revision 20
 
+  BUILDS (mainly for CI/CD only)
+    build prepare                      # Make some build preparations if required.
+    build publish:dev                  # Publish artifacts for dev environment
+    build release:prod                 # Make a release for prod environment
+
   ARTIFACTS (mainly for CI/CD only)
-    artifact prepare                   # Make some build preparations if required.
     artifact build:server:dev TAG      # Build server artifact for dev environment
     artifact push:server:dev TAG       # Push server artifact for dev environment
-    artifact publish:dev               # Publish artifacts for dev environment
-    artifact release:prod              # Make a release for prod environment
+    artifact verify:server:dev TAG     # Verify server artifact (tested -> ok)
 
   PROJECT TEMPLATES
     project create: my-template        # Create a project based on template
@@ -786,12 +789,23 @@ PROJECT: DEPLOYMENT OPERATIONS
     if revision has not been given as argument. You can see current revision
     number by running `taito deployment revisions[:ENV]`.
 
-PROJECT: ARTIFACTS (mainly for CI/CD only)
+PROJECT: BUILDS (mainly for CI/CD only)
 
-  artifact prepare
+  build prepare
     Make some preparations if required. Typically this step determines if the
     artifacts (e.g. container images) have already been built, and the new
     version number for the release by the type of commits (feature, fix, etc).
+
+  build publish:ENV
+    Publishes build artifacts (e.g. docs, test reports) to a central location.
+
+  build release:ENV
+    Release pre and post handling. These commands usually generate release notes
+    automatically and tag the git repository with a new version number.
+    TIP: Enable the 'make' or 'npm' plugin and implement release-pre:prod and
+    release-post:prod scripts in your makefile/package.json.
+
+PROJECT: ARTIFACTS (mainly for CI/CD only)
 
   artifact build:TARGET[:ENV] IMAGE_TAG [BUILD_CONTEXT] [SERVICE_DIR] [PROJECT_REPOSITORY]
     Builds image. Build context and service dir are './TARGET' by default unless
@@ -803,14 +817,8 @@ PROJECT: ARTIFACTS (mainly for CI/CD only)
   artifact push:TARGET[:ENV] IMAGE_TAG [PROJECT_REPOSITORY]
     Pushes image to image registry. Example: 'taito artifact push:client test1'.
 
-  artifact publish:ENV
-    Publishes build artifacts (e.g. docs, test reports) to a central location.
-
-  artifact release:ENV
-    Release pre and post handling. These commands usually generate release notes
-    automatically and tag the git repository with a new version number.
-    TIP: Enable the 'make' or 'npm' plugin and implement release-pre:prod and
-    release-post:prod scripts in your makefile/package.json.
+  artifact verify:TARGET[:ENV] IMAGE_TAG [PROJECT_REPOSITORY]
+    Verifies image (tested -> ok). Example: 'taito artifact verify:client test1'.
 
 PROJECT: TEMPLATES
 

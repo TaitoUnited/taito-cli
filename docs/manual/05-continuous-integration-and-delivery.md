@@ -4,7 +4,7 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 
 * `taito auth`: Authenticate (in case the CI/CD tool does not handle authentication automatically).
 * `taito deployment cancel`: Cancel old ongoing builds except this one (in case the CI/CD tool does not handle this automatically).
-* `taito artifact prepare`: Make some preparations if required. Typically this step determines if the artifacts (e.g. container images) have already been built, and the new version number for the release by the type of commits (feature, fix, etc).
+* `taito build prepare`: Make some preparations if required. Typically this step determines if the artifacts (e.g. container images) have already been built, and the new version number for the release by the type of commits (feature, fix, etc).
 * `taito install`: Install required libraries.
 * `taito scan`: Lint code, scan for code smells and vulnerabilities, etc. (TODO ship code climate with taito container?)
 * `taito docs`: Generate docs.
@@ -15,8 +15,9 @@ Taito-cli is designed so that in most cases your CI/CD tool needs only to execut
 * `taito deployment wait`: Wait for application to restart in the target environment.
 * `taito test:` Run integration and e2e tests for the target environment.
 * `taito deployment verify`: Verifies that integration and e2e tests tests went ok for the target environment. If tests failed and autorevert is enabled for the target environment, executes `taito db revert` and `taito deployment revert`.
-* `taito artifact publish`: Publish all artifacts to a central location (e.g. container images, libraries, docs, test results, test coverage reports, code quality reports).
-* `taito artifact release`: Typically generates release notes from git commits or issues, and tags the git repository with the new version number.
+* `taito build publish`: Publish all artifacts to a central location (e.g. container images, libraries, docs, test results, test coverage reports, code quality reports).
+* `taito build release`: Typically generates release notes from git commits or issues, and tags the git repository with the new version number.
+* `taito artifact verify:TARGET`: Verify artifact (tested -> ok).
 
 See [cloudbuild.yaml](https://github.com/TaitoUnited/server-template/blob/master/cloudbuild.yaml) of kubernetes-template as an example. TODO: add local testing env and reverts to the script.
 

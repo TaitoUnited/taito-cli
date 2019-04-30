@@ -5,6 +5,7 @@
 
 # NOTE: ci-release is deprecated
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
+   [[ ${taito_commands_only_chain:-} == *"build-release"* ]] || \
    [[ ${taito_commands_only_chain:-} == *"artifact-release"* ]] || \
    [[ ${taito_commands_only_chain:-} == *"ci-release"* ]]; then
   # TODO fetch db secrets only? does artifact-release still require secrets?

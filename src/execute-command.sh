@@ -154,7 +154,7 @@ if [[ ${debug} == true ]]; then
 fi
 
 # NOTE: ci-publish is deprecated
-if [[ " unit scan docs ci-publish artifact-publish " == *"${taito_command}"* ]] && \
+if [[ " unit scan docs ci-publish artifact-publish build-publish " == *"${taito_command}"* ]] && \
    [[ -f ./taitoflag_images_exist ]]; then
   echo
   echo "### Skipping ${taito_command}. Image already exists."
