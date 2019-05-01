@@ -16,7 +16,7 @@ fi
 (
   ${taito_setv:?}
   ls -1 *${file_suffix} | sed "s/${file_suffix}//" | xargs -L1 sh -c \
-    "docker load -input \${0}${file_suffix} ${image_prefix}\${0}${image_suffix}"
+    "docker load --input \${0}${file_suffix} ${image_prefix}\${0}${image_suffix}"
 )
 
 # Call next command on command chain

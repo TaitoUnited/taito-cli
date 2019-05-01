@@ -135,8 +135,10 @@ else
     )
   fi && \
   if [[ ${save_image} == "true" ]]; then
-    ${taito_setv:?}
-    docker save -output "${name}-tester.docker" "${image_tester}"
-    docker save -output "${name}.docker" "${image}"
+    (
+      ${taito_setv:?}
+      docker save --output "${name}-tester.docker" "${image_tester}"
+      docker save --output "${name}.docker" "${image}"
+    )
   fi
 fi

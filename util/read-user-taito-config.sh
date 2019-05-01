@@ -11,10 +11,20 @@ if [[ -f "${taito_home_path}/.taito/taito-config.sh" ]]; then
   . "${taito_home_path}/.taito/taito-config.sh"
   set +a
 fi
+
 # Personal organization specific configuration
-if [[ -f "${taito_home_path}/.taito/taito-config-${taito_organization_param:-}.sh" ]]; then
+org_config_file=""
+if [[ "${taito_organization_param:-}" ]]; then
+  org_config_file="${taito_home_path}/.taito/taito-config-${taito_organization_param}.sh"
+fi
+
+if [[ "$org_config_file" ]] && [[ -f "${org_config_file}" ]]; then
   set -a
   # shellcheck disable=SC1090
-  . "${taito_home_path}/.taito/taito-config-${taito_organization_param:-}.sh"
+  . "${org_config_file}"
   set +a
+elif [[ "$org_config_file" ]]; then
+  echo
+  echo "ERROR: Taito config file not found: $org_config_file"
+  exit 1
 fi

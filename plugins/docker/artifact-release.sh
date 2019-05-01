@@ -25,7 +25,7 @@ if [[ "${taito_targets:-}" != *"${name}"* ]]; then
   echo "Skipping verify: ${name} not included in taito_targets"
 else
   if [[ -f "${name}.docker" ]]; then
-    (${taito_setv:?} docker load -input "${name}.docker" "${image}")
+    (${taito_setv:?} docker load --input "${name}.docker" "${image}")
   fi
   (${taito_setv:?} docker push "${image}")
 fi && \
