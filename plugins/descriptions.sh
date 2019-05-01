@@ -455,10 +455,10 @@ if [[ ${taito_project:-} ]]; then
         # Kill the ${stack} container running on ${env} environment"
       echo "deployment build:${stack}${suffix} \
         # Build and deploy the ${stack} artifact to ${env} environment"
-      echo "artifact build:${stack}${suffix} \
-        # Build ${stack} artifact for ${env} environment"
-      echo "artifact push:${stack}${suffix} \
-        # Push ${stack} artifact for ${env} environment"
+      echo "artifact prepare:${stack}${suffix} \
+        # Prepare ${stack} artifact for ${env} environment"
+      echo "artifact release:${stack}${suffix} \
+        # Release ${stack} artifact for ${env} environment"
     done
 
     # Links

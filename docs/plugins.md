@@ -39,7 +39,7 @@ Build tool plugins typically implement the following:
 
 Plugins:
 
-* [docker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker/README.md): Build and push Docker container images using the `taito artifact build` and `taito artifact push` commands.
+* [docker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker/README.md): Build and push Docker container images using the `taito artifact prepare` and `taito artifact release` commands.
 * [helm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm/README.md): Manage Helm deployments on Kubernetes using the `taito deployment *` commands.
 * [make](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/make/README.md): Execute make scripts with taito-cli.
 * [npm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/npm/README.md): Execute npm scripts with taito-cli.

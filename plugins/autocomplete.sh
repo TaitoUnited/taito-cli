@@ -296,8 +296,8 @@ if [[ ${taito_project:-} ]]; then
       echo "copy from:${stack}${param} SOURCE_PATH DESTINATION_PATH"
       echo "kill:${stack}${suffix}"
       echo "deployment build:${stack}${suffix}"
-      echo "artifact build:${stack}${suffix}"
-      echo "artifact push:${stack}${suffix}"
+      echo "artifact prepare:${stack}${suffix}"
+      echo "artifact release:${stack}${suffix}"
     done
 
     # Links
