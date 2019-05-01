@@ -13,11 +13,14 @@ else
   image_suffix="TODO"
 fi
 
-(
-  ${taito_setv:?}
-  ls -1 *${file_suffix} | sed "s/${file_suffix}//" | xargs -L1 sh -c \
-    "docker load --input \${0}${file_suffix} ${image_prefix}\${0}${image_suffix}"
-)
+files=$(ls -1 *${file_suffix})
+if [[ "$files" ]]; then
+  (
+    ${taito_setv:?}
+    ls -1 *${file_suffix} | sed "s/${file_suffix}//" | xargs -L1 sh -c \
+      "docker load --input \${0}${file_suffix}"
+  )
+fi
 
 # Call next command on command chain
 "${taito_util_path}/util/call-next.sh" "${@}"

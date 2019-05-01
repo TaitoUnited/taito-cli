@@ -139,6 +139,8 @@ else
       ${taito_setv:?}
       docker save --output "${name}-tester.docker" "${image_tester}"
       docker save --output "${name}.docker" "${image}"
+      pwd
+      ls *.docker
     )
   fi
 fi
