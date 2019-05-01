@@ -7,10 +7,18 @@
 
 name=${taito_target:?Target not given}
 image_tag=${1:-dry-run}
-build_context=${2}
-service_dir=${3}
-dockerfile=${4}
-image_path=${5}
+if [[ "${taito_docker_new_params:-}" == "true" ]]; then
+  save_image=${2}
+  build_context=${3}
+  service_dir=${4}
+  dockerfile=${5}
+  image_path=${6}
+else
+  build_context=${2}
+  service_dir=${3}
+  dockerfile=${4}
+  image_path=${5}
+fi
 
 # NOTE: For backwards compatibility
 if [[ "${2}" == "eu.gcr.io"* ]]; then
@@ -125,5 +133,10 @@ else
         --tag "${image_latest}" \
         "${build_context}"
     )
+  fi && \
+  if [[ ${save_image} == "true" ]]; then
+    ${taito_setv:?}
+    docker save -output "${name}-tester.docker" "${image_tester}"
+    docker save -output "${name}.docker" "${image}"
   fi
 fi

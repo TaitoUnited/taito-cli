@@ -24,11 +24,10 @@ image="${prefix}:${image_tag}"
 if [[ "${taito_targets:-}" != *"${name}"* ]]; then
   echo "Skipping verify: ${name} not included in taito_targets"
 else
-  (
-    ${taito_setv:?}
-    # push image without the -untested prefix
-    docker push "${image}"
-  )
+  if [[ -f "${name}.docker" ]]; then
+    (${taito_setv:?} docker load -input "${name}.docker" "${image}")
+  fi
+  (${taito_setv:?} docker push "${image}")
 fi && \
 
 # Call next command on command chain

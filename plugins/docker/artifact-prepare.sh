@@ -2,6 +2,7 @@
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
+export taito_docker_new_params=true
 "${taito_plugin_path}/util/build.sh" "${@}"
 "${taito_plugin_path}/util/push.sh" "${@}"
 

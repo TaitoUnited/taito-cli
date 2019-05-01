@@ -7,7 +7,15 @@
 
 name=${taito_target:?Target not given}
 image_tag=${1:?Image tag not given}
-image_path=${2}
+if [[ "${taito_docker_new_params:-}" == "true" ]]; then
+  save_image=${2}
+  build_context=${3}
+  service_dir=${4}
+  dockerfile=${5}
+  image_path=${6}
+else
+  image_path=${2}
+fi
 
 path_suffix=""
 if [[ "${name}" != "." ]]; then
