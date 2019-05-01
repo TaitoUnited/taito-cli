@@ -101,7 +101,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# to a different zone than feature, development, and testing environments,"
   echo "# configure alternative prod zone settings here."
   echo "template_default_zone_prod=$taito_zone"
-  echo "template_default_domain_prod=$taito_organization.com"
+  echo "template_default_domain_prod=$taito_default_domain"
   echo "template_default_provider_org_id_prod=$taito_provider_org_id"
   echo "template_default_provider_region_prod=$taito_provider_region"
   echo "template_default_provider_zone_prod=$taito_provider_zone"
