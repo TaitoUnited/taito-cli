@@ -44,11 +44,25 @@ You can easily run any shell command inside the taito-cli container, for example
 
 Running `taito auth:ENV` also sets the default context for currently enabled plugins. For example, if the kubectl plugin is enabled, you can run `taito auth:ENV` to set the default context for kubectl (Kubernetes cluster and namespace). After that you can execute a bunch of kubectl commands, and all of them will execute in the default context previously set by the auth command. For example: `taito -- kubectl get secrets`, `taito -- kubectl get secret my-secret -o yaml`.
 
-#### Customizing taito-cli
+#### Installing additional tools to local Taito CLI image
 
-If file `~/.taito/install.sh` exists (TODO), it will be run inside Taito CLI container as root during `taito upgrade`. You can use it to install additional tools to your Taito CLI container, or to make some personal customizations to Taito CLI behavior. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install.sh`.
+You can install additional tools to you local Taito CLI image like this:
 
-You can also use Docker Hub or some other registry to build and distribute a custom Taito CLI image that is dependent on one of the official Taito CLI images. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.
+```
+taito -r shell                             # Start shell as root user
+apt-get update                             # Retrieve new lists of packages
+apt-get install PACKAGE [PACKAGE ...]      # Install some packages
+taito util-commit                          # Commit changes to the Taito CLI image
+exit                                       # Exit Taito CLI shell
+```
+
+These changes are in effect until the next time you run `taito upgrade`. If you want to make permanent changes, put your additional installation scripts in `~/.taito/install.sh`. It will be run as root user during `taito upgrade`. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install.sh`.
+
+> TODO: Implement install.sh support.
+
+#### Building and distributing customized Taito CLI images
+
+You can use Docker Hub or some other registry to build and distribute a custom Taito CLI image that is dependent on one of the official Taito CLI images. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.
 
 #### Admin credentials
 
