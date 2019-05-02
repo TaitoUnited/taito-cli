@@ -16,7 +16,7 @@ then
   echo "Press enter to open BitBucket build pipeline management on web your web browser."
   read -r
   "${taito_cli_path}/util/browser.sh" \
-    "https://${taito_vc_repository_url:?}/addon/pipelines/home" && \
+    "https://${taito_vc_repository_url:?}/admin/addon/admin/pipelines/settings" && \
   echo "Press enter when done" && \
   read -r
 fi && \
