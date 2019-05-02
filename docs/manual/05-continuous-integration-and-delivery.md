@@ -1,6 +1,6 @@
 ## 5. Continuous integration and delivery
 
-In most cases your CI/CD tool needs only to execute a bunch of Taito CLI commands without any arguments to get the job done. Everything is already configured in taito-config.sh, and Taito CLI provides support for various infrastructures by plugins. You can also easily run any of the CI/CD steps manually from command line using *Taito CLI*. A typical CI/CD process would consist of the following steps. Run `taito -h` to see decription of the commands.
+In most cases your CI/CD tool needs only to execute a bunch of simple Taito CLI commands to get the job done. Everything is already configured in taito-config.sh, and Taito CLI provides support for various infrastructures by plugins. This means that you can also easily run any of the CI/CD steps manually from command line using *Taito CLI*. A typical CI/CD process would consist of the following steps. Run `taito -h` to see decription of the commands.
 
 ```
 # Prepare build
@@ -43,6 +43,8 @@ taito_target_env=${BRANCH/master/prod}
 . taito-config.sh
 set +a
 ```
+
+Note that the process may slightly differ depending on branch. On dev and feature branches the artifacts are usually tagged using `untested` suffix, and on master branch some additional steps are taken during `taito build release` to generate release notes, etc.
 
 ---
 
