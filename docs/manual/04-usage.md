@@ -1,4 +1,4 @@
-## 3. Usage
+## 4. Usage
 
 ### Setting up a project
 
@@ -74,4 +74,4 @@ TODO support for U2F/YubiKey?
 
 ---
 
-**Next:** [4. Configuration](04-configuration.md)
+**Next:** [5. Configuration](05-configuration.md)

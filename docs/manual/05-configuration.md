@@ -1,4 +1,4 @@
-## 4. Configuration
+## 5. Configuration
 
 By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](02-installation.md) chapter for an example of a personal configuration file.
 
@@ -261,4 +261,4 @@ See the [secret management](https://github.com/TaitoUnited/taito-cli/blob/dev/do
 
 ---
 
-**Next:** [5. Continuous integration and delivery](05-continuous-integration-and-delivery.md)
+**Next:** [6. Continuous integration and delivery](06-continuous-integration-and-delivery.md)

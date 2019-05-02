@@ -25,7 +25,8 @@ TODO: instructions
 ## TODO
 
 * Add stackdriver slack channel with terraform?
-* https://github.com/terraform-providers/terraform-provider-google/issues/3369
 * taito_zone_authorized_networks: for each in terraform 0.12 https://releases.hashicorp.com/terraform/ (
-* vertical_pod_autoscaling and kms secrets not suppoerted yet:
-https://github.com/terraform-providers/terraform-provider-google/issues/3315
+* Might cause problems on Kubernetes 1.12: https://github.com/terraform-providers/terraform-provider-google/issues/3369
+* vertical_pod_autoscaling and kms secrets not supported yet by Terraform provider:
+  - https://github.com/terraform-providers/terraform-provider-google/issues/3315
+  - https://github.com/terraform-providers/terraform-provider-google/issues/3400

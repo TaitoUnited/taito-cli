@@ -1,4 +1,4 @@
-## 6. Infrastructure management
+## 7. Infrastructure management
 
 Taito CLI provides a lightweight abstraction on top of infrastructure and configuration management tools for managing a *zone*. A zone provides basic infrastructure that your projects can rely on. It usually consists of container orchestration and database clusters, logging and monitoring systems, etc. You usually have at least two taito zones: one for development and testing purposes, and another one for production usage.
 
@@ -14,4 +14,4 @@ Do not confuse taito zones with cloud provider regions and zones. Each taito zon
 
 ---
 
-**Next:** [7. ChatOps](07-chatops.md)
+**Next:** [8. ChatOps](08-chatops.md)

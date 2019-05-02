@@ -1,4 +1,4 @@
-## 9. Custom plugins
+## 10. Custom plugins
 
 > Before implementing your own custom plugin, you should browse through existing [extensions](https://github.com/search?q=topic%3Ataito-extension&type=Repositories), as they already might provide what you are looking for.
 
@@ -174,4 +174,4 @@ TODO add documentation
 
 ---
 
-**Next:** [10. Custom project templates](10-custom-project-templates.md)
+**Next:** [11. Custom project templates](11-custom-project-templates.md)

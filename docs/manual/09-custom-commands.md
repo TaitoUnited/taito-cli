@@ -1,4 +1,4 @@
-## 8. Custom commands
+## 9. Custom commands
 
 You can run any script defined in your project root *package.json* or *makefile* with Taito CLI. Just add scripts to your file, and enable the `npm` or `make` plugin in your taito-config.sh. Thus, you can use *Taito CLI* with any project, even those that use technologies that are not supported by any of the existing Taito CLI plugins.
 
@@ -35,4 +35,4 @@ All npm commands are run inside Taito CLI by default. Use `taito-host-` prefix t
 
 ---
 
-**Next:** [9. Custom plugins](09-custom-plugins.md)
+**Next:** [10. Custom plugins](10-custom-plugins.md)

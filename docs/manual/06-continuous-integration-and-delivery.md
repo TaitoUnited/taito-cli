@@ -1,4 +1,4 @@
-## 5. Continuous integration and delivery
+## 6. Continuous integration and delivery
 
 In most cases your CI/CD tool needs only to execute a bunch of simple Taito CLI commands to get the job done. Everything is already configured in taito-config.sh, and Taito CLI provides support for various infrastructures by plugins. This means that you can also easily run any of the CI/CD steps manually from command line using *Taito CLI*. A typical CI/CD process would consist of the following steps. Run `taito -h` to see decription of the commands.
 
@@ -48,4 +48,4 @@ Note that the process may slightly differ depending on branch. On dev and featur
 
 ---
 
-**Next:** [6. Infrastructure management](06-infrastructure-management.md)
+**Next:** [7. Infrastructure management](07-infrastructure-management.md)

@@ -4,15 +4,16 @@ Table of contents:
 
 * [1. Introduction](01-introduction.md)
 * [2. Installation and upgrade](02-installation.md)
-* [3. Usage](03-usage.md)
-* [4. Configuration](04-configuration.md)
-* [5. Continuous integration and delivery](05-continuous-integration-and-delivery.md)
-* [6. Infrastructure management](06-infrastructure-management.md)
-* [7. ChatOps](07-chatops.md)
-* [8. Custom commands](08-custom-commands.md)
-* [9. Custom plugins](09-custom-plugins.md)
-* [10. Custom project templates](10-custom-project-templates.md)
-* [11. Taito-cli development](11-taito-cli-development.md)
+* [3. Quick start](03-quick-start.md)
+* [4. Usage](04-usage.md)
+* [5. Configuration](05-configuration.md)
+* [6. Continuous integration and delivery](06-continuous-integration-and-delivery.md)
+* [7. Infrastructure management](07-infrastructure-management.md)
+* [8. ChatOps](08-chatops.md)
+* [9. Custom commands](09-custom-commands.md)
+* [10. Custom plugins](10-custom-plugins.md)
+* [11. Custom project templates](11-custom-project-templates.md)
+* [12. Taito-cli development](12-taito-cli-development.md)
 
 ---
 

@@ -11,8 +11,6 @@ Example:
 ```
 taito zone apply                       # Setup your infrastructure based on some configuration files.
                                        # You can copy one of the examples located in examples/zones.
-                                       # Change at least organization details (name, abbr, and id).
-                                       # Also change the zone name (taito_zone) to avoid naming conflicts.
 ...
 taito project create: server-template  # Create a new project based on a reusable template
 taito kaboom                           # Clean start local development environment
@@ -70,7 +68,7 @@ How to implement a command:
 6. Add the plugin to [plugins.md](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) file if it is not there already.
 7. Make a pull request.
 
-For detailed instructions, see plugin development instructions on the [docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/09-custom-plugins.md) and on the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/16-creating-a-plugin.md).
+For detailed instructions, see plugin development instructions on the [docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/10-custom-plugins.md) and on the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/16-creating-a-plugin.md).
 
 ## License
 
