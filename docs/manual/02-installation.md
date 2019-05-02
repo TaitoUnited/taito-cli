@@ -39,27 +39,15 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
     #!/bin/bash
     # shellcheck disable=SC2034
 
-    # taito-cli
-    taito_global_plugins="docker-global fun-global
-      google-global gcloud-global links-global template-global"
+    # Taito CLI
+    taito_global_plugins="git-global docker-global fun-global google-global
+      gcloud-global links-global template-global"
 
-    # default zone
-    taito_zone=my-zone
-
-    # git
-    git_organization=git@github.com:MyOrganization
-
-    # google (personal settings)
-    google_authuser=
-
-    # toggl (personal settings)
-    toggl_projects="myproject:12345678 someproject:87654321"
-
-    # docker (personal settings)
+    # Docker
     # NOTE: set to true if you get networking errors when running 'taito db' commands
     docker_legacy_networking=false
 
-    # links
+    # Links
     link_global_urls="
       * home=https://www.myorganization.com
       * intra=https://intra.myorganization.com Intranet
@@ -69,89 +57,7 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
     "
 
     # --- Project template settings ---
-    # (default settings for newly created projects)
-
-    # Template: Taito CLI image
-    # TIP: Pull taito image from private registry to keep CI/CD fast.
-    template_default_taito_image=taitounited/taito-cli:latest
-    template_default_taito_image_username=
-    template_default_taito_image_password=
-    template_default_taito_image_email=
-
-    # Template: Labeling
-    template_default_zone=my-zone
-    template_default_organization=myorganization
-    template_default_organization_abbr=myorg
-
-    # Template: Domains
-    template_default_domain=dev.myorganization.com
-
-    # Template: Project defaults
-    template_default_environments="dev prod"
-
-    # Template: Cloud provider
-    template_default_provider=gcloud
-    template_default_provider_org_id=0123456789
-    template_default_provider_region=europe-west1
-    template_default_provider_zone=europe-west1-c
-
-    # Template: Git provider
-    template_default_git_provider=github.com
-    template_default_git_organization=myorganization
-    template_default_git_url=github.com/myorganization
-    template_default_source_git=git@github.com:TaitoUnited
-    template_default_dest_git=github.com/myorganization
-
-    # Template: CI/CD provider
-    template_default_ci_provider=gcloud
-    template_default_ci_deploy_with_spinnaker=false
-    template_default_container_registry=eu.gcr.io
-
-    # Template: Misc providers
-    template_default_sentry_organization=myorganization
-    template_default_appcenter_organization=myorganization
-
-    # Template: Kubernetes
-    template_default_kubernetes=my-kube
-
-    # Template: Postgres
-    template_default_postgres=my-postgres
-    template_default_postgres_host="postgres.myorganization.com"
-    template_default_postgres_master_username=postgres
-    template_default_postgres_master_password_hint="Hint where to get the password"
-
-    # Template: MySQL
-    template_default_mysql=my-mysql
-    template_default_mysql_host="mysql.myorganization.com"
-    template_default_mysql_master_username=root
-    template_default_mysql_master_password_hint="Hint where to get the password"
-
-    # Template: Storage
-    template_default_storage_class=REGIONAL
-    template_default_storage_location=europe-west1
-    template_default_storage_days=60
-
-    # Template: Backups
-    template_default_backup_location=
-    template_default_backup_days=
-
-    # Template: Production zone
-    # TIP: If you want to deploy staging, canary, and production environments
-    # to a different zone than feature, development, and testing environments,
-    # configure alternative prod zone settings here.
-    template_default_zone_prod=my-zone
-    template_default_domain_prod=myorganization.com
-    template_default_provider_org_id_prod=0123456789
-    template_default_provider_region_prod=europe-west1
-    template_default_provider_zone_prod=europe-west1-c
-    template_default_postgres_host_prod="postgres.myorganization.com"
-    template_default_mysql_host_prod="mysql.myorganization.com"
-    template_default_storage_class_prod=REGIONAL
-    template_default_storage_location_prod=europe-west1
-    template_default_storage_days_prod=60
-    template_default_backup_location_prod=europe-west1
-    template_default_backup_days_prod=60
-    template_default_monitoring_uptime_channels_prod=
+    # Define default settings for newly created projects here
     ```
 
 4. Optional steps:

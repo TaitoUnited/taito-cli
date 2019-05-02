@@ -15,17 +15,17 @@ taito zone apply                       # Setup your infrastructure based on some
                                        # Also change the zone name (taito_zone) to avoid naming conflicts.
 ...
 taito project create: server-template  # Create a new project based on a reusable template
-taito env apply                        # Create local development environment
-taito start                            # Start the local development environment
-taito init                             # Initialize the local database with database tables and development data
+taito kaboom                           # Clean start local development environment
+                                       # (Runs env apply --clean, start --clean, init --clean)
 taito open client                      # Open application web UI running on local environment
 taito info                             # Show user credentials required for signing in, or some other info
 taito feat: posts                      # Switch to 'feature/posts' git branch (and create it, as it does not exist yet)
-taito stage                            # Stage some changes
-taito commit                           # Commit staged changes
+...                                    # Make some changes
+taito stage                            # Stage all changes
+taito commit                           # Commit all staged changes
 taito feat merge                       # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
 taito env apply:dev                    # Create remote dev environment
-...                                    # Push some changes to dev branch to trigger the dev environment build
+taito push                             # Push changes to dev branch (triggers CI/CD build)
 taito open builds                      # Show build status on browser
 taito status:dev                       # Show status of dev environment
 taito open client:dev                  # Open application web UI running on dev environment
