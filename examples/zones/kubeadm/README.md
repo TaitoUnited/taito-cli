@@ -1,4 +1,4 @@
-# Kubeadm
+# Kubeadm example zone (TODO)
 
 Example for a Kubeadm-based self-managed taito zone deployed on virtual machines or dedicated servers. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
 

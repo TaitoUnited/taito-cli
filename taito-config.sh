@@ -1,6 +1,5 @@
 #!/bin/sh
 # shellcheck disable=SC2034
-: "${taito_env:?}"
 : "${taito_target_env:?}"
 
 # Taito-cli
@@ -17,6 +16,7 @@ taito_project=taito-cli
 
 # Environments
 taito_environments="dev canary prod"
+taito_env=$taito_target_env
 
 # Provider and namespaces
 taito_namespace=${taito_project}-${taito_env}

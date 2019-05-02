@@ -1,15 +1,5 @@
 # gcloud example zone
 
-TODO:
-* Add stackdriver slack channel with terraform?
-* Configure devops project
-* https://github.com/terraform-providers/terraform-provider-google/issues/3369
-* Wait for terraform 0.12 https://releases.hashicorp.com/terraform/ (for each -> taito_zone_authorized_networks)
-* Not supported yet: vertical_pod_autoscaling, kms secrets
-https://github.com/terraform-providers/terraform-provider-google/issues/3315
-
-Example for a taito zone located in Google Cloud. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
-
 ## Links
 
 [//]: # (GENERATED LINKS START)
@@ -20,7 +10,7 @@ LINKS WILL BE GENERATED HERE
 
 > You can update this section by configuring links in `taito-config.sh` and running `taito project docs`.
 
-## Interactive operations:
+## Interactive operations
 
 * `taito zone apply`: Apply infrastructure changes to the zone.
 * `taito zone status`: Show status summary of the zone.
@@ -31,3 +21,11 @@ LINKS WILL BE GENERATED HERE
 ## projects.json
 
 TODO: instructions
+
+## TODO
+
+* Add stackdriver slack channel with terraform?
+* https://github.com/terraform-providers/terraform-provider-google/issues/3369
+* taito_zone_authorized_networks: for each in terraform 0.12 https://releases.hashicorp.com/terraform/ (
+* vertical_pod_autoscaling and kms secrets not suppoerted yet:
+https://github.com/terraform-providers/terraform-provider-google/issues/3315

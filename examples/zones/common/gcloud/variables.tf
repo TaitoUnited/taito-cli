@@ -3,23 +3,18 @@
 variable "taito_organization" {
   type = "string"
 }
+
 variable "taito_zone" {
   type = "string"
 }
 
-/* Cloud provider */
+/* Providers and namespaces */
 
-variable "taito_provider" {
-  type = "string"
-}
 variable "taito_provider_org_id" {
-  type = "string"
-}
-variable "taito_provider_billing_account_id" {
   type = "string"
   default = ""
 }
-variable "taito_provider_user_profile" {
+variable "taito_provider_billing_account_id" {
   type = "string"
   default = ""
 }
@@ -31,6 +26,7 @@ variable "taito_provider_region" {
 }
 variable "taito_provider_zone" {
   type = "string"
+  default = ""
 }
 variable "taito_provider_additional_zones" {
   type = "list"
@@ -75,6 +71,14 @@ variable "taito_zone_authorized_network" {
   type = "string"
   default = "false"
 }
+variable "taito_zone_private_network" {
+  type = "string" /* bool */
+  default = "false"
+}
+variable "taito_zone_high_availability" {
+  type = "string" /* bool */
+  default = "false"
+}
 
 /* Buckets */
 
@@ -91,17 +95,9 @@ variable "taito_zone_backups_bucket" {
   default = ""
 }
 
-/* Messaging */
-/* NOTE: not required on Terraform */
-
-/* Kubernetes */
-/* NOTE: kubernetes_cluster and kubernetes_user not required on Terraform */
+/* Kubernetes settings */
 
 variable "kubernetes_name" {
-  type = "string"
-  default = ""
-}
-variable "kubernetes_version" {
   type = "string"
   default = ""
 }
@@ -122,19 +118,7 @@ variable "kubernetes_max_node_count" {
   default = 1
 }
 
-/* Helm */
-
-variable "helm_releases" {
-  type = "list"
-  default = []
-}
-
-variable "helm_nginx_ingress_replica_count" {
-  type = "string"
-  default = "1"
-}
-
-/* Postgres clusters */
+/* Postgres settings */
 
 variable "postgres_instances" {
   type = "list"
@@ -146,17 +130,12 @@ variable "postgres_tiers" {
   default = []
 }
 
-variable "postgres_sizes" {
-  type = "list"
-  default = []
-}
-
 variable "postgres_admins" {
   type = "list"
   default = []
 }
 
-/* MySQL clusters */
+/* Mysql settings */
 
 variable "mysql_instances" {
   type = "list"
@@ -168,17 +147,12 @@ variable "mysql_tiers" {
   default = []
 }
 
-variable "mysql_sizes" {
-  type = "list"
-  default = []
-}
-
 variable "mysql_admins" {
   type = "list"
   default = []
 }
 
-/* Logging */
+/* Loggins sinks */
 
 variable "logging_sinks" {
   type = "list"

@@ -1,7 +1,0 @@
-certmanager:
-  securityContext:
-    enabled: true
-  rbac:
-    create: true
-  serviceAccount:
-    create: true

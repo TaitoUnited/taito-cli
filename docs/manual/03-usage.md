@@ -60,7 +60,7 @@ These changes are in effect until the next time you run `taito upgrade`. If you 
 
 > TODO: Implement install.sh support.
 
-#### Building and distributing customized Taito CLI images
+#### Building and distributing a customized Taito CLI image
 
 You can use Docker Hub or some other registry to build and distribute a custom Taito CLI image that is dependent on one of the official Taito CLI images. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.
 

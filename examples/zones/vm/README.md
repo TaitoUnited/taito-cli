@@ -1,4 +1,4 @@
-# Virtual machines
+# Virtual machines example zone (TODO)
 
 An example for running projects directly on a virtual machine for hobby purposes. For a small amount of simple hobby projects it is more cost effective to run them on a virtual machine instead of using Kubernetes and database clusters as a service.
 

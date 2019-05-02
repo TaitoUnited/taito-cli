@@ -1,0 +1,15 @@
+replicas: 1
+timeoutClient: 180s
+timeoutClientFin: 180s
+timeoutConnect: 10s
+timeoutServer: 180s
+timeoutServerFin: 180s
+timeoutTunnel: 180s
+preResolve: 0
+forwards:
+  - name: mysql
+    containerPort: 3306
+    talk: my-zone-common-mysql.HEXCHARS.us-east-1.rds.amazonaws.com:3306
+  - name: postgres
+    containerPort: 5432
+    talk: my-zone-common-postgres.HEXCHARS.us-east-1.rds.amazonaws.com:5432
