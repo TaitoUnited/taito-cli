@@ -28,10 +28,10 @@ if [[ "${taito_targets:-}" != *"${name}"* ]]; then
 else
   if [[ -f "${name}.docker" ]]; then
     echo "Load ${name}.docker"
-    (${taito_setv:?} docker load --input "${name}.docker")
+    (${taito_setv:?}; docker load --input "${name}.docker")
   fi
   echo "Push ${image}"
-  (${taito_setv:?} docker push "${image}")
+  (${taito_setv:?}; docker push "${image}")
 fi && \
 
 # Call next command on command chain
