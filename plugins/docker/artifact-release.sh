@@ -21,12 +21,16 @@ fi
 prefix="${image_path}${path_suffix}"
 image="${prefix}:${image_tag}"
 
+echo "image: ${image}"
+
 if [[ "${taito_targets:-}" != *"${name}"* ]]; then
-  echo "Skipping verify: ${name} not included in taito_targets"
+  echo "Skipping artifact release: ${name} not included in taito_targets"
 else
   if [[ -f "${name}.docker" ]]; then
+    echo "Load ${name}.docker"
     (${taito_setv:?} docker load --input "${name}.docker")
   fi
+  echo "Push ${image}"
   (${taito_setv:?} docker push "${image}")
 fi && \
 
