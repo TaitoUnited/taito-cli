@@ -2,7 +2,7 @@
 
 By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](02-installation.md) chapter for an example of a personal configuration file.
 
-Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of kubernetes-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control. *TODO: `taito-user-config.sh` is named `taito-run-env.sh` in the current taito-cli implementation and it is used only for `docker-compose up`.*
+Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of kubernetes-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control. *TODO: `taito-user-config.sh` is named `taito-run-env.sh` in the current Taito CLI implementation and it is used only for `docker-compose up`.*
 
 Settings are defined as environment variables. If an environment variable contains multiple values, just write them using whitespace as delimiter, for example:
 
@@ -25,10 +25,10 @@ taito_target_env=$APPCENTER_BRANCH
 
 The following settings are shared among plugins. All of them are optional.
 
-* **taito_image:** Taito-cli Docker image that is used for running the taito-cli commands. The default value is `taitounited/taito-cli:latest`.
+* **taito_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `taitounited/taito-cli:latest`.
 * **taito_zone:** The default taito zone. You can usually leave this empty.
-* **taito_global_extensions:** Globally enabled taito-cli extensions. You can reference an extension by using a local file path, git repository path or an url to a **tar.gz** archive. TODO example values.
-* **taito_global_plugins:** Globally enabled taito-cli plugins.
+* **taito_global_extensions:** Globally enabled Taito CLI extensions. You can reference an extension by using a local file path, git repository path or an url to a **tar.gz** archive. TODO example values.
+* **taito_global_plugins:** Globally enabled Taito CLI plugins.
 
 [Plugins](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) named with a `-global` suffix are designed to be used globally. That is, you configure them in your personal or organizational configuration file.
 
@@ -38,10 +38,10 @@ The following settings are shared among plugins. All of them are optional.
 
 Basic settings:
 
-* **taito_image:** Taito-cli Docker image that is used for running the taito-cli commands. The default value is `taitounited/taito-cli:latest`.
-* **taito_version:** Version of the taito configuration file syntax. It is used to provide backwards compatibility in case taito-cli implementation is changed. The current version is `1`.
-* **taito_extensions:** Enabled taito-cli extensions. You can reference an extension using a local file path (relative to the project root directory), git repository path or an url to a **tar.gz** archive. TODO example values.
-* **taito_plugins:** Enabled taito-cli plugins.
+* **taito_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `taitounited/taito-cli:latest`.
+* **taito_version:** Version of the taito configuration file syntax. It is used to provide backwards compatibility in case Taito CLI implementation is changed. The current version is `1`.
+* **taito_extensions:** Enabled Taito CLI extensions. You can reference an extension using a local file path (relative to the project root directory), git repository path or an url to a **tar.gz** archive. TODO example values.
+* **taito_plugins:** Enabled Taito CLI plugins.
 
 Project labeling:
 

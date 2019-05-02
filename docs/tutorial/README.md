@@ -1,6 +1,6 @@
 # Tutorial
 
-This tutorial guides you through common software development scenarios in a chronological order. You may consider it as a chronological taito-cli manual.
+This tutorial guides you through common software development scenarios in a chronological order. You may consider it as a chronological Taito CLI manual.
 
 ## Table of contents
 
@@ -23,9 +23,9 @@ This tutorial guides you through common software development scenarios in a chro
 
 ### PART III: Customizing Taito CLI
 
-* [12. Creating a custom taito-cli command](12-creating-a-custom-command.md)
-* [13. Creating a custom taito-cli plugin](13-creating-a-custom-plugin.md)
-* [14. Creating a custom taito-cli template](14-creating-a-custom-template.md)
+* [12. Creating a custom Taito CLI command](12-creating-a-custom-command.md)
+* [13. Creating a custom Taito CLI plugin](13-creating-a-custom-plugin.md)
+* [14. Creating a custom Taito CLI template](14-creating-a-custom-template.md)
 
 ### PART IV: Infrastructure
 

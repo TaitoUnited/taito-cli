@@ -1,6 +1,6 @@
-# Taito-cli
+# Taito CLI
 
-[taito-cli website](https://github.com/TaitoUnited/taito-cli/blob/dev/www/README.md)
+[Taito CLI website](https://github.com/TaitoUnited/taito-cli/blob/dev/www/README.md)
 
 > Taito is a Finnish word meaning "ability" or "skill".
 
@@ -43,11 +43,11 @@ To get started see the [docs](https://github.com/TaitoUnited/taito-cli/tree/dev/
 
 ## Container images
 
-TODO: The default taito-cli docker image contains all the tools. Slimmed down images are optimized for CI/CD builds.
+TODO: The default Taito CLI docker image contains all the tools. Slimmed down images are optimized for CI/CD builds.
 
 ## Contributing
 
-TODO: Something about taito-cli vs external extensions.
+TODO: Something about Taito CLI vs external extensions.
 
 ## Development
 
@@ -55,14 +55,14 @@ TODO: Something about taito-cli vs external extensions.
 
 For website development, see the [WEBSITE.md](WEBSITE.md).
 
-### Taito-cli development
+### Taito CLI development
 
-Install taito-cli normally using the [installation instructions](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md). You can run a taito-cli command in development mode by using the `-d, --dev` flag (e.g. `taito -d status`). In the development mode your local taito-cli directory is mounted in the taito-cli container. If you are working with your own fork, update your PATH or taito symlink so that it points to your forked version of the taito-cli.
+Install Taito CLI normally using the [installation instructions](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md). You can run a taito command in development mode by using the `-d, --dev` flag (e.g. `taito -d status`). In the development mode your local taito-cli directory is mounted in the Taito CLI container. If you are working with your own fork, update your PATH or taito symlink so that it points to your forked version of the Taito CLI.
 
 How to implement a command:
 
 1. Fork taito-cli repository (or create a new feature branch if you have write permissions to taito-cli repository).
-2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. Try to implement one of the taito-cli prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
+2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. Try to implement one of the Taito CLI prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
 3. Add unit tests for your command. You can execute a single unit test by executing the corresponding bats file. All unit tests are run automatically on git push and during CI build, but you can also run them manually with the `taito unit` command.
 4. Make sure that the plugin description written in plugin README.md is up-to-date.
 5. If you implemented some new plugin specific commands, add the command descriptions to the help.txt file of your plugin. Also, add the plugin specific commands to `autocomplete.sh` and `descriptions.sh` files located in root of plugins directory.
@@ -73,4 +73,4 @@ For detailed instructions, see plugin development instructions on the [docs](htt
 
 ## License
 
-Taito-cli is licensed under the [MIT license](https://github.com/TaitoUnited/taito-cli/blob/master/LICENSE), and supported by [Taito United](http://taitounited.fi/).
+Taito CLI is licensed under the [MIT license](https://github.com/TaitoUnited/taito-cli/blob/master/LICENSE), and supported by [Taito United](http://taitounited.fi/).

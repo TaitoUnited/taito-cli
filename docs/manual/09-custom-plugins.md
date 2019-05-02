@@ -10,7 +10,7 @@ You can implement your plugin with almost any programming language. The only req
 
 This is how you implement your own custom plugin:
 
-1. First create a directory that works as a taito-cli extension. It is basically a collection of plugins:
+1. First create a directory that works as a Taito CLI extension. It is basically a collection of plugins:
 
     ```
     my-extension/
@@ -112,7 +112,7 @@ If your plugin needs to run some commands on host machine, execute `"${taito_cli
 
 Currently this mechanism is used  e.g. for executing docker commands on host and launching browser.
 
-### Committing changes to the taito-cli container image
+### Committing changes to the Taito CLI container image
 
 If your plugin needs to save some data permanently on the container image, execute `"${taito_cli_path}/util/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
 
@@ -141,7 +141,7 @@ If you need to alter default behaviour of a plugin in some way, you can override
 
 #### Common variables
 
-All settings defined in `taito-config.sh` are visible for plugins. See [configuration](04-configuration.md) chapter for more info. Additionally the following environment variables are defined by taito-cli:
+All settings defined in `taito-config.sh` are visible for plugins. See [configuration](04-configuration.md) chapter for more info. Additionally the following environment variables are defined by Taito CLI:
 
 * **taito_env**: The selected environment (e.g. local, feat-NAME, dev, test, stag, canary, prod)
 * **taito_target_env**: TODO ....
@@ -150,7 +150,7 @@ All settings defined in `taito-config.sh` are visible for plugins. See [configur
 * **taito_enabled_extensions**: List of all enabled extensions.
 * **taito_enabled_plugins**: List of all enabled plugins.
 * **taito_skip_override**: True if command overrides should be skipped.
-* **taito_cli_path**: Path to taito-cli root directory.
+* **taito_cli_path**: Path to Taito CLI root directory.
 * **taito_plugin_path**: Path to root directory of the current plugin.
 * **taito_project_path**: Path to project root directory.
 * **taito_command_chain**: Chain of commands to be executed next.

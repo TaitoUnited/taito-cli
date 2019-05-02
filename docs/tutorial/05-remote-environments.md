@@ -57,7 +57,7 @@ The first CI/CD build will take some time. Subsequent builds are faster as they 
 
 ### 5.3. Run integration and e2e tests manually againts the dev environment
 
-TODO some notes about docker-compose-test.yaml -> taito-cli is used as proxy to access dev database.
+TODO some notes about docker-compose-test.yaml -> Taito CLI is used as proxy to access dev database.
 
 ```bash
 taito test:dev
@@ -200,7 +200,7 @@ Advanced features (TODO not all implemented yet):
 * **Copy production data to staging**: Often it's a good idea to copy production database to staging before merging changes to the stag branch: `taito db copy between:prod:stag`, `taito storage copy between:prod:stag`. If you are sure nobody is using the production database, you can alternatively use the quick copy (`taito db copyquick between:prod:stag`), but it disconnects all other users connected to the production database until copying is finished and also requires that both databases are located in the same database cluster.
 * **Feature branch**: You can create an environment also for a feature branch: `taito env apply:f-NAME`. The feature should reside in a branch named `feature/NAME`.
 * **Revert application**: Revert application to the previous revision by running `taito deployment revert:ENV`. If you need to revert to a specific revision, check current revision by running `taito deployment revisions:ENV` first and then revert to a specific revision by running `taito deployment revert:ENV REVISION`. You can also deploy a specific version with `taito deployment deploy:ENV IMAGE_TAG|SEMANTIC_VERSION`.
-* **Debugging CI builds**: You can build and start production containers locally with the `taito start --clean --prod` command. You can also run any CI build steps defined in cloudbuild.yaml locally with taito-cli.
+* **Debugging CI builds**: You can build and start production containers locally with the `taito start --clean --prod` command. You can also run any CI build steps defined in cloudbuild.yaml locally with Taito CLI.
 
 ---
 

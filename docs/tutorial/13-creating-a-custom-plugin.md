@@ -1,8 +1,8 @@
 ## 13. Creating a custom plugin
 
-TODO Creating a taito-cli plugin.
+TODO Creating a Taito CLI plugin.
 
-TODO Also creating a custom zone? -> using taito-cli with custom infrastucture.
+TODO Also creating a custom zone? -> using Taito CLI with custom infrastucture.
 
 ---
 

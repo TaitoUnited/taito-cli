@@ -12,7 +12,7 @@ Since this is a tutorial, we can skip all preliminary planning and design, and j
 
 ### 1.2. Creating a new project based on a project template
 
-First make sure that your taito-cli is up-to-date by running `taito upgrade`. You should also make sure that [Node.js](https://nodejs.org/) and [Docker Compose](https://docs.docker.com/compose/install/) have been installed, and are up-to-date. If you haven't installed taito-cli yet, read [introduction](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/01-introduction.md) and [installation](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md) chapters of the taito-cli manual, and install taito-cli according to the instructions.
+First make sure that your Taito CLI is up-to-date by running `taito upgrade`. You should also make sure that [Node.js](https://nodejs.org/) and [Docker Compose](https://docs.docker.com/compose/install/) have been installed, and are up-to-date. If you haven't installed Taito CLI yet, read [introduction](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/01-introduction.md) and [installation](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md) chapters of the Taito CLI manual, and install Taito CLI according to the instructions.
 
 > Instead of creating a new project, you can alternatively use an existing playground project provided by your organization. You can list all playground projects with `taito open playgrounds` or `taito -o ORGANIZATION open playgrounds`. Choose the one that has been created based on the [server-template](https://github.com/TaitoUnited/server-template) and seems to be up-to-date.
 

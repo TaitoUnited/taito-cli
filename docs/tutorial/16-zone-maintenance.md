@@ -2,7 +2,7 @@
 
 > NOTE: For DevOps personnel. you can skip if using organization infrastructure.
 
-TODO taito-cli commands for maintenance:
+TODO Taito CLI commands for maintenance:
 - upgrading clusters
 - rotating secrets
 - etc.

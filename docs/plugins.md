@@ -1,6 +1,6 @@
 # Plugins
 
-This page describes all the plugins that are bundled with taito-cli by default. You may find more plugins by browsing taito-cli [extensions](extensions.md).
+This page describes all the plugins that are bundled with Taito CLI by default. You may find more plugins by browsing Taito CLI [extensions](extensions.md).
 
 ## Application control
 
@@ -19,21 +19,21 @@ Application control plugins typically implement the following commands:
 
 Plugins:
 
-* [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README.md): Manage containers running on docker-compose using taito-cli commands.
-* [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl/README.md): Manage containers running on Kubernetes using taito-cli commands.
-* [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README.md): Manage serverless workloads (containers/functions) running on Knative using taito-cli commands.
+* [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README.md): Manage containers running on docker-compose using Taito CLI commands.
+* [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl/README.md): Manage containers running on Kubernetes using Taito CLI commands.
+* [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README.md): Manage serverless workloads (containers/functions) running on Knative using Taito CLI commands.
 * [telepresence](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/telepresence/README.md): Manage microservices running locally and connected to a remote Kubernetes cluster.
-* [serverless-platform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless-platform/README.md): Manage serverless workloads (containers/functions) running on Serverless Platform using taito-cli commands.
+* [serverless-platform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless-platform/README.md): Manage serverless workloads (containers/functions) running on Serverless Platform using Taito CLI commands.
 
 > TIP: It is quite common to run docker-compose in local development and Kubernetes on server environments. You can do this by enabling the docker-compose plugin for local environment and the kubectl plugin for all other environments.
 
-> NOTE: If your application is based on technologies that are not supported by existing taito-cli plugins, you can implement the aforementioned application control taito-cli commands in *package.json*, *Makefile* or *Pipfile* of your project. See the [Build Tools](#build-tools) section for npm, make and pipenv plugin descriptions, and the [legacy-server-template](https://github.com/TaitoUnited/legacy-server-template) for some examples.
+> NOTE: If your application is based on technologies that are not supported by existing Taito CLI plugins, you can implement the aforementioned application control Taito CLI commands in *package.json*, *Makefile* or *Pipfile* of your project. See the [Build Tools](#build-tools) section for npm, make and pipenv plugin descriptions, and the [legacy-server-template](https://github.com/TaitoUnited/legacy-server-template) for some examples.
 
 ## Build tools
 
 Build tool plugins typically implement the following:
 
-* Pre-hook for running user defined scripts with taito-cli (e.g. scripts in *package.json*, *Makefile* or *Pipfile*).
+* Pre-hook for running user defined scripts with Taito CLI (e.g. scripts in *package.json*, *Makefile* or *Pipfile*).
 * `taito env apply`: Install libraries and setup git hooks.
 * Participate in the CI/CD process by implementing some of the taito commands.
 
@@ -41,17 +41,17 @@ Plugins:
 
 * [docker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker/README.md): Build and push Docker container images using the `taito artifact prepare` and `taito artifact release` commands.
 * [helm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm/README.md): Manage Helm deployments on Kubernetes using the `taito deployment *` commands.
-* [make](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/make/README.md): Execute make scripts with taito-cli.
-* [npm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/npm/README.md): Execute npm scripts with taito-cli.
-* [pipenv](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/pipenv/README.md): Execute pipenv scripts with taito-cli.
+* [make](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/make/README.md): Execute make scripts with Taito CLI.
+* [npm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/npm/README.md): Execute npm scripts with Taito CLI.
+* [pipenv](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/pipenv/README.md): Execute pipenv scripts with Taito CLI.
 * [semantic-release](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/semantic-release/README.md): Make a new release using the `taito build release` command. The [semantic-release](https://github.com/semantic-release/semantic-release) library will handle semantic versioning and release notes automatically based on your git commit messages.
 
-You typically need to implement the following taito-cli commands in *package.json*, *Makefile* or *Pipfile* of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/server-template/blob/master/package.json) of the kubernetes-template as an example.
+You typically need to implement the following Taito CLI commands in *package.json*, *Makefile* or *Pipfile* of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/server-template/blob/master/package.json) of the kubernetes-template as an example.
 
 * `taito init`: Populate data sources with example data (databases, storages).
 * `taito info`: Show info required for logging in to the application.
 * `taito unit`: Run unit tests.
-* `taito test`: Run integration and e2e tests. Taito-cli provides `taito util-test` command that may be useful for implementing these.
+* `taito test`: Run integration and e2e tests. Taito CLI provides `taito util-test` command that may be useful for implementing these.
 * `taito check deps`: Check project dependencies (available upgrades, known vulnerabilities, etc.).
 * `taito check size`: Check application size (webpack bundle size, for example).
 * `release-pre:prod` and `release-post:prod`: Execute pre- and post-tasks for a production release (execute semantic-release, for example).
@@ -94,29 +94,29 @@ Plugins:
 
 Database plugins typically implement the following commands:
 
-* `taito db *`: Manage database with taito-cli commands.
+* `taito db *`: Manage database with Taito CLI commands.
 * `taito env apply`: Create a database and database users (if not managed with terraform)
 * `taito env rotate`: Set new database user passwords (if not managed with terraform)
 * `taito env destroy`: Delete a database and database users (if not managed with terraform)
 
 Plugins:
 
-* [mysql-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/mysql-db/README.md): taito-cli support for MySQL.
-* [postgres-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/postgres-db/README.md): taito-cli support for PostgreSQL.
-* [sqitch-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sqitch-db/README.md): taito-cli support for Sqitch.
+* [mysql-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/mysql-db/README.md): Taito CLI support for MySQL.
+* [postgres-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/postgres-db/README.md): Taito CLI support for PostgreSQL.
+* [sqitch-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sqitch-db/README.md): Taito CLI support for Sqitch.
 
 ## Hour reporting
 
 Hour reporting plugins typically implement the following commands:
 
-* `taito hours *`: Hour reporting with taito-cli commands.
+* `taito hours *`: Hour reporting with Taito CLI commands.
 
 Plugins:
 
-* [jira-tempo](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jira-tempo/README.md): taito-cli support for JIRA Tempo.
-* [toggl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/toggl/README.md): taito-cli support for Toggl.
+* [jira-tempo](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jira-tempo/README.md): Taito CLI support for JIRA Tempo.
+* [toggl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/toggl/README.md): Taito CLI support for Toggl.
 
-TIP: You can report your work hours to multiple hour reporting systems at once with a single taito-cli command. You just need to enable multiple hour reporting plugins. For example, if one of the plugins should always be enabled and the other one only when you are working with a certain project, you can enable one plugin globally in you personal `taito-config.sh` file, and the other one in the `taito-config.sh` file of the project. On the other hand, if both plugins should be enabled when you are working for a certain organization, you can enable both plugins in the `taito-config.sh` file of the organization.
+TIP: You can report your work hours to multiple hour reporting systems at once with a single Taito CLI command. You just need to enable multiple hour reporting plugins. For example, if one of the plugins should always be enabled and the other one only when you are working with a certain project, you can enable one plugin globally in you personal `taito-config.sh` file, and the other one in the `taito-config.sh` file of the project. On the other hand, if both plugins should be enabled when you are working for a certain organization, you can enable both plugins in the `taito-config.sh` file of the organization.
 
 ## Infrastructure management for projects
 
@@ -134,7 +134,7 @@ Plugins:
 
 Zone infrastructure management plugins typically implement the following commands:
 
-* `taito zone *`: Manage zone with taito-cli commands.
+* `taito zone *`: Manage zone with Taito CLI commands.
 
 Tool plugins:
 
@@ -153,17 +153,17 @@ Cloud provider plugins:
 
 Issue management plugins typically implement the following commands:
 
-* `taito issue *`: Issue management with taito-cli commands.
+* `taito issue *`: Issue management with Taito CLI commands.
 
 Plugins:
 
-* [github-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-issues/README.md): taito-cli support for GitHub issues.
-* [gitlab-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-issues/README.md): taito-cli support for GitLab issues.
-* [jira-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jira-issues/README.md): taito-cli support for JIRA issues.
+* [github-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-issues/README.md): Taito CLI support for GitHub issues.
+* [gitlab-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-issues/README.md): Taito CLI support for GitLab issues.
+* [jira-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jira-issues/README.md): Taito CLI support for JIRA issues.
 
 ## Miscellaneous
 
-* [basic](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/basic/README.md): The basic plugin is always enabled. It implements some of the basic taito-cli functionality like `taito --help`, `taito --readme` and `taito --trouble`.
+* [basic](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/basic/README.md): The basic plugin is always enabled. It implements some of the basic Taito CLI functionality like `taito --help`, `taito --readme` and `taito --trouble`.
 * [docker-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-global/README.md): Clean up your Docker with the `taito workspace clean` and `taito workspace kill` commands.
 * [fun-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/fun-global/README.md): Some funny commands just for fun.
 * [google-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/google-global/README.md): Adds `?authuser=N` to all google.com links based on your personal `taito-config.sh` file.
@@ -223,7 +223,7 @@ Plugins:
 
 Service plugins typically implement the following commands:
 
-* TODO taito-cli commands for managing services
+* TODO Taito CLI commands for managing services
 
 Plugins:
 
@@ -238,17 +238,17 @@ Storage plugins typically implement the following commands:
 
 Plugins:
 
-* [aws-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-storage/README.md): taito-cli support for AWS storage buckets (S3).
-* [azure-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-storage/README.md): taito-cli support for Azure storage buckets.
-* [gcloud-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-storage/README.md): taito-cli support for Google Cloud storage buckets.
+* [aws-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-storage/README.md): Taito CLI support for AWS storage buckets (S3).
+* [azure-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-storage/README.md): Taito CLI support for Azure storage buckets.
+* [gcloud-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-storage/README.md): Taito CLI support for Google Cloud storage buckets.
 
 ## Version control
 
 Version control plugins typically implement the following commands:
 
-* `taito env`: Version control commands for taito-cli (manage environment, feature and hotfix branches).
-* `taito feat`: Version control commands for taito-cli (manage environment, feature and hotfix branches).
-* `taito commit`: Version control commands for taito-cli (manage environment, feature and hotfix branches).
+* `taito env`: Version control commands for Taito CLI (manage environment, feature and hotfix branches).
+* `taito feat`: Version control commands for Taito CLI (manage environment, feature and hotfix branches).
+* `taito commit`: Version control commands for Taito CLI (manage environment, feature and hotfix branches).
 
 Plugins:
 

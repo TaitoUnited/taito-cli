@@ -6,7 +6,7 @@ TODO scrum + kanban + safe references.
 
 ### 4.1. Issues
 
-Whether you are working alone or as a team, it's best to document, coordinate and prioritize the work somehow. Taito-cli provides you commands that you can use to quickly manage issues directly from command line.
+Whether you are working alone or as a team, it's best to document, coordinate and prioritize the work somehow. Taito CLI provides you commands that you can use to quickly manage issues directly from command line.
 
 Try the following commands. Note that the given issue title don't have to be an exact match. If no exact match is found, command finds the closest matching issue title and confirms that it is the correct issue.
 
@@ -42,7 +42,7 @@ TODO autocomplete at least for status, labels and personnel?
 
 ### 4.2. Hour reporting
 
-You can also do work hour reporting with taito-cli directly from command line. This is especially handy if you need to enter the same hour entries to multiple hour reporting systems. With taito-cli you can input your work hours to multiple systems at once with a single command. You just need to enable multiple taito-cli hour reporting plugins in your project `taito-config.sh`.
+You can also do work hour reporting with Taito CLI directly from command line. This is especially handy if you need to enter the same hour entries to multiple hour reporting systems. With Taito CLI you can input your work hours to multiple systems at once with a single command. You just need to enable multiple Taito CLI hour reporting plugins in your project `taito-config.sh`.
 
 Try the following commands:
 

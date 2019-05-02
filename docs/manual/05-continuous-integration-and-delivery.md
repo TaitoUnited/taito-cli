@@ -1,6 +1,6 @@
 ## 5. Continuous integration and delivery
 
-In most cases your CI/CD tool needs only to execute a bunch of Taito CLI commands without any arguments to get the job done. Everything is already configured in taito-config.sh, and Taito CLI provides support for various infrastructures by plugins. You can also run any of the steps manually from command line using *Taito CLI*. A typical CI/CD process would consist of the following steps. Run `taito -h` to see decription of the commands.
+In most cases your CI/CD tool needs only to execute a bunch of Taito CLI commands without any arguments to get the job done. Everything is already configured in taito-config.sh, and Taito CLI provides support for various infrastructures by plugins. You can also easily run any of the CI/CD steps manually from command line using *Taito CLI*. A typical CI/CD process would consist of the following steps. Run `taito -h` to see decription of the commands.
 
 ```
 # Prepare build
@@ -35,7 +35,7 @@ fail:
 - taito db revert:$BITBUCKET_BRANCH $COMMIT_SHA
 ```
 
-If you for some reason cannot use Taito CLI in your CI/CD pipeline, you can easily implement the CI/CD steps yourself. First run each step manually with the verbose option (`taito -v`) to see the commands that Taito CLI executes. Then implement your CI/CD script based on those commands. You can also use `taito-config.sh` environment variables in your CI/CD script:
+If you for some reason cannot use Taito CLI in your CI/CD pipeline, you can easily implement the CI/CD steps yourself. First run each step manually with the verbose option (`taito -v`) to see the commands that Taito CLI executes under the hood. Then implement your CI/CD script based on those commands. You can also use `taito-config.sh` environment variables in your CI/CD script:
 
 ```
 set -a

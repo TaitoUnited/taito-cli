@@ -28,7 +28,7 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
     git checkout master
     ```
 
-2. Symlink the file named **taito** to your PATH. It's a bash script that runs taito-cli as a Docker container. For example:
+2. Symlink the file named **taito** to your PATH. It's a bash script that runs Taito CLI as a Docker container. For example:
 
     ```
     sudo ln -s /home/myname/projects/taito-cli/taito /usr/local/bin/taito
@@ -157,7 +157,7 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
 4. Optional steps:
 
     * Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
-    * Install taito-cli plugin for your editor (TODO: not implemented yet): [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
+    * Install Taito CLI plugin for your editor (TODO: not implemented yet): [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
 
 5. Try it:
 
@@ -165,7 +165,7 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
 
 ### Upgrade
 
-You can upgrade taito-cli and its extensions anytime by running `taito upgrade`.
+You can upgrade Taito CLI and its extensions anytime by running `taito upgrade`.
 
 ---
 

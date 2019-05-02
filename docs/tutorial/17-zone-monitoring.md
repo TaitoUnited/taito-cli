@@ -2,7 +2,7 @@
 
 > NOTE: For DevOps personnel. you can skip if using organization infrastructure.
 
-TODO taito-cli commands for monitoring, anomaly detection, etc.
+TODO Taito CLI commands for monitoring, anomaly detection, etc.
 
 ---
 

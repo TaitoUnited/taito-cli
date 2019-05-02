@@ -1,6 +1,6 @@
 ## 3. Version control
 
-Taito-cli provides some version control commands that make it easier for you to follow commonly defined version control conventions. An organization may also override the default version control conventions with a custom taito-cli plugin.
+Taito CLI provides some version control commands that make it easier for you to follow commonly defined version control conventions. An organization may also override the default version control conventions with a custom Taito CLI plugin.
 
 > All commit messages must be structured according to the [Angular git commit convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines) (see also [Conventional Commits](http://conventionalcommits.org/)). This is because application version number and release notes are generated automatically for production release by the [semantic-release](https://github.com/semantic-release/semantic-release) library.
 
@@ -12,7 +12,7 @@ If you would rather use GUI tools or git commands for managing your branches, yo
 taito conventions
 ```
 
-The aforementioned command should display the following version control conventions defined by taito-cli, unless your organization has overridden some of them.
+The aforementioned command should display the following version control conventions defined by Taito CLI, unless your organization has overridden some of them.
 
 ```
 Environment branches:
@@ -36,7 +36,7 @@ Hotfix branches:
 - TODO
 ```
 
-There is a lot to remember. However, if you use taito-cli for managing your branches, you don't have to remember all these conventions.
+There is a lot to remember. However, if you use Taito CLI for managing your branches, you don't have to remember all these conventions.
 
 ##### TODO COMMIT MESSAGES!
 
