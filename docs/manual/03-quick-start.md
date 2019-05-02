@@ -57,7 +57,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     taito env apply:dev
     ```
 
-2. Trigger build by committing and pushing changes to dev branch (you can do this with git tools also):
+2. Trigger build by committing and pushing changes to dev branch (you can do this with git tools also). Note that you should write your commit message according to [Conventional Commits](https://www.conventionalcommits.org):
 
     ```
     taito stage
