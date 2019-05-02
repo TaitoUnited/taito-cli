@@ -1,4 +1,4 @@
-# VMware example zone (TODO)
+# VMware Cloud example zone (TODO)
 
 Example for a taito zone located in VMware Cloud. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
 

@@ -1,4 +1,4 @@
-# gcloud example zone
+# Google Cloud example zone
 
 ## Links
 

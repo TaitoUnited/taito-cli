@@ -6,8 +6,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_vc_repository:?}"
 : "${template_dest_git:?}"
-# TODO: separate setting for git organization
-: "${template_default_organization:?}"
+: "${template_default_git_url:?}"
 
 # Execute create script of template
 "${taito_plugin_path}/util/init.sh" "create" && \
@@ -55,9 +54,9 @@ echo "Please wait..." && \
   read -r
   echo
   if [[ \"${template_dest_git}\" == *\"bitbucket.org:\"* ]]; then
-    taito -c util-browser https://bitbucket.org/${template_default_organization}/${taito_vc_repository}/src/dev/${doc}
+    taito -c util-browser https://${template_default_git_url}/${taito_vc_repository}/src/dev/${doc}
   else
-    taito -c util-browser https://github.com/${template_default_organization}/${taito_vc_repository}/blob/dev/${doc}
+    taito -c util-browser https://${template_default_git_url}/${taito_vc_repository}/blob/dev/${doc}
   fi
 "
 

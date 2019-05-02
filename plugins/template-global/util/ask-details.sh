@@ -27,7 +27,7 @@ echo "No special characters, only alphabets!"
 echo
 echo "1) Company (e.g. 'seedi')?"
 read -r taito_company
-if ! [[ "${taito_company}" =~ ^[a-z]+$ ]] || \
+if ! [[ "${taito_company}" =~ ^[a-z][a-z1-9]+$ ]] || \
    [[ ${#taito_company} -gt 14 ]]; then
   echo "ERROR: invalid value or too long"
   exit 1
@@ -35,7 +35,7 @@ fi
 echo
 echo "2) Optional: Product family (e.g. 'merri')?"
 read -r taito_family
-if ! [[ "${taito_family}" =~ ^[a-z]*$ ]] || \
+if ! [[ "${taito_family}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
    [[ ${#taito_family} -gt 14 ]]; then
   echo "ERROR: invalid value or too long"
   exit 1
@@ -43,7 +43,7 @@ fi
 echo
 echo "3) Application name (e.g. 'chat')?"
 read -r taito_application
-if ! [[ "${taito_application}" =~ ^[a-z]+$ ]] || \
+if ! [[ "${taito_application}" =~ ^[a-z][a-z1-9]+$ ]] || \
    [[ ${#taito_application} -gt 14 ]]; then
   echo "ERROR: invalid value or too long"
   exit 1
@@ -51,7 +51,7 @@ fi
 echo
 echo "4) Optional: implementation suffix (e.g. 'api', 'gui', ...)"
 read -r taito_suffix # TODO application_suffix
-if ! [[ "${taito_suffix}" =~ ^[a-z]*$ ]] || \
+if ! [[ "${taito_suffix}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
    [[ ${#taito_suffix} -gt 10 ]]; then
   echo "ERROR: invalid value or too long"
   exit 1
