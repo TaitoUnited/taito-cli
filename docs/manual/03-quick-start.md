@@ -11,7 +11,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     cd my-zone
     ```
 
-2. Edit the `taito-config.sh` from located in my-zone folder. Change at least the following settings, if such settings exist in the file:
+2. Edit the `taito-config.sh` located in my-zone folder. Change at least the following settings, if such settings exist in the file:
 
     - taito_organization
     - taito_organization_abbr
@@ -24,7 +24,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
 
 3. Create the infrastructure by running `taito zone apply` and follow instructions.
 
-4. Display project template settings by running `taito project settings`. Copy-paste these settings to your `~/.taito/taito-config.sh` file.
+4. Display project template settings by running `taito project settings` and copy-paste the settings to your `~/.taito/taito-config.sh` file.
 
 ### Setting up a new project
 
@@ -115,7 +115,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     taito env apply:prod
     ```
 
-2. Merge changes between environments: dev -> ... -> prod (you can do this with git tools also, but always use fast-forward when merging between environment branches):
+2. Merge changes between environments: `dev -> ... -> prod` (you can do this with git tools also, but always use fast-forward when merging between environment branches):
 
     ```
     taito env merge:dev prod
@@ -135,7 +135,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
 
 #### More taito commands
 
-Run `taito -h` to show more taito commands that you can use. DEVELOPMENT.md file located on you project folder might also be useful.
+Run `taito -h` to show more taito commands that you can use. DEVELOPMENT.md file located on project root folder might also be useful.
 
 ---
 

@@ -1,7 +1,24 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
+: "${taito_command:?}"
 
+# Automatic authentication on 'env apply'
+if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
+  echo
+  echo "### gcloud/pre"
+  "${taito_plugin_path}/util/auth.sh"
+fi && \
+
+# Kubernetes credentials for ci
+if [[ "${taito_mode:-}" == "ci" ]] && \
+   [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]]; then
+  echo
+  echo "### gcloud/pre: Getting credentials for kubernetes"
+  "${taito_plugin_path}/util/get-credentials-kube.sh"
+fi && \
+
+# Database proxy
 if [[ ${gcloud_db_proxy_enabled:-} != "false" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
@@ -15,13 +32,7 @@ if [[ ${gcloud_db_proxy_enabled:-} != "false" ]] && \
   fi
 fi && \
 
-if [[ "${taito_mode:-}" == "ci" ]] && \
-   [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]]; then
-  echo
-  echo "### gcloud/pre: Getting credentials for kubernetes"
-  "${taito_plugin_path}/util/get-credentials-kube.sh"
-fi && \
-
+# Create new Google project on env apply
 if [[ $taito_command == "env-apply" ]] && \
    [[ ${taito_resource_namespace:-} ]] && \
    [[ ${taito_commands_only_chain:-} == *"terraform/"* ]] && \
