@@ -48,15 +48,15 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     taito open client
     ```
 
-#### Remote dev environment
+#### Development environment (dev)
 
-1. Create remote dev environment:
+1. Create dev environment:
 
     ```
     taito env apply:dev
     ```
 
-2. Trigger build by committing and pushing changes to dev branch (you can also use normal git commands instead):
+2. Trigger build by committing and pushing changes to dev branch (you can do this with git tools also):
 
     ```
     taito stage
@@ -94,19 +94,19 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     taito logs:server:dev
     ```
 
-8. Connect to the dev environment database:
-
-    ```
-    taito db connect:dev
-    ```
-
-9. Initialize dev environment database with some development data:
+8. Initialize dev environment database with some development data:
 
     ```
     taito init:dev
     ```
 
-#### Production environment
+9. Connect to the dev environment database:
+
+    ```
+    taito db connect:dev
+    ```
+
+#### Production environment (prod)
 
 1. Create production environment:
 
@@ -114,13 +114,13 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     taito env apply:prod
     ```
 
-2. Merge changes between environments: dev -> ... -> prod:
+2. Merge changes between environments: dev -> ... -> prod (you can do this with git tools also, but always use fast-forward when merging between environment branches):
 
     ```
     taito env merge:dev prod
     ```
 
-3. Show production environment build status on browser
+3. Show production environment build status on browser:
 
     ```
     taito open builds:prod
@@ -131,6 +131,10 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     ```
     taito open client:prod
     ```
+
+#### More taito commands
+
+Run `taito -h` to show more taito commands that you can use. DEVELOPMENT.md file located on you project folder might also be useful.
 
 ---
 

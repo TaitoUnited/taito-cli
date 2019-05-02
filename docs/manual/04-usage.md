@@ -1,13 +1,5 @@
 ## 4. Usage
 
-### Setting up a project
-
-TODO: A separate quick spin chapter: Quick infrastructure setup and commands example (list of commands). Also tutorial reference.
-
-If you are not working with an existing Taito CLI project, see the first chapters of [Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md) on how to create a new project, and [chapter 15. Creating a zone](https://github.com/TaitoUnited/taito-cli/blob/master/docs/tutorial/15-creating-a-zone.md) for instructions on how to setup your infrastructure.
-
-If you would rather add Taito CLI support for an existing project, see the [configuration](04-configuration.md) chapter. Note that some of the [project templates](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/templates.md##project-templates) provide instructions on how to migrate an existing project to use the template.
-
 ### The basics
 
 Taito CLI is configured with a `taito-config.sh` file placed at your project root directory. You can execute taito commands anywhere in the project directory hierarchy, that is, at the project root directory or any of its subdirectories. When you are not located inside a project directory, only global Taito CLI plugins are enabled and therefore only a small subset of taito commands are enabled.

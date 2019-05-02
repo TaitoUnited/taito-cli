@@ -40,8 +40,8 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
     # shellcheck disable=SC2034
 
     # Taito CLI
-    taito_global_plugins="git-global docker-global fun-global google-global
-      gcloud-global links-global template-global"
+    taito_global_plugins="git-global docker-global google-global gcloud-global
+      links-global template-global"
 
     # Docker
     # NOTE: set to true if you get networking errors when running 'taito db' commands
