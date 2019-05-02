@@ -2,7 +2,13 @@
 
 ## 1. Starting a new project
 
-### 1.1. Preliminary planning, design and validation
+### 1.1. Prerequisites
+
+If you haven't installed Taito CLI yet, read the [introduction](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/01-introduction.md) and [installation](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md) chapters of the Taito CLI manual, and install Taito CLI according to the instructions.
+
+If you don't have an existing infrastructure running, read the [setting up infrastructure](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md#setting-up-infrastructure) chapter of the Taito CLI manual and set up infrastucture according to the instructions.
+
+### 1.2. Preliminary planning, design and validation
 
 Normally you would start your project by doing some preliminary business modeling, project planning, and requirements engineering. However, these are out of scope for this technology oriented tutorial.
 
@@ -10,9 +16,7 @@ Based on requirements you choose your architecture and make some preliminary sof
 
 Since this is a tutorial, we can skip all preliminary planning and design, and jump right into the implementation. During implementation you iteratively and incrementally implement your application by defining detailed requirements for top priority features in your backlog, and by designing, implementing and testing each feature one by one.
 
-### 1.2. Creating a new project based on a project template
-
-First make sure that your Taito CLI is up-to-date by running `taito upgrade`. You should also make sure that [Node.js](https://nodejs.org/) and [Docker Compose](https://docs.docker.com/compose/install/) have been installed, and are up-to-date. If you haven't installed Taito CLI yet, read [introduction](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/01-introduction.md) and [installation](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md) chapters of the Taito CLI manual, and install Taito CLI according to the instructions.
+### 1.3. Creating a new project based on a project template
 
 > Instead of creating a new project, you can alternatively use an existing playground project provided by your organization. You can list all playground projects with `taito open playgrounds` or `taito -o ORGANIZATION open playgrounds`. Choose the one that has been created based on the [server-template](https://github.com/TaitoUnited/server-template) and seems to be up-to-date.
 

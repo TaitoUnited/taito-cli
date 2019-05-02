@@ -34,6 +34,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
 
     ```
     taito project create: server-template
+    cd my-project
     ```
 
 2. Clean start the local development environment:
