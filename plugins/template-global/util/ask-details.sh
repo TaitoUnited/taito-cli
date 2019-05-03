@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 : "${taito_cli_path:?}"
 : "${template_source_git:?}"
@@ -25,7 +25,7 @@ echo
 echo "NOTE: Please give a short lower case word or abbreviation for each."
 echo "No special characters, only alphabets!"
 echo
-echo "1) Company (e.g. 'seedi')?"
+echo "1) Company or customer (e.g. 'taito')?"
 read -r taito_company
 if ! [[ "${taito_company}" =~ ^[a-z][a-z1-9]+$ ]] || \
    [[ ${#taito_company} -gt 14 ]]; then
@@ -33,7 +33,7 @@ if ! [[ "${taito_company}" =~ ^[a-z][a-z1-9]+$ ]] || \
   exit 1
 fi
 echo
-echo "2) Optional: Product family (e.g. 'merri')?"
+echo "2) Optional: Product family (e.g. 'office')?"
 read -r taito_family
 if ! [[ "${taito_family}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
    [[ ${#taito_family} -gt 14 ]]; then

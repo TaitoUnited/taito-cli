@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 : "${taito_cli_path:?}"
 : "${taito_vc_repository:?}"

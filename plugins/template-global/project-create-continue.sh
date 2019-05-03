@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 . _template-config.sh
 
@@ -9,18 +9,18 @@
 : "${template_default_git_url:?}"
 
 # Execute create script of template
-"${taito_plugin_path}/util/init.sh" "create" && \
+"${taito_plugin_path}/util/init.sh" "create"
 
-rm -f ./_template-config.sh && \
+rm -f ./_template-config.sh
 
-taito project-docs && \
+taito project-docs
 
-echo && \
-echo "Create a new repository: ${template_dest_git}/${taito_vc_repository}" && \
+echo
+echo "Create a new repository: ${template_dest_git}/${taito_vc_repository}"
 echo "The new repository must be completely empty (no README.md, LICENSE, or"
 echo ".gitignore). After you have created the empty repository, continue by"
-echo "pressing enter." && \
-read -r && \
+echo "pressing enter."
+read -r
 
 doc="README.md#configuration"
 if [[ -f "DEVELOPMENT.md" ]]; then
@@ -30,7 +30,7 @@ if [[ -f "CONFIGURATION.md" ]]; then
   doc="CONFIGURATION.md"
 fi
 
-echo "Please wait..." && \
+echo "Please wait..."
 "${taito_cli_path}/util/execute-on-host-fg.sh" "
   set -e
   export GIT_PAGER=''
