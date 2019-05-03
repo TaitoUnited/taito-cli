@@ -4,7 +4,7 @@
 : "${taito_mode:?}"
 
 if [[ $taito_mode != "ci" ]] || [[ ! -d ./node_modules ]]; then
-  "${taito_plugin_path}/install.sh"
+  "${taito_plugin_path}/util/install.sh"
 fi
 
 # Call next command on command chain
