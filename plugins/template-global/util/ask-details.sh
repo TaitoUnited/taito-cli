@@ -14,18 +14,18 @@ export taito_suffix
 export taito_vc_repository
 
 echo
-echo "Repository name, namespace and labels will be constituted from the following"
-echo "details:"
+echo "Repository name, application namespace, and labels will be constituted from"
+echo "the following details:"
 echo
-echo "  1) Company"
+echo "  1) Customer: company or business unit"
 echo "  2) Product family (optional)"
 echo "  3) Application name"
 echo "  4) Implementation suffix (optional)"
 echo
 echo "NOTE: Please give a short lower case word or abbreviation for each."
-echo "No special characters, only alphabets!"
+echo "No special characters!"
 echo
-echo "1) Company or customer (e.g. 'taito')?"
+echo "1) Customer: company or business unit (e.g. 'taito')?"
 read -r taito_company
 if ! [[ "${taito_company}" =~ ^[a-z][a-z1-9]+$ ]] || \
    [[ ${#taito_company} -gt 14 ]]; then
