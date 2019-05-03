@@ -1,5 +1,7 @@
 # AWS example zone
 
+Example for a taito zone located in AWS. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
+
 ## Links
 
 [//]: # (GENERATED LINKS START)
@@ -17,8 +19,14 @@ LINKS WILL BE GENERATED HERE
 * `taito zone doctor`: Analyze and repair the zone.
 * `taito zone maintenance`: Execute supervised maintenance tasks that need to be run periodically for the zone (e.g. upgrades, secret rotation, log reviews, access right reviews).
 * `taito zone destroy`: Destroy the zone.
-* `taito project settings`: Show project template example settings for this zone.
+* `taito project settings`: Show project template settings for this zone.
 
 ## projects.json
 
 TODO: instructions
+
+## TODO
+
+* Metrics server
+* EFK
+* Prometheus

@@ -17,8 +17,8 @@ taito project-docs
 
 echo
 echo "Create a new repository: ${template_dest_git}/${taito_vc_repository}"
-echo "The new repository must be completely empty (no README.md, LICENSE, or"
-echo ".gitignore). After you have created the empty repository, continue by"
+echo "The new repository must be completely empty (no README.md, LICENSE,"
+echo "or .gitignore). After you have created the empty repository, continue by"
 echo "pressing enter."
 read -r
 

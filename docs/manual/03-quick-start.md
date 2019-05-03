@@ -28,13 +28,13 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
 
 ### Setting up a new project
 
-#### Local development environment
+#### Local development environment (local)
 
 1. Create a new project based on a reusable template:
 
     ```
     taito project create: server-template
-    cd my-project
+    cd PROJECT
     ```
 
 2. Clean start the local development environment:

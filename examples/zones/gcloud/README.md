@@ -1,5 +1,7 @@
 # Google Cloud example zone
 
+Example for a taito zone located in Google Cloud. Configure settings in `taito-config.sh` and then create the zone by running `taito zone apply`.
+
 ## Links
 
 [//]: # (GENERATED LINKS START)
@@ -17,6 +19,7 @@ LINKS WILL BE GENERATED HERE
 * `taito zone doctor`: Analyze and repair the zone.
 * `taito zone maintenance`: Execute supervised maintenance tasks that need to be run periodically for the zone (e.g. upgrades, secret rotation, log reviews, access right reviews).
 * `taito zone destroy`: Destroy the zone.
+* `taito project settings`: Show project template settings for this zone.
 
 ## projects.json
 
@@ -24,9 +27,10 @@ TODO: instructions
 
 ## TODO
 
-* Add stackdriver slack channel with terraform?
+* Add stackdriver slack channel with terraform
 * taito_zone_authorized_networks: for each in terraform 0.12 https://releases.hashicorp.com/terraform/ (
 * Might cause problems on Kubernetes 1.12: https://github.com/terraform-providers/terraform-provider-google/issues/3369
 * vertical_pod_autoscaling and kms secrets not supported yet by Terraform provider:
   - https://github.com/terraform-providers/terraform-provider-google/issues/3315
   - https://github.com/terraform-providers/terraform-provider-google/issues/3400
+* https://cloud.google.com/blog/products/networking/bringing-enterprise-network-security-controls-to-your-kubernetes-clusters-on-gke

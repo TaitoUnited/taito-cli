@@ -7,9 +7,8 @@ The template uses Docker Compose to run your application. All parts of the appli
 Start the application with the following commands:
 
 ```shell
-taito env apply     # Create local development environment
-taito start --init  # Start the local development environment and once started,
-                    # initialize database with database tables and example data
+taito kaboom        # Clean start local development environment
+                    # (Runs env apply --clean, start --clean, init --clean)
 taito open client   # Open application web user interface
 taito info          # Show info required for signing in to the application
 ```

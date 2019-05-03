@@ -12,6 +12,19 @@ You can manage your zone using the following commands:
 
 Do not confuse taito zones with cloud provider regions and zones. Each taito zone may use multiple cloud provider regions and zones to achieve high availability and regional resiliency. Taito zones are created mainly based on maintainability and security concerns instead.
 
+You can use one of the examples located in [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones) as a starting point for your infrastructure, and customize it according to your own requirements. For security critical needs you should also consider some additional steps, for example:
+
+- Backup all data to another cloud provider.
+- Setup a secure bastion host for accessing critical resources and leave audit trail of all connections.
+- Limit also egress traffic in addition to ingress traffic, and monitor suspicious connection attempts.
+- Limit Kubernetes network traffic with Kubernetes networking rules.
+- Limit Kubernetes namespace access with RBAC.
+- Use personal accounts for accessing databases to leave a clear audit trail.
+- Reserve a separate IP address and load balancer for each domain name.
+- Prepare for high usage spikes with autoscaling and CDN.
+- Prepare for DDoS attacks with services like Cloudflare.
+- Use monitoring and anomaly detection tools for detecting and blocking hacking attempts.
+
 ---
 
 **Next:** [8. ChatOps](08-chatops.md)

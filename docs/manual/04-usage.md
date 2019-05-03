@@ -30,7 +30,7 @@ You can execute project specific commands also outside the project directory wit
 
 #### Running shell commands
 
-You can easily run any shell command inside the Taito CLI container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito shell`. Thus, you never need to install any infrastructure specific tools on your own operating system. If you need some tools that Taito CLI container doesn't provide by default, see [customizing Taito CLI](#customizing-taito-cli).
+You can easily run any shell command inside the Taito CLI container, for example: `taito -- kubectl get pods --namespace my-project-dev`. You can also start an interactive shell inside the container: `taito shell`. Thus, you never need to install any infrastructure specific tools on your own operating system.
 
 #### Setting current context for shell commands
 
@@ -38,7 +38,7 @@ Running `taito auth:ENV` also sets the default context for currently enabled plu
 
 #### Installing additional tools to local Taito CLI image
 
-You can install additional tools to you local Taito CLI image like this:
+You can install additional tools to your local Taito CLI image like this:
 
 ```
 taito -r shell                             # Start shell as root user
@@ -54,13 +54,13 @@ These changes are in effect until the next time you run `taito upgrade`. If you 
 
 #### Building and distributing a customized Taito CLI image
 
-You can use Docker Hub or some other registry to build and distribute a custom Taito CLI image that is dependent on one of the official Taito CLI images. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.
+You can use Docker Hub or some other container registry to build and distribute a custom Taito CLI image. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.
 
 #### Admin credentials
 
 Many tools require you to authenticate only once and then you can run any command without supplying your password again. For this reason Taito CLI supports a separate admin account for accessing critical resources.
 
-With the `-a, --admin` option you specify that you would like to run the given command as admin. For example, you can authenticate as admin by running `taito -a auth:prod` and then execute a command as admin by running `taito -a status:prod`. Your admin credentials are stored in Taito CLI container image using `aes-256-cbc` encryption and you need to enter the decryption key everytime you execute a command as admin. Keep the decryption key in a safe place.
+With the `-a, --admin` option you specify that you would like to run the given command as admin. For example, you can authenticate as admin by running `taito -a auth:prod` and then execute a command as admin by running `taito -a status:prod`. Your admin credentials are stored in Taito CLI container image using `aes-256-cbc` encryption and you need to enter the decryption key every time you execute a command as admin. Keep the decryption key in a safe place.
 
 TODO support for U2F/YubiKey?
 

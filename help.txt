@@ -3,7 +3,7 @@ TAITO-CLI
 
 QUICK EXAMPLES
 
-  LOCAL DEVELOPMENT
+  LOCAL DEVELOPMENT                    (TODO Split to subsections)
     kaboom                             # Full clean start (env apply, start, init with --clean)
     env apply                          # Configure local environment
     start                              # Start the application
@@ -54,7 +54,7 @@ QUICK EXAMPLES
     build                              # Build project (if not built automatically by 'taito start')
     run                                # Run the application (if not run automatically by 'taito start')
 
-  ACCESSING A REMOTE ENVIRONMENT
+  ACCESSING A REMOTE ENVIRONMENT       (TODO Split to subsections)
     open client:dev                    # Open application GUI on browser
     open admin:dev                     # Open admin GUI on browser
     info:dev                           # Show information required for signing in
@@ -197,7 +197,7 @@ QUICK EXAMPLES
     taito util commit                  # Commit changes to Taito CLI
     taito -q util random string: 30    # Generate a random string
     taito -q util random words: 3      # Generate random words
-    taito util test:client:dev jest    # Run all tests of jest test suite
+    taito util test:client:dev jest    # Run all tests of 'jest' test suite
 
 OPTIONS
 

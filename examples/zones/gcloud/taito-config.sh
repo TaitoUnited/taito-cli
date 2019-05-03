@@ -4,7 +4,8 @@
 # Taito CLI
 taito_version=1
 taito_type=zone
-taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone links-global"
+taito_extensions="./extension"
+taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone links-global custom"
 # taito_mounts="${PWD}/../common:/common"
 
 # Labeling
