@@ -29,7 +29,7 @@ if [[ ${check} == "" ]]; then
 else
   echo "Image exists"
   taito_images_exist=true
-  cat "exist" > ./taitoflag_images_exist
+  echo "exist" > ./taitoflag_images_exist
 fi
 
 # Call next command on command chain
