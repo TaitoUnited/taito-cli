@@ -3,6 +3,7 @@
 : "${taito_project:?}"
 : "${taito_project_path:?}"
 : "${taito_image_registry:?}"
+: "${taito_target_env:?}"
 : "${taito_env:?}"
 
 name=${taito_target:?Target not given}
@@ -80,10 +81,10 @@ else
       if [[ $pulled == "true" ]]; then
         break
       elif [[ $count -gt 80 ]]; then
-        echo "- ERROR: Image ${image_tag} not found from registry even after multiple retries. Not building a new image because ci_exec_build is set to false for this environment."
+        echo "- ERROR: Image ${image_tag} not found from registry even after multiple retries. Not building a new image because ci_exec_build is set to '${ci_exec_build}' for '${taito_target_env}' environment."
         exit 1
       else
-        echo "- WARNING: Image ${image_tag} not found from registry. Not building a new image because ci_exec_build is set to false for this environment. Retry in 30 secs."
+        echo "- WARNING: Image ${image_tag} not found from registry. Not building a new image because ci_exec_build is set to '${ci_exec_build}' for '${taito_target_env}' environment. Retry in 30 secs."
         sleep 30
       fi
     done
