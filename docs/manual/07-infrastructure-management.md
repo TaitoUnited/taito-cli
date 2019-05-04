@@ -9,6 +9,7 @@ You can manage your zone using the following commands:
     taito zone doctor         # Analyze and repair the zone.
     taito zone maintenance    # Execute supervised maintenance tasks interactively.
     taito zone destroy        # Destroy the zone.
+    taito project settings    # Show project template settings for the zone.
 
 Do not confuse taito zones with cloud provider regions and zones. Each taito zone may use multiple cloud provider regions and zones to achieve high availability and regional resiliency. Taito zones are created mainly based on maintainability and security concerns instead.
 
@@ -20,10 +21,11 @@ You can use one of the examples located in [examples/zones](https://github.com/T
 - Limit Kubernetes network traffic with Kubernetes networking rules.
 - Limit Kubernetes namespace access with RBAC.
 - Use personal accounts for accessing databases to leave a clear audit trail.
-- Reserve a separate IP address and load balancer for each domain name.
+- Reserve a separate IP address and load balancer for each domain or subdomain.
 - Prepare for high usage spikes with autoscaling and CDN.
 - Prepare for DDoS attacks with services like Cloudflare.
-- Use monitoring and anomaly detection tools for detecting and blocking hacking attempts.
+- Use scanners to detect vulnerabilities.
+- Use honeypots. intrusion detection systems, and anomaly detection tools for detecting and blocking hacking attempts.
 
 ---
 

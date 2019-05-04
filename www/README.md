@@ -10,11 +10,11 @@ All content can already be found from `docs` folder as markdown files.
 
 ### Tabs on top of the page
 
-* [Docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md)
-* [Tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md)
-* [Plugins](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/plugins.md)
-* [Templates](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/templates.md)
-* [Extensions](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/extensions.md)
+* [Docs](https://github.com/TaitoUnited/taito-cli/tree/master/docs/manual/README.md)
+* [Tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README.md)
+* [Plugins](https://github.com/TaitoUnited/taito-cli/tree/master/docs/plugins.md)
+* [Templates](https://github.com/TaitoUnited/taito-cli/tree/master/docs/templates.md)
+* [Extensions](https://github.com/TaitoUnited/taito-cli/tree/master/docs/extensions.md)
 * Search (optional)
 * [GitHub](https://github.com/TaitoUnited/taito-cli)
 
@@ -24,7 +24,7 @@ Big title: **Taito CLI**
 
 Subtitle: An extensible toolkit for DevOps and NoOps.
 
-Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or [see the tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md).
+Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/master/docs/manual/README.md) or [see the tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README.md).
 
 ### Slogans at the bottom of the landing page
 

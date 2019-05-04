@@ -6,7 +6,7 @@
 
 You can implement your plugin with almost any programming language. The only requirement is that your plugin provides taito command implementations as executable files. Bash is a good choice for a simple implementation that gets the job done by calling an existing command line tool. Python or JavaScript are preferred for more complex stuff, especially if you need to interract with a REST/JSON API.
 
-> See [project-and-extension](https://github.com/TaitoUnited/taito-cli/tree/dev/examples/project-and-extension) as an example. It is a project that uses a custom extension that is located in the project subdirectory. TODO examples for Python and JavaScript.
+> See [project-and-extension](https://github.com/TaitoUnited/taito-cli/tree/master/examples/project-and-extension) as an example. It is a project that uses a custom extension that is located in the project subdirectory. TODO examples for Python and JavaScript.
 
 This is how you implement your own custom plugin:
 

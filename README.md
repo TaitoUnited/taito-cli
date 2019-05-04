@@ -6,39 +6,9 @@
 
 Taito command line interface is an extensible toolkit for developers and DevOps personnel. It defines a standard set of commands that can be used in any project no matter the technology or infrastructure. Thus, developers and DevOps personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. This is made possible by shipping all required tools as a Docker container image, implementing the commands with plugins, and defining project specific settings in a configuration file. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
-Example:
+To get started see the [docs](https://github.com/TaitoUnited/taito-cli/tree/master/docs/manual/README.md) or the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README.md).
 
-```
-taito zone apply                       # Setup your infrastructure based on some configuration files.
-                                       # You can copy one of the examples located in examples/zones.
-...
-taito project create: server-template  # Create a new project based on a reusable template
-taito kaboom                           # Clean start local development environment
-                                       # (Runs env apply --clean, start --clean, init --clean)
-taito open client                      # Open application web UI running on local environment
-taito info                             # Show user credentials required for signing in, or some other info
-taito feat: posts                      # Switch to 'feature/posts' git branch (and create it, as it does not exist yet)
-...                                    # Make some changes
-taito stage                            # Stage all changes
-taito commit                           # Commit all staged changes
-taito feat merge                       # Rebase, merge and delete the 'feature/posts' branch, switch back to dev branch
-taito env apply:dev                    # Create remote dev environment
-taito push                             # Push changes to dev branch (triggers CI/CD build)
-taito open builds                      # Show build status on browser
-taito status:dev                       # Show status of dev environment
-taito open client:dev                  # Open application web UI running on dev environment
-taito info:dev                         # Show user credentials required for signing in, or some other info
-taito logs:server:dev                  # Tail logs of server container running on dev environment
-taito db connect:dev                   # Connect to the dev environment database
-taito env apply:prod                   # Create production environment
-taito env merge:dev prod               # Merge changes between environments: dev -> ... -> prod
-taito open builds:prod                 # Show production build status on browser
-taito open client:prod                 # Open application web UI running on prod environment
-taito open logs:prod                   # Open production environment logs on browser
-taito hours add: 6.5                   # Add an work hour entry for today for the current project (to 1-N hour reporting systems)
-```
-
-To get started see the [docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/README.md) or the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md). For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt) or run `taito -h`.
+For a quick example of some commands, see [3. Quick start](https://github.com/TaitoUnited/taito-cli/tree/master/docs/manual/03-quick-start.md). For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) or run `taito -h`.
 
 ## Container images
 
@@ -68,7 +38,7 @@ How to implement a command:
 6. Add the plugin to [plugins.md](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) file if it is not there already.
 7. Make a pull request.
 
-For detailed instructions, see plugin development instructions on the [docs](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/manual/10-custom-plugins.md) and on the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/16-creating-a-plugin.md).
+For detailed instructions, see plugin development instructions on the [docs](https://github.com/TaitoUnited/taito-cli/tree/master/docs/manual/10-custom-plugins.md) and on the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/16-creating-a-plugin.md).
 
 ## License
 

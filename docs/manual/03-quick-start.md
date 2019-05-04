@@ -4,7 +4,7 @@
 
 You can skip this step, if you are using Taito CLI with an existing infrastructure and you have received `template_default_*` settings for your `~/.taito/taito-config.sh` file from elsewhere.
 
-1. Copy one of the infrastructure examples from [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/dev/examples/zones):
+1. Copy one of the infrastructure examples from [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones):
 
     ```
     cp -r ~/projects/taito-cli/examples/zones/EXAMPLE my-zone
@@ -37,7 +37,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     cd PROJECT
     ```
 
-2. Clean start the local development environment:
+2. Clean start the local development environment and initialize database:
 
     ```
     taito kaboom
@@ -133,7 +133,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     taito open client:prod
     ```
 
-#### More taito commands
+### Taito command reference
 
 Run `taito -h` to show more taito commands that you can use. DEVELOPMENT.md file located on project root folder might also be useful.
 
