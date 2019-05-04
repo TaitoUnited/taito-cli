@@ -9,16 +9,16 @@ taito_plugins="terraform-zone aws-zone kubectl-zone helm-zone links-global custo
 # taito_mounts="${PWD}/../common:/common"
 
 # Labeling
-taito_organization=myorganization
-taito_organization_abbr=myorg
-taito_zone=my-zone
+taito_organization=myorganization # CHANGE
+taito_organization_abbr=myorg # CHANGE
+taito_zone=my-zone # CHANGE
 
 # Domains
 taito_default_domain=dev.myorganization.com
 
 # Cloud provider
 taito_provider=aws
-taito_provider_org_id=0123456789
+taito_provider_org_id=0123456789 # CHANGE
 # taito_provider_user_profile=$taito_organization
 taito_provider_project_id=$taito_zone
 taito_provider_region_hexchars=HEXCHARS # NOTE: determine hexhars from database endpoints
@@ -34,19 +34,19 @@ taito_ci_provider=bitbucket
 #   arn:aws:iam::012345678999:group/administrators
 #   arn:aws:iam::098765432111:user/john-doe
 # TODO: implement for AWS
-taito_zone_owners=
+taito_zone_owners= # CHANGE
 taito_zone_editors=
 taito_zone_viewers=
 taito_zone_developers=
 taito_zone_externals=
 
 # Settings
-taito_zone_devops_email=support@myorganization.com
+taito_zone_devops_email=support@myorganization.com # CHANGE
 taito_zone_backup_day_limit=60
 taito_zone_initial_database_password=VP1obkemgqGVVo0Q
 # TODO: restrict access to VPC resources on AWS
 # TODO: support multiple network addresses (requires terraform 0.12)
-taito_zone_authorized_network="123.123.123.123/32"
+taito_zone_authorized_network="123.123.123.123/32" # CHANGE
 
 # Buckets
 # NOTE: State bucket name also in terraform/main.tf file (terraform backend)

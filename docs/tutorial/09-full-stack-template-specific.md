@@ -1,4 +1,4 @@
-## 9. Kubernetes-template specific details
+## 9. full-stack-template specific details
 
 ### 9.1. Setup authentication
 
@@ -25,8 +25,6 @@ Builds take time, upgrades are tedious for the full codebase, different parts of
 (NOTE: For more complex microservice setups you may need: 16. api gateway, 17. service mesh)
 
 ### 9.6. Alternative technologies
-
-kubernetes-template-alt
 
 ---
 

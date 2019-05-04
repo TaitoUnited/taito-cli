@@ -17,7 +17,7 @@ This tutorial guides you through common software development scenarios in a chro
 * [6. Environment variables and secrets](06-env-variables-and-secrets.md)
 * [7. Databases and files](07-databases-and-files.md)
 * [8. Cloud services and Terraform](08-cloud-services-and-terraform.md)
-* [9. Kubernetes-template specific details](09-kubernetes-template-specific.md)
+* [9. full-stack-template specific details](09-full-stack-template-specific.md)
 * [10. Production setup](10-production-setup.md)
 * [11. Running in production](11-running-in-production.md)
 

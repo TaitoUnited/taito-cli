@@ -17,7 +17,7 @@ The following guidelines usually work well at least for a GUI implementation. Yo
 * A file should contain only nearby references (e.g. references to files in the same directory or in a subdirectory directly beneath it); with the exception of references to libraries and common directories, of course.
 * You cannot always follow the dependency guidelines mentioned above. If you break the guidelines, at least try to avoid making circular dependencies between directories. Also leave a `REFACTOR:` comment if the dependency is the kind that it should be refactored later.
 
-See [kubernetes-template/client/src](https://github.com/TaitoUnited/server-template/tree/master/client/src) as an example.
+See [full-stack-template/client/src](https://github.com/TaitoUnited/server-template/tree/master/client/src) as an example.
 
 TODO: DRY, KISS, YAGNI, GRASP, SOLID
 TODO: https://jaxenter.com/promising-new-metric-track-maintainability-154195.html

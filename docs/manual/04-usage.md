@@ -8,21 +8,21 @@ Run `taito -h` to show a list of all predefined commands of Taito CLI and additi
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito auth:dev`). Note that your credentials are saved on the Taito CLI container image, as you don't need them lying on your host file system anymore.
 
-[Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order, including creating your first taito-cli project and setting up your own infrastructure. You may consider it as a chronological Taito CLI manual.
+[Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order. You may consider it as a chronological Taito CLI manual.
 
-See the [DEVELOPMENT.md](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md) of the [kubernetes-template](https://github.com/TaitoUnited/server-template) as an example on how to use Taito CLI with your project.
+See the [DEVELOPMENT.md](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md) of the [full-stack-template](https://github.com/TaitoUnited/server-template) as an example on how to use Taito CLI with your project.
 
 ### Troubleshooting
 
-Run `taito --trouble`.
+Run `taito --trouble` to see troubleshooting.
 
-With the `-v` or `--verbose` flag you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
+With the `-v` or `--verbose` flag (e.g. `taito -v db connect:dev`) you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
 
 ### Advanced usage
 
 #### Multiple organizations
 
-If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `project create` command as it will tell Taito CLI to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION project create: kubernetes-template`.
+If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `project create` command as it will tell Taito CLI to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION project create: full-stack-template`.
 
 #### Project references
 
@@ -34,7 +34,13 @@ You can easily run any shell command inside the Taito CLI container, for example
 
 #### Setting current context for shell commands
 
-Running `taito auth:ENV` also sets the default context for currently enabled plugins. For example, if the kubectl plugin is enabled, you can run `taito auth:ENV` to set the default context for kubectl (Kubernetes cluster and namespace). After that you can execute a bunch of kubectl commands, and all of them will execute in the default context previously set by the auth command. For example: `taito -- kubectl get secrets`, `taito -- kubectl get secret my-secret -o yaml`.
+Running `taito auth:ENV` also sets the default context for currently enabled plugins. For example, if the kubectl plugin is enabled, you can run `taito auth:ENV` to set the default context for kubectl (Kubernetes cluster and namespace). After that you can execute a bunch of kubectl commands, and all of them will execute in the default context previously set by the auth command. For example:
+
+```
+taito auth:dev
+taito -- kubectl get secrets
+taito -- kubectl get secret my-secret -o yaml
+```
 
 #### Installing additional tools to local Taito CLI image
 

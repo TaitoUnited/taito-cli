@@ -9,17 +9,17 @@ taito_plugins="terraform-zone gcloud-zone kubectl-zone helm-zone links-global cu
 # taito_mounts="${PWD}/../common:/common"
 
 # Labeling
-taito_organization=myorganization
-taito_organization_abbr=myorg
-taito_zone=my-zone
+taito_organization=myorganization # CHANGE
+taito_organization_abbr=myorg # CHANGE
+taito_zone=my-zone # CHANGE
 
 # Domains
 taito_default_domain=dev.myorganization.com
 
 # Cloud provider
 taito_provider=gcloud
-taito_provider_org_id=0123456789 # NOTE: leave empty for 'no organization'
-taito_provider_billing_account_id=1234AB-1234AB-1234AB
+taito_provider_org_id=0123456789 # CHANGE: leave empty for 'no organization'
+taito_provider_billing_account_id=1234AB-1234AB-1234AB # CHANGE
 taito_provider_project_id=$taito_zone
 taito_provider_region=europe-west1
 taito_provider_zone=europe-west1-b
@@ -33,6 +33,7 @@ taito_ci_provider=gcloud
 # User rights, for example:
 #   user:john.doe@gmail.com
 #   domain:mydomain.com
+# CHANGE
 taito_zone_owners="
   user:john.doe@myorganization.com
 "
@@ -42,10 +43,10 @@ taito_zone_developers=
 taito_zone_externals=
 
 # Settings
-taito_zone_devops_email=support@myorganization.com
+taito_zone_devops_email=support@myorganization.com # CHANGE
 taito_zone_initial_database_password=5AeEBCnLSyagkeCQ
 # TODO: support multiple network addresses (requires terraform 0.12)
-taito_zone_authorized_network="123.123.123.123/32"
+taito_zone_authorized_network="123.123.123.123/32" # CHANGE
 taito_zone_backup_day_limit=60
 # TODO: remove these?
 taito_zone_high_availability=false

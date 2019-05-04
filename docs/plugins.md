@@ -46,7 +46,7 @@ Plugins:
 * [pipenv](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/pipenv/README.md): Execute pipenv scripts with Taito CLI.
 * [semantic-release](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/semantic-release/README.md): Make a new release using the `taito build release` command. The [semantic-release](https://github.com/semantic-release/semantic-release) library will handle semantic versioning and release notes automatically based on your git commit messages.
 
-You typically need to implement the following Taito CLI commands in *package.json*, *Makefile* or *Pipfile* of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/server-template/blob/master/package.json) of the kubernetes-template as an example.
+You typically need to implement the following Taito CLI commands in *package.json*, *Makefile* or *Pipfile* of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/server-template/blob/master/package.json) of the full-stack-template as an example.
 
 * `taito init`: Populate data sources with example data (databases, storages).
 * `taito info`: Show info required for logging in to the application.

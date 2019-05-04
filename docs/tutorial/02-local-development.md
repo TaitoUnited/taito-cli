@@ -196,7 +196,7 @@ Data changes made by a service should be atomic to preserve data integrity. That
 
 #### a) Transactions with a relational database
 
-With relational databases you can use transactions to achieve atomicity. The kubernetes-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. Kubernetes-template specific details](09-kubernetes-template-specific.md) if you'd like to know how to customize your transactions.
+With relational databases you can use transactions to achieve atomicity. The full-stack-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. full-stack-template specific details](09-full-stack-template-specific.md) if you'd like to know how to customize your transactions.
 
 Try if transactions work like they should:
 
@@ -252,7 +252,7 @@ You should not test implementation in your test scripts. Instead, you should alw
 
 #### a) Create user interface test
 
-Kubernetes-template uses [Cypress](https://www.cypress.io/) for automatic user interface tests.
+full-stack-template uses [Cypress](https://www.cypress.io/) for automatic user interface tests.
 
 1) Open the Cypress UI with `taito cypress:client` and run all existing Cypress tests by pressing the `Run all specs` -button.
 2) Create tests for you UI. See the `client/test/integration/posts.spec.js` as an example. The following resources provide some useful instructions for writing Cypress tests:
@@ -274,7 +274,7 @@ The api test examples use [Mocha](https://mochajs.org/) as testing framework and
 
 #### c) Create unit test
 
-The kubernetes-template differentiates unit tests from all other tests by using `unit` as filename suffix instead of `test`. A unit test does not require a running environment. That is, no database or external services are involved as unit test typically tests only a bunch of code. You can achieve this by [mocking](TODO-link). TODO mock link.
+The full-stack-template differentiates unit tests from all other tests by using `unit` as filename suffix instead of `test`. A unit test does not require a running environment. That is, no database or external services are involved as unit test typically tests only a bunch of code. You can achieve this by [mocking](TODO-link). TODO mock link.
 
 The unit test examples use [Mocha](https://mochajs.org/) as testing framework and [Chai](https://www.chaijs.com/) for assertions.
 

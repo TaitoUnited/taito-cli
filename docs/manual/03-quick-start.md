@@ -11,16 +11,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
     cd my-zone
     ```
 
-2. Edit the `taito-config.sh` located in my-zone folder. Change at least the following settings, if such settings exist in the file:
-
-    - taito_organization
-    - taito_organization_abbr
-    - taito_zone
-    - taito_provider_org_id
-    - taito_provider_billing_account_id
-    - taito_zone_owners
-    - taito_zone_devops_email
-    - taito_zone_authorized_network
+2. Edit the `taito-config.sh` located in my-zone folder. Change at least all settings that have marked with `# CHANGE`.
 
 3. Create the infrastructure by running `taito zone apply` and follow instructions.
 

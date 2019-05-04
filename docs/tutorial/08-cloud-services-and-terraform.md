@@ -5,4 +5,4 @@
 
 ---
 
-**Next:** [9. Kubernetes-template specific details](09-kubernetes-template-specific.md)
+**Next:** [9. full-stack-template specific details](09-full-stack-template-specific.md)
