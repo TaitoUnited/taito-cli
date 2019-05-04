@@ -10,15 +10,14 @@ Settings are defined as environment variables. If an environment variable contai
 taito_environments="dev test canary prod"
 ```
 
-TIP: You can easily use the values defined in `taito-config.sh` also in your own scripts. This example is from  [react-native-template](https://github.com/TaitoUnited/react-native-template/blob/dev/scripts/appcenter/post-build.sh#L9):
+TIP: You can easily use `taito-config.sh` settings in your own custom scripts. For example [post-build.sh](https://github.com/TaitoUnited/react-native-template/blob/dev/scripts/appcenter/post-build.sh#L9) script of react-native-template uses taito-config.sh settings to send Slack notification after App Center build has ended:
 
 ```
 # Read settings from taito-config.sh
-taito_env=$APPCENTER_BRANCH
-taito_target_env=$APPCENTER_BRANCH
-. ./taito-config.sh
-
-# Use taito-config values
+set -a
+taito_target_env=${APPCENTER_BRANCH/master/prod}
+. taito-config.sh
+set +a
 ```
 
 ### Common settings in personal or organizational configuration file

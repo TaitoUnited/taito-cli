@@ -17,7 +17,7 @@ You can use one of the examples located in [examples/zones](https://github.com/T
 
 - Backup all data to another cloud provider.
 - Setup a secure bastion host for accessing critical resources and leave audit trail of all connections.
-- Limit also egress traffic in addition to ingress traffic, and monitor suspicious connection attempts.
+- Limit egress traffic in addition to ingress traffic, and monitor suspicious connection attempts.
 - Limit Kubernetes network traffic with Kubernetes networking rules.
 - Limit Kubernetes namespace access with RBAC.
 - Use personal accounts for accessing databases to leave a clear audit trail.
