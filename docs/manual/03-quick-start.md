@@ -135,7 +135,7 @@ You can skip this step, if you are using Taito CLI with an existing infrastructu
 
 ### Taito command reference
 
-Run `taito -h` to show more taito commands that you can use. DEVELOPMENT.md file located on project root folder might also be useful.
+Run `taito -h` to show more taito commands that you can use. Check also the DEVELOPMENT.md file located at your project root folder.
 
 ---
 

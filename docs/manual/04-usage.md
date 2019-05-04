@@ -38,7 +38,7 @@ Running `taito auth:ENV` also sets the default context for currently enabled plu
 
 #### Installing additional tools to local Taito CLI image
 
-You can install additional tools to your local Taito CLI image like this:
+You can install additional tools to your local Taito CLI image:
 
 ```
 taito -r shell                             # Start shell as root user
@@ -48,7 +48,7 @@ taito util-commit                          # Commit changes to the Taito CLI ima
 exit                                       # Exit Taito CLI shell
 ```
 
-These changes are in effect until the next time you run `taito upgrade`. If you want to make permanent changes, put your additional installation scripts in `~/.taito/install.sh`. It will be run as root user during `taito upgrade`. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install.sh`.
+These changes are in effect until the next time you run `taito upgrade`. If you want to make permanent changes, put your installation scripts in `~/.taito/install.sh`. It will be run as root user during `taito upgrade`. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install.sh`.
 
 > TODO: Implement install.sh support.
 

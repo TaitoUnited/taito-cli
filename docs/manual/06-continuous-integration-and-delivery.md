@@ -6,10 +6,9 @@ In most cases your CI/CD tool needs only to execute a bunch of simple Taito CLI 
 # Prepare build
 taito build prepare:$BRANCH
 
-# Prepare artifacts for deployment in parallel
-parallel:
-- taito artifact prepare:client:$BRANCH $COMMIT_SHA
-- taito artifact prepare:server:$BRANCH $COMMIT_SHA
+# Prepare artifacts for deployment (execute in parallel)
+taito artifact prepare:client:$BRANCH $COMMIT_SHA
+taito artifact prepare:server:$BRANCH $COMMIT_SHA
 
 # Deploy the changes to target environment
 (taito env apply:$BRANCH)
@@ -21,18 +20,16 @@ taito deployment wait:$BRANCH
 taito test:$BRANCH
 taito deployment verify:$BRANCH
 
-# Release artifacts in parallel
-parallel:
-- taito artifact release:client:$BRANCH $COMMIT_SHA
-- taito artifact release:server:$BRANCH $COMMIT_SHA
+# Release artifacts (execute in parallel)
+taito artifact release:client:$BRANCH $COMMIT_SHA
+taito artifact release:server:$BRANCH $COMMIT_SHA
 
 # Release build
 taito build release:$BRANCH
 
-# Revert deployment on fail
-fail:
-- taito deployment revert:$BITBUCKET_BRANCH $COMMIT_SHA
-- taito db revert:$BITBUCKET_BRANCH $COMMIT_SHA
+# ON FAIL: Revert deployment on fail
+taito deployment revert:$BITBUCKET_BRANCH $COMMIT_SHA
+taito db revert:$BITBUCKET_BRANCH $COMMIT_SHA
 ```
 
 If you for some reason cannot use Taito CLI in your CI/CD pipeline, you can easily implement the CI/CD steps yourself. First run each step manually with the verbose option (`taito -v`) to see the commands that Taito CLI executes under the hood. Then implement your CI/CD script based on those commands. You can also use `taito-config.sh` environment variables in your CI/CD script:

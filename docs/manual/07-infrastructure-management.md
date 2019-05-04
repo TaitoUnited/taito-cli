@@ -25,7 +25,7 @@ You can use one of the examples located in [examples/zones](https://github.com/T
 - Prepare for high usage spikes with autoscaling and CDN.
 - Prepare for DDoS attacks with services like Cloudflare.
 - Use scanners to detect vulnerabilities.
-- Use honeypots. intrusion detection systems, and anomaly detection tools for detecting and blocking hacking attempts.
+- Use intrusion detection systems, anomaly detection tools, and honeypots for detecting and blocking hacking attempts.
 
 ---
 
