@@ -33,7 +33,10 @@ then
     fi && \
     terraform apply && \
 
-    if [[ "${taito_zone_initial_database_password:-}" ]]; then
+    if [[ "${taito_zone_initial_database_password:-}" ]] && \
+       "${taito_cli_path}/util/confirm-execution.sh" "" "" \
+         "Change database master password"
+    then
       echo
       echo "--- CHANGE DATABASE MASTER PASSWORD ---"
       echo

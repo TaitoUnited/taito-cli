@@ -76,13 +76,13 @@ if [[ ${taito_type:-} == "zone" ]]; then
 
   echo
   echo "# Template: Postgres"
-  echo "template_default_postgres=common-postgres"
+  echo "template_default_postgres=${postgres_instance}"
   echo "template_default_postgres_host=\"${postgres_host}\""
   echo "template_default_postgres_master_username=${postgres_admin}"
   echo "template_default_postgres_master_password_hint=\"Hint from where to get the password\""
   echo
   echo "# Template: MySQL"
-  echo "template_default_mysql=common-mysql"
+  echo "template_default_mysql=${mysql_instance}"
   echo "template_default_mysql_host=\"${mysql_host}\""
   echo "template_default_mysql_master_username=${mysql_admin}"
   echo "template_default_mysql_master_password_hint=\"Hint from where to get the password\""
