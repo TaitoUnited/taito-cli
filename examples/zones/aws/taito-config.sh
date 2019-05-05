@@ -100,7 +100,7 @@ taito_messaging_monitoring_channel=monitoring
 # Links
 link_urls="
   * state=https://s3.console.aws.amazon.com/s3/buckets/$taito_zone_state_bucket/ Terraform state
-  * images=https://s3.console.aws.amazon.com/s3/buckets/$taito_zone_images_bucket/ Docker images
+  * images=https://console.aws.amazon.com/ecr/repositories?region=${taito_provider_region} Docker images
   * functions=https://s3.console.aws.amazon.com/s3/buckets/$taito_zone_functions_bucket/ Functions
   * backups=https://s3.console.aws.amazon.com/s3/buckets/$taito_zone_backups_bucket/ Backups
   * dashboard=https://${taito_provider_region}.console.aws.amazon.com/console/home?region=${taito_provider_region} AWS Management Console

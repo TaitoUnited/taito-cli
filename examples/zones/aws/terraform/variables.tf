@@ -199,7 +199,10 @@ variable "map_accounts" {
   type        = "list"
 
   default = [
-
+    /*
+    "777777777777",
+    "888888888888",
+    */
   ]
 }
 
@@ -214,7 +217,13 @@ variable "map_roles" {
   type        = "list"
 
   default = [
-
+    /*
+    {
+      role_arn = "arn:aws:iam::66666666666:role/role1"
+      username = "role1"
+      group    = "system:masters"
+    },
+    */
   ]
 }
 
@@ -229,7 +238,13 @@ variable "map_users" {
   type        = "list"
 
   default = [
-
+    /*
+    {
+      user_arn = "arn:aws:iam::66666666666:user/user1"
+      username = "user1"
+      group    = "system:masters"
+    },
+    */
   ]
 }
 

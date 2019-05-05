@@ -11,8 +11,6 @@ then
   echo "- Access type: Programmatic access"
   echo "- AmazonEC2ContainerRegistryPowerUser policy for reading and writing"
   echo "  container images."
-  echo "- TODO policy for deploying applications to Kubernetes and accessing"
-  echo "  database using Kubernetes as a proxy."
   echo
   echo "If you have already configured AWS credentials for your CI/CD, you can ignore"
   echo "this step."
@@ -26,8 +24,15 @@ then
   echo "configure them on organization/account level, you don't have to configure"
   echo "them for each git repository separately."
   echo
-  echo "TODO: FOR NOW YOU SHOULD USE THE SAME CREDENTIALS THAT YOU USED TO CREATE"
-  echo "THE KUBERNETES CLUSTER. RUN: taito -- cat /home/taito/.aws/credentials"
+  echo "Press enter when done."
+  read -r
+  echo
+  echo "The user also needs to have deployment rights for the Kubernetes cluster."
+  echo "You most likely can add the rights in your taito zone config like this:"
+  echo
+  echo "- Edit 'terraform/variables.tf': add user to 'map_users' and increase"
+  echo "  the 'map_users_count'."
+  echo "- Run 'taito zone apply'."
   echo
   echo "Press enter when done."
   read -r

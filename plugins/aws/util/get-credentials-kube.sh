@@ -8,4 +8,4 @@ ${taito_setv:?}
 aws $aws_options eks \
   --region "${taito_provider_region}" update-kubeconfig \
   --name "${kubernetes_name}" \
-  --alias "${kubernetes_name}" &> ${taito_vout:-}
+  --alias "${kubernetes_name}" > ${taito_vout:-}
