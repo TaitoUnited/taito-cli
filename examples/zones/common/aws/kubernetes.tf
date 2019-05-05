@@ -50,14 +50,12 @@ module "eks" {
   worker_group_launch_template_count   = "1"
   */
 
-  /* TODO: configure user access
   map_roles                            = "${var.map_roles}"
   map_roles_count                      = "${var.map_roles_count}"
   map_users                            = "${var.map_users}"
   map_users_count                      = "${var.map_users_count}"
   map_accounts                         = "${var.map_accounts}"
   map_accounts_count                   = "${var.map_accounts_count}"
-  */
 
   cluster_enabled_log_types = [
     "api","audit","authenticator","controllerManager","scheduler"

@@ -74,6 +74,14 @@ module "taito_zone" {
   # Logging
   logging_sinks = "${var.logging_sinks}"
   logging_companies = "${var.logging_companies}"
+
+  # Temporary AWS / Kubernetes specific settings
+  map_accounts = "${var.map_accounts}"
+  map_accounts_count = "${var.map_accounts_count}"
+  map_roles = "${var.map_roles}"
+  map_roles_count = "${var.map_roles_count}"
+  map_users = "${var.map_users}"
+  map_users_count = "${var.map_users_count}"
 }
 
 module "helm_releases" {

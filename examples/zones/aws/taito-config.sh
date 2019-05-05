@@ -33,7 +33,8 @@ taito_ci_provider=bitbucket
 # User rights, for example:
 #   arn:aws:iam::012345678999:group/administrators
 #   arn:aws:iam::098765432111:user/john-doe
-# TODO: implement for AWS
+# TODO: NOT SUPPORTED YET (waiting for terraform 0.12 for each)
+# CONFIGURE KUBERNETES USERS IN terraform/variables.tf
 taito_zone_owners= # CHANGE
 taito_zone_editors=
 taito_zone_viewers=
