@@ -9,7 +9,7 @@ preResolve: 0
 forwards:
   - name: mysql
     containerPort: 3306
-    talk: my-zone-common-mysql.HEXCHARS.us-east-1.rds.amazonaws.com:3306
+    talk: MYSQL_INSTANCES.TAITO_PROVIDER_REGION_HEXCHARS.TAITO_PROVIDER_REGION.rds.amazonaws.com:3306
   - name: postgres
     containerPort: 5432
-    talk: my-zone-common-postgres.HEXCHARS.us-east-1.rds.amazonaws.com:5432
+    talk: POSTGRES_INSTANCES.TAITO_PROVIDER_REGION_HEXCHARS.TAITO_PROVIDER_REGION.rds.amazonaws.com:5432

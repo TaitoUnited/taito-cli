@@ -3,7 +3,7 @@ terraform {
      taito-config.sh. Note that you cannot use environment variables here. */
   /*
   backend "gcs" {
-    bucket  = "my-zone-state"
+    bucket  = "TAITO_ZONE_STATE_BUCKET"
     prefix  = "terraform/state/zone"
   }
   */

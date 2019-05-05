@@ -3,9 +3,9 @@ terraform {
      taito-config.sh. Note that you cannot use environment variables here. */
   /*
   backend "s3" {
-    profile = "myorganization"
-    bucket  = "my-zone-state"
-    region = "us-east-1"
+    profile = "TAITO_ORGANIZATION"
+    bucket  = "TAITO_ZONE_STATE_BUCKET"
+    region = "TAITO_PROVIDER_REGION"
     skip_region_validation = true   # support brand new regions (e.g. stockholm)
     key  = "terraform/state/zone"
   }
