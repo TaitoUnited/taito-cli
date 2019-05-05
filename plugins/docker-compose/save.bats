@@ -5,7 +5,7 @@ load "${taito_cli_path}/test/util/test-helper.sh"
 @test "docker-compose: 'taito commit:server'" {
   export taito_target="server"
   export taito_project="acme-chat"
-  test commit.sh
+  test save.sh
 
   assert_executed docker ps
   assert_executed docker commit acme-chat-server acme-chat-server-savetus

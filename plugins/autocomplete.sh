@@ -127,6 +127,7 @@ if [[ ${taito_project:-} ]]; then
   for stack in ${taito_build_targets:-}
   do
     echo "build:${stack}"
+    echo "save:${stack}"
   done
 
   # Stack component commands

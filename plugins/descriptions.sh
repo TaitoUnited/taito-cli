@@ -192,6 +192,8 @@ if [[ ${taito_project:-} ]]; then
   do
     echo "build:${stack} \
       # Build ${stack} module"
+    echo "save:${stack} \
+      # Save changes to ${stack} module"
   done
 
   # Stack component commands

@@ -41,7 +41,7 @@ QUICK EXAMPLES
     copy from:server /sr .             # Copy a file/folder from server container
     sync to:server ./loc /sr           # Sync folder to server container
     sync from:server /sr .             # Sync folder from server container
-    commit:client                      # Commit changes to client container image
+    save:client                        # Save changes to client container image
     clean:server                       # Clean server container by deleting it
     docs                               # Generate documentation
     check deps                         # Check dependencies
@@ -472,8 +472,8 @@ PROJECT: BASIC OPERATIONS
     $ taito kill:client:dev
     $ taito kill:my-app-client-3034393823-2f5jf:dev
 
-  commit:TARGET
-    Commit changes to a container
+  save:TARGET
+    Save changes to a container
 
   clean[:TARGET]
     Clean.
