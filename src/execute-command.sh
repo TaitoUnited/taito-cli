@@ -430,7 +430,7 @@ export taito_plugins="${taito_plugins// gcloud-builder:-local / gcloud-builder:-
 
 # Determine enabled plugins
 enabled_plugins=""
-plugins_string=$(echo ${taito_plugins:-} "${taito_global_plugins:-} basic " \
+plugins_string=$(echo "${taito_plugins:-} ${taito_global_plugins:-} basic " \
   | awk '{for (i=1;i<=NF;i++) if (!a[$i]++) printf("%s%s",$i,FS)}{printf("\n")}')
 # TODO remove this (backwards compatibility)
 plugins_string="${plugins_string/postgres /postgres-db }"
@@ -438,6 +438,10 @@ plugins_string="${plugins_string/postgres /postgres-db }"
 if [[ "${plugins_string}" == *"postgres-db"* ]] && \
    [[ "${plugins_string}" != *"sqitch-db"* ]]; then
   plugins_string="sqitch-db ${plugins_string}"
+fi
+# Hack: move google-global to first because it modifies link urls
+if [[ "${plugins_string}" == *" google-global "* ]]; then
+  plugins_string="google-global ${plugins_string/ google-global / }"
 fi
 plugins=("${plugins_string}")
 
