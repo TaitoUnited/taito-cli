@@ -42,6 +42,8 @@ then
   echo "  the 'map_users_count'."
   echo "- Run 'taito zone apply'."
   echo
+  echo "TODO: Limited Kubernetes group for CI/CD (not system:masters)"
+  echo
   echo "Press enter when done."
   read -r
 fi
