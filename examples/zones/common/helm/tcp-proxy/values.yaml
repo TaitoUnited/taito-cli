@@ -1,9 +1,0 @@
-# https://hub.docker.com/r/tecnativa/tcp-proxy
-# preResolve: 0
-# forwards:
-#   - name: mysql
-#     containerPort: 3306
-#     talk: taito-awstest1-common-postgres.c45t0ln04uqh.us-east-1.rds.amazonaws.com:3306
-#   - name: postgres
-#     containerPort: 5432
-#     talk: taito-awstest1-common-postgres.c45t0ln04uqh.us-east-1.rds.amazonaws.com:5432

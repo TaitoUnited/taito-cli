@@ -19,7 +19,7 @@ provider "google" {
 
 module "taito_zone" {
   # source = "../common/gcloud"
-  source = "github.com/TaitoUnited/taito-cli//examples/zones/common/gcloud"
+  source = "github.com/TaitoUnited/taito-terraform-modules//zones/gcloud"
 
   # Labeling
   taito_organization = "${var.taito_organization}"
@@ -80,7 +80,7 @@ module "taito_zone" {
 
 module "helm_releases" {
   # source = "../common/helm"
-  source = "github.com/TaitoUnited/taito-cli//examples/zones/common/helm"
+  source = "github.com/TaitoUnited/taito-terraform-modules//zones/helm"
 
   # Settings
   taito_zone_devops_email = "${var.taito_zone_devops_email}"
