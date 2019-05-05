@@ -18,7 +18,6 @@ provider "google" {
 }
 
 module "taito_zone" {
-  # source = "../common/gcloud"
   source = "github.com/TaitoUnited/taito-terraform-modules//zones/gcloud"
 
   # Labeling

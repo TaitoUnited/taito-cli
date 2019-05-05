@@ -21,7 +21,6 @@ provider "aws" {
 }
 
 module "taito_zone" {
-  # source = "../common/aws"
   source = "github.com/TaitoUnited/taito-terraform-modules//zones/aws"
 
   # Labeling
