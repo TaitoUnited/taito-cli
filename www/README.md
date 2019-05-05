@@ -34,7 +34,7 @@ Use the same simple command set from project to project no matter the technology
 
 #### Extensible
 
-Add Taito CLI support for any technology by implementing a Taito CLI plugin. Create custom commands and share them with your colleagues as Taito CLI extensions. Implement project specific Taito CLI commands with npm, make or pipenv.
+Add Taito CLI support for any technology by implementing a Taito CLI plugin. Create custom commands and share them with your colleagues as Taito CLI extensions. Implement project specific Taito CLI commands with npm or make.
 
 Already supported: AWS, (Azure), Google Cloud, (Digital Ocean), Kubernetes, Helm, Docker Compose, (Serverless Framework), PostgreSQL, MySQL, Sqitch, Terraform, (Ansible), and many more!
 

@@ -4,7 +4,7 @@
 
 You can skip this step, if you are using Taito CLI with an existing infrastructure and you have received `template_default_*` settings for your `~/.taito/taito-config.sh` file from elsewhere.
 
-1. Copy one of the infrastructure examples from [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones):
+1. Copy one of the infrastructure examples from [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/README.md):
 
     ```
     cp -r ~/projects/taito-cli/examples/zones/EXAMPLE my-zone

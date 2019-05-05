@@ -13,7 +13,7 @@ You can manage your zone using the following commands:
 
 Do not confuse taito zones with cloud provider regions and zones. Each taito zone may use multiple cloud provider regions and zones to achieve high availability and regional resiliency. Taito zones are created mainly based on maintainability and security concerns instead.
 
-You can use one of the examples located in [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones) as a starting point for your infrastructure, and customize it according to your own requirements. For security critical needs you should also consider some additional steps, for example:
+You can use one of the examples located in [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/README.md) as a starting point for your infrastructure, and customize it according to your own requirements. For security critical needs you should also consider some additional steps, for example:
 
 - Backup all data to another cloud provider.
 - Setup a secure bastion host for accessing critical resources and leave audit trail of all connections.

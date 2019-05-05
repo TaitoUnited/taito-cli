@@ -6,7 +6,7 @@ In most cases your CI/CD tool needs only to execute a bunch of simple Taito CLI 
 # Prepare build
 taito build prepare:$BRANCH
 
-# Prepare artifacts for deployment (execute in parallel)
+# Prepare all artifacts for deployment (execute in parallel)
 taito artifact prepare:client:$BRANCH $COMMIT_SHA
 taito artifact prepare:server:$BRANCH $COMMIT_SHA
 
@@ -20,7 +20,7 @@ taito deployment wait:$BRANCH
 taito test:$BRANCH
 taito deployment verify:$BRANCH
 
-# Release artifacts (execute in parallel)
+# Release all artifacts (execute in parallel)
 taito artifact release:client:$BRANCH $COMMIT_SHA
 taito artifact release:server:$BRANCH $COMMIT_SHA
 
