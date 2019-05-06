@@ -45,7 +45,7 @@ taito_target_env=${BRANCH/master/prod}
 set +a
 ```
 
-Note that the process may slightly differ depending on branch. On dev and feature branches the artifacts are usually tagged using `untested` suffix, and on master branch some additional steps are taken during `taito build release` to generate release notes, etc.
+Note that the CI/CD process may slightly differ depending on branch. On dev and feature branches the artifacts are usually tagged using `untested` suffix, and on master branch some additional steps are taken during `taito build release` to generate release notes, etc.
 
 ---
 

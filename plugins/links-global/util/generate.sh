@@ -33,7 +33,7 @@ do
             description=${command/\[:ENV\]/:${env}}
             description=${description/:ENV/:${env}}
           fi
-          if [[ -n ${url} ]]; then
+          if [[ -n ${url} ]] && [[ "${url}" != "https:///"* ]]; then
             echo "* [${description}](${url})"
           fi
         fi
