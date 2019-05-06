@@ -71,20 +71,9 @@ psql -h 127.0.0.1 -p 5001 -d acme_chat_test -U acme_chat_test
 Password: ****************
 ```
 
-#### All tools included
-
-Working with modern multicloud and hybrid cloud environments requires lots of tools. Taito CLI Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito upgrade`. And if you need something special, it is very easy to customize the Taito CLI image with your own requirements.
-
-```
-taito -- terraform apply
-taito -- kubectl get pods --namespace acme-chat-dev
-taito -- gcloud dns managed-zones list
-taito -- aws ec2 describe-instances
-```
-
 #### Modern CI/CD
 
-Taito CLI is shipped as a Docker container and is a good fit with modern container-based CI/CD pipelines.
+Taito CLI is shipped as a Docker container, and it is a good fit with modern container-based CI/CD pipelines.
 
 ```
 taito build prepare:dev
@@ -96,6 +85,17 @@ taito test:dev
 taito artifact release:client:dev
 taito artifact release:server:dev
 taito build release:dev
+```
+
+#### All tools included
+
+Working with modern multicloud and hybrid cloud environments requires lots of tools. Taito CLI Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito upgrade`. And if you need something special, it is very easy to customize the Taito CLI image with your own requirements.
+
+```
+taito -- terraform apply
+taito -- kubectl get pods --namespace acme-chat-dev
+taito -- gcloud dns managed-zones list
+taito -- aws ec2 describe-instances
 ```
 
 #### No lock-in
@@ -123,4 +123,4 @@ taito hours add: 6.5
 
 #### Uniform conventions
 
-Maintain good and uniform conventions by providing reusable project templates. Customize your workflows with custom plugins, if necessary.
+Maintain good and uniform conventions by providing reusable infrastructure and project templates. Customize your workflows with custom Taito CLI plugins, if necessary.
