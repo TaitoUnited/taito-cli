@@ -9,7 +9,6 @@ taito_project="example-project"
 taito_environments="dev prod"
 taito_env=$taito_target_env
 taito_targets="client server"
-taito_databases="database reportdb"
 taito_storages="example-project-${taito_env}"
 
 # default database

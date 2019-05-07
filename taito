@@ -355,7 +355,8 @@ if [[ "${taito_env}" == "local" ]] && \
 
   # TODO remove links and use networks only
   if [[ "${link_flags}" == "" ]]; then
-    databases=("${taito_databases}")
+    all=$("$taito_util_path/get-targets-by-type.sh" database)
+    databases=("${taito_target:-$all}")
     for database in ${databases[@]}
     do
       echo "# Linking local db: \

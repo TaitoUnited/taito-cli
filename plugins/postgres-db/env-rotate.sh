@@ -5,7 +5,8 @@
 
 if [[ "${taito_env}" != "local" ]]; then
   (
-    databases=("${taito_target:-$taito_databases}")
+    all=$("$taito_util_path/get-targets-by-type.sh" database)
+    databases=("${taito_target:-$all}")
     for database in ${databases[@]}
     do
       export taito_target="${database}"

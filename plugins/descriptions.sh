@@ -286,7 +286,7 @@ if [[ ${taito_project:-} ]]; then
       # Show application status of ${env} environment"
 
     if [[ "${cprefix}" == "db"* ]] || [[ "${cprefix}" == "*" ]]; then
-      for database in ${taito_databases:-}
+      for database in $("$taito_util_path/get-targets-by-type.sh" database)
       do
         db=""
         if [[ "${database}" != "database" ]]; then

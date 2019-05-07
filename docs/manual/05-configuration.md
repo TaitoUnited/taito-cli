@@ -31,6 +31,10 @@ The following settings are shared among plugins. All of them are optional.
 
 [Plugins](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) named with a `-global` suffix are designed to be used globally. That is, you configure them in your personal or organizational configuration file.
 
+### Template settings in personal or organizational configuration file
+
+TODO: In template plugin README.md (template_default_ci_exec_deploy false for security critical environments, etc.)
+
 ### Common settings in project specific configuration file
 
 The following settings are shared among plugins. All of them are optional.
@@ -86,9 +90,12 @@ Stack:
 
 * **taito_targets:** For example `"client server database storage"`.
 * **taito_build_targets:** Targets for the `taito build[:BUILD_TARGET]` command. By default **taito_targets** are used as **taito_build_targets**.
-* **taito_databases:** For example `"database reportdb"`. The default database is named `database`.
 * **taito_storages:** For example `"my-project-dev"`.
 * **taito_networks:** Networks defined in your `docker-compose.yaml`. Usually just `"default"`.
+
+Stack types:
+
+TODO
 
 Database settings:
 
@@ -99,8 +106,6 @@ Database settings:
 * **db_NAME_proxy_port:** Database proxy port
 * **db_NAME_user:** Database user
 * **db_NAME_password:** Database password
-
-> Define database settings for each database separately. Database names are defined with the `taito_databases` setting. TODO: same mechanism for storages also?
 
 Messaging:
 

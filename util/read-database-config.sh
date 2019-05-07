@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
+all_databases=$("$taito_util_path/get-targets-by-type.sh" database)
+
 target="${1}"
 if [[ -z ${1} ]] && [[ -n "${taito_target:-}" ]] && \
-   [[ "${taito_databases:-}" == *"${taito_target}"* ]]; then
+   [[ "${all_databases:-}" == *"${taito_target}"* ]]; then
   target="${taito_target:-}"
 fi
 target="${target:-database}"
