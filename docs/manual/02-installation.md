@@ -56,6 +56,9 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
       * playgrounds=https://github.com/search?q=topic%3Ataito-playground+org%3AMyOrganization&type=Repositories Playground projects
     "
 
+    # --- infrastructure template settings ---
+    template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure//templates
+
     # --- Project template settings ---
     # Define default settings for newly created projects here
     ```
