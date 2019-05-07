@@ -62,6 +62,7 @@ do
 done
 
 # Zone management
+echo "zone create: TEMPLATE"
 if [[ ${taito_type:-} == "zone" ]]; then
   echo "zone apply"
   echo "zone status"

@@ -4,18 +4,11 @@
 
 You can skip this step, if you are using Taito CLI with an existing infrastructure and you have received `template_default_*` settings for your `~/.taito/taito-config.sh` file from elsewhere.
 
-1. Copy one of the infrastructure examples from [examples/zones](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/README.md):
+1. Create new zone based on one of the infrastructure examples from [taito-infrastructure](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates) by running `taito zone create: TEMPLATE` and follow instructions.
 
-    ```
-    cp -r ~/projects/taito-cli/examples/zones/EXAMPLE my-zone
-    cd my-zone
-    ```
+2. Apply infrastructure configuration by running `taito zone apply` and follow instructions.
 
-2. Edit the `taito-config.sh` located in my-zone folder. Change at least all settings that have been marked with `# CHANGE`.
-
-3. Create the infrastructure by running `taito zone apply` and follow instructions.
-
-4. Display project template settings by running `taito project settings` and copy-paste the settings to your `~/.taito/taito-config.sh` file.
+3. Display project template settings by running `taito project settings` and copy-paste the settings to your `~/.taito/taito-config.sh` file.
 
 ### Setting up a new project
 

@@ -154,6 +154,7 @@ QUICK EXAMPLES
     env destroy:dev                    # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
+    zone create: gcloud                # Create a new zone based on the gcloud template
     zone apply                         # Apply infrastructure changes to the zone
     zone status                        # Show status summary of the zone
     zone doctor                        # Analyze and repair the zone
@@ -847,6 +848,9 @@ PROJECT: ENVIRONMENT SETUP
     Rotate secrets for an environment.
 
 ZONE
+
+  zone create: TEMPLATE
+    Create a new zone based on a template.
 
   zone apply [NAME]
     Apply infrastructure changes to a zone.

@@ -36,7 +36,7 @@ Use the same simple command set from project to project no matter the technology
 taito deployment deploy:test
 taito status:test
 taito open client:test
-taito db copy:dev test
+taito db copy:test dev
 ```
 
 See the [command reference](https://github.com/TaitoUnited/taito-cli/blob/dev/help.txt).
@@ -123,4 +123,9 @@ taito hours add: 6.5
 
 #### Uniform conventions
 
-Maintain good and uniform conventions by providing reusable infrastructure and project templates. Customize your workflows with custom Taito CLI plugins, if necessary.
+Maintain good and uniform conventions by providing reusable infrastructure and project templates. Customize your workflows with custom Taito CLI extensions.
+
+```
+taito_global_extensions="git@github.com:MyOrg/my-extension.git"
+taito_global_plugins="my-git-global ..."
+```

@@ -341,7 +341,9 @@ if [[ "${taito_command}" == "vc-"* ]]; then
 fi
 
 # Validate zone operations
-if [[ "${taito_command}" == "zone-"* ]] && [[ "${taito_type:-}" != "zone" ]]; then
+if [[ "${taito_command}" == "zone-"* ]] && \
+   [[ "${taito_command}" != "zone-create" ]] && \
+   [[ "${taito_type:-}" != "zone" ]]; then
   echo
   echo "ERROR: You can run zone commands only inside a zone directory."
   exit 130
@@ -349,6 +351,7 @@ fi
 
 # Confirm zone operations
 if [[ "${taito_command}" == "zone-"* ]] && \
+   [[ "${taito_command}" != "zone-create" ]] && \
    [[ "${taito_command}" != "zone-status" ]] && \
    [[ ${quiet} != "true" ]]; then
   echo

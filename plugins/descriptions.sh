@@ -104,6 +104,7 @@ do
 done
 
 # Zone management
+echo "zone create: TEMPLATE # Create a new zone based in an infrastructure template"
 if [[ ${taito_type:-} == "zone" ]]; then
   echo "zone apply # Apply infrastructure changes to the zone"
   echo "zone status # Show status summary of the zone"
