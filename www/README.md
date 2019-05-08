@@ -82,6 +82,7 @@ taito artifact prepare:server:dev
 taito db deploy:dev
 taito deployment deploy:dev
 taito test:dev
+taito deployment verify:dev
 taito artifact release:client:dev
 taito artifact release:server:dev
 taito build release:dev
@@ -123,9 +124,9 @@ taito hours add: 6.5
 
 #### Uniform conventions
 
-Maintain good and uniform conventions by providing reusable infrastructure and project templates. Customize your workflows with custom Taito CLI extensions.
+Maintain good and uniform conventions by providing reusable infrastructure and project templates. Customize software development workflows for your organization with custom Taito CLI extensions.
 
 ```
-taito_global_extensions="git@github.com:MyOrg/my-extension.git"
-taito_global_plugins="my-git-global ..."
+taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
+taito_global_plugins="myorg-git-global ..."
 ```

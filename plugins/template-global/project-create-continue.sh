@@ -49,7 +49,7 @@ echo "Please wait..."
   git checkout -q -b dev
   git push -q -u origin dev &> /dev/null
   echo
-  echo DONE! Now configure your project!
+  echo Created directory: ${taito_vc_repository}
   echo Press enter to open configuration instructions.
   read -r
   echo
