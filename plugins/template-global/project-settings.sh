@@ -109,6 +109,8 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_zone_prod=$taito_provider_zone"
   echo "template_default_ci_provider_prod=$taito_ci_provider"
   echo "template_default_ci_exec_deploy_prod=true # Set to 'false' for security critical environments"
+  echo "template_default_vc_provider_prod=$taito_vc_provider"
+  echo "template_default_vc_url_prod=$taito_vc_provider/$taito_organization"
   echo "template_default_container_registry_prod=$taito_provider_container_registry"
   echo "template_default_postgres_host_prod=\"${postgres_host}\""
   echo "template_default_mysql_host_prod=\"${mysql_host}\""
