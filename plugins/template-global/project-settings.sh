@@ -48,12 +48,12 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_zone=$taito_provider_zone"
   echo
   echo "# Template: Git provider"
-  echo "template_default_git_provider=$taito_git_provider"
+  echo "template_default_vc_provider=$taito_vc_provider"
   echo "template_default_git_organization=$taito_organization"
-  echo "template_default_git_url=$taito_git_provider/$taito_organization"
+  echo "template_default_git_url=$taito_vc_provider/$taito_organization"
   echo "template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure//templates"
   echo "template_default_source_git=git@github.com:TaitoUnited"
-  echo "template_default_dest_git=git@$taito_git_provider:$taito_organization"
+  echo "template_default_dest_git=git@$taito_vc_provider:$taito_organization"
   echo
   echo "# Template: CI/CD provider"
   echo "template_default_ci_provider=$taito_ci_provider"
