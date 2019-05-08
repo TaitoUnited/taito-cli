@@ -144,7 +144,7 @@ if [[ "${project}" ]]; then
     mkdir -p "${project_local_path}" && \
     cd "${project_local_path}" && \
     git clone --no-checkout --depth 1 -b dev --single-branch --filter=blob:none \
-      "${git_organization:?}/${project}.git" . &> /dev/null && \
+      "${vc_organization:?}/${project}.git" . &> /dev/null && \
     git checkout dev -- taito-config.sh package.json &> /dev/null
   else
     cd "${project_local_path}" && \

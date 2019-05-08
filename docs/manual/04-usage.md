@@ -26,7 +26,7 @@ If you work for multiple organizations, you may define organization specific ove
 
 #### Project references
 
-You can execute project specific commands also outside the project directory with the `-p` option, for example `taito -p my-project open logs:prod`. The command reads the `taito-config.sh` file directly from remote git repository, and therefore the git repository need not be cloned to your local disk. The `-p` options works only if you have configured `git_organization` setting in you personal or organizational `taito-config.sh` file.
+You can execute project specific commands also outside the project directory with the `-p` option, for example `taito -p my-project open logs:prod`. The command reads the `taito-config.sh` file directly from remote git repository, and therefore the git repository need not be cloned to your local disk. The `-p` options works only if you have configured `vc_organization` setting in you personal or organizational `taito-config.sh` file.
 
 #### Running shell commands
 

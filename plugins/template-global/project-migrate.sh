@@ -21,10 +21,10 @@ fi
 . "${taito_plugin_path}/util/ask-details.sh"
 
 # Validate current git repository name
-current_git_url=$(git config --get remote.origin.url)
-dest_git_url="${template_dest_git:?}/${taito_vc_repository:?}.git"
-if [[ $current_git_url != "$dest_git_url" ]]; then
-  echo "ERROR: Git url '$current_git_url' does not match with '$dest_git_url'!"
+current_vc_url=$(git config --get remote.origin.url)
+dest_vc_url="${template_dest_git:?}/${taito_vc_repository:?}.git"
+if [[ $current_vc_url != "$dest_vc_url" ]]; then
+  echo "ERROR: Git url '$current_vc_url' does not match with '$dest_vc_url'!"
   echo "Rename the git repository first and only then run the migration."
   exit 1
 fi
