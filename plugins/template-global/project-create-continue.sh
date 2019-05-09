@@ -8,6 +8,16 @@
 : "${template_dest_git:?}"
 : "${template_default_vc_url:?}"
 
+for alternative in ${template_default_alternatives:-}
+do
+  if [[ -d "alternatives/$alternative" ]]; then
+    name="${alternative%%-*}"
+    rm -rf "$name"
+    mv "alternatives/$alternative" "$name"
+  fi
+done
+rm -rf alternatives
+
 # Execute create script of template
 "${taito_plugin_path}/util/init.sh" "create"
 

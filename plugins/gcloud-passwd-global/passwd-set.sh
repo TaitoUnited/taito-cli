@@ -29,7 +29,7 @@ fi
 
 echo "Generate a random password (Y/n)?"
 read -r random
-if [[ ${random} =~ ^[Yy]$ ]]; then
+if [[ ${random} =~ ^[Yy]*$ ]]; then
   # TODO better tool for this?
   password=$(openssl rand -base64 30 | sed -e 's/[^a-zA-Z0-9]/a/g')
   password2=${password}

@@ -40,6 +40,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Project defaults"
   echo "template_default_environments=\"dev prod\""
+  echo "template_default_alternatives=\"\""
   echo
   echo "# Template: Cloud provider"
   echo "template_default_provider=$taito_provider"
