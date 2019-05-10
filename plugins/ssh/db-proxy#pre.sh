@@ -3,7 +3,10 @@
 
 if [[ "${ssh_db_proxy:-}" ]]; then
   . ${taito_plugin_path}/util/opts.sh
-  sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes -L ${ssh_db_proxy} sleep 180"
+  (
+    ${taito_setv:?}
+    sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${ssh_db_proxy} sleep 180"
+  )
 
   echo "Database connection details:"
   echo "- host: 127.0.0.1"

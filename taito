@@ -378,17 +378,10 @@ if [[ "${mode}" == "dev" ]]; then
 fi
 proxy_flags=""
 if [[ "${command}" == "db-proxy"* ]]; then
-  echo "Exposing database proxy port: ${database_proxy_port}"
-  if [[ "${database_proxy_port:-}" != "" ]]; then
-    proxy_flags="\
-      --expose=${database_proxy_port} \
-      -p 127.0.0.1:${database_proxy_port}:${database_proxy_port}"
-  elif [[ "${gcloud_sql_proxy_port:-}" != "" ]]; then
-    # TODO remove gcloud_sql_proxy_port setting from all projects
-    proxy_flags="\
-      --expose=${gcloud_sql_proxy_port} \
-      -p 127.0.0.1:${gcloud_sql_proxy_port}:${gcloud_sql_proxy_port}"
-  fi
+  echo "Exposing database proxy port: ${database_proxy_port:-$database_port}"
+  proxy_flags="\
+    --expose=${database_proxy_port:-$database_port} \
+    -p 127.0.0.1:${database_proxy_port:-$database_port}:${database_proxy_port:-$database_port}"
 fi
 
 # gcsfuse mounting requires privileged mode
