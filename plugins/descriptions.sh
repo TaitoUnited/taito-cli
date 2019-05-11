@@ -230,6 +230,9 @@ if [[ ${taito_project:-} ]]; then
       param_not_empty=":local"
     fi
 
+    echo "config${suffix} \
+      # Show configuration values"
+
     echo "env merge${suffix} DESTINATION_BRANCH \
       # Merge source env branch to the destination env branch"
 

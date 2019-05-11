@@ -1,8 +1,9 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
-: "${taito_image_registry:?}"
+: "${taito_container_registry:?}"
 : "${taito_target_env:?}"
 : "${taito_env:?}"
 
@@ -43,7 +44,7 @@ if [[ "${service_dir}" == "" ]]; then
 fi
 
 if [[ "${image_path}" == "" ]]; then
-  image_path="${taito_image_registry}"
+  image_path="${taito_container_registry}"
 fi
 
 path_suffix=""
@@ -74,8 +75,8 @@ else
       echo "- Pulling the existing image ${image_tag}."
       (
         ${taito_setv:?};
-        docker pull "${image}" && \
-        docker pull "${image_builder}" && \
+        "$taito_plugin_path/imagepull.sh" "${image}" && \
+        "$taito_plugin_path/imagepull.sh" "${image_builder}" && \
         docker image tag "${image_builder}" "${image_tester}"
       ) && pulled="true"
       if [[ $pulled == "true" ]]; then
@@ -105,13 +106,13 @@ else
     fi
 
     (
-      ${taito_setv:?}
       # Pull latest builder and production image to be used as cache
-      docker pull "${image_builder}"
-      docker pull "${image_latest}"
+      "$taito_plugin_path/imagepull.sh" "${image_builder}"
+      "$taito_plugin_path/imagepull.sh" "${image_latest}"
       # Build the build stage container separately so that it can be used as:
       # 1) Build cache for later builds using --cache-from
       # 2) Integration and e2e test executioner
+      ${taito_setv:?}
       docker build \
         --target builder \
         -f "${service_dir}/${dockerfile}" \

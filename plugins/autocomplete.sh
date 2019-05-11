@@ -159,6 +159,8 @@ if [[ ${taito_project:-} ]]; then
       param_not_empty=":local"
     fi
 
+    echo "config${suffix}"
+
     echo "env merge${suffix} DESTINATION_BRANCH"
 
     echo "env apply${suffix}"

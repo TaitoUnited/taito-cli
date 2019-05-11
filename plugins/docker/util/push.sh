@@ -1,8 +1,9 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
+: "${taito_plugin_path:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
-: "${taito_image_registry:?}"
+: "${taito_container_registry:?}"
 : "${taito_env:?}"
 
 name=${taito_target:?Target not given}
@@ -23,7 +24,7 @@ if [[ "${name}" != "." ]]; then
 fi
 
 if [[ "${image_path}" == "" ]]; then
-  image_path="${taito_image_registry}"
+  image_path="${taito_container_registry}"
 fi
 
 version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)
@@ -40,21 +41,17 @@ else
   if [[ ! -f ./taitoflag_images_exist ]] && \
      ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_build:-}" == "true" ]])
   then
-    (
-      ${taito_setv:?}
-      docker push "${image_untested}" && \
-      docker push "${image_latest}" && \
-      docker push "${image_builder}"
-    )
+    "$taito_plugin_path/imagepush.sh" "${image_untested}" && \
+    "$taito_plugin_path/imagepush.sh" "${image_latest}" && \
+    "$taito_plugin_path/imagepush.sh" "${image_builder}"
   else
     echo "- Image ${image_tag} already exists. Skipping push."
   fi && \
   if [[ "${version}" ]]; then
     echo "- Tagging an existing image with semantic version ${version}"
     (
-      ${taito_setv:?}
-      docker image tag "${image}" "${prefix}:${version}" && \
-      docker push "${prefix}:${version}"
+      (${taito_setv:?}; docker image tag "${image}" "${prefix}:${version}") && \
+      "$taito_plugin_path/imagepush.sh" "${prefix}:${version}"
     )
   fi
 fi

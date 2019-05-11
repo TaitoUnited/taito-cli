@@ -3,15 +3,17 @@
 
 name=${1}
 
-if "${taito_util_path}/confirm-execution.sh" "aws" "${name}" \
+if [[ "${kubernetes_name}" ]] && "${taito_util_path}/confirm-execution.sh" "aws" "${name}" \
   "Configure AWS credentials for CI/CD pipeline"
 then
   echo "Your CI/CD requires AWS access keys with the following settings and"
   echo "policies enabled:"
   echo
   echo "- Access type: Programmatic access"
-  echo "- AmazonEC2ContainerRegistryPowerUser policy for reading and writing"
-  echo "  container images."
+  if [[ ${taito_container_registry_provider:-} == "aws" ]]; then
+    echo "- AmazonEC2ContainerRegistryPowerUser policy for reading and writing"
+    echo "  container images."
+  fi
   echo "- KubernetesFullAccess policy for deploying application to Kubernetes."
   echo "  You can create the policy according to these instructions if it does"
   echo "  not exist yet:"

@@ -309,6 +309,9 @@ TAITO: BASIC OPERATIONS
   upgrade
     Upgrade taito-cli and its extensions to the latest version.
 
+  config[:ENV]
+    Show taito config values.
+
 PROJECT: BASIC OPERATIONS
 
   kaboom

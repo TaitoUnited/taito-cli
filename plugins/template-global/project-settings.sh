@@ -38,6 +38,10 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: Domains"
   echo "template_default_domain=$taito_default_domain"
   echo
+  echo "# Hosts"
+  echo "template_default_host=$taito_default_host"
+  echo "template_default_host_prod=$taito_default_host_prod"
+  echo
   echo "# Template: Project defaults"
   echo "template_default_environments=\"dev prod\""
   echo "template_default_alternatives=\"\""
@@ -59,6 +63,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: CI/CD provider"
   echo "template_default_ci_provider=$taito_ci_provider"
   echo "template_default_ci_exec_deploy=true"
+  echo "template_default_container_registry_provider=$taito_provider"
   echo "template_default_container_registry=$taito_provider_container_registry"
   echo
   echo "# Template: Misc providers"
@@ -112,6 +117,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_ci_exec_deploy_prod=true # Set to 'false' for security critical environments"
   echo "template_default_vc_provider_prod=$taito_vc_provider"
   echo "template_default_vc_url_prod=$taito_vc_provider/$taito_organization"
+  echo "template_default_container_registry_provider_prod=$taito_provider"
   echo "template_default_container_registry_prod=$taito_provider_container_registry"
   echo "template_default_postgres_host_prod=\"${postgres_host}\""
   echo "template_default_mysql_host_prod=\"${mysql_host}\""

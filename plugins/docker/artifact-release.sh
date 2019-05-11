@@ -2,7 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
-: "${taito_image_registry:?}"
+: "${taito_container_registry:?}"
 : "${taito_env:?}"
 
 name=${taito_target:?Target not given}
@@ -15,7 +15,7 @@ if [[ "${name}" != "." ]]; then
 fi
 
 if [[ "${image_path}" == "" ]]; then
-  image_path="${taito_image_registry}"
+  image_path="${taito_container_registry}"
 fi
 
 prefix="${image_path}${path_suffix}"
@@ -31,7 +31,7 @@ else
     (${taito_setv:?}; docker load --input "${name}.docker")
   fi
   echo "Push ${image}"
-  (${taito_setv:?}; docker push "${image}")
+  "$taito_plugin_path/imagepush.sh" "${image}"
 fi && \
 
 # Call next command on command chain

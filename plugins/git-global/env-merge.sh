@@ -2,6 +2,9 @@
 : "${taito_cli_path:?}"
 : "${taito_environments:?Environments not set in taito config}"
 : "${taito_target_env:?}"
+: "${taito_env_merge_source:?}"
+: "${taito_env_merge_dest:?}"
+: "${taito_env_merges:?}"
 
 if ! git rev-parse --is-inside-work-tree &> /dev/null; then
   # Not a git repository -> call next command on command chain and exit
@@ -10,63 +13,20 @@ if ! git rev-parse --is-inside-work-tree &> /dev/null; then
 fi
 
 # Parse arguments
-dest=""
 git_push_options=""
 while [[ $# -gt 0 ]]
 do
   if [[ ${1} == "--force" ]]; then
     git_push_options="--force-with-lease"
-  elif [[ ${1} == "--" ]]; then
-    echo "ERROR: Invalid option ${1}"
-    exit 1
-  elif [[ ! ${dest} ]]; then
-    dest=${1/prod/master}
-  else
-    echo "ERROR: Invalid parameter ${1}"
-    exit 1
   fi
   shift
 done
 
-# Determine valid merges
-merges=""
-prev_env=""
-for env in ${taito_environments}
-do
-  env="${env/prod/master}"
-  if [[ ${env} != "feat"* ]]; then
-    if [[ ${prev_env} ]]; then
-      merges="${merges} ${prev_env}->${env} "
-    fi
-    prev_env="${env}"
-  fi
-done
-
-# Determine source branch
-source="${taito_branch:-}"
-if [[ ! "${source}" ]]; then
-  # use current git branch as source
-  source=$(git symbolic-ref --short HEAD)
-fi
-
-# Determine destination branch
-if [[ ! ${dest} ]]; then
-  dest=$(echo "${merges}" | sed "s/.*${source}->\([^[:space:]]*\).*/\1/")
-fi
-
-# Validate arguments
-if [[ ! "${merges}" =~ .*${source}-.*\>${dest}.* ]]; then
-  echo "Merging from ${source} to ${dest} is not allowed."
-  echo "Changes must be merged from one environment to another in this order:"
-  echo "${taito_environments}"
-  exit 1
-fi
-
 # Execute all merges
 source_found=""
-for merge in ${merges[@]}
+for merge in ${taito_env_merges[@]}
 do
-  if [[ "${merge}" == "${source}->"* ]] || [[ "${source_found}" ]]; then
+  if [[ "${merge}" == "${taito_env_merge_source}->"* ]] || [[ "${source_found}" ]]; then
     source_found=true
     s="${merge%->*}"
     d="${merge##*->}"
@@ -102,7 +62,7 @@ do
     "
 
   fi
-  if [[ "${merge}" == *"->${dest}" ]]; then
+  if [[ "${merge}" == *"->${taito_env_merge_dest}" ]]; then
     break
   fi
 done

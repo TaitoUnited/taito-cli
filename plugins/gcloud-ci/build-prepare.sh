@@ -2,13 +2,13 @@
 : "${taito_cli_path:?}"
 : "${taito_env:?}"
 : "${taito_vc_repository:?}"
-: "${taito_image_registry:?}"
+: "${taito_container_registry:?}"
 
 image_tag=${1}
 image_path=${2}
 
 if [[ "${image_path}" == "" ]]; then
-  image_path="${taito_image_registry}"
+  image_path="${taito_container_registry}"
 fi
 
 echo "Checking if image already exists in the container registry"
