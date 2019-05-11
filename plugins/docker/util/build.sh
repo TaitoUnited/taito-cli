@@ -75,8 +75,8 @@ else
       echo "- Pulling the existing image ${image_tag}."
       (
         ${taito_setv:?};
-        "$taito_plugin_path/imagepull.sh" "${image}" && \
-        "$taito_plugin_path/imagepull.sh" "${image_builder}" && \
+        "$taito_plugin_path/util/imagepull.sh" "${image}" && \
+        "$taito_plugin_path/util/imagepull.sh" "${image_builder}" && \
         docker image tag "${image_builder}" "${image_tester}"
       ) && pulled="true"
       if [[ $pulled == "true" ]]; then
@@ -107,8 +107,8 @@ else
 
     (
       # Pull latest builder and production image to be used as cache
-      "$taito_plugin_path/imagepull.sh" "${image_builder}"
-      "$taito_plugin_path/imagepull.sh" "${image_latest}"
+      "$taito_plugin_path/util/imagepull.sh" "${image_builder}"
+      "$taito_plugin_path/util/imagepull.sh" "${image_latest}"
       # Build the build stage container separately so that it can be used as:
       # 1) Build cache for later builds using --cache-from
       # 2) Integration and e2e test executioner

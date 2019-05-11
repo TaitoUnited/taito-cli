@@ -31,7 +31,7 @@ else
     (${taito_setv:?}; docker load --input "${name}.docker")
   fi
   echo "Push ${image}"
-  "$taito_plugin_path/imagepush.sh" "${image}"
+  "$taito_plugin_path/util/imagepush.sh" "${image}"
 fi && \
 
 # Call next command on command chain
