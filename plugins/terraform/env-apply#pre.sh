@@ -8,8 +8,9 @@
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
-  "Apply changes to ${taito_env} environment by running terraform scripts"
+if [[ -f "./scripts/terraform/${taito_provider}" ]] && \
+   "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
+     "Apply changes to ${taito_env} environment by running terraform scripts"
 then
   (
     export TF_LOG_PATH="./${taito_env}/terraform.log"

@@ -7,8 +7,9 @@
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
-  "Destroy ${taito_env} environment by running terraform"
+if [[ -f "./scripts/terraform/${taito_provider}" ]] && \
+   "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
+     "Destroy ${taito_env} environment by running terraform"
 then
   (
     export TF_LOG_PATH="./${taito_env}/terraform.log"

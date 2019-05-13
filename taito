@@ -473,6 +473,7 @@ fi
 
 # Remove temporary secrets
 rm -rf ./tmp/secrets &> /dev/null
+rm -rf ./secrets/changed &> /dev/null
 
 # Exit
 exit ${exit_code}

@@ -7,8 +7,14 @@
 # Run post scripts from scripts/run directory
 script="${run_scripts_location}/taito-${taito_command}#post.sh"
 if [[ -f ${script} ]]; then
-  echo "Running script: ${script}"
-  "${script}" "${@}"
+  export taito_hook_command_executed=true
+  echo
+  echo "### run/post"
+  echo "Run script ${script} (Y/n)?"
+  read -r confirm
+  if [[ ${confirm} =~ ^[Yy]*$ ]]; then
+    "${script}" "${@}"
+  fi
 fi
 
 # Runs a process if run_after_for_XXX setting is set for one of the

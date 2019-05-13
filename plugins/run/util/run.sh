@@ -11,6 +11,8 @@ for plugin_suffix in ${plugin_suffices[@]}
 do
   if [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
     env_var="${run_env_var_prefix}${plugin_suffix}"
+    echo
+    echo "### run"
     echo "Running command: ${!env_var}" > "${taito_vout}"
     if [[ ${run_bg_pids_env_var} ]]; then
       sh -c "${!env_var}" &

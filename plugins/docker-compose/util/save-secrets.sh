@@ -2,6 +2,9 @@
 : "${taito_project_path:?}"
 : "${taito_env:?}"
 
+rm -rf "${taito_project_path}/secrets/changed/${taito_env}"
+mkdir -p "${taito_project_path}/secrets/changed/${taito_env}"
+
 # Save secret values to ./secrets
 mkdir -p "${taito_project_path}/secrets/${taito_env}"
 secret_index=0
@@ -25,9 +28,13 @@ do
     if [[ ${secret_value} == "secret_file:"* ]]; then
       yes | cp -f "${secret_value#secret_file:}" \
         "${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
+      yes | cp -f "${secret_value#secret_file:}" \
+        "${taito_project_path}/secrets/changed/${taito_env}/${secret_name}.${secret_property:?}"
     else
       printf "%s" "${secret_value}" > \
         "${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
+      printf "%s" "${secret_value}" > \
+        "${taito_project_path}/secrets/changed/${taito_env}/${secret_name}.${secret_property:?}"
     fi
   fi
   secret_index=$((${secret_index}+1))

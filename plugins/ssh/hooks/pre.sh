@@ -9,16 +9,22 @@ plugin_suffices=$(env | cut -f1 -d= | grep "ssh_forward_for_" | \
 for plugin_suffix in ${plugin_suffices[@]}
 do
   if [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
+    echo
+    echo "### ssh/pre"
     . ${taito_plugin_path}/util/opts.sh
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"
     (
-      ${taito_setv:?};
+      ${taito_setv:?}
       sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 60"
-    )
+    ) || (
+      echo "SSH connection failed with options ${opts} ${forward_value}."
+      echo "Have you set taito_ssh_user in ~/.taito/taito-config.sh or ./taito-user-config.sh?"
+      exit 1
+    ) && \
     ssh_was_run="true"
   fi
-done
+done && \
 
 # Call next command on command chain
 "${taito_cli_path}/util/call-next.sh" "${@}"

@@ -12,8 +12,14 @@
 # Run scripts from scripts/run directory
 script="${run_scripts_location}/taito-${taito_command}.sh"
 if [[ -f ${script} ]]; then
-  echo "Running script: ${script}"
-  "${script}" "${@}"
+  export taito_hook_command_executed=true
+  echo
+  echo "### run/pre"
+  echo "Run script ${script} (Y/n)?"
+  read -r confirm
+  if [[ ${confirm} =~ ^[Yy]*$ ]]; then
+    "${script}" "${@}"
+  fi
 fi
 
 # Call next command on command chain
