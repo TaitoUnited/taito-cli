@@ -14,7 +14,7 @@ do
     forward_value="${!forward_env_var_name}"
     (
       ${taito_setv:?};
-      sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 10"
+      sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 60"
     )
     ssh_was_run="true"
   fi
