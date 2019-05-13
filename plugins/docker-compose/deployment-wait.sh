@@ -4,6 +4,11 @@
 : "${taito_project_path:?}"
 : "${taito_command:?}"
 
+# Call next command on command chain
+"${taito_util_path}/call-next.sh" "${@}"
+exit $?
+
+# TODO implement
 echo && \
 echo "Waiting for docker to start..." && \
 counter=1 && \
@@ -18,7 +23,4 @@ do
   sleep "${ci_wait_test_sleep:-5}"
   ((counter++))
 done && \
-sleep "${ci_wait_test_sleep:-5}" && \
-
-# Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+sleep "${ci_wait_test_sleep:-5}"

@@ -3,9 +3,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_mode:?}"
 
-if [[ $taito_mode != "ci" ]] || [[ ! -d ./node_modules ]]; then
-  "${taito_plugin_path}/util/install.sh"
-fi
+"${taito_plugin_path}/util/install.sh"
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"

@@ -20,7 +20,7 @@ elif [[ "${taito_mode:-}" != "ci" ]] && [[ "${task_install_dev_exists:-}" ]]; th
 fi && \
 
 install_all=false
-if [[ ${do_confirm} ]] && [[ ! $RUNNING_TESTS ]]; then
+if [[ ${taito_mode} != "ci" ]] && [[ ${do_confirm} ]] && [[ ! $RUNNING_TESTS ]]; then
   echo
   echo "Install all libraries on host for autocompletion purposes (Y/n)?"
   read -r confirm

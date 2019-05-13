@@ -43,38 +43,48 @@ if [[ $exec_after ]]; then
   "
 fi
 
-if [[ ${was_executed} == false ]] && [[ "${taito_command}" == "init" ]]; then
-  # None of the enabled plugins has implemented init
-  echo
-  echo "### basic/post: Nothing to initialize"
-elif [[ ${was_executed} == false ]]; then
-  # Command not found
-  if [[ "${taito_orig_command}" != " " ]]; then
-    # Show matching commands
+if [[ ${was_executed} == false ]]; then
+  if [[ "${taito_command}" == "build-prepare" ]]; then
+    # None of the enabled plugins has implemented build prepare
     echo
-    echo "### basic/post:"
-    echo "Unknown command: '${taito_orig_command//-/ }'. Perhaps one of the following commands is the one"
-    echo "you meant to run. Run 'taito -h' to get more help."
-    export taito_command_chain=""
-    export taito_plugin_path="${taito_plugin_path}"
-    help=$("${taito_plugin_path}/__help.sh" "${taito_orig_command}")
-    if [[ ${#help} -le 5 ]]; then
-      # No help found. Try with only a first letter of the last word.
-      last_word=${taito_orig_command##*-}
-      search="${last_word:0:1}"
-      if [[ "${taito_orig_command}" == *"-"* ]]; then
-        search="${taito_orig_command%-*} ${last_word:0:1}"
+    echo "### basic/post: Nothing to prepare"
+  elif [[ "${taito_command}" == "build-release" ]]; then
+    # None of the enabled plugins has implemented build release
+    echo
+    echo "### basic/post: Nothing to release"
+  elif [[ "${taito_command}" == "init" ]]; then
+    # None of the enabled plugins has implemented init
+    echo
+    echo "### basic/post: Nothing to initialize"
+  elif [[ ${was_executed} == false ]]; then
+    # Command not found
+    if [[ "${taito_orig_command}" != " " ]]; then
+      # Show matching commands
+      echo
+      echo "### basic/post:"
+      echo "Unknown command: '${taito_orig_command//-/ }'. Perhaps one of the following commands is the one"
+      echo "you meant to run. Run 'taito -h' to get more help."
+      export taito_command_chain=""
+      export taito_plugin_path="${taito_plugin_path}"
+      help=$("${taito_plugin_path}/__help.sh" "${taito_orig_command}")
+      if [[ ${#help} -le 5 ]]; then
+        # No help found. Try with only a first letter of the last word.
+        last_word=${taito_orig_command##*-}
+        search="${last_word:0:1}"
+        if [[ "${taito_orig_command}" == *"-"* ]]; then
+          search="${taito_orig_command%-*} ${last_word:0:1}"
+        fi
+        help=$("${taito_plugin_path}/__help.sh" "${search}")
       fi
-      help=$("${taito_plugin_path}/__help.sh" "${search}")
+      if [[ ${#help} -le 5 ]]; then
+        # No help found for command. Try without the last word.
+        help=$("${taito_plugin_path}/__help.sh" "${taito_orig_command%-*}")
+      fi
+      echo "${help}"
+    else
+      echo
+      echo "Unknown command"
     fi
-    if [[ ${#help} -le 5 ]]; then
-      # No help found for command. Try without the last word.
-      help=$("${taito_plugin_path}/__help.sh" "${taito_orig_command%-*}")
-    fi
-    echo "${help}"
-  else
-    echo
-    echo "Unknown command"
   fi
 fi
 

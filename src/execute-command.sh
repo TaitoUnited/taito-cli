@@ -146,6 +146,11 @@ if [[ ${verbose} == true ]]; then
   taito_setv="set -x"
   taito_vout="/dev/stdout"
 fi
+
+if [[ ${taito_mode} == "ci" ]]; then
+  echo "[${taito_command}]"
+fi
+
 if [[ ${debug} == true ]]; then
   taito_debug=true
   echo taito_command: "${taito_command}"

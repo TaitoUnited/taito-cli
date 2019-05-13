@@ -16,7 +16,9 @@ options=("${@:2}")
 
 # Determine image
 # TODO: this is a quick hack
-if [[ "${taito_mode:-}" == "ci" ]] && [[ ! -f ./taitoflag_images_exist ]]; then
+if [[ "${taito_mode:-}" == "ci" ]] && \
+   [[ "${ci_exec_build:-}" == "true" ]] && \
+   [[ ! -f ./taitoflag_images_exist ]]; then
   image="${image}-untested"
 elif [[ ${image} == "--dry-run" ]]; then
   options=("${@:1}")

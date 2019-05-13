@@ -16,7 +16,6 @@ if [[ "${taito_host:-}" ]] && \
    [[ "${commands}" == *"docker"* ]]; then
   ssh "${taito_ssh_user:?}@${taito_host}" "${commands}"
 elif [[ "${taito_mode:-}" == "ci" ]]; then
-  echo "RUNNING: ${commands}"
   eval "${commands}"
 elif [[ -n ${taito_run:-} ]]; then
   echo "${commands}" >> ${taito_run}

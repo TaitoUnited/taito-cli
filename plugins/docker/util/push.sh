@@ -42,8 +42,10 @@ else
      ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_build:-}" == "true" ]])
   then
     "$taito_plugin_path/util/imagepush.sh" "${image_untested}" && \
-    "$taito_plugin_path/util/imagepush.sh" "${image_latest}" && \
-    "$taito_plugin_path/util/imagepush.sh" "${image_builder}"
+    if [[ ${taito_container_registry_provider:-} != "host" ]]; then
+      "$taito_plugin_path/util/imagepush.sh" "${image_latest}" && \
+      "$taito_plugin_path/util/imagepush.sh" "${image_builder}"
+    fi
   else
     echo "- Image ${image_tag} already exists. Skipping push."
   fi && \

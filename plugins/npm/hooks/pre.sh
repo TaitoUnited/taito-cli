@@ -103,13 +103,13 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   if [[ "${taito_command}" == "build-release"* ]] || \
      [[ "${taito_command}" == "artifact-release"* ]] || \
      [[ "${taito_command}" == "ci-release"* ]]; then
-    echo "TODO: remove this artifact-release skip hack"
+    # TODO: remove this artifact-release skip hack
     npm_command=""
   fi
 
   # run npm command
 
-  if [[ "${taito_mode:-}" == "ci" ]]; then
+  if [[ "${taito_verbose:-}" == "true" ]]; then
     echo "taito_mode: ${taito_mode:-}"
     echo "taito_command: ${taito_command}"
     echo "npm_command: ${taito_command}"

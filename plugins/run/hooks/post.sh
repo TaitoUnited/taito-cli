@@ -11,7 +11,7 @@ if [[ -f ${script} ]]; then
   echo
   echo "### run/post"
   echo "Run script ${script} (Y/n)?"
-  read -r confirm
+  [[ ${taito_mode:-} == "ci" ]] || read -r confirm
   if [[ ${confirm} =~ ^[Yy]*$ ]]; then
     "${script}" "${@}"
   fi

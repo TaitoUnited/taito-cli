@@ -3,12 +3,13 @@
 
 # Runs a process if ssh_forward_for_XXX setting is set for one of the
 # plugins in the current command chain
-export ssh_was_run="false"
+export ssh_proxy_running="${ssh_proxy_running:-false}"
 plugin_suffices=$(env | cut -f1 -d= | grep "ssh_forward_for_" | \
   sed "s/ssh_forward_for_//" | tr '\n' ' ')
 for plugin_suffix in ${plugin_suffices[@]}
 do
-  if [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
+  if [[ $ssh_proxy_running == "false" ]] && \
+     [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
     echo
     echo "### ssh/pre"
     . ${taito_plugin_path}/util/opts.sh
@@ -22,7 +23,7 @@ do
       echo "Have you set taito_ssh_user in ~/.taito/taito-config.sh or ./taito-user-config.sh?"
       exit 1
     ) && \
-    ssh_was_run="true"
+    ssh_proxy_running="true"
   fi
 done && \
 
