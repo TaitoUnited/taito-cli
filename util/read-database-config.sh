@@ -30,6 +30,14 @@ if [[ -n "${target}" ]] && [[ -n "${!env_var_name}" ]]; then
   export database_host="${!env_var_name}"
   echo "- database_host: ${database_host}" > "${taito_dout:-/dev/null}"
 
+  env_var_name="db_${target}_real_host"
+  export database_real_host="${!env_var_name}"
+  echo "- database_real_host: ${database_real_host}" > "${taito_dout:-/dev/null}"
+
+  env_var_name="db_${target}_real_port"
+  export database_real_port="${!env_var_name}"
+  echo "- database_real_port: ${database_real_port}" > "${taito_dout:-/dev/null}"
+
   env_var_name="db_${target}_proxy_host"
   export database_proxy_host="${!env_var_name}"
   echo "- database_proxy_host: ${database_proxy_host}" > "${taito_dout:-/dev/null}"

@@ -2,7 +2,7 @@
 
 By default only the *basic* plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](02-installation.md) chapter for an example of a personal configuration file.
 
-Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of full-stack-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control. *TODO: `taito-user-config.sh` is named `taito-run-env.sh` in the current Taito CLI implementation and it is used only for `docker-compose up`.*
+Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of full-stack-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control.
 
 Settings are defined as environment variables. If an environment variable contains multiple values, just write them using whitespace as delimiter, for example:
 

@@ -9,7 +9,7 @@
 . ${taito_plugin_path}/util/run.sh run_for_
 
 # Run scripts from scripts/run directory
-script="scripts/run/taito-${taito_command}.sh"
+script="scripts/taito-run/taito-${taito_command}.sh"
 if [[ -f ${script} ]]; then
   echo "Running script: ${script}"
   "${script}" "${@}"

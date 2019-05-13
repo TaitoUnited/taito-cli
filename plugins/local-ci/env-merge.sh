@@ -14,7 +14,7 @@ do
   if [[ "${merge}" == "${taito_env_merge_source}->"* ]] || [[ "${source_found}" ]]; then
     source_found=true
     branch="${merge##*->}"
-    "${taito_plugin_path}/util/ci.sh" "$branch"
+    "${taito_util_path}/local-ci.sh" "$branch"
   fi
   if [[ "${merge}" == *"->${taito_env_merge_dest}" ]]; then
     break

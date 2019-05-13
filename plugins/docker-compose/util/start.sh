@@ -61,6 +61,7 @@ if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database
   "
 fi
 
+# TODO: remove taito-run-env.sh (backwards compatibility -> only used in old projects)
 "${taito_util_path}/execute-on-host-fg.sh" "
   if [ -f ./taito-run-env.sh ]; then . ./taito-run-env.sh; fi
   ${conditional_commands}

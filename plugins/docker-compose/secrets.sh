@@ -10,6 +10,7 @@ echo "Secrets in docker-compose.yaml:"
 (${taito_setv}; cat docker-compose.yaml | grep -i "SECRET:\|PASSWORD:\|KEY:\|ID:")
 echo
 
+# TODO: remove (backwards compatibility -> only used in old projects)
 if [[ -f ./taito-run-env.sh ]]; then
   echo "Secrets in taito-run-env.sh:"
   (${taito_setv}; cat ./taito-run-env.sh)

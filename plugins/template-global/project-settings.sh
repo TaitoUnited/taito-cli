@@ -2,12 +2,35 @@
 : "${taito_util_path:?}"
 
 if [[ ${taito_type:-} == "zone" ]]; then
+  # Postgres
+  postgres_host=${postgres_default_host:-}
+  postgres_host_prod=${postgres_default_host_prod:-}
+  postgres_admin=${postgres_default_admin:-}
   postgres_instance=$(echo "${postgres_instances:-}" | awk '{print $1;}')
-  postgres_host=$(echo "${postgres_hosts:-}" | awk '{print $1;}')
-  postgres_admin=$(echo "${postgres_admins:-}" | awk '{print $1;}')
+  if [[ ! $postgres_host ]]; then
+    postgres_host=$(echo "${postgres_hosts:-}" | awk '{print $1;}')
+  fi
+  if [[ ! $postgres_host_prod ]]; then
+    postgres_host_prod=$(echo "${postgres_hosts_prod:-$postgres_hosts}" | awk '{print $1;}')
+  fi
+  if [[ ! $postgres_admin ]]; then
+    postgres_admin=$(echo "${postgres_admins:-}" | awk '{print $1;}')
+  fi
+
+  # MySQL
+  mysql_host=${mysql_default_host:-}
+  mysql_host_prod=${mysql_default_host_prod:-}
+  mysql_admin=${mysql_default_admin:-}
   mysql_instance=$(echo "${mysql_instances:-}" | awk '{print $1;}')
-  mysql_host=$(echo "${mysql_hosts:-}" | awk '{print $1;}')
-  mysql_admin=$(echo "${mysql_admins:-}" | awk '{print $1;}')
+  if [[ ! $mysql_host ]]; then
+    mysql_host=$(echo "${mysql_hosts:-}" | awk '{print $1;}')
+  fi
+  if [[ ! $mysql_host_prod ]]; then
+    mysql_host_prod=$(echo "${mysql_hosts_prod:-$mysql_hosts}" | awk '{print $1;}')
+  fi
+  if [[ ! $mysql_admin ]]; then
+    mysql_admin=$(echo "${mysql_admins:-}" | awk '{print $1;}')
+  fi
 
   echo
   echo "Once you have configured the zone, you can create a new project on"
@@ -38,10 +61,6 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: Domains"
   echo "template_default_domain=$taito_default_domain"
   echo
-  echo "# Hosts"
-  echo "template_default_host=$taito_default_host"
-  echo "template_default_host_prod=$taito_default_host_prod"
-  echo
   echo "# Template: Project defaults"
   echo "template_default_environments=\"dev prod\""
   echo "template_default_alternatives=\"\""
@@ -64,7 +83,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_ci_provider=$taito_ci_provider"
   echo "template_default_ci_exec_deploy=true"
   echo "template_default_container_registry_provider=$taito_provider"
-  echo "template_default_container_registry=$taito_provider_container_registry"
+  echo "template_default_container_registry=$taito_container_registry"
   echo
   echo "# Template: Misc providers"
   echo "template_default_sentry_organization=$taito_organization"
@@ -78,7 +97,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   elif [[ $taito_provider == "aws" ]]; then
     echo "template_default_kubernetes_cluster_prefix=arn:aws:eks:$taito_provider_region:$taito_provider_org_id:cluster/"
   else
-    echo "template_default_kubernetes_cluster_prefix=???"
+    echo "template_default_kubernetes_cluster_prefix=TODO"
   fi
 
   echo
@@ -108,7 +127,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# to a different zone than feature, development, and testing environments,"
   echo "# configure alternative prod zone settings here."
   echo "template_default_zone_prod=$taito_zone"
-  echo "template_default_domain_prod=$taito_default_domain"
+  echo "template_default_domain_prod=${taito_default_domain_prod:-$taito_default_domain}"
   echo "template_default_provider_prod=$taito_provider"
   echo "template_default_provider_org_id_prod=$taito_provider_org_id"
   echo "template_default_provider_region_prod=$taito_provider_region"
@@ -118,9 +137,9 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_vc_provider_prod=$taito_vc_provider"
   echo "template_default_vc_url_prod=$taito_vc_provider/$taito_organization"
   echo "template_default_container_registry_provider_prod=$taito_provider"
-  echo "template_default_container_registry_prod=$taito_provider_container_registry"
-  echo "template_default_postgres_host_prod=\"${postgres_host}\""
-  echo "template_default_mysql_host_prod=\"${mysql_host}\""
+  echo "template_default_container_registry_prod=$taito_container_registry"
+  echo "template_default_postgres_host_prod=\"${postgres_host_prod:-$postgres_host}\""
+  echo "template_default_mysql_host_prod=\"${mysql_host_prod:-$mysql_host}\""
   echo "template_default_storage_class_prod=REGIONAL"
   echo "template_default_storage_location_prod=$taito_provider_region"
   echo "template_default_storage_days_prod=60"

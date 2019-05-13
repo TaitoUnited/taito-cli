@@ -13,6 +13,14 @@ if [[ -f "${taito_project_path}/taito-config.sh" ]]; then
   set +a
 fi
 
+if [[ -f "${taito_project_path}/taito-user-config.sh" ]]; then
+  # Project specific configuration of user
+  set -a
+  # shellcheck disable=SC1090
+  . "${taito_project_path}/taito-user-config.sh"
+  set +a
+fi
+
 # Set defaults
 export taito_build_targets=${taito_build_targets:-$taito_targets}
 

@@ -316,6 +316,7 @@ function cleanup {
 trap cleanup EXIT
 
 # Set some variables to be used later
+taito_host_username="$(whoami)"
 taito_host_uname="$(uname)"
 taito_run="${log_file/${taito_home_path}/${taito_container_home}}"
 taito_run_fg="${log_file_fg/${taito_home_path}/${taito_container_home}}"
@@ -418,6 +419,7 @@ docker_command="
     -e taito_enabled_extensions=${extension_paths}
     -e taito_run=${taito_run}
     -e taito_run_fg=${taito_run_fg}
+    -e taito_host_username=${taito_host_username}
     -e taito_host_uname=${taito_host_uname}
     -e taito_host_project_path=${taito_project_path}
     -e taito_mode=${mode}

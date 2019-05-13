@@ -1,8 +1,8 @@
 #!/bin/bash -e
 : "${taito_util_path:?}"
+: "${taito_env:?}"
 
-branch="${taito_branch:-dev}"
-"${taito_util_path}/local-ci.sh" "$branch"
+"${taito_util_path}/local-ci.sh" "$taito_env"
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"
