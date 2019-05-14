@@ -288,6 +288,10 @@ if [[ ${admin} == true ]] || [[ ${root} == true ]]; then
   docker_user_opts="--user 0:0"
 fi
 
+if [[ ${root} == true ]]; then
+  docker_user_opts="${docker_user_opts} -v /var/run/docker.sock:/var/run/docker.sock"
+fi
+
 if [[ ${admin} == true ]]; then
   echo "Admin encryption/decryption key:"
   read -s admin_key
