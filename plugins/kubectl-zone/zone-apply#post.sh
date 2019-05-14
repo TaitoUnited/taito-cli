@@ -80,7 +80,7 @@ then
     echo "TODO: For AWS use the lowest IP:s only (e.g. starting with 3.) as they seem"
     echo "to be static."
     echo
-    echo "Press enter to continue"
+    echo "Press enter once you have configured DNS."
     read -r
   else
     echo "Your Kubernetes cluster does not seem to contain any load balancer IP"

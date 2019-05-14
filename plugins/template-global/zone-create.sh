@@ -24,10 +24,11 @@ read -r zone
   git clone -q -b master --single-branch --depth 1 ${git_repository} \${HOME}/.taito/tmp/${zone} &&
   echo Copying template ${template_path} &&
   cp -r \${HOME}/.taito/tmp/$zone/$template_path \"$zone\" &&
+  taito -c -- sed -i s/taito_zone=my-zone/taito_zone=$zone/ $zone/taito-config.sh &&
   echo &&
   echo Created new directory: \"$zone\" &&
   echo &&
-  echo \"1) Change to the new directory: cd $zone\" &&
+  echo \"1) Go to the new directory: cd $zone\" &&
   echo \"2) Edit taito-config.sh and change at least all settings marked with '# CHANGE'\" &&
   echo \"3) Run 'taito zone apply' and follow instructions\" &&
   echo

@@ -26,7 +26,7 @@ rm -f ./_template-config.sh
 taito project-docs
 
 echo
-echo "Create a new repository: ${template_dest_git}/${taito_vc_repository}"
+echo "Create a new repository: ${template_default_vc_url}/${taito_vc_repository}"
 echo "The new repository must be completely empty (no README.md, LICENSE,"
 echo "or .gitignore). After you have created the empty repository, continue by"
 echo "pressing enter."

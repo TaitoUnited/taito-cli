@@ -38,10 +38,11 @@ then
   read -r
   echo
   echo "The CI/CD user needs to have deployment rights for the Kubernetes cluster."
-  echo "You most likely can add the rights in your taito zone config like this:"
+  echo "You most likely can add the rights in your taito zone configuration files"
+  echo "like this:"
   echo
-  echo "- Edit 'terraform/variables.tf': add user to 'map_users' and increase"
-  echo "  the 'map_users_count'."
+  echo "- Edit 'terraform/variables.tf': add the CI/CD user to 'map_users'"
+  echo "  and increase the 'map_users_count' by one."
   echo "- Run 'taito zone apply'."
   echo
   echo "TODO: Limited Kubernetes group for CI/CD (not system:masters)"

@@ -17,15 +17,15 @@ echo
 echo "Repository name, application namespace, and labels will be constituted from"
 echo "the following details:"
 echo
-echo "  1) Customer: company or business unit"
+echo "  1) Customer, company or business unit"
 echo "  2) Product family (optional)"
 echo "  3) Application name"
-echo "  4) Implementation suffix (optional)"
+echo "  4) Service or name suffix (optional)"
 echo
 echo "NOTE: Please give a short lower case word or abbreviation for each."
 echo "No special characters!"
 echo
-echo "1) Customer: company or business unit (e.g. 'taito')?"
+echo "1) Customer, company or business unit (e.g. 'taito')?"
 read -r taito_company
 if ! [[ "${taito_company}" =~ ^[a-z][a-z1-9]+$ ]] || \
    [[ ${#taito_company} -gt 14 ]]; then
@@ -49,7 +49,7 @@ if ! [[ "${taito_application}" =~ ^[a-z][a-z1-9]+$ ]] || \
   exit 1
 fi
 echo
-echo "4) Optional: implementation suffix (e.g. 'api', 'gui', ...)"
+echo "4) Optional: service or name suffix (e.g. 'api', 'gui', ...)"
 read -r taito_suffix # TODO application_suffix
 if ! [[ "${taito_suffix}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
    [[ ${#taito_suffix} -gt 10 ]]; then

@@ -10,7 +10,7 @@ name=${1}
   cd terraform || exit 1
 
   if "${taito_util_path}/confirm-execution.sh" "terraform" "${name}" \
-    "Replace hardcoded values in taito_config.sh and terraform/*"
+    "Replace placeholders with real values in taito_config.sh and terraform/*"
   then
     # For AWS: determine hex string for region from database endpoint URL
     if [[ ${taito_provider:-} == "aws" ]]; then
