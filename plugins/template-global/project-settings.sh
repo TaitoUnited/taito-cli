@@ -87,6 +87,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_container_registry=$taito_container_registry"
   echo
   echo "# Template: Misc providers"
+  echo "template_default_uptime_provider="
   echo "template_default_sentry_organization=$taito_organization"
   echo "template_default_appcenter_organization=$taito_organization"
   echo
@@ -140,6 +141,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_vc_url_prod=$taito_vc_provider/$taito_organization"
   echo "template_default_container_registry_provider_prod=$taito_provider"
   echo "template_default_container_registry_prod=$taito_container_registry"
+  echo "template_default_uptime_provider_prod=$taito_uptime_provider"
   echo "template_default_postgres_host_prod=\"${postgres_host_prod:-$postgres_host}\""
   echo "template_default_mysql_host_prod=\"${mysql_host_prod:-$mysql_host}\""
   echo "template_default_storage_class_prod=REGIONAL"

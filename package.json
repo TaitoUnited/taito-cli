@@ -17,7 +17,7 @@
     "__clean": "docker build --no-cache -t taito .",
     "lint": "echo 'TODO lint'",
     "compile": "echo 'TODO compilation if required for some parts'",
-    "unit": "taito -- find . -name \"*.bats\" -type f -prune -exec bats '{}' +",
+    "unit": "taito -- rm -f /tmp/bats.*; find . -name \"*.bats\" -type f -prune -exec bats '{}' +",
     "test": "echo 'TODO integration tests (cd test; ./all.sh)'",
     "verify": "taito lint && taito -c compile && taito -c unit",
     "check-deps": "npm-check",
