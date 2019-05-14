@@ -8,7 +8,7 @@
 
 name=${1}
 
-if [[ -f "./scripts/terraform/${taito_provider}" ]] && \
+if [[ -d "./scripts/terraform/${taito_provider}" ]] && \
    "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
      "Run terraform scripts for cloud provider ${taito_provider}"
 then
@@ -27,7 +27,7 @@ then
 fi && \
 
 # TODO: duplicate code
-if [[ -f "./scripts/terraform/${taito_uptime_provider:-}-uptime" ]] && \
+if [[ -d "./scripts/terraform/${taito_uptime_provider:-}-uptime" ]] && \
    "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
      "Run terraform scripts for uptime provider ${taito_uptime_provider}"
 then
