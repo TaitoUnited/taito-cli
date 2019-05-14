@@ -3,6 +3,9 @@
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 
+# Set default region just in case
+export AWS_DEFAULT_REGION="${taito_provider_region:?}"
+
 # Automatic authentication on 'env apply'
 if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo
