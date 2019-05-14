@@ -58,8 +58,9 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_organization=$taito_organization"
   echo "template_default_organization_abbr=${taito_organization_abbr:-$taito_organization}"
   echo
-  echo "# Template: Domains"
+  echo "# Template: Domains and hosts"
   echo "template_default_domain=$taito_default_domain"
+  echo "template_default_host=x.$taito_default_domain"
   echo
   echo "# Template: Project defaults"
   echo "template_default_environments=\"dev prod\""
@@ -128,6 +129,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# configure alternative prod zone settings here."
   echo "template_default_zone_prod=$taito_zone"
   echo "template_default_domain_prod=${taito_default_domain_prod:-$taito_default_domain}"
+  echo "template_default_host_prod=x.${taito_default_domain_prod:-$taito_default_domain}"
   echo "template_default_provider_prod=$taito_provider"
   echo "template_default_provider_org_id_prod=$taito_provider_org_id"
   echo "template_default_provider_region_prod=$taito_provider_region"

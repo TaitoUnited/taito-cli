@@ -109,19 +109,20 @@ Database settings:
 
 Messaging:
 
-* **taito_messaging_app:** Messaging app used for notifications (e.g. `slack`).
+* **taito_messaging_provider:** Messaging app used for notifications (e.g. `slack`).
 * **taito_messaging_webhook:** Webhook for sending messaging notifications.
 * **taito_messaging_channel:** Messaging channel used for project discussion.
 * **taito_messaging_builds_channel:** Messaging channel used for monitoring builds. Default value: '#builds'.
 * **taito_messaging_critical_channel:** Messaging channel used for critical alerts. Default value: '#critical'.
 * **taito_messaging_monitoring_channel:** Messaging channel used for monitoring apps. Default value: '#monitoring'.
 
-Monitoring:
+Uptime monitoring:
 
-* **taito_monitoring_targets:** Targets to be monitored, for example `admin client server`.
-* **taito_monitoring_paths:** Public paths to be monitored, for example `/admin/uptimez /uptimez /api/uptimez`.
-* **taito_monitoring_timeouts:** Monitoring timeouts, for example `2s 2s 5s`.
-* **taito_monitoring_channels:** Monitoring channels, for example `projects/myproject/notificationChannels/1234567890`.
+* **taito_uptime_provider:**
+* **taito_uptime_targets:** Targets to be monitored, for example `admin client server`.
+* **taito_uptime_paths:** Public paths to be monitored, for example `/admin/uptimez /uptimez /api/uptimez`.
+* **taito_uptime_timeouts:** Monitoring timeouts, for example `2s 2s 5s`.
+* **taito_uptime_channels:** Monitoring channels, for example `projects/myproject/notificationChannels/1234567890`.
 
 Continuos integration settings:
 

@@ -13,5 +13,5 @@ read -r confirm
 if [[ ${confirm:-y} =~ ^[Yy]*$ ]]; then
   rm -f ./taitoflag* &> /dev/null
   echo "Image tag: ${image_tag}"
-  ssh-agent bash -c "./local-ci.sh ${env} ${image_tag}"
+  "${taito_util_path}/ssh-agent.sh" "./local-ci.sh ${env} ${image_tag}"
 fi

@@ -1,5 +1,6 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 : "${taito_zone:?}"
@@ -52,8 +53,7 @@ if [[ -d "./scripts/helm" ]]; then
   helm_deploy_options="${helm_deploy_options:-}"
 
   # Substitute environment variables in helm.yaml
-  perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : ""/eg' \
-    scripts/helm.yaml > scripts/helm.yaml.tmp
+  "$taito_util_path/replace-variables.sh" scripts/helm.yaml scripts/helm.yaml.tmp
 
   # helm-ENV.yaml overrides default settings of helm.yaml
   override_file=""
@@ -64,8 +64,7 @@ if [[ -d "./scripts/helm" ]]; then
   fi
   if [[ ${override_file} ]]; then
     # Substitute environment variables in helm-ENV.yaml
-    perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : ""/eg' \
-      "${override_file}" > "${override_file}.tmp"
+    "$taito_util_path/replace-variables.sh" "${override_file}" "${override_file}.tmp"
     helm_deploy_options="${helm_deploy_options} -f ${override_file}.tmp"
   fi
 

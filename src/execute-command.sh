@@ -637,7 +637,9 @@ fi
 
 # Execute command
 exit_code=0
-if [[ "${command}" == "shell" ]] && [[ -z ${taito_target} ]]; then
+if [[ "${command}" == "shell" ]] && \
+   [[ -z ${taito_target} ]] && \
+   [[ ${taito_env} == "local" ]]; then
   # Start interactive shell
   /bin/bash
   exit_code=${?}

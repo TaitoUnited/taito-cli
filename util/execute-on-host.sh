@@ -14,7 +14,9 @@ echo "+ ${commands}" > "${taito_vout}"
 if [[ "${taito_host:-}" ]] && \
    [[ "${taito_env}" != "local" ]] && \
    [[ "${commands}" == *"docker"* ]]; then
-  ssh "${taito_ssh_user:?}@${taito_host}" "${commands}"
+  . "${taito_cli_path}/plugins/ssh/util/opts.sh"
+  ssh -t ${opts} "${taito_ssh_user:?}@${taito_host}" \
+    "sudo -- sh -c 'cd /projects/${taito_namespace}; ${commands}'"
 elif [[ "${taito_mode:-}" == "ci" ]]; then
   eval "${commands}"
 elif [[ -n ${taito_run:-} ]]; then

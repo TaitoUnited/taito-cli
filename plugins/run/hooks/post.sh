@@ -13,7 +13,7 @@ if [[ -f ${script} ]]; then
   echo "Run script ${script} (Y/n)?"
   [[ ${taito_mode:-} == "ci" ]] || read -r confirm
   if [[ ${confirm} =~ ^[Yy]*$ ]]; then
-    "${script}" "${@}"
+    "${taito_util_path}/ssh-agent.sh" "${script}" "${@}"
   fi
 fi
 

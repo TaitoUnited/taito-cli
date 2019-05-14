@@ -58,16 +58,14 @@ then
       # once and only one of them succeeds
       echo "Enter SSH key name or leave empty to use the default [id_rsa]:"
       read -r keyname
-      ssh-agent bash -c "
-        ${taito_setv:?}
-        ssh-add "${HOME}/.ssh/${keyname:-id_rsa}" && \
-        ansible-playbook -i inventory ${ansible_options:-} site.yml
-      "
-    else
-      ${taito_setv:?}
-      ansible-playbook -i inventory ${ansible_options:-} site.yml
-      set +x
+      keyname=${keyname:-id_rsa}
     fi
+
+    "${taito_util_path}/ssh-agent.sh" "
+      ${taito_setv:?} && \
+      [[ "${keyname}" ]] && ssh-add "${HOME}/.ssh/${keyname:-id_rsa}" && \
+      ansible-playbook -i inventory ${ansible_options:-} site.yml
+    "
   )
 fi && \
 

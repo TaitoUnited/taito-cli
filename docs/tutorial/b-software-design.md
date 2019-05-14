@@ -1,21 +1,24 @@
 ## APPENDIX B: Software design
 
-### Code structure
+### Modular structure
 
-An implementation should be divided in loosely coupled highly cohesive parts by using a modular directory structure. One way to do this, is to imagine that your API implementation is going to be split in multiple microservices in the future, and your UI implementation is going to be split in multiple chunks that are loaded to browser separately. Even if this would not happen, this kind of loosely coupled structure has also many other benefits:
+Many tutorials introduce you a monolithic application structure: put all application state in this directory, put all application actions into another directory. This works ok for a very small application, but it starts to become problematic once the codebase grows larger. Another approach would be to split the frontend into separate micro frontends and the backend into separate microservices. But this can be a bit overkill approach for a small application or API. When in doubt, a monolithic implementation with a modular structure is often the best approach for quickly building the first MVP or prototype. When done correctly, the modular structure can easily be split into separate micro frontends and microservices once required.
+
+Whether you are building a monolithic implementation or separate micro frontends and microservices, an application or API codebase should always be divided into loosely coupled highly cohesive parts by using a modular structure. Even if the monolithic implementation is not going to be split into micro frontends and microservices later, the modular structure provides many benefits, for example:
 
 * When making a change, it's easier to see how widely the change might affect the application.
 * When implementing a new feature, there is no need to jump around in the codebase as much.
 * It's easier for a new developer to implement new features without knowing the whole codebase.
 * Once the application grows and time passes, it's easier to rewrite some parts of the application using a newer technology without affecting the other parts.
 
-The following guidelines usually work well at least for a GUI implementation. You might need to break the guidelines once in a while, but still try to keep directories loosely coupled.
+The following guidelines usually work well when building a modular monolithic implementation:
 
 * Create directory structure mainly based on domain concepts or features (`billing`, `management`, `trip`, ...) instead of technical type or layer (`actions`, `containers`, `components`, `css`, `utils`, ...).
+* You can use event-based communication to avoid direct calls between loosely coupled parts. That is, one UI section or service produces events that the others can listen to, if they are interested in such an event.
 * Use such file naming that you can easily determine the type from a filename (e.g. `*.util.js`, `*.api.js`). This way you don't need to use additional directories for grouping files by type. Thus, you can freely place a file wherever it is needed. NOTE: It is ok to exclude type from GUI component filenames to keep import statements shorter. Just make sure that you can easily determine type and responsibility from a filename, and that you use the same naming convention throughout the codebase.
 * A directory should not contain any references outside of its boundary; with the exception of references to libraries and common directories. You can think of each directory as an independent concept (or subconcept), and each `common` directory as a library that is shared among closely related concepts (or subconcepts).
 * A file should contain only nearby references (e.g. references to files in the same directory or in a subdirectory directly beneath it); with the exception of references to libraries and common directories, of course.
-* You cannot always follow the dependency guidelines mentioned above. If you break the guidelines, at least try to avoid making circular dependencies between directories. Also leave a `REFACTOR:` comment if the dependency is the kind that it should be refactored later.
+* If you break the guidelines, at least try to avoid making circular dependencies. Also leave a `REFACTOR:` comment if the dependency is the kind that it should be refactored later.
 
 See [full-stack-template/client/src](https://github.com/TaitoUnited/server-template/tree/master/client/src) as an example.
 
