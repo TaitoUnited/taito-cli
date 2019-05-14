@@ -223,3 +223,5 @@ Restart containers and open the site on browser:
     taito open www
 
 > NOTE: The docs folder is mounted inside the www container. Therefore you can access all markdown files of docs in your static generator implementation with `../docs`.
+
+...
