@@ -1,6 +1,5 @@
 import React from 'react';
-import { graphql, Link } from 'gatsby';
-import styled from '@emotion/styled';
+import { graphql } from 'gatsby';
 
 import { flattenListData } from '../utils';
 import Page from '../components/Page';
@@ -9,6 +8,8 @@ import SEO from '../components/SEO';
 export default ({ data }) => {
   const items = flattenListData(data, 'items');
   const [pageData] = flattenListData(data, 'data');
+
+  console.log('> items', items);
 
   return (
     <Page>

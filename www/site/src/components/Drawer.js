@@ -26,15 +26,19 @@ const Drawer = () => {
       <Backdrop isVisible={isOpen} onClick={() => setOpen(false)} />
 
       <Menu isOpen={isOpen}>
-        <MenuItem onClick={() => navigateDelayed('/')}>Etusivu</MenuItem>
-        <MenuItem onClick={() => navigateDelayed('/palvelut')}>
-          Palvelut
+        <MenuItem onClick={() => navigateDelayed('/')}>Home</MenuItem>
+        <MenuItem onClick={() => navigateDelayed('/docs/')}>Docs</MenuItem>
+        <MenuItem onClick={() => navigateDelayed('/tutorial/')}>
+          Tutorial
         </MenuItem>
-        <MenuItem onClick={() => navigateDelayed('/galleria')}>
-          Galleria
+        <MenuItem onClick={() => navigateDelayed('/plugins/')}>
+          Plugins
         </MenuItem>
-        <MenuItem onClick={() => navigateDelayed('/ota-yhteytta')}>
-          Ota yhteyttä
+        <MenuItem onClick={() => navigateDelayed('/templates/')}>
+          Templates
+        </MenuItem>
+        <MenuItem onClick={() => navigateDelayed('/extensions/')}>
+          Extension
         </MenuItem>
       </Menu>
     </>
