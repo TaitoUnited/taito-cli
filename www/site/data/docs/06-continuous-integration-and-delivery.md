@@ -49,5 +49,4 @@ Note that the CI/CD process may slightly differ depending on branch. On dev and 
 
 ---
 
-**Next:** [7. Infrastructure management](07-infrastructure-management)
-````
+**Next:** [7. Infrastructure management](/docs/07-infrastructure-management)

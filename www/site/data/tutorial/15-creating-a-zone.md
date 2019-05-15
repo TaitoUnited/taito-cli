@@ -30,4 +30,4 @@ TODO:
 
 ---
 
-**Next:** [16. Zone maintenance](16-zone-maintenance)
+**Next:** [16. Zone maintenance](/tutorial/16-zone-maintenance)

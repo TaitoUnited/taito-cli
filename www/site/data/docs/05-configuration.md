@@ -1,6 +1,6 @@
 ## 5. Configuration
 
-By default only the _basic_ plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](02-installation) chapter for an example of a personal configuration file.
+By default only the _basic_ plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](/docs/02-installation) chapter for an example of a personal configuration file.
 
 Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of full-stack-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control.
 
@@ -255,16 +255,15 @@ Plugins require secrets to perform some of the operations. Secrets are configure
 
 Secret naming convention is **name.property[/namespace]:method**. For example:
 
-* *silicon-valley-prod-basic-auth.auth:htpasswd*: User credentials for basic authentication. Use `htpasswd-plain` instead of `htpasswd` if you want to store the passwords in plain text (e.g. for development purposes).
-* *silicon-valley-prod-twilio.apikey:manual*: API key for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.
-* *silicon_valley_prod-db-app.password:random*: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be used by application.
-* *silicon_valley_prod-db-mgr.password/devops:random*: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be in managing the database (for CI/CD, etc). It is saved to devops namespace as it is not required by the application.
-* *cloudsql-gserviceaccount.key:copy/devops*: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
-* *github-buildbot.token:read/devops*: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
+- _silicon-valley-prod-basic-auth.auth:htpasswd_: User credentials for basic authentication. Use `htpasswd-plain` instead of `htpasswd` if you want to store the passwords in plain text (e.g. for development purposes).
+- _silicon-valley-prod-twilio.apikey:manual_: API key for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.
+- _silicon_valley_prod-db-app.password:random_: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be used by application.
+- _silicon_valley_prod-db-mgr.password/devops:random_: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be in managing the database (for CI/CD, etc). It is saved to devops namespace as it is not required by the application.
+- _cloudsql-gserviceaccount.key:copy/devops_: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
+- _github-buildbot.token:read/devops_: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
 
 See the [secret management](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md#secret-management) section of the plugins page for more information.
 
 ---
 
-**Next:** [6. Continuous integration and delivery](06-continuous-integration-and-delivery)
-````
+**Next:** [6. Continuous integration and delivery](/docs/06-continuous-integration-and-delivery)

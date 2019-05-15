@@ -204,4 +204,4 @@ Advanced features (TODO not all implemented yet):
 
 ---
 
-**Next:** [6. Environment variables and secrets](06-env-variables-and-secrets)
+**Next:** [6. Environment variables and secrets](/tutorial/06-env-variables-and-secrets)

@@ -34,7 +34,7 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
    sudo ln -s /home/myname/projects/taito-cli/taito /usr/local/bin/taito
    ```
 
-3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses Taito CLI, they will provide you the correct settings. See [Advanced Usage](03-usage.md#advanced-usage) if you need to configure settings for multiple organizations.
+3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses Taito CLI, they will provide you the correct settings. See [Advanced Usage](/docs/03-usage#advanced-usage) if you need to configure settings for multiple organizations.
 
    ```shell
    #!/bin/bash
@@ -79,4 +79,4 @@ You can upgrade Taito CLI and its extensions anytime by running `taito upgrade`.
 
 ---
 
-**Next:** [3. Quick start](03-quick-start)
+**Next:** [3. Quick start](/docs/03-quick-start)

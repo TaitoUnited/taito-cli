@@ -8,7 +8,6 @@ Taito CLI provides some version control commands that make it easier for you to 
 
 If you would rather use GUI tools or git commands for managing your branches, you can display the version control conventions by running:
 
-
 ```shell
 taito conventions
 ```
@@ -71,34 +70,34 @@ increase the major version number.
 ```
 
 Meanings:
-* Closes #xx, #xx: Closes issues
-* Issues #xx, #xx: References issues
-* BREAKING CHANGE: Introduces a breaking change that causes major version number to be increased in the next production release.
-* [skip ci]: Skips continuous integration build when the commit is pushed.
+
+- Closes #xx, #xx: Closes issues
+- Issues #xx, #xx: References issues
+- BREAKING CHANGE: Introduces a breaking change that causes major version number to be increased in the next production release.
+- [skip ci]: Skips continuous integration build when the commit is pushed.
 
 You can use any of the following types in your commit message. Use at least types `fix` and `feat`. Normally you shouldn't use the `wip` type with dev branch, but you can use it in this tutorial.
 
-* `wip`: Work-in-progress (small commits that will be squashed later to one larger commit before merging them to one of the environment branches)
-* `feat`: A new feature
-* `fix`: A bug fix
-* `docs`: Documentation only changes
-* `style`: Code formatting
-* `refactor`: Refactoring
-* `perf`: Performance tuning
-* `test`: Implementing missing tests or correcting existing ones
-* `revert`: Revert previous commit.
-* `build`: Build system changes
-* `ci`: Continuous integration changes (cloudbuild.yaml)
-* `chore`: maintenance
-
+- `wip`: Work-in-progress (small commits that will be squashed later to one larger commit before merging them to one of the environment branches)
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Code formatting
+- `refactor`: Refactoring
+- `perf`: Performance tuning
+- `test`: Implementing missing tests or correcting existing ones
+- `revert`: Revert previous commit.
+- `build`: Build system changes
+- `ci`: Continuous integration changes (cloudbuild.yaml)
+- `chore`: maintenance
 
 ### 3.2 Feature branches
 
 Feature branches are handy especially in the following situations:
 
-* **Making changes to existing production functionality**: Use feature branches and pull-requests for code reviews. This will decrease the likelyhood that the change will brake something in production. It is also easier to keep the release log clean by using separate feature branches.
-* **A new project team member**: Use pull-requests for code reviews. This way you can help the new developer in getting familiar with the coding conventions and application logic of the project.
-* **Teaching a new technology**: Pull-requests can be very useful in teaching best practices for an another developer.
+- **Making changes to existing production functionality**: Use feature branches and pull-requests for code reviews. This will decrease the likelyhood that the change will brake something in production. It is also easier to keep the release log clean by using separate feature branches.
+- **A new project team member**: Use pull-requests for code reviews. This way you can help the new developer in getting familiar with the coding conventions and application logic of the project.
+- **Teaching a new technology**: Pull-requests can be very useful in teaching best practices for an another developer.
 
 Code reviews are very important at the beginning of a new software project, because this is the time when the basic foundation is built for the future development. At the beginning, however, it is usually more sensible to do occasional code reviews across the entire codebase instead of feature specific code reviews based on pull-requests.
 
@@ -188,11 +187,12 @@ TODO
 ### 3.6 Some common mistakes
 
 TODO:
-* Most common mistake so far: An accidental commit to an environment branch other than dev -> prevents fast-forward merge.
-* Erased a commit from dev branch that was already merged to test branch -> prevents fast-forward merge.
-* Premature feature branch merge to dev (merge commit on top vs. other commits on top of it)
-* Premature env branch merge
+
+- Most common mistake so far: An accidental commit to an environment branch other than dev -> prevents fast-forward merge.
+- Erased a commit from dev branch that was already merged to test branch -> prevents fast-forward merge.
+- Premature feature branch merge to dev (merge commit on top vs. other commits on top of it)
+- Premature env branch merge
 
 ---
 
-**Next:** [4. Project management](04-project-management)
+**Next:** [4. Project management](/tutorial/04-project-management)

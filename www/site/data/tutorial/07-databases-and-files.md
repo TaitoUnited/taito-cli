@@ -38,4 +38,4 @@ taito storage sync to:dev ./source /dest # Sync files to default dev bucket
 
 ---
 
-**Next:** [8. Cloud services and Terraform](08-cloud-services-and-terraform)
+**Next:** [8. Cloud services and Terraform](/tutorial/08-cloud-services-and-terraform)

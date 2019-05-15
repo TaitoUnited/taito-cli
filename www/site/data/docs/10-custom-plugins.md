@@ -141,7 +141,7 @@ If you need to alter default behaviour of a plugin in some way, you can override
 
 #### Common variables
 
-All settings defined in `taito-config.sh` are visible for plugins. See [configuration](04-configuration) chapter for more info. Additionally the following environment variables are defined by Taito CLI:
+All settings defined in `taito-config.sh` are visible for plugins. See [configuration](/docs/04-configuration) chapter for more info. Additionally the following environment variables are defined by Taito CLI:
 
 - **taito_env**: The selected environment (e.g. local, feat-NAME, dev, test, stag, canary, prod)
 - **taito_target_env**: TODO ....
@@ -174,4 +174,4 @@ TODO add documentation
 
 ---
 
-**Next:** [11. Custom project templates](11-custom-project-templates)
+**Next:** [11. Custom project templates](/docs/11-custom-project-templates)
