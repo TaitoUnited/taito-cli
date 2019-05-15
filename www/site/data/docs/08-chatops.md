@@ -4,4 +4,4 @@ TODO ChatOps: Mattermost/Slack integrations, some additional intelligence with G
 
 ---
 
-**Next:** [9. Custom commands](09-custom-commands)
+**Next:** [9. Custom commands](/docs/09-custom-commands)

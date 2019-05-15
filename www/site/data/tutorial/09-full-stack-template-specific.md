@@ -28,4 +28,4 @@ Builds take time, upgrades are tedious for the full codebase, different parts of
 
 ---
 
-**Next:** [10. Production setup](10-production-setup)
+**Next:** [10. Production setup](/tutorial/10-production-setup)

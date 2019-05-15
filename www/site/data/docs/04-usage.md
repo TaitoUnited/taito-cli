@@ -72,4 +72,4 @@ TODO support for U2F/YubiKey?
 
 ---
 
-**Next:** [5. Configuration](05-configuration)
+**Next:** [5. Configuration](/docs/05-configuration)

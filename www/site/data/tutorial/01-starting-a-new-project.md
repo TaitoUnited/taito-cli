@@ -30,7 +30,6 @@ taito project create: server-template
 
 **b) Create the project using default settings of an organization**
 
-
 ```shell
 # TODO: test if this works
 taito -o ORGANIZATION project create: TaitoUnited/server-template
@@ -40,5 +39,4 @@ Follow the instructions provided by the command. Use **acme** as company name to
 
 ---
 
-**Next:** [2. Local development](02-local-development)
-````
+**Next:** [2. Local development](/tutorial/02-local-development)

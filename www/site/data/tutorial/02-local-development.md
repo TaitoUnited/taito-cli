@@ -49,7 +49,7 @@ git pull -r           # Pull changes from remote git repository using rebase
 git push              # Push changes to remote git repository
 ```
 
-For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): my short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](03-version-control).
+For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): my short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](/tutorial/03-version-control).
 
 > TIP: `git pull -r` refuses to run if your worktree is dirty. In such case, you can run `git pull -r --autostash` if you don't want to commit or stash your changes before pull.
 
@@ -196,7 +196,7 @@ Data changes made by a service should be atomic to preserve data integrity. That
 
 #### a) Transactions with a relational database
 
-With relational databases you can use transactions to achieve atomicity. The full-stack-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. full-stack-template specific details](09-full-stack-template-specific) if you'd like to know how to customize your transactions.
+With relational databases you can use transactions to achieve atomicity. The full-stack-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. full-stack-template specific details](/tutorial/09-full-stack-template-specific) if you'd like to know how to customize your transactions.
 
 Try if transactions work like they should:
 
@@ -243,7 +243,7 @@ taito test:server           # Run all API tests of server against locally runnin
 taito test:client cypress   # Run all cypress UI tests of client against locally running application
 ```
 
-You can run UI and API tests also against remote environments, but this is explained in chapter [6. Remote environments](#06-remote-environments).
+You can run UI and API tests also against remote environments, but this is explained in chapter [5. Remote environments](/tutorial/05-remote-environments).
 
 You should not test implementation in your test scripts. Instead, you should always find some kind of 'public API' that is designed not to change very often, and test behaviour of that API. Here public API can be provided by a class, module, library, service or UI for example. This way you can make changes to the underlying implementation, and the existing tests protect you from breaking anything.
 
@@ -306,8 +306,4 @@ If you did not already, read [Appendix B: Software design](b-software-design) fo
 
 ---
 
-**Next:** [3. Version control](03-version-control)
-
-```
-
-```
+**Next:** [3. Version control](/tutorial/03-version-control)

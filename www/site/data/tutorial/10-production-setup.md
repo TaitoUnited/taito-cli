@@ -31,4 +31,4 @@ acme-myapp:
 
 ---
 
-**Next:** [11. Running in production](11-running-in-production)
+**Next:** [11. Running in production](/tutorial/11-running-in-production)

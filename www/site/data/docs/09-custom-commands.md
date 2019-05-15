@@ -35,4 +35,4 @@ Instead of implementing custom commands in _package.json_ or _Makefile_, you can
 
 ---
 
-**Next:** [10. Custom plugins](10-custom-plugins)
+**Next:** [10. Custom plugins](/docs/10-custom-plugins)

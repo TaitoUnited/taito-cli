@@ -123,4 +123,4 @@ Run `taito -h` to show more taito commands that you can use. Check also the DEVE
 
 ---
 
-**Next:** [4. Usage](04-usage)
+**Next:** [4. Usage](/docs/04-usage)
