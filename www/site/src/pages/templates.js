@@ -1,6 +1,5 @@
 import React from 'react';
-import { graphql, Link } from 'gatsby';
-import styled from '@emotion/styled';
+import { graphql } from 'gatsby';
 
 import { flattenListData } from '../utils';
 import Page from '../components/Page';
