@@ -398,12 +398,12 @@ fi
 if [[ "${taito_command}" == "env-merge" ]]; then
   # Parse arguments
   dest=""
-  while [[ $# -gt 0 ]]
+  for param in ${params[@]}
   do
-    if [[ ${1} != "-"* ]] && [[ ! ${dest} ]]; then
-      dest=${1/prod/master}
+    if [[ ${param} != "-"* ]] && [[ ! ${dest} ]]; then
+      dest=${param/prod/master}
     else
-      echo "ERROR: Invalid parameter ${1}"
+      echo "ERROR: Invalid parameter ${param}"
       exit 1
     fi
     shift
