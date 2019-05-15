@@ -32,7 +32,7 @@ Links/buttons: [Get started](https://github.com/TaitoUnited/taito-cli/tree/maste
 
 Use the same simple command set from project to project no matter the technology or infrastructure. Easily manage your containers, functions, databases, object storages, and legacy applications wherever they are deployed. Just add a taito configuration file to your project, and you're good to go.
 
-```
+```sh
 taito deployment deploy:test
 taito status:test
 taito open client:test
@@ -45,7 +45,7 @@ See the [command reference](https://github.com/TaitoUnited/taito-cli/blob/dev/he
 
 Use preconfigured templates to set up your infrastructure and to deploy new projects on top of it. Everything works out-of-the-box with minimal configuration.
 
-```
+```sh
 taito zone create: gcloud
 taito zone apply
 
@@ -59,13 +59,13 @@ taito env apply:prod
 
 To connect to the test database, you write this:
 
-```
+```sh
 taito db connect:test
 ```
 
 Instead of this:
 
-```
+```sh
 cloud_sql_proxy -instances=acme-zone:europe-west1:acme-postgres=tcp:0.0.0.0:5001
 psql -h 127.0.0.1 -p 5001 -d acme_chat_test -U acme_chat_test
 Password: ****************
@@ -75,7 +75,7 @@ Password: ****************
 
 Taito CLI is shipped as a Docker container, and it is a good fit with modern container-based CI/CD pipelines.
 
-```
+```sh
 taito build prepare:dev
 taito artifact prepare:client:dev
 taito artifact prepare:server:dev
@@ -92,7 +92,7 @@ taito build release:dev
 
 Working with modern multicloud and hybrid cloud environments requires lots of tools. Taito CLI Docker container image contains all the tools you need, and you can upgrade it anytime by running `taito upgrade`. And if you need something special, it is very easy to customize the Taito CLI image with your own requirements.
 
-```
+```sh
 taito -- terraform apply
 taito -- kubectl get pods --namespace acme-chat-dev
 taito -- gcloud dns managed-zones list
@@ -103,7 +103,7 @@ taito -- aws ec2 describe-instances
 
 Taito CLI is a lightweight wrapper that reduces technology and vendor lock-in by providing a standard command set on top of various tools. However, you can use those tools also directly without Taito CLI, and therefore you can stop using Taito CLI at any time, if you like.
 
-```
+```sh
 taito --verbose status:dev
 
 + kubectl config use-context acme-chat-dev
@@ -117,7 +117,7 @@ taito --verbose status:dev
 
 Add Taito CLI support for any technology by implementing a Taito CLI plugin. Create custom commands and share them with your colleagues as Taito CLI extensions. Implement project specific Taito CLI commands with npm or make.
 
-```
+```sh
 taito order pizza: quattro stagioni
 taito hours add: 6.5
 ```
@@ -126,7 +126,7 @@ taito hours add: 6.5
 
 Maintain good and uniform conventions by providing reusable infrastructure and project templates. Customize software development workflows for your organization with custom Taito CLI extensions.
 
-```
+```sh
 taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
 taito_global_plugins="myorg-git-global ..."
-```
+```sh
