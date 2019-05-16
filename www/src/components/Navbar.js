@@ -21,11 +21,11 @@ const Navbar = () => {
 
       <div style={{ flex: 1 }} />
 
-      <NavLink to="/docs/" activeStyle={activeStyle}>
+      <NavLink to="/docs/" activeStyle={activeStyle} partiallyActive>
         Docs
       </NavLink>
 
-      <NavLink to="/tutorial/" activeStyle={activeStyle}>
+      <NavLink to="/tutorial/" activeStyle={activeStyle} partiallyActive>
         Tutorial
       </NavLink>
 
