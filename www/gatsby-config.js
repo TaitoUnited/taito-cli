@@ -5,6 +5,9 @@ module.exports = {
     title: 'Taito CLI',
     description: 'Taito CLI - An extensible toolkit for DevOps and NoOps.',
   },
+
+  pathPrefix: '/taito-cli',
+
   plugins: [
     {
       resolve: 'gatsby-source-filesystem',
