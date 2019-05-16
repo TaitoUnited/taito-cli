@@ -57,10 +57,16 @@ do
     fi && \
     echo Merging... && \
     git fetch origin ${s}:${d} && \
-    git push --no-verify ${git_push_options} origin ${d} || \
+    git push --no-verify ${git_push_options} origin ${d} && \
+    if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
+      echo && \
+      echo ---------------------------------------------------------------------- && \
+      echo TIP: Run \\'taito ci run:${taito_target_env}\\' to execute CI/CD locally. && \
+      echo ---------------------------------------------------------------------- && \
+      echo
+    fi || \
     (echo && echo 'ERROR: MERGING FAILED!!!!' && echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d} --> TODO --force does not work yet?') \
     "
-
   fi
   if [[ "${merge}" == *"->${taito_env_merge_dest}" ]]; then
     break

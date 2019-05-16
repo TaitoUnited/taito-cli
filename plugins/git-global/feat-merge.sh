@@ -2,6 +2,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project_path:?}"
+: "${taito_target_env:?}"
 
 dest="${taito_branch:-dev}"
 
@@ -44,6 +45,14 @@ if git rev-parse --is-inside-work-tree &> /dev/null; then
     git branch -d \${feature}
   else
     git checkout -
+  fi
+
+  if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
+    echo
+    echo ----------------------------------------------------------------------
+    echo TIP: Run \\'taito ci run:${taito_target_env}\\' to execute CI/CD locally.
+    echo ----------------------------------------------------------------------
+    echo
   fi
 fi
 "

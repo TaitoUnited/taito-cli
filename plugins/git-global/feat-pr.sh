@@ -34,6 +34,14 @@ if git rev-parse --is-inside-work-tree &> /dev/null; then
   echo \"Make the pull request with your web browser. Press enter to open browser.\"
   read -r
   taito open-git
+
+  if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
+    echo
+    echo ----------------------------------------------------------------------
+    echo TIP: Run \\'taito ci run:${taito_target_env}\\' to execute CI/CD locally.
+    echo ----------------------------------------------------------------------
+    echo
+  fi
 fi
 " && \
 
