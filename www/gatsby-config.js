@@ -1,5 +1,7 @@
 const path = require('path');
 
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 module.exports = {
   siteMetadata: {
     title: 'Taito CLI',
@@ -20,12 +22,16 @@ module.exports = {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
+          // NOTE: add `pathPrefix` to relative links in Markdown files
+          // https://github.com/gatsbyjs/gatsby/issues/3316
+          !IS_DEV && 'gatsby-remark-links-path-prefix',
+
           {
             resolve: 'gatsby-remark-prismjs',
             aliases: { sh: 'bash' },
             noInlineHighlight: false,
           },
-        ],
+        ].filter(Boolean),
       },
     },
     'gatsby-plugin-catch-links',
