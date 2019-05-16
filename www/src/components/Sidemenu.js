@@ -1,13 +1,15 @@
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
+import { desktopOnly } from '../utils';
 
 const Sidemenu = styled.div`
-  width: 300px;
+  width: 320px;
   min-height: 100vh;
   border-right: 1px solid ${props => props.theme.grey[300]};
   display: flex;
   flex-direction: column;
   padding: 16px 0px 16px 24px;
+  ${desktopOnly}
 `;
 
 const SidemenuItem = styled(Link)`
@@ -48,6 +50,8 @@ const SidemenuItem = styled(Link)`
       content: '›';
     }
   }
+
+  ${desktopOnly}
 `;
 
 Sidemenu.Item = SidemenuItem;

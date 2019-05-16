@@ -1,13 +1,18 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { FiBookOpen } from 'react-icons/fi';
 
 import { flattenListData } from '../utils';
+import { IS_BROWSER } from '../constants';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
 import Text from '../components/Text';
 import Gutter from '../components/Gutter';
 import Sidemenu from '../components/Sidemenu';
-import { IS_BROWSER } from '../constants';
+import Drawer from '../components/Drawer';
+
+const isActive = slug =>
+  IS_BROWSER ? window.location.pathname === slug : false;
 
 export default function DocTemplate({ data }) {
   const menuItems = flattenListData(data, 'menu');
@@ -22,24 +27,36 @@ export default function DocTemplate({ data }) {
 
           <Gutter dir="vertical" />
 
-          {menuItems.map(item => {
-            const isActive = IS_BROWSER
-              ? window.location.pathname === item.slug
-              : false;
-
-            return (
-              <Sidemenu.Item key={item.id} to={item.slug} isActive={isActive}>
-                {item.headings.length > 0
-                  ? item.headings[0].value
-                  : 'Missing heading!'}
-              </Sidemenu.Item>
-            );
-          })}
+          {menuItems.map(item => (
+            <Sidemenu.Item
+              key={item.id}
+              to={item.slug}
+              isActive={isActive(item.slug)}
+            >
+              {item.headings.length > 0
+                ? item.headings[0].value
+                : 'Missing heading!'}
+            </Sidemenu.Item>
+          ))}
         </Sidemenu>
       }
     >
       <SEO />
       <div dangerouslySetInnerHTML={{ __html: data.doc.html }} />
+
+      <Drawer buttonPosition="bottom-right" buttonIcon={<FiBookOpen />}>
+        {menuItems.map(item => (
+          <Drawer.Item
+            key={item.id}
+            to={item.slug}
+            isActive={isActive(item.slug)}
+          >
+            {item.headings.length > 0
+              ? item.headings[0].value
+              : 'Missing heading!'}
+          </Drawer.Item>
+        ))}
+      </Drawer>
     </Page>
   );
 }
