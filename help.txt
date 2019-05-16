@@ -131,7 +131,8 @@ QUICK EXAMPLES
     deployment revert:dev 20           # Revert application on dev env to revision 20
 
   BUILDS (mainly for CI/CD)
-    build prepare                      # Prepare build
+    ci run:dev                         # Run CI/CD script for dev locally
+    build prepare:dev                  # Prepare build
     artifact prepare:server:dev TAG    # Prepare artifact for deployment
     artifact release:server:dev TAG    # Release artifact
     build release:prod                 # Release build for prod environment

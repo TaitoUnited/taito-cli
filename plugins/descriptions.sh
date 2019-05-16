@@ -386,6 +386,8 @@ if [[ ${taito_project:-} ]]; then
       echo "deployment revert${param} REVISION \
         # Revert application on ${env} environment to an another revision"
 
+      echo "ci run:${suffix} \
+        # Run CI/CD script locally for ${env} environment"
       echo "build prepare${suffix} \
         # Prepare artifacts for ${env} environment"
       echo "build publish${suffix} \

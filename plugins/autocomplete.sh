@@ -250,6 +250,7 @@ if [[ ${taito_project:-} ]]; then
       echo "deployment revisions${suffix}"
       echo "deployment revert${param} REVISION"
 
+      echo "ci run${suffix}"
       echo "build prepare${suffix}"
       echo "build publish${suffix}"
       if [[ "${env}" == "prod" ]]; then
