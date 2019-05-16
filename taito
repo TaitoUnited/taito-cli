@@ -383,10 +383,13 @@ if [[ "${mode}" == "dev" ]]; then
 fi
 proxy_flags=""
 if [[ "${command}" == "db-proxy"* ]]; then
-  echo "Exposing database proxy port: ${database_proxy_port:-$database_port}"
+  . "${taito_util_path}/read-database-config.sh"
+  port="${params[1]}"
+  proxy_port=${port:-$database_proxy_port}
+  echo "Exposing database proxy port: ${proxy_port:-$database_port}"
   proxy_flags="\
-    --expose=${database_proxy_port:-$database_port} \
-    -p 127.0.0.1:${database_proxy_port:-$database_port}:${database_proxy_port:-$database_port}"
+    --expose=${proxy_port:-$database_port} \
+    -p 127.0.0.1:${proxy_port:-$database_port}:${proxy_port:-$database_port}"
 fi
 
 # gcsfuse mounting requires privileged mode
