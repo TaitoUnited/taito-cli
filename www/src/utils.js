@@ -2,21 +2,21 @@ import { css } from '@emotion/core';
 import { BREAKPOINTS } from './constants';
 
 export const flattenListData = (data, key = 'allMarkdownRemark') => {
-  console.log('> Arr data:', data);
-  return data[key].edges.map(({ node }) => ({
-    id: node.id,
-    html: node.html,
-    ...node.fields,
-    ...node.frontmatter,
-  }));
+  console.log('> flattenListData:', data);
+  return data[key].edges.map(
+    ({ node: { fields = {}, frontmatter = {}, ...rest } }) => ({
+      ...rest,
+      ...fields,
+      ...frontmatter,
+    })
+  );
 };
 
 export const flattenData = (data, key = 'markdownRemark') => {
-  console.log('> Data:', data);
-  const { id, html, fields = {}, frontmatter = {} } = data[key];
+  console.log('> flattenData:', data);
+  const { fields = {}, frontmatter = {}, ...rest } = data[key];
   return {
-    id,
-    html,
+    ...rest,
     ...fields,
     ...frontmatter,
   };

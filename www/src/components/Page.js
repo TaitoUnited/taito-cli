@@ -6,12 +6,16 @@ import Navbar from '../components/Navbar';
 import Drawer from '../components/Drawer';
 import Footer from '../components/Footer';
 
-const Page = ({ children, ...rest }) => {
+const Page = ({ menu = null, children, ...rest }) => {
   useForceTrailingSlash();
+  console.log({ menu });
 
   return (
     <Wrapper {...rest}>
-      <Content>{children}</Content>
+      <Main>
+        {menu}
+        <Content>{children}</Content>
+      </Main>
       <Footer />
       <Navbar />
       <Drawer />
@@ -26,12 +30,19 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
+const Main = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 50px;
+`;
+
 const Content = styled.div`
   flex: 1;
-  max-width: 1000px;
   width: 100%;
-  margin: 50px auto 16px auto;
   padding: 16px;
+  max-width: 900px;
+  margin: 0px auto;
 
   a {
     color: ${props => props.theme.primary[800]};
@@ -59,6 +70,15 @@ const Content = styled.div`
 
   ul > li {
     margin-top: 8px;
+  }
+
+  blockquote {
+    margin: 0;
+    padding: 8px 16px;
+    background-color: ${props => props.theme.primary[100]};
+    border-left: 8px solid ${props => props.theme.primary[500]};
+    color: ${props => props.theme.primary[700]};
+    border-radius: 2px;
   }
 `;
 
