@@ -6,8 +6,6 @@ import { desktopOnly } from '../utils';
 import theme from '../theme';
 
 const Navbar = () => {
-  // const [dropmenuOpen, setDropmenuOpen] = React.useState(false);
-
   const activeStyle = {
     fontWeight: 500,
     borderColor: theme.primary[500],
@@ -21,23 +19,23 @@ const Navbar = () => {
 
       <div style={{ flex: 1 }} />
 
-      <NavLink to="/docs/" activeStyle={activeStyle} partiallyActive>
+      <NavLink to="/docs" activeStyle={activeStyle} partiallyActive>
         Docs
       </NavLink>
 
-      <NavLink to="/tutorial/" activeStyle={activeStyle} partiallyActive>
+      <NavLink to="/tutorial" activeStyle={activeStyle} partiallyActive>
         Tutorial
       </NavLink>
 
-      <NavLink to="/plugins/" activeStyle={activeStyle}>
+      <NavLink to="/plugins" activeStyle={activeStyle}>
         Plugins
       </NavLink>
 
-      <NavLink to="/templates/" activeStyle={activeStyle}>
+      <NavLink to="/templates" activeStyle={activeStyle}>
         Templates
       </NavLink>
 
-      <NavLink to="/extensions/" activeStyle={activeStyle}>
+      <NavLink to="/extensions" activeStyle={activeStyle}>
         Extensions
       </NavLink>
 

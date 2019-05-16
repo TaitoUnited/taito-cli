@@ -2,36 +2,31 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import { media } from '../utils';
-import { useForceTrailingSlash } from '../hooks';
 import Navbar from '../components/Navbar';
 import Drawer from '../components/Drawer';
 import Footer from '../components/Footer';
 
-const Page = ({ menu = null, children, ...rest }) => {
-  useForceTrailingSlash();
+const Page = ({ menu = null, children, ...rest }) => (
+  <Wrapper {...rest}>
+    <Main>
+      {menu}
+      <Content>{children}</Content>
+    </Main>
 
-  return (
-    <Wrapper {...rest}>
-      <Main>
-        {menu}
-        <Content>{children}</Content>
-      </Main>
+    <Footer />
 
-      <Footer />
+    <Navbar />
 
-      <Navbar />
-
-      <Drawer>
-        <Drawer.Item to="/">Home</Drawer.Item>
-        <Drawer.Item to="/docs/">Docs</Drawer.Item>
-        <Drawer.Item to="/tutorial/">Tutorial</Drawer.Item>
-        <Drawer.Item to="/plugins/">Plugins</Drawer.Item>
-        <Drawer.Item to="/templates/">Templates</Drawer.Item>
-        <Drawer.Item to="/extensions/">Extensions</Drawer.Item>
-      </Drawer>
-    </Wrapper>
-  );
-};
+    <Drawer>
+      <Drawer.Item to="/">Home</Drawer.Item>
+      <Drawer.Item to="/docs">Docs</Drawer.Item>
+      <Drawer.Item to="/tutorial">Tutorial</Drawer.Item>
+      <Drawer.Item to="/plugins">Plugins</Drawer.Item>
+      <Drawer.Item to="/templates">Templates</Drawer.Item>
+      <Drawer.Item to="/extensions">Extensions</Drawer.Item>
+    </Drawer>
+  </Wrapper>
+);
 
 const Wrapper = styled.div`
   width: 100%;
