@@ -16,7 +16,7 @@ if [[ "${taito_host:-}" ]] && \
    [[ "${commands}" == *"docker"* ]]; then
   . "${taito_cli_path}/plugins/ssh/util/opts.sh"
   ssh -t ${opts} "${taito_ssh_user:?}@${taito_host}" \
-    "sudo -- sh -c 'cd /projects/${taito_namespace}; ${commands}'"
+    "sudo -- bash -c 'cd /projects/${taito_namespace}; . ./taito-config.sh; ${commands}'"
 elif [[ "${taito_mode:-}" == "ci" ]]; then
   eval "${commands}"
 elif [[ -n ${taito_run:-} ]]; then

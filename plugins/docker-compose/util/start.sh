@@ -3,6 +3,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 : "${taito_project:?}"
+: "${taito_target_env:?}"
 
 switches=" ${*} "
 
@@ -23,7 +24,7 @@ if [[ "${switches}" == *"--clean"* ]]; then
   flags="${flags} --force-recreate --build --remove-orphans \
     --renew-anon-volumes"
 fi
-if [[ "${switches}" == *"-b"* ]]; then
+if [[ "${switches}" == *"-b"* ]] || [[ ${taito_target_env} != "local" ]]; then
   flags="${flags} --detach"
 fi
 
