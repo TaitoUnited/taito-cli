@@ -46,7 +46,7 @@ You can also do work hour reporting with Taito CLI directly from command line. T
 
 Try the following commands:
 
-```
+```shell
 taito hours auth                         # Authenticate
 taito hours start                        # Start/continue the timer
 taito hours pause                        # Pause the timer
@@ -65,4 +65,4 @@ TODO bulk adds (e.g. three weeks on vacation)
 
 ---
 
-**Next:** [PART II: Environments](05-remote-environments.md)
+**Next:** [PART II: Environments](/tutorial/05-remote-environments)

@@ -95,4 +95,4 @@ As stated previously, each part should be named according to its responsibility.
 
 ---
 
-**Next:** [APPENDIX C: Modern server infrastructure](c-modern-server-infrastructure.md)
+**Next:** [APPENDIX C: Modern server infrastructure](c-modern-server-infrastructure)

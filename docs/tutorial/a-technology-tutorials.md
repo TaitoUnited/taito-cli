@@ -34,7 +34,7 @@ You should take the single threaded model into account also when processing a la
 
 In React your UI consist of a component tree. For example:
 
-```
+```shell
 App
   TopBar
   LeftDrawer
@@ -103,4 +103,4 @@ TODO
 
 ---
 
-**Next:** [APPENDIX B: Software design](b-software-design.md)
+**Next:** [APPENDIX B: Software design](b-software-design)

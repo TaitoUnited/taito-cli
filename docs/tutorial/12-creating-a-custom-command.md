@@ -8,4 +8,4 @@ TODO Also creating a custom zone? -> using Taito CLI with custom infrastucture.
 
 ---
 
-**Next:** [13. Creating a custom plugin](13-creating-a-custom-plugin.md)
+**Next:** [13. Creating a custom plugin](/tutorial/13-creating-a-custom-plugin)

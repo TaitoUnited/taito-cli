@@ -2,22 +2,22 @@
 
 TODO describe:
 
-* docker-compose.yaml
-* scripts/helm.yaml
-* scripts/helm-ENV.yaml
+- docker-compose.yaml
+- scripts/helm.yaml
+- scripts/helm-ENV.yaml
 
 ### 6.1. Define an environment variable: same value for all environments
 
 Add the variable to docker-compose.yaml for local development:
 
-```
+```shell
 environment:
   MY_VARIABLE: my_value
 ```
 
 Add the variable to scripts/helm.yaml:
 
-```
+```shell
 env:
   MY_VARIABLE: my_value
 ```
@@ -26,21 +26,21 @@ env:
 
 Add the variable to docker-compose.yaml for local development:
 
-```
+```shell
 environment:
   MY_VARIABLE: my_value
 ```
 
 Add default value for the variable to scripts/helm.yaml:
 
-```
+```shell
 env:
   MY_VARIABLE: my_value
 ```
 
 Add environment specific value to `scripts/helm-ENV.yaml` file for such environments that do not use the default value:
 
-```
+```shell
 env:
   MY_VARIABLE: my_value
 ```
@@ -49,7 +49,7 @@ env:
 
 First make the configuration changes and push them to dev branch. Then deploy the configuration changes directly to different environments:
 
-```
+```shell
 taito deployment deploy:stag
 taito deployment deploy:prod
 ```
@@ -60,7 +60,7 @@ taito deployment deploy:prod
 
 taito-config.sh:
 
-```
+```shell
 taito_secrets="
   ${taito_project}-${taito_env}-my-secret.key:manual
 "
@@ -68,21 +68,21 @@ taito_secrets="
 
 helm.yaml:
 
-```
+```shell
 secrets:
   MY_SECRET_KEY: ${taito_project}-${taito_env}-my-secret.key
 ```
 
 docker-compose.yaml:
 
-```
+```shell
 environment:
   MY_SECRET_KEY: ${acme-myproject-dev-my-secret-key}
 ```
 
 Set secret value for each environment:
 
-```
+```shell
 taito env rotate:dev my-secret
 taito env rotate:test my-secret
 taito env rotate:prod my-secret
@@ -96,4 +96,4 @@ TODO
 
 ---
 
-**Next:** [7. Databases and files](07-databases-and-files.md)
+**Next:** [7. Databases and files](/tutorial/07-databases-and-files)

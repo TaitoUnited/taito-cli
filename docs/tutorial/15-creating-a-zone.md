@@ -10,23 +10,24 @@
 
 3. Create a taito zone based on the Google Cloud example with the following commands. Replace `EDIT` with your favorite editor. (TODO: zone create: TEMPLATE)
 
-    ```shell
-    cp -r taito-cli/examples/zones/gcloud my-zone
-    cd my-zone
-    EDIT taito-config.sh
-    taito zone apply
-    ```
+   ```shell
+   cp -r taito-cli/examples/zones/gcloud my-zone
+   cd my-zone
+   EDIT taito-config.sh
+   taito zone apply
+   ```
 
 A **taito zone** provides an infrastructure that your projects are deployed on. The Google Cloud example creates you Kubernetes and PostgreSQL clusters among other things. You usually have at least two **taito zones**: one for development and testing purposes, and an another one for production usage. In these exercises, however, you require only one **taito zone**.
 
 Do not confuse taito zones with cloud provider regions and zones. One **taito zone** may use multiple cloud provider regions and zones to achieve high availability and regional resiliency.
 
-If you want to know more, see [Appendix C: Modern server infrastructure](c-modern-server-infrastructure.md).
+If you want to know more, see [Appendix C: Modern server infrastructure](c-modern-server-infrastructure).
 
 TODO:
-* use some text from the old example.
-* optional: setup remote state for Terraform
+
+- use some text from the old example.
+- optional: setup remote state for Terraform
 
 ---
 
-**Next:** [16. Zone maintenance](16-zone-maintenance.md)
+**Next:** [16. Zone maintenance](/tutorial/16-zone-maintenance)

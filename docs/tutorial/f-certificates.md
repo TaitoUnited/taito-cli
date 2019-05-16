@@ -8,7 +8,7 @@ A domain validated (DV) certificate does not provide identity assurance and ther
 
 Add `tls.key:csrkey` secret for the production domain name in `taito-config.sh` file.
 
-```
+```shell
 # OV certificate for production only
 if [[ "${taito_env}" == "prod" ]]; then
   taito_secrets="
@@ -22,7 +22,7 @@ fi
 
 Create a private key and a certificate signing request with the following command. The private key will be stored to Kubernetes and the certificate signing request will be saved to your local disk.
 
-```
+```shell
 taito env rotate:prod myapp-mydomain-com-1.tls.key
 ```
 
@@ -36,7 +36,7 @@ Send the `.csr` file to the Certificate Authority.
 
 You get a bunch of certificate files from the Certificate Authority. You should combine them in a correct order to get a chained certificate file that contains all of them. Some examples:
 
-```
+```shell
 cat app_mydomain_com.crt TrustedSecureCertificateAuthority5.crt USERTrustRSAAddTrustCA.crt AddTrustExternalCARoot.crt > app_mydomain_com-chained.crt
 ```
 
@@ -46,7 +46,7 @@ https://medium.com/two-cents/certificate-chain-example-e37d68c3a3f0
 
 Add `tls.crt:file` secret for the production domain name in `taito-config.sh` file.
 
-```
+```shell
 # Custom certificate for production
 if [[ "${taito_env}" == "prod" ]]; then
   taito_secrets="
@@ -59,7 +59,7 @@ fi
 
 Save the chained crt file to Kubernetes:
 
-```
+```shell
 taito env rotate:prod myapp-mydomain-com-1.tls.crt
 ```
 
@@ -67,7 +67,7 @@ taito env rotate:prod myapp-mydomain-com-1.tls.crt
 
 Define `myapp-mydomain-com-1` secret for the production domain name in `helm-prod.yaml`:
 
-```
+```shell
 acme-myapp:
   ingress:
     domains:
@@ -77,7 +77,7 @@ acme-myapp:
 
 Either merge the change to master branch with `taito env merge:dev prod`, or deploy the configuration change directly to production:
 
-```
+```shell
 taito deployment deploy:prod
 ```
 
