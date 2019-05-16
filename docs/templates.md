@@ -2,7 +2,7 @@
 
 ## Infrastructure templates
 
-Taito CLI comes with some simple [infrastucture templates](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/README.md) that you can use as an example to set up your infrastructure. You may also find more infrastructure templates on [GitHub](TODO).
+Taito CLI comes with some simple [infrastucture templates](https://github.com/TaitoUnited/taito-cli/tree/master/examples/zones/README) that you can use as an example to set up your infrastructure. You may also find more infrastructure templates on [GitHub](TODO).
 
 ## Project templates
 

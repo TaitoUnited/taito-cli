@@ -14,4 +14,4 @@ Log alerts on by default...
 
 ---
 
-**Next:** [PART III: Customizing Taito CLI](12-creating-a-custom-command.md)
+**Next:** [PART III: Customizing Taito CLI](/tutorial/12-creating-a-custom-command)

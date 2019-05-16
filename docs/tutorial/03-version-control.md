@@ -14,7 +14,7 @@ taito conventions
 
 The aforementioned command should display the following version control conventions defined by Taito CLI, unless your organization has overridden some of them.
 
-```
+```shell
 Environment branches:
 - Branch naming: dev, test, stag, canary, master.
 - Environment branches should be merged to one another in the following
@@ -44,17 +44,17 @@ All commit messages must be structured according to the [Angular git commit conv
 
 Some commit message examples:
 
-```
+```shell
 feat(dashboard): news
 ```
 
-```
+```shell
 docs: installation instructions
 
 [skip ci]
 ```
 
-```
+```shell
 fix(login): fix header alignment
 
 Problem persists with IE9, but IE9 is no longer supported.
@@ -62,7 +62,7 @@ Problem persists with IE9, but IE9 is no longer supported.
 Closes #87, #76
 ```
 
-```
+```shell
 feat(ux): new look and feel
 
 BREAKING CHANGE: Not really breaking anything, but it's a good time to
@@ -70,34 +70,34 @@ increase the major version number.
 ```
 
 Meanings:
-* Closes #xx, #xx: Closes issues
-* Issues #xx, #xx: References issues
-* BREAKING CHANGE: Introduces a breaking change that causes major version number to be increased in the next production release.
-* [skip ci]: Skips continuous integration build when the commit is pushed.
+
+- Closes #xx, #xx: Closes issues
+- Issues #xx, #xx: References issues
+- BREAKING CHANGE: Introduces a breaking change that causes major version number to be increased in the next production release.
+- [skip ci]: Skips continuous integration build when the commit is pushed.
 
 You can use any of the following types in your commit message. Use at least types `fix` and `feat`. Normally you shouldn't use the `wip` type with dev branch, but you can use it in this tutorial.
 
-* `wip`: Work-in-progress (small commits that will be squashed later to one larger commit before merging them to one of the environment branches)
-* `feat`: A new feature
-* `fix`: A bug fix
-* `docs`: Documentation only changes
-* `style`: Code formatting
-* `refactor`: Refactoring
-* `perf`: Performance tuning
-* `test`: Implementing missing tests or correcting existing ones
-* `revert`: Revert previous commit.
-* `build`: Build system changes
-* `ci`: Continuous integration changes (cloudbuild.yaml)
-* `chore`: maintenance
-
+- `wip`: Work-in-progress (small commits that will be squashed later to one larger commit before merging them to one of the environment branches)
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Code formatting
+- `refactor`: Refactoring
+- `perf`: Performance tuning
+- `test`: Implementing missing tests or correcting existing ones
+- `revert`: Revert previous commit.
+- `build`: Build system changes
+- `ci`: Continuous integration changes (cloudbuild.yaml)
+- `chore`: maintenance
 
 ### 3.2 Feature branches
 
 Feature branches are handy especially in the following situations:
 
-* **Making changes to existing production functionality**: Use feature branches and pull-requests for code reviews. This will decrease the likelyhood that the change will brake something in production. It is also easier to keep the release log clean by using separate feature branches.
-* **A new project team member**: Use pull-requests for code reviews. This way you can help the new developer in getting familiar with the coding conventions and application logic of the project.
-* **Teaching a new technology**: Pull-requests can be very useful in teaching best practices for an another developer.
+- **Making changes to existing production functionality**: Use feature branches and pull-requests for code reviews. This will decrease the likelyhood that the change will brake something in production. It is also easier to keep the release log clean by using separate feature branches.
+- **A new project team member**: Use pull-requests for code reviews. This way you can help the new developer in getting familiar with the coding conventions and application logic of the project.
+- **Teaching a new technology**: Pull-requests can be very useful in teaching best practices for an another developer.
 
 Code reviews are very important at the beginning of a new software project, because this is the time when the basic foundation is built for the future development. At the beginning, however, it is usually more sensible to do occasional code reviews across the entire codebase instead of feature specific code reviews based on pull-requests.
 
@@ -105,7 +105,7 @@ Note that most feature branches should be short-lived and located only on your l
 
 #### Display commands
 
-```
+```shell
 taito feat -h
 ```
 
@@ -113,7 +113,7 @@ taito feat -h
 
 Create a public feature branch and make some changes to it:
 
-```
+```shell
 taito feat: delete-post
 ** Commit and push some changes **
 ```
@@ -122,7 +122,7 @@ taito feat: delete-post
 
 Create a private feature branch, commit some changes to it as multiple commits, merge all changes to the dev branch as a single commit, and delete the feature branch:
 
-```
+```shell
 taito feat: delete-image
 ** Commit some changes as multiple commits **
 taito feat squash
@@ -134,7 +134,7 @@ taito feat squash
 
 Switch back to the `delete-post` feature branch, make some changes to it, rebase it with the dev branch and merge it using fast-forward:
 
-```
+```shell
 taito feat: delete-post
 ** Commit and push some changes **
 taito feat merge
@@ -144,7 +144,7 @@ taito feat merge
 
 Create a public feature branch, make some changes to it, rebase it with dev branch, and create a pull-request:
 
-```
+```shell
 taito feat: reporting
 ** Commit and push some changes **
 taito feat pr
@@ -154,25 +154,25 @@ taito feat pr
 
 Display commands:
 
-```
+```shell
 taito env -h
 ```
 
 Change to dev branch:
 
-```
+```shell
 taito env:dev
 ```
 
 Merge changes from current environment branch (dev) to the next (test):
 
-```
+```shell
 taito env merge
 ```
 
 Merge changes from dev branch to canary, and to all environment branches in between them:
 
-```
+```shell
 taito env merge:dev canary
 ```
 
@@ -187,11 +187,12 @@ TODO
 ### 3.6 Some common mistakes
 
 TODO:
-* Most common mistake so far: An accidental commit to an environment branch other than dev -> prevents fast-forward merge.
-* Erased a commit from dev branch that was already merged to test branch -> prevents fast-forward merge.
-* Premature feature branch merge to dev (merge commit on top vs. other commits on top of it)
-* Premature env branch merge
+
+- Most common mistake so far: An accidental commit to an environment branch other than dev -> prevents fast-forward merge.
+- Erased a commit from dev branch that was already merged to test branch -> prevents fast-forward merge.
+- Premature feature branch merge to dev (merge commit on top vs. other commits on top of it)
+- Premature env branch merge
 
 ---
 
-**Next:** [4. Project management](04-project-management.md)
+**Next:** [4. Project management](/tutorial/04-project-management)

@@ -12,7 +12,7 @@ Bucket versioning on/off, etc.
 
 ### 10.5. Setup domain name
 
-TODO: DV certificate automatically. For OV/EV certficate, see [Appendix F: SSL/TLS certificates](f-certificates.md).
+TODO: DV certificate automatically. For OV/EV certficate, see [Appendix F: SSL/TLS certificates](f-certificates).
 
 ### 10.7. Disable basic auth
 
@@ -20,7 +20,7 @@ Basic authentication is enabled in all environments by default to keep the envir
 
 helm-prod.yaml:
 
-```
+```shell
 acme-myapp:
   # Ingress
   ingress:
@@ -31,4 +31,4 @@ acme-myapp:
 
 ---
 
-**Next:** [11. Running in production](11-running-in-production.md)
+**Next:** [11. Running in production](/tutorial/11-running-in-production)
