@@ -1,4 +1,4 @@
-# Manual
+# Documentation
 
 Table of contents:
 
