@@ -26,6 +26,10 @@ img {
   max-width: 100%;
 }
 
+p {
+  word-wrap: break-word;
+}
+
 h1 {
   font-size: 56px;
   margin-top: 0px;

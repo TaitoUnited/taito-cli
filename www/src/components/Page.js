@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import { media } from '../utils';
 import { useForceTrailingSlash } from '../hooks';
 import Navbar from '../components/Navbar';
 import Drawer from '../components/Drawer';
@@ -8,7 +9,6 @@ import Footer from '../components/Footer';
 
 const Page = ({ menu = null, children, ...rest }) => {
   useForceTrailingSlash();
-  console.log({ menu });
 
   return (
     <Wrapper {...rest}>
@@ -16,9 +16,19 @@ const Page = ({ menu = null, children, ...rest }) => {
         {menu}
         <Content>{children}</Content>
       </Main>
+
       <Footer />
+
       <Navbar />
-      <Drawer />
+
+      <Drawer>
+        <Drawer.Item to="/">Home</Drawer.Item>
+        <Drawer.Item to="/docs/">Docs</Drawer.Item>
+        <Drawer.Item to="/tutorial/">Tutorial</Drawer.Item>
+        <Drawer.Item to="/plugins/">Plugins</Drawer.Item>
+        <Drawer.Item to="/templates/">Templates</Drawer.Item>
+        <Drawer.Item to="/extensions/">Extensions</Drawer.Item>
+      </Drawer>
     </Wrapper>
   );
 };
@@ -34,7 +44,12 @@ const Main = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  overflow-x: hidden;
   margin-top: 50px;
+
+  ${media.sm`
+    margin-top: 40px;
+  `}
 `;
 
 const Content = styled.div`
