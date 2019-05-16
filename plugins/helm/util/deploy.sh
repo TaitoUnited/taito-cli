@@ -19,6 +19,7 @@ options=("${@:2}")
 # TODO: this is a quick hack
 if [[ "${taito_mode:-}" == "ci" ]] && \
    [[ "${ci_exec_build:-}" == "true" ]] && \
+   [[ ${image} != *"-untested" ]] && \
    [[ ! -f ./taitoflag_images_exist ]]; then
   image="${image}-untested"
 elif [[ ${image} == "--dry-run" ]]; then
