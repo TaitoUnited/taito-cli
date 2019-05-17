@@ -1,3 +1,14 @@
+/*
+ * Add styles that apply globally here such as code syntax highlighting,
+ * typography, style resets, etc.
+ * Also generated HTML content from Markdown needs to be styled globally
+ * since we can't use React components with emotion in them.
+ *
+ * NOTE: if you need theme values or responsive styles DON'T add the style
+ * definitions here!!! Create a styling file under `src/styles` and then use
+ * the `theme.js` object and the `media` helper func from `src/utils`.
+ */
+
 html {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
@@ -20,44 +31,14 @@ body {
 
 * {
   box-sizing: border-box;
+  word-break: break-word;
 }
 
 img {
   max-width: 100%;
 }
 
-p {
-  word-wrap: break-word;
-}
-
-h1 {
-  font-size: 56px;
-  margin-top: 0px;
-  margin-bottom: 24px;
-}
-
-h2 {
-  font-size: 32px;
-}
-
-h3 {
-  font-size: 24px;
-}
-
-h4 {
-  font-size: 18px;
-}
-
-h5 {
-  font-size: 16px;
-}
-
-h1 + p {
-  font-size: 24px;
-  font-weight: 300;
-  color: #606f7b;
-}
-
+/* Code syntax highlight */
 pre[class*='language-'] {
   border-radius: 2px !important;
 }
