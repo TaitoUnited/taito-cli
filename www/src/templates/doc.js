@@ -70,7 +70,7 @@ export const pageQuery = graphql`
 
     menu: allMarkdownRemark(
       filter: {
-        fileAbsolutePath: { regex: "/docs/(?!README).+/" }
+        fileAbsolutePath: { regex: "/^((?!README).)*$/" }
         fields: { slug: { regex: "/docs/" } }
       }
       sort: { fields: [fields___slug], order: ASC }
