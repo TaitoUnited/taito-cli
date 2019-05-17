@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
+import { FaGithub } from 'react-icons/fa';
 
 import { desktopOnly } from '../utils';
 import theme from '../theme';
-import Search from './Search';
+import Gutter from './Gutter';
+import Search from './search';
 
 const Navbar = () => {
   const activeStyle = {
@@ -43,7 +45,10 @@ const Navbar = () => {
       <div style={{ flex: 1 }} />
 
       <Search />
-      <div>Github</div>
+
+      <Gutter />
+
+      <FaGithub color="#fff" size={24} />
     </Nav>
   );
 };
@@ -51,12 +56,14 @@ const Navbar = () => {
 const Nav = styled.nav`
   display: flex;
   flex-direction: row;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   background-color: ${props => props.theme.primary[700]};
   z-index: 1;
+  padding: 0px 16px;
   ${desktopOnly}
 `;
 
