@@ -54,7 +54,7 @@ const Content = styled.div`
   max-width: 900px;
   margin: 0px auto;
 
-  a {
+  a:not(.autolink-a) {
     color: ${props => props.theme.primary[800]};
     background-color: ${props => props.theme.primary[100]};
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);

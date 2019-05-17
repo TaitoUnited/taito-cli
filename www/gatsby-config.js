@@ -6,6 +6,7 @@ module.exports = {
   siteMetadata: {
     title: 'Taito CLI',
     description: 'Taito CLI - An extensible toolkit for DevOps and NoOps.',
+    author: 'Jukka Keski-Luopa',
   },
 
   pathPrefix: '/taito-cli',
@@ -22,6 +23,14 @@ module.exports = {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
+          {
+            resolve: 'gatsby-remark-autolink-headers',
+            options: {
+              className: 'autolink-a',
+              removeAccents: true,
+            },
+          },
+
           // NOTE: add `pathPrefix` to relative links in Markdown files
           // https://github.com/gatsbyjs/gatsby/issues/3316
           !IS_DEV && 'gatsby-remark-links-path-prefix',
