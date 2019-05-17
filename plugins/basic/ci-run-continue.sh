@@ -10,6 +10,8 @@ function cleanup {
 
 (
   trap cleanup EXIT
+  # TODO: fetch secrets from host instead
+  cp -r secrets "tmp/ci/$taito_target_env" &> /dev/null || :
   cd "tmp/ci/$taito_target_env"
   echo "Image tag: ${image_tag}"
   "${taito_util_path}/ssh-agent.sh" "./local-ci.sh ${taito_target_env} ${image_tag}"
