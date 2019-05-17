@@ -9,6 +9,14 @@ for secret_name in "${secret_names[@]}"
 do
   . "${taito_cli_path}/util/secret-by-index.sh"
 
+  # TODO remove once all project have been converted
+  secret_property="SECRET"
+  if [[ "${taito_version:-}" -ge "1" ]] || [[ "${secret_name:0:12}" != *"."* ]]; then
+    # TODO: ugly hack that currently occurs in 4 places
+    secret_property=$(echo ${secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
+    secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')
+  fi
+
   if [[ ${secret_method:?} != "read/"* ]]; then
     (
       ${taito_setv:?}
