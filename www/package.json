@@ -32,7 +32,8 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-icons": "^3.7.0",
-    "react-instantsearch-dom": "^5.6.0"
+    "react-instantsearch-dom": "^5.6.0",
+    "striptags": "^3.1.1"
   },
   "devDependencies": {
     "babel-plugin-transform-remove-console": "^6.9.4",
