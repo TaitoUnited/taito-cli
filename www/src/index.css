@@ -38,6 +38,10 @@ img {
   max-width: 100%;
 }
 
+a {
+  color: #009A48;
+}
+
 /* Code syntax highlight */
 pre[class*='language-'] {
   border-radius: 2px !important;
