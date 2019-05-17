@@ -51,7 +51,7 @@ if [[ ${was_executed} == false ]]; then
   elif [[ "${taito_command}" == "build-release" ]]; then
     # None of the enabled plugins has implemented build release
     echo
-    echo "### basic/post: Nothing to release"
+    echo "### basic/post: DONE!"
   elif [[ "${taito_command}" == "init" ]]; then
     # None of the enabled plugins has implemented init
     echo
