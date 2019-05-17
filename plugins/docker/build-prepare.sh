@@ -6,7 +6,7 @@
 
 image_tag=${1}
 
-if [[ ${taito_container_registry_provider:-} == "host" ]]; then
+if [[ ${taito_container_registry_provider:-} == "local" ]]; then
   . "${taito_cli_path}/plugins/ssh/util/opts.sh"
 
   images=$(

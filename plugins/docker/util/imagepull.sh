@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ ${taito_container_registry_provider:-} != "host" ]]; then
+if [[ ${taito_container_registry_provider:-} != "local" ]]; then
   (
     ${taito_setv:?}
     docker pull "$1"

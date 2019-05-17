@@ -2,7 +2,7 @@
 
 echo
 echo "Pushing image $1 to registry. This may take some time. Please be patient..."
-if [[ ${taito_container_registry_provider:-} != "host" ]]; then
+if [[ ${taito_container_registry_provider:-} != "local" ]]; then
   (
     ${taito_setv:?}
     docker push "$1"

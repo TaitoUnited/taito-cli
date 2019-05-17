@@ -42,7 +42,7 @@ else
      ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_build:-}" == "true" ]])
   then
     "$taito_plugin_path/util/imagepush.sh" "${image_untested}" && \
-    if [[ ${taito_container_registry_provider:-} != "host" ]]; then
+    if [[ ${taito_container_registry_provider:-} != "local" ]]; then
       "$taito_plugin_path/util/imagepush.sh" "${image_latest}" && \
       "$taito_plugin_path/util/imagepush.sh" "${image_builder}"
     fi
