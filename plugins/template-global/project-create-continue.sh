@@ -11,12 +11,14 @@
 if [[ -d alternatives ]]; then
   alternatives=${template_default_alternatives:-}
   if [[ ! ${alternatives} ]]; then
-    echo "The template comes with React / Node.js / Postgres implementation by default,"
-    echo "but offers also the following alternatives:"
-    ls -d alternatives/*/
+    echo
+    echo "The template comes with React / Node.js / Postgres implementation by"
+    echo "default, but offers also the following alternatives:"
+    echo
+    ls -d alternatives/*/ | sed "s/alternatives\\///" | sed "s/\\///"
 
     echo
-    echo "Give alternative names one by one and give empty name once done."
+    echo "Give alternative names one by one. Give empty name once done."
     alternative=-
     while [[ $alternative ]]; do
       read -r alternative
