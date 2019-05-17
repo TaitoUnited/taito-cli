@@ -4,6 +4,7 @@ import { Link } from 'gatsby';
 
 import { desktopOnly } from '../utils';
 import theme from '../theme';
+import Search from './Search';
 
 const Navbar = () => {
   const activeStyle = {
@@ -41,8 +42,8 @@ const Navbar = () => {
 
       <div style={{ flex: 1 }} />
 
-      <div>Search</div>
-      <div>Github lin</div>
+      <Search />
+      <div>Github</div>
     </Nav>
   );
 };
