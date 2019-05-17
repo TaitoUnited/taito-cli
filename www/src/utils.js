@@ -2,7 +2,6 @@ import { css } from '@emotion/core';
 import { BREAKPOINTS } from './constants';
 
 export const flattenListData = (data, key = 'allMarkdownRemark') => {
-  console.log('> flattenListData:', data);
   return data[key].edges.map(
     ({ node: { fields = {}, frontmatter = {}, ...rest } }) => ({
       ...rest,
@@ -13,7 +12,6 @@ export const flattenListData = (data, key = 'allMarkdownRemark') => {
 };
 
 export const flattenData = (data, key = 'markdownRemark') => {
-  console.log('> flattenData:', data);
   const { fields = {}, frontmatter = {}, ...rest } = data[key];
   return {
     ...rest,
@@ -23,34 +21,31 @@ export const flattenData = (data, key = 'markdownRemark') => {
 };
 
 export const mobileOnly = css`
-  @media screen and (min-width: 34em) {
+  @media screen and (min-width: ${BREAKPOINTS.sm}px) {
     display: none;
   }
 `;
 
 export const desktopOnly = css`
-  @media screen and (max-width: 34em) {
+  @media screen and (max-width: ${BREAKPOINTS.sm}px) {
     display: none;
   }
 `;
 
-const em = px => `${px / 16}em`;
-
 export const media = {
   sm: (first, ...args) => css`
-    @media screen and (max-width: ${em(BREAKPOINTS.sm)}) {
+    @media screen and (max-width: ${BREAKPOINTS.sm}px) {
       ${css(first, ...args)}
     }
   `,
   md: (first, ...args) => css`
-    @media screen and (min-width: ${em(
-        BREAKPOINTS.sm + 1
-      )}) and (max-width: ${em(BREAKPOINTS.lg - 1)}) {
+    @media screen and (min-width: ${BREAKPOINTS.sm +
+        1}px) and (max-width: ${BREAKPOINTS.lg - 1}px) {
       ${css(first, ...args)}
     }
   `,
   lg: (first, ...args) => css`
-    @media screen and (min-width: ${em(BREAKPOINTS.lg)}) {
+    @media screen and (min-width: ${BREAKPOINTS.lg}px) {
       ${css(first, ...args)}
     }
   `,
