@@ -19,7 +19,8 @@ if [[ "${taito_mode:-}" == "ci" ]] && \
 fi && \
 
 # Database proxy
-if [[ ${gcloud_db_proxy_enabled:-} != "false" ]] && \
+if [[ ${taito_provider:-} == "gcloud" ]] && \
+   [[ ${gcloud_db_proxy_enabled:-} != "false" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
   if [[ "${proxy_running}" == "" ]]; then
@@ -34,32 +35,18 @@ fi && \
 
 # Create new Google project on env apply
 if [[ $taito_command == "env-apply" ]] && \
-   [[ ${taito_resource_namespace:-} ]] && \
-   [[ ${taito_commands_only_chain:-} == *"terraform/"* ]] && \
-   ! gcloud projects describe "${taito_resource_namespace}" &> /dev/null; then
-  echo
-  echo "### gcloud/pre: Creating new Google Cloud project"
-  echo
-  billing_var="gcloud_billing_account_${taito_organization:-}"
-  billing_id=${!billing_var:-$taito_provider_billing_account_id}
-  if [[ ! ${billing_id} ]]; then
-    echo "Enter billing account id for the new project:"
-    read -r billing_id
-  else
-    echo "Create new Google Cloud project '${taito_resource_namespace:?}' (Y/n)?"
-    read -r confirm
-    if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
-      billing_id=
-    fi
+   [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
+  if [[ $taito_provider == "gcloud" ]] && [[ ${taito_zone:-} ]]; then
+    "${taito_plugin_path}/util/ensure-project-exists.sh" \
+      "${taito_zone:?}" "${taito_provider_org_id:?}"
   fi
-
-  if [[ ${billing_id} ]] && [[ ${#billing_id} -gt 10 ]]; then
-    gcloud projects create "${taito_resource_namespace:?}" \
-      "--organization=${taito_provider_org_id:?}" && \
-    gcloud beta billing projects link "${taito_resource_namespace:?}" \
-      --billing-account "${billing_id}"
-  else
-    exit 130
+  if [[ $taito_provider == "gcloud" ]] && [[ ${taito_resource_namespace_id:-} ]]; then
+    "${taito_plugin_path}/util/ensure-project-exists.sh" \
+      "${taito_resource_namespace_id:?}" "${taito_provider_org_id:?}"
+  fi
+  if [[ ${taito_uptime_provider:-} == "gcloud" ]]; then
+    "${taito_plugin_path}/util/ensure-project-exists.sh" \
+      "${taito_uptime_namespace_id:-}" "${taito_uptime_provider_org_id:?}"
   fi
 fi && \
 
