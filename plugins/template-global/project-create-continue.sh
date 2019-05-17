@@ -8,15 +8,37 @@
 : "${template_dest_git:?}"
 : "${template_default_vc_url:?}"
 
-for alternative in ${template_default_alternatives:-}
-do
-  if [[ -d "alternatives/$alternative" ]]; then
-    name="${alternative%%-*}"
-    rm -rf "$name"
-    mv "alternatives/$alternative" "$name"
+if [[ -d alternatives ]]; then
+  alternatives=${template_default_alternatives:-}
+  if [[ ! ${alternatives} ]]; then
+    echo "The template comes with React / Node.js / Postgres implementation by default,"
+    echo "but offers also the following alternatives:"
+    ls -d alternatives/*/
+
+    echo
+    echo "Give alternative names one by one and give empty name once done."
+    alternative=-
+    while [[ $alternative ]]; do
+      read -r alternative
+      if [[ -d alternatives/$alternative ]]; then
+        alternatives="${alternatives} $alternative"
+      else
+        echo "No such alternative: $alternative"
+      fi
+    done
   fi
-done
-rm -rf alternatives
+
+  echo "Preparing alternatives..."
+  for alternative in ${alternatives}
+  do
+    if [[ -d "alternatives/$alternative" ]]; then
+      name="${alternative%%-*}"
+      rm -rf "$name"
+      mv "alternatives/$alternative" "$name"
+    fi
+  done
+  rm -rf alternatives
+fi
 
 # Execute create script of template
 "${taito_plugin_path}/util/init.sh" "create"
