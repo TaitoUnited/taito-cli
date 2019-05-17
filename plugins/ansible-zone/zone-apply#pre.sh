@@ -63,7 +63,9 @@ then
 
     "${taito_util_path}/ssh-agent.sh" "
       ${taito_setv:?} && \
-      [[ "${keyname}" ]] && ssh-add "${HOME}/.ssh/${keyname:-id_rsa}" && \
+      if [[ \"${keyname}\" ]]; then
+        ssh-add "${HOME}/.ssh/${keyname:-id_rsa}";
+      fi && \
       ansible-playbook -i inventory ${ansible_options:-} site.yml
     "
   )
