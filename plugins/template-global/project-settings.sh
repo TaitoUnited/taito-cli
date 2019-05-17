@@ -79,7 +79,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_vc_url=$taito_vc_domain:$taito_organization"
   echo "template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure//templates"
   echo "template_default_source_git=git@github.com:TaitoUnited"
-  echo "template_default_dest_git=git@$taito_vc_provider:$taito_organization"
+  echo "template_default_dest_git=git@$taito_vc_domain:$taito_organization"
   echo
   echo "# Template: CI/CD provider"
   echo "template_default_ci_provider=$taito_ci_provider"
