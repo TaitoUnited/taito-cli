@@ -7,7 +7,7 @@ if [[ ! ${taito_target:-} ]]; then
   (
     ${taito_setv:?}
     ssh -t ${opts} "${taito_ssh_user:?}@${taito_host}" \
-      "cd /projects/${taito_namespace}; bash"
+      "cd ${taito_host_dir:?}; bash"
   )
 fi
 

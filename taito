@@ -408,6 +408,18 @@ fi
 #   mkdir -p "${taito_home_path}/.terraform.d"
 # fi
 
+function cleanup {
+  # Remove temporary secrets
+  rm -rf "${taito_project_path}/tmp/secrets" &> /dev/null
+  find ${taito_project_path}/secrets/* -type d -not -name 'local' -print0 \
+    | xargs -0 rm -rf --
+  # rm -rf ./secrets/changed &> /dev/null
+  # if [[ ${taito_target_env:-} ]] && [[ ${taito_target_env} != "local" ]]; then
+  #   rm -rf "./secrets/${taito_target_env}" &> /dev/null
+  # fi
+}
+trap cleanup EXIT
+
 # TODO do not pass taito_admin_key as command line argument
 docker_command="
   docker run ${docker_it}
@@ -477,10 +489,6 @@ if [[ "${exit_code}" != "0" ]] && [[ ${continue} == false ]]; then
   echo "HINT: Run 'taito --trouble' to see troubleshoothing"
   echo
 fi
-
-# Remove temporary secrets
-rm -rf ./tmp/secrets &> /dev/null
-rm -rf ./secrets/changed &> /dev/null
 
 # Exit
 exit ${exit_code}

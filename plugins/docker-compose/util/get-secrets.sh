@@ -23,8 +23,19 @@ do
 
   file="${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
   if [[ "${secret_method}" == "random" ]] || \
-     [[ "${secret_method}" == "manual" ]]; then
-    secret_value=$(cat "${file}" 2> /dev/null)
+     [[ "${secret_method}" == "manual" ]] || ( \
+       [[ "${secret_method}" == "htpasswd-plain" ]] && \
+       [[ "${taito_env}" != "local" ]] \
+    ); then
+    if [[ "${taito_host:-}" ]] && \
+       [[ "${taito_env}" != "local" ]]; then
+       remote_file="${taito_host_dir:?}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
+       . "${taito_cli_path}/plugins/ssh/util/opts.sh"
+       secret_value=$(ssh -t ${opts} "${taito_ssh_user:?}@${taito_host}" \
+         "sudo -- bash -c 'cat ${remote_file} 2> /dev/null'" 2> /dev/null)
+    else
+      secret_value=$(cat "${file}" 2> /dev/null)
+    fi
   else
     secret_value="secret_file:${file}"
   fi
