@@ -446,6 +446,7 @@ docker_command="
     -e taito_image_name=${taito_image_name}
     -e taito_admin_key=${admin_key}
     -e taito_organization_param=${taito_organization_param}
+    -e TAITO_CONFIG_OVERRIDE=${TAITO_CONFIG_OVERRIDE}
     --entrypoint taito
     ${image_flag}
 "

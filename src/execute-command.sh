@@ -179,6 +179,12 @@ fi
 # Set defaults
 # TODO set default taito_version here
 
+if [[ ${TAITO_CONFIG_OVERRIDE} == *"://"* ]]; then
+  mkdir -p "${taito_project_path}/tmp" &> /dev/null
+  wget -O "${taito_project_path}/tmp/taito-config-override.sh" "${TAITO_CONFIG_OVERRIDE}" &> /dev/null
+  export TAITO_CONFIG_OVERRIDE=${taito_project_path}/tmp/taito-config-override.sh
+fi
+
 # Read taito-config.sh files from all locations
 . "${taito_util_path}/read-user-taito-config.sh" "${taito_env}" && \
 . "${taito_util_path}/read-project-taito-config.sh" "${taito_env}" && \
