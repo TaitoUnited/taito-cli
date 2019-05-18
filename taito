@@ -411,8 +411,8 @@ fi
 function cleanup {
   # Remove temporary secrets
   rm -rf "${taito_project_path}/tmp/secrets" &> /dev/null
-  find ${taito_project_path}/secrets/* -type d -not -name 'local' -print0 \
-    | xargs -0 rm -rf --
+  find ${taito_project_path}/secrets/* -type d -not -name 'local' \
+    -print0 2> /dev/null | xargs -0 rm -rf --
   # rm -rf ./secrets/changed &> /dev/null
   # if [[ ${taito_target_env:-} ]] && [[ ${taito_target_env} != "local" ]]; then
   #   rm -rf "./secrets/${taito_target_env}" &> /dev/null
