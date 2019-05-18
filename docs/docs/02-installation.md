@@ -24,23 +24,19 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
    source /dev/stdin <<< "$(curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh)"
    ```
 
-2. Optional: Install Taito CLI plugin for your editor (TODO: not implemented yet): [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
+2. Optional: Install Taito CLI plugin for your editor ([Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)) TODO
 
-3. Try it:
-
-   - Run `taito -h` to show taito help.
+3. Try it by running `taito -h`.
 
 ### Manual installation
 
-> With manual installation you can decide yourself, where Taito CLI will be installed.
+> With manual installation you can decide yourself where to install Taito CLI.
 
-1. See the [install.sh](`https://github.com/TaitoUnited/taito-cli/blob/master/install.sh`) example script and execute the steps manually in any way you like.
+1. See the [install.sh](https://github.com/TaitoUnited/taito-cli/blob/master/install.sh) script and execute the steps manually in any way you like.
 
-2. Optional: Install Taito CLI plugin for your editor (TODO: not implemented yet): [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
+2. Optional: Install Taito CLI plugin for your editor ([Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)) TODO
 
-3. Try it:
-
-   - Run `taito -h` to show taito help.
+3. Try it by running `taito -h`.
 
 ### Upgrade
 

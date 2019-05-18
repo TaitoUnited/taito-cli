@@ -1,5 +1,7 @@
 ## 5. Configuration
 
+> TODO: separate chapters for project template settings, and tips for setting up proxies and version control commands.
+
 By default only the _basic_ plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](/docs/02-installation) chapter for an example of a personal configuration file.
 
 Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of full-stack-template as an example.
@@ -14,10 +16,8 @@ TIP: You can easily use `taito-config.sh` settings in your own custom scripts. F
 
 ```shell
 # Read settings from taito-config.sh
-set -a
-taito_target_env=${APPCENTER_BRANCH/master/prod}
+export taito_target_env=${APPCENTER_BRANCH/master/prod}
 . taito-config.sh
-set +a
 ```
 
 ### Configuration overrides

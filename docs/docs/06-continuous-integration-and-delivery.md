@@ -36,19 +36,17 @@ If you want your CI/CD to do more that it currently does, try not to add more CI
 
 ### Deployment to multiple platforms
 
-You can deploy the same project to multiple platforms. For example, your development and testing environments may reside on Google Cloud Platform to enable easy access for external personnel. And your staging, canary and production environments may reside on-premises to fulfill extra security requirements. These are configured in the project specific `taito-config.sh` file.
+You can deploy the same project to multiple platforms. For example, your development and testing environments may reside on Google Cloud Platform to enable easy access for external personnel. 	Furthermore, your staging, canary and production environments may reside on-premises to fulfill extra security requirements. Deployment settings are configured in the project specific `taito-config.sh` file.
 
-You may even deploy the same branch simultaneously to multiple platforms. Just define path to a configuration overrides file with the `TAITO_CONFIG_OVERRIDE` environment variable, and it will be included in the `taito-config.sh` file just before provider specific settings. The file may be either local file (e.g. `./my-overrides.sh`) or reside remotely (e.g. `https://mydomain.com/configs/my-overrides.sh`).
+You may even deploy the same branch simultaneously to multiple platforms. Just define path to a configuration overrides file with the `TAITO_CONFIG_OVERRIDE` environment variable, and it will be included in the `taito-config.sh` file just before provider specific settings. The file may be either local file (e.g. `./my-overrides.sh`) or remote (e.g. `https://mydomain.com/configs/my-overrides.sh`).
 
 ### CI/CD without Taito CLI
 
 If you for some reason cannot use Taito CLI in your CI/CD pipeline, you can easily implement the CI/CD steps yourself. First run each step manually with the verbose option (`taito -v`) to see the commands that Taito CLI executes under the hood. Then implement your CI/CD script based on those commands. You can also use `taito-config.sh` environment variables in your CI/CD script:
 
 ```shell
-set -a
-taito_target_env=${BRANCH/master/prod}
+export taito_target_env=${BRANCH/master/prod}
 . taito-config.sh
-set +a
 ```
 
 Note that the CI/CD process may slightly differ depending on branch. On dev and feature branches the artifacts are usually tagged using `untested` suffix, and on master branch some additional steps are taken during `taito build release` to generate release notes, etc.
