@@ -15,12 +15,22 @@ then
     trap cleanup EXIT
     ansible_options="${ansible_options:-}"
 
+    echo "Inventories:"
+    ls -p ansible-playbooks | grep -v / | grep -v "\."
+    echo
+    echo "Select inventory:"
+    read -r inventory
+    if [[ $inventory ]]; then
+      ansible_options="$ansible_options -i $inventory"
+    fi
+
+    echo
     echo "Groups and hosts in ansible inventory:"
-    grep "^\\[" ansible-playbooks/inventory | sed "s/\\[//" | sed "s/\\]//" | tr '\n' ' ' || :
+    grep "^\\[" ansible-playbooks/$inventory | sed "s/\\[//" | sed "s/\\]//" | tr '\n' ' ' || :
     echo
-    grep "^[a-z]" ansible-playbooks/inventory | sort | uniq
+    grep "^[a-z]" ansible-playbooks/$inventory | sort | uniq
     echo
-    echo "Enter limit for ansible (e.g. group or hostname) or leave empty to run [all]:"
+    echo "Enter limit for ansible (e.g. group or hostname) or leave empty to run all:"
     read -r limit
     if [[ $limit ]]; then
       ansible_options="$ansible_options --limit $limit"
@@ -66,7 +76,7 @@ then
       if [[ \"${keyname}\" ]]; then
         ssh-add "${HOME}/.ssh/${keyname:-id_rsa}";
       fi && \
-      ansible-playbook -i inventory ${ansible_options:-} site.yml
+      ansible-playbook ${ansible_options:-} site.yml
     "
   )
 fi && \
