@@ -69,4 +69,21 @@ if [[ -n "${target}" ]] && [[ -n "${!env_var_name}" ]]; then
   env_var_name="db_${target}_password"
   export database_password="${!env_var_name}"
   echo "- database_password: ${database_password}" > "${taito_dout:-/dev/null}"
+
+  env_var_name="db_${target}_app_username"
+  export database_app_username="${!env_var_name}"
+  echo "- database_app_username: ${database_app_username}" > "${taito_dout:-/dev/null}"
+
+  env_var_name="db_${target}_app_secret"
+  export database_app_secret="${!env_var_name}"
+  echo "- database_app_secret: ${database_app_secret}" > "${taito_dout:-/dev/null}"
+
+  env_var_name="db_${target}_mgr_username"
+  export database_mgr_username="${!env_var_name}"
+  echo "- database_mgr_username: ${database_mgr_username}" > "${taito_dout:-/dev/null}"
+
+  env_var_name="db_${target}_mgr_secret"
+  export database_mgr_secret="${!env_var_name}"
+  echo "- database_mgr_secret: ${database_mgr_secret}" > "${taito_dout:-/dev/null}"
+
 fi

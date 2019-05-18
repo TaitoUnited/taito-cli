@@ -36,7 +36,7 @@
     echo "WARNING: File ./${taito_target:-database}/db.sql does not exist"
   fi && \
 
-  . "${taito_plugin_path}/util/postgres-username-password.sh" && \
+  . "${taito_util_path}/database-username-password.sh" && \
 
   PGPASSWORD="${secret_value}"
   (

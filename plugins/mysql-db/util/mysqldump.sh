@@ -18,7 +18,7 @@ if [[ "${username}" != "" ]]; then
   mysql_username="${username}"
   mysql_password=""
 elif [[ "${taito_env}" != "local" ]]; then
-  . "${taito_plugin_path}/util/mysql-username-password.sh"
+  . "${taito_util_path}/database-username-password.sh"
   if [[ "${database_build_username}" ]] && \
      [[ "${database_build_password}" ]]; then
     mysql_username="${database_build_username}"

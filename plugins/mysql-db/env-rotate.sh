@@ -13,7 +13,7 @@ if [[ "${taito_env}" != "local" ]]; then
       . "${taito_util_path}/read-database-config.sh" "${database}" && \
 
       if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
-        . "${taito_plugin_path}/util/mysql-username-password.sh" && \
+        . "${taito_util_path}/database-username-password.sh" && \
 
         if [[ -n ${database_build_password:-} ]] && \
            [[ -n ${database_app_password:-} ]] && ( \

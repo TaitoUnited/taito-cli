@@ -7,7 +7,7 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-. "${taito_plugin_path}/util/mysql-username-password.sh"
+. "${taito_util_path}/database-username-password.sh"
 
 # Validate env variables
 
