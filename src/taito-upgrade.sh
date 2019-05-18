@@ -36,9 +36,25 @@ docker pull "${taito_image}"
 docker rm taito-save taito-new &> /dev/null
 
 echo "Creating taito user with local user uid and gid on taito-cli image"
-docker run -it --name taito-new --entrypoint /bin/sh "${taito_image}" -c "\
-  /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g) && \
-  /taito-cli-deps/tools/user-init.sh taito"
+docker_run_flags=
+if [[ -f ${HOME}/.taito/install.sh ]]; then
+  docker_run_flags="-v ${HOME}/.taito/install.sh:/taitoinstall.sh"
+fi
+docker run -it --name taito-new --entrypoint /bin/bash ${docker_run_flags} \
+  "${taito_image}" -c "
+  /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g)
+  /taito-cli-deps/tools/user-init.sh taito
+  if [[ -f /taitoinstall.sh ]]; then
+    echo
+    echo --- Executing \~/.taito/install.sh ---
+    echo
+    chmod +x /taitoinstall.sh
+    /taitoinstall.sh
+    echo
+    echo --- Done executing \~/.taito/install.sh ---
+    echo
+  fi
+"
 
 # Copy credentials from old image
 if docker create --name taito-save "${taito_image}save" &> /dev/null; then
