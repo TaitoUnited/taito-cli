@@ -2,7 +2,7 @@
 
 By default only the _basic_ plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](/docs/02-installation) chapter for an example of a personal configuration file.
 
-Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of full-stack-template as an example. In addition, user specific overrides may be defined in `taito-user-config.sh` file located at project root folder. The user specific file should not be committed to version control.
+Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of full-stack-template as an example.
 
 Settings are defined as environment variables. If an environment variable contains multiple values, just write them using whitespace as delimiter, for example:
 
@@ -19,6 +19,12 @@ taito_target_env=${APPCENTER_BRANCH/master/prod}
 . taito-config.sh
 set +a
 ```
+
+### Configuration overrides
+
+User specific overrides may be defined in `taito-user-config.sh` file located at project root folder. In this file you can define additional variables or override any variables set in `taito-config.sh` The user specific file should not be committed to version control.
+
+You may define path to an additional configuration overrides file with a `TAITO_CONFIG_OVERRIDE` environment variable. These overrides will be included in the `taito-config.sh` just before provider specific settings. The file may be either local file (e.g. `./my-overrides.sh`) or reside remotely (e.g. `https://mydomain.com/configs/my-overrides.sh`).
 
 ### Common settings in personal or organizational configuration file
 

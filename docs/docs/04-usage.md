@@ -56,8 +56,6 @@ exit                                       # Exit Taito CLI shell
 
 These changes are in effect until the next time you run `taito upgrade`. If you want to make permanent changes, put your installation scripts in `~/.taito/install.sh`. It will be run as root user during `taito upgrade`. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install.sh`.
 
-> TODO: Implement install.sh support.
-
 #### Building and distributing a customized Taito CLI image
 
 You can use Docker Hub or some other container registry to build and distribute a custom Taito CLI image. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.

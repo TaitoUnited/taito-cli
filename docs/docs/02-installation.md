@@ -16,60 +16,29 @@ See [Docker Post-installation steps for Linux](https://docs.docker.com/install/l
 
 Taito CLI has not been tested on Windows. It won't probably work yet.
 
-### Installation
+### Automatic installation
 
-1. Clone taito-cli git repository and checkout the master branch:
-
-   ```shell
-   git clone git@github.com:TaitoUnited/taito-cli.git
-   # Or with HTTPS: git clone https://github.com/TaitoUnited/taito-cli.git
-
-   cd taito-cli
-   git checkout master
-   ```
-
-2. Symlink the file named **taito** to your PATH. It's a bash script that runs Taito CLI as a Docker container. For example:
+1. Run:
 
    ```shell
-   sudo ln -s /home/myname/projects/taito-cli/taito /usr/local/bin/taito
+   source /dev/stdin <<< "$(curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh)"
    ```
 
-3. Configure your personal settings in `~/.taito/taito-config.sh` (see the example below). If you work for an organization that uses Taito CLI, they will provide you the correct settings. See [Advanced Usage](/docs/03-usage#advanced-usage) if you need to configure settings for multiple organizations.
+2. Optional: Install Taito CLI plugin for your editor (TODO: not implemented yet): [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
 
-   ```shell
-   #!/bin/bash
-   # shellcheck disable=SC2034
+3. Try it:
 
-   # Taito CLI
-   taito_global_plugins="git-global docker-global google-global gcloud-global
-     links-global template-global"
+   - Run `taito -h` to show taito help.
 
-   # Docker
-   # NOTE: set to true if you get networking errors when running 'taito db' commands
-   docker_legacy_networking=false
+### Manual installation
 
-   # Links
-   link_global_urls="
-     * home=https://www.myorganization.com
-     * intra=https://intra.myorganization.com Intranet
-     * conventions=https://intra.myorganization.com/conventions Software development conventions
-     * hours=https://hours.myorganization.com Hour reporting
-     * playgrounds=https://github.com/search?q=topic%3Ataito-playground+org%3AMyOrganization&type=Repositories Playground projects
-   "
+> With manual installation you can decide yourself, where Taito CLI will be installed.
 
-   # --- infrastructure template settings ---
-   template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure//templates
+1. See the [install.sh](`https://github.com/TaitoUnited/taito-cli/blob/master/install.sh`) example script and execute the steps manually in any way you like.
 
-   # --- Project template settings ---
-   # Define default settings for newly created projects here
-   ```
+2. Optional: Install Taito CLI plugin for your editor (TODO: not implemented yet): [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
 
-4. Optional steps:
-
-   - Install autocompletion for your shell: [support/README.md](https://github.com/TaitoUnited/taito-cli/tree/master/support#shell-support).
-   - Install Taito CLI plugin for your editor (TODO: not implemented yet): [Atom](https://github.com/keskiju/atom-taito-cli), [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli)
-
-5. Try it:
+3. Try it:
 
    - Run `taito -h` to show taito help.
 

@@ -1,25 +1,22 @@
 #!/usr/bin/env bash
 
-# Run with:
-# source /dev/stdin <<< "$(curl -s https://github.com/TaitoUnited/taito-cli/install.sh)"
-
 set -e
 
-# Clone taito
+# 1. Clone Taito CLI to ~/taito-cli and checkout master branch
 echo "[Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf ~/taito-cli &> /dev/null || :
 git clone https://github.com/TaitoUnited/taito-cli.git ~/taito-cli
 (cd ~/taito-cli &> /dev/null && git checkout master &> /dev/null)
 echo
 
-# Symlink taito
+# 2. Add taito command symlink to ~/bin/taito
 echo "[Add Taito CLI to path]"
 mkdir -p "${HOME}/bin"
 rm -f "${HOME}/bin/taito" || :
 ln -s "${HOME}/taito-cli/taito" "${HOME}/bin/taito"
 echo "added ${HOME}/bin/taito"
 
-# Add taito to path
+# 3. Add ~/bin to path
 if ! echo "$PATH" | grep -q "${HOME}/bin"; then
   export PATH="${HOME}/bin:$PATH"
   if [[ -f ~/.bashrc ]]; then
@@ -37,7 +34,7 @@ if ! echo "$PATH" | grep -q "${HOME}/bin"; then
 fi
 echo
 
-# Create taito-config.sh
+# 4. Create ~/.taito/taito-config.sh file
 mkdir -p ~/.taito
 cat > ~/.taito/taito-config.sh <<EOL
 #!/bin/bash
@@ -67,7 +64,7 @@ template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure
 # Define default settings for newly created projects here
 EOL
 
-# Autocomplete for bash
+# 5. Setup autocomplete for bash
 echo "[Add autocomplete support]"
 if [[ -f ~/.bashrc ]] && ! grep "taito-cli" ~/.bashrc &> /dev/null; then
   echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bashrc
@@ -82,7 +79,7 @@ if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
   echo "modified ~/.inputrc"
 fi
 
-# Autocomplete for zsh
+# 6. Setup autocomplete for zsh
 if [[ -f ~/.zshrc ]] && ! grep "taito-cli" ~/.zshrc &> /dev/null; then
   sedi="-i"
   if [[ $(uname) == "Darwin" ]]; then
@@ -92,5 +89,6 @@ if [[ -f ~/.zshrc ]] && ! grep "taito-cli" ~/.zshrc &> /dev/null; then
   echo "modified ~/.zshrc"
 fi
 
+# 7. Success!
 echo
 echo "Taito CLI was installed successfully! Try to run 'taito -h'"

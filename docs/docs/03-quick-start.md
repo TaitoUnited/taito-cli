@@ -2,7 +2,7 @@
 
 ### Setting up infrastructure
 
-You can skip this step, if you are using Taito CLI with an existing infrastructure and you have received `template_default_*` settings for your `~/.taito/taito-config.sh` file from elsewhere.
+If you are using Taito CLI with an existing infrastructure, ask for taito configuration settings from your collagues. Otherwise create a new zone with the following steps:
 
 1. Create new zone based on one of the infrastructure examples from [taito-infrastructure](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates) by running `taito zone create: TEMPLATE` and follow instructions.
 

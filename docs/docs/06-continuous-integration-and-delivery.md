@@ -32,7 +32,13 @@ taito deployment revert:$BITBUCKET_BRANCH $COMMIT_SHA
 taito db revert:$BITBUCKET_BRANCH $COMMIT_SHA
 ```
 
-If you want your CI/CD to do more that it currently does, try not to add more CI/CD steps. Instead, enable plugins or add custom commands that do additional operations within the current CI/CD steps. For example, if you want to do something extra at the end of the CI/CD script, just enable some plugin that executes the additional operation on `taito build release`, or add a custom command to your package.json (e.g. `"build-release": "echo 'Do something extra'"`).
+If you want your CI/CD to do more that it currently does, try not to add more CI/CD steps. Instead, enable plugins or add custom commands that do additional operations within the current CI/CD steps. This way CI/CD scripts remain reusable and CI/CD steps consists of standard steps that can be easily run either automatically or manually. For example, if you want to do something extra at the end of the CI/CD script, just enable some plugin that executes the additional operation on `taito build release`, or add a custom command to your package.json (e.g. `"build-release": "echo 'Do something extra'"`).
+
+### Deployment to multiple platforms
+
+You can deploy the same project to multiple platforms. For example, your development and testing environments may reside on Google Cloud Platform to enable easy access for external personnel. And your staging, canary and production environments may reside on-premises to fulfill extra security requirements. These are configured in the project specific `taito-config.sh` file.
+
+You may even deploy the same branch simultaneously to multiple platforms. Just define path to a configuration overrides file with the `TAITO_CONFIG_OVERRIDE` environment variable, and it will be included in the `taito-config.sh` file just before provider specific settings. The file may be either local file (e.g. `./my-overrides.sh`) or reside remotely (e.g. `https://mydomain.com/configs/my-overrides.sh`).
 
 ### CI/CD without Taito CLI
 
