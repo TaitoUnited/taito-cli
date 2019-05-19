@@ -19,7 +19,7 @@ if [[ ${confirm:-y} =~ ^[Yy]*$ ]]; then
     cleanup
     trap cleanup EXIT
     mkdir -p tmp/ci
-    git clone --single-branch --branch $taito_target_env git@$taito_vc_repository_url tmp/ci/$taito_target_env
+    git clone --single-branch --branch $taito_target_env git@${taito_vc_repository_url/\//:} tmp/ci/$taito_target_env
     taito -r -c ci-run-continue:$taito_target_env ${image_tag}
   "
 fi
