@@ -11,6 +11,7 @@ elif [[ "${taito_host_uname}" == "Darwin" ]]; then
   echo "(e.g. UseKeyChain)."
 fi
 
+read -t 1 -n 10000 discard || :
 if [[ ! ${taito_ssh_user} ]]; then
   echo
   echo "SSH username has not been set. Set taito_ssh_user environment variable"
