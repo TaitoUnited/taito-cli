@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
+if [[ "$(id -u)" == "0" ]]; then
+  echo "This script should not be run as root" 1>&2
+  exit 1
+fi
+
 # Parse arguments
 # TODO rename variables
 mode="${taito_mode:-normal}"

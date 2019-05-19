@@ -2,10 +2,22 @@
 
 set -e
 
+if [[ "$(id -u)" == "0" ]]; then
+  echo "This script should not be run as root" 1>&2
+  exit 1
+fi
+
 # 1. Clone Taito CLI to ~/taito-cli and checkout master branch
 echo "[Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf ~/taito-cli &> /dev/null || :
-git clone https://github.com/TaitoUnited/taito-cli.git ~/taito-cli
+git clone git@github.com:TaitoUnited/taito-cli.git ~/taito-cli || (
+  echo
+  echo "Failed to clone Taito CLI git repository. Taito CLI uses git with"
+  echo "SSH keys. If you have not configured SSH keys yet, see the following link:"
+  echo
+  echo "https://help.github.com/en/articles/connecting-to-github-with-ssh"
+  exit 1
+)
 (cd ~/taito-cli &> /dev/null && git checkout master &> /dev/null)
 echo
 
