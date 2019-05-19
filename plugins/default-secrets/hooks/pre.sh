@@ -23,7 +23,7 @@ if ( [[ ${taito_command} == "env-apply" ]] || \
       ;;
   esac
 
-  if [[ ${source_env} ]]; then
+  if [[ ${source_env} ]] && [[ " ${taito_environments:-} "  == *" ${source_env} "* ]]; then
     echo
     echo "### default-secrets/pre: Reading default secret values from ${source_env} environment"
 
