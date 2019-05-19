@@ -49,6 +49,7 @@ rm -f ./_template-config.sh
 
 taito project-docs
 
+read -t 1 -n 10000 discard || :
 echo
 echo "Create a new repository: ${template_default_vc_url}/${taito_vc_repository}"
 echo "The new repository must be completely empty (no README.md, LICENSE,"

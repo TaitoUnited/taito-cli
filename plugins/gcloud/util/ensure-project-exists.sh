@@ -25,8 +25,12 @@ if [[ ${project_id} ]] && ! gcloud projects describe "${project_id}" &> /dev/nul
 
     # NOTE: hack for https://github.com/terraform-providers/terraform-provider-google/issues/2605
     if [[ $project_id == "${taito_uptime_namespace_id:-}" ]]; then
+      read -t 1 -n 10000 discard || :
       echo "You need to create Stackdriver workspace manually by opening Google Project"
       echo "'$project_id' and choosing Monitoring from the menu."
+      echo
+      echo "Press enter once done."
+      read -r
     fi
   else
     exit 130

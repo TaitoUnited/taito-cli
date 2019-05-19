@@ -14,6 +14,7 @@ echo "+ ${commands}" > "${taito_vout}"
 if [[ "${taito_host:-}" ]] && \
    [[ "${taito_command}" != "util-test" ]] && \
    [[ "${taito_command}" != "test" ]] && \
+   [[ "${taito_command}" != "auth" ]] && \
    [[ "${taito_env}" != "local" ]] && \
    [[ "${commands}" == *"docker"* ]]; then
   . "${taito_cli_path}/plugins/ssh/util/opts.sh"
