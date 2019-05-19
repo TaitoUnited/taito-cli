@@ -40,6 +40,9 @@ cat > ~/.taito/taito-config.sh <<EOL
 #!/bin/bash
 # shellcheck disable=SC2034
 
+# Configuration instructions:
+# - https://taito.dev/docs/05-configuration
+
 # Taito CLI
 taito_global_plugins="git-global docker-global google-global gcloud-global
   links-global template-global"
