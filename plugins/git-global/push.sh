@@ -6,9 +6,10 @@
     set -e
     git push ${*}
     if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
+      branch=\$(git branch | grep \\* | cut -d ' ' -f2)
       echo
       echo ----------------------------------------------------------------------
-      echo TIP: Run \\'taito ci run:${taito_target_env}\\' to execute CI/CD locally.
+      echo TIP: Run \\'taito ci run:\${branch}\\' to execute CI/CD locally.
       echo ----------------------------------------------------------------------
       echo
     fi

@@ -75,7 +75,8 @@ echo "Please wait..."
   while ! (echo Pushing to git... && git push --force -q -u origin master &> /dev/null)
   do
     echo Failed pushing to ${template_dest_git}/${taito_vc_repository}.
-    echo Make sure the repository exists and press enter.
+    echo Make sure the git repository exists and you have authenticated using SSH keys.
+    echo Press enter to try again.
     read -r
   done
   git tag v0.0.0
