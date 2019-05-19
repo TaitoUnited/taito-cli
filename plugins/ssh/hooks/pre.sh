@@ -20,7 +20,6 @@ do
       sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 60"
     ) || (
       echo "SSH connection failed with options ${opts} ${forward_value}."
-      echo "Have you set taito_ssh_user in ~/.taito/taito-config.sh or ./taito-user-config.sh?"
       exit 1
     ) && \
     ssh_proxy_running="true"

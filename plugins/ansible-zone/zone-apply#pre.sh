@@ -30,7 +30,8 @@ then
     echo
     grep "^[a-z]" ansible-playbooks/$inventory | sort | uniq
     echo
-    echo "Enter limit for ansible (e.g. group or hostname) or leave empty to run all:"
+    echo "Enter limit for ansible (e.g. group or hostname) or leave empty to run"
+    echo "all in inventory '$inventory':"
     read -r limit
     if [[ $limit ]]; then
       ansible_options="$ansible_options --limit $limit"
@@ -76,6 +77,8 @@ then
       if [[ \"${keyname}\" ]]; then
         ssh-add "${HOME}/.ssh/${keyname:-id_rsa}";
       fi && \
+      echo
+      echo Executing ansible playbooks...
       ansible-playbook ${ansible_options:-} site.yml
     "
   )

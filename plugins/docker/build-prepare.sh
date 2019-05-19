@@ -10,7 +10,7 @@ if [[ ${taito_container_registry_provider:-} == "local" ]]; then
   . "${taito_cli_path}/plugins/ssh/util/opts.sh"
 
   images=$(
-    ssh ${opts} "${taito_ssh_user}@${taito_host}" "
+    ssh ${opts} "${taito_ssh_user:?}@${taito_host}" "
       sudo bash -c '
         sudo docker images | grep ${taito_container_registry} | grep [[:space:]]${image_tag}[[:space:]]
       '

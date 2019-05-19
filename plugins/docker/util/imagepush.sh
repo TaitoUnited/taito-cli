@@ -13,6 +13,6 @@ else
     ${taito_setv:?}
     # TODO add users to docker group to avoid sudo?
     docker save "$1" | \
-      ssh ${opts} -C "${taito_ssh_user:-taito}@${taito_host:?}" sudo docker load
+      ssh ${opts} -C "${taito_ssh_user:?}@${taito_host:?}" sudo docker load
   )
 fi
