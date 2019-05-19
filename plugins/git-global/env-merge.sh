@@ -49,6 +49,7 @@ do
 
     "${taito_cli_path}/util/execute-on-host-fg.sh" "\
     echo && \
+    (read -t 1 -n 10000 discard || :) && \
     echo \"Merging ${s} -> ${d} ${git_push_options}\" && \
     echo \"Do you want to continue (Y/n)?\" && \
     read -r confirm && \
