@@ -1,13 +1,15 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 if [[ "${ssh_db_proxy:-}" ]]; then
   . ${taito_plugin_path}/util/opts.sh
+  forward_value=$(echo "$ssh_db_proxy" | "${taito_util_path}/replace-variables.sh")
   (
     ${taito_setv:?}
-    sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${ssh_db_proxy} sleep 180"
+    sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 180"
   )
 
+  echo
   echo "Database connection details:"
   echo "- host: 127.0.0.1"
   echo "- port: ${database_port:-}"
@@ -20,4 +22,4 @@ if [[ "${ssh_db_proxy:-}" ]]; then
 fi
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"
