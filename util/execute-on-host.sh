@@ -1,6 +1,7 @@
 #!/bin/bash
 : "${taito_vout:?}"
 : "${taito_env:?}"
+: "${taito_command:?}"
 
 # Executes the given shell commands on host
 # NOTE: executes in container if ci mode is enabled.
@@ -12,6 +13,8 @@ echo "+ ${commands}" > "${taito_vout}"
 
 # TODO: clean up this hack (for running docker commands on remote host)
 if [[ "${taito_host:-}" ]] && \
+   [[ "${taito_command}" != "util-test" ]] && \
+   [[ "${taito_command}" != "test" ]] && \
    [[ "${taito_env}" != "local" ]] && \
    [[ "${commands}" == *"docker"* ]]; then
   . "${taito_cli_path}/plugins/ssh/util/opts.sh"
