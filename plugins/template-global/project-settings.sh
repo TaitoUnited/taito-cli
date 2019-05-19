@@ -101,6 +101,8 @@ if [[ ${taito_type:-} == "zone" ]]; then
     echo "template_default_kubernetes_cluster_prefix=gke_${taito_zone}_${taito_provider_zone}_"
   elif [[ $taito_provider == "aws" ]]; then
     echo "template_default_kubernetes_cluster_prefix=arn:aws:eks:$taito_provider_region:$taito_provider_org_id:cluster/"
+  elif [[ $taito_provider == "linux" ]]; then
+    echo "template_default_kubernetes_cluster_prefix="
   else
     echo "template_default_kubernetes_cluster_prefix=TODO"
   fi
@@ -157,8 +159,10 @@ if [[ ${taito_type:-} == "zone" ]]; then
     echo "template_default_kubernetes_cluster_prefix_prod=gke_${taito_zone}_${taito_provider_zone}_"
   elif [[ $taito_provider == "aws" ]]; then
     echo "template_default_kubernetes_cluster_prefix_prod=arn:aws:eks:$taito_provider_region:$taito_provider_org_id:cluster/"
+  elif [[ $taito_provider == "linux" ]]; then
+    echo "template_default_kubernetes_cluster_prefix_prod="
   else
-    echo "template_default_kubernetes_cluster_prefix_prod=???"
+    echo "template_default_kubernetes_cluster_prefix_prod=TODO"
   fi
 
   echo

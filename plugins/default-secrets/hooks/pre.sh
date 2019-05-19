@@ -28,7 +28,7 @@ if ( [[ ${taito_command} == "env-apply" ]] || \
     echo "### default-secrets/pre: Reading default secret values from ${source_env} environment"
 
     rm -f "${taito_project_path}/taito-secrets.sh" &> /dev/null
-    taito secrets:${source_env} --save-as-taito-secrets &> /dev/null
+    taito secrets:${source_env} --save-as-taito-secrets
     sed -i 's/^export /export default_/' "${taito_project_path}/taito-secrets.sh" &> /dev/null
     . "${taito_project_path}/taito-secrets.sh" &> /dev/null
     if [[ -f "${taito_project_path}/taito-secrets.sh" ]]; then

@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 # Runs a process if ssh_forward_for_XXX setting is set for one of the
 # plugins in the current command chain
@@ -15,6 +15,7 @@ do
     . ${taito_plugin_path}/util/opts.sh
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"
+    forward_value=$(echo "$forward_value" | "${taito_util_path}/replace-variables.sh")
     (
       ${taito_setv:?}
       sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 60"
@@ -27,4 +28,4 @@ do
 done && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"
