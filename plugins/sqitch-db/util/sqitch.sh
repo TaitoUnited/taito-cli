@@ -20,6 +20,7 @@ fi
 (
   cd "${taito_target:-database}" || exit
 
+  # TODO: Remove? -\
   if [[ ${sqitch_engine} == "mysql" ]]; then
     database_user="${database_name}ap"
   else
@@ -29,10 +30,11 @@ fi
     database_user="${database_username}"
   fi
   sqitch_password="${database_password:-$taito_default_password}"
+  # TODO: Remove? -/
 
   if [[ "${taito_env}" != "local" ]];then
     # TODO do not reference postgres plugin util directly
-    . "${taito_cli_path}/plugins/postgres-db/util/postgres-username-password.sh"
+    . "${taito_util_path}/database-username-password.sh"
     if [[ "${database_build_password}" != "" ]]; then
       database_user="${database_build_username}"
       sqitch_password="${database_build_password}"
