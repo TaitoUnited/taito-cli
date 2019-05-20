@@ -26,7 +26,7 @@ elif [[ "${taito_env}" != "local" ]]; then
   fi
 fi
 
-if [[ "${database_password:-}" ]]; then
+if [[ "${mysql_password:-}" ]]; then
   (
     export MYSQL_PWD="${mysql_password}"
     ${taito_setv:?}
