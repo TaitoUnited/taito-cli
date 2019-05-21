@@ -11,6 +11,7 @@ trap finish EXIT
 
 ${taito_setv:?}
 if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+  export HELM_TILLER_HISTORY_MAX=10
   helm tiller start-ci > /dev/null
   export HELM_HOST=127.0.0.1:44134
 fi

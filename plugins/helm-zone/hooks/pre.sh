@@ -4,6 +4,7 @@
 
 if [[ ${taito_command} == "zone-"* ]]; then
   # Run tillerless Helm
+  export HELM_TILLER_HISTORY_MAX=10
   (${taito_setv:?}; helm tiller start-ci > /dev/null)
   export HELM_HOST=127.0.0.1:44134
 fi
