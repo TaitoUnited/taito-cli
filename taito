@@ -325,6 +325,8 @@ function cleanup {
 trap cleanup EXIT
 
 # Set some variables to be used later
+export taito_host_username
+export taito_host_uname
 taito_host_username="$(whoami)"
 taito_host_uname="$(uname)"
 taito_run="${log_file/${taito_home_path}/${taito_container_home}}"
