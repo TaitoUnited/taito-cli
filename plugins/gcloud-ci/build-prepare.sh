@@ -3,6 +3,7 @@
 : "${taito_env:?}"
 : "${taito_vc_repository:?}"
 : "${taito_container_registry:?}"
+: "${taito_zone:?}"
 
 image_tag=${1}
 image_path=${2}
@@ -16,7 +17,7 @@ echo "TODO check from container registry instead as there might be manual \
 builds also"
 
 check=$( \
-  gcloud -q builds list \
+  gcloud -q --project "${taito_zone}" builds list \
   --filter="status:SUCCESS AND \
             source.repoSource.repoName~.*${taito_project:?} AND \
             images~.*\\:${image_tag}" \

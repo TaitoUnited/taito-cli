@@ -3,6 +3,7 @@
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
+: "${taito_zone:?}"
 
 if [[ "${taito_is_admin:-}" == true ]] && \
    ( [[ "${taito_command}" == "env-"* ]] || \
@@ -38,7 +39,7 @@ if [[ "${taito_is_admin:-}" == true ]] && \
    # TODO remove env name hardcoding
    export postgres_password && \
    postgres_password=$( \
-     gcloud -q kms decrypt --keyring "${taito_secrets_keyring}" \
+     gcloud -q --project "${taito_zone}" kms decrypt --keyring "${taito_secrets_keyring}" \
        --key "${taito_secrets_key}" \
        --location "${taito_secrets_region}" \
        --plaintext-file '-' \

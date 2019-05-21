@@ -1,6 +1,7 @@
 #!/bin/bash
 : "${taito_cli_path:?}"
 : "${taito_plugin_path:?}"
+: "${taito_zone:?}"
 
 if [[ -z $1 ]]; then
   echo "Fetching latest image tag from build history..."
@@ -8,7 +9,7 @@ if [[ -z $1 ]]; then
   export taito_target_image
   ${taito_setv:?}
   taito_target_image=$( \
-    gcloud -q builds list \
+    gcloud -q --project "${taito_zone}" builds list \
       --sort-by="~createTime" --format="value(images)" \
       --filter=" \
         status:SUCCESS AND \
