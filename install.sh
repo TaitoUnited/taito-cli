@@ -7,46 +7,50 @@ if [[ "$(id -u)" == "0" ]]; then
   exit 1
 fi
 
-# 1. Clone Taito CLI to ~/taito-cli and checkout master branch
-echo "[Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
+echo "[1. Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf ~/taito-cli &> /dev/null || :
 git clone git@github.com:TaitoUnited/taito-cli.git ~/taito-cli || (
   echo
-  echo "Failed to clone Taito CLI git repository. Taito CLI uses git with"
+  echo "Failed to clone Taito CLI git repository. Taito CLI uses GitHub with"
   echo "SSH keys. If you have not configured SSH keys yet, see the following link:"
   echo
   echo "https://help.github.com/en/articles/connecting-to-github-with-ssh"
+  echo
+  echo "If you have already configured SSH, make the following command works:"
+  echo
+  echo "git clone git@github.com:TaitoUnited/taito-cli.git"
+  echo
+  echo "If the command does not work, make sure your ssh-agent is running and"
+  echo "the key has been added to the agent:"
+  echo
+  echo 'eval "$(ssh-agent -s)"'
+  echo 'ssh-add ~/.ssh/mykey'
+  echo '# ON MAC: ssh-add -K ~/.ssh/mykey'
+  echo
+  echo "TIP: You can add these lines to your ~/.bashrc"
+  echo
   exit 1
 )
 (cd ~/taito-cli &> /dev/null && git checkout master &> /dev/null)
 echo
 
-# 2. Add taito command symlink to ~/bin/taito
-echo "[Add Taito CLI to path]"
-mkdir -p "${HOME}/bin"
-rm -f "${HOME}/bin/taito" || :
-ln -s "${HOME}/taito-cli/taito" "${HOME}/bin/taito"
-echo "added ${HOME}/bin/taito"
-
-# 3. Add ~/bin to path
-if ! echo "$PATH" | grep -q "${HOME}/bin"; then
-  export PATH="${HOME}/bin:$PATH"
-  if [[ -f ~/.bashrc ]]; then
-    echo "export PATH=\"${HOME}/bin:\$PATH\"" >> ~/.bashrc
-    echo "modified ~/.bashrc"
-  fi
-  if [[ -f ~/.bash_profile ]]; then
-    echo "export PATH=\"${HOME}/bin:\$PATH\"" >> ~/.bash_profile
+echo "[2. Add ~/taito-cli/bin to path]"
+if ! echo "$PATH" | grep -q "${HOME}/taito-cli/bin"; then
+  export PATH="${HOME}/taito-cli/bin:$PATH"
+  echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bashrc
+  echo "modified ~/.bashrc"
+  if [[ -f ~/.bash_profile ]] && ! grep ".bashrc" ~/.bash_profile; then
+    echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bash_profile
     echo "modified ~/.bash_profile"
   fi
   if [[ -f ~/.zshrc ]]; then
-    echo "export PATH=\"${HOME}/bin:\$PATH\"" >> ~/.zshrc
+    echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.zshrc
     echo "modified ~/.zshrc"
   fi
 fi
 echo
 
-# 4. Create ~/.taito/taito-config.sh file
+echo "[3. Create ~/.taito/taito-config.sh file]"
 mkdir -p ~/.taito
 cat > ~/.taito/taito-config.sh <<EOL
 #!/bin/bash
@@ -79,13 +83,13 @@ template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure
 # Define default settings for newly created projects here
 EOL
 
-# 5. Setup autocomplete for bash
-echo "[Add autocomplete support]"
-if [[ -f ~/.bashrc ]] && ! grep "taito-cli" ~/.bashrc &> /dev/null; then
+echo "[4. Add autocomplete support for bash]"
+if [[ -f ~/.bashrc ]] && ! grep "taito-cli/support" ~/.bashrc &> /dev/null; then
   echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
-if [[ -f ~/.bash_profile ]] && ! grep "taito-cli" ~/.bash_profile &> /dev/null; then
+if [[ -f ~/.bash_profile ]] && ! grep ".bashrc" ~/.bash_profile && \
+   ! grep "taito-cli/support" ~/.bash_profile &> /dev/null; then
   echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bash_profile
   echo "modified ~/.bash_profile"
 fi
@@ -94,8 +98,8 @@ if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
   echo "modified ~/.inputrc"
 fi
 
-# 6. Setup autocomplete for zsh
-if [[ -f ~/.zshrc ]] && ! grep "taito-cli" ~/.zshrc &> /dev/null; then
+echo "[5. Add autocomplete support for zsh]"
+if [[ -f ~/.zshrc ]] && ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
   sedi="-i"
   if [[ $(uname) == "Darwin" ]]; then
     sedi="-i ''"
@@ -104,6 +108,15 @@ if [[ -f ~/.zshrc ]] && ! grep "taito-cli" ~/.zshrc &> /dev/null; then
   echo "modified ~/.zshrc"
 fi
 
-# 7. Success!
+echo "[6. Check that it works ok]"
+taito info -h > /dev/null
+
+echo "[7. Upgrade]"
+taito upgrade
+
+echo "[8. Success]"
 echo
-echo "Taito CLI was installed successfully! Try to run 'taito -h'"
+echo "Taito CLI was installed successfully! Start a new shell by opening a new"
+echo "terminal window or by running `bash` in the current terminal. Then try taito"
+echo "by running `taito -h`."
+echo
