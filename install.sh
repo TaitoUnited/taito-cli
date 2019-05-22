@@ -8,6 +8,12 @@ if [[ "$(id -u)" == "0" ]]; then
 fi
 
 echo
+echo "Enter Taito CLI installation directory or press enter to use the default"
+echo "[$HOME/taito-cli]"
+echo read -r INSTALL_DIR
+INSTALL_DIR=${INSTALL_DIR:-$HOME/taito-cli}
+
+echo
 echo "[1. Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf ~/taito-cli &> /dev/null || :
 git clone https://github.com/TaitoUnited/taito-cli.git ~/taito-cli
@@ -18,18 +24,18 @@ echo "[2. Checkout master branch]"
 
 echo
 echo "[3. Add ~/taito-cli/bin to path]"
-export PATH="${HOME}/taito-cli/bin:$PATH"
-if ! grep "${HOME}/taito-cli/bin" ~/.bashrc &> /dev/null; then
-  echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bashrc
+export PATH="$INSTALL_DIR/bin:$PATH"
+if ! grep "$INSTALL_DIR/bin" ~/.bashrc &> /dev/null; then
+  echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
-if ! grep "${HOME}/taito-cli/bin" ~/.bash_profile &> /dev/null && \
+if ! grep "$INSTALL_DIR/bin" ~/.bash_profile &> /dev/null && \
    ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
-  echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bash_profile
+  echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> ~/.bash_profile
   echo "modified ~/.bash_profile"
 fi
-if ! grep "${HOME}/taito-cli/bin" ~/.zshrc &> /dev/null; then
-  echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.zshrc
+if ! grep "$INSTALL_DIR/bin" ~/.zshrc &> /dev/null; then
+  echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> ~/.zshrc
   echo "modified ~/.zshrc"
 fi
 

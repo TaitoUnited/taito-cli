@@ -18,7 +18,7 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
 
 ### Automatic installation
 
-1. Install Taito CLI to your home directory by running:
+1. Install Taito CLI by running:
 
     ```shell
     curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash -
@@ -27,8 +27,6 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
 2. Optional: Install Taito CLI plugin for your [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli) or [Atom](https://github.com/keskiju/atom-taito-cli) editor.
 
 ### Manual installation
-
-> With manual installation you can decide yourself where to install Taito CLI.
 
 1. See the [install.sh](https://github.com/TaitoUnited/taito-cli/blob/master/install.sh) script and execute the steps manually in any way you like.
 
