@@ -125,5 +125,50 @@ if [[ -d "./scripts/helm" ]]; then
       -f scripts/helm.yaml.tmp \
       ${helm_deploy_options:-} \
       "${taito_project}-${taito_target_env}" "./scripts/helm"
+
+    # NOTE: temp fix for Kubernetes upgrade. TODO: remove this!
+    exit_code=$?
+    if [[ $exit_code != 0 ]] && [[ ${taito_zone} == "gcloud-temp1" ]] && \
+       helm ls --namespace "${taito_namespace}" | grep "2017\|2018\|Jan\|Feb\|Mar\|Apr\|May"; then
+      echo "Fix Helm chart after Kubernetes upgrade: delete chart and redeploy"
+      helm delete --purge "${taito_project}-${taito_target_env}"
+      helm upgrade "${options[@]}" --debug --install \
+        --namespace "${taito_namespace}" \
+        --set global.env="${taito_target_env}" \
+        --set global.zone.name="${taito_zone}" \
+        --set global.zone.provider="${taito_provider:-}" \
+        --set global.zone.providerRegion="${taito_provider_region:-}" \
+        --set global.zone.providerZone="${taito_provider_zone:-}" \
+        --set global.zone.namespace="${taito_namespace}" \
+        --set global.zone.resourceNamespace="${taito_resource_namespace:-}" \
+        --set global.project.name="${taito_project}" \
+        --set global.project.company="${taito_company:-}" \
+        --set global.project.family="${taito_family:-}" \
+        --set global.project.application="${taito_application:-}" \
+        --set global.project.suffix="${taito_suffix:-}" \
+        --set global.build.imageTag="${image}" \
+        --set global.build.version="${version}" \
+        --set global.build.commit="TODO" \
+        --set env="${taito_target_env}" \
+        --set zone.name="${taito_zone}" \
+        --set zone.provider="${taito_provider:-}" \
+        --set zone.providerRegion="${taito_provider_region:-}" \
+        --set zone.providerZone="${taito_provider_zone:-}" \
+        --set zone.namespace="${taito_namespace}" \
+        --set zone.resourceNamespace="${taito_resource_namespace:-}" \
+        --set project.name="${taito_project}" \
+        --set project.company="${taito_company:-}" \
+        --set project.family="${taito_family:-}" \
+        --set project.application="${taito_application:-}" \
+        --set project.suffix="${taito_suffix:-}" \
+        --set build.imageTag="${image}" \
+        --set build.version="${version}" \
+        --set build.commit="TODO" \
+        -f scripts/helm.yaml.tmp \
+        ${helm_deploy_options:-} \
+        "${taito_project}-${taito_target_env}" "./scripts/helm"
+      exit_code=$?
+    fi
+    exit $exit_code
   )
 fi
