@@ -4,7 +4,7 @@ import { desktopOnly } from '../utils';
 
 const Sidemenu = styled.div`
   width: 320px;
-  min-height: 100vh;
+  height: 100%;
   border-right: 1px solid ${props => props.theme.grey[300]};
   display: flex;
   flex-direction: column;

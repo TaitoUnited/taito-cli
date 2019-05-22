@@ -4,16 +4,13 @@ import styled from '@emotion/styled';
 import { media } from '../utils';
 import Navbar from '../components/Navbar';
 import Drawer from '../components/Drawer';
-import Footer from '../components/Footer';
 
 const Page = ({ menu = null, children, ...rest }) => (
   <Wrapper {...rest}>
-    <Main>
-      {menu}
+    <Main hasMenu={!!menu}>
+      {menu && <Menu>{menu}</Menu>}
       <Content>{children}</Content>
     </Main>
-
-    <Footer />
 
     <Navbar />
 
@@ -41,10 +38,19 @@ const Main = styled.div`
   width: 100%;
   overflow-x: hidden;
   margin-top: 50px;
+  padding-left: ${props => (props.hasMenu ? 320 : 0)}px;
 
   ${media.sm`
     margin-top: 40px;
   `}
+`;
+
+const Menu = styled.div`
+  position: fixed;
+  top: 50px;
+  left: 0px;
+  height: calc(100vh - 50px);
+  overflow-y: auto;
 `;
 
 const Content = styled.div`
