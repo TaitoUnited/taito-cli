@@ -1,4 +1,4 @@
-# PART IV: Zones
+# PART IV: Infrastructure
 
 ## 15. Creating a zone
 

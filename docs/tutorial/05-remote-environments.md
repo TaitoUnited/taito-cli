@@ -1,4 +1,4 @@
-# PART II: Infrastructure
+# PART II: Environments
 
 > TODO: If zone does not yet exist, see chapter...
 > TODO: Project configs not ok if zone has not yet been created

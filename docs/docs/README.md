@@ -1,6 +1,6 @@
 # Documentation
 
-In order to get started and familiarize yourself with Taito CLI you should read through the main documentation first and the go through the [tutorial](/tutorial).
+In order to get started and familiarize yourself with Taito CLI you should read through the main documentation first and then go through the [tutorial](/tutorial).
 
 ## Table of contents
 
