@@ -7,34 +7,33 @@ if [[ "$(id -u)" == "0" ]]; then
   exit 1
 fi
 
+echo
 echo "[1. Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf ~/taito-cli &> /dev/null || :
 git clone https://github.com/TaitoUnited/taito-cli.git ~/taito-cli
-echo
 
+echo
 echo "[2. Checkout master branch]"
 (cd ~/taito-cli &> /dev/null && git checkout master &> /dev/null)
-echo
 
+echo
 echo "[3. Add ~/taito-cli/bin to path]"
-if ! echo "$PATH" | grep -q "${HOME}/taito-cli/bin"; then
-  export PATH="${HOME}/taito-cli/bin:$PATH"
-  if ! grep "${HOME}/taito-cli/bin" ~/.bashrc; then
-    echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bashrc
-    echo "modified ~/.bashrc"
-  fi
-  if ! grep "${HOME}/taito-cli/bin" ~/.bash_profile && \
-     ! grep ".bashrc" ~/.bash_profile; then
-    echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bash_profile
-    echo "modified ~/.bash_profile"
-  fi
-  if ! grep "${HOME}/taito-cli/bin" ~/.zshrc; then
-    echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.zshrc
-    echo "modified ~/.zshrc"
-  fi
+export PATH="${HOME}/taito-cli/bin:$PATH"
+if ! grep "${HOME}/taito-cli/bin" ~/.bashrc &> /dev/null; then
+  echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bashrc
+  echo "modified ~/.bashrc"
 fi
-echo
+if ! grep "${HOME}/taito-cli/bin" ~/.bash_profile &> /dev/null && \
+   ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
+  echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bash_profile
+  echo "modified ~/.bash_profile"
+fi
+if ! grep "${HOME}/taito-cli/bin" ~/.zshrc &> /dev/null; then
+  echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.zshrc
+  echo "modified ~/.zshrc"
+fi
 
+echo
 echo "[4. Create ~/.taito/taito-config.sh file if it does not exist yet]"
 mkdir -p ~/.taito
 if [[ ! -f ~/.taito/taito-config.sh ]]; then
@@ -70,13 +69,14 @@ template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure
 EOL
 fi
 
+echo
 echo "[5. Add autocomplete support for bash]"
 if ! grep "taito-cli/support" ~/.bashrc &> /dev/null; then
   echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
 if ! grep "taito-cli/support" ~/.bash_profile &> /dev/null && \
-   ! grep ".bashrc" ~/.bash_profile; then
+   ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
   echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bash_profile
   echo "modified ~/.bash_profile"
 fi
@@ -85,6 +85,7 @@ if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
   echo "modified ~/.inputrc"
 fi
 
+echo
 echo "[6. Add autocomplete support for zsh]"
 if ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
   sedi="-i"
@@ -95,12 +96,15 @@ if ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
   echo "modified ~/.zshrc"
 fi
 
-echo "[7. Check that it works ok]"
+echo
+echo "[7. Pull Taito CLI container image and check that it works ok]"
 taito info -h > /dev/null
 
-echo "[8. Upgrade]"
+echo
+echo "[8. Taito CLI upgrade]"
 taito upgrade
 
+echo
 echo "[9. Success]"
 echo
 echo "Taito CLI was installed successfully! Start a new shell by opening a new"
