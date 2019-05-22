@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+TAITO_INSTALL_DIR=${TAITO_INSTALL_DIR:-$HOME/taito-cli}
 
 if [[ "$(id -u)" == "0" ]]; then
   echo "This script should not be run as root" 1>&2
@@ -8,34 +9,28 @@ if [[ "$(id -u)" == "0" ]]; then
 fi
 
 echo
-echo "Enter Taito CLI installation directory or press enter to use the default"
-echo "[$HOME/taito-cli]"
-echo read -r INSTALL_DIR
-INSTALL_DIR=${INSTALL_DIR:-$HOME/taito-cli}
-
-echo
 echo "[1. Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
-rm -rf ~/taito-cli &> /dev/null || :
-git clone https://github.com/TaitoUnited/taito-cli.git ~/taito-cli
+rm -rf "$TAITO_INSTALL_DIR" &> /dev/null || :
+git clone https://github.com/TaitoUnited/taito-cli.git "$TAITO_INSTALL_DIR"
 
 echo
 echo "[2. Checkout master branch]"
-(cd ~/taito-cli &> /dev/null && git checkout master &> /dev/null)
+(cd "$TAITO_INSTALL_DIR" &> /dev/null && git checkout master &> /dev/null)
 
 echo
-echo "[3. Add ~/taito-cli/bin to path]"
-export PATH="$INSTALL_DIR/bin:$PATH"
-if ! grep "$INSTALL_DIR/bin" ~/.bashrc &> /dev/null; then
-  echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> ~/.bashrc
+echo "[3. Add $TAITO_INSTALL_DIR/bin to path]"
+export PATH="$TAITO_INSTALL_DIR/bin:$PATH"
+if ! grep "$TAITO_INSTALL_DIR/bin" ~/.bashrc &> /dev/null; then
+  echo "export PATH=\"$TAITO_INSTALL_DIR/bin:\$PATH\"" >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
-if ! grep "$INSTALL_DIR/bin" ~/.bash_profile &> /dev/null && \
+if ! grep "$TAITO_INSTALL_DIR/bin" ~/.bash_profile &> /dev/null && \
    ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
-  echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> ~/.bash_profile
+  echo "export PATH=\"$TAITO_INSTALL_DIR/bin:\$PATH\"" >> ~/.bash_profile
   echo "modified ~/.bash_profile"
 fi
-if ! grep "$INSTALL_DIR/bin" ~/.zshrc &> /dev/null; then
-  echo "export PATH=\"$INSTALL_DIR/bin:\$PATH\"" >> ~/.zshrc
+if ! grep "$TAITO_INSTALL_DIR/bin" ~/.zshrc &> /dev/null; then
+  echo "export PATH=\"$TAITO_INSTALL_DIR/bin:\$PATH\"" >> ~/.zshrc
   echo "modified ~/.zshrc"
 fi
 
@@ -78,12 +73,12 @@ fi
 echo
 echo "[5. Add autocomplete support for bash]"
 if ! grep "taito-cli/support" ~/.bashrc &> /dev/null; then
-  echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bashrc
+  echo "source $TAITO_INSTALL_DIR/support/bash/complete.sh" >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
 if ! grep "taito-cli/support" ~/.bash_profile &> /dev/null && \
    ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
-  echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bash_profile
+  echo "source $TAITO_INSTALL_DIR/support/bash/complete.sh" >> ~/.bash_profile
   echo "modified ~/.bash_profile"
 fi
 if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
@@ -98,7 +93,7 @@ if ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
   if [[ $(uname) == "Darwin" ]]; then
     sedi="-i ''"
   fi
-  sed ${sedi} '1s|^|fpath=(~/taito-cli/support/zsh-completion $fpath)\'$'\n|' ~/.zshrc
+  sed ${sedi} '1s|^|fpath=('"$TAITO_INSTALL_DIR"'/support/zsh-completion $fpath)\'$'\n|' ~/.zshrc
   echo "modified ~/.zshrc"
 fi
 
@@ -114,6 +109,6 @@ echo
 echo "[9. Success]"
 echo
 echo "Taito CLI was installed successfully! Start a new shell by opening a new"
-echo "terminal window or by running `bash` in the current terminal. Then try taito"
-echo "by running `taito -h`."
+echo "terminal window or by running 'bash' in the current terminal. Then try taito"
+echo "by running 'taito -h'."
 echo

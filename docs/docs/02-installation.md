@@ -21,7 +21,8 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
 1. Install Taito CLI by running:
 
     ```shell
-    curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash -
+    export TAITO_INSTALL_DIR=~/taito-cli
+    curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash
     ```
 
 2. Optional: Install Taito CLI plugin for your [Visual Studio Code](https://github.com/keskiju/vscode-taito-cli) or [Atom](https://github.com/keskiju/atom-taito-cli) editor.
