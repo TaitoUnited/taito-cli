@@ -22,3 +22,19 @@ steps:
 - id: test
   name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'test']
+
+# TODO: remove once all image references have been updated
+- id: alt-push
+  name: 'gcr.io/cloud-builders/docker'
+  env:
+    - project_id=$PROJECT_ID
+    - repo_name=$REPO_NAME
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    alt_reponame=$${repo_name}
+    alt_reponame=${alt_reponame/_taitounited_/-taitounited-}
+    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:$BRANCH_NAME \
+       eu.gcr.io/$${project_id}/${alt_reponame}/cli:$BRANCH_NAME
+    docker push eu.gcr.io/$${project_id}/${alt_reponame}/cli:$BRANCH_NAME
