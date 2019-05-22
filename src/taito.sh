@@ -18,7 +18,7 @@ taito_cli_path=$(
     [[ "${source}" != /* ]] && source="${taito_cli_path}/${source}"
   done
   dir=$(dirname "${source}")
-  echo "${dir%/bin}"
+  echo "${dir%/src}"
 )
 taito_src_path="${taito_cli_path}/src" && \
 taito_util_path="${taito_cli_path}/src/util" && \
