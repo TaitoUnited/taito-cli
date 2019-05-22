@@ -19,13 +19,16 @@ echo
 echo "[3. Add ~/taito-cli/bin to path]"
 if ! echo "$PATH" | grep -q "${HOME}/taito-cli/bin"; then
   export PATH="${HOME}/taito-cli/bin:$PATH"
-  echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bashrc
-  echo "modified ~/.bashrc"
-  if [[ -f ~/.bash_profile ]] && ! grep ".bashrc" ~/.bash_profile; then
+  if ! grep "${HOME}/taito-cli/bin" ~/.bashrc; then
+    echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bashrc
+    echo "modified ~/.bashrc"
+  fi
+  if ! grep "${HOME}/taito-cli/bin" ~/.bash_profile && \
+     ! grep ".bashrc" ~/.bash_profile; then
     echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bash_profile
     echo "modified ~/.bash_profile"
   fi
-  if [[ -f ~/.zshrc ]]; then
+  if ! grep "${HOME}/taito-cli/bin" ~/.zshrc; then
     echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.zshrc
     echo "modified ~/.zshrc"
   fi
@@ -68,12 +71,12 @@ EOL
 fi
 
 echo "[5. Add autocomplete support for bash]"
-if [[ -f ~/.bashrc ]] && ! grep "taito-cli/support" ~/.bashrc &> /dev/null; then
+if ! grep "taito-cli/support" ~/.bashrc &> /dev/null; then
   echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
-if [[ -f ~/.bash_profile ]] && ! grep ".bashrc" ~/.bash_profile && \
-   ! grep "taito-cli/support" ~/.bash_profile &> /dev/null; then
+if ! grep "taito-cli/support" ~/.bash_profile &> /dev/null && \
+   ! grep ".bashrc" ~/.bash_profile; then
   echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bash_profile
   echo "modified ~/.bash_profile"
 fi
@@ -83,7 +86,7 @@ if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
 fi
 
 echo "[6. Add autocomplete support for zsh]"
-if [[ -f ~/.zshrc ]] && ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
+if ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
   sedi="-i"
   if [[ $(uname) == "Darwin" ]]; then
     sedi="-i ''"
