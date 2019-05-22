@@ -9,42 +9,14 @@ fi
 
 echo "[1. Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf ~/taito-cli &> /dev/null || :
-git clone git@github.com:TaitoUnited/taito-cli.git ~/taito-cli || (
-  echo
-  echo "Failed to clone Taito CLI git repository. You probably have not configured"
-  echo "SSH keys for GitHub. Choose:"
-  echo
-  echo "1) Configure SSH keys"
-  echo "2) Clone Taito CLI with HTTPS"
-  echo
-  echo "Your choice (1 or 2):"
-  read -r choice
-  if [[ $choice == *"2"* ]]; then
-    git clone https://github.com/TaitoUnited/taito-cli.git ~/taito-cli
-  else
-    echo "Run install again once you have configured the SSH keys according to these"
-    echo "instructions: https://help.github.com/en/articles/connecting-to-github-with-ssh"
-    echo
-    echo "Once you have configured SSH keys, make sure the following command works:"
-    echo "git clone git@github.com:TaitoUnited/taito-cli.git"
-    echo
-    echo "If the command does not work, make sure your ssh-agent is running and"
-    echo "your SSH key has been added to the agent:"
-    echo
-    echo 'eval "$(ssh-agent -s)"'
-    echo '# ON MAC: ssh-add -K ~/.ssh/id_rsa'
-    echo 'ssh-add ~/.ssh/id_rsa'
-    echo
-    echo "TIP: You may also add these lines to your shell startup script"
-    echo "(e.g. ~/.bashrc or ~/.zshrc)"
-    echo
-    exit 1
-  fi
-)
+git clone https://github.com/TaitoUnited/taito-cli.git ~/taito-cli
+echo
+
+echo "[2. Checkout master branch]"
 (cd ~/taito-cli &> /dev/null && git checkout master &> /dev/null)
 echo
 
-echo "[2. Add ~/taito-cli/bin to path]"
+echo "[3. Add ~/taito-cli/bin to path]"
 if ! echo "$PATH" | grep -q "${HOME}/taito-cli/bin"; then
   export PATH="${HOME}/taito-cli/bin:$PATH"
   echo "export PATH=\"${HOME}/taito-cli/bin:\$PATH\"" >> ~/.bashrc
@@ -60,8 +32,9 @@ if ! echo "$PATH" | grep -q "${HOME}/taito-cli/bin"; then
 fi
 echo
 
-echo "[3. Create ~/.taito/taito-config.sh file]"
+echo "[4. Create ~/.taito/taito-config.sh file if it does not exist yet]"
 mkdir -p ~/.taito
+if [[ ! -f ~/.taito/taito-config.sh ]]; then
 cat > ~/.taito/taito-config.sh <<EOL
 #!/bin/bash
 # shellcheck disable=SC2034
@@ -92,8 +65,9 @@ template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure
 # --- Project template settings ---
 # Define default settings for newly created projects here
 EOL
+fi
 
-echo "[4. Add autocomplete support for bash]"
+echo "[5. Add autocomplete support for bash]"
 if [[ -f ~/.bashrc ]] && ! grep "taito-cli/support" ~/.bashrc &> /dev/null; then
   echo 'source ~/taito-cli/support/bash/complete.sh' >> ~/.bashrc
   echo "modified ~/.bashrc"
@@ -108,7 +82,7 @@ if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
   echo "modified ~/.inputrc"
 fi
 
-echo "[5. Add autocomplete support for zsh]"
+echo "[6. Add autocomplete support for zsh]"
 if [[ -f ~/.zshrc ]] && ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
   sedi="-i"
   if [[ $(uname) == "Darwin" ]]; then
@@ -118,13 +92,13 @@ if [[ -f ~/.zshrc ]] && ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
   echo "modified ~/.zshrc"
 fi
 
-echo "[6. Check that it works ok]"
+echo "[7. Check that it works ok]"
 taito info -h > /dev/null
 
-echo "[7. Upgrade]"
+echo "[8. Upgrade]"
 taito upgrade
 
-echo "[8. Success]"
+echo "[9. Success]"
 echo
 echo "Taito CLI was installed successfully! Start a new shell by opening a new"
 echo "terminal window or by running `bash` in the current terminal. Then try taito"
