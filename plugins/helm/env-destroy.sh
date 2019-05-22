@@ -1,5 +1,5 @@
 #!/bin/bash -e
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"

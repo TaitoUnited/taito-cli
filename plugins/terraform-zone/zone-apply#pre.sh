@@ -1,10 +1,10 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_env:?}"
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
+if "${taito_util_path}/confirm-execution.sh" "terraform" "${name}" \
   "Apply changes by running terraform scripts"
 then
   (
@@ -34,7 +34,7 @@ then
     terraform apply && \
 
     if [[ "${taito_zone_initial_database_password:-}" ]] && \
-       "${taito_cli_path}/util/confirm-execution.sh" "" "" \
+       "${taito_util_path}/confirm-execution.sh" "" "" \
          "Change database master password"
     then
       echo
@@ -62,4 +62,4 @@ then
 fi && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

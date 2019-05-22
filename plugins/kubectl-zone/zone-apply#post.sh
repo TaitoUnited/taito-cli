@@ -1,5 +1,5 @@
 #!/bin/bash -e
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 name=${1}
@@ -7,7 +7,7 @@ name=${1}
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
 
 # TODO: Already stopped on gcloud?
-# if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-dashboard" "${name}" \
+# if "${taito_util_path}/confirm-execution.sh" "kubectl-dashboard" "${name}" \
 #   "Stop dashboard of Kubernetes as it is not needed in most cloud setups"
 # then
 #   kubectl scale --replicas=0 --namespace kube-system deployment/kubernetes-dashboard || :
@@ -17,13 +17,13 @@ name=${1}
 
 # TODO: Only needed if database manager and github token are saved on Kubernetes.
 # But extra namespace does not matter either.
-# if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-devops-namespace" "${name}" \
+# if "${taito_util_path}/confirm-execution.sh" "kubectl-devops-namespace" "${name}" \
 #   "Create 'devops' namespace on Kubernetes"
 # then
 #   "${taito_plugin_path}/../kubectl/util/ensure-namespace.sh" devops
 # fi
 
-# if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-cloudsql-secret" "${name}" \
+# if "${taito_util_path}/confirm-execution.sh" "kubectl-cloudsql-secret" "${name}" \
 #   "Create service acccount for Cloud SQL access and save it to devops namespace"
 # then
 #   echo && \
@@ -42,7 +42,7 @@ name=${1}
 
 # TODO: GitHub token handling should be implemented somewhere else, but might be
 # needed on Kubernetes for some setups.
-# if "${taito_cli_path}/util/confirm-execution.sh" "kubectl-github-secret" "${name}" \
+# if "${taito_util_path}/confirm-execution.sh" "kubectl-github-secret" "${name}" \
 #   "ONLY FOR PRODUCTION CLUSTER: Save GitHub token to devops namespace for tagging releases"
 # then
 #   echo && \
@@ -56,7 +56,7 @@ name=${1}
 #     --from-file=token=tmp/github
 # fi
 
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl" "${name}" \
+if "${taito_util_path}/confirm-execution.sh" "kubectl" "${name}" \
   "Configure DNS"
 then
   echo
@@ -103,4 +103,4 @@ then
 fi
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

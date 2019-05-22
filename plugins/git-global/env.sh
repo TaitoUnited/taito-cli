@@ -1,5 +1,5 @@
 #!/bin/bash -e
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_target_env:?}"
 
@@ -8,7 +8,7 @@ source="${source/prod/master}"
 dest="${taito_branch:?}"
 
 # TODO duplicate code with git-feat.sh?
-"${taito_cli_path}/util/execute-on-host-fg.sh" "
+"${taito_util_path}/execute-on-host-fg.sh" "
 set -e
 if git rev-parse --is-inside-work-tree &> /dev/null && \
    ! git checkout ${dest} 2> /dev/null; then
@@ -28,4 +28,4 @@ fi
 "
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

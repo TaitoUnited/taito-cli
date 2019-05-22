@@ -1,1 +1,0 @@
-# Taito-cli implementation

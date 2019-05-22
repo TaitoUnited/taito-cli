@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_dest_env:?}"
@@ -35,4 +35,4 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
 fi && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_command:?}"
 
 link_name=${1}
@@ -28,7 +28,7 @@ if [[ ${found} != "" ]]; then
               ${echo_command} "### links/pre: Opening ${name}"
               ${echo_command} Opening link "${url}"
             fi
-            "${taito_cli_path}/util/${open_command}" "${url}"
+            "${taito_util_path}/${open_command}" "${url}"
           else
             [[ ${taito_quiet:-} != "true" ]] && \
               ${echo_command} "### links/pre: Showing link ${name}"

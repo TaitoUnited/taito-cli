@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${template_name:?}"
 : "${template_source_git:?}"
@@ -22,4 +22,4 @@ trap cleanup EXIT
 )
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

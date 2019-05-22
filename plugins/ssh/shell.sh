@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_host_uname:?}"
 
 if [[ ! ${taito_target:-} ]]; then
@@ -12,4 +12,4 @@ if [[ ! ${taito_target:-} ]]; then
 fi
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

@@ -27,7 +27,7 @@ secret_index=0 && \
 secret_names=(${taito_secret_names}) && \
 for secret_name in "${secret_names[@]}"
 do
-  . "${taito_cli_path}/util/secret-by-index.sh" && \
+  . "${taito_util_path}/secret-by-index.sh" && \
 
   if [[ "${flag}" == "--save-as-taito-secrets" ]]; then
     echo "export ${secret_value_var}=\"${secret_value}\"; " >> taito-secrets.sh

@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
@@ -20,7 +20,7 @@ if [[ "${taito_env}" != "local" ]]; then
              [[ ${database_build_password_changed:-} ]] || \
              [[ ${database_app_password_changed:-} ]]
            ); then
-          if "${taito_cli_path}/util/confirm-execution.sh" "postgres" "" \
+          if "${taito_util_path}/confirm-execution.sh" "postgres" "" \
             "Set new passwords for postgres database ${database_name:-}"
           then
             export database_username=${database_master_username:-postgres}
@@ -36,4 +36,4 @@ if [[ "${taito_env}" != "local" ]]; then
 fi && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

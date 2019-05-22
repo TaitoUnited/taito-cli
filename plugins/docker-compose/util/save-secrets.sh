@@ -11,7 +11,7 @@ secret_index=0
 secret_names=(${taito_secret_names})
 for secret_name in "${secret_names[@]}"
 do
-  . "${taito_cli_path}/util/secret-by-index.sh"
+  . "${taito_util_path}/secret-by-index.sh"
 
   if [[ "${secret_changed:-}" ]] && \
      [[ "${secret_value:-}" ]] && \

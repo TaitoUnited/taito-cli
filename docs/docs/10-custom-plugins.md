@@ -83,7 +83,7 @@ Note that you can also add a project specific extension to your project subdirec
 
 NOTE: Always remember to call the next command of the command chain at some point during command execution (usually at the end) unless you want to stop the command chain execution:
 
-    "${taito_cli_path}/util/call-next.sh" "${@}"
+    "${taito_util_path}/call-next.sh" "${@}"
 
 NOTE: Do not call another command directly from another. It's error prone; you'll easily mess up the command chain execution, and also clarity of user friendly info messages. Place the common logic shared by multiple commands in a separate util instead.
 
@@ -108,13 +108,13 @@ You can use these environment variables to provide additional output in verbose 
 
 ### Running commands on host
 
-If your plugin needs to run some commands on host machine, execute `"${taito_cli_path}/util/execute-on-host.sh" COMMANDS` to run them immediately in the background. Alternatively you can use the `"${taito_cli_path}/util/execute-on-host-fg.sh" COMMANDS` to run the commands on foreground after the taito container has exited. Note that if some of the commands might require user input, you must run the commands on foreground.
+If your plugin needs to run some commands on host machine, execute `"${taito_util_path}/execute-on-host.sh" COMMANDS` to run them immediately in the background. Alternatively you can use the `"${taito_util_path}/execute-on-host-fg.sh" COMMANDS` to run the commands on foreground after the taito container has exited. Note that if some of the commands might require user input, you must run the commands on foreground.
 
 Currently this mechanism is used e.g. for executing docker commands on host and launching browser.
 
 ### Committing changes to the Taito CLI container image
 
-If your plugin needs to save some data permanently on the container image, execute `"${taito_cli_path}/util/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
+If your plugin needs to save some data permanently on the container image, execute `"${taito_util_path}/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
 
 ### Command chains and passing data
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 echo
 echo "NOTE: The current ssh plugin implementation uses keys that have been stored"
@@ -13,4 +13,4 @@ echo "Press enter to continue."
 read -r
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 if [[ -n "${taito_admin_key}" ]]; then
   echo "# Encrypting admin credentials" && \
@@ -15,7 +15,7 @@ fi && \
 
 echo "# Asking host to commit credentials to taito-cli container image" && \
 export taito_admin_key="" && \
-"${taito_cli_path}/util/docker-commit.sh" && \
+"${taito_util_path}/docker-commit.sh" && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

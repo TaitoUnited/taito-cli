@@ -1,55 +1,11 @@
 images: [
-  'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:latest'
+  'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:$BRANCH_NAME'
 ]
 
 steps:
 - id: install
   name: 'gcr.io/cloud-builders/npm'
   args: ['install']
-- id: secrets
-  waitFor: ['-']
-  name: 'gcr.io/cloud-builders/kubectl'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    echo "# Get credentials" && \
-    gcloud container clusters get-credentials "kube1" \
-      --zone "europe-west1-c" && \
-
-    # Get github token from Kubernetes secrets
-    kubectl --namespace "devops" get secret "github-buildbot" -o yaml | \
-      grep "^  token" | sed -e "s/^.*: //" | base64 --decode > github-token.tmp
-
-- id: release-pre
-  waitFor: ['secrets']
-  name: 'gcr.io/cloud-builders/npm'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    github_token=$$(cat github-token.tmp)
-
-    # TODO is git clone / npm install even necessary with the latest
-    # semantic release?
-
-    echo "# Cloning git repo to release directory as google container"
-    echo "# builder workspace does not point to the original repository"
-    git clone "https://${github_token}@github.com/TaitoUnited/taito-cli.git" \
-      release && \
-    cd release && \
-    git checkout master && \
-    npm install && \
-
-    echo "# Running semantic-release pre" && \
-    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-pre:prod \
-      > ./release-output && \
-    cat ./release-output && \
-
-    # Parse version from semantic-release output
-    cat ./release-output | \
-      grep "next release version" | \
-      grep -o '[0-9]*\.[0-9]*\.[0-9]*' > ../taitoflag_version
 
 - id: build
   name: 'gcr.io/cloud-builders/docker'
@@ -60,39 +16,9 @@ steps:
   args:
   - '-c'
   - |
-    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:latest .
+    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:$BRANCH_NAME \
+      -f docker/Dockerfile .
 
 - id: test
   name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'test']
-
-- id: release-post
-  name: 'gcr.io/cloud-builders/npm'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    echo "# Running semantic-release post" && \
-    github_token=$$(cat github-token.tmp) && \
-    cd release && \
-    NPM_TOKEN=none GH_TOKEN=${github_token} npm run release-post:prod
-
-- id: push
-  name: 'gcr.io/cloud-builders/docker'
-  env:
-    - project_id=$PROJECT_ID
-    - repo_name=$REPO_NAME
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    # Read version number that semantic-release wrote on the package.json
-    # and tag image with it
-    tag=$$(cat "./taitoflag_version")
-    echo "Using tag $${tag}" && \
-    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
-      eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} && \
-    echo "Pushing latest" && \
-    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest && \
-    echo "Pushing $${tag}" && \
-    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}

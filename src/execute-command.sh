@@ -663,8 +663,8 @@ else
   fi
 
   # Execute taito-cli command chain
-  "${taito_util_path}/ssh-agent.sh" "$taito_cli_path/util/call-next.sh" "${params[@]}"
-  # "${taito_cli_path}/util/call-next.sh" "${params[@]}"
+  "${taito_util_path}/ssh-agent.sh" "$taito_util_path/call-next.sh" "${params[@]}"
+  # "${taito_util_path}/call-next.sh" "${params[@]}"
   exit_code=${?}
   if [[ ${exit_code} == 130 ]]; then
     echo "Cancelled"

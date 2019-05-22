@@ -1,7 +1,7 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
-"${taito_cli_path}/util/browser.sh" "${1}" && \
+"${taito_util_path}/browser.sh" "${1}" && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

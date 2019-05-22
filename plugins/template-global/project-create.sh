@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 export template="${1:?Template not given}"
@@ -20,7 +20,7 @@ fi
 echo
 echo "Please wait..."
 
-"${taito_cli_path}/util/execute-on-host-fg.sh" "\
+"${taito_util_path}/execute-on-host-fg.sh" "\
   export GIT_PAGER='' && \
   git clone -q -b master --single-branch --depth 1 ${template_source_git}/${template}.git ${taito_vc_repository:?} && \
   cd ${taito_vc_repository} && \
@@ -41,4 +41,4 @@ echo "Please wait..."
   taito -o '${taito_organization_param:-}' -c project-create-continue"
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

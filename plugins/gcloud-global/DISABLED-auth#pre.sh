@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_enabled_plugins:?}"
 
 if [[ " ${taito_enabled_plugins} " != *" gcloud "* ]]; then
@@ -11,4 +11,4 @@ else
 fi && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

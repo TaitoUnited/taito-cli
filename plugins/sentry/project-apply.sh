@@ -1,12 +1,12 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_vc_repository:?}"
 : "${sentry_organization:?}"
 : "${taito_project_path:?}"
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "sentry" "${name}" \
+if "${taito_util_path}/confirm-execution.sh" "sentry" "${name}" \
   "Configure Sentry project"
 then
   echo "Create a new Sentry project with these settings:"
@@ -28,7 +28,7 @@ then
   echo "Press enter to open Sentry"
   read -r
 
-  "${taito_cli_path}/util/browser.sh" \
+  "${taito_util_path}/browser.sh" \
     "https://sentry.io/organizations/${sentry_organization}/projects/new/"
 
   echo "Press enter when ready"
@@ -64,4 +64,4 @@ then
 fi
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

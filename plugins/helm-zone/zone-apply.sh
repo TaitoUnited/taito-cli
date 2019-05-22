@@ -1,6 +1,6 @@
 #!/bin/bash
 : "${taito_setv:?}"
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 name=${1}
@@ -11,7 +11,7 @@ if [[ -d "./helm" ]]; then
   charts=($(cd helm && ls)) && \
   for chart in ${charts[@]}
   do
-    if "${taito_cli_path}/util/confirm-execution.sh" "${chart}" "${name}" \
+    if "${taito_util_path}/confirm-execution.sh" "${chart}" "${name}" \
       "Install helm chart ${chart} on Kubernetes"
     then
       # TODO support namespaces
@@ -40,4 +40,4 @@ if [[ -d "./helm" ]]; then
 fi
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

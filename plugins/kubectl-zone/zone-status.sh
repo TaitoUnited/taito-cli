@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
 
@@ -45,4 +45,4 @@ echo "to be static."
 echo
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

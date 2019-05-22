@@ -1,13 +1,13 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 name=${1}
 
-if "${taito_cli_path}/util/confirm-execution.sh" "kubectl" "${name}" \
+if "${taito_util_path}/confirm-execution.sh" "kubectl" "${name}" \
   "Rotate secrets"
 then
   echo "TODO rotate secrets"
 fi && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

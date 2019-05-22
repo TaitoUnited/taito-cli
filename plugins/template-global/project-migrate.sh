@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${template_default_source_git:?}"
 
@@ -35,7 +35,7 @@ echo
 echo "Please wait..."
 rm -rf "./template-tmp"
 mkdir "./template-tmp"
-"${taito_cli_path}/util/execute-on-host-fg.sh" "
+"${taito_util_path}/execute-on-host-fg.sh" "
   set -e
   export GIT_PAGER=''
   git clone -q -b master --single-branch --depth 1 \
@@ -57,4 +57,4 @@ mkdir "./template-tmp"
 "
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

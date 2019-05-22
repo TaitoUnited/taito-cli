@@ -2,7 +2,7 @@
 
 . _template-config.sh
 
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_vc_repository:?}"
 : "${template_dest_git:?}"
@@ -66,7 +66,7 @@ if [[ -f "CONFIGURATION.md" ]]; then
 fi
 
 echo "Please wait..."
-"${taito_cli_path}/util/execute-on-host-fg.sh" "
+"${taito_util_path}/execute-on-host-fg.sh" "
   set -e
   export GIT_PAGER=''
   git init -q
@@ -97,4 +97,4 @@ echo "Please wait..."
 "
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

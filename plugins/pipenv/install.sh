@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 switches=" ${*} "
 
@@ -8,9 +8,9 @@ if [[ "${switches}" == *"--clean"* ]]; then
   pipenv_command="pipenv update --clear --dev"
 fi && \
 
-"${taito_cli_path}/util/execute-on-host-fg.sh" "\
+"${taito_util_path}/execute-on-host-fg.sh" "\
 pipenv --python 3.6 && \
 ${pipenv_command}" && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

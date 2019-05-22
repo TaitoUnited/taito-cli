@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 type=${1}
 account=$(gcloud config get-value account 2> /dev/null)

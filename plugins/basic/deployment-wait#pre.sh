@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_app_url:?}"
 : "${taito_target_env:?}"
 
@@ -19,7 +19,7 @@ if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
   echo
 else
   # Call next command on command chain
-  "${taito_cli_path}/util/call-next.sh" "${@}"
+  "${taito_util_path}/call-next.sh" "${@}"
   echo
   echo
   echo

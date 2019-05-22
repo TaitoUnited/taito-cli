@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_env:?}"
 : "${taito_project:?}"
 : "${taito_env:?}"
@@ -8,7 +8,7 @@ secret_index=0
 secret_names=(${taito_secret_names})
 for secret_name in "${secret_names[@]}"
 do
-  . "${taito_cli_path}/util/secret-by-index.sh"
+  . "${taito_util_path}/secret-by-index.sh"
 
   # TODO remove once all projects have been converted
   secret_property="SECRET"

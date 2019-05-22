@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
@@ -21,4 +21,4 @@ if [[ "${taito_mode:-}" == "ci" ]] && \
 fi
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

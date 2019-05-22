@@ -1,5 +1,5 @@
 #!/bin/bash -e
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_environments:?Environments not set in taito config}"
 : "${taito_target_env:?}"
 : "${taito_env_merge_source:?}"
@@ -8,7 +8,7 @@
 
 if ! git rev-parse --is-inside-work-tree &> /dev/null; then
   # Not a git repository -> call next command on command chain and exit
-  "${taito_cli_path}/util/call-next.sh" "${@}"
+  "${taito_util_path}/call-next.sh" "${@}"
   exit
 fi
 
@@ -47,7 +47,7 @@ do
 
     # TODO execution should end if one merge fails
 
-    "${taito_cli_path}/util/execute-on-host-fg.sh" "\
+    "${taito_util_path}/execute-on-host-fg.sh" "\
     echo && \
     (read -t 1 -n 10000 discard || :) && \
     echo \"Merging ${s} -> ${d} ${git_push_options}\" && \
@@ -76,4 +76,4 @@ done
 echo
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

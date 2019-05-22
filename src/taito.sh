@@ -17,10 +17,11 @@ taito_cli_path=$(
     source=$(readlink "${source}")
     [[ "${source}" != /* ]] && source="${taito_cli_path}/${source}"
   done
-  dirname "${source}"
+  dir=$(dirname "${source}")
+  echo "${dir%/bin}"
 )
 taito_src_path="${taito_cli_path}/src" && \
-taito_util_path="${taito_cli_path}/util" && \
+taito_util_path="${taito_cli_path}/src/util" && \
 taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
 
 # Set working directory

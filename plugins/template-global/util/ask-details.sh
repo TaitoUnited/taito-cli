@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${template_source_git:?}"
 : "${template_default_dest_git:?}"
 : "${template:?}"

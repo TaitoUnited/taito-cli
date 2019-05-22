@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${database_name:?}"
 
 echo "Database connection details:"
@@ -12,4 +12,4 @@ echo "- password: ${database_password:-?}"
 echo "TODO implement"
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

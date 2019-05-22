@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
@@ -15,7 +15,7 @@ if [[ "${taito_env}" != "local" ]]; then
       . "${taito_util_path}/read-database-config.sh" "${database}" && \
 
       if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
-        if "${taito_cli_path}/util/confirm-execution.sh" "mysql" "${name}" \
+        if "${taito_util_path}/confirm-execution.sh" "mysql" "${name}" \
           "Delete mysql database ${database_name}"
         then
           # Create a subshell to contain password
@@ -34,4 +34,4 @@ if [[ "${taito_env}" != "local" ]]; then
 fi && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

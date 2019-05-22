@@ -11,25 +11,35 @@ echo "[1. Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf ~/taito-cli &> /dev/null || :
 git clone git@github.com:TaitoUnited/taito-cli.git ~/taito-cli || (
   echo
-  echo "Failed to clone Taito CLI git repository. Taito CLI uses GitHub with"
-  echo "SSH keys. If you have not configured SSH keys yet, see the following link:"
+  echo "Failed to clone Taito CLI git repository. You probably have not configured"
+  echo "SSH keys for GitHub. Choose:"
   echo
-  echo "https://help.github.com/en/articles/connecting-to-github-with-ssh"
+  echo "1) Configure SSH keys"
+  echo "2) Clone Taito CLI with HTTPS"
   echo
-  echo "If you have already configured SSH, make the following command works:"
-  echo
-  echo "git clone git@github.com:TaitoUnited/taito-cli.git"
-  echo
-  echo "If the command does not work, make sure your ssh-agent is running and"
-  echo "the key has been added to the agent:"
-  echo
-  echo 'eval "$(ssh-agent -s)"'
-  echo 'ssh-add ~/.ssh/mykey'
-  echo '# ON MAC: ssh-add -K ~/.ssh/mykey'
-  echo
-  echo "TIP: You can add these lines to your ~/.bashrc"
-  echo
-  exit 1
+  echo "Your choice (1 or 2):"
+  read -r choice
+  if [[ $choice == *"2"* ]]; then
+    git clone https://github.com/TaitoUnited/taito-cli.git ~/taito-cli
+  else
+    echo "Run install again once you have configured the SSH keys according to these"
+    echo "instructions: https://help.github.com/en/articles/connecting-to-github-with-ssh"
+    echo
+    echo "Once you have configured SSH keys, make sure the following command works:"
+    echo "git clone git@github.com:TaitoUnited/taito-cli.git"
+    echo
+    echo "If the command does not work, make sure your ssh-agent is running and"
+    echo "your SSH key has been added to the agent:"
+    echo
+    echo 'eval "$(ssh-agent -s)"'
+    echo '# ON MAC: ssh-add -K ~/.ssh/id_rsa'
+    echo 'ssh-add ~/.ssh/id_rsa'
+    echo
+    echo "TIP: You may also add these lines to your shell startup script"
+    echo "(e.g. ~/.bashrc or ~/.zshrc)"
+    echo
+    exit 1
+  fi
 )
 (cd ~/taito-cli &> /dev/null && git checkout master &> /dev/null)
 echo

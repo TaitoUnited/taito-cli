@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_provider:?}"
@@ -8,7 +8,7 @@
 name=${1}
 
 if [[ -d "./scripts/terraform/${taito_provider}" ]] && \
-   "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
+   "${taito_util_path}/confirm-execution.sh" "terraform" "${name}" \
      "Run terraform scripts for cloud provider ${taito_provider}"
 then
   (
@@ -26,7 +26,7 @@ fi && \
 
 # TODO: duplicate code
 if [[ -d "./scripts/terraform/${taito_uptime_provider:-}-uptime" ]] && \
-   "${taito_cli_path}/util/confirm-execution.sh" "terraform" "${name}" \
+   "${taito_util_path}/confirm-execution.sh" "terraform" "${name}" \
      "Run terraform scripts for uptime provider ${taito_uptime_provider}"
 then
   (
@@ -43,4 +43,4 @@ then
 fi && \
 
 # Call next command on command chain
-"${taito_cli_path}/util/call-next.sh" "${@}"
+"${taito_util_path}/call-next.sh" "${@}"

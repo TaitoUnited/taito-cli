@@ -1,5 +1,5 @@
 #!/bin/bash
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_image_name:?}"
 
 # Asks host to commit changes to the container image
@@ -10,9 +10,9 @@ fi
 
 if [[ -z "${taito_admin_key:-}" ]] || [[ "${taito_is_admin:-}" == true ]]; then
   sleep 1
-  "${taito_cli_path}/util/execute-on-host.sh" \
+  "${taito_util_path}/execute-on-host.sh" \
     "docker commit ${HOSTNAME} ${taito_image_name}save > /dev/null"
-  "${taito_cli_path}/util/execute-on-host-fg.sh" \
+  "${taito_util_path}/execute-on-host-fg.sh" \
     "docker image tag ${taito_image_name}save ${taito_image_name} > /dev/null"
   sleep 4
   echo OK

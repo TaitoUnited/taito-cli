@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
-: "${taito_cli_path:?}"
+: "${taito_util_path:?}"
 : "${taito_image:?}"
 : "${taito_home_path:?}"
 
