@@ -286,6 +286,8 @@ export gcloud_project=${gcloud_project:-$taito_zone}
 export gcloud_region=${gcloud_region:-$taito_provider_region}
 export gcloud_zone=${gcloud_zone:-$taito_provider_zone}
 export taito_provider_org_id=${taito_provider_org_id:-$gcloud_org_id}
+export taito_provider_region=${taito_provider_region:-$gcloud_region}
+export taito_provider_zone=${taito_provider_zone:-$gcloud_zone}
 export taito_container_registry=${taito_container_registry:-$taito_image_registry}
 
 # TODO ^^^^^ clean up code ^^^^^
