@@ -335,7 +335,9 @@ taito_run_fg="${log_file_fg/${taito_home_path}/${taito_container_home}}"
 
 # Fix for Docker Toolbox on Windows
 if [[ $taito_host_uname == *"_NT"* ]] && [[ -f "./docker.exe" ]]; then
-  echo "Current directory contains docker.exe. Execute command somewhere else."
+  echo
+  echo "Current directory contains docker.exe. Execute the command in some"
+  echo "other directory."
   exit 1
 fi
 
@@ -362,7 +364,8 @@ if [[ "${taito_env}" == "local" ]] && \
      [[ "${command}" == "init"* ]]
    ); then
   docker_project="${PWD##*/}"
-  if [[ "${docker_legacy_networking}" == "true" ]]; then
+  if [[ "${docker_legacy_networking}" == "true" ]] || \
+     [[ $taito_host_uname == *"_NT"* ]]; then
     docker_project="${docker_project//-/}"
     docker_project="${docker_project//_/}"
   fi
@@ -460,6 +463,7 @@ docker_command="
     -e taito_image_name=${taito_image_name}
     -e taito_admin_key=${admin_key}
     -e taito_organization_param=${taito_organization_param}
+    -e DOCKER_HOST=${DOCKER_HOST}
     -e TAITO_CONFIG_OVERRIDE=${TAITO_CONFIG_OVERRIDE}
     --entrypoint taito
     ${image_flag}
