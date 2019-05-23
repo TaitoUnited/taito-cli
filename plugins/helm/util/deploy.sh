@@ -131,6 +131,8 @@ if [[ -d "./scripts/helm" ]]; then
     if [[ $exit_code != 0 ]] && [[ ${taito_zone} == "gcloud-temp1" ]] && \
        helm ls --namespace "${taito_namespace}" | grep "2017\|2018\|Jan\|Feb\|Mar\|Apr\|May"; then
       echo "Fix Helm chart after Kubernetes upgrade: delete chart and redeploy"
+      kubectl delete configmap "${taito_project}-common" \
+        --namespace "${taito_namespace}"
       kubectl delete configmap "${taito_project}-${taito_target_env}-common" \
         --namespace "${taito_namespace}"
       helm delete --purge "${taito_project}-${taito_target_env}"
