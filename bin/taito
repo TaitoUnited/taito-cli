@@ -333,6 +333,12 @@ taito_host_uname="$(uname)"
 taito_run="${log_file/${taito_home_path}/${taito_container_home}}"
 taito_run_fg="${log_file_fg/${taito_home_path}/${taito_container_home}}"
 
+# Fix for Docker Toolbox on Windows
+if [[ $taito_host_uname == *"_NT"* ]] && [[ -f "./docker.exe" ]]; then
+  echo "Current directory contains docker.exe. Execute command somewhere else."
+  exit 1
+fi
+
 # Start a background process that will run commands on host in the
 # background while the container is still running on foregound.
 # Commands to be executed are read from a log file.
