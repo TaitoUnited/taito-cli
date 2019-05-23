@@ -11,7 +11,11 @@ fi
 echo
 echo "[1. Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf "$TAITO_INSTALL_DIR" &> /dev/null || :
-git clone https://github.com/TaitoUnited/taito-cli.git "$TAITO_INSTALL_DIR"
+if [[ $TAITO_GIT_CLONE_METHOD == "ssh" ]]; then
+  git clone git@github.com:TaitoUnited/taito-cli.git "$TAITO_INSTALL_DIR"
+else
+  git clone https://github.com/TaitoUnited/taito-cli.git "$TAITO_INSTALL_DIR"
+fi
 
 echo
 echo "[2. Checkout master branch]"

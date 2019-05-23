@@ -22,6 +22,7 @@ Taito CLI has not been tested on Windows. It won't probably work yet.
 
     ```shell
     export TAITO_INSTALL_DIR=~/taito-cli
+    export TAITO_GIT_CLONE_METHOD=https  # https or ssh
     curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash
     ```
 
