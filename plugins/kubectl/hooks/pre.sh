@@ -9,14 +9,14 @@
 if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   proxy_running=$(pgrep "kubectl")
+  echo
+  echo -e "${H1s}kubectl${H1e}"
   if [[ "${proxy_running}" == "" ]]; then
-    echo
-    echo "### kubectl/pre: Starting db proxy"
+    echo "Starting db proxy"
     "${taito_plugin_path}/util/use-context.sh"
     "${taito_plugin_path}/util/db-proxy-start.sh" "true"
   else
-    echo
-    echo "### kubectl/pre: Not Starting db proxy. It is already running."
+    echo "Not Starting db proxy. It is already running."
   fi
 fi && \
 
@@ -36,7 +36,8 @@ elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
 fi
 if [[ ${secret_filter} ]]; then
   echo
-  echo "### kubectl/pre: Getting secrets from Kubernetes"
+  echo -e "${H1s}kubectl${H1e}"
+  echo "Getting secrets from Kubernetes"
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
   # shellcheck disable=SC1090
   . "${taito_plugin_path}/util/get-secrets.sh" "true" ${secret_filter}

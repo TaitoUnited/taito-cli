@@ -14,7 +14,7 @@ script="${run_scripts_location}/taito-${taito_command}.sh"
 if [[ -f ${script} ]]; then
   export taito_hook_command_executed=true
   echo
-  echo "### run/pre"
+  echo -e "${H1s}run${H1e}"
   echo "Run script ${script} (Y/n)?"
   [[ ${taito_mode:-} == "ci" ]] || read -r confirm
   if [[ ${confirm} =~ ^[Yy]*$ ]]; then

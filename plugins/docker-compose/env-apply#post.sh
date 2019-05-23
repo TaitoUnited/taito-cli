@@ -5,7 +5,8 @@
 : "${taito_env:?}"
 
 echo
-echo "### docker-compose/post: Showing information"
+echo -e "${H1s}docker-compose${H1e}"
+echo "Showing information"
 echo
 "${taito_plugin_path}/util/restart-all.sh"
 

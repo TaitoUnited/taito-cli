@@ -38,7 +38,7 @@ then
          "Change database master password"
     then
       echo
-      echo "--- CHANGE DATABASE MASTER PASSWORD ---"
+      echo -e "${H2s}CHANGE DATABASE MASTER PASSWORD${H2e}"
       echo
       echo "Your database master password was initially set to the initial password"
       echo "configured in taito-config.sh. The initial password is stored both in"

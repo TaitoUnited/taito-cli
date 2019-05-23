@@ -97,7 +97,7 @@ if [[ "${taito_env}" != "local" ]]; then
 fi && \
 
 # Create test suite template from init and test phase commands
-template="echo && echo '### TEST ${taito_target}:${taito_env} suite=SUITE' && ${init_command} && ${compose_cmd}"
+template="echo && echo 'TEST ${taito_target}:${taito_env} suite=SUITE' && ${init_command} && ${compose_cmd}"
 
 # Generate commands to be run by traversing all test suites
 commands=""
@@ -105,10 +105,10 @@ suites=( $(grep "${suite_filter}" "./${dir}/test-suites" 2> /dev/null) ) || :
 if [[ ${#suites[@]} == 0 ]]; then
   suites=( $(cat "./${dir}/test-suites" | head -1) )
   echo
-  echo "---------------------------------------------------------"
-  echo "WARNING: No suite found with filter: ${suite_filter}"
-  echo "Running the default test suite: ${suites[0]}"
-  echo "---------------------------------------------------------"
+  echo -e "${NOTEs}---------------------------------------------------------${NOTEe}"
+  echo -e "${NOTEs}WARNING: No suite found with filter: ${suite_filter}${NOTEe}"
+  echo -e "${NOTEs}Running the default test suite: ${suites[0]}${NOTEe}"
+  echo -e "${NOTEs}---------------------------------------------------------${NOTEe}"
   echo
 fi
 for suite in "${suites[@]}"

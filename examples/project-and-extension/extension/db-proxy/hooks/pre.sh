@@ -2,7 +2,8 @@
 
 if [[ "${taito_command}" == "db-"* ]]; then
   echo
-  echo "### db-proxy: Starting db proxy for ${database_name}"
+  echo -e "${H1s}db-proxy${H1e}"
+  echo "Starting db proxy for ${database_name}"
 fi
 
 # Call next command on command chain

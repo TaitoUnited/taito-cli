@@ -4,8 +4,7 @@
 "${taito_util_path}/execute-on-host-fg.sh" "
 if git rev-parse --is-inside-work-tree &> /dev/null; then
   echo
-  echo 'Version control conventions'
-  echo '---------------------------'
+  echo -e "${H2s}Version control conventions${H2e}"
   echo
   echo 'Environment branches:'
   echo '- Branch naming: dev, test, stag, canary, master.'

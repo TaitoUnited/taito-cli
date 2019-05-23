@@ -9,7 +9,7 @@ export AWS_DEFAULT_REGION="${taito_provider_region:?}"
 # Automatic authentication on 'env apply'
 if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo
-  echo "### aws/pre"
+  echo -e "${H1s}aws${H1e}"
   "${taito_plugin_path}/util/auth.sh"
 fi
 
@@ -18,7 +18,7 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
   # Ensure that AWS credentials exist
   if [[ ! "${AWS_ACCESS_KEY_ID}" ]]; then
     echo
-    echo "### aws/pre"
+    echo -e "${H1s}aws${H1e}"
     echo
     echo "ERROR: AWS_ACCESS_KEY_ID environment variable not set."
     echo "Configure AWS_ACCESS_KEY_ID in your CI/CD settings."
@@ -26,7 +26,7 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
   fi
   if [[ ! "${AWS_SECRET_ACCESS_KEY}" ]]; then
     echo
-    echo "### aws/pre"
+    echo -e "${H1s}aws${H1e}"
     echo
     echo "ERROR: AWS_SECRET_ACCESS_KEY environment variable not set"
     echo "Configure AWS_SECRET_ACCESS_KEY in your CI/CD settings."
@@ -36,7 +36,8 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
   # Container registry (ECR) authentication
   if [[ ${taito_commands_only_chain:-} == *"docker/"* ]]; then
     echo
-    echo "### aws/pre: Getting credentials for Elastic Container Registry"
+    echo -e "${H1s}aws${H1e}"
+    echo "Getting credentials for Elastic Container Registry"
     "${taito_plugin_path}/util/get-credentials-ecr.sh"
   fi && \
 
@@ -47,7 +48,8 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
        [[ ${taito_requires_database_connection:-} == "true" ]] \
      ); then
     echo
-    echo "### aws/pre: Getting credentials for kubernetes"
+    echo -e "${H1s}aws${H1e}"
+    echo "Getting credentials for kubernetes"
     "${taito_plugin_path}/util/get-credentials-kube.sh"
   fi
 fi && \

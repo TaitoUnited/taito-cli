@@ -3,7 +3,8 @@
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
   echo
-  echo "### azure/post: Stopping all db proxies"
+  echo -e "${H1s}azure${H1e}"
+  echo "Stopping all db proxies"
   echo "TODO implement"
 fi
 

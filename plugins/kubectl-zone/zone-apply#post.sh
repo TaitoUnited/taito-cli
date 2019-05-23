@@ -60,7 +60,7 @@ if "${taito_util_path}/confirm-execution.sh" "kubectl" "${name}" \
   "Configure DNS"
 then
   echo
-  echo "--- LOAD BALANCER IP ADDRESSES ---"
+  echo -e "${H2s}LOAD BALANCER IP ADDRESSES${H2e}"
   echo
   lb_ips="$(kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.spec.loadBalancerIP,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
     --no-headers --all-namespaces 2> /dev/null | grep -v "<none>.*<none>" | sed s/\\s*\<none\>\\s*//g)"

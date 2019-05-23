@@ -1,6 +1,14 @@
 #!/bin/bash
 # NOTE: This bash script is run inside docker container.
 
+# Set output formatting
+export H1s="\\e[92m\\e[1m[" # Heading 1 start: Light green, bold
+export H1e="]\\e[0m"        # Heading 1 end
+export H2s="\\e[95m["       # Heading 2 start: Light magenta
+export H2e="]\\e[0m"        # Heading 2 end
+export NOTEs="\\e[104m["    # Note start: Ligth blue background
+export NOTEe="]\\e[0m"      # Note end
+
 # Parse options
 verbose="${taito_verbose:-false}"
 debug="${taito_debug:-false}"
@@ -179,7 +187,7 @@ fi
 if [[ " unit scan docs ci-publish artifact-publish build-publish " == *"${taito_command}"* ]] && \
    [[ -f ./taitoflag_images_exist ]]; then
   echo
-  echo "### Skipping ${taito_command}. Image already exists."
+  echo "Skipping ${taito_command}. Image already exists."
   echo
   exit 0
 fi
@@ -188,7 +196,7 @@ if [[ "${taito_command}" == "test" ]] && \
    [[ "${taito_mode:-}" == "ci" ]] && \
    [[ "${ci_exec_test:-}" != "true" ]]; then
   echo
-  echo "### Skipping ${taito_command} in ci mode. ci_exec_test is false."
+  echo "Skipping ${taito_command} in ci mode. ci_exec_test is false."
   echo
   exit 0
 fi
@@ -677,7 +685,7 @@ else
   # Print some additional info in debug mode
   if [[ ${debug} == true ]]; then
     echo
-    echo "### Taito-cli: Executing on ${taito_namespace:-} environment:"
+    echo "TAITO CLI: Executing on ${taito_namespace:-} environment:"
     echo -e "${taito_command_chain// /\\n}"
   fi
 

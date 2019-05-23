@@ -2,7 +2,8 @@
 
 if [[ "${taito_command}" == "db-"* ]]; then
   echo
-  echo "### db-proxy: Stopping db proxy for ${database_name}"
+  echo -e "${H1s}db-proxy${H1e}"
+  echo "Stopping db proxy for ${database_name}"
   echo
 fi
 

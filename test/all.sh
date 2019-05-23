@@ -7,7 +7,7 @@ suites_success=false
 suites=$(ls -1 -d */)
 for suite in ${suites[@]}
 do
-  echo "### SUITE: ${suite}"
+  echo "SUITE: ${suite}"
   cd "${suite}" || exit 1
   if ! ./suite.sh; then
     echo "SUITE ${suite} - FAILED"
@@ -23,9 +23,9 @@ if [[ $? -gt 0 ]]; then
 fi
 
 if [[ ${suites_success} == true ]]; then
-  echo "### ALL SUITES SUCCEEDED!"
+  echo "ALL SUITES SUCCEEDED!"
   exit
 else
-  echo "### SOME OF THE SUITES FAILED!"
+  echo "SOME OF THE SUITES FAILED!"
   exit 1
 fi

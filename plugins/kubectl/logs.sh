@@ -21,11 +21,11 @@ if [[ -z "${pod}" ]]; then
 else
   # Kubernetes
   echo
-  echo "--- kubectl: Desciption ---"
+  echo -e "${H2s}Desciption${H2e}"
   (${taito_setv:?}; kubectl describe pod "${pod}")
   echo
   echo
-  echo "--- kubectl: Logs ---"
+  echo -e "${H2s}Logs${H2e}"
   if ! (${taito_setv:?}; kubectl logs -f --tail=400 "${pod}" "${container}"); then
     exit 1
   fi

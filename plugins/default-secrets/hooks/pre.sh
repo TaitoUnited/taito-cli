@@ -25,7 +25,8 @@ if ( [[ ${taito_command} == "env-apply" ]] || \
 
   if [[ ${source_env} ]] && [[ " ${taito_environments:-} "  == *" ${source_env} "* ]]; then
     echo
-    echo "### default-secrets/pre: Reading default secret values from ${source_env} environment"
+    echo -e "${H1s}default-secrets${H1e}"
+    echo "Reading default secret values from ${source_env} environment"
 
     rm -f "${taito_project_path}/taito-secrets.sh" &> /dev/null
     taito secrets:${source_env} --save-as-taito-secrets

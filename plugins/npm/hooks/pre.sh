@@ -118,7 +118,8 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   if [[ "${npm_command}" != "" ]]; then
     # Run it
     echo
-    echo "### npm/pre: Running script '${npm_command}${params}'"
+    echo -e "${H1s}npm${H1e}"
+    echo "Running script '${npm_command}${params}'"
     # NOTE: Intentionally removed parameter support: -- "${@}"
     # NOTE: All libs are installed using 'npm install' run on directly on host.
     #       Perhaps some npm scripts should also be run on host to avoid

@@ -5,7 +5,8 @@
 if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   echo
-  echo "### kubectl/post: Stopping all db proxies"
+  echo -e "${H1s}kubectl${H1e}"
+  echo "Stopping all db proxies"
   "${taito_plugin_path}/util/db-proxy-stop.sh"
 fi
 

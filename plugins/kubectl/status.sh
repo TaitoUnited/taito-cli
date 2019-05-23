@@ -25,36 +25,36 @@ done
 "$taito_plugin_path/util/use-context.sh"
 
 if [ $all = true ]; then
-  echo "--- Node details ---"
+  echo -e "${H2s}Node details${H2e}"
   ($taito_setv; kubectl describe nodes)
   echo
-  echo "--- Nodes ---"
+  echo -e "${H2s}Nodes${H2e}"
   ($taito_setv; kubectl top nodes 2> /dev/null)
   echo
-  echo "--- Ingress ---"
+  echo -e "${H2s}Ingress${H2e}"
   ($taito_setv; kubectl get ingress $kubernetes_params)
   echo
-  echo "--- Jobs ---"
+  echo -e "${H2s}Jobs${H2e}"
   ($taito_setv; kubectl get jobs $kubernetes_params)
 fi
 
 echo
-echo "--- Cron jobs ---"
+echo -e "${H2s}Cron jobs${H2e}"
 ($taito_setv; kubectl get cronjobs $kubernetes_params)
 
 if [ "${taito_version:-}" -ge "1" ]; then
   echo
-  echo "--- Pods ---"
+  echo -e "${H2s}Pods${H2e}"
   ($taito_setv; kubectl get pods $kubernetes_params | grep -e "${taito_target_env}\\|NAME")
   echo
-  echo "--- Resource usage ---"
+  echo -e "${H2s}Resource usage${H2e}"
   ($taito_setv; kubectl top pod $kubernetes_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME")
 else
   echo
-  echo "--- Pods ---"
+  echo -e "${H2s}Pods${H2e}"
   ($taito_setv; kubectl get pods $kubernetes_params)
   echo
-  echo "--- Resource usage ---"
+  echo -e "${H2s}Resource usage${H2e}"
   ($taito_setv; kubectl top pod $kubernetes_params 2> /dev/null)
 fi
 

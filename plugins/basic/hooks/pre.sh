@@ -9,7 +9,8 @@ switches=" ${*} "
 # auth command pre-handling
 # if [[ "${taito_command:-}" == "auth" ]]; then
 #   echo
-#   echo "### basic/pre: Deleting old credentials (but not committing the change yet!)"
+#   echo -e "${H1s}basic${H1e}"
+#   echo "Deleting old credentials (but not committing the change yet!)"
 #   rm -rf ~/.config ~/.kube
 # fi
 
@@ -23,7 +24,8 @@ fi
 if [[ ${taito_command:-} == "env-destroy" ]] || \
    [[ ${taito_command:-} == "env-alt-destroy" ]]; then
   echo
-  echo "### basic/pre: Deleting ${taito_target_env:?} environment of ${taito_project:?}. Do you want to continue (Y/n)?"
+  echo -e "${H1s}basic${H1e}"
+  echo "Deleting ${taito_target_env:?} environment of ${taito_project:?}. Do you want to continue (Y/n)?"
   read -r confirm
   if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
     exit 130

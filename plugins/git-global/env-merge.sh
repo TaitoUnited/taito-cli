@@ -30,7 +30,7 @@ do
     source_found=true
     s="${merge%->*}"
     d="${merge##*->}"
-    echo "${s}->${d} ${git_push_options}"
+    echo -e "${H2s}${s}->${d} ${git_push_options}${H2e}"
 
     # Check if production env has been configured
     if [[ ${d} == "master" ]] && ( \

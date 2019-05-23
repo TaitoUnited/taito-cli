@@ -8,13 +8,9 @@ if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
   echo "Skipping deployment wait because ci_exec_test != true"
   echo
   echo
-  echo
-  echo
-  echo "------------------------------------------------------"
-  echo "NOTE: Your application is now starting up at ${taito_target_env}!"
-  echo "------------------------------------------------------"
-  echo
-  echo
+  echo -e "${NOTEs}------------------------------------------------------${NOTEe}"
+  echo -e "${NOTEs}NOTE: Your application is now starting up at ${taito_target_env}!${NOTEe}"
+  echo -e "${NOTEs}------------------------------------------------------${NOTEe}"
   echo
   echo
 else
@@ -22,13 +18,9 @@ else
   "${taito_util_path}/call-next.sh" "${@}"
   echo
   echo
-  echo
-  echo
-  echo "------------------------------------------------------"
-  echo "NOTE: Your application is now running at ${taito_target_env}!"
-  echo "------------------------------------------------------"
-  echo
-  echo
+  echo -e "${NOTEs}------------------------------------------------------${NOTEe}"
+  echo -e "${NOTEs}NOTE: Your application is now running at ${taito_target_env}!${NOTEe}"
+  echo -e "${NOTEs}------------------------------------------------------${NOTEe}"
   echo
   echo
 fi

@@ -3,28 +3,28 @@
 
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
 
-echo --- Cluster ---
+echo -e "${H2s}Cluster${H2e}"
 kubectl get componentstatus
 echo
-echo --- Nodes ---
+echo -e "${H2s}Nodes${H2e}"
 kubectl describe nodes
 echo
-echo --- Top nodes ---
+echo -e "${H2s}Top nodes${H2e}"
 kubectl top nodes 2> /dev/null
 echo
-echo --- Ingresses ---
+echo -e "${H2s}Ingresses${H2e}"
 kubectl get ingress --all-namespaces
 echo
-echo --- Services ---
+echo -e "${H2s}Services${H2e}"
 kubectl get services --all-namespaces
 echo
-echo --- Pods ---
+echo -e "${H2s}Pods${H2e}"
 kubectl get pods --all-namespaces
 echo
-echo --- Top pods ---
+echo -e "${H2s}Top pods${H2e}"
 kubectl top pods --all-namespaces 2> /dev/null
 echo
-echo --- Load Balancer IPs ---
+echo -e "${H2s}Load Balancer IPs${H2e}"
 kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.spec.loadBalancerIP,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
   --no-headers --all-namespaces 2> /dev/null | \
   grep -v "<none>.*<none>" | \

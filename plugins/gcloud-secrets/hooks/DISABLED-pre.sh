@@ -9,7 +9,8 @@ if [[ "${taito_is_admin:-}" == true ]] && \
    ( [[ "${taito_command}" == "env-"* ]] || \
      [[ "${taito_command}" == "db-"* ]] ); then
 
-   echo "### taito/pre: Getting db password for admin"
+   echo -e "${H1s}gcloud-secrets${H1e}"
+   echo "Getting db password for admin"
 
    # TODO duplicate code with passwd-get
 

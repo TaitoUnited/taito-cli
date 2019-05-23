@@ -11,7 +11,7 @@ success=true
 IFS=';' read -ra commands <<< "${tests}"
 for command in "${commands[@]}"
 do
-  echo "### TEST: ${command}"
+  echo "TEST: ${command}"
   # shellcheck disable=SC2086
   if ! eval ${command}; then
     echo "${command} - FAILED"
@@ -20,9 +20,9 @@ do
 done
 
 if [[ ${success} == true ]]; then
-  echo "### TEST SUITE SUCCEEDED!"
+  echo "TEST SUITE SUCCEEDED!"
   exit
 else
-  echo "### TEST SUITE FAILED!"
+  echo "TEST SUITE FAILED!"
   exit 1
 fi

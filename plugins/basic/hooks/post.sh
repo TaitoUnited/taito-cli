@@ -47,21 +47,24 @@ if [[ ${was_executed} == false ]]; then
   if [[ "${taito_command}" == "build-prepare" ]]; then
     # None of the enabled plugins has implemented build prepare
     echo
-    echo "### basic/post: Nothing to prepare"
+    echo -e "${H1s}basic${H1e}"
+    echo "Nothing to prepare"
   elif [[ "${taito_command}" == "build-release" ]]; then
     # None of the enabled plugins has implemented build release
     echo
-    echo "### basic/post: DONE!"
+    echo -e "${H1s}basic${H1e}"
+    echo "DONE!"
   elif [[ "${taito_command}" == "init" ]]; then
     # None of the enabled plugins has implemented init
     echo
-    echo "### basic/post: Nothing to initialize"
+    echo -e "${H1s}basic${H1e}"
+    echo "Nothing to initialize"
   elif [[ ${was_executed} == false ]]; then
     # Command not found
     if [[ "${taito_orig_command}" != " " ]]; then
       # Show matching commands
       echo
-      echo "### basic/post:"
+      echo -e "${H1s}basic${H1e}"
       echo "Unknown command: '${taito_orig_command//-/ }'. Perhaps one of the following commands is the one"
       echo "you meant to run. Run 'taito -h' to get more help."
       export taito_command_chain=""

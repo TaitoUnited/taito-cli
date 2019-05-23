@@ -28,9 +28,9 @@ mkdir -p "${mount_path}"
 
 echo "Mounting bucket '${bucket}'"
 echo
-echo "-----------------------------"
-echo "NOTE: Press CTRL-C to unmount"
-echo "-----------------------------"
+echo -e "${NOTEs}-----------------------------${NOTEe}"
+echo -e "${NOTEs}NOTE: Press CTRL-C to unmount${NOTEe}"
+echo -e "${NOTEs}-----------------------------${NOTEe}"
 echo
 
 (

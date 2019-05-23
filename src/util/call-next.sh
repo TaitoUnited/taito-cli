@@ -8,12 +8,12 @@ next="${chain[0]}"
 
 if [[ "${next}" != "" ]]; then
   name="${next//\/taito-cli\/plugins\//}"
-  name=$(echo "${name}" | cut -f 1 -d '.')
+  name=$(echo "${name}" | cut -f 1 -d '/')
   if [[ ${taito_quiet:-} != "true" ]] && ( \
        [[ "${taito_debug}" == "true" ]] || [[ "${next}" != *"/hooks/"* ]] \
      ); then
     echo
-    echo "### ${name}"
+    echo -e "${H1s}${name}${H1e}"
   fi
   export taito_plugin_path
   taito_plugin_path=$(echo "${next/\hooks/}" | sed -e 's/\/[^\/]*$//g')
