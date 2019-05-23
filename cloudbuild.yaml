@@ -96,3 +96,19 @@ steps:
     docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest && \
     echo "Pushing $${tag}" && \
     docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
+
+# TODO: remove once all image references have been updated
+- id: alt-push
+  name: 'gcr.io/cloud-builders/docker'
+  env:
+    - project_id=$PROJECT_ID
+    - repo_name=$REPO_NAME
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    alt_reponame=$${repo_name}
+    alt_reponame=${alt_reponame/_taitounited_/-taitounited-}
+    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
+       eu.gcr.io/$${project_id}/${alt_reponame}/cli:latest
+    docker push eu.gcr.io/$${project_id}/${alt_reponame}/cli:latest
