@@ -4,17 +4,17 @@
 
 The following software needs to be installed on your computer before you can install Taito CLI.
 
-- [Bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>) (or bash-like shell)
+- [Bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>)
 - [Git](https://git-scm.com/)
 - [Docker](https://docs.docker.com/install/)
+
+**Note for Windows:**
+
+[Git for Windows](https://gitforwindows.org/) includes Git BASH. You can use it to execute Taito CLI commands. The legacy [Docker Toolbox](https://docs.docker.com/toolbox/overview/) also includes bash, in case you use it instead of the [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/).
 
 **Note for Linux:**
 
 See [Docker Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/).
-
-**Note for Windows:**
-
-Taito CLI has not been tested on Windows. It won't probably work yet.
 
 ### Automatic installation
 
