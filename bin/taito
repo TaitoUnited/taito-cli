@@ -490,7 +490,7 @@ exit_code=$?
 
 # Kill the background execution process
 pkill -f "${log_file}" &> /dev/null || (
-  ps | grep "${log_file}" | cut -d' ' -f1 | xargs kill &> /dev/null
+  ps | grep "${log_file}" | sed s/^[[:space:]]*// | cut -d' ' -f1 | xargs kill &> /dev/null
 )
 
 # Execute requested commands on foreground after container has exited.
