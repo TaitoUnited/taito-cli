@@ -270,6 +270,12 @@ OPTIONS
   -z
     Skip taito command overrides during execution.
 
+  --check
+    Check Taito CLI installation
+
+  --version
+    Print version
+
 ARGUMENTS
 
   Target pod (TARGET) and environment (ENV) are included in the command itself.

@@ -14,6 +14,23 @@ do
   key="$1"
   if [[ ${skip_rest} == false ]]; then
     case $key in
+        --version)
+        echo "TODO: print Taito CLI version"
+        exit
+        ;;
+        --check)
+        if [[ $(whoami) == "taito" ]]; then
+          echo
+          echo "Taito CLI is OK!"
+          exit
+        else
+          echo
+          echo "ERROR: 'taito' user has not been initialized properly."
+          echo
+          echo "Run 'taito upgrade'."
+          exit 1
+        fi
+        ;;
         -c|--continue)
         continue=true
         shift

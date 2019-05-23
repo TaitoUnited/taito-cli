@@ -76,11 +76,11 @@ fi
 
 echo
 echo "[5. Add autocomplete support for bash]"
-if ! grep "taito-cli/support" ~/.bashrc &> /dev/null; then
+if ! grep "$TAITO_INSTALL_DIR/support" ~/.bashrc &> /dev/null; then
   echo "source $TAITO_INSTALL_DIR/support/bash/complete.sh" >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
-if ! grep "taito-cli/support" ~/.bash_profile &> /dev/null && \
+if ! grep "$TAITO_INSTALL_DIR/support" ~/.bash_profile &> /dev/null && \
    ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
   echo "source $TAITO_INSTALL_DIR/support/bash/complete.sh" >> ~/.bash_profile
   echo "modified ~/.bash_profile"
@@ -92,7 +92,7 @@ fi
 
 echo
 echo "[6. Add autocomplete support for zsh]"
-if ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
+if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
   sedi="-i"
   if [[ $(uname) == "Darwin" ]]; then
     sedi="-i ''"
@@ -102,17 +102,22 @@ if ! grep "taito-cli/support" ~/.zshrc &> /dev/null; then
 fi
 
 echo
-echo "[7. Pull Taito CLI container image and check that it works ok]"
-taito info -h > /dev/null
+echo "[7. Pull Taito CLI container image and check version]"
+taito --version
 
+# NOTE: Upgrade just in case. Sometimes resolves some user uid/gid issues.
 echo
 echo "[8. Taito CLI upgrade]"
 taito upgrade
 
 echo
-echo "[9. Success]"
+echo "[9. Taito CLI installation check]"
+taito --check
+
+echo
+echo "[10. Success]"
 echo
 echo "Taito CLI was installed successfully! Start a new shell by opening a new"
 echo "terminal window or by running 'bash' in the current terminal. Then try taito"
-echo "by running 'taito -h'."
+echo "by running 'taito -h'. If you have problems, try to run 'taito upgrade'."
 echo
