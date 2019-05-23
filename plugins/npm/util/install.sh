@@ -46,12 +46,14 @@ fi && \
 # We are installing libs locally anyway so perhaps it is better this way.
 # TODO add '--python=${npm_python}' for npm install?
 "${taito_util_path}/execute-on-host-fg.sh" "\
+  set -e;
   echo \"# Running 'npm ${npm_command}'\" && \
   npm ${npm_command}" && \
 
 if [[ "${task_postinstall}" ]]; then
   # TODO add '--python=${npm_python}' for npm run?
   "${taito_util_path}/execute-on-host-fg.sh" "
+    set -e;
     if [[ ${install_all} == \"true\" ]]; then
       echo \"Running 'npm run ${task_postinstall}'\"
       npm run ${task_postinstall}
