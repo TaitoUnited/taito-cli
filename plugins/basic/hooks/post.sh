@@ -85,6 +85,7 @@ if [[ ${was_executed} == false ]]; then
       echo
       echo "Unknown command"
     fi
+    exit 1
   fi
 fi
 
