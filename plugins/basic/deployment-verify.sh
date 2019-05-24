@@ -9,8 +9,8 @@ if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_test:-}" == "true" ]]; then
       echo "Reverting deployment"
       (
         ${taito_setv:?}
-        taito "db-revert:${taito_env}"
-        taito "depl-revert:${taito_env}"
+        taito "db revert:${taito_env}"
+        taito "deployment revert:${taito_env}"
       )
     fi
     exit 1
