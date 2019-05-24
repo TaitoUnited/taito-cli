@@ -428,6 +428,23 @@ if ( [[ "${taito_env}" == "prod" ]] || [[ "${taito_dest_env}" == "prod" ]] ) && 
   fi
 fi
 
+# Confirm env-apply and env-destroy admin privileges
+if [[ ${taito_command} == "env-apply" ]] || \
+   [[ ${taito_command} == "env-destroy" ]]; then
+  if [[ $taito_target_env == "prod" ]] || \
+     [[ $taito_target_env == "canary" ]] || \
+     [[ $taito_target_env == "stag" ]]; then
+    echo
+    echo "Running 'taito '${taito_command//-/ }' on $taito_target_env environment most likely"
+    echo "requires admin privileges. You may not be allowed to execute all operations."
+    echo "Are you sure you want to continue (y/N)?"
+    read -r confirm
+    if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
+      exit 130
+    fi
+  fi
+fi
+
 if [[ "${taito_command}" == "env-merge" ]]; then
   # Parse arguments
   dest=""
