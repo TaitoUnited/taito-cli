@@ -320,6 +320,23 @@ touch "${log_file}"
 touch "${log_file_fg}"
 
 function cleanup {
+  set +e
+
+  # Remove temporary secrets
+  rm -rf "${taito_project_path}/tmp/secrets" &> /dev/null
+  find ${taito_project_path}/secrets/* -type d -not -name 'local' \
+    -print0 2> /dev/null | xargs -0 rm -rf --
+
+  # Kill the background execution process
+  pkill -f "${log_file}" &> /dev/null || (
+    processes=$(ps | grep "${log_file}")
+    if [[ ! $processes ]]; then
+      processes=$(ps | grep "/tail")
+    fi
+    echo "${processes}" | sed s/^[[:space:]]*// | cut -d' ' -f1 | xargs kill &> /dev/null
+  )
+
+  # Remove temporary execution log files
   rm -f "${log_file}" &> /dev/null
   rm -f "${log_file_fg}" &> /dev/null
 }
@@ -415,28 +432,6 @@ if [[ "${command}" == "storage"* ]]; then
   misc_flags="--privileged"
 fi
 
-# TODO: remove?
-# uname_sr="$(uname -sr)"
-# # For windows we need to make sure that all mounted directories exist
-# if [[ "${uname_sr}" == *"Microsoft"* ]] || \
-#    [[ "${uname_sr}" == *"CYGWIN"* ]]; then
-#   mkdir -p "${taito_home_path}/.taito"
-#   mkdir -p "${taito_home_path}/.ssh"
-#   mkdir -p "${taito_home_path}/.terraform.d"
-# fi
-
-function cleanup {
-  # Remove temporary secrets
-  rm -rf "${taito_project_path}/tmp/secrets" &> /dev/null
-  find ${taito_project_path}/secrets/* -type d -not -name 'local' \
-    -print0 2> /dev/null | xargs -0 rm -rf --
-  # rm -rf ./secrets/changed &> /dev/null
-  # if [[ ${taito_target_env:-} ]] && [[ ${taito_target_env} != "local" ]]; then
-  #   rm -rf "./secrets/${taito_target_env}" &> /dev/null
-  # fi
-}
-trap cleanup EXIT
-
 # TODO do not pass taito_admin_key as command line argument
 docker_command="
   docker run ${docker_it}
@@ -491,11 +486,6 @@ else
 fi
 
 exit_code=$?
-
-# Kill the background execution process
-pkill -f "${log_file}" &> /dev/null || (
-  ps | grep "${log_file}" | sed s/^[[:space:]]*// | cut -d' ' -f1 | xargs kill &> /dev/null
-)
 
 # Execute requested commands on foreground after container has exited.
 if [[ ${exit_code} == 0 ]]; then
