@@ -18,9 +18,7 @@ echo "Pulling taito-cli directory from git: ${taito_cli_path}"
   if [[ ${branch} != "master" ]]; then
     echo
     echo "WARNING! You are currently using ${branch} branch of taito-cli."
-    echo "Checkout the master branch instead (Y/n)?"
-    read -r confirm
-    if [[ ${confirm} =~ ^[Yy]*$ ]]; then
+    if "$taito_util_path/confirm.sh" "Checkout the master branch instead?"; then
       git checkout master && \
       git branch --set-upstream-to=origin/master master
     fi

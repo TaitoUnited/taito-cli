@@ -9,9 +9,8 @@ if [[ ! ${image_tag} ]]; then
   image_tag=$(git rev-parse "${taito_branch:?}")
 fi
 
-echo "Do you want to execute CI/CD for ${taito_target_env} (Y/n)?"
-read -r confirm
-if [[ ${confirm:-y} =~ ^[Yy]*$ ]]; then
+if "${taito_util_path}/confirm.sh" \
+   "Do you want to execute CI/CD for ${taito_target_env}?"; then
   "${taito_util_path}/execute-on-host-fg.sh" "
     function cleanup {
       rm -rf tmp/ci/$taito_target_env &> /dev/null || :

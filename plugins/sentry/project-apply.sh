@@ -25,21 +25,25 @@ then
   echo "'taito project apply' again later when you are ready to create the"
   echo "Sentry project."
   echo
+  read -r -t 1 -n 1000 || : # Flush input buffer
   echo "Press enter to open Sentry"
   read -r
 
   "${taito_util_path}/browser.sh" \
     "https://sentry.io/organizations/${sentry_organization}/projects/new/"
 
+  read -r -t 1 -n 1000 || : # Flush input buffer
   echo "Press enter when ready"
   read -r
 
+  read -r -t 1 -n 1000 || : # Flush input buffer
   echo "Sentry public DSN url?"
   read -r dsn_public
   if [[ -z "${dsn_public}" ]]; then
     dsn_public="#sentryPublicDSN"
   fi
 
+  read -r -t 1 -n 1000 || : # Flush input buffer
   echo "Sentry private DSN url?"
   read -r dsn
   if [[ -z "${dsn}" ]]; then

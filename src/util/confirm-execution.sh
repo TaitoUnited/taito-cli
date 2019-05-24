@@ -1,4 +1,5 @@
 #!/bin/bash
+: "${taito_util_path:?}"
 
 current_name=${1}
 requested_name=${2}
@@ -8,14 +9,11 @@ if [[ "${requested_name}" == "" ]] || \
    [[ "${requested_name}" == "-"* ]] || \
    [[ "${requested_name}" == "${current_name}" ]]; then
   if [[ "${prompt}" ]]; then
-    echo "${prompt} (Y/n)?"
+    text="${prompt}?"
   else
-    echo "Execute ${current_name} (Y/n)?"
+    text="Execute ${current_name}?"
   fi
-  read -r confirm
-  if [[ ${confirm} =~ ^[Yy]*$ ]]; then
-    exit 0
-  fi
+  if "$taito_util_path/confirm.sh" "$text"; then exit 0; fi
 fi
 
 exit 2

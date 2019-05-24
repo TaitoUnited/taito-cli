@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
@@ -12,11 +12,8 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   dest="${taito_dest_env}"
   username="${1:-postgres}"
 
-  echo "Copying ${source} to ${dest}. Do you want to continue (Y/n)?"
-  read -r confirm
-  if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
-    exit 130
-  fi
+  "$taito_util_path/confirm.sh" \
+    "Copying ${source} to ${dest}. Do you want to continue?"
 
   db_prefix=${database_name%_*}
   db_dest=${database_name%_*}_${dest}

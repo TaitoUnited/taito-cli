@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
@@ -15,11 +15,8 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   echo "Copying ${source} to ${dest}"
   echo "NOTE: This works only if both databases are located in the same database cluster."
   echo "WARNING! THIS HAS NOT BEEN TESTED AT ALL YET! Use db-copy:ENV instead!"
-  echo "WARNING! This operation will disconnect all connections! Continue (Y/n)?"
-  read -r confirm
-  if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
-    exit 130
-  fi
+  echo "WARNING! This operation will disconnect all connections!"
+  "$taito_util_path/confirm.sh"
 
   db_prefix=${database_name%_*}
 

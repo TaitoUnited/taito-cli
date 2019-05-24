@@ -10,9 +10,8 @@ if [[ ${project_id} ]] && ! gcloud projects describe "${project_id}" &> /dev/nul
     echo "Enter billing account id for the new Google Cloud project '${project_id}':"
     read -r billing_id
   else
-    echo "Create new Google Cloud project '${project_id:?}' (Y/n)?"
-    read -r confirm
-    if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
+    if ! "$taito_util_path/confirm.sh" "Create new Google Cloud project '${project_id:?}'?"
+    then
       billing_id=
     fi
   fi

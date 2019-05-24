@@ -503,7 +503,9 @@ if [[ ${exit_code} == 0 ]]; then
   exit_code=$?
 fi
 
-if [[ "${exit_code}" != "0" ]] && [[ ${continue} == false ]]; then
+if [[ "${exit_code}" != "0" ]] && \
+   [[ "${exit_code}" != "130" ]] && \
+   [[ ${continue} == false ]]; then
   echo
   echo "HINT: Run 'taito --trouble' to see troubleshoothing"
   echo

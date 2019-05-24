@@ -21,9 +21,8 @@ fi && \
 
 install_all=false
 if [[ ${taito_mode} != "ci" ]] && [[ ${do_confirm} ]] && [[ ! $RUNNING_TESTS ]]; then
-  echo "Install all libraries on host for autocompletion purposes (Y/n)?"
-  read -r confirm
-  if [[ ${confirm} =~ ^[Yy]*$ ]]; then
+  if "$taito_util_path/confirm.sh" \
+    "Install all libraries on host for autocompletion purposes?"; then
     install_all=true
   fi
 else

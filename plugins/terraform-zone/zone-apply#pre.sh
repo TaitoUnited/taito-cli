@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_util_path:?}"
 : "${taito_env:?}"
 
@@ -8,6 +8,7 @@ if "${taito_util_path}/confirm-execution.sh" "terraform" "${name}" \
   "Apply changes by running terraform scripts"
 then
   (
+    set -e
     if [[ -f "./terraform/terraform.tfstate" ]]; then
       echo "Your Terraform state is currently located on local disk. You should"
       echo "configure remote backend in ./terraform/main.tf before continuing."
@@ -16,11 +17,7 @@ then
       echo "from your local disk once the state has been transferred to a remote"
       echo "backend."
       echo
-      echo "Do you want to continue anyway (y/N)?"
-      read -r confirm
-      if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
-        exit 130
-      fi
+      "$taito_util_path/confirm.sh" "Do you want to continue anyway?" no
     fi
 
     export TF_LOG_PATH="./terraform.log"

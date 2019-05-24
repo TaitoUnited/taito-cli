@@ -27,9 +27,7 @@ if [[ "${name}" == "" ]]; then
   read -r name
 fi
 
-echo "Generate a random password (Y/n)?"
-read -r random
-if [[ ${random} =~ ^[Yy]*$ ]]; then
+if "$taito_util_path/confirm.sh" "Generate a random password?"; then
   # TODO better tool for this?
   password=$(openssl rand -base64 30 | sed -e 's/[^a-zA-Z0-9]/a/g')
   password2=${password}

@@ -13,6 +13,7 @@ else
   template_path=$template
 fi
 
+read -r -t 1 -n 1000 || : # Flush input buffer
 echo "Zone name (e.g. my-$template)?"
 read -r zone
 

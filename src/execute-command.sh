@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # NOTE: This bash script is run inside docker container.
 
 # Parse options
@@ -393,12 +393,8 @@ if [[ "${taito_command}" == "zone-"* ]] && \
    [[ "${taito_command}" != "zone-status" ]] && \
    [[ ${quiet} != "true" ]]; then
   echo
-  echo "The operation is targetting zone ${taito_zone:-}. Do you want to continue (Y/n)?"
-  read -r confirm
-  if ! [[ ${confirm} =~ ^[Yy]*$ ]]; then
-    echo Cancelled
-    exit 130
-  fi
+  echo "The operation is targetting zone ${taito_zone:-}."
+  "$taito_util_path/confirm.sh"
 fi
 
 # Confirm prod operations
@@ -410,21 +406,14 @@ if ( [[ "${taito_env}" == "prod" ]] || [[ "${taito_dest_env}" == "prod" ]] ) && 
    [[ "${taito_mode:-}" != "ci" ]] && \
    [[ ${quiet} != "true" ]]; then
   echo
-  echo "The operation is targetting prod environment of ${taito_project:-}. Do you want to continue (y/N)?"
-  read -r confirm
-  if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
-    exit 130
-  fi
+  echo "The operation is targetting prod environment of ${taito_project:-}."
+  "$taito_util_path/confirm.sh" "Do you want to continue anyway?" no
 
   # Confirm suspicious operations
   if [[ "${taito_command}" == "init" ]]; then
     echo
-    echo "Command '${orig_command}' is not meant to be run on production environment"
-    echo "Do you want to continue anyway (y/N)?"
-    read -r confirm
-    if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
-      exit 130
-    fi
+    echo "Command 'taito ${orig_command}' is not meant to be run on production environment."
+    "$taito_util_path/confirm.sh" "Do you want to continue anyway?" no
   fi
 fi
 
@@ -437,11 +426,7 @@ if [[ ${taito_command} == "env-apply" ]] || \
     echo
     echo "Running 'taito ${taito_command//-/ }' on $taito_target_env environment most likely"
     echo "requires admin privileges. You may not be allowed to execute all operations."
-    echo "Are you sure you want to continue (y/N)?"
-    read -r confirm
-    if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
-      exit 130
-    fi
+    "$taito_util_path/confirm.sh" "Do you want to continue anyway?" no
   fi
 fi
 

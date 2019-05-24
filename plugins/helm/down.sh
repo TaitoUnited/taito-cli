@@ -8,11 +8,8 @@
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
 
 echo "Deleting ${taito_project}-${taito_target_env}. This may also delete data that"
-echo "has been stored on a persistent volume. Do you really want to continue (y/N)?"
-read -r confirm
-if ! [[ "${confirm}" =~ ^[Yy]$ ]]; then
-  exit 130
-fi
+echo "has been stored on a persistent volume."
+"$taito_util_path/confirm.sh" "Do you really want to continue?" no
 
 (
   ${taito_setv:?}

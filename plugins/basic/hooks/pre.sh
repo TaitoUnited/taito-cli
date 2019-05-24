@@ -25,11 +25,8 @@ if [[ ${taito_command:-} == "env-destroy" ]] || \
    [[ ${taito_command:-} == "env-alt-destroy" ]]; then
   echo
   echo -e "${H1s}basic${H1e}"
-  echo "Deleting ${taito_target_env:?} environment of ${taito_project:?}. Do you want to continue (Y/n)?"
-  read -r confirm
-  if ! [[ "${confirm}" =~ ^[Yy]*$ ]]; then
-    exit 130
-  fi
+  echo "Deleting ${taito_target_env:?} environment of ${taito_project:?}"
+  "${taito_util_path}/confirm.sh" "Do you really want to continue?" no
 fi
 
 # Call next command on command chain

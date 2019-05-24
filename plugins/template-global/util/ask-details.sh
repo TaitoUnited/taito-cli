@@ -25,6 +25,7 @@ echo
 echo "NOTE: Please give a short lower case word or abbreviation for each."
 echo "No special characters!"
 echo
+read -r -t 1 -n 1000 || : # Flush input buffer
 echo "1) Customer, company or business unit (e.g. 'taito')?"
 read -r taito_company
 if ! [[ "${taito_company}" =~ ^[a-z][a-z1-9]+$ ]] || \
@@ -33,6 +34,7 @@ if ! [[ "${taito_company}" =~ ^[a-z][a-z1-9]+$ ]] || \
   exit 1
 fi
 echo
+read -r -t 1 -n 1000 || : # Flush input buffer
 echo "2) Optional: Product family (e.g. 'office')?"
 read -r taito_family
 if ! [[ "${taito_family}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
@@ -41,6 +43,7 @@ if ! [[ "${taito_family}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
   exit 1
 fi
 echo
+read -r -t 1 -n 1000 || : # Flush input buffer
 echo "3) Application name (e.g. 'chat')?"
 read -r taito_application
 if ! [[ "${taito_application}" =~ ^[a-z][a-z1-9]+$ ]] || \
@@ -49,6 +52,7 @@ if ! [[ "${taito_application}" =~ ^[a-z][a-z1-9]+$ ]] || \
   exit 1
 fi
 echo
+read -r -t 1 -n 1000 || : # Flush input buffer
 echo "4) Optional: service or name suffix (e.g. 'api', 'gui', ...)"
 read -r taito_suffix # TODO application_suffix
 if ! [[ "${taito_suffix}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
