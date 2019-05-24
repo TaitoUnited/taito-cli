@@ -30,7 +30,8 @@ const Form = styled.form`
 
   ${props => media.sm`
     width: 100%;
-    padding: 12px;
+    padding: 0px 8px;
+    height: 40px;
     border: 1px solid ${props.theme.grey[500]};
     color: ${props.theme.black};
     background-color: ${props.theme.grey[100]};

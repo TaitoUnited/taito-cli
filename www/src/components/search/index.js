@@ -97,9 +97,9 @@ const HitWrapper = styled.div`
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4);
 
   ${media.sm`
-    top: 56px;
+    top: 48px;
     width: 100%;
-    max-height: calc(90vh - 56px);
+    max-height: calc(80vh - 56px);
   `}
 
   ul {
