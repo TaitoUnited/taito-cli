@@ -17,7 +17,7 @@ if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
   exit 0
 fi
 
-echo "# Running tests for ${dir} in ${taito_env} environment"
+echo "Running tests for ${dir} in ${taito_env} environment"
 echo
 
 # Determine command to be run on init phase

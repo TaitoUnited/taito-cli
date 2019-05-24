@@ -42,7 +42,7 @@ else
   read -r -s password2
 fi
 
-echo "Validating..."
+echo "Validating."
 if [[ "${password}" != "${password2}" ]]; then
   echo "ERROR: Passwords do not match"
   exit 1
@@ -56,7 +56,7 @@ else
   echo "OK!"
 fi && \
 
-echo "Encrypting..."
+echo "Encrypting."
 # TODO do not use tmp files
 mkdir -p "${HOME}/tmp" && \
 cipher_path="${HOME}/tmp/cipher.tmp" && \
@@ -75,12 +75,12 @@ fi && \
 
 if gsutil ls "${taito_secrets_url}/${name}" &> /dev/null; then
   # NOTE: This is futile if bucket versioning is enabled
-  echo "Making a backup..." && \
+  echo "Making a backup." && \
   gsutil cp "${taito_secrets_url}/${name}" \
     "${taito_secrets_backup_url}/${name}.$(date +%s)" &> /dev/null
 fi
 
-echo "Saving new password..." && \
+echo "Saving new password." && \
 if ! gsutil cp "${cipher_path}" "${taito_secrets_url}/${name}"; then
   echo "ERROR: Copying encrypted password to bucket failed."
   rm -f "${cipher_path}"

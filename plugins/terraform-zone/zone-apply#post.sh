@@ -72,7 +72,7 @@ name=${1}
     echo
   fi
 
-  echo "Displaying some zone details..."
+  echo "Displaying some zone details."
   terraform output
 )
 

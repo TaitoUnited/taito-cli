@@ -10,13 +10,13 @@ exit $?
 
 # TODO implement
 echo && \
-echo "Waiting for docker to start..." && \
+echo "Waiting for docker to start." && \
 counter=1 && \
 up="" && \
 while [[ ${counter} -le 120 ]] && [[ ! ${up} ]]
 do
   if [[ ${counter} -gt 50 ]]; then
-    echo "Waiting for docker to start ${counter}..."
+    echo "Waiting for docker to start ${counter}."
     docker-compose ps
   fi
   up=$(docker-compose ps | grep " Up " | grep -E "\-server|\-client")

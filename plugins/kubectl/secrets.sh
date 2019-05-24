@@ -7,20 +7,19 @@ flag=${1}
 
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh" && \
 
-kubectl get secrets && \
-echo && \
-
 save_to_disk=false
 if [[ "${flag}" == "--save-as-taito-secrets" ]]; then
   save_to_disk=true
+else
+  kubectl get secrets
+  echo 'Showing secret values from Kubernetes:'
+  echo
 fi
 
 # shellcheck disable=SC1090
 . "${taito_plugin_path}/util/get-secrets.sh" "${save_to_disk}" && \
 
 # Print secret values
-echo 'Showing secret values from Kubernetes:' && \
-echo && \
 rm taito-secrets.sh &> /dev/null || : && \
 secret_index=0 && \
 secret_names=(${taito_secret_names}) && \

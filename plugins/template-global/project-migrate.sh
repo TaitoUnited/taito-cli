@@ -32,7 +32,7 @@ fi
 # Clone template git repo to a temporary template-tmp directory
 # and then continue the migration there.
 echo
-echo "Please wait..."
+echo "Please wait."
 rm -rf "./template-tmp"
 mkdir "./template-tmp"
 "${taito_util_path}/execute-on-host-fg.sh" "

@@ -18,7 +18,7 @@ fi
 . "${taito_plugin_path}/util/ask-details.sh"
 
 echo
-echo "Please wait..."
+echo "Please wait."
 
 "${taito_util_path}/execute-on-host-fg.sh" "\
   export GIT_PAGER='' && \

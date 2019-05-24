@@ -4,10 +4,7 @@
 : "${taito_namespace:?}"
 : "${taito_env:?}"
 
-echo
-echo -e "${H1s}docker-compose${H1e}"
-echo "Showing information"
-echo
+echo "Showing information if required"
 "${taito_plugin_path}/util/restart-all.sh"
 
 # Call next command on command chain

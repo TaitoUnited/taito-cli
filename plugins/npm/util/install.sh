@@ -21,7 +21,6 @@ fi && \
 
 install_all=false
 if [[ ${taito_mode} != "ci" ]] && [[ ${do_confirm} ]] && [[ ! $RUNNING_TESTS ]]; then
-  echo
   echo "Install all libraries on host for autocompletion purposes (Y/n)?"
   read -r confirm
   if [[ ${confirm} =~ ^[Yy]*$ ]]; then
@@ -47,7 +46,7 @@ fi && \
 # TODO add '--python=${npm_python}' for npm install?
 "${taito_util_path}/execute-on-host-fg.sh" "\
   set -e;
-  echo \"# Running 'npm ${npm_command}'\" && \
+  echo \"Running 'npm ${npm_command}'\" && \
   npm ${npm_command}" && \
 
 if [[ "${task_postinstall}" ]]; then

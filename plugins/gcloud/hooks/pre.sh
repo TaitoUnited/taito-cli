@@ -7,6 +7,7 @@
 if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo
   echo -e "${H1s}gcloud${H1e}"
+  echo "Authenticating"
   "${taito_plugin_path}/util/auth.sh"
 fi && \
 

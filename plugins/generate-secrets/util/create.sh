@@ -20,7 +20,7 @@ do
      )
   then
     if [[ ${skip_confirm} == "true" ]]; then
-      echo "${secret_name} (${secret_method:-}):"
+      echo -e "${H2s}${secret_name} (${secret_method:-})${H2e}"
     fi
     . "${taito_plugin_path}/util/create-by-type.sh"
   fi

@@ -10,7 +10,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   dump_file="${1:?}"
   username=""
 
-  echo "Dumping database ${database_name} to ${dump_file}. Please wait..."
+  echo "Dumping database ${database_name} to ${dump_file}. Please wait."
   "${taito_plugin_path}/util/psql.sh" "${username}" \
     "-f ${dump_file}" "pg_dump"
 fi && \

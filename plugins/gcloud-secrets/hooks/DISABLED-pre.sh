@@ -24,7 +24,7 @@ if [[ "${taito_is_admin:-}" == true ]] && \
    # TODO remove cluster name hardcoding
    name=TODO
 
-   echo "Fetching..."
+   echo "Fetching."
    # TODO do not use tmp files
    mkdir -p "${HOME}/tmp"
    cipher_path="${HOME}/tmp/cipher.tmp"
@@ -35,7 +35,7 @@ if [[ "${taito_is_admin:-}" == true ]] && \
      exit 1
    fi && \
 
-   echo "Decrypting..." && \
+   echo "Decrypting." && \
    echo && \
    # TODO remove env name hardcoding
    export postgres_password && \

@@ -22,7 +22,7 @@ if [[ "${name}" == "" ]]; then
   read -r name
 fi
 
-echo "Fetching..."
+echo "Fetching."
 # TODO do not use tmp files
 mkdir -p "${HOME}/tmp"
 cipher_path="${HOME}/tmp/cipher.tmp"
@@ -33,7 +33,7 @@ if ! gsutil cp "${taito_secrets_url}/${name}" "${cipher_path}"; then
   exit 1
 fi && \
 
-echo "Decrypting..." && \
+echo "Decrypting." && \
 echo && \
 echo "Password for ${name}:" && \
 gcloud kms decrypt --keyring "${taito_secrets_keyring}" \

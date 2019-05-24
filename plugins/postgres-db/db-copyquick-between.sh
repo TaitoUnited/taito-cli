@@ -12,7 +12,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   dest="${taito_dest_env}"
   username="${1:-postgres}"
 
-  echo "Copying ${source} to ${dest}."
+  echo "Copying ${source} to ${dest}"
   echo "NOTE: This works only if both databases are located in the same database cluster."
   echo "WARNING! THIS HAS NOT BEEN TESTED AT ALL YET! Use db-copy:ENV instead!"
   echo "WARNING! This operation will disconnect all connections! Continue (Y/n)?"

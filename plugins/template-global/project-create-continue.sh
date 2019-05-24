@@ -30,7 +30,7 @@ if [[ -d alternatives ]]; then
     done
   fi
 
-  echo "Preparing alternatives..."
+  echo "Preparing alternatives."
   for alternative in ${alternatives}
   do
     if [[ -d "alternatives/$alternative" ]]; then
@@ -65,7 +65,7 @@ if [[ -f "CONFIGURATION.md" ]]; then
   doc="CONFIGURATION.md"
 fi
 
-echo "Please wait..."
+echo "Please wait."
 "${taito_util_path}/execute-on-host-fg.sh" "
   set -e
   export GIT_PAGER=''

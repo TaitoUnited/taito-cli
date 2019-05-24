@@ -5,7 +5,10 @@
 
 name=${1}
 
-if [[ "${taito_env}" != "local" ]]; then
+if [[ "${taito_env}" == "local" ]]; then
+  echo "Skipping database create for local environment"
+else
+  echo "Creating databases"
   (
     all=$("$taito_util_path/get-targets-by-type.sh" database)
     databases=("${taito_target:-$all}")

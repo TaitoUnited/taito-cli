@@ -10,6 +10,7 @@ export AWS_DEFAULT_REGION="${taito_provider_region:?}"
 if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo
   echo -e "${H1s}aws${H1e}"
+  echo "Authenticating"
   "${taito_plugin_path}/util/auth.sh"
 fi
 
