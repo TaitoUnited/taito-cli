@@ -9,6 +9,7 @@ import {
   connectStateResults,
 } from 'react-instantsearch-dom';
 
+import { media } from '../../utils';
 import Gutter from '../Gutter';
 import SearchInput from './SearchInput';
 import SearchHit from './SearchHit';
@@ -76,6 +77,10 @@ const SearchWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+
+  ${media.sm`
+    width: 100%;
+  `}
 `;
 
 const HitWrapper = styled.div`
@@ -90,6 +95,12 @@ const HitWrapper = styled.div`
   padding: 12px;
   border: 4px solid #fff;
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4);
+
+  ${media.sm`
+    top: 56px;
+    width: 100%;
+    max-height: calc(90vh - 56px);
+  `}
 
   ul {
     list-style: none !important;

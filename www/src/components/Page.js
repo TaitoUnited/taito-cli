@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { media } from '../utils';
-import Navbar from '../components/Navbar';
-import Drawer from '../components/Drawer';
+import { media, mobileOnly } from '../utils';
+import Navbar from './Navbar';
+import Drawer from './Drawer';
+import Search from './search';
 
 const Page = ({ menu = null, children, ...rest }) => (
   <Wrapper {...rest}>
@@ -13,6 +14,10 @@ const Page = ({ menu = null, children, ...rest }) => (
     </Main>
 
     <Navbar />
+
+    <MobileSearch>
+      <Search />
+    </MobileSearch>
 
     <Drawer>
       <Drawer.Item to="/">Home</Drawer.Item>
@@ -41,8 +46,22 @@ const Main = styled.div`
   padding-left: ${props => (props.hasMenu ? 320 : 0)}px;
 
   ${media.sm`
-    margin-top: 40px;
+    padding-left: 0px;
+    margin-top: 54px;
   `}
+`;
+
+const MobileSearch = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0px 64px 0px 16px;
+  background-color: #fff;
+  ${mobileOnly}
 `;
 
 const Menu = styled.div`
