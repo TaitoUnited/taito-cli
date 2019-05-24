@@ -626,6 +626,8 @@ if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
     [[ "${taito_mode:-}" == "ci" ]] \
   ); then
   export taito_requires_database_connection="true"
+else
+  export taito_requires_database_connection="false"
 fi
 
 # Admin credentials pre-handling
