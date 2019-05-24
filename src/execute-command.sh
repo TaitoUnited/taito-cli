@@ -1,14 +1,6 @@
 #!/bin/bash
 # NOTE: This bash script is run inside docker container.
 
-# Set output formatting
-export H1s="\\e[92m\\e[1m[" # Heading 1 start: Light green, bold
-export H1e="]\\e[0m"        # Heading 1 end
-export H2s="\\e[95m["       # Heading 2 start: Light magenta
-export H2e="]\\e[0m"        # Heading 2 end
-export NOTEs="\\e[104m["    # Note start: Ligth blue background
-export NOTEe="]\\e[0m"      # Note end
-
 # Parse options
 verbose="${taito_verbose:-false}"
 debug="${taito_debug:-false}"
@@ -213,6 +205,14 @@ fi
 # Read taito-config.sh files from all locations
 . "${taito_util_path}/read-user-taito-config.sh" "${taito_env}" && \
 . "${taito_util_path}/read-project-taito-config.sh" "${taito_env}" && \
+
+# Set output formatting
+export H1s="${taito_style_h1_s:-\\e[92m\\e[1m[}" # Heading 1 start: Light green, bold
+export H1e="${taito_style_h1_e:-]\\e[0m}"        # Heading 1 end
+export H2s="${taito_style_h2_s:-\\e[95m[}"       # Heading 2 start: Light magenta
+export H2e="${taito_style_h2_e:-]\\e[0m}"        # Heading 2 end
+export NOTEs="${taito_style_note_s:-\\e[104m[}"  # Note start: Ligth blue background
+export NOTEe="${taito_style_note_e:-]\\e[0m}"    # Note end
 
 # For backwards compatibility --> TODO remove!
 if [[ ! "${taito_version}" ]]; then
