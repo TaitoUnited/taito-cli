@@ -435,7 +435,7 @@ if [[ ${taito_command} == "env-apply" ]] || \
      [[ $taito_target_env == "canary" ]] || \
      [[ $taito_target_env == "stag" ]]; then
     echo
-    echo "Running 'taito '${taito_command//-/ }' on $taito_target_env environment most likely"
+    echo "Running 'taito ${taito_command//-/ }' on $taito_target_env environment most likely"
     echo "requires admin privileges. You may not be allowed to execute all operations."
     echo "Are you sure you want to continue (y/N)?"
     read -r confirm

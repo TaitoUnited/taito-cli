@@ -27,5 +27,11 @@ taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
 # Set working directory
 cd "${taito_project_path}" && \
 
+formatted=()
+while IFS= read -r line; do
+  formatted+=( "$line" )
+done < <( "${taito_src_path}/convert-command-syntax.sh" "${@}" )
+args=("${formatted[@]}")
+
 # Execute
-"${taito_src_path}/execute-command.sh" "${@}"
+"${taito_src_path}/execute-command.sh" "${args[@]}"
