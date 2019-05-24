@@ -11,11 +11,13 @@ if "${taito_util_path}/confirm-execution.sh" "gcloud-ci" "${name}" \
   "Add a build trigger for ${taito_project} in ${taito_zone}"
 then
   echo "Create a new build trigger with these settings if one does not exist already:"
-  echo "- Source: GitHub"
+  echo "- Source: ${taito_vc_provider:-GitHub}"
   echo "- Repository: ${taito_vc_repository}"
   echo "- Name: ${taito_project}"
   echo "- Type: Branch"
-  echo "- Branch regex: '^(dev|test)\$' or '^(stag|canary|master)\$' depending on zone"
+  echo "- Branch regex - Most likely one of these depending on zone:"
+  echo "    ^(dev|test)\$"
+  echo "    ^(stag|canary|master)\$"
   echo "- Build configuration: cloudbuild.yaml"
   echo "- Cloudbuild.yaml location: /cloudbuild.yaml"
   echo

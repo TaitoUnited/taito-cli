@@ -30,7 +30,7 @@ do
     source_found=true
     s="${merge%->*}"
     d="${merge##*->}"
-    echo -e "${H2s}${s}->${d} ${git_push_options}${H2e}"
+    echo "${s}->${d} ${git_push_options}"
 
     # Check if production env has been configured
     if [[ ${d} == "master" ]] && ( \
@@ -50,7 +50,7 @@ do
     "${taito_util_path}/execute-on-host-fg.sh" "\
     echo && \
     (read -t 1 -n 10000 discard || :) && \
-    echo \"Merging ${s} -> ${d} ${git_push_options}\" && \
+    echo -e \"${H2s}Merging ${s} -> ${d}${H2e}\" && \
     echo \"Do you want to continue (Y/n)?\" && \
     read -r confirm && \
     if ! [[ \${confirm:-y} =~ ^[Yy]*$ ]]; then \
