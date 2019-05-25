@@ -8,6 +8,7 @@
 switches=" ${*} "
 
 compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
+exports=$("$taito_plugin_path/util/prepare-exports.sh")
 
 setenv="dockerfile=Dockerfile "
 if [[ "${switches}" == *"--prod"* ]]; then
@@ -67,6 +68,7 @@ fi
 # TODO: remove taito-run-env.sh (backwards compatibility -> only used in old projects)
 "${taito_util_path}/execute-on-host-fg.sh" "
   if [ -f ./taito-run-env.sh ]; then . ./taito-run-env.sh; fi
+  ${exports}
   ${conditional_commands}
   ${setenv}docker-compose -f $compose_file ${compose_cmd} ${flags}
 "
