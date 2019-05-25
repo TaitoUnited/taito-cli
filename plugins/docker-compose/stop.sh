@@ -7,7 +7,10 @@ if [[ "${options}" == *" --down "* ]]; then
   exit 1
 fi
 
-"${taito_util_path}/execute-on-host-fg.sh" "docker-compose stop" && \
+compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
+"${taito_util_path}/execute-on-host-fg.sh" "
+  docker-compose -f $compose_file stop
+"
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"

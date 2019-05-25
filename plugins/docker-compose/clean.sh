@@ -21,8 +21,9 @@ else
   # TODO [data | build] as arguments
   echo "Docker will remove images and volumes after taito-cli has exited"
 
+  compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
   "${taito_util_path}/execute-on-host-fg.sh" \
-    "docker-compose down --rmi 'local' --volumes --remove-orphans"
+    "docker-compose -f $compose_file down --rmi 'local' --volumes --remove-orphans"
 fi && \
 
 # Call next command on command chain

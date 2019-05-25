@@ -7,6 +7,8 @@
 
 switches=" ${*} "
 
+compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
+
 setenv="dockerfile=Dockerfile "
 if [[ "${switches}" == *"--prod"* ]]; then
   setenv="dockerfile=Dockerfile.build "
@@ -33,7 +35,7 @@ if [[ "${switches}" == *"--restart"* ]]; then
   # Run 'docker-compose stop' before start
   conditional_commands="
     ${conditional_commands}
-    docker-compose stop
+    docker-compose -f $compose_file stop
   "
 fi
 if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database "* ]]; then
@@ -66,5 +68,5 @@ fi
 "${taito_util_path}/execute-on-host-fg.sh" "
   if [ -f ./taito-run-env.sh ]; then . ./taito-run-env.sh; fi
   ${conditional_commands}
-  ${setenv}docker-compose ${compose_cmd} ${flags}
+  ${setenv}docker-compose -f $compose_file ${compose_cmd} ${flags}
 "

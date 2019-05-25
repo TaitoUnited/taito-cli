@@ -15,11 +15,12 @@ counter=1 && \
 up="" && \
 while [[ ${counter} -le 120 ]] && [[ ! ${up} ]]
 do
+  compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
   if [[ ${counter} -gt 50 ]]; then
     echo "Waiting for docker to start ${counter}."
-    docker-compose ps
+    docker-compose -f $compose_file ps
   fi
-  up=$(docker-compose ps | grep " Up " | grep -E "\-server|\-client")
+  up=$(docker-compose -f $compose_file ps | grep " Up " | grep -E "\-server|\-client")
   sleep "${ci_wait_test_sleep:-5}"
   ((counter++))
 done && \
