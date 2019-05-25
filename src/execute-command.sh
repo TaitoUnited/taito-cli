@@ -243,7 +243,7 @@ if (( RANDOM % 4 == 0 )) && \
    [[ ${quiet} != "true" ]] && \
    [[ ${taito_command} != "project-"* ]] && \
    [[ ${taito_command} != "env-apply" ]]; then
-  if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]]; then
+  if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]; then
     echo
     echo "--------------------------------------------------------"
     echo "NOTE: This project has not yet been fully configured."
@@ -549,7 +549,7 @@ command_chain=()
 post_command_chain=()
 extensions=("${taito_enabled_extensions} ${taito_cli_path}/plugins")
 # TODO plugin_path??
-# commands=($(ls "${plugin_path}/${command}"[\#.]* 2> /dev/null))
+# commands=($(ls "${plugin_path}/${command}"[\#.]* 2> /dev/null || :))
 for plugin in ${plugins[@]}
 do
   # Check first if plugin is enabled for this environment:
@@ -573,15 +573,15 @@ do
 
     # Add pre/post handlers
     # TODO: use 'find path -executable' instead of {sh,py,js,x}
-    pre_handlers+=($(ls "${plugin_path}"/hooks/pre*{sh,py,js,x} 2> /dev/null))
-    post_handlers+=($(ls "${plugin_path}"/hooks/post*{sh,py,js,x} 2> /dev/null))
+    pre_handlers+=($(ls "${plugin_path}"/hooks/pre*{sh,py,js,x} 2> /dev/null || :))
+    post_handlers+=($(ls "${plugin_path}"/hooks/post*{sh,py,js,x} 2> /dev/null || :))
 
     # Add matching commands to command chain
-    commands=($(ls "${plugin_path}/${command}"[\#.]*{sh,py,js,x} 2> /dev/null))
+    commands=($(ls "${plugin_path}/${command}"[\#.]*{sh,py,js,x} 2> /dev/null || :))
 
-    pre_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#pre\."))
-    command_chain+=($(printf '%s\n' "${commands[@]}" | grep -v "#\|\.txt\|\.md" ))
-    post_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#post\."))
+    pre_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#pre\." || :))
+    command_chain+=($(printf '%s\n' "${commands[@]}" | grep -v "#\|\.txt\|\.md" || :))
+    post_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#post\." || :))
   fi
 done
 
