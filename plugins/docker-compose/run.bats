@@ -8,7 +8,7 @@ load "${taito_cli_path}/test/util/test-helper.sh"
   export taito_project="acme-chat"
   test run.sh command
 
-  assert_executed docker-compose run --no-deps --entrypoint command acme-chat-server
+  assert_executed docker-compose -f docker-compose.yaml run --no-deps --entrypoint command acme-chat-server
   assert_executed call-next.sh command
   assert_executed_count 2
 }

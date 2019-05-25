@@ -5,7 +5,7 @@ load "${taito_cli_path}/test/util/test-helper.sh"
 @test "docker-compose: 'taito clean'" {
   test clean.sh
 
-  assert_executed docker-compose down --rmi local --volumes --remove-orphans
+  assert_executed docker-compose -f docker-compose.yaml down --rmi local --volumes --remove-orphans
   assert_executed call-next.sh
   assert_executed_count 2
 }
