@@ -33,29 +33,29 @@ do
         ;;
         -c|--continue)
         continue=true
-        shift
+        shift || :
         ;;
         -v|--verbose)
         verbose=true
-        shift
+        shift || :
         ;;
         -q|--quiet)
         quiet=true
-        shift
+        shift || :
         ;;
         --debug)
         verbose=true
         debug=true
-        shift
+        shift || :
         ;;
         -z)
         skip_override=true
-        shift
+        shift || :
         ;;
         *)
         # not known -> pass it to the command
         args+=("$1")
-        shift
+        shift || :
         if [[ "$1" != "-"* ]]; then
           # not an option -> pass all the rest to the command
           skip_rest=true
@@ -65,7 +65,7 @@ do
   else
     # Add to args to be passed for the command
     args+=("$1")
-    shift
+    shift || :
   fi
 done
 
@@ -207,12 +207,12 @@ fi
 . "${taito_util_path}/read-project-taito-config.sh" "${taito_env}" && \
 
 # Set output formatting
-export H1s="${taito_style_h1_s:-\\e[92m\\e[1m[}" # Heading 1 start: Light green, bold
-export H1e="${taito_style_h1_e:-]\\e[0m}"        # Heading 1 end
-export H2s="${taito_style_h2_s:-\\e[95m[}"       # Heading 2 start: Light magenta
-export H2e="${taito_style_h2_e:-]\\e[0m}"        # Heading 2 end
-export NOTEs="${taito_style_note_s:-\\e[104m[}"  # Note start: Ligth blue background
-export NOTEe="${taito_style_note_e:-]\\e[0m}"    # Note end
+export H1s="${taito_style_h1_s:-\\x1B[92m\\x1B[1m[}" # Heading 1 start: Light green, bold
+export H1e="${taito_style_h1_e:-]\\x1B[0m}"        # Heading 1 end
+export H2s="${taito_style_h2_s:-\\x1B[95m[}"       # Heading 2 start: Light magenta
+export H2e="${taito_style_h2_e:-]\\x1B[0m}"        # Heading 2 end
+export NOTEs="${taito_style_note_s:-\\x1B[104m[}"  # Note start: Ligth blue background
+export NOTEe="${taito_style_note_e:-]\\x1B[0m}"    # Note end
 
 # For backwards compatibility --> TODO remove!
 if [[ ! "${taito_version}" ]]; then
@@ -441,7 +441,7 @@ if [[ "${taito_command}" == "env-merge" ]]; then
       echo "ERROR: Invalid parameter ${param}"
       exit 1
     fi
-    shift
+    shift || :
   done
 
   # Determine valid merges

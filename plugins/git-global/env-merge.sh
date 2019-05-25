@@ -19,7 +19,7 @@ do
   if [[ ${1} == "--force" ]]; then
     git_push_options="--force-with-lease"
   fi
-  shift
+  shift || :
 done
 
 # Execute all merges

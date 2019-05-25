@@ -13,11 +13,11 @@ do
   case $1 in
     --all)
       all=true
-      shift
+      shift || :
       ;;
     --all-namespaces)
       kubernetes_params="--all-namespaces"
-      shift
+      shift || :
       ;;
   esac
 done
