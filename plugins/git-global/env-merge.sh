@@ -30,7 +30,6 @@ do
     source_found=true
     s="${merge%->*}"
     d="${merge##*->}"
-    echo "${s}->${d} ${git_push_options}"
 
     # Check if production env has been configured
     if [[ ${d} == "master" ]] && ( \
@@ -48,19 +47,19 @@ do
     # TODO execution should end if one merge fails
 
     "${taito_util_path}/execute-on-host-fg.sh" "\
-    echo && \
-    (read -t 1 -n 10000 discard || :) && \
+    (read -t 1 -n 1000 discard || :) && \
     echo -e \"${H2s}Merging ${s} -> ${d}${H2e}\" && \
-    echo \"Do you want to continue (Y/n)?\" && \
-    read -r confirm && \
+    read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm && \
     if ! [[ \${confirm:-y} =~ ^[Yy]*$ ]]; then \
+      echo && \
+      echo && \
       exit 130; \
     fi && \
     echo Merging... && \
     git fetch origin ${s}:${d} && \
     git push --no-verify ${git_push_options} origin ${d} && \
+    echo && \
     if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
-      echo && \
       echo ---------------------------------------------------------------------- && \
       echo TIP: Run \\'taito ci run:${d/master/prod}\\' to execute CI/CD locally. && \
       echo ---------------------------------------------------------------------- && \
