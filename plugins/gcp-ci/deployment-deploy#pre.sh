@@ -16,7 +16,7 @@ if [[ -z $1 ]]; then
         source.repoSource.repoName~.*${taito_project:?} AND \
         source.repoSource.branchName:${taito_branch:?}" | \
       head -1 | \
-      sed "s/^.*:\([^;]*\)*;.*$/\1/" \
+      sed "s/^.*:\([^;]*\)\(;\|$\)/\1/" \
   )
   echo "Using tag: ${taito_target_image}"
 fi
