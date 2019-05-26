@@ -21,13 +21,12 @@ read -r -t 1 -n 1000 || :
 
 # Display confirm prompt
 read -p "$prompt" -n 1 -r
+echo
 if [[ $REPLY =~ ^[Yy]$ ]] || ( \
      [[ $default_reply == "yes" ]] && \
      [[ $REPLY =~ ^[Yy]*$ ]] \
    ); then
-  echo
   exit 0
 else
-  echo
   exit 130
 fi

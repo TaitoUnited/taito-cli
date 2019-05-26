@@ -14,13 +14,15 @@ if git rev-parse --is-inside-work-tree &> /dev/null; then
     feature=\$(git symbolic-ref --short HEAD)
   fi
 
-  echo \"Making a pull request for merging \${feature} to ${dest}. Do you want to continue (Y/n)?\"
-  read -r confirm
+  echo \"Making a pull request for merging \${feature} to ${dest}\"
+  read -t 1 -n 1000 discard || :
+  read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm
+  echo
   if ! [[ \${confirm} =~ ^[Yy]*$ ]]; then
     exit 130
   fi
-  echo \"Rebase branch \${feature} before making the pull request (Y/n)?\"
-  read -r rebase
+  read -t 1 -n 1000 discard || :
+  read -p \"Rebase branch \${feature} before making the pull request? [Y/n] \" -n 1 -r rebase
   git checkout \${feature}
   if [[ \${rebase} =~ ^[Yy]*$ ]]; then
     git fetch --all

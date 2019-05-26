@@ -50,8 +50,8 @@ do
     (read -t 1 -n 1000 discard || :) && \
     echo -e \"${H2s}Merging ${s} -> ${d}${H2e}\" && \
     read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm && \
+    echo && \
     if ! [[ \${confirm:-y} =~ ^[Yy]*$ ]]; then \
-      echo && \
       echo && \
       exit 130; \
     fi && \

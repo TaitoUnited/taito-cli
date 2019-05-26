@@ -42,9 +42,7 @@ then
     ansible_options="$ansible_options -u ${username:-$taito_host_username}"
 
     if [[ $username == "root" ]]; then
-      echo "Log in with password (Y/n)"
-      read -r confirm
-      if [[ ${confirm} =~ ^[Yy]*$ ]]; then
+      if "$taito_util_path/confirm.sh" "Log in with password"; then
         ansible_options="$ansible_options --ask-pass"
       fi
     fi

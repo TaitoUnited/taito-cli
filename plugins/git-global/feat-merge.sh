@@ -15,14 +15,15 @@ if git rev-parse --is-inside-work-tree &> /dev/null; then
   else
     feature=\$(git symbolic-ref --short HEAD)
   fi
-
-  echo \"Merging \${feature} to ${dest}. Do you want to continue (Y/n)?\"
-  read -r confirm
+  read -t 1 -n 1000 discard || :
+  read -p \"Merging \${feature} to ${dest}. Do you want to continue? [Y/n] \" -n 1 -r confirm
+  echo
   if ! [[ \${confirm} =~ ^[Yy]*$ ]]; then
     exit 130
   fi
-  echo \"Rebase branch \${feature} before merge (Y/n)?\"
-  read -r rebase
+  read -t 1 -n 1000 discard || :
+  read -p \"Rebase branch \${feature} before merge? [Y/n] \" -n 1 -r rebase
+  echo
   if [[ \${rebase} =~ ^[Yy]*$ ]]; then
     git fetch --all
     git checkout \${feature}
@@ -38,8 +39,9 @@ if git rev-parse --is-inside-work-tree &> /dev/null; then
     echo NOTE: Push failed. Fix all errors first. Then push changes to ${dest} branch and delete the \${feature} branch. \
   ) && \
   echo
-  echo \"Delete branch \${feature} (Y/n)?\"
-  read -r del
+  read -t 1 -n 1000 discard || :
+  read -p \"Delete branch \${feature}? [Y/n] \" -n 1 -r del
+  echo
   if [[ \${del} =~ ^[Yy]*$ ]]; then
     git push origin --no-verify --delete \${feature} &> /dev/null
     git branch -d \${feature}

@@ -12,8 +12,9 @@ dest="${taito_branch:?}"
 set -e
 if git rev-parse --is-inside-work-tree &> /dev/null && \
    ! git checkout ${dest} 2> /dev/null; then
-  echo \"Creating a new branch ${dest} from ${source}. Do you want to continue (Y/n)?\"
-  read -r confirm
+  read -t 1 -n 1000 discard || :
+  read -p \"Creating a new branch ${dest} from ${source}. Do you want to continue? [Y/n] \" -n 1 -r confirm
+  echo
   if ! [[ \${confirm} =~ ^[Yy]*$ ]]; then
     echo Cancelled
     exit 130

@@ -15,8 +15,10 @@ if git rev-parse --is-inside-work-tree &> /dev/null; then
     feature=\$(git symbolic-ref --short HEAD)
   fi
 
-  echo \"Rebasing \${feature} with ${dest}. Do you want to continue (Y/n)?\"
-  read -r confirm
+  echo \"Rebasing \${feature} with ${dest}\"
+  read -t 1 -n 1000 discard || :
+  read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm
+  echo
   if ! [[ \${confirm} =~ ^[Yy]*$ ]]; then
     exit 130
   fi
