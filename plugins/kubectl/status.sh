@@ -25,6 +25,7 @@ done
 "$taito_plugin_path/util/use-context.sh"
 
 if [ $all = true ]; then
+  echo
   echo -e "${H2s}Node details${H2e}"
   ($taito_setv; kubectl describe nodes)
   echo
@@ -58,12 +59,15 @@ else
   ($taito_setv; kubectl top pod $kubernetes_params 2> /dev/null)
 fi
 
-echo
+if [ $all = false ] || [ ! $kubernetes_params ]; then
+  echo
+  echo -e "${H2s}More info${H2e}"
+fi
 if [ $all = false ]; then
-  echo "NOTE: See more info with '--all'"
+  echo "See more info with '--all'"
 fi
 if [ ! $kubernetes_params ]; then
-  echo "NOTE: See all namespaces with '--all-namespaces'"
+  echo "See all namespaces with '--all-namespaces'"
 fi
 
 # Call next command on command chain
