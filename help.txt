@@ -151,11 +151,11 @@ QUICK EXAMPLES
     env info:dev                       # Show environment information
     env apply:dev                      # Apply project specific changes to dev env
     env rotate:dev                     # Rotate project specific secrets in dev env
-    env rotate:dev gcloud              # Rotate project specific gcloud secrets in dev env
+    env rotate:dev gcp                 # Rotate project specific gcp secrets in dev env
     env destroy:dev                    # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
-    zone create: gcloud                # Create a new zone based on the gcloud template
+    zone create: gcp                   # Create a new zone based on the gcp template
     zone apply                         # Apply infrastructure changes to the zone
     zone status                        # Show status summary of the zone
     zone doctor                        # Analyze and repair the zone

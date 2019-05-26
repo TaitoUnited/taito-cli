@@ -88,9 +88,9 @@ if [[ "${taito_env}" != "local" ]]; then
     compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
   fi
 
-  # NOTE: Quick hack for gcloud builder -> run tests directly inside taito-cli because
+  # NOTE: Quick hack for gcp builder -> run tests directly inside taito-cli because
   # sql proxy fails to connect in docker-compose
-  if [[ "${taito_plugins}" == *"gcloud-ci"* ]] && [[ "${taito_mode:-}" == "ci" ]]; then
+  if [[ "${taito_plugins}" == *"gcp-ci"* ]] && [[ "${taito_mode:-}" == "ci" ]]; then
     docker_compose="false"
     compose_cmd="${export_env_vars} cd ./${dir} && npm install && ./test.sh SUITE ${test_filter}"
   fi

@@ -2,7 +2,7 @@
 : "${taito_util_path:?}"
 
 if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" != "false" ]]; then
-  echo "TODO deploy aws/azure/gcloud function using serverless.com"
+  echo "TODO deploy aws/azure/gcp function using serverless.com"
 fi && \
 
 # Call next command on command chain

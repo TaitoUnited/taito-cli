@@ -2,7 +2,7 @@
 : "${taito_verbose:?}"
 : "${taito_vout:?}"
 
-if [[ ${gcloud_db_proxy_enabled:-} != "false" ]]; then
+if [[ ${gcp_db_proxy_enabled:-} != "false" ]]; then
   database_id="${taito_zone:?}:${taito_provider_region:?}:${database_instance:?}"
 
   if [[ $1 == "true" ]]; then

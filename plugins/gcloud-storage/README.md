@@ -1,1 +1,0 @@
-# gcloud-storage

@@ -68,8 +68,8 @@ Plugins:
 
 - [aws](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws/README): AWS cloud environment.
 - [azure](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure/README): Azure cloud environment.
-- [gcloud](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud/README): Google Cloud environment.
-- [gcloud-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-global/README): Google Cloud environment.
+- [gcp](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp/README): Google Cloud environment.
+- [gcp-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-global/README): Google Cloud environment.
 - [ssh](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ssh/README): For accessing virtual machines or dedicated servers with plain ssh.
 
 ## CI/CD
@@ -84,7 +84,7 @@ CI/CD plugins typically implement the following commands:
 
 Plugins:
 
-- [gcloud-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-ci/README): Use Google Cloud Build as your CI/CD pipeline.
+- [gcp-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-ci/README): Use Google Cloud Build as your CI/CD pipeline.
 - [github-actions](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-actions/README): Use GitHub actions as your CI/CD pipeline.
 - [gitlab-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-ci/README): Use GitLab CI/CD as your CI/CD pipeline.
 - [jenkins](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jenkins/README): Use Jenkins as your CI/CD pipeline.
@@ -147,7 +147,7 @@ Cloud provider plugins:
 
 - [aws-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-zone/README)
 - [azure-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-zone/README)
-- [gcloud-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-zone/README)
+- [gcp-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-zone/README)
 
 ## Issue management
 
@@ -173,7 +173,7 @@ Plugins:
 
 Plugins:
 
-- [gcloud-monitoring](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-monitoring/README): Lists available monitoring channels, etc.
+- [gcp-monitoring](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-monitoring/README): Lists available monitoring channels, etc.
 - [sentry](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sentry/README): Creates a Sentry project on `taito project apply`.
 
 You can open monitoring systems on your browser with the following commands, if the links have been configured in `taito-config.sh` file of your project.
@@ -196,7 +196,7 @@ Password management plugins are meant for managing commonly shared passwords. Ty
 
 Plugins:
 
-- [gcloud-passwd-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-passwd-global/README):
+- [gcp-passwd-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-passwd-global/README):
 
 ## Secret management
 
@@ -211,11 +211,11 @@ Plugins:
 
 - [default-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/default-secrets/README): Uses stag environent secrets as default values for prod secrets, prod environent secrets as default values for stag secrets, and dev secrets as default values for all other environments.
 - [generate-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/generate-secrets/README): Generates secret values on demand either by generating random values or by querying secret details from user.
-- [gcloud-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-secrets/README): Uses Google Cloud KMS and Google Cloud Storage to store or backup secrets.
+- [gcp-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-secrets/README): Uses Google Cloud KMS and Google Cloud Storage to store or backup secrets.
 - [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kube-secrets/README): Uses Kubernetes to store secrets.
 - [vault-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/vault-secrets/README): Uses [Vault](https://www.vaultproject.io/) to manage secrets.
 
-> TIP: You can enable multiple secret plugins at the same time. For example, enable the kubectl plugin so that secrets are available for Kubernetes deployments. Additionally, enable the gcloud-secrets plugin so that at least non-random secrets will be saved to a storage bucket just in case you accidentally delete secrets from Kubernetes.
+> TIP: You can enable multiple secret plugins at the same time. For example, enable the kubectl plugin so that secrets are available for Kubernetes deployments. Additionally, enable the gcp-secrets plugin so that at least non-random secrets will be saved to a storage bucket just in case you accidentally delete secrets from Kubernetes.
 
 ## Services
 
@@ -238,7 +238,7 @@ Plugins:
 
 - [aws-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-storage/README): Taito CLI support for AWS storage buckets (S3).
 - [azure-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-storage/README): Taito CLI support for Azure storage buckets.
-- [gcloud-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcloud-storage/README): Taito CLI support for Google Cloud storage buckets.
+- [gcp-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-storage/README): Taito CLI support for Google Cloud storage buckets.
 
 ## Version control
 

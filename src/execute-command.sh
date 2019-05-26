@@ -520,9 +520,15 @@ done
 eval "$secret_exports"
 
 # NOTE: For backwards compatibility (plugins were renamed)
+export taito_global_plugins="${taito_global_plugins//gcloud/gcp}"
+export taito_plugins="${taito_plugins//gcloud/gcp}"
 export taito_plugins="${taito_plugins// git / git-global }"
 export taito_plugins="${taito_plugins// dev-secrets / default-secrets }"
-export taito_plugins="${taito_plugins// gcloud-builder:-local / gcloud-builder:-local gcloud-ci:-local }"
+export taito_plugins="${taito_plugins// gcp-builder:-local / gcp-builder:-local gcp-ci:-local }"
+
+# NOTE: For backwards compatibility (provider was renamed)
+export taito_provider="${taito_provider//gcloud/gcp}"
+export taito_uptime_provider="${taito_uptime_provider//gcloud/gcp}"
 
 # Determine enabled plugins
 enabled_plugins=""
@@ -607,7 +613,7 @@ export taito_enabled_plugins="${enabled_plugins}"
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
     [[ "${taito_command:-}" == "test" ]] &&
-    [[ "${taito_plugins:-}" == *"gcloud-ci"* ]] &&
+    [[ "${taito_plugins:-}" == *"gcp-ci"* ]] &&
     [[ "${taito_mode:-}" == "ci" ]] \
   ); then
   export taito_requires_database_connection="true"

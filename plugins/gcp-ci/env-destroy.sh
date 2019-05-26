@@ -5,7 +5,7 @@
 
 name=${1}
 
-if "${taito_util_path}/confirm-execution.sh" "gcloud-ci-trigger" "${name}" \
+if "${taito_util_path}/confirm-execution.sh" "gcp-ci-trigger" "${name}" \
   "Remove build trigger of ${taito_project} from ${taito_zone}"
 then
   echo "Delete trigger manually. Press enter to open build trigger management."

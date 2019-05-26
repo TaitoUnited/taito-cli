@@ -1,4 +1,4 @@
-FROM taitounited/taito-cli-deps:gcloud
+FROM taitounited/taito-cli-deps:gcp
 MAINTAINER Taito United <support@taitounited.fi>
 
 COPY . /taito-cli

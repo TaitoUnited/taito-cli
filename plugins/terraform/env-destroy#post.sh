@@ -7,6 +7,12 @@
 
 name=${1}
 
+# NOTE: For backwards compatibility
+if [[ $taito_provider == "gcp" ]] && [[ -d "./scripts/terraform/gcloud" ]]; then
+  taito_provider=${taito_provider//gcp/gcloud}
+  taito_uptime_provider=${taito_uptime_provider//gcp/gcloud}
+fi
+
 if [[ -d "./scripts/terraform/${taito_provider}" ]] && \
    "${taito_util_path}/confirm-execution.sh" "terraform" "${name}" \
      "Run terraform scripts for cloud provider ${taito_provider}"

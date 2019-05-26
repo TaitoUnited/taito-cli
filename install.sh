@@ -50,7 +50,7 @@ cat > ~/.taito/taito-config.sh <<EOL
 # - https://taito.dev/docs/05-configuration
 
 # Taito CLI
-taito_global_plugins="git-global docker-global google-global gcloud-global
+taito_global_plugins="git-global docker-global google-global gcp-global
   links-global template-global"
 
 # Docker

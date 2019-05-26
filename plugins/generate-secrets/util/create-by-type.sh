@@ -28,7 +28,7 @@ if [[ -z "${secret_value}" ]]; then
       done
       ;;
     file)
-      if [[ "${taito_provider:-}" == "gcloud" ]] && \
+      if [[ "${taito_provider:-}" == "gcp" ]] && \
          [[ "${secret_name}" == *"serviceaccount"* ]]; then
         opts=""
         if [[ ${google_authuser:-} ]]; then

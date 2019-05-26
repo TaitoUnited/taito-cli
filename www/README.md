@@ -46,7 +46,7 @@ See the [command reference](https://github.com/TaitoUnited/taito-cli/blob/dev/he
 Use preconfigured templates to set up your infrastructure and to deploy new projects on top of it. Everything works out-of-the-box with minimal configuration.
 
 ```sh
-taito zone create: gcloud
+taito zone create: gcp
 taito zone apply
 
 taito project create: full-stack

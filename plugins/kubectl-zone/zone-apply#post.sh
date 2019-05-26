@@ -6,7 +6,7 @@ name=${1}
 
 "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
 
-# TODO: Already stopped on gcloud?
+# TODO: Already stopped on gcp?
 # if "${taito_util_path}/confirm-execution.sh" "kubectl-dashboard" "${name}" \
 #   "Stop dashboard of Kubernetes as it is not needed in most cloud setups"
 # then
@@ -33,7 +33,7 @@ name=${1}
 #   echo "service account JSON key to file './tmp/cloudsql.json'." && \
 #   echo "The service account will be used to access database from Kubernetes." && \
 #   echo "You can delete the JSON file afterwards." && \
-#   # TODO open gcloud console
+#   # TODO open gcp console
 #   echo "Press enter after you have saved the file." && \
 #   read -r && \
 #   kubectl create secret generic "cloudsql-gserviceaccount" --namespace=devops \

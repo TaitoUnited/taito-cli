@@ -80,7 +80,7 @@ URLs:
 
 Provider and namespaces:
 
-- **taito_provider:** Provider (e.g. `aws`, `azure`, `gcloud`, `onpremise`).
+- **taito_provider:** Provider (e.g. `aws`, `azure`, `gcp`, `onpremise`).
 - **taito_provider_region:** Region of the provider.
 - **taito_provider_zone:** Zone of the provider.
 - **taito_zone:** Taito zone that contains the clusters/services that your application is deployed on. TODO explain taito zone.

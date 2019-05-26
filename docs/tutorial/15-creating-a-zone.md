@@ -11,7 +11,7 @@
 3. Create a taito zone based on the Google Cloud example with the following commands. Replace `EDIT` with your favorite editor. (TODO: zone create: TEMPLATE)
 
    ```shell
-   cp -r taito-cli/examples/zones/gcloud my-zone
+   cp -r taito-cli/examples/zones/gcp my-zone
    cd my-zone
    EDIT taito-config.sh
    taito zone apply

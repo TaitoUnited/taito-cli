@@ -4,7 +4,7 @@ project_id=$1
 organization_id=$2
 
 if [[ ${project_id} ]] && ! gcloud projects describe "${project_id}" &> /dev/null; then
-  billing_var="gcloud_billing_account_${taito_organization:-}"
+  billing_var="gcp_billing_account_${taito_organization:-}"
   billing_id=${!billing_var:-$taito_provider_billing_account_id}
   if [[ ! ${billing_id} ]]; then
     echo "Enter billing account id for the new Google Cloud project '${project_id}':"

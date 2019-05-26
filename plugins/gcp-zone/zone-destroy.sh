@@ -5,8 +5,8 @@
 name=${1}
 
 if [[ -n "${kubernetes_name:-}" ]]; then
-  if "${taito_util_path}/confirm-execution.sh" "gcloud-build-notifications" "${name}" \
-    "Destroy gcloud build notifications"
+  if "${taito_util_path}/confirm-execution.sh" "gcp-build-notifications" "${name}" \
+    "Destroy gcp build notifications"
   then
     "${taito_plugin_path}/util/teardown-build-slack-notifications.sh"
   fi
