@@ -18,17 +18,17 @@ fi
 # - taito env apply [--clean] [--start] [--init]
 exec_after=""
 if [[ ${taito_command} == "kaboom" ]]; then
-  exec_after="taito -c env-apply:${taito_env} --clean --start --init"
+  exec_after="taito ${taito_options:-} env-apply:${taito_env} --clean --start --init"
 elif [[ ${taito_command} == "env-apply" ]]; then
   if [[ "${switches}" == *"--start"* ]]; then
     # taito start [--init]
-    exec_after="taito -c start:${taito_env} --restart"
+    exec_after="taito ${taito_options:-} start:${taito_env} --restart"
     if [[ "${switches}" == *"--init"* ]]; then
       exec_after="${exec_after} --init"
     fi
   elif [[ "${switches}" == *"--init"* ]]; then
     # taito init
-    exec_after="taito -c init:${taito_env}"
+    exec_after="taito ${taito_options:-} init:${taito_env}"
   fi
 fi
 if [[ $exec_after ]] && [[ "${switches}" == *"--clean"* ]]; then

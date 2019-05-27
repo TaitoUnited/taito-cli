@@ -53,7 +53,7 @@ mkdir "./template-tmp"
   echo 'export taito_application=${taito_application:?}' >> _template-config.sh
   echo 'export taito_suffix=${taito_suffix:-}' >> _template-config.sh
   echo 'export taito_vc_repository=${taito_vc_repository}' >> _template-config.sh
-  taito -o '${taito_organization_param:-}' -c project migrate continue
+  taito ${taito_options:-} project migrate continue
 "
 
 # Call next command on command chain

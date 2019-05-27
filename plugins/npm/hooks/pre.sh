@@ -109,7 +109,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
 
   # run npm command
 
-  if [[ "${taito_verbose:-}" == "true" ]]; then
+  if [[ "${taito_debug:-}" == "true" ]]; then
     echo "taito_mode: ${taito_mode:-}"
     echo "taito_command: ${taito_command}"
     echo "npm_command: ${taito_command}"

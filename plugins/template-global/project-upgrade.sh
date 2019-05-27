@@ -19,7 +19,7 @@ mkdir "${template_project_path}/template-tmp"
   export GIT_PAGER=''
   git clone -q -b master --single-branch --depth 1 \
     ${template_source_git}/${template}.git ./template-tmp/${template}
-  taito -o '${taito_organization_param:-}' -c project upgrade continue
+  taito ${taito_options:-} project upgrade continue
 "
 
 # Call next command on command chain

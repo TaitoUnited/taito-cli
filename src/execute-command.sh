@@ -2,10 +2,10 @@
 # NOTE: This bash script is run inside docker container.
 
 # Parse options
-verbose="${taito_verbose:-false}"
-debug="${taito_debug:-false}"
-quiet="${taito_quiet:-false}"
-continue="${taito_continue:-false}"
+verbose=false # "${taito_verbose:-false}"
+debug=false # "${taito_debug:-false}"
+quiet=false # "${taito_quiet:-false}"
+continue=false # "${taito_continue:-false}"
 skip_override=false
 skip_rest=false
 args=()
@@ -43,6 +43,10 @@ do
         quiet=true
         shift || :
         ;;
+        -d|--dev)
+        # Ignore
+        shift || :
+        ;;
         --debug)
         verbose=true
         debug=true
@@ -69,7 +73,12 @@ do
   fi
 done
 
-# TODO Convert space command syntax to internal hyphen syntax
+# Convert space command syntax to internal hyphen syntax
+formatted=()
+while IFS= read -r line; do
+  formatted+=( "$line" )
+done < <( "${taito_src_path}/convert-command-syntax.sh" "${args[@]}" )
+args=("${formatted[@]}")
 
 # Determine command, target, env and parameters from args
 env_command="${args[0]}"
@@ -157,11 +166,22 @@ export taito_quiet=${quiet}
 export taito_setv=":"
 export taito_vout="/dev/null" # verbode mode output
 export taito_dout="/dev/null" # debug mode output
+export taito_options="-c"
+if [[ ${taito_mode:-} == "dev" ]]; then
+  taito_options="${taito_options} -d"
+fi
+if [[ ${taito_organization_param:-} ]]; then
+  taito_options="${taito_options} -o $taito_organization_param "
+fi
+if [[ ${quiet} == true ]]; then
+  taito_options="${taito_options} -q"
+fi
 if [[ ${verbose} == true ]]; then
   # Helper environment variables to be used in verbose mode
   taito_verbose=true
   taito_setv="set -x"
   taito_vout="/dev/stdout"
+  taito_options="${taito_options} -v"
 fi
 
 if [[ ${taito_mode} == "ci" ]]; then

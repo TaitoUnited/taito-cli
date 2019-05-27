@@ -59,7 +59,7 @@ if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database
         count=\$((\${count}+1))
       done
       sleep 5
-      taito -q init ${init_flags} | cat
+      taito -q ${taito_options:-} init ${init_flags} | cat
     }
     init &
   "

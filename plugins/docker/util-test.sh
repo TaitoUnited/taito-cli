@@ -23,7 +23,7 @@ echo
 # Determine command to be run on init phase
 init_command="echo 'Not running init (ci_exec_test_init=false)'" && \
 if [[ "${ci_exec_test_init:-}" == "true" ]]; then
-  init_command="taito init:${taito_env} --clean"
+  init_command="taito ${taito_options:-} init:${taito_env} --clean"
 fi && \
 
 # Determine test suite parameters

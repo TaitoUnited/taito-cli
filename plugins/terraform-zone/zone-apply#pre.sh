@@ -46,7 +46,7 @@ then
       echo "You most likely can change the password on cloud provider web console."
       echo "Look for modify button or users tab in the database section."
       echo
-      databases_link="$(taito -q link-databases | grep -v '^\s*$')"
+      databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$')"
       if [[ ${databases_link} ]]; then
         echo "Press enter to open the web console at ${databases_link}"
         read -r

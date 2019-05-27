@@ -35,7 +35,7 @@ if git rev-parse --is-inside-work-tree &> /dev/null; then
   echo
   echo \"Make the pull request with your web browser. Press enter to open browser.\"
   read -r
-  taito open-git
+  taito ${taito_options:-} open git
 
   if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
     echo

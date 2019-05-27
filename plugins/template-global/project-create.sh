@@ -38,7 +38,7 @@ echo "Please wait."
   echo 'export taito_suffix=${taito_suffix:-}' >> _template-config.sh && \
   echo 'export taito_vc_repository=${taito_vc_repository}' >> _template-config.sh && \
   rm -rf .git && \
-  taito -o '${taito_organization_param:-}' -c project create continue"
+  taito ${taito_options:-} -c project create continue"
 
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"

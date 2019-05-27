@@ -47,7 +47,7 @@ fi
 
 rm -f ./_template-config.sh
 
-taito project-docs
+taito ${taito_options:-} project docs
 
 read -t 1 -n 10000 discard || :
 echo
@@ -90,9 +90,9 @@ echo "Please wait."
   read -r
   echo
   if [[ \"${template_dest_git}\" == *\"bitbucket.org:\"* ]]; then
-    taito -c util-browser https://${template_default_vc_url}/${taito_vc_repository}/src/dev/${doc}
+    taito ${taito_options:-} util-browser https://${template_default_vc_url}/${taito_vc_repository}/src/dev/${doc}
   else
-    taito -c util-browser https://${template_default_vc_url}/${taito_vc_repository}/blob/dev/${doc}
+    taito ${taito_options:-} util-browser https://${template_default_vc_url}/${taito_vc_repository}/blob/dev/${doc}
   fi
 "
 
