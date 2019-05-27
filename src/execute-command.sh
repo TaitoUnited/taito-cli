@@ -544,7 +544,7 @@ export taito_global_plugins="${taito_global_plugins//gcloud/gcp}"
 export taito_plugins="${taito_plugins//gcloud/gcp}"
 export taito_plugins="${taito_plugins// git / git-global }"
 export taito_plugins="${taito_plugins// dev-secrets / default-secrets }"
-export taito_plugins="${taito_plugins// gcp-builder:-local / gcp-builder:-local gcp-ci:-local }"
+export taito_plugins="${taito_plugins// gcp-builder:-local/ gcp-builder:-local gcp-ci:-local}"
 
 # NOTE: For backwards compatibility (provider was renamed)
 export taito_provider="${taito_provider//gcloud/gcp}"
