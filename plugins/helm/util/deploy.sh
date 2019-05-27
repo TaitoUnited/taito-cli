@@ -80,6 +80,7 @@ if [[ -d "./scripts/helm" ]]; then
   cat ./scripts/helm.yaml.tmp > "${taito_vout}"
   echo > "${taito_vout}"
   (
+    export taito_provider=${taito_orig_provider:-$taito_provider}
     ${taito_setv:?}
     if [[ ${taito_zone} != "gcloud-temp1" ]]; then
       export HELM_TILLER_HISTORY_MAX=10
