@@ -380,7 +380,7 @@ if [[ "${taito_env}" == "local" ]] && \
      [[ "${command}" == "db-"* ]] || \
      [[ "${command}" == "init"* ]]
    ); then
-  docker_project="${PWD##*/}"
+  docker_project=$(echo "${PWD##*/}" | tr '[:upper:]' '[:lower:]')
   if [[ "${docker_legacy_networking}" == "true" ]] || \
      [[ $taito_host_uname == *"_NT"* ]]; then
     docker_project="${docker_project//-/}"
@@ -432,9 +432,16 @@ if [[ "${command}" == "storage"* ]]; then
   misc_flags="--privileged"
 fi
 
+# TTY fix for Docker Destop for Windows
+# https://github.com/docker/for-win/issues/1588
+winpty=""
+if [[ $taito_host_uname == *"_NT"* ]] && [[ ! $DOCKER_HOST ]]; then
+  winpty="winpty"
+fi
+
 # TODO do not pass taito_admin_key as command line argument
 docker_command="
-  docker run ${docker_it}
+  ${winpty} docker run ${docker_it}
     -v ${taito_home_path}/.taito:${taito_container_home}/.taito
     -v ${taito_home_path}/.ssh:${taito_container_home}/.ssh
     -v ${taito_home_path}/.terraform.d:${taito_container_home}/.terraform.d
