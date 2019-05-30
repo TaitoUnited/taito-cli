@@ -151,10 +151,6 @@ if [[ "${command}" == "--"* ]]; then
 fi
 
 # Export some variables to be used in configs and command execution
-export taito_command_context_prefix=
-if [[ ${taito_command_context:-} ]]; then
-  taito_command_context_prefix="${taito_command_context}: "
-fi
 export taito_default_password="${taito_default_password:-secret}"
 export taito_continue="true"
 export taito_skip_override="${skip_override}"
@@ -231,12 +227,19 @@ fi
 . "${taito_util_path}/read-project-taito-config.sh" "${taito_env}" && \
 
 # Set output formatting
-export H1s="${taito_style_h1_s:-\\x1B[92m\\x1B[1m[}" # Heading 1 start: Light green, bold
-export H1e="${taito_style_h1_e:-]\\x1B[0m}"        # Heading 1 end
-export H2s="${taito_style_h2_s:-\\x1B[95m[}"       # Heading 2 start: Light magenta
-export H2e="${taito_style_h2_e:-]\\x1B[0m}"        # Heading 2 end
-export NOTEs="${taito_style_note_s:-\\x1B[104m[}"  # Note start: Ligth blue background
-export NOTEe="${taito_style_note_e:-]\\x1B[0m}"    # Note end
+export H1s="${taito_style_h1_s:-\\x1B[92m\\x1B[1m[}"  # Heading 1 start: Light green, bold
+export H1e="${taito_style_h1_e:-]\\x1B[0m}"           # Heading 1 end
+export H1Ps="${taito_style_h1_s:-\\x1B[95m\\x1B[1m}"  # Heading 1 prefix start: Light green, bold
+export H1Pe="${taito_style_h1_e:-\\x1B[0m}"           # Heading 1 prefix end
+export H2s="${taito_style_h2_s:-\\x1B[95m[}"          # Heading 2 start: Light magenta
+export H2e="${taito_style_h2_e:-]\\x1B[0m}"           # Heading 2 end
+export NOTEs="${taito_style_note_s:-\\x1B[95m}"       # Note start: Ligth blue background
+export NOTEe="${taito_style_note_e:-\\x1B[0m}"        # Note end
+
+export taito_command_context_prefix=
+if [[ ${taito_command_context:-} ]]; then
+  taito_command_context_prefix="${H1Ps}${taito_command_context}${H1Pe} "
+fi
 
 # For backwards compatibility --> TODO remove!
 if [[ ! "${taito_version}" ]]; then
