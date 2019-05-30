@@ -11,11 +11,8 @@ if [[ "${ssh_db_proxy:-}" ]]; then
 
   echo
   echo "Database connection details:"
-  echo "- host: 127.0.0.1"
-  echo "- port: ${database_port:-}"
-  echo "- database: ${database_name:-}"
-  echo "- username: ${database_username:-}, ${database_name}, ${database_name}_app, ${database_name}ap or your personal username"
-  echo "- password: ${database_password:-?}"
+  "${taito_util_path}/display-db-proxy-details.sh"
+  echo
   echo
   echo "Press enter to shutdown proxy"
   read -r

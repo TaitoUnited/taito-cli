@@ -32,7 +32,8 @@ if [[ $kubectl_secrets_retrieved != true ]]; then
      [[ ${taito_command} == "ci-release" ]]; then
     secret_filter="git"
   elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
-     [[ ${taito_command} == "test" ]]; then
+       [[ ${taito_command} == "db-proxy" ]] || \
+       [[ ${taito_command} == "test" ]]; then
     secret_filter="db"
   fi
 fi
@@ -40,7 +41,8 @@ fi
 if [[ ${secret_filter} ]]; then
   echo
   echo -e "${H1s}kubectl${H1e}"
-  if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
+  if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
+     [[ ${taito_command} == "db-proxy" ]]; then
     echo "Getting secrets from Kubernetes for DB access"
   else
     echo "Getting secrets from Kubernetes for making a release"

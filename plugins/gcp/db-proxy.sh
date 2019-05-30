@@ -12,12 +12,8 @@ port="${1}"
   fi
 
   echo "Database connection details:"
-  echo "- host: 127.0.0.1"
-  echo "- port: ${database_port:-}"
-  echo "- database: ${database_name:-}"
-  echo "- username: ${database_username:-}, ${database_name}, ${database_name}_app, ${database_name}ap or your personal username"
-  echo "- password: ${database_password:-?}"
-
+  "${taito_util_path}/display-db-proxy-details.sh"
+  echo
   "${taito_plugin_path}/util/db-proxy-start.sh" && \
   "${taito_plugin_path}/util/db-proxy-stop.sh"
 ) && \
