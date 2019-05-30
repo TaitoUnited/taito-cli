@@ -20,11 +20,11 @@ if [[ "${taito_host:-}" ]] && \
    [[ "${commands}" == *"docker"* ]]; then
   . "${taito_cli_path}/plugins/ssh/util/opts.sh"
   ssh -t ${opts} "${taito_ssh_user:?}@${taito_host}" \
-    "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; (${commands})'"
+    "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; ${commands}'"
 elif [[ "${taito_mode:-}" == "ci" ]]; then
-  eval "(${commands})"
+  eval "${commands}"
 elif [[ -n ${taito_run:-} ]]; then
-  echo "(${commands})" >> ${taito_run}
+  echo "${commands}" >> ${taito_run}
   sleep "${sleep_seconds:-2}"
 else
   echo

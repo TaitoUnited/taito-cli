@@ -1,13 +1,13 @@
 #!/bin/bash
 
-name=${1}
-
 # TODO: duplicate code with env-apply
 
-if [[ "${taito_env}" != "local" ]]; then
-  echo "Skipping database create for remote environment"
+switches=" ${*} "
+
+if [[ "${taito_env}" != "local" ]] || [[ "${switches}" != *" --clean "* ]]; then
+  echo "Not cleaning database containers"
 else
-  echo "Recreating database(s) by cleaning database container(s)"
+  echo "Cleaning database container(s)"
   (
     all=$("$taito_util_path/get-targets-by-type.sh" database)
     databases=("${taito_target:-$all}")
@@ -23,15 +23,21 @@ else
       # Leave only directory name
       dir_name="${dir_name##*/}"
 
-
       compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
-      "${taito_util_path}/execute-on-host-fg.sh" "
+      "${taito_util_path}/execute-on-host.sh" "
         docker-compose -f $compose_file stop ${pod:?}
         docker-compose -f $compose_file rm --force ${pod:?}
         docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
         docker-compose -f $compose_file start ${pod:?}
       "
     done
+    if [[ ${all} ]]; then
+      sleep 10
+      echo
+      echo "Waiting for databases to start..."
+      sleep 30
+      echo "Done waiting"
+    fi
   )
 fi && \
 

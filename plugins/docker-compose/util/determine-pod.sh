@@ -8,7 +8,7 @@
 #   pod="${taito_target:?Target not given}"
 # fi
 
-pod="${taito_target:?Target not given}"
+pod="${1:-$taito_target}"
 if [[ ${pod} != "${taito_project}-"* ]]; then
   pod="${taito_project}-${pod}"
 fi
