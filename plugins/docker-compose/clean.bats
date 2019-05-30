@@ -16,9 +16,12 @@ load "${taito_cli_path}/test/util/test-helper.sh"
   export taito_project="acme-chat"
   test clean.sh
 
-  assert_executed docker rmi --force taito-cli_acme-chat-server
+  assert_executed docker-compose -f docker-compose.yaml stop acme-chat-server
+  assert_executed docker-compose -f docker-compose.yaml rm --force acme-chat-server
+  assert_executed docker-compose -f docker-compose.yaml up --force-recreate --build --no-start acme-chat-server
+  assert_executed docker-compose -f docker-compose.yaml start acme-chat-server
   assert_executed call-next.sh
-  assert_executed_count 2
+  assert_executed_count 5
 }
 
 @test "docker-compose: 'taito clean:npm' (do not clean docker)" {
