@@ -151,6 +151,10 @@ if [[ "${command}" == "--"* ]]; then
 fi
 
 # Export some variables to be used in configs and command execution
+export taito_command_context_prefix=
+if [[ ${taito_command_context:-} ]]; then
+  taito_command_context_prefix="${taito_command_context}: "
+fi
 export taito_default_password="${taito_default_password:-secret}"
 export taito_continue="true"
 export taito_skip_override="${skip_override}"

@@ -126,11 +126,17 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     #       compatibilty issues.
     taito_hook_command_executed=true
     if [[ "${run_on_host}" == "true" ]]; then
-      "${taito_util_path}/execute-on-host-fg.sh" "\
-        npm run -s ${npm_command}${params}"
+      "${taito_util_path}/execute-on-host-fg.sh" "
+        export taito_command_context='npm ${npm_command}'
+        npm run -s ${npm_command}${params}
+      "
       exit_code=0
     else
-      (${taito_setv:?}; npm run -s ${npm_command}${params})
+      (
+        export taito_command_context="npm ${npm_command}"
+        ${taito_setv:?}
+        npm run -s ${npm_command}${params}
+      )
       exit_code=$?
     fi
   fi

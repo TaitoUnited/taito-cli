@@ -13,7 +13,7 @@ if [[ "${next}" != "" ]]; then
        [[ "${taito_debug}" == "true" ]] || [[ "${next}" != *"/hooks/"* ]] \
      ); then
     echo
-    echo -e "${H1s}${name}${H1e}"
+    echo -e "${H1s}${taito_command_context_prefix:-}${name}${H1e}"
   fi
   export taito_plugin_path
   taito_plugin_path=$(echo "${next/\hooks/}" | sed -e 's/\/[^\/]*$//g')
