@@ -1,4 +1,5 @@
 #!/bin/bash
+: ${taito_target_env:?}
 
 # Reads postgres usernames and passwords to environment variables.
 
@@ -21,3 +22,13 @@ fi
 . "${taito_util_path}/secret-by-name.sh"
 database_build_password="${secret_value}"
 database_build_password_changed="${secret_changed}"
+
+if [[ ${taito_target_env} != "local" ]] && \
+   [[ ! $database_app_password ]] && \
+   [[ ! $database_build_password ]] && \
+   [[ ${taito_quiet:-} != true ]]; then
+  echo -e "${NOTEs}"
+  echo "WARNING: Failed to determine database passwords. If you have not been"
+  echo "authenticated, run taito 'auth:${taito_target_env}' and try again."
+  echo -e "${NOTEe}"
+fi
