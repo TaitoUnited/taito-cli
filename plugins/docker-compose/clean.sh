@@ -14,9 +14,14 @@ elif [[ ${taito_target:-} ]]; then
   # Leave only directory name
   dir_name="${dir_name##*/}"
 
-  echo "NOTE: You must run 'taito stop' first or else clean fails"
-  "${taito_util_path}/execute-on-host-fg.sh" \
-    "docker rmi --force ${dir_name}_${pod:?}"
+  # echo "NOTE: You must run 'taito stop' first or else clean fails"
+  compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
+  "${taito_util_path}/execute-on-host-fg.sh" "
+    docker-compose -f $compose_file stop ${pod:?}
+    docker-compose -f $compose_file rm --force ${pod:?}
+    docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
+    docker-compose -f $compose_file start ${pod:?}
+  "
 else
   # TODO [data | build] as arguments
   echo "Docker will remove images and volumes after taito-cli has exited"

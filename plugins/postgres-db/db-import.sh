@@ -9,6 +9,7 @@
 if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   filename="${1:?Filename not given}"
   username="${2}"
+  echo "Importing ${1}"
 
   (
     cd "${taito_current_path}"

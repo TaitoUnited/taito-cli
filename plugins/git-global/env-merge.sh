@@ -31,17 +31,14 @@ do
     s="${merge%->*}"
     d="${merge##*->}"
 
-    # Check if production env has been configured
-    if [[ ${d} == "master" ]] && ( \
-         [[ $(grep "\\* \\[ \\] Production done" CONFIGURATION.md 2> /dev/null) != "" ]] || \
-         [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null) != "" ]] \
-      ); then
+    # Check if project has been fully configured
+    if [[ ${d} == "master" ]] && \
+       [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]; then
       echo
-      echo "----------------------------------------------------------------------"
-      echo "WARNING! The production environment has not yet been fully configured."
-      echo "See the '[ ] Production done' and '[ ] All done' checkboxes in"
-      echo "CONFIGURATION.md."
-      echo "----------------------------------------------------------------------"
+      echo "--------------------------------------------------------"
+      echo "WARNING: This project has not yet been fully configured."
+      echo "See the '[ ] All done' checkboxes in CONFIGURATION.md."
+      echo "--------------------------------------------------------"
     fi
 
     # TODO execution should end if one merge fails

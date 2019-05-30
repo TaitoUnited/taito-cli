@@ -17,6 +17,15 @@ if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || \
     [[ ${type} == "init" ]] || [[ ${type} == "reset" ]]
 then
   echo "gcloud init"
+  echo
+  echo -e "${NOTEs}"
+  echo "---------------------------------------------------------------"
+  echo "You can select anything as your default GCP project and region."
+  echo "Taito CLI will always use the values defined in taito config"
+  echo "files instead of the default GCP settings you have selected"
+  echo "during authentication."
+  echo "---------------------------------------------------------------"
+  echo -e "${NOTEe}"
   # TODO run 'gcloud auth revoke ${account}' ?
   (${taito_setv:?}; gcloud init --console-only)
 fi && \

@@ -8,17 +8,13 @@ The following software needs to be installed on your computer before you can ins
 - [Git](https://git-scm.com/)
 - [Docker](https://docs.docker.com/install/)
 
-**Note for Windows:**
+**Note for Windows:** [Git for Windows](https://gitforwindows.org/) includes both git and bash. [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/) is recommended, but you can also use the legacy [Docker Toolbox](https://docs.docker.com/toolbox/overview/) instead. If you are using Docker Toolbox, it is recommended to use the Docker Toolbox as you unix-like shell instead of Git Bash.
 
-[Git for Windows](https://gitforwindows.org/) includes both git and bash. [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/) is recommended, but you can use also the legacy [Docker Toolbox](https://docs.docker.com/toolbox/overview/).
-
-**Note for Linux:**
-
-See [Docker Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/).
+**Note for Linux:** See [Docker Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/).
 
 ### Automatic installation
 
-1. Install Taito CLI by running the following commands on shell:
+1. Install Taito CLI by running the following commands on your unix-like shell (e.g. bash):
 
     ```shell
     export TAITO_INSTALL_DIR=~/taito-cli

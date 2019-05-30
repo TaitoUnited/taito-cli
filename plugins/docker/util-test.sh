@@ -105,10 +105,10 @@ suites=( $(grep "${suite_filter}" "./${dir}/test-suites" 2> /dev/null) ) || :
 if [[ ${#suites[@]} == 0 ]]; then
   suites=( $(cat "./${dir}/test-suites" | head -1) )
   echo
-  echo -e "${NOTEs}---------------------------------------------------------${NOTEe}"
-  echo -e "${NOTEs}WARNING: No suite found with filter: ${suite_filter}${NOTEe}"
-  echo -e "${NOTEs}Running the default test suite: ${suites[0]}${NOTEe}"
-  echo -e "${NOTEs}---------------------------------------------------------${NOTEe}"
+  echo -e "${NOTEs}"
+  echo "WARNING: No suite found with filter: ${suite_filter}"
+  echo "Running the default test suite: ${suites[0]}"
+  echo -e "${NOTEe}"
   echo
 fi
 for suite in "${suites[@]}"
