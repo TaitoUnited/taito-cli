@@ -61,7 +61,7 @@ export_env_vars="\
 
 # Determine pod
 # shellcheck disable=SC1090
-. "${taito_cli_path}/plugins/docker-compose/util/determine-pod.sh" "${dir}" && \
+. "${taito_cli_path}/plugins/docker-compose/util/determine-pod.sh" && \
 
 # Determine command to be run on test phase
 docker_compose="false"

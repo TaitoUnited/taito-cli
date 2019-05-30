@@ -16,7 +16,8 @@ else
       # TODO: duplicate code with clean.sh
 
       # shellcheck disable=SC1090
-      . "${taito_plugin_path}/util/determine-pod.sh" "$database"
+      taito_target=$database
+      . "${taito_plugin_path}/util/determine-pod.sh"
 
       # Docker-compose uses directory name as image prefix by default
       dir_name="${taito_host_project_path:-/taito-cli}"
