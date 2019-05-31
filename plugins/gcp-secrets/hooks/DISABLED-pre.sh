@@ -9,7 +9,7 @@ if [[ "${taito_is_admin:-}" == true ]] && \
    ( [[ "${taito_command}" == "env-"* ]] || \
      [[ "${taito_command}" == "db-"* ]] ); then
 
-   echo -e "${H1s}gcp-secrets${H1e}"
+   echo -e "${taito_command_context_prefix:-}${H1s}gcp-secrets${H1e}"
    echo "Getting db password for admin"
 
    # TODO duplicate code with passwd-get

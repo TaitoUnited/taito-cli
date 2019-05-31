@@ -30,13 +30,13 @@ if [[ ${found} != "" ]]; then
           fi
           if [[ "${mode}" == "open" ]]; then
             if [[ ${taito_quiet:-} != "true" ]]; then
-              ${echo_command} -e "${H1s}links-global${H1e}"
+              ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
               ${echo_command} Opening link "${url}"
             fi
             "${taito_util_path}/${open_command}" "${url}"
           else
             [[ ${taito_quiet:-} != "true" ]] && \
-              ${echo_command} -e "${H1s}links-global${H1e}"
+              ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
               ${echo_command} "Showing link ${name}"
             ${echo_command} "${url}"
           fi

@@ -9,7 +9,7 @@ script="${run_scripts_location}/taito-${taito_command}#post.sh"
 if [[ -f ${script} ]]; then
   export taito_hook_command_executed=true
   echo
-  echo -e "${H1s}run${H1e}"
+  echo -e "${taito_command_context_prefix:-}${H1s}run${H1e}"
   if "$taito_util_path/confirm.sh" "Run script ${script}?" yes yes; then
     "${taito_util_path}/ssh-agent.sh" "${script}" "${@}"
   fi

@@ -12,7 +12,7 @@ if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
   if [[ $docker_compose_secrets_retrieved != true ]]; then
     # TODO fetch db secrets only? does artifact-release still require secrets?
     echo
-    echo -e "${H1s}docker-compose${H1e}"
+    echo -e "${taito_command_context_prefix:-}${H1s}docker-compose${H1e}"
     if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
        [[ ${taito_command} == "db-proxy" ]]; then
       echo "Retrieving secrets from ./secrets/${taito_env} for DB access"

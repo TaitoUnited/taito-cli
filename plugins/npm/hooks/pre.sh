@@ -118,7 +118,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   if [[ "${npm_command}" != "" ]]; then
     # Run it
     echo
-    echo -e "${H1s}npm${H1e}"
+    echo -e "${taito_command_context_prefix:-}${H1s}npm${H1e}"
     echo "Running script '${npm_command}${params}'"
     # NOTE: Intentionally removed parameter support: -- "${@}"
     # NOTE: All libs are installed using 'npm install' run on directly on host.

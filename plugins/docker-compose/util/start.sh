@@ -42,10 +42,11 @@ fi
 if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database "* ]]; then
   # Run 'taito init' automatically after database container has started
   init_flags=
-  if [[ "${switches}" == *"--clean"* ]]; then
-    init_flags="--clean"
-  fi
+  # if [[ "${switches}" == *"--clean"* ]]; then
+  #   init_flags="--clean"
+  # fi
 
+  # TODO: remove hardcoded database target: ${taito_project}-database
   # TODO: how to avoid hardcoded 'sleep 40'? DB container does not provide health checks.
   conditional_commands="
     ${conditional_commands}
@@ -58,7 +59,8 @@ if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database
         sleep 2
         count=\$((\${count}+1))
       done
-      sleep 5
+      sleep 10
+      export taito_command_context='init'
       taito -q ${taito_options:-} init ${init_flags} | cat
     }
     init &

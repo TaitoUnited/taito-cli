@@ -27,8 +27,8 @@ if [[ ${taito_target_env} != "local" ]] && \
    [[ ! $database_app_password ]] && \
    [[ ! $database_build_password ]] && \
    [[ ${taito_quiet:-} != true ]]; then
-  echo -e "${NOTEs}"
-  echo "WARNING: Failed to determine database passwords. If you have not been"
-  echo "authenticated, run taito 'auth:${taito_target_env}' and try again."
-  echo -e "${NOTEe}"
+  echo -e "${NOTEs}" > /dev/stderr
+  echo "WARNING: Failed to determine database passwords. If you have not been" > /dev/stderr
+  echo "authenticated, run taito 'auth:${taito_target_env}' and try again." > /dev/stderr
+  echo -e "${NOTEe}" > /dev/stderr
 fi

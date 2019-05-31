@@ -10,7 +10,7 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   proxy_running=$(pgrep "kubectl")
   echo
-  echo -e "${H1s}kubectl${H1e}"
+  echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
   if [[ "${proxy_running}" == "" ]]; then
     echo "Starting db proxy"
     "${taito_plugin_path}/util/use-context.sh"
@@ -40,7 +40,7 @@ fi
 
 if [[ ${secret_filter} ]]; then
   echo
-  echo -e "${H1s}kubectl${H1e}"
+  echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
   if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
      [[ ${taito_command} == "db-proxy" ]]; then
     echo "Getting secrets from Kubernetes for DB access"

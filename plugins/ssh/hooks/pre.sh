@@ -11,7 +11,7 @@ do
   if [[ $ssh_proxy_running == "false" ]] && \
      [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
     echo
-    echo -e "${H1s}ssh${H1e}"
+    echo -e "${taito_command_context_prefix:-}${H1s}ssh${H1e}"
     . ${taito_plugin_path}/util/opts.sh
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"

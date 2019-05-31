@@ -6,7 +6,7 @@ if [[ ${taito_provider:-} == "gcp" ]] && \
    [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   echo
-  echo -e "${H1s}gcp${H1e}"
+  echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   echo "Stopping all db proxies"
   "${taito_plugin_path}/util/db-proxy-stop.sh"
 fi

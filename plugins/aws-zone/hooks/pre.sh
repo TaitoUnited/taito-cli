@@ -6,7 +6,7 @@
 
 if [[ $taito_command == "zone-"* ]]; then
   echo
-  echo -e "${H1s}aws-zone${H1e}"
+  echo -e "${taito_command_context_prefix:-}${H1s}aws-zone${H1e}"
   "${taito_cli_path}/plugins/aws/util/auth.sh"
 fi
 

@@ -18,17 +18,23 @@ fi
 # - taito env apply [--clean] [--start] [--init]
 exec_after=""
 if [[ ${taito_command} == "kaboom" ]]; then
-  exec_after="taito ${taito_options:-} env-apply:${taito_env} --clean --start --init"
+  exec_after="
+    export taito_command_context='env apply'
+    taito ${taito_options:-} env-apply:${taito_env} --clean --start --init"
 elif [[ ${taito_command} == "env-apply" ]]; then
   if [[ "${switches}" == *"--start"* ]]; then
     # taito start [--init]
-    exec_after="taito ${taito_options:-} start:${taito_env} --restart"
+    exec_after="
+      export taito_command_context='start'
+      taito ${taito_options:-} start:${taito_env} --restart"
     if [[ "${switches}" == *"--init"* ]]; then
       exec_after="${exec_after} --init"
     fi
   elif [[ "${switches}" == *"--init"* ]]; then
     # taito init
-    exec_after="taito ${taito_options:-} init:${taito_env}"
+    exec_after="
+      export taito_command_context='init'
+      taito ${taito_options:-} init:${taito_env}"
   fi
 fi
 if [[ $exec_after ]] && [[ "${switches}" == *"--clean"* ]]; then
@@ -47,24 +53,24 @@ if [[ ${was_executed} == false ]]; then
   if [[ "${taito_command}" == "build-prepare" ]]; then
     # None of the enabled plugins has implemented build prepare
     echo
-    echo -e "${H1s}basic${H1e}"
+    echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
     echo "Nothing to prepare"
   elif [[ "${taito_command}" == "build-release" ]]; then
     # None of the enabled plugins has implemented build release
     echo
-    echo -e "${H1s}basic${H1e}"
+    echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
     echo "DONE!"
   elif [[ "${taito_command}" == "init" ]]; then
     # None of the enabled plugins has implemented init
     echo
-    echo -e "${H1s}basic${H1e}"
+    echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
     echo "Nothing to initialize"
   elif [[ ${was_executed} == false ]]; then
     # Command not found
     if [[ "${taito_orig_command}" != " " ]]; then
       # Show matching commands
       echo
-      echo -e "${H1s}basic${H1e}"
+      echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
       echo "Unknown command: '${taito_orig_command//-/ }'. Perhaps one of the following commands is the one"
       echo "you meant to run. Run 'taito -h' to get more help."
       export taito_command_chain=""

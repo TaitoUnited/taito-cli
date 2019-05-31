@@ -6,7 +6,7 @@
 # Automatic authentication on 'env apply'
 if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo
-  echo -e "${H1s}gcp${H1e}"
+  echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   echo "Authenticating"
   "${taito_plugin_path}/util/auth.sh"
 fi && \
@@ -15,7 +15,7 @@ fi && \
 if [[ "${taito_mode:-}" == "ci" ]] && \
    [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]]; then
   echo
-  echo -e "${H1s}gcp${H1e}"
+  echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   echo "Getting credentials for kubernetes"
   "${taito_plugin_path}/util/get-credentials-kube.sh"
 fi && \
@@ -26,7 +26,7 @@ if [[ ${taito_provider:-} == "gcp" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
   echo
-  echo -e "${H1s}gcp${H1e}"
+  echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   if [[ "${proxy_running}" == "" ]]; then
     echo "Starting db proxy"
     "${taito_plugin_path}/util/db-proxy-start.sh" "true"
