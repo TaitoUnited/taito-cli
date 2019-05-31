@@ -21,6 +21,7 @@ const theme = {
     800: '#2c353d',
     900: '#22292F',
   },
+  info: '#5aafd0',
   black: '#222',
   white: '#fff',
 };

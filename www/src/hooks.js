@@ -12,3 +12,28 @@ export const useForceTrailingSlash = () => {
     }
   }, []);
 };
+
+// https://usehooks.com/useOnScreen/
+export const useOnScreen = (ref, rootMargin = '0px') => {
+  const [isIntersecting, setIntersecting] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIntersecting(entry.isIntersecting);
+      },
+      {
+        rootMargin,
+      }
+    );
+
+    if (el) observer.observe(el);
+
+    return () => {
+      observer.unobserve(el);
+    };
+  }, [ref, rootMargin]);
+
+  return isIntersecting;
+};
