@@ -54,10 +54,6 @@ export default () => (
           lines={[
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>deployment deploy:test</Terminal.LineSuffix>,
-            ],
-            [
-              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>status:test</Terminal.LineSuffix>,
             ],
             [
@@ -66,7 +62,15 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>db copy:test dev</Terminal.LineSuffix>,
+              <Terminal.LineSuffix>logs:server:test</Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
+              <Terminal.LineSuffix>db copy:dev test</Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
+              <Terminal.LineSuffix>db connect:test</Terminal.LineSuffix>,
             ],
           ]}
         />
@@ -76,12 +80,14 @@ export default () => (
 
       <Section>
         <SectionText>
-          <SectionTitle>Preconfigured templates</SectionTitle>
+          <SectionTitle>Multicloud, on any platform</SectionTitle>
           <p>
-            Use preconfigured templates to set up your infrastructure and to
-            deploy new projects on top of it.
+            Deploy your applications to multiple platforms without any extra
+            hassle. Leverage public cloud for fluent collaboration between
+            in-house and external personnel during development. Deploy to
+            on-premises to meet the extra security requirements of a production
+            environment.
           </p>
-          <p>Everything works out-of-the-box with minimal configuration.</p>
         </SectionText>
 
         <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
@@ -94,7 +100,7 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>zone apply</Terminal.LineSuffix>,
+              <Terminal.LineSuffix>zone create: vmware</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
@@ -105,6 +111,10 @@ export default () => (
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>env apply:dev</Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
+              <Terminal.LineSuffix>env apply:canary</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
@@ -121,9 +131,15 @@ export default () => (
           <SectionTitle>Simple to use</SectionTitle>
           <p>
             Many daily tasks, such as connecting to a database, can be extremely
-            tedious.
+            tedious. Before actually connecting to the database, you have to
+            locate the correct database cluster and the correct database in it.
+            You may also have to start a proxy for establishing a secure
+            connection, and to retrieve credentials from somewhere for database
+            access.
           </p>
-          <p>TODO: more here.</p>
+          <p>
+            With Taito CLI you achieve all this with a one simple command.
+          </p>
         </SectionText>
 
         <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
@@ -131,11 +147,15 @@ export default () => (
         <Terminal
           lines={[
             [
+              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
+              <Terminal.LineSuffix>db connect:test</Terminal.LineSuffix>,
+            ],
+            [
               <Terminal.LinePrefix color={theme.grey[500]}>
-                echo
+                #
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                "Connecting to a DB without taito-cli"
+                Without Taito CLI:
               </Terminal.LineSuffix>,
             ],
             [
@@ -144,20 +164,23 @@ export default () => (
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
                 -instances=acme-zone:europe-west1:acme-postgres=tcp:0.0.0.0:5001
+              </Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix color={theme.info}>
+                psql
+              </Terminal.LinePrefix>,
+              <Terminal.LineSuffix>
                 psql -h 127.0.0.1 -p 5001 -d acme_chat_test -U acme_chat_test
               </Terminal.LineSuffix>,
             ],
             [
-              <Terminal.LinePrefix color={theme.grey[500]}>
-                echo
+              <Terminal.LinePrefix color={theme.info}>
+                output: Password:
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                "Connecting to a DB with taito-cli"
+                ******************
               </Terminal.LineSuffix>,
-            ],
-            [
-              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>db connect:test</Terminal.LineSuffix>,
             ],
           ]}
         />
@@ -167,10 +190,18 @@ export default () => (
 
       <Section>
         <SectionText>
-          <SectionTitle>Modern CI/CD</SectionTitle>
+          <SectionTitle>No lock-in</SectionTitle>
           <p>
-            Taito CLI is shipped as a Docker container, and it is a good fit
-            with modern container-based CI/CD pipelines.
+            Taito CLI is a lightweight wrapper that reduces technology and
+            vendor lock-in by providing a standard command set on top of various
+            platform specific tools. You just run a simple taito command, and
+            Taito CLI runs a number of not-so-simple commands under the hood
+            based on your configuration.
+          </p>
+          <p>
+            However, you can use all those tools also directly without Taito
+            CLI, and therefore you can stop using Taito CLI at any time, if you
+            like. There is no lock-in with Taito CLI.
           </p>
         </SectionText>
 
@@ -180,25 +211,41 @@ export default () => (
           lines={[
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>build prepare:dev</Terminal.LineSuffix>,
+              <Terminal.LineSuffix>--verbose status:dev</Terminal.LineSuffix>,
             ],
             [
-              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
+              <Terminal.LinePrefix color={theme.info}>
+                output: kubectl
+              </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                artifact prepare:client:dev
+                config use-context acme-chat-dev
               </Terminal.LineSuffix>,
             ],
             [
-              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>db deploy:dev</Terminal.LineSuffix>,
+              <Terminal.LinePrefix color={theme.info}>
+                output: kubectl
+              </Terminal.LinePrefix>,
+              <Terminal.LineSuffix>get cronjobs</Terminal.LineSuffix>,
             ],
             [
-              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>test:dev</Terminal.LineSuffix>,
+              <Terminal.LinePrefix color={theme.info}>
+                output: kubectl
+              </Terminal.LinePrefix>,
+              <Terminal.LineSuffix>get pods</Terminal.LineSuffix>,
             ],
             [
-              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>deployment verify:dev</Terminal.LineSuffix>,
+              <Terminal.LinePrefix color={theme.info}>
+                output: kubectl
+              </Terminal.LinePrefix>,
+              <Terminal.LineSuffix>top pod</Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix color={theme.info}>
+                output: helm
+              </Terminal.LinePrefix>,
+              <Terminal.LineSuffix>
+                list --namespace acme-chat-dev
+              </Terminal.LineSuffix>,
             ],
           ]}
         />
@@ -255,83 +302,13 @@ export default () => (
 
       <Section>
         <SectionText>
-          <SectionTitle>No lock-in</SectionTitle>
-          <p>
-            Taito CLI is a lightweight wrapper that reduces technology and
-            vendor lock-in by providing a standard command set on top of various
-            tools.
-          </p>
-          <p>
-            However, you can use those tools also directly without Taito CLI,
-            and therefore you can stop using Taito CLI at any time, if you like.
-          </p>
-        </SectionText>
-
-        <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
-
-        <Terminal
-          lines={[
-            [
-              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>—-verbose status:dev</Terminal.LineSuffix>,
-            ],
-            [
-              <Terminal.LinePrefix color={theme.grey[500]}>
-                echo
-              </Terminal.LinePrefix>,
-              <Terminal.LineSuffix>
-                "Want to use your tools directly?"
-              </Terminal.LineSuffix>,
-            ],
-            [
-              <Terminal.LinePrefix color={theme.info}>
-                kubectl
-              </Terminal.LinePrefix>,
-              <Terminal.LineSuffix>
-                config use-context acme-chat-dev
-              </Terminal.LineSuffix>,
-            ],
-            [
-              <Terminal.LinePrefix color={theme.info}>
-                kubectl
-              </Terminal.LinePrefix>,
-              <Terminal.LineSuffix>get cronjobs</Terminal.LineSuffix>,
-            ],
-            [
-              <Terminal.LinePrefix color={theme.info}>
-                kubectl
-              </Terminal.LinePrefix>,
-              <Terminal.LineSuffix>get pods</Terminal.LineSuffix>,
-            ],
-            [
-              <Terminal.LinePrefix color={theme.info}>
-                kubectl
-              </Terminal.LinePrefix>,
-              <Terminal.LineSuffix>top pod</Terminal.LineSuffix>,
-            ],
-            [
-              <Terminal.LinePrefix color={theme.info}>
-                helm
-              </Terminal.LinePrefix>,
-              <Terminal.LineSuffix>
-                list --namespace acme-chat-dev
-              </Terminal.LineSuffix>,
-            ],
-          ]}
-        />
-      </Section>
-
-      <Divider />
-
-      <Section>
-        <SectionText>
           <SectionTitle>Extensible</SectionTitle>
           <p>
             Add Taito CLI support for any technology by implementing a Taito CLI
             plugin. Create custom commands and share them with your colleagues
-            as Taito CLI extensions.
+            as Taito CLI extensions. Implement project specific Taito CLI
+            commands with npm or make.
           </p>
-          <p>Implement project specific Taito CLI commands with npm or make.</p>
         </SectionText>
 
         <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
@@ -380,12 +357,13 @@ export default () => (
               </Terminal.LineSuffix>,
             ],
             <span>
-              taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
+              output: taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
             </span>,
-            <span>taito_global_plugins="myorg-git-global ..."</span>,
+            <span>output: taito_global_plugins="myorg-git-global ..."</span>,
           ]}
         />
       </Section>
+
     </Content>
   </Wrapper>
 );

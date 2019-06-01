@@ -4,7 +4,7 @@ Production environment uses a domain validated SSL/TLS certificate by default. I
 
 A domain validated (DV) certificate does not provide identity assurance and therefore it is not recommended for e-Commerce or online financial transactions. In addition, sites with an organization validated (OV) or an extended validation (EV) certificate may seem more trustworthy in the eyes of some users. Most users won't notice any difference if an OV certificate is used instead of a DV certificate. However, if an EV certificate is being used, the organization name and country are shown clearly on the address bar of the browser. Therefore many large organizations use EV certificates on their sites even though they are pricey and require extra effort.
 
-#### 1. Create a certificate signing request (csr) and send it to CA
+### 1. Create a certificate signing request (csr) and send it to CA
 
 Add `tls.key:csrkey` secret for the production domain name in `taito-config.sh` file.
 
@@ -32,7 +32,7 @@ Send the `.csr` file to the Certificate Authority.
 
 > TODO wildcard certificate naming --> x-myapp-comain-com
 
-#### 2. Create a chained certificate file
+### 2. Create a chained certificate file
 
 You get a bunch of certificate files from the Certificate Authority. You should combine them in a correct order to get a chained certificate file that contains all of them. Some examples:
 
@@ -42,7 +42,7 @@ cat app_mydomain_com.crt TrustedSecureCertificateAuthority5.crt USERTrustRSAAddT
 
 https://medium.com/two-cents/certificate-chain-example-e37d68c3a3f0
 
-#### 3. Save the chained certificate file to Kubernetes
+### 3. Save the chained certificate file to Kubernetes
 
 Add `tls.crt:file` secret for the production domain name in `taito-config.sh` file.
 
@@ -63,7 +63,7 @@ Save the chained crt file to Kubernetes:
 taito env rotate:prod myapp-mydomain-com-1.tls.crt
 ```
 
-#### 4. Take the new certificate into use
+### 4. Take the new certificate into use
 
 Define `myapp-mydomain-com-1` secret for the production domain name in `helm-prod.yaml`:
 
@@ -81,10 +81,10 @@ Either merge the change to master branch with `taito env merge:dev prod`, or dep
 taito deployment deploy:prod
 ```
 
-#### 5. Renew the certificate
+### 5. Renew the certificate
 
 TODO
 
-#### 6. Revert back to the default DV certificate
+### 6. Revert back to the default DV certificate
 
 You can revert back to the default DV certificate just by removing the `certSecret` setting for the domain from `helm-prod.yaml`.

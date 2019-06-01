@@ -22,7 +22,7 @@ TODO: Something about Taito CLI vs external extensions.
 
 ### Website development
 
-For website development, see the [WEBSITE.md](WEBSITE.md).
+For website development, see the [www/README.md](www/README.md).
 
 ### Taito CLI development
 

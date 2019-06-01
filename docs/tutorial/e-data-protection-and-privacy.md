@@ -1,4 +1,4 @@
-### APPENDIX E: Data protection and privacy (GDPR)
+## APPENDIX E: Data protection and privacy (GDPR)
 
 This section provides documentation and a checklist for data protection and privacy. Most of the checklist steps concern personal data (GDPR), but many of them can, and should, be applied to any confidential data to keep the data safe.
 
@@ -10,11 +10,11 @@ Glossary:
 * **Data processor:** The entity that processes data on behalf of the Data Controller. For example, the company that hosts the software system and provides tehcnical support.
 * **[Data Protection Officer (DPO)](https://eugdprcompliant.com/what-is-a-data-protection-officer/):** Ensures that organisation processes personal data in compliance with data protection rules.
 
-#### Documentation
+### Documentation
 
 > TODO: Add documentation here (see checklist)
 
-#### Checklist
+### Checklist
 
 > Go through the checklist and leave a comment for each: `COMMENT: ...`.
 

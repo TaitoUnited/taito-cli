@@ -36,12 +36,12 @@ This tutorial guides you through common software development scenarios in a chro
 
 ### Appendixes
 
-* [A. Technology tutorials](a-technology-tutorials)
-* [B. Software design](b-software-design)
-* [C. Modern server infrastructure](c-modern-server-infrastructure)
-* [D. Security](d-security)
-* [E. Data protection and privacy (GDPR)](e-data-protection-and-privacy)
-* [F. SSL/TLS certificates](f-certificates)
+* [A. Technology tutorials](/tutorial/a-technology-tutorials)
+* [B. Software design](/tutorial/b-software-design)
+* [C. Modern server infrastructure](/tutorial/c-modern-server-infrastructure)
+* [D. Security](/tutorial/d-security)
+* [E. Data protection and privacy (GDPR)](/tutorial/e-data-protection-and-privacy)
+* [F. SSL/TLS certificates](/tutorial/f-certificates)
 
 ---
 
