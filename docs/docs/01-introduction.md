@@ -10,7 +10,7 @@ The standardized command set and reusable project templates enable easy collabor
 
 You can also easily extend the predefined command set with your own custom commands and share them with your colleagues. And since Taito CLI is shipped as a Docker container image, no tools need to be installed on the host operating system. All dependencies are shipped within the container image.
 
-Taito CLI is a wrapper that reduces technology and vendor lock-in by providing a standard command set on top of various tools. However, there is no lock-in with Taito CLI. You can use all the tools and taito configuration files also directly without Taito CLI, and therefore you can stop using Taito CLI at any time, if you like.
+Taito CLI is a lightweight wrapper that reduces technology and vendor lock-in by providing a standard command set on top of various tools. However, there is no lock-in with Taito CLI. You can use all the tools and taito configuration files also directly without Taito CLI, and therefore you can stop using Taito CLI at any time, if you like.
 
 ---
 

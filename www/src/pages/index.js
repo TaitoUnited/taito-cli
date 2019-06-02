@@ -175,7 +175,7 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                output: Password:
+                out: Password:
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
                 ******************
@@ -198,7 +198,7 @@ export default () => (
             under the hood based on your configuration.
           </p>
           <p>
-            However, you can use all those tools also directly without Taito
+            However, you can use all the tools also directly without Taito
             CLI. Therefore you can stop using Taito CLI at any time, if you
             like. There is no lock-in with Taito CLI.
           </p>
@@ -214,7 +214,20 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                output: kubectl
+                out: [kubectl]
+              </Terminal.LinePrefix>,
+            ],
+            [
+              <Terminal.LinePrefix color={theme.info}>
+                out: kubectl
+              </Terminal.LinePrefix>,
+              <Terminal.LineSuffix>
+                config set-context acme-chat-dev --cluster=gke_my-gcp_europe-west1-c_my-kube1 --user=gke_my-gcp_europe-west1-c_my-kube1 --namespace=acme-chat-dev
+              </Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix color={theme.info}>
+                out: kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
                 config use-context acme-chat-dev
@@ -222,25 +235,30 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                output: kubectl
+                out: kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>get cronjobs</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                output: kubectl
+                out: kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>get pods</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                output: kubectl
+                out: kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>top pod</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                output: helm
+                out: [helm]
+              </Terminal.LinePrefix>,
+            ],
+            [
+              <Terminal.LinePrefix color={theme.info}>
+                out: helm
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
                 list --namespace acme-chat-dev
@@ -356,9 +374,9 @@ export default () => (
               </Terminal.LineSuffix>,
             ],
             <span>
-              output: taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
+              out: taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
             </span>,
-            <span>output: taito_global_plugins="myorg-git-global ..."</span>,
+            <span>out: taito_global_plugins="myorg-git-global ..."</span>,
           ]}
         />
       </Section>
