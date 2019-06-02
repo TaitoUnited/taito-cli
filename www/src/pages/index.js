@@ -54,11 +54,11 @@ export default () => (
           lines={[
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>status:test</Terminal.LineSuffix>,
+              <Terminal.LineSuffix>open client:test</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>open client:test</Terminal.LineSuffix>,
+              <Terminal.LineSuffix>status:test</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
@@ -199,7 +199,7 @@ export default () => (
           </p>
           <p>
             However, you can use all those tools also directly without Taito
-            CLI, and therefore you can stop using Taito CLI at any time, if you
+            CLI. Therefore you can stop using Taito CLI at any time, if you
             like. There is no lock-in with Taito CLI.
           </p>
         </SectionText>

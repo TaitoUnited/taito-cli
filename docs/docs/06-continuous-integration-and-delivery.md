@@ -36,7 +36,7 @@ If you want your CI/CD to do more that it currently does, try not to add more CI
 
 ### Deployment to multiple platforms
 
-You can deploy the same project to multiple platforms. For example, your development and testing environments may reside on Google Cloud Platform to enable easy access for external personnel. 	Furthermore, your staging, canary, and production environments may reside on-premises to fulfill extra security requirements. Deployment settings are configured in the project specific `taito-config.sh` file.
+You can deploy the same application to multiple platforms. For example, your development and testing environments may reside on Google Cloud Platform to enable easy access for external personnel. 	Furthermore, your staging, canary, and production environments may reside on-premises to fulfill extra security requirements. Deployment settings are configured in the project specific `taito-config.sh` file.
 
 You may even deploy the same git branch simultaneously to multiple platforms. Just define path to a configuration overrides file in your CI/CD script with the `TAITO_CONFIG_OVERRIDE` environment variable, and it will be included in the `taito-config.sh` file just before `taito-provider-config.sh`. The file may be either local file (e.g. `./my-overrides.sh`) or remote (e.g. `https://mydomain.com/configs/my-overrides.sh`).
 
