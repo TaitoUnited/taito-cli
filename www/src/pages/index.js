@@ -132,10 +132,9 @@ export default () => (
           <p>
             Many daily tasks, such as connecting to a database, can be extremely
             tedious. Before actually connecting to the database, you have to
-            locate the correct database cluster and the correct database in it.
-            You may also have to start a proxy for establishing a secure
-            connection, and to retrieve credentials from somewhere for database
-            access.
+            locate the correct database cluster, the correct database in it,
+            and the credentials for database access. You may also have to
+            establish a secure tunnel by using a proxy.
           </p>
           <p>
             With Taito CLI you achieve all this with a one simple command.
@@ -163,7 +162,7 @@ export default () => (
                 cloud_sql_proxy
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                -instances=acme-zone:europe-west1:acme-postgres=tcp:0.0.0.0:5001
+                -instances=acme-zone:europe-west1:acme-postgres=tcp:127.0.0.1:5001
               </Terminal.LineSuffix>,
             ],
             [
@@ -195,8 +194,8 @@ export default () => (
             Taito CLI is a lightweight wrapper that reduces technology and
             vendor lock-in by providing a standard command set on top of various
             platform specific tools. You just run a simple taito command, and
-            Taito CLI runs a number of not-so-simple commands under the hood
-            based on your configuration.
+            Taito CLI runs a number of platform or technology specific commands
+            under the hood based on your configuration.
           </p>
           <p>
             However, you can use all those tools also directly without Taito
@@ -336,7 +335,7 @@ export default () => (
           <SectionTitle>Uniform conventions</SectionTitle>
           <p>
             Maintain good and uniform conventions by providing reusable
-            infrastructure and project templates.
+            infrastructure templates and project templates.
           </p>
           <p>
             Customize software development workflows for your organization with

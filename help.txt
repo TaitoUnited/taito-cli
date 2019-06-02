@@ -3,19 +3,41 @@ TAITO-CLI
 
 QUICK EXAMPLES
 
-  LOCAL DEVELOPMENT                    (TODO Split to subsections)
-    kaboom                             # Full clean start (env apply, start, init with --clean)
+  LOCAL DEVELOPMENT BASICS
+    kaboom                             # Quick start: env apply, start --clean --init
     env apply                          # Configure local environment
-    start                              # Start the application
-    start --clean --init               # Clean start. Run init after start.
-    init                               # Initialize databases and storages
-    init --clean                       # Reinitialize databases and storages
+    start                              # Start the application. Add --clean for clean start.
+    init                               # Initialize DB and storages. Add --clean for clean init.
+    info                               # Show info required for signing in to the application
     open client                        # Open application GUI on browser
     open admin                         # Open admin GUI on browser
-    open builds                        # Open build logs on browser
+    db connect                         # Access default database from command line
+    db add: articles                   # Add a migration for default database
+    db deploy                          # Deploy migrations to default database
+    restart:server                     # Restart server container
+    workspace kill                     # Kill all running processes (e.g. containers)
+    workspace clean                    # Remove all unused build artifacts (e.g. images)
+
+  LINKS
+    open client:dev                    # Open application GUI on browser
+    open admin:dev                     # Open admin GUI on browser
+    open server:dev                    # Open server API endpoint on browser
+    open apidocs                       # Open API documentation on browser
+    open docs                          # Open documentation on browser
+    open builds:dev                    # Open build logs on browser
+    open logs:dev                      # Open logs on browser (e.g. Stackdriver or Kibana)
+    open errors:dev                    # Open error tracking on browser
+    open storage:dev                   # Open storage bucket on browser
+    open git                           # Open git repository on browser
     open project                       # Open project management on browser
+    open uptime                        # Open uptime monitoring on browser
+    open tracing                       # Open distributed tracing on browser
+    open performance                   # Open performace monitoring
+    open feedback                      # Open user feedback management
+    open analytics                     # Open usage analytics
     open -h                            # List all links
-    info                               # Show info required for signing in to the application
+
+  QUALITY CONTROL
     lint                               # Lint code
     unit                               # Run all unit tests
     unit:client                        # Run all unit tests of client container
@@ -23,57 +45,39 @@ QUICK EXAMPLES
     test                               # Run all integration and e2e tests
     test:server                        # Run all integration and e2e tests of server
     test:server trip car               # Run the 'car' test of 'trip' test suite
-    db connect                         # Access default database from command line
-    db connect:reportdb                # Access report database from command line
-    db proxy                           # Show db conn details. Start a proxy if required.
-    db proxy:reportdb                  # Show db conn details for report db. Start a proxy if required.
-    db add: role_enum                  # Add a migration for default database
-    db add:report role_enum            # Add a migration for report database
-    db deploy                          # Deploy migrations to default database
-    db import: ./file.sql              # Import a file to default database
-    restart                            # Restart containers / watch / application
-    restart:client                     # Restart client container
-    workspace kill                     # Kill all running processes (e.g. containers)
-    workspace clean                    # Remove all unused build artifacts (e.g. images)
-    shell:server                       # Start shell inside a container named 'server'
-    exec:server echo foo               # Execute a command in a container named 'server'
-    copy to:server ./loc /sr           # Copy a file/folder to server container
-    copy from:server /sr .             # Copy a file/folder from server container
-    sync to:server ./loc /sr           # Sync folder to server container
-    sync from:server /sr .             # Sync folder from server container
-    save:client                        # Save changes to client container image
-    clean:server                       # Clean server container by deleting it
-    docs                               # Generate documentation
+    test:dev                           # Run integration/e2e tests against dev env
     check deps                         # Check dependencies
-    check deps:worker                  # Check dependencies of the worker
+    check deps:server                  # Check dependencies of the server
     check code                         # Check code quality
     check code:client                  # Check code quality of the client
     check size                         # Check size
     check size:client                  # Check size of the client
-    link                               # Link libraries (if not linked automatically by 'taito start')
-    build                              # Build project (if not built automatically by 'taito start')
-    run                                # Run the application (if not run automatically by 'taito start')
 
-  ACCESSING A REMOTE ENVIRONMENT       (TODO Split to subsections)
-    open client:dev                    # Open application GUI on browser
-    open admin:dev                     # Open admin GUI on browser
+  INFORMATION
     info:dev                           # Show information required for signing in
     status:dev                         # Show application status
     secrets:dev                        # Show secrets
-    test:dev                           # Run integration/e2e tests against dev env
-    logs:worker:dev                    # Tail logs of a container named 'worker'
-    kill:worker:dev                    # Kill a container named 'worker'
+
+  APPLICATION CONTROL
+    start:dev                          # Start application
+    restart:dev                        # Restart application
+    stop:dev                           # Stop application
+    down:dev                           # Remove application
+
+  CONTAINERS
+    logs:server:dev                    # Tail logs of a container named 'server'
+    kill:server:dev                    # Kill a container named 'server'
+    restart:server:dev                 # Restart container named 'server'
     shell:server:dev                   # Start a shell on a container named 'server'
     exec:server:dev echo foo           # Execute a command in a container named 'server'
-    open logs:dev                      # Open logs on browser (e.g. Stackdriver or EFK)
-    open storage:dev                   # Open storage bucket on browser
-    init:dev --clean                   # Reinitialize databases and storages
-    copy to:server:dev ./file /app     # Copy a file/folder to server container
-    copy from:server:dev /app/file .   # Copy a file/folder from server containr
-    sync to:server:dev ./dir /app      # Sync folder to server container
-    sync from:server:dev /app/dir .    # Sync folder from server container
+    save:client                        # Save changes to client container image
+    clean:server                       # Clean server container by deleting it
+    copy to:server:dev ./file /dir     # Copy a file/folder to server container
+    copy from:server:dev /dir/file .   # Copy a file/folder from server containr
+    sync to:server:dev ./dir /dir      # Sync folder to server container
+    sync from:server:dev /dir .        # Sync folder from server container
 
-  DATABASE OPERATIONS
+  DATABASES
     db connect:dev                     # Access default database on command line
     db connect:reportdb:dev            # Access report database on command line
     db proxy:dev                       # Start a database proxy for a GUI tool access
@@ -81,6 +85,7 @@ QUICK EXAMPLES
     db dump:dev ./dump.sql             # Dump default database to a file
     db log:dev                         # View change log of default database
     db recreate:dev                    # Recreate the default database
+    db add: articles                   # Add a migration for default database
     db deploy:dev                      # Deploy changes to default database
     db rebase:dev                      # Rebase a database (db revert + db deploy)
     db rebase:dev b91b7b2              # Rebase a database (db revert + db deploy)
@@ -89,13 +94,19 @@ QUICK EXAMPLES
     db copy between:test:dev           # Copy test database to dev
     db copyquick between:test:dev      # Copy test database to dev (WARNING!!)
 
-  STORAGE OPERATIONS
+  STORAGES
     storage mount:dev                  # Mount dev storage bucket to ./mnt/BUCKT
     storage mount:dev ./mymount        # Mount dev storage bucket to ./mymount
     storage copy from:dev /sour ./dest # Copy files from dev bucket
     storage copy to:dev ./sour /dest   # Copy files to dev bucket
     storage sync from:dev /sour ./dest # Sync files from dev bucket
     storage sync to:dev ./sour /dest   # Sync files to dev bucket
+
+  MESSAGE QUEUES
+    topic list:dev                     # List all topics in dev environment
+    topic publish:dev my-topic         # Publish a message to a topic
+    topic subscribe:dev my-topic       # Subscribe for messages in a topic
+    topic clean:dev my-topic           # Remove all messages of a topic
 
   VERSION CONTROL
     conventions                        # Show version control conventions
@@ -122,7 +133,7 @@ QUICK EXAMPLES
   DEPLOYMENT OPERATIONS
     deployment start:dev               # Start ci build for dev environment manually
     deployment cancel:dev              # Cancel an ongoing dev environment ci build
-    deployment build:worker:dev        # Build and deploy worker container to dev env
+    deployment build:server:dev        # Build and deploy server container to dev env
     deployment deploy:dev              # Deploy latest dev version to dev env
     deployment deploy:dev 1.1.1        # Deploy prebuilt version to dev env
     deployment wait                    # Wait for deployment
@@ -195,7 +206,7 @@ QUICK EXAMPLES
     TODO bulk adds (e.g. three weeks on vacation)
 
   UTILS:
-    taito util browser: https:/hs.fi   # Launch browser
+    taito util browser: https://hs.fi  # Launch browser
     taito util commit                  # Commit changes to Taito CLI
     taito -q util random string: 30    # Generate a random string
     taito -q util random words: 3      # Generate random words
@@ -508,6 +519,7 @@ PROJECT: LINKS
   > open errors:ENV - Error Tracking (e.g. Sentry)
   > open logs:ENV - Logs (e.g. Stackdriver)
   > open uptime - Uptime monitoring (e.g. Stackdriver)
+  > open tracing - Open distributed tracing
   > open performance - Performace monitoring (e.g. New Relic)
   > open feedback - User feedback management
   > open analytics - Usage analytics (e.g. Google Analytics)

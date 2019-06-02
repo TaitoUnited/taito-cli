@@ -119,7 +119,7 @@ If you are using Taito CLI with an existing infrastructure, ask for taito config
 
 ### Taito command reference
 
-Run `taito -h` to show more taito commands that you can use. Check also the DEVELOPMENT.md file located at your project root folder.
+Run `taito -h` to show more taito commands that you can use, or see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt). Check also the DEVELOPMENT.md file located at your project root folder.
 
 ---
 
