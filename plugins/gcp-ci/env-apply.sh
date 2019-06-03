@@ -18,7 +18,7 @@ then
   echo "- Branch regex - Most likely one of these depending on zone:"
   echo "    ^(dev|test)\$"
   echo "    ^(stag|canary|master)\$"
-  echo "- Build configuration: cloudbuild.yaml"
+  echo "- Build configuration: Cloud Build configuration file (yaml or json)"
   echo "- Cloudbuild.yaml location: /cloudbuild.yaml"
   echo
   echo "Press enter to open build trigger management"

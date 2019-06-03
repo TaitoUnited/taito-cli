@@ -4,7 +4,7 @@
 
 Taito command line interface is an extensible toolkit for developers and DevOps personnel. It defines a standard set of commands that can be used in any project no matter the technology or infrastructure. Thus, developers and DevOps personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. This is made possible by shipping all required tools as a Docker container image, implementing the commands with plugins, and defining project specific settings in a configuration file. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
-To get started see the [docs](https://taitounited.github.io/taito-cli/docs). For a quick example of some commands, see [3. Quick start](https://taitounited.github.io/taito-cli/docs/03-quick-start). For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) or run `taito -h`.
+To get started see the [website](https://taitounited.github.io/taito-cli/). For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) or run `taito -h`.
 
 ## Container images
 

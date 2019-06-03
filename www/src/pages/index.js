@@ -105,7 +105,7 @@ export default () => (
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                project create: full-stack
+                project create: full-stack-template
               </Terminal.LineSuffix>,
             ],
             [
@@ -114,11 +114,19 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
+              <Terminal.LineSuffix>env apply:test</Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>env apply:canary</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>env apply:prod</Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
+              <Terminal.LineSuffix>env merge:dev canary</Terminal.LineSuffix>,
             ],
           ]}
         />
