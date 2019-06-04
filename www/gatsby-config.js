@@ -15,7 +15,7 @@ module.exports = {
   pathPrefix: '/taito-cli',
 
   plugins: [
-    !IS_DEV && {
+    !IS_DEV && false && {
       resolve: 'gatsby-plugin-algolia',
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
