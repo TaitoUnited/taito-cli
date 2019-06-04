@@ -26,6 +26,9 @@ then
   echo "during authentication."
   echo "---------------------------------------------------------------"
   echo -e "${NOTEe}"
+  echo
+  echo "Press enter to continue to authentication"
+  read -r
   # TODO run 'gcloud auth revoke ${account}' ?
   (${taito_setv:?}; gcloud init --console-only)
 fi && \
