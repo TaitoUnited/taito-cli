@@ -69,15 +69,21 @@ taito_secrets="
 helm.yaml:
 
 ```shell
-secrets:
-  MY_SECRET_KEY: ${taito_project}-${taito_env}-my-secret.key
+    secrets:
+      MY_SECRET_KEY: ${taito_project}-${taito_env}-my-secret.key
 ```
 
 docker-compose.yaml:
 
 ```shell
-environment:
-  MY_SECRET_KEY: ${acme-myproject-dev-my-secret-key}
+    secrets:
+      MY_SECRET_KEY: ${acme-myproject-dev-my-secret-key}
+...
+...
+secrets:
+  MY_SECRET_KEY:
+    file: ./secrets/${taito_env}/${taito_project}-${taito_env}-my-secret.key
+
 ```
 
 Set secret value for each environment:

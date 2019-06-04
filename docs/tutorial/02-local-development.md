@@ -33,27 +33,23 @@ Add some npm library to the dependencies section of the `client/package.json`, r
 
 ### 2.4. Commit and push changes to git
 
-Once in a while commit and push your changes to git. You can do this either with a GUI tool of some sort (e.g. your code editor) or on command line with the following commands.
+Once in a while commit and push your changes to git. You can do this either with a GUI tool of some sort (e.g. your code editor), with git commands, or with the following taito commands.
 
 Committing changes to a local git repository:
 
 ```shell
-git add -A                                     # Add all changed files to staging area
-git commit -m 'wip(articles): user interface'  # Commit all staged changes to the local git repository
+taito stage           # Add all changed files to staging area
+taito commit          # Commit all staged changes to the local git repository
 ```
 
 Pulling changes from and pushing changes to a remote git repository:
 
 ```shell
-git pull -r           # Pull changes from remote git repository using rebase
-git push              # Push changes to remote git repository
+taito pull            # Pull changes from remote git repository using rebase and autostash
+taito push            # Push changes to remote git repository
 ```
 
 For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): my short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](/tutorial/03-version-control).
-
-> TIP: `git pull -r` refuses to run if your worktree is dirty. In such case, you can run `git pull -r --autostash` if you don't want to commit or stash your changes before pull.
-
-> TIP: You can configure git to always rebase by default on pull with `git config --global pull.rebase true`.
 
 ### 2.5. Add a database table
 
@@ -67,7 +63,11 @@ EDIT database/verify/articles.sql               # Edit verify script
 taito init                                      # Deploy to local db
 ```
 
-TODO: or `taito init --clean`?
+If you modify the `deploy/articles.sql` after you have already deployed it, you have to deploy the changes with the `--clean` option:
+
+```
+taito init --clean
+```
 
 The _deploy.sql_ script creates a database table, the _verify.sql_ script verifies that the database table exists, and the _revert.sql_ script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
 

@@ -2,7 +2,7 @@
 
 ### 10.1. Backups and GDPR
 
-Bucket versioning on/off, etc.
+Automatically by terraform.
 
 ### 10.2. Set resource limits and autoscaling
 
@@ -16,18 +16,11 @@ TODO: DV certificate automatically. For OV/EV certficate, see [Appendix F: SSL/T
 
 ### 10.7. Disable basic auth
 
-Basic authentication is enabled in all environments by default to keep the environment hidden. You can disable the basic auth by...
-
-helm-prod.yaml:
-
-```shell
-acme-myapp:
-  # Ingress
-  ingress:
-    basicAuth: false
-```
+Basic authentication is enabled in all environments by default to keep the environment hidden. You can disable the basic auth by setting `taito_basic_auth_enabled=false` for prod environment.
 
 ### 10.8. Setup uptime monitoring
+
+Automatically by terraform.
 
 ---
 

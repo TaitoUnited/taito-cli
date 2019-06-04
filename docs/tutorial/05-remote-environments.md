@@ -26,7 +26,7 @@ Create the dev environment:
 ```shell
 ( EDIT taito-config.sh )       # No need to edit (dev is already enabled)
 taito env apply:dev            # Create the dev environment
-git push                       # Push some changes to the dev branch
+taito push                     # Push some changes to the dev branch
 ```
 
 Make sure it works ok:
@@ -52,7 +52,7 @@ The first CI/CD build will take some time. Subsequent builds are faster as they 
    ci_exec_test=true
    ```
 
-2. Push the change to dev branch: `git push`
+2. Push the change to dev branch: `taito push`
 3. See build and test execution with `taito open builds`
 
 ### 5.3. Run integration and e2e tests manually againts the dev environment
@@ -135,7 +135,7 @@ taito_env="${taito_env/canary/prod}" # canary -> prod
 ### 5.7. Deploy changes through multiple environments (dev -> canary)
 
 ```shell
-git push                         # Push some changes to the dev branch
+taito push                       # Push some changes to the dev branch
 taito env merge:dev canary       # Merge changes: dev -> test -> canary
 taito open builds                # See them build and deploy
 ```
