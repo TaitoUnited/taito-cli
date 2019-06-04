@@ -2,7 +2,7 @@
 
 ### Setting up infrastructure
 
-> Important: Skip this step if your organization is already using Taito CLI. In such case you should use the existing infrastructure. Ask for taito configuration settings from your colleagues.
+> IMPORTANT: Skip this step if your organization is already using Taito CLI. In such case you should use the existing infrastructure instead of creating a new zone. Ask for taito configuration settings from your colleagues and copy-paste the settings to your `~/.taito/taito-config.sh` file.
 
 Create a new zone with the following steps:
 
@@ -28,6 +28,7 @@ Create a new zone with the following steps:
     ```shell
     taito kaboom
     ```
+    > If the kaboom command fails with Docker Compose `read timeout` error, stop it with `ctrl+c`, start it again with `taito start`, and then run `taito init`.
 
 3. Open application web UI running on local environment:
 
