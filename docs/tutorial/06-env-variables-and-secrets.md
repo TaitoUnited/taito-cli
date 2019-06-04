@@ -47,14 +47,13 @@ env:
 
 ### 6.3. Deploy a configuration changes without rebuilding
 
-First make the configuration changes and push them to dev branch. Then deploy the configuration changes directly to different environments:
+Make configuration changes to `scripts/helm*.yaml` files on your local disk, and then deploy the changes directly to different environments with the following commands:
 
 ```shell
-taito deployment deploy:stag
+taito deployment deploy:dev
+taito deployment deploy:test
 taito deployment deploy:prod
 ```
-
-> TODO: Currently you always need to give image tag as a parameter. See the latest image tag deployed successfully for the branch in question by running `taito open builds`.
 
 ### 6.4. Define a secret
 
@@ -89,16 +88,15 @@ secrets:
 Set secret value for each environment:
 
 ```shell
+taito env rotate my-secret
 taito env rotate:dev my-secret
 taito env rotate:test my-secret
 taito env rotate:prod my-secret
 ```
 
-> TODO: Describe how to use the same secret value for local and dev environment without committing it to git.
-
 ### 6.5. User specific variables
 
-TODO
+TODO `taito-user-config.sh`
 
 ---
 
