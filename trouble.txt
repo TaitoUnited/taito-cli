@@ -1,13 +1,17 @@
-TAITO-CLI TROUBLESHOOTING
+TAITO CLI TROUBLESHOOTING
 
   Any problem
-    - Try to upgrade taito-cli by running 'taito upgrade'. With the
-    - With the `-v` or `--verbose` flag you can see the commands that plugins
-      run during command execution. If you want to see even more output, use
-      the `--debug` flag.
+    - Try to upgrade Taito CLI by running 'taito upgrade'.
+    - Run the taito command with the verbose (-v) flag to see the commands that
+      plugins run during command execution. If you want to see even more output,
+      use the `--debug` flag.
+
+  Read timeout on 'taito kaboom':
+    If the kaboom command fails with Docker Compose read timeout error, stop it
+    with ctrl+c, start it again with 'taito start', and then run 'taito init'.
 
   Connection or authorization error
-    If you run into a connection or authorization error during taito-cli
+    If you run into a connection or authorization error during Taito CLI
     command execution, the command probably requires authentication and you
     either have not authenticated or your authentication has expired. In such
     case, run 'taito auth:ENV' to authenticate.
@@ -18,7 +22,7 @@ TAITO-CLI TROUBLESHOOTING
     disk in your docker preferences. Also check that you have disk space
     available on your computer.
 
-  Taito-cli hangs after displaying the copyright notice
+  Taito CLI hangs after displaying the copyright notice
     First try restarting your Docker daemon. If the problem persists after
     Docker restart, try Docker reset as your Docker virtual disk might have
     been corrupted.
@@ -64,5 +68,5 @@ TAITO-CLI TROUBLESHOOTING
     'taito deployment deploy:ENV' or 'taito deployment start:ENV'.
 
   Tutorial
-    Taito-cli tutorial guides you through some common software development
+    Taito CLI tutorial guides you through some common software development
     scenarios and problems.

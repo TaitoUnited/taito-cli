@@ -1,4 +1,4 @@
-TAITO-CLI
+TAITO CLI
 ---------
 
 QUICK EXAMPLES
@@ -215,7 +215,7 @@ QUICK EXAMPLES
 OPTIONS
 
   --help, -h
-    Show help.txt of current project and a list of all taito-cli commands.
+    Show help.txt of current project and a list of all Taito CLI commands.
     Run 'taito COMMAND -h' to get help for a specific command or
     'taito PREFIX -h' to get help for a specific set of commands.
 
@@ -225,18 +225,18 @@ OPTIONS
     TODO implement
 
   --trouble
-    Show trouble.txt of current project and taito-cli.
+    Show trouble.txt of current project and Taito CLI.
 
   --readme
     Show README.md of current project.
 
   --dev, -d
-    Run in development mode. In the development mode your local taito-cli
+    Run in development mode. In the development mode your local Taito CLI
     directory is mounted on the container.
     TODO always pass on -d switch when running another taito command
 
   --
-    Execute any command inside the taito-cli container. Example:
+    Execute any command inside the Taito CLI container. Example:
     taito -- kubectl get pods
 
   --admin, -a
@@ -247,7 +247,7 @@ OPTIONS
 
   --project PROJECT, -p PROJECT
     Execute command in the context of given project. This command allows
-    you to execute a taito-cli command without cloning the project repository
+    you to execute a Taito CLI command without cloning the project repository
     to your local disk. Examples:
       taito -p my-project open client:dev
       taito -p org@another-project open info:prod
@@ -275,7 +275,7 @@ OPTIONS
     Prints all commands.
 
   -c
-    Informs taito-cli that the command is continuing from a previous command
+    Informs Taito CLI that the command is continuing from a previous command
     execution and therefore the copyright license should not be shown again.
 
   -z
@@ -322,10 +322,10 @@ TAITO: BASIC OPERATIONS
     or 'taito shell'.
 
   shell
-    Start interactive shell on the taito-cli container.
+    Start interactive shell on the Taito CLI container.
 
   upgrade
-    Upgrade taito-cli and its extensions to the latest version.
+    Upgrade Taito CLI and its extensions to the latest version.
 
   config[:ENV]
     Show taito config values.
@@ -504,7 +504,7 @@ PROJECT: LINKS
 
   > You can specify project specific browser links with the links plugin.
   > Here are some recommended link names that are also included in the
-  > taito-cli autocomplete scripts:
+  > Taito CLI autocomplete scripts:
   >
   > open client[:ENV] - Application GUI
   > open admin[:ENV] - Admin GUI
@@ -922,7 +922,7 @@ UTILS
     your build scripts.
 
   util commit
-    Commits current changes to the taito-cli container. For example, you
+    Commits current changes to the Taito CLI container. For example, you
     can start a shell running 'taito shell', make some changes and then
     commit all changes by running 'taito util-commit' inside the container.
 

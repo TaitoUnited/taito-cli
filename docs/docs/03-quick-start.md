@@ -28,13 +28,14 @@ Create a new zone with the following steps:
     ```shell
     taito kaboom
     ```
-    > If the kaboom command fails with Docker Compose `read timeout` error, stop it with `ctrl+c`, start it again with `taito start`, and then run `taito init`.
 
 3. Open application web UI running on local environment:
 
     ```shell
     taito open client
     ```
+
+> In case of trouble, run `taito --trouble`. Sometimes `taito kaboom` might fail and hopefully `taito --trouble` helps.
 
 #### Apply project wide settings
 
@@ -145,8 +146,6 @@ Create a new zone with the following steps:
 ### Taito command reference
 
 Run `taito -h` to show more taito commands that you can use, or see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt). Check also the DEVELOPMENT.md file located at your project root folder.
-
-In case of trouble, run `taito --trouble`.
 
 ---
 
