@@ -2,43 +2,7 @@
 
 Taito CLI provides some version control commands that make it easier for you to follow commonly defined version control conventions. An organization may also override the default version control conventions with a custom Taito CLI plugin.
 
-> All commit messages must be structured according to the [Angular git commit convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines) (see also [Conventional Commits](http://conventionalcommits.org/)). This is because application version number and release notes are generated automatically for production release by the [semantic-release](https://github.com/semantic-release/semantic-release) library.
-
-### 3.1 Display commonly defined conventions
-
-If you would rather use GUI tools or git commands for managing your branches, you can display the version control conventions by running:
-
-```shell
-taito conventions
-```
-
-The aforementioned command should display the following version control conventions defined by Taito CLI, unless your organization has overridden some of them.
-
-```shell
-Environment branches:
-- Branch naming: dev, test, stag, canary, master.
-- Environment branches should be merged to one another in the following
-  order: dev -> test -> stag -> canary -> master.
-- Environment branches should be merged using fast-forward only.
-- 'dev' is the only environment branch that you should commit changes to.
-
-Feature branches:
-- Branch naming with 'feature/' prefix, for example: feature/delete-user.
-- Feature branches are created from 'dev' branch and merged back to it
-  using `non-fast-forward` to keep a clear feature branch history.
-- You should rebase your feature branch with the `dev` branch before
-  merging or creating a pull-request. It is recommended to squash some of your
-  commits during rebase to keep a clean version history.
-- You should run all tests before merging or creating a pull-request.
-- You should delete a feature branch once it is no longer needed.
-
-Hotfix branches:
-- TODO
-```
-
-There is a lot to remember. However, if you use Taito CLI for managing your branches, you don't have to remember all these conventions.
-
-##### TODO COMMIT MESSAGES!
+### 3.1 Commit message conventions
 
 All commit messages must be structured according to the [Angular git commit convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines) (see also [Conventional Commits](http://conventionalcommits.org/)). This is because application version number and release notes are generated automatically for production release by the [semantic-release](https://github.com/semantic-release/semantic-release) library.
 
@@ -91,7 +55,41 @@ You can use any of the following types in your commit message. Use at least type
 - `ci`: Continuous integration changes (cloudbuild.yaml)
 - `chore`: maintenance
 
-### 3.2 Feature branches
+### 3.2 Display commonly defined version control conventions
+
+If you would rather use GUI tools or git commands for managing your branches, you can display the version control conventions by running:
+
+```shell
+taito conventions
+```
+
+The aforementioned command should display the following version control conventions defined by Taito CLI, unless your organization has overridden some of them.
+
+```shell
+Environment branches:
+- Branch naming: dev, test, stag, canary, master.
+- Environment branches should be merged to one another in the following
+  order: dev -> test -> stag -> canary -> master.
+- Environment branches should be merged using fast-forward only.
+- 'dev' is the only environment branch that you should commit changes to.
+
+Feature branches:
+- Branch naming with 'feature/' prefix, for example: feature/delete-user.
+- Feature branches are created from 'dev' branch and merged back to it
+  using `non-fast-forward` to keep a clear feature branch history.
+- You should rebase your feature branch with the `dev` branch before
+  merging or creating a pull-request. It is recommended to squash some of your
+  commits during rebase to keep a clean version history.
+- You should run all tests before merging or creating a pull-request.
+- You should delete a feature branch once it is no longer needed.
+
+Hotfix branches:
+- TODO
+```
+
+There is a lot to remember. However, if you use Taito CLI for managing your branches, you don't have to remember all these conventions.
+
+### 3.3 Feature branches
 
 Feature branches are handy especially in the following situations:
 
@@ -150,7 +148,7 @@ taito feat: reporting
 taito feat pr
 ```
 
-### 3.3 Environment branches
+### 3.4 Environment branches
 
 Display commands:
 
@@ -176,15 +174,15 @@ Merge changes from dev branch to canary, and to all environment branches in betw
 taito env merge:dev canary
 ```
 
-### 3.4 Hotfix branches
+### 3.5 Hotfix branches
 
 TODO
 
-### 3.5 Feature flags
+### 3.6 Feature flags
 
 TODO
 
-### 3.6 Some common mistakes
+### 3.7 Some common mistakes
 
 TODO:
 

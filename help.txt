@@ -14,27 +14,32 @@ QUICK EXAMPLES
     db connect                         # Access default database from command line
     db add: articles                   # Add a migration for default database
     db deploy                          # Deploy migrations to default database
+    env rotate: my-secret              # Set value for secret (restart all containers after)
+    install                            # Install newly added libraries (restart container after)
     restart:server                     # Restart server container
+    restart                            # Restart all containers
+    shell:server                       # Start shell on the server container
     workspace kill                     # Kill all running processes (e.g. containers)
     workspace clean                    # Remove all unused build artifacts (e.g. images)
 
   LINKS
+    open git                           # Open git repository on browser
+    open project                       # Open project management on browser
+    open ux                            # Open UX guides
+    open docs                          # Open project documentation on browser
+    open apidocs:dev                   # Open generated API documentation on browser
     open client:dev                    # Open application GUI on browser
     open admin:dev                     # Open admin GUI on browser
     open server:dev                    # Open server API endpoint on browser
-    open apidocs                       # Open API documentation on browser
-    open docs                          # Open documentation on browser
     open builds:dev                    # Open build logs on browser
     open logs:dev                      # Open logs on browser (e.g. Stackdriver or Kibana)
     open errors:dev                    # Open error tracking on browser
     open storage:dev                   # Open storage bucket on browser
-    open git                           # Open git repository on browser
-    open project                       # Open project management on browser
-    open uptime                        # Open uptime monitoring on browser
-    open tracing                       # Open distributed tracing on browser
-    open performance                   # Open performace monitoring
-    open feedback                      # Open user feedback management
-    open analytics                     # Open usage analytics
+    open uptime:prod                   # Open uptime monitoring on browser
+    open tracing:prod                  # Open distributed tracing on browser
+    open performance:prod              # Open performace monitoring
+    open feedback:prod                 # Open user feedback management
+    open analytics:prod                # Open usage analytics
     open -h                            # List all links
 
   QUALITY CONTROL

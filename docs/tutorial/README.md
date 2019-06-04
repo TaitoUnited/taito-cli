@@ -41,7 +41,6 @@ This tutorial guides you through common software development scenarios in a chro
 * [C. Modern server infrastructure](/tutorial/c-modern-server-infrastructure)
 * [D. Security](/tutorial/d-security)
 * [E. Data protection and privacy (GDPR)](/tutorial/e-data-protection-and-privacy)
-* [F. SSL/TLS certificates](/tutorial/f-certificates)
 
 ---
 

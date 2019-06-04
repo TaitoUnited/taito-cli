@@ -21,6 +21,12 @@ TODO existing playground project -> destroy environments first.
 
 ### 5.1. Create dev environment
 
+Make sure your authentication is in effect (just in case):
+
+```shell
+taito auth:dev
+```
+
 Create the dev environment:
 
 ```shell
@@ -65,6 +71,12 @@ taito test:dev
 
 ### 5.4. Create test environment
 
+Make sure your authentication is in effect (just in case):
+
+```shell
+taito auth:test
+```
+
 Create the test environment:
 
 ```shell
@@ -83,6 +95,30 @@ taito open client:test         # Open application GUI
 
 ### 5.5. Create production environment
 
+Configure domain name for prod environment in `taito-config.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
+
+```shell
+  # Domain and resources
+  taito_domain=
+  taito_default_domain=$taito_project-$taito_target_env.taitodev.com
+```
+
+OPTIONAL: Configure DNS for your non-default domain name. You can display the default IP address with `taito env info:prod`.
+
+OPTIONAL: Disable basic authentication for production environment in `taito-config.sh`:
+
+```shell
+  prod)
+    # Settings
+    taito_basic_auth_enabled=false
+```
+
+Make sure your authentication is in effect (just in case):
+
+```shell
+taito auth:prod
+```
+
 Create the environment:
 
 ```shell
@@ -99,7 +135,7 @@ taito open status:prod         # Check status of prod environment
 taito open client:prod         # Open application GUI
 ```
 
-> At this point your production environment already exists. However, before releasing it to the real end-users you need to do some additional tasks that are explained in chapter [9. Production setup](#09-production-setup).
+> At this point your production environment already exists. However, before releasing it to the real end-users you might want to do some additional tasks that are explained in chapter [9. Production setup](#09-production-setup).
 
 ### 5.6. Create canary environment
 

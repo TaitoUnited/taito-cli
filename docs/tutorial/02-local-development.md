@@ -15,7 +15,13 @@ taito info          # Show info required for signing in to the application
 
 Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first. While waiting, browse through the [Quick start](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md#quick-start) section of the DEVELOPMENT.md file to get an quick overview of the Taito CLI commands.
 
-### 2.2. Implement a new page with React
+### 2.2. Configure autocomplete, autoformatting, and linting on editor
+
+TODO: How to configure your code editor to support autocomplete, autoformatting, and linting.
+
+TODO: Something about typescript vs javascript. Start with plain javascript?
+
+### 2.3. Implement a new page with React
 
 Make up some simple idea that you would like to implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data anywhere permanently.
 
@@ -27,11 +33,11 @@ You can debug the implementation with your web browser. [Chrome DevTools](https:
 
 > If web development is new for you and you are insterested, just take your time learning the web development basics before continuing the Taito CLI tutorial.
 
-### 2.3. Add a new npm library dependency
+### 2.4. Add a new npm library dependency
 
 Add some npm library to the dependencies section of the `client/package.json`, run `taito install`, and restart the application with `ctrl-c`, `taito start`. Now you should be able to use the npm library in your implementation.
 
-### 2.4. Commit and push changes to git
+### 2.5. Commit and push changes to git
 
 Once in a while commit and push your changes to git. You can do this either with a GUI tool of some sort (e.g. your code editor), with git commands, or with the following taito commands.
 
@@ -51,7 +57,7 @@ taito push            # Push changes to remote git repository
 
 For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): my short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](/tutorial/03-version-control).
 
-### 2.5. Add a database table
+### 2.6. Add a database table
 
 Your implementation needs to store some data permanently. For this, you create 1-N database tables to PostgreSQL database. You add a new database table by adding a new database migration. You can do this with the following commands:
 
@@ -73,7 +79,7 @@ The _deploy.sql_ script creates a database table, the _verify.sql_ script verifi
 
 Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [appendix A](a-technology-tutorials.md#sql-and-relational-databases) for some SQL and relational database tutorials.
 
-### 2.6. Add some example data to database
+### 2.7. Add some example data to database
 
 Often it's a good idea to add some example data to database, as it makes development and testing easier. Folder `database/data/` contains example data for each environment. Try to add some example data to the newly created database table(s) with the following commands:
 
@@ -86,7 +92,7 @@ Note that `taito init --clean` erases all existing data from your local database
 
 > TODO: note about remote environments and `taito init:dev --clean`.
 
-### 2.7. Connect to the local database
+### 2.8. Connect to the local database
 
 Connect to your local database and check that the example data exists there. You can do this with the following commands:
 
@@ -102,7 +108,7 @@ If you are not yet familiar with SQL, you should try to execute also some additi
 
 > TIP: If you have installed some database GUI tool, you can run `taito db proxy` to display database connection details and you can use those details to connect to the local database.
 
-### 2.8. Modify an existing database table
+### 2.9. Modify an existing database table
 
 Normally all database changes must be made using database migrations (option a). However, if you are modifying a database table that does not exist in production environment yet, you can keep the scripts located in `database/deploy/` cleaner by modifying them directly (option b). Try the both approaches:
 
@@ -135,7 +141,7 @@ taito init --clean                 # Deploy to local db
 
 The downside of this approach is that the `taito init:ENV --clean` command deletes all existing data from database, and the command must be run manually to all environments that already contain the database table that was modified.
 
-### 2.9. Implement API
+### 2.10. Implement API
 
 Your UI implementation needs to access the data located in database. However, accessing database directly from UI is a bad approach for many reasons. Therefore you need to implement an API that exists between the UI and the database:
 
@@ -166,7 +172,7 @@ TODO: Later
 
 See [appendix A](a-technology-tutorials.md#graphql-api) for some GraphQL API tutorials.
 
-### 2.10. Use environment variables for configuration
+### 2.11. Use environment variables for configuration
 
 Your implementation will be run in many other environments in In addition to your local environment (testing environment and production environment, for example). Some settings, like database settings, change depending on the environment. You can define these settings with environment variables.
 
@@ -179,18 +185,18 @@ Note that you should not use environment variables to define passwords or other 
 
 TODO: change current docker-compose.yaml implementation -> mount secrets
 
-### 2.11. Use 3rd party services and define secrets
+### 2.12. Use 3rd party services and define secrets
 
 You should not worry about 3rd party services and secrets for now. These are explained in part II of the tutorial.
 
-### 2.12. Store files to object storage
+### 2.13. Store files to object storage
 
 TODO: As noted previously, no local disk.
 
 TODO: https://cloud.google.com/storage/docs/access-control/signing-urls-manually
 TODO: minio -> S3 compatible (google cloud, etc.)
 
-### 2.13. Use transactions to preserve data integrity
+### 2.14. Use transactions to preserve data integrity
 
 Data changes made by a service should be atomic to preserve data integrity. That is, if `PUT /articles/432` modifies data located in multiple database tables, either all data updates should be completed or none of them should.
 
@@ -225,7 +231,7 @@ Try this yourself by modifying the implementation that you made in exercise 2.10
 
 > Some systems support distributed transactions. That is, you can make changes to multiple systems at once, and all of them engage to the same transaction. Distributed transactions come with extra complexity and are rarely needed.
 
-### 2.14. Automatic testing
+### 2.15. Automatic testing
 
 Test scripts are run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production). You can also run these tests manually with the following commands:
 
@@ -284,23 +290,25 @@ The unit test examples use [Mocha](https://mochajs.org/) as testing framework an
    TODO
    ```
 
-### 2.15. Try some additional taito commands
+### 2.16. Try some additional taito commands
 
 ```shell
 taito open git                 # Open git repository on browser
 taito open project             # Open project management on browser
 taito open docs                # Open project documentation on browser
+taito open apidocs             # Open generated api documentation on browser
 taito open ux                  # Open UX guides and layouts on browser
 
 taito check size:client        # Analyze size of the client
 taito check deps:server        # Check dependencies of the server
+taito check code:server        # Check code quality ot the server
 
 taito --trouble                # Display troubleshooting
 taito workspace kill           # Kill all running processes (e.g. containers)
 taito workspace clean          # Remove all unused build artifacts (e.g. images)
 ```
 
-### 2.16. Read some software design basics
+### 2.17. Read some software design basics
 
 If you did not already, read [Appendix B: Software design](b-software-design) for some tips on how to design your application.
 

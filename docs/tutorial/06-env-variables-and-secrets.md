@@ -96,7 +96,7 @@ taito env rotate:prod my-secret
 
 ### 6.5. User specific variables
 
-TODO `taito-user-config.sh`
+`taito-user-config.sh`
 
 ---
 
