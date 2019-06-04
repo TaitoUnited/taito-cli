@@ -2,7 +2,9 @@
 
 ### Setting up infrastructure
 
-If you are using Taito CLI with an existing infrastructure, ask for taito configuration settings from your colleagues. Otherwise create a new zone with the following steps:
+> Important: Skip this step if your organization is already using Taito CLI. In such case you should use the existing infrastructure. Ask for taito configuration settings from your colleagues.
+
+Create a new zone with the following steps:
 
 1. Create new zone based on one of the infrastructure examples from [taito-infrastructure](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates) by running `taito zone create: TEMPLATE` and follow instructions.
 
@@ -33,15 +35,31 @@ If you are using Taito CLI with an existing infrastructure, ask for taito config
     taito open client
     ```
 
+#### Apply project wide settings
+
+1. Run `taito open conventions` to show organization specific conventions and follow instructions.
+
+2. Apply project wide settings:
+
+    ```shell
+    taito project apply
+    ```
+
 #### Development environment (dev)
 
-1. Create dev environment:
+1. Make sure your authentication is in effect:
+
+    ```shell
+    taito auth:dev
+    ```
+
+2. Create dev environment:
 
     ```shell
     taito env apply:dev
     ```
 
-2. Trigger build by committing and pushing changes to dev branch (you can do this with git tools also). Note that you should write your commit message according to [Conventional Commits](https://www.conventionalcommits.org):
+3. Trigger build by committing and pushing changes to dev branch (you can do this with git tools also). Note that you should write your commit message according to [Conventional Commits](https://www.conventionalcommits.org):
 
     ```shell
     taito stage
@@ -49,43 +67,43 @@ If you are using Taito CLI with an existing infrastructure, ask for taito config
     taito push
     ```
 
-3. Show build status on browser:
+4. Show build status on browser:
 
     ```shell
     taito open builds:dev
     ```
 
-4. Show status of dev environment:
+5. Show status of dev environment:
 
     ```shell
     taito status:dev
     ```
 
-5. Open application web UI running on dev environment:
+6. Open application web UI running on dev environment:
 
     ```shell
     taito open client:dev
     ```
 
-6. Show credentials for signing in (basic auth):
+7. Show credentials for signing in (basic auth):
 
     ```shell
     taito info:dev
     ```
 
-7. Tail logs of server container running on dev environment:
+8. Tail logs of server container running on dev environment:
 
     ```shell
     taito logs:server:dev
     ```
 
-8. Initialize dev environment database with some development data:
+9. Initialize dev environment database with some development data:
 
     ```shell
     taito init:dev
     ```
 
-9. Connect to the dev environment database:
+10. Connect to the dev environment database:
 
     ```shell
     taito db connect:dev
@@ -93,25 +111,31 @@ If you are using Taito CLI with an existing infrastructure, ask for taito config
 
 #### Production environment (prod)
 
-1. Create production environment:
+1. Make sure your authentication is in effect:
+
+    ```shell
+    taito auth:prod
+    ```
+
+2. Create production environment:
 
     ```shell
     taito env apply:prod
     ```
 
-2. Merge changes between environments: `dev -> ... -> prod` (you can do this with git tools also, but always use fast-forward when merging between environment branches):
+3. Merge changes between environments: `dev -> ... -> prod` (you can do this with git tools also, but always use fast-forward when merging between environment branches):
 
     ```shell
     taito env merge:dev prod
     ```
 
-3. Show production environment build status on browser:
+4. Show production environment build status on browser:
 
     ```shell
     taito open builds:prod
     ```
 
-4. Open application web UI running on prod environment:
+5. Open application web UI running on prod environment:
 
     ```shell
     taito open client:prod
@@ -120,6 +144,8 @@ If you are using Taito CLI with an existing infrastructure, ask for taito config
 ### Taito command reference
 
 Run `taito -h` to show more taito commands that you can use, or see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt). Check also the DEVELOPMENT.md file located at your project root folder.
+
+In case of trouble, run `taito --trouble`.
 
 ---
 
