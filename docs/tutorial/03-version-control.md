@@ -57,7 +57,7 @@ You can use any of the following types in your commit message. Use at least type
 
 ### 3.2 Display commonly defined version control conventions
 
-If you would rather use GUI tools or git commands for managing your branches, you can display the version control conventions by running:
+If you would rather manage your git branches with GUI tools or git commands instead of taito commands, you can display the version control conventions by running:
 
 ```shell
 taito conventions

@@ -361,7 +361,8 @@ export default () => (
           <SectionTitle>Uniform conventions</SectionTitle>
           <p>
             Maintain good and uniform conventions by providing reusable
-            infrastructure templates and project templates.
+            infrastructure templates and project templates. Use the same
+            conventions no matter the technology or infrastructure.
           </p>
           <p>
             Customize software development workflows for your organization with

@@ -49,6 +49,8 @@ taito open logs:dev            # Open logs
 
 The first CI/CD build will take some time. Subsequent builds are faster as they use a previous build as cache.
 
+CI/CD deploys database migrations automatically, but not any data. You can manually deploy both database migrations and example data from `database/data/dev.sql` with `taito init:dev` or `taito init:dev --clean`. You can also import data from any sql file with `taito db import:dev FILE`.
+
 ### 5.2. Enable automatic integration and e2e tests for dev environment
 
 1. Enable `ci_exec_test` for `dev` environment in `taito-config.sh`:
@@ -93,6 +95,8 @@ taito open status:test         # Check status of test environment
 taito open client:test         # Open application GUI
 ```
 
+CI/CD deploys database migrations automatically, but not any data. You can manually deploy both database migrations and example data from `database/data/test.sql` with `taito init:test` or `taito init:test --clean`. You can also import data from any sql file with `taito db import:test FILE`.
+
 ### 5.5. Create production environment
 
 Configure domain name for prod environment in `taito-config.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
@@ -135,7 +139,9 @@ taito open status:prod         # Check status of prod environment
 taito open client:prod         # Open application GUI
 ```
 
-> At this point your production environment already exists. However, before releasing it to the real end-users you might want to do some additional tasks that are explained in chapter [9. Production setup](#09-production-setup).
+CI/CD deploys database migrations automatically, but not any data. You can manually import data from any sql file with `taito db import:test FILE`. You should not use `taito init:prod` command with a live production environment that already contains some important data.
+
+> At this point your production environment already exists. However, before releasing it to the real end-users, you might want to do some additional tasks that are explained in chapter [9. Production setup](#09-production-setup).
 
 ### 5.6. Create canary environment
 
