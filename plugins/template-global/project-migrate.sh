@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+echo "'project migrate' command under construction"
+exit 1
+
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${template_default_source_git:?}"
