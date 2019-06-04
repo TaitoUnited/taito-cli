@@ -21,10 +21,11 @@ do
 
   if [[ ${secret_method:?} != "read/"* ]]; then
     (
+      # TODO: Do not just ignore fail, check if fail was ok (= not patched)
       ${taito_setv:?}
       kubectl patch secret "${formatted_secret_name}" \
         --namespace="${secret_namespace}" \
-        -p "{ \"data\": { \"${secret_property}\": null, \"${secret_property}.METHOD\": null } }"
+        -p "{ \"data\": { \"${secret_property}\": null, \"${secret_property}.METHOD\": null } }" || :
     )
   fi
   secret_index=$((${secret_index}+1))

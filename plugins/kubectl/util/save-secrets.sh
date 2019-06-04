@@ -66,10 +66,11 @@ do
         if kubectl get secret "${formatted_secret_name}" \
              --namespace="${secret_namespace}" &> /dev/null; then
           # Patch an existing secret
+          # TODO: Do not just ignore fail, check if fail was ok (= not patched)
           data_only=$(echo "${json}" | jq '.data')
           kubectl patch secret "${formatted_secret_name}" \
             --namespace="${secret_namespace}" \
-            -p "{ \"data\": ${data_only} }"
+            -p "{ \"data\": ${data_only} }" || :
         else
           # Create new secret
           "${script_dir}/ensure-namespace.sh" "${secret_namespace}"
