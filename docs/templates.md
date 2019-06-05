@@ -2,7 +2,7 @@
 
 ## Project templates
 
-Officially recommended project templates are listed below. All of them include taito configurations for Taito CLI, Terraform scripts for infrastucture management, and build scripts for CI/CD. You may also find more project templates preconfigured for Taito CLI on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
+Officially recommended project templates are listed below. All of them include taito configurations for Taito CLI, Terraform scripts for multiple platforms, and build scripts for multiple CI/CD tools. You may also find more project templates preconfigured for Taito CLI on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
 
 > Run `taito [-o ORG] project create: TEMPLATE` to create a project (e.g `taito project create: full-stack-template`).
 
@@ -56,7 +56,7 @@ Use one of the **Kubernetes as a service** infrastructure templates, but do not 
 
 Infrastructure based on Linux virtual machines or dedicated servers.
 
-* [linux](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/linux): Any Linux servers (Coming soon)
+* [linux](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/linux): Any Linux servers
 
 ### Additional security steps
 
