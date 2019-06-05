@@ -54,11 +54,11 @@ Alternatively, if you would like to write plain JavaScript (*.js), you can enabl
 
 Make up some simple idea that you would like to implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data anywhere permanently.
 
-If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A: Technology tutorials](a-technology-tutorials) provides some tips and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
+If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A: Technology tutorials](/tutorial/a-technology-tutorials) provides some tips and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
 
 The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. You should see the same errors also on your editor, if your editor has been configured properly.
 
-You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials#browser-extensions) for some additional browser extensions that might also be useful.
+You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](/tutorial/a-technology-tutorials#browser-extensions) for some additional browser extensions that might also be useful.
 
 > If web development is new for you and you are insterested in it, just take your time learning the web development basics before continuing the Taito CLI tutorial.
 
@@ -106,7 +106,7 @@ taito init --clean
 
 The _deploy.sql_ script creates a database table, the _verify.sql_ script verifies that the database table exists, and the _revert.sql_ script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
 
-Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [appendix A](a-technology-tutorials#sql-and-relational-databases) for some SQL and relational database tutorials.
+Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [appendix A](/tutorial/a-technology-tutorials#sql-and-relational-databases) for some SQL and relational database tutorials.
 
 ### 2.8. Add some example data to database
 
@@ -133,7 +133,7 @@ select * from articles; # Show all articles (SQL command)
 \q                      # Quit (postgres)
 ```
 
-If you are not yet familiar with SQL, you should try to execute also some additional SQL commands just for the fun of it. See [appendix A](a-technology-tutorials#sql-and-relational-databases) for some SQL tutorials.
+If you are not yet familiar with SQL, you should try to execute also some additional SQL commands just for the fun of it. See [appendix A](/tutorial/a-technology-tutorials#sql-and-relational-databases) for some SQL tutorials.
 
 > TIP: If you have installed some database GUI tool, you can run `taito db proxy` to display database connection details and you can use those details to connect to the local database.
 
@@ -178,7 +178,7 @@ Your UI implementation needs to access the data located in database. However, ac
 UI (on browser)  ->  API (on server)  ->  database
 ```
 
-The API should be stateless. That is, the API implementation should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](b-software-design#api-design).
+The API should be stateless. That is, the API implementation should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](/tutorial/b-software-design#api-design).
 
 TODO: Some tips for debugging.
 
@@ -193,13 +193,13 @@ Implement a RESTful API endpoint for your UI and modify your UI implementation t
 - `PATCH /articles/432`: Update article 432 (only given fields)
 - `DELETE /articles/432`: Delete article 432
 
-See [appendix A](a-technology-tutorials#restful-api) for some RESTful API tutorials.
+See [appendix A](/tutorial/a-technology-tutorials#restful-api) for some RESTful API tutorials.
 
 #### b) GraphQL API
 
 TODO: Later
 
-See [appendix A](a-technology-tutorials#graphql-api) for some GraphQL API tutorials.
+See [appendix A](/tutorial/a-technology-tutorials#graphql-api) for some GraphQL API tutorials.
 
 ### 2.12. Use environment variables for configuration
 
@@ -339,7 +339,7 @@ taito workspace clean          # Remove all unused build artifacts (e.g. images)
 
 ### 2.18. Read some software design basics
 
-If you did not already, read [Appendix B: Software design](b-software-design) for some tips on how to design your application.
+If you did not already, read [Appendix B: Software design](/tutorial/b-software-design) for some tips on how to design your application.
 
 ---
 

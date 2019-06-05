@@ -4,15 +4,15 @@
 
 ### 1.1. Prerequisites
 
-If you haven't installed Taito CLI yet, read the [introduction](https://taitounited.github.io/taito-cli/docs/01-introduction) and [installation](https://taitounited.github.io/taito-cli/docs/02-installation/) chapters of the Taito CLI manual, and install Taito CLI according to the instructions.
+If you haven't installed Taito CLI yet, read the [1. Introduction](https://taitounited.github.io/taito-cli/docs/01-introduction) and [2. Installation and upgrade](https://taitounited.github.io/taito-cli/docs/02-installation/) chapters of the Taito CLI manual, and install Taito CLI according to the instructions.
 
-If you don't have an existing infrastructure configured and running, read the [setting up infrastructure](https://taitounited.github.io/taito-cli/docs/03-quick-start/#setting-up-infrastructure) chapter of the Taito CLI manual and set up infrastucture according to the instructions.
+If you don't have an existing infrastructure configured and running, read [setting up infrastructure](https://taitounited.github.io/taito-cli/docs/03-quick-start/#setting-up-infrastructure) and set up infrastucture according to the instructions.
 
 ### 1.2. Preliminary planning, design and validation
 
 Normally you would start your project by doing some preliminary business modeling, project planning, and requirements engineering. However, these are out of scope for this technology oriented tutorial.
 
-Based on requirements you choose your architecture and make some preliminary software design decisions. [APPENDIX B: Software design](b-software-design) and [APPENDIX C: Modern server infrastructure](c-modern-server-infrastructure) provide some useful information for doing this, but they are not requisite for this tutorial. Note that you should also validate your core architectural and design decisions at the beginning of the project. Questions like _"Progressive web app, hybrid app, or native app?"_ need to be answered before the implementation can fully begin. If you are unsure of some decisions, the validation may include also prototyping, and even performance testing, if it seems essential.
+Based on requirements you choose your architecture and make some preliminary software design decisions. [APPENDIX B: Software design](/tutorial/b-software-design) and [APPENDIX C: Modern server infrastructure](/tutorial/c-modern-server-infrastructure) provide some useful information for doing this, but they are not requisite for this tutorial. Note that you should also validate your core architectural and design decisions at the beginning of the project. Questions like _"Progressive web app, hybrid app, or native app?"_ need to be answered before the implementation can fully begin. If you are unsure of some decisions, the validation may include also prototyping, and even performance testing, if it seems essential.
 
 Since this is a tutorial, we can skip all preliminary planning and design, and jump right into the implementation. During implementation you iteratively and incrementally implement your application by defining detailed requirements for top priority features in your backlog, and by designing, implementing and testing each feature one by one.
 

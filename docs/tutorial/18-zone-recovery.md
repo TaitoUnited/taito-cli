@@ -6,4 +6,4 @@ TODO Taito CLI commands and tips for recovering from an accident or cyber-attack
 
 ---
 
-**Next:** [Appendix A: technology tutorials](a-technology-tutorials)
+**Next:** [Appendix A: technology tutorials](/tutorial/a-technology-tutorials)
