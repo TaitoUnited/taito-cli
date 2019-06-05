@@ -4,9 +4,9 @@
 
 ### 1.1. Prerequisites
 
-If you haven't installed Taito CLI yet, read the [introduction](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/01-introduction) and [installation](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation) chapters of the Taito CLI manual, and install Taito CLI according to the instructions.
+If you haven't installed Taito CLI yet, read the [introduction](https://taitounited.github.io/taito-cli/docs/01-introduction) and [installation](https://taitounited.github.io/taito-cli/docs/02-installation/) chapters of the Taito CLI manual, and install Taito CLI according to the instructions.
 
-If you don't have an existing infrastructure running, read the [setting up infrastructure](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md#setting-up-infrastructure) chapter of the Taito CLI manual and set up infrastucture according to the instructions.
+If you don't have an existing infrastructure configured and running, read the [setting up infrastructure](https://taitounited.github.io/taito-cli/docs/03-quick-start/#setting-up-infrastructure) chapter of the Taito CLI manual and set up infrastucture according to the instructions.
 
 ### 1.2. Preliminary planning, design and validation
 

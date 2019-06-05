@@ -18,7 +18,7 @@ TODO
 
 ### 11.5. Zone monitoring
 
-Mostly for DevOps personnel. See chapter [17. Zone monitoring](17-zone-monitoring.md).
+Mostly for DevOps personnel. See chapter [17. Zone monitoring](/tutorial/17-zone-monitoring).
 
 ### 11.6. Security updates
 
