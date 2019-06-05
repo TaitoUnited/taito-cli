@@ -51,27 +51,15 @@ The first CI/CD build will take some time. Subsequent builds are faster as they 
 
 CI/CD deploys database migrations automatically, but not any data. You can manually deploy both database migrations and example data from `database/data/dev.sql` with `taito init:dev` or `taito init:dev --clean`. You can also import data from any sql file with `taito db import:dev FILE`.
 
-### 5.2. Enable automatic integration and e2e tests for dev environment
+### 5.2. Run integration and e2e tests manually againts the dev environment
 
-1. Enable `ci_exec_test` for `dev` environment in `taito-config.sh`:
-
-   ```bash
-   # NOTE: enable tests once you have implemented some integration or e2e tests
-   ci_exec_test=true
-   ```
-
-2. Push the change to dev branch: `taito push`
-3. See build and test execution with `taito open builds`
-
-### 5.3. Run integration and e2e tests manually againts the dev environment
-
-TODO some notes about docker-compose-test.yaml -> Taito CLI is used as proxy to access dev database.
+CI/CD runs integration and e2e tests automatically against the dev environment, because `ci_exec_test=true` for dev enviroment in `taito-config.sh`. You can run tests against the dev environment also yourself:
 
 ```shell
 taito test:dev
 ```
 
-### 5.4. Create test environment
+### 5.3. Create test environment
 
 Make sure your authentication is in effect (just in case):
 
@@ -97,7 +85,7 @@ taito open client:test         # Open application GUI
 
 CI/CD deploys database migrations automatically, but not any data. You can manually deploy both database migrations and example data from `database/data/test.sql` with `taito init:test` or `taito init:test --clean`. You can also import data from any sql file with `taito db import:test FILE`.
 
-### 5.5. Create production environment
+### 5.4. Create production environment
 
 Configure domain name for prod environment in `taito-config.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
 
@@ -143,7 +131,7 @@ CI/CD deploys database migrations automatically, but not any data. You can manua
 
 > At this point your production environment already exists. However, before releasing it to the real end-users, you might want to do some additional tasks that are explained in chapter [9. Production setup](#09-production-setup).
 
-### 5.6. Create canary environment
+### 5.5. Create canary environment
 
 Canary environment is a special environment that uses production environment resources: databases, storage buckets, secrets and external services. That is, if you deploy your application to the canary environment, your application will run side-by-side with the production version of the application, and it will also use all the same resources.
 
@@ -174,7 +162,7 @@ And how this works exactly? Well, the canary environment is mapped to production
 taito_env="${taito_env/canary/prod}" # canary -> prod
 ```
 
-### 5.7. Deploy changes through multiple environments (dev -> canary)
+### 5.6. Deploy changes through multiple environments (dev -> canary)
 
 ```shell
 taito push                       # Push some changes to the dev branch
@@ -182,37 +170,37 @@ taito env merge:dev canary       # Merge changes: dev -> test -> canary
 taito open builds                # See them build and deploy
 ```
 
-### 5.8. Create a feature environment
+### 5.7. Create a feature environment
 
 ```shell
 TODO
 ```
 
-### 5.9. Delete the feature environment
+### 5.8. Delete the feature environment
 
 ```shell
 TODO
 ```
 
-### 5.10. Revert application to the previous revision
+### 5.9. Revert application to the previous revision
 
 ```shell
 taito deployment revert:prod
 ```
 
-### 5.11. Deploy a specific version of the application
+### 5.10. Deploy a specific version of the application
 
 ```shell
 taito deployment deploy:dev 1.1.0
 ```
 
-### 5.12 Make a hotfix for production
+### 5.11. Make a hotfix for production
 
 ```shell
 TODO
 ```
 
-### 5.13. Debugging
+### 5.12. Debugging
 
 ```shell
 taito open logs:dev              # Open logs of dev environment
@@ -223,7 +211,7 @@ taito exec:server:dev echo foo   # Execute a command inside the server container
 
 TODO link: Stackdriver log filtering instructions
 
-### 5.14. Some additional deployment commands
+### 5.13. Some additional deployment commands
 
 ```shell
 taito deployment start:dev        # Start ci build for dev environment manually

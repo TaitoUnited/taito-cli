@@ -31,11 +31,11 @@ The application is built automatically in the background when you make changes. 
 
 You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials.md#browser-extensions) for some additional browser extensions that might also be useful.
 
-> If web development is new for you and you are insterested, just take your time learning the web development basics before continuing the Taito CLI tutorial.
+> If web development is new for you and you are insterested in it, just take your time learning the web development basics before continuing the Taito CLI tutorial.
 
 ### 2.4. Add a new npm library dependency
 
-Add some npm library to the dependencies section of the `client/package.json`, run `taito install`, and restart the application with `ctrl-c`, `taito start`. Now you should be able to use the npm library in your implementation.
+Add some npm library to the dependencies section of the `client/package.json`, run `taito install`, and restart the client container with `taito restart:client`. Now you should be able to use the npm library in your implementation.
 
 ### 2.5. Commit and push changes to git
 
@@ -149,7 +149,7 @@ Your UI implementation needs to access the data located in database. However, ac
 UI (on browser)  ->  API (on server)  ->  database
 ```
 
-The API should be stateless. That is, the API implementatino should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](b-software-design.md#api-design).
+The API should be stateless. That is, the API implementation should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](b-software-design.md#api-design).
 
 TODO: Some tips for debugging.
 
@@ -229,7 +229,7 @@ Try this yourself by modifying the implementation that you made in exercise 2.10
 - 1. write to database, write to object storage
 - 2. write to object storage, write to database
 
-> Some systems support distributed transactions. That is, you can make changes to multiple systems at once, and all of them engage to the same transaction. Distributed transactions come with extra complexity and are rarely needed.
+> Some systems support distributed transactions. That is, you can make changes to multiple systems at once, and all of them engage to the same transaction. Distributed transactions come with extra complexity and are rarely needed for simple systems.
 
 ### 2.15. Automatic testing
 
