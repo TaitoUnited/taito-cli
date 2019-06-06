@@ -8,12 +8,12 @@ Start the application with the following commands:
 
 ```shell
 taito kaboom        # Clean start local development environment
-                    # (Runs env apply --clean, start --clean, init --clean)
+                    # (Runs 'taito env apply --clean', 'taito start --clean', 'taito init')
 taito open client   # Open application web user interface
 taito info          # Show info required for signing in to the application
 ```
 
-Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first. While waiting, browse through the [Quick start](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md#quick-start) section of the DEVELOPMENT.md file to get an quick overview of the Taito CLI commands.
+Installation and starting up takes some time the first time you run the commands, as Docker containers and npm libraries need to be downloaded first. While waiting, browse through the [Quick start](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT.md#quick-start) section of the DEVELOPMENT.md file to get a quick overview of the Taito CLI commands.
 
 ### 2.2. Configure your editor
 

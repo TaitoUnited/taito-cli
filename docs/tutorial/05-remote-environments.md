@@ -92,7 +92,7 @@ Configure domain name for prod environment in `taito-config.sh`. If you want to 
 ```shell
   # Domain and resources
   taito_domain=
-  taito_default_domain=$taito_project-$taito_target_env.taitodev.com
+  taito_default_domain=$taito_project-$taito_target_env.mydomain.com
 ```
 
 OPTIONAL: Configure DNS for your non-default domain name. You can display the default IP address with `taito env info:prod`.
