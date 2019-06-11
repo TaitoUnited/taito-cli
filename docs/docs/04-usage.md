@@ -4,7 +4,7 @@
 
 Taito CLI is configured with a `taito-config.sh` file placed at your project root directory. You can execute taito commands anywhere in the project directory hierarchy, that is, at the project root directory or any of its subdirectories. When you are not located inside a project directory, only global Taito CLI plugins are enabled and therefore only a small subset of taito commands are enabled.
 
-Run `taito -h` to show a list of all predefined commands of Taito CLI and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for taito commands, if you have installed the autocompletion support.
+Run `taito -h` to show a list of all predefined commands of Taito CLI and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito feat -h` or `taito env -h`. Write `taito ` and hit tab, and you'll get autocompletion for taito commands.
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito auth:dev`). Note that your credentials are saved on the Taito CLI container image, as you don't need them lying on your host file system anymore.
 
