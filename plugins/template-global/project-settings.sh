@@ -3,8 +3,8 @@
 
 if [[ ${taito_type:-} == "zone" ]]; then
   # Postgres
-  postgres_host=${postgres_default_host:-}
-  postgres_host_prod=${postgres_default_host_prod:-}
+  postgres_host=${postgres_default_host:-127.0.0.1}
+  postgres_host_prod=${postgres_default_host_prod:-127.0.0.1}
   postgres_admin=${postgres_default_admin:-}
   postgres_instance=$(echo "${postgres_instances:-}" | awk '{print $1;}')
   if [[ ! $postgres_host ]]; then
@@ -18,8 +18,8 @@ if [[ ${taito_type:-} == "zone" ]]; then
   fi
 
   # MySQL
-  mysql_host=${mysql_default_host:-}
-  mysql_host_prod=${mysql_default_host_prod:-}
+  mysql_host=${mysql_default_host:-127.0.0.1}
+  mysql_host_prod=${mysql_default_host_prod:-127.0.0.1}
   mysql_admin=${mysql_default_admin:-}
   mysql_instance=$(echo "${mysql_instances:-}" | awk '{print $1;}')
   if [[ ! $mysql_host ]]; then
