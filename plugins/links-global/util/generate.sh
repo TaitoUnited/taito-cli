@@ -2,6 +2,11 @@
 : "${taito_util_path:?}"
 : "${taito_project_path:?}"
 
+# Skip link generation for template projects
+if [[ ${taito_project:-} == *"-template" ]]; then
+  exit 0
+fi
+
 # Generate markdown links
 markdown_links=""
 
