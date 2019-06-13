@@ -30,7 +30,6 @@ taito auth:dev
 Create the dev environment:
 
 ```shell
-( EDIT taito-config.sh )       # No need to edit (dev is already enabled)
 taito env apply:dev            # Create the dev environment
 taito push                     # Push some changes to the dev branch
 ```
@@ -70,39 +69,36 @@ taito auth:test
 Create the test environment:
 
 ```shell
-EDIT taito-config.sh           # Add 'test' to 'taito_environments'
-taito env apply:test           # Create the test environment
-taito env merge:dev test       # Merge changes from dev to test
+EDIT taito-environments-config.sh  # Add 'test' to 'taito_environments'
+taito env apply:test               # Create the test environment
+taito env merge:dev test           # Merge changes from dev to test
 ```
 
 Make sure it works:
 
 ```shell
-taito open builds              # Watch it build and deploy automatically
-taito open status:test         # Check status of test environment
-taito open client:test         # Open application GUI
+taito open builds                  # Watch it build and deploy automatically
+taito open status:test             # Check status of test environment
+taito open client:test             # Open application GUI
 ```
 
 CI/CD deploys database migrations automatically, but not any data. You can manually deploy both database migrations and example data from `database/data/test.sql` with `taito init:test` or `taito init:test --clean`. You can also import data from any sql file with `taito db import:test FILE`.
 
 ### 5.4. Create production environment
 
-Configure domain name for prod environment in `taito-config.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
+Configure domain name for prod environment in `taito-domain-config.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
 
 ```shell
-  # Domain and resources
-  taito_domain=
-  taito_default_domain=$taito_project-$taito_target_env.mydomain.com
+taito_domain=
+taito_default_domain=$taito_project-$taito_target_env.mydomain.com
 ```
 
 OPTIONAL: Configure DNS for your non-default domain name. You can display the default IP address with `taito env info:prod`.
 
-OPTIONAL: Disable basic authentication for production environment in `taito-config.sh`:
+OPTIONAL: Disable basic authentication for production environment in `taito-domain-config.sh`:
 
 ```shell
-  prod)
-    # Settings
-    taito_basic_auth_enabled=false
+taito_basic_auth_enabled=false
 ```
 
 Make sure your authentication is in effect (just in case):
@@ -114,7 +110,6 @@ taito auth:prod
 Create the environment:
 
 ```shell
-( EDIT taito-config.sh )       # No need to edit (prod is already configured)
 taito env apply:prod           # Create the prod environment
 taito env merge:test prod      # Merge changes from test to prod
 ```
@@ -140,17 +135,17 @@ NOTE: Since canary environment uses production resources, you don't need to run 
 Create the canary environment:
 
 ```shell
-EDIT taito-config.sh             # Add 'canary' to 'taito_environments'
-taito env merge:test canary      # Merge changes from test to canary
+EDIT taito-environments-config.sh  # Add 'canary' to 'taito_environments'
+taito env merge:test canary        # Merge changes from test to canary
 ```
 
 Make sure it works:
 
 ```shell
-taito open builds                # Watch it build and deploy automatically
-taito open status:canary         # Check status of canary environment
-taito open client:canary         # Open canary application GUI
-taito open client:prod           # Open production application GUI
+taito open builds                  # Watch it build and deploy automatically
+taito open status:canary           # Check status of canary environment
+taito open client:canary           # Open canary application GUI
+taito open client:prod             # Open production application GUI
 ** Create some posts in the production app **
 ** Resfresh the posts page in the canary app -> you'll see the new posts **
 ```
@@ -158,7 +153,7 @@ taito open client:prod           # Open production application GUI
 And how this works exactly? Well, the canary environment is mapped to production resources in `taito-config.sh` with these lines:
 
 ```shell
-# Environment mappings (for canary releases and A/B testing)
+# Environment mappings
 taito_env="${taito_env/canary/prod}" # canary -> prod
 ```
 

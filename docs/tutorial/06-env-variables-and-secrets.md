@@ -57,7 +57,7 @@ taito deployment deploy:prod
 
 ### 6.4. Define a secret
 
-taito-config.sh:
+taito-environments-config.sh:
 
 ```shell
 taito_secrets="
