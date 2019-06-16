@@ -65,6 +65,11 @@ if [[ ${was_executed} == false ]]; then
     echo
     echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
     echo "Nothing to initialize"
+  elif [[ "${taito_command}" == "db-deploy" ]]; then
+    # None of the enabled plugins has implemented db deploy
+    echo
+    echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
+    echo "No database deployment plugin enabled"
   elif [[ ${was_executed} == false ]]; then
     # Command not found
     if [[ "${taito_orig_command}" != " " ]]; then
