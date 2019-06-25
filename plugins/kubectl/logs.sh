@@ -8,6 +8,7 @@ container="${1}"
 
 "${taito_plugin_path}/util/use-context.sh"
 
+DETERMINE_FAILED_POD=true
 . "${taito_plugin_path}/util/determine-pod-container.sh"
 
 echo pod: "${pod}"
