@@ -270,7 +270,8 @@ if (( RANDOM % 4 == 0 )) && \
    [[ ${quiet} != "true" ]] && \
    [[ ${taito_command} != "project-"* ]] && \
    [[ ${taito_command} != "env-apply" ]]; then
-  if [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]; then
+  if [[ ${taito_project:-} != *"-template" ]] && \
+     [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]; then
     echo
     echo "--------------------------------------------------------"
     echo "NOTE: This project has not yet been fully configured."

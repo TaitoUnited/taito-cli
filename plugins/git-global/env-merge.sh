@@ -33,6 +33,7 @@ do
 
     # Check if project has been fully configured
     if [[ ${d} == "master" ]] && \
+       [[ ${taito_project:-} != *"-template" ]] && \
        [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]; then
       echo
       echo "--------------------------------------------------------"
