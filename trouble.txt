@@ -41,14 +41,17 @@ TAITO CLI TROUBLESHOOTING
     Delete the directories using sudo and try again in the correct order:
     'taito env apply', 'taito start'.
 
-  'command not found'
-    - Try running 'taito upgrade'
-    - Try upgrading docker and docker-compose
+  'Unknown command'
+    - Did you execute the command in a project directory that contains
+      taito-config.sh?
     - Did you give the correct environment as argument? Commands always use the
       local environment by default.
-    - Check your plugin configuration in your taito-config.sh files.
+    - Check your plugin configuration in your taito-config.sh files. Perhaps
+      some plugins are not enabled.
     - Make sure that you have set all the environment variables correctly:
       TODO...
+    - Try upgrading Taito CLI with 'taito upgrade'
+    - Try upgrading Docker and Docker Compose
 
   My application continuously crashes or restarts
     Liveness probe is probably failing. Check logs with `taito logs:TARGET:ENV`
