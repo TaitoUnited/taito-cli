@@ -2,8 +2,9 @@
 : "${taito_util_path:?}"
 : "${taito_project_path:?}"
 
-# Skip link generation for template projects
-if [[ ${taito_project:-} == *"-template" ]]; then
+# Skip link generation for template projects and non-projects
+if [[ ${taito_project:-} == *"-template" ]] || \
+   [[ ! -f "${taito_project_path}/taito-config.sh" ]]; then
   exit 0
 fi
 
