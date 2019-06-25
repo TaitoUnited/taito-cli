@@ -20,7 +20,7 @@ The following guidelines usually work well when building a modular monolithic im
 * A file should contain only nearby references (e.g. references to files in the same directory or in a subdirectory directly beneath it); with the exception of references to libraries and common directories, of course.
 * If you break the guidelines, at least try to avoid making circular dependencies. Also leave a `REFACTOR:` comment if the dependency is the kind that it should be refactored later.
 
-See [full-stack-template/client/src](https://github.com/TaitoUnited/server-template/tree/master/client/src) as an example.
+See [full-stack-template/client/src](https://github.com/TaitoUnited/full-stack-template/tree/master/client/src) as an example.
 
 TODO: DRY, KISS, YAGNI, GRASP, SOLID
 TODO: https://jaxenter.com/promising-new-metric-track-maintainability-154195.html
@@ -72,7 +72,7 @@ Think about the following concepts while you are working with your project. You 
 * **High cohesion:** Aim for high cohesion by putting closely related logic in the same place.
 * **Responsibility:** Name the part according to its responsibility. The part should implement only such logic that it's responsible for and nothing else!
 
-See [server-template](https://github.com/TaitoUnited/server-template) as an example of a directory structure. This kind of loosely coupled modular structure has many benefits including:
+See [full-stack-template](https://github.com/TaitoUnited/full-stack-template) as an example of a directory structure. This kind of loosely coupled modular structure has many benefits including:
 
 * When you make changes to an existing implementation, you know better how widely the change will affect the rest of the application (what might break).
 * When you make changes to a feature, you don't have to jump around in the code tree searching for the correct places that you need to change.

@@ -10,7 +10,7 @@ Some of the plugins require authentication. If you encounter a connection or aut
 
 [Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README) guides you through common software development scenarios in a chronological order. You may consider it as a chronological Taito CLI manual.
 
-See the [DEVELOPMENT.md](https://github.com/TaitoUnited/server-template/blob/master/DEVELOPMENT) of the [full-stack-template](https://github.com/TaitoUnited/server-template) as an example on how to use Taito CLI with your project.
+See the [DEVELOPMENT.md](https://github.com/TaitoUnited/full-stack-template/blob/master/DEVELOPMENT) of the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) as an example on how to use Taito CLI with your project.
 
 ### Troubleshooting
 

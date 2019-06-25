@@ -39,8 +39,8 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "1) Configure your personal config file (~/.taito/taito-config.sh) or"
   echo "   organizational config file (~/.taito/taito-config-${taito_organization_abbr:-myorg}.sh)"
   echo "   according to the example settings displayed below."
-  echo "2) Create a new project based on server-template by running"
-  echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: server-template'"
+  echo "2) Create a new project based on full-stack-template by running"
+  echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: full-stack-template'"
   echo
   echo "# --- Project template settings ---"
   echo "# (default settings for newly created projects)"

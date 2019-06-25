@@ -19,7 +19,7 @@ Create a new zone with the following steps:
 1. Create a new project based on a reusable template:
 
     ```shell
-    taito project create: server-template
+    taito project create: full-stack-template
     cd PROJECT
     ```
 

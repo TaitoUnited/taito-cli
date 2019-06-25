@@ -27,7 +27,7 @@ Plugins:
 
 > TIP: It is quite common to run docker-compose in local development and Kubernetes on server environments. You can do this by enabling the docker-compose plugin for local environment and the kubectl plugin for all other environments.
 
-> NOTE: If your application is based on technologies that are not supported by existing Taito CLI plugins, you can implement the aforementioned application control Taito CLI commands in _package.json_, _Makefile_ or _Pipfile_ of your project. See the [Build Tools](#build-tools) section for npm, make and pipenv plugin descriptions, and the [legacy-server-template](https://github.com/TaitoUnited/legacy-server-template) for some examples.
+> NOTE: If your application is based on technologies that are not supported by existing Taito CLI plugins, you can implement the aforementioned application control Taito CLI commands in _package.json_, _Makefile_ or _Pipfile_ of your project. See the [Build Tools](#build-tools) section for npm, make and pipenv plugin descriptions.
 
 ## Build tools
 
@@ -46,7 +46,7 @@ Plugins:
 - [pipenv](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/pipenv/README): Execute pipenv scripts with Taito CLI.
 - [semantic-release](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/semantic-release/README): Make a new release using the `taito build release` command. The [semantic-release](https://github.com/semantic-release/semantic-release) library will handle semantic versioning and release notes automatically based on your git commit messages.
 
-You typically need to implement the following Taito CLI commands in _package.json_, _Makefile_ or _Pipfile_ of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/server-template/blob/master/package.json) of the full-stack-template as an example.
+You typically need to implement the following Taito CLI commands in _package.json_, _Makefile_ or _Pipfile_ of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/full-stack-template/blob/master/package.json) of the full-stack-template as an example.
 
 - `taito init`: Populate data sources with example data (databases, storages).
 - `taito info`: Show info required for logging in to the application.
