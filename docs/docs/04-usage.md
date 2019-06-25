@@ -14,7 +14,7 @@ See the [DEVELOPMENT.md](https://github.com/TaitoUnited/server-template/blob/mas
 
 ### Troubleshooting
 
-Run `taito --trouble` to see troubleshooting.
+Run `taito trouble` to see troubleshooting.
 
 With the `-v` or `--verbose` flag (e.g. `taito -v db connect:dev`) you can see the commands that plugins run during command execution. If you want to see even more output, use the `--debug` flag.
 

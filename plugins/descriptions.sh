@@ -9,13 +9,13 @@ cprefix="${1:-*}"
 echo "--help \
   &focus \
   # Show help.txt of current project and a list of all taito-cli commands"
-echo "--readme \
+echo "readme \
   &focus \
   # Show README.md of current project and taito-cli"
 echo "shell \
   &focus \
   # Start interactive shell on the taito-cli container"
-echo "--trouble \
+echo "trouble \
   &focus \
   # Show trouble.txt of current project and taito-cli"
 echo "upgrade \

@@ -332,7 +332,7 @@ taito check size:client        # Analyze size of the client
 taito check deps:server        # Check dependencies of the server
 taito check code:server        # Check code quality ot the server
 
-taito --trouble                # Display troubleshooting
+taito trouble                  # Display troubleshooting
 taito workspace kill           # Kill all running processes (e.g. containers)
 taito workspace clean          # Remove all unused build artifacts (e.g. images)
 ```

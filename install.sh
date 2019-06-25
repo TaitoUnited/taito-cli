@@ -108,7 +108,7 @@ fi
 
 echo
 echo "[8. Pull Taito CLI container image and check version]"
-taito --version
+taito version
 
 # NOTE: Upgrade just in case. Sometimes resolves some user uid/gid issues.
 echo
@@ -117,7 +117,7 @@ taito upgrade
 
 echo
 echo "[10. Taito CLI installation check]"
-taito --check
+taito check
 
 echo
 echo "[11. Success]"

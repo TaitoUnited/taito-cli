@@ -5,8 +5,8 @@
 
 export tests="\
 taito --help;\
-taito --readme;\
-taito --trouble;\
+taito readme;\
+taito trouble;\
 "
 
 if ! ../util/verify.sh; then

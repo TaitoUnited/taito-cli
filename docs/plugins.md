@@ -163,7 +163,7 @@ Plugins:
 
 ## Miscellaneous
 
-- [basic](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/basic/README): The basic plugin is always enabled. It implements some of the basic Taito CLI functionality like `taito --help`, `taito --readme` and `taito --trouble`.
+- [basic](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/basic/README): The basic plugin is always enabled. It implements some of the basic Taito CLI functionality like `taito --help`, `taito readme` and `taito trouble`.
 - [docker-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-global/README): Clean up your Docker with the `taito workspace clean` and `taito workspace kill` commands.
 - [links-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/links-global/README): Provides support for links by implementing the `taito open *` and `taito link *` commands. Also generates links to project README.md on `taito project apply` and `taito project docs`.
 - [run](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/run/README): TODO

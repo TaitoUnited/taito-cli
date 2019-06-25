@@ -11,7 +11,7 @@ _taito_commands()
     colon_split=$(echo "${taito_full}" | sed 's/:[^:]*/:[^:]*/g')
   fi
   opts=$(echo " ${taito_prefix}" | sed "s/ [a-zA-Z].*//")
-  taito --autocomplete "${taito_prefix}" | \
+  taito autocomplete "${taito_prefix}" | \
     sed "s/^/${opts} /" | \
     grep -e "${pattern}" | awk "{print \$${taito_index}}" | \
     sed "s/\([^:]*${colon_split}:\).*/\1/"

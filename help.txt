@@ -229,12 +229,6 @@ OPTIONS
     descriptions in search.
     TODO implement
 
-  --trouble
-    Show trouble.txt of current project and Taito CLI.
-
-  --readme
-    Show README.md of current project.
-
   --dev, -d
     Run in development mode. In the development mode your local Taito CLI
     directory is mounted on the container.
@@ -276,21 +270,12 @@ OPTIONS
     No logging output.
     TODO implement
 
-  --autocomplete, --descriptions
-    Prints all commands.
-
   -c
     Informs Taito CLI that the command is continuing from a previous command
     execution and therefore the copyright license should not be shown again.
 
   -z
     Skip taito command overrides during execution.
-
-  --check
-    Check Taito CLI installation
-
-  --version
-    Print version
 
 ARGUMENTS
 
@@ -326,14 +311,29 @@ TAITO: BASIC OPERATIONS
     default context for shell commands like 'taito -- kubectl get pods'
     or 'taito shell'.
 
+  autocomplete, descriptions
+    Prints all commands.
+
+  check
+    Check Taito CLI installation
+
+  config[:ENV]
+    Show taito config values.
+
+  readme
+    Show README.md of current project.
+
   shell
     Start interactive shell on the Taito CLI container.
+
+  trouble
+    Show trouble.txt of current project and Taito CLI.
 
   upgrade
     Upgrade Taito CLI and its extensions to the latest version.
 
-  config[:ENV]
-    Show taito config values.
+  version
+    Print version
 
 PROJECT: BASIC OPERATIONS
 

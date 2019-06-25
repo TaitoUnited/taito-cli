@@ -40,11 +40,11 @@ do
         options+=("$1")
         shift
         ;;
-        --descriptions)
+        descriptions)
         mode="descriptions"
         shift
         ;;
-        --autocomplete)
+        autocomplete)
         mode="autocomplete"
         shift
         ;;
@@ -478,8 +478,8 @@ docker_command="
 if [[ " ${params[@]} " == *" -h "* ]] || \
    [[ " ${options[*]} " == *" -h "* ]] || \
    [[ " ${options[*]} " == *" --help "* ]] || \
-   [[ " ${options[*]} " == *" --trouble "* ]] || \
-   [[ " ${options[*]} " == *" --readme "* ]]; then
+   [[ ${command} == "trouble" ]] || \
+   [[ ${command} == "readme" ]]; then
   # Filter some control characters for a cleaner output
   if [[ "${taito_host_uname}" == "Darwin" ]]; then
    ctrl_filter=" tr -d '[:cntrl:]' "
@@ -505,7 +505,7 @@ if [[ "${exit_code}" != "0" ]] && \
    [[ "${exit_code}" != "130" ]] && \
    [[ ${continue} == false ]]; then
   echo
-  echo "HINT: Run 'taito --trouble' to see troubleshoothing"
+  echo "HINT: Run 'taito trouble' to see troubleshoothing"
   echo
 fi
 

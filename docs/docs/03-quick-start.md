@@ -35,7 +35,7 @@ Create a new zone with the following steps:
     taito open client
     ```
 
-> In case of trouble, run `taito --trouble`. Sometimes `taito kaboom` might fail and hopefully `taito --trouble` helps.
+> In case of trouble, run `taito trouble`. Sometimes `taito kaboom` might fail and hopefully `taito trouble` helps.
 
 #### Apply project wide settings
 

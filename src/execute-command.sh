@@ -14,11 +14,11 @@ do
   key="$1"
   if [[ ${skip_rest} == false ]]; then
     case $key in
-        --version)
+        version)
         echo "TODO: print Taito CLI version"
         exit
         ;;
-        --check)
+        check)
         if [[ $(whoami) == "taito" ]]; then
           echo
           echo "Taito CLI is OK!"
