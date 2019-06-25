@@ -57,7 +57,7 @@ taito deployment deploy:prod
 
 ### 6.4. Define a secret
 
-Add secret definition to `taito-environments-config.sh`:
+Add secret definition to `taito-environments-config.sh`. Avoid undescores in secret names as they are not valid in Kubernetes:
 
 ```shell
 taito_secrets="

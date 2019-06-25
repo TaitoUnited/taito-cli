@@ -259,7 +259,7 @@ You can define parameters for your e2e and integration test suites by using `tes
 
 Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands. See [taito-config.sh](https://github.com/TaitoUnited/server-template/blob/master/taito-config.sh) of full-stack-template for examples.
 
-Secret naming convention is **name.property[/namespace]:method**. For example:
+Secret naming convention is **name.property[/namespace]:method**. You should avoid undescores in secret names as they are not valid in Kubernetes. For example:
 
 - _silicon-valley-prod-basic-auth.auth:htpasswd_: User credentials for basic authentication. Use `htpasswd-plain` instead of `htpasswd` if you want to store the passwords in plain text (e.g. for development purposes).
 - _silicon-valley-prod-twilio.apikey:manual_: API key for external Twilio service for sending sms messages. The token is asked from user during the environment creation and secret rotation process.

@@ -41,6 +41,16 @@ do
       formatted_secret_name=$(echo ${formatted_secret_name} | sed 's/\([^\.]*\).*/\1/')
     fi
 
+    if [[ ${secret_name} == *"_"* ]]; then
+      echo -e "${NOTEs}"
+      echo "NOTE: Secret name '${secret_name}' contains an underscore (_)."
+      echo "Underscores are converted to hyphen (-) when secret is stored to Kubernetes."
+      echo "It's best to avoid underscores in secret names."
+      echo
+      echo "SECRET NAME WAS CONVERTED TO: ${formatted_secret_name}"
+      echo -e "${NOTEe}"
+    fi
+
     if [[ ${secret_method} == "copy/"* ]]; then
       secret_value=$(kubectl get secret "${formatted_secret_name}" -o yaml \
         --namespace="${secret_source_namespace}" | grep "^  ${secret_property}" | \
