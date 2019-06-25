@@ -268,6 +268,15 @@ Secret naming convention is **name.property[/namespace]:method**. For example:
 - _cloudsql-gserviceaccount.key:copy/devops_: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
 - _github-buildbot.token:read/devops_: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
 
+You can use the following methods in your secret definition:
+
+- `random`: Randomly generated string.
+- `manual`: Manually entered string.
+- `file`: File. The file path is entered manually.
+- `htpasswd`: htpasswd file that contains 1-N user credentials. User credentials are entered manually.
+- `htpasswd-plain`: htpasswd file that contains 1-N user credentials. Passwords are stored in plain text. User credentials are entered manually.
+- `csrkey`: Secret key generated for certificate signing request (CSR).
+
 See the [secret management](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md#secret-management) section of the plugins page for more information.
 
 ---

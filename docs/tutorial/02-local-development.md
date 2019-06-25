@@ -64,7 +64,7 @@ You can debug the implementation with your web browser. [Chrome DevTools](https:
 
 ### 2.5. Add a new npm library dependency
 
-Add some npm library to the dependencies section of the `client/package.json`, run `taito install`, and restart the client container with `taito restart:client`. Now you should be able to use the npm library in your implementation.
+Add some npm library to the dependencies section of the `client/package.json`. Install the new libraries locally by running `taito install` (or `taito env apply`). Restart the client container with `taito restart:client`. Now you should be able to use the npm library in your implementation.
 
 ### 2.6. Commit and push changes to git
 

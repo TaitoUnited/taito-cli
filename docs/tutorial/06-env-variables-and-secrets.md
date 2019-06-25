@@ -57,7 +57,7 @@ taito deployment deploy:prod
 
 ### 6.4. Define a secret
 
-taito-environments-config.sh:
+Add secret definition to `taito-environments-config.sh`:
 
 ```shell
 taito_secrets="
@@ -65,18 +65,27 @@ taito_secrets="
 "
 ```
 
-helm.yaml:
+You can use the following types in your secret definition:
+
+- `random`: Randomly generated string.
+- `manual`: Manually entered string.
+- `file`: File. The file path is entered manually.
+- `htpasswd`: htpasswd file that contains 1-N user credentials. User credentials are entered manually.
+- `htpasswd-plain`: htpasswd file that contains 1-N user credentials. Passwords are stored in plain text. User credentials are entered manually.
+- `csrkey`: Secret key generated for certificate signing request (CSR).
+
+Add secret reference for Kubernetes in `helm.yaml`:
 
 ```shell
     secrets:
       MY_SECRET_KEY: ${taito_project}-${taito_env}-my-secret.key
 ```
 
-docker-compose.yaml:
+Add secret reference for Docker Compose in `docker-compose.yaml`:
 
 ```shell
     secrets:
-      MY_SECRET_KEY: ${acme-myproject-dev-my-secret-key}
+      - MY_SECRET_KEY
 ...
 ...
 secrets:

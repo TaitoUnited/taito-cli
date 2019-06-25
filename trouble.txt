@@ -6,9 +6,10 @@ TAITO CLI TROUBLESHOOTING
       plugins run during command execution. If you want to see even more output,
       use the `--debug` flag.
 
-  Read timeout on 'taito kaboom':
+  Read timeout on 'taito kaboom' or `taito start --clean`:
     If the kaboom command fails with Docker Compose read timeout error, stop it
     with ctrl+c, start it again with 'taito start', and then run 'taito init'.
+    For more info, see https://github.com/docker/compose/issues/3927
 
   Connection or authorization error
     If you run into a connection or authorization error during Taito CLI
@@ -21,6 +22,12 @@ TAITO CLI TROUBLESHOOTING
     'taito workspace clean'. You can also try to enlarge the docker virtual
     disk in your docker preferences. Also check that you have disk space
     available on your computer.
+
+  Strange Docker problems
+    Try to reset docker to factory defaults (on macOS: preferences -> reset) or
+    just clean it by running 'taito workspace kill' and 'taito workspace clean'.
+    Adjust your Docker resource limits (on macOS: preferences -> disk,
+    preferences -> advanced).
 
   Taito CLI hangs after displaying the copyright notice
     First try restarting your Docker daemon. If the problem persists after
@@ -49,11 +56,10 @@ TAITO CLI TROUBLESHOOTING
     the container with `taito kill:TARGET:ENV` to see if it helps.
 
   Application does not work locally
-    - Try clean start by running:
-      $ taito env apply --clean
-      $ taito start --clean
-      $ taito init --clean
-    - Try cleaning your local workspace by running 'workspace-kill' and/or
+    - Try clean start by running 'taito kaboom'. If the kaboom command fails
+      with Docker Compose read timeout error, stop it with ctrl+c, start it
+      again with 'taito start', and then run 'taito init'
+    - Try cleaning your local workspace by running 'workspace-kill' and
       'workspace-clean'
 
   CI/CD build fails but everything works locally

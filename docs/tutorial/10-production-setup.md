@@ -4,11 +4,11 @@
 
 These were already automatically set during `taito project apply` and `taito env apply:prod`:
 
-- Backups
-- Log monitoring
-- Error tracking
-- Uptime monitoring
-- Resource limits and autoscaling
+- Backups: TODO open backups
+- Log monitoring: `taito open logs:prod` and TODO open alerts
+- Error tracking: `taito open errors:prod`
+- Uptime monitoring: `taito open uptime:prod`
+- Resource limits and autoscaling: `taito status:prod` (TODO show more info)
 
 ### 10.2. Performance testing
 
@@ -18,7 +18,7 @@ TODO
 
 TODO
 
-### 10.4. SSL/TLS certificate
+### 10.4. Custom SSL/TLS certificate
 
 Production environment uses a domain validated SSL/TLS certificate by default. It was acquired from Let's Encrypt when you deployed your application to the production environment the first time, and it will be renewed automatically every 3 months.
 
