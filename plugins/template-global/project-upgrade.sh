@@ -1,8 +1,5 @@
 #!/bin/bash -e
 
-echo "'project upgrade' command under construction"
-exit 1
-
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${template_name:?}"
