@@ -102,7 +102,8 @@ else
     fi
 
     if [[ -d "./shared" ]]; then
-      cp -r ./shared ${service_dir}
+      rm -rf "${service_dir}/shared"
+      cp -r ./shared "${service_dir}"
     fi
 
     (
