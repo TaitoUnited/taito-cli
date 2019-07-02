@@ -102,8 +102,17 @@ else
     fi
 
     if [[ -d "./shared" ]]; then
-      rm -rf "${service_dir}/shared"
-      cp -r ./shared "${service_dir}"
+      shared_dest="${service_dir}/shared"
+      if [[ -L "${service_dir}/src/shared" ]]; then
+        shared_dest="${service_dir}/src/shared"
+      fi
+      if [[ -L "${shared_dest}" ]]; then
+        rm -rf "${shared_dest}"
+      fi
+      if [[ ! -f "${shared_dest}" ]] && [[ ! -d "${shared_dest}" ]]; then
+        echo "Mapping ./shared to ${shared_dest}"
+        cp -r ./shared "${shared_dest}"
+      fi
     fi
 
     (
