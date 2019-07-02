@@ -37,6 +37,10 @@ if [[ -d alternatives ]]; then
       name="${alternative%%-*}"
       rm -rf "$name"
       mv "alternatives/$alternative" "$name"
+      if [[ -L $name/shared ]]; then
+        rm -rf "$name/shared"
+        ln -s ../shared "$name/shared"
+      fi
     fi
   done
   rm -rf alternatives
