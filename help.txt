@@ -4,7 +4,7 @@ TAITO CLI
 QUICK EXAMPLES
 
   LOCAL DEVELOPMENT BASICS
-    kaboom                             # Quick start (runs 'env apply', 'start --clean --init')
+    kaboom                             # Quick start (runs: env apply, start --clean --init)
     env apply                          # Configure local environment and install some libs
     start                              # Start the application. Add --clean for clean start.
     init                               # Initialize DB and storages. Add --clean for clean init.

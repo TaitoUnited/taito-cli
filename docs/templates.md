@@ -6,13 +6,13 @@ Officially recommended project templates are listed below. All of them include t
 
 > Run `taito [-o ORG] project create: TEMPLATE` to create a project (e.g `taito project create: full-stack-template`).
 
-* [full-stack-template](https://github.com/TaitoUnited/full-stack-template): Template for applications and APIs running on Kubernetes, Docker Compose, serverless functions, or virtual machine. You can choose the stack during project creation. Support for event-driven microservices (Kafka) and Istio service mesh coming soon.
+* [full-stack-template](https://github.com/TaitoUnited/full-stack-template): Template for cloud-native applications and APIs running on Kubernetes, Docker Compose, serverless (FaaS), or virtual machine. You can choose the stack during project creation.
 
-* [website-template](https://github.com/TaitoUnited/website-template): Template for websites generated with a static site generator (e.g. Gatsby, Hugo or Jekyll), and running on CDN, Kubernetes, Docker Compose, or virtual machine. Supports an automated multistage publishing process. Netlify CMS support also coming soon. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic functionality to your website.
+* [website-template](https://github.com/TaitoUnited/website-template): Template for websites generated with a static site generator (e.g. Gatsby, Hugo or Jekyll), and running on CDN, Kubernetes, Docker Compose, or virtual machine. Supports an automated multistage publishing process. Netlify CMS support also coming soon. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic functionality for your website.
 
-* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Template for WordPress sites running on Kubernetes, Docker Compose, or virtual machine. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic non-PHP functionality to your website.
+* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Template for WordPress sites running on Kubernetes, Docker Compose, or virtual machine. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic non-PHP functionality for your website.
 
-* [react-native-template](https://github.com/TaitoUnited/react-native-template): Template for react-native applications. Visual Studio App Center for CI/CD and monitoring.
+* [react-native-template](https://github.com/TaitoUnited/react-native-template): Template for React Native applications. Visual Studio App Center for CI/CD and monitoring.
 
 * [npm-template](https://github.com/TaitoUnited/npm-template): Template for npm libraries. Includes monorepo support.
 
