@@ -204,15 +204,6 @@ if [[ " unit scan docs ci-publish artifact-publish build-publish " == *"${taito_
   exit 0
 fi
 
-if [[ "${taito_command}" == "test" ]] && \
-   [[ "${taito_mode:-}" == "ci" ]] && \
-   [[ "${ci_exec_test:-}" != "true" ]]; then
-  echo
-  echo "Skipping ${taito_command} in ci mode. ci_exec_test is false."
-  echo
-  exit 0
-fi
-
 # Set defaults
 # TODO set default taito_version here
 
@@ -225,6 +216,15 @@ fi
 # Read taito-config.sh files from all locations
 . "${taito_util_path}/read-user-taito-config.sh" "${taito_env}" && \
 . "${taito_util_path}/read-project-taito-config.sh" "${taito_env}" && \
+
+if [[ "${taito_command}" == "test" ]] && \
+   [[ "${taito_mode:-}" == "ci" ]] && \
+   [[ "${ci_exec_test:-}" != "true" ]]; then
+  echo
+  echo "Skipping ${taito_command} in ci mode. ci_exec_test is false."
+  echo
+  exit 0
+fi
 
 # Set output formatting
 export H1s="${taito_style_h1_s:-\\x1B[92m\\x1B[1m[}"  # Heading 1 start: Light green, bold
