@@ -151,7 +151,7 @@ if [[ "${project}" ]]; then
     cd "${project_local_path}" && \
     git clone --no-checkout --depth 1 -b dev --single-branch --filter=blob:none \
       "${vc_organization:?}/${project}.git" . &> /dev/null && \
-    git checkout dev -- taito-config.sh package.json &> /dev/null
+    git checkout dev -- *.sh *.json &> /dev/null
   else
     cd "${project_local_path}" && \
     git pull &> /dev/null
