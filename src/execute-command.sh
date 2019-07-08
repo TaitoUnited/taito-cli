@@ -643,6 +643,7 @@ export taito_enabled_plugins="${enabled_plugins}"
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
     [[ "${taito_command:-}" == "test" ]] &&
     [[ "${taito_plugins:-}" == *"gcp-ci"* ]] &&
+    [[ "${taito_plugins:-}" == *"-db"* ]] &&
     [[ "${taito_mode:-}" == "ci" ]] \
   ); then
   export taito_requires_database_connection="true"
