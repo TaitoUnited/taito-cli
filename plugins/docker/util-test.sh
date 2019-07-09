@@ -97,7 +97,7 @@ if [[ "${taito_env}" != "local" ]]; then
 fi && \
 
 # Create test suite template from init and test phase commands
-template="echo && echo 'TEST ${taito_target}:${taito_env} suite=SUITE' && ${init_command} && ${compose_cmd}"
+template="(echo && echo 'TEST ${taito_target}:${taito_env} suite=SUITE' && ${init_command} && ${compose_cmd})"
 
 # Generate commands to be run by traversing all test suites
 commands=""
