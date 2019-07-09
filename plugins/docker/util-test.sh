@@ -118,6 +118,11 @@ done && \
 
 # Execute tests
 if [[ ! -z ${commands} ]]; then
+  if [[ "${taito_mode:-}" == "ci" ]]; then
+    echo "--- EXECUTING ---"
+    echo "${compose_pre_cmd}${commands# && }"
+    echo "-----------------"
+  fi
   "${taito_util_path}/execute-on-host-fg.sh" "${compose_pre_cmd}${commands# && }"
 fi && \
 
