@@ -135,7 +135,6 @@ Continuos integration settings:
 - **ci_exec_build:** Build a container if it does not exist already (true/false).
 - **ci_exec_deploy:** Deploy automatically (true/false).
 - **ci_exec_test:** Execute test suites after deploy (true/false).
-- **ci_exec_test_wait:** How many seconds to wait for deployment/restart (true/false).
 - **ci_exec_test_init:** Run 'init --clean' before each test suite (true/false).
 - **ci_exec_revert:** Revert deploy automatically on fail (true/false).
 - **ci_static_assets_location:** Location where the static assets should be published (e.g. storage bucket).

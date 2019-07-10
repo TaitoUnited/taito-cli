@@ -6,7 +6,7 @@ Officially recommended project templates are listed below. All of them include t
 
 > Run `taito [-o ORG] project create: TEMPLATE` to create a project (e.g `taito project create: full-stack-template`).
 
-* [full-stack-template](https://github.com/TaitoUnited/full-stack-template): Template for cloud-native applications and APIs running on Kubernetes, Docker Compose, serverless (FaaS), or virtual machine. You can choose the stack during project creation.
+* [full-stack-template](https://github.com/TaitoUnited/full-stack-template): Template for cloud-native applications and microservices running on Kubernetes, Docker Compose, serverless (FaaS), or virtual machine. You can choose the stack during project creation.
 
 * [website-template](https://github.com/TaitoUnited/website-template): Template for websites generated with a static site generator (e.g. Gatsby, Hugo or Jekyll), and running on CDN, Kubernetes, Docker Compose, or virtual machine. Supports an automated multistage publishing process. Netlify CMS support also coming soon. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic functionality for your website.
 
