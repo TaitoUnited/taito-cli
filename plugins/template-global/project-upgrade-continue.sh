@@ -21,5 +21,8 @@ trap cleanup EXIT
   "${taito_plugin_path}/util/init.sh" "upgrade"
 )
 
+# TODO: remove once all projects have been upgraded
+rm -f taitoless.sh || :
+
 # Call next command on command chain
 "${taito_util_path}/call-next.sh" "${@}"
