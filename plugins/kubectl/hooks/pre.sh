@@ -23,6 +23,7 @@ fi && \
 # kubernetes secrets
 # TODO: tighter filter
 # NOTE: ci-release is deprecated
+fetch_secrets=
 secret_filter=
 if [[ $kubectl_secrets_retrieved != true ]]; then
   if [[ ${taito_command} == "build-prepare" ]] || \
@@ -30,15 +31,20 @@ if [[ $kubectl_secrets_retrieved != true ]]; then
      [[ ${taito_command} == "artifact-prepare" ]] || \
      [[ ${taito_command} == "artifact-release" ]] || \
      [[ ${taito_command} == "ci-release" ]]; then
+    fetch_secrets="true"
     secret_filter="git"
   elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
-       [[ ${taito_command} == "db-proxy" ]] || \
-       [[ ${taito_command} == "test" ]]; then
+       [[ ${taito_command} == "db-proxy" ]]; then
+    fetch_secrets="true"
     secret_filter="db"
+  elif [[ ${taito_command} == "test" ]] &&
+       [[ "stag canary prod" != *"${taito_env}"* ]]; then
+    fetch_secrets="true"
+    secret_filter=
   fi
 fi
 
-if [[ ${secret_filter} ]]; then
+if [[ ${fetch_secrets} ]]; then
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
   if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
