@@ -38,17 +38,22 @@ fi && \
 # Create new Google project on env apply
 if [[ $taito_command == "env-apply" ]] && \
    [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
-  if [[ $taito_provider == "gcp" ]] && [[ ${taito_zone:-} ]]; then
+  if [[ $taito_provider == "gcp" ]] && \
+     [[ ${taito_provider_org_id:-} ]] && \
+     [[ ${taito_zone:-} ]]; then
     "${taito_plugin_path}/util/ensure-project-exists.sh" \
-      "${taito_zone:?}" "${taito_provider_org_id:?}"
+      "${taito_zone}" "${taito_provider_org_id}"
   fi
-  if [[ $taito_provider == "gcp" ]] && [[ ${taito_resource_namespace_id:-} ]]; then
+  if [[ $taito_provider == "gcp" ]] && \
+     [[ $taito_provider_org_id ]] && \
+     [[ ${taito_resource_namespace_id:-} ]]; then
     "${taito_plugin_path}/util/ensure-project-exists.sh" \
-      "${taito_resource_namespace_id:?}" "${taito_provider_org_id:?}"
+      "${taito_resource_namespace_id:?}" "${taito_provider_org_id}"
   fi
-  if [[ ${taito_uptime_provider:-} == "gcp" ]]; then
+  if [[ ${taito_uptime_provider:-} == "gcp" ]] && \
+     [[ ${taito_uptime_provider_org_id:-} ]]; then
     "${taito_plugin_path}/util/ensure-project-exists.sh" \
-      "${taito_uptime_namespace_id:-}" "${taito_uptime_provider_org_id:?}"
+      "${taito_uptime_namespace_id:-}" "${taito_uptime_provider_org_id}"
   fi
 fi && \
 
