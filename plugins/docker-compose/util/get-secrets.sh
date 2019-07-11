@@ -36,12 +36,14 @@ do
     else
       secret_value=$(cat "${file}" 2> /dev/null)
     fi
-  else
+  elif [[ -f ${file} ]]; then
     secret_value="secret_file:${file}"
   fi
 
-  exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
-  exports="${exports}export ${secret_value_var2}=\"${secret_value}\"; "
+  if [[ ${secret_value} ]]; then
+    exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
+    exports="${exports}export ${secret_value_var2}=\"${secret_value}\"; "
+  fi
 
   secret_index=$((${secret_index}+1))
 done

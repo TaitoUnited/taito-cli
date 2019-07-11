@@ -27,9 +27,11 @@ do
 
     if [[ ${secret_value} == "secret_file:"* ]]; then
       yes | cp -f "${secret_value#secret_file:}" \
-        "${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
+        "${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}" \
+        || echo "WARN: Failed to copy ${secret_value#secret_file:}"
       yes | cp -f "${secret_value#secret_file:}" \
-        "${taito_project_path}/secrets/changed/${taito_env}/${secret_name}.${secret_property:?}"
+        "${taito_project_path}/secrets/changed/${taito_env}/${secret_name}.${secret_property:?}" \
+        || echo "WARN: Failed to copy ${secret_value#secret_file:}"
     else
       printf "%s" "${secret_value}" > \
         "${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}"

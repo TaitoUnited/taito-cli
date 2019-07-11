@@ -10,7 +10,7 @@ secret_value=""
 secret_value2=""
 
 if [[ "${secret_default_value:-}" ]] && \
-   [[ "${secret_method}" != "random" ]] && \
+   [[ "${secret_method}" == "manual" ]] && \
    "${taito_util_path}/confirm.sh" \
      "Default value exists. Use the default value for ${taito_env} environment?"
 then

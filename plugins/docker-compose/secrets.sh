@@ -30,7 +30,9 @@ do
   . "${taito_util_path}/secret-by-index.sh" && \
 
   if [[ "${flag}" == "--save-as-taito-secrets" ]]; then
-    echo "export ${secret_value_var}=\"${secret_value}\"; " >> taito-secrets.sh
+    if [[ ${secret_value} ]]; then
+      echo "export ${secret_value_var}=\"${secret_value}\"; " >> taito-secrets.sh
+    fi
   else
     echo "Secret ${secret_name}:"
     echo "${secret_value}"
