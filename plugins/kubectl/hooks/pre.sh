@@ -47,12 +47,7 @@ fi
 if [[ ${fetch_secrets} ]]; then
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
-  if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
-     [[ ${taito_command} == "db-proxy" ]]; then
-    echo "Getting secrets from Kubernetes for DB access"
-  else
-    echo "Getting secrets from Kubernetes for making a release"
-  fi
+  echo "Getting secrets from Kubernetes"
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
   # shellcheck disable=SC1090
   . "${taito_plugin_path}/util/get-secrets.sh" "true" ${secret_filter}
