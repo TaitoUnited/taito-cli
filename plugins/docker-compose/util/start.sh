@@ -31,6 +31,13 @@ if [[ "${switches}" == *"-b"* ]] || [[ ${taito_target_env} != "local" ]]; then
 fi
 
 conditional_commands=
+if [[ "${switches}" == *"--clean"* ]]; then
+  # Use longer http timeout
+  conditional_commands="
+    ${conditional_commands}
+    export COMPOSE_HTTP_TIMEOUT=180
+  "
+fi
 if [[ "${switches}" == *"--restart"* ]]; then
   # Run 'docker-compose stop' before start
   conditional_commands="
