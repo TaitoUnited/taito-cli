@@ -75,6 +75,7 @@ QUICK EXAMPLES
     restart:server:dev                 # Restart container named 'server'
     shell:server:dev                   # Start a shell on a container named 'server'
     exec:server:dev echo foo           # Execute a command in a container named 'server'
+    forward:redis:dev 6000 6379        # Forward local port 6000 to container port 6379
     save:client                        # Save changes to client container image
     clean:server                       # Clean server container by deleting it
     copy to:server:dev ./file /dir     # Copy a file/folder to server container
@@ -468,6 +469,12 @@ PROJECT: BASIC OPERATIONS
     $ taito exec:client echo "taito!"
     $ taito exec:client:dev echo "taito!"
     $ taito exec:my-app-client-3034393823-2f5jf:dev echo "taito!"
+
+  forward:TARGET[:ENV] LOCAL_PORT [REMOTE_PORT]
+    Forward local port to remote container port
+    Examples:
+    $ taito forward:redis:dev 6379
+    $ taito forward:redis:dev 6000 6379
 
   copy to:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
     Copy a file or folder. Examples:

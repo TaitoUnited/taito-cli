@@ -14,6 +14,7 @@ Application control plugins typically implement the following commands:
 - `taito logs`: Tail logs of a container/function.
 - `taito shell`: Start shell inside a running container.
 - `taito exec`: Execute command inside a running container.
+- `taito forward`: Forward local port to container port.
 - `taito copy from`: Copy files from a running container.
 - `taito copy to`: Copy files to a running container.
 
