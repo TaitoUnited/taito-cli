@@ -288,6 +288,7 @@ fi
 
 # Determine user details
 export taito_host_user
+export taito_container_home
 taito_host_user="$(id -u):$(id -g)"
 docker_user_opts="--user $taito_host_user"
 taito_container_home="/home/taito"
