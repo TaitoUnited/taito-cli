@@ -287,11 +287,13 @@ if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
 fi
 
 # Determine user details
+export taito_host_user
+taito_host_user="$(id -u):$(id -g)"
+docker_user_opts="--user $taito_host_user"
 taito_container_home="/home/taito"
-docker_user_opts="--user $(id -u):$(id -g)"
 if [[ ${admin} == true ]] || [[ ${root} == true ]]; then
-  taito_container_home="/root"
   docker_user_opts="--user 0:0"
+  taito_container_home="/root"
 fi
 
 if [[ ${root} == true ]]; then
