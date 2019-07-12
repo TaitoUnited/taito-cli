@@ -428,6 +428,11 @@ if [[ "${command}" == "db-proxy"* ]]; then
     --expose=${proxy_port:-$database_port} \
     -p 127.0.0.1:${proxy_port:-$database_port}:${proxy_port:-$database_port}"
 fi
+if [[ "${command}" == "forward"* ]] && [[ ${params[1]} ]]; then
+  proxy_port="${params[1]}"
+  echo "Exposing proxy port: ${proxy_port}"
+  proxy_flags="--expose=${proxy_port} -p 127.0.0.1:${proxy_port}:${proxy_port}"
+fi
 
 # gcsfuse mounting requires privileged mode
 misc_flags=""

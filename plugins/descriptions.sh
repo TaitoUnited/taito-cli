@@ -455,6 +455,8 @@ if [[ ${taito_project:-} ]]; then
         # Start shell inside the ${stack} container running on ${env} environment"
       echo "exec:${stack}${param} COMMAND \
         # Execute a command in the ${stack} container running on ${env} environment"
+      echo "forward:${stack}${param} LOCAL_PORT REMOTE_PORT \
+        # Forward local port to container running on ${env} environment"
       echo "copy to:${stack}${param} SOURCE_PATH DESTINATION_PATH \
         # Copy a file from the ${stack} container running on ${env} environment"
       echo "copy from:${stack}${param} SOURCE_PATH DESTINATION_PATH \

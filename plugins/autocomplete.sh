@@ -297,6 +297,7 @@ if [[ ${taito_project:-} ]]; then
       echo "logs:${stack}${suffix}"
       echo "shell:${stack}${suffix}"
       echo "exec:${stack}${param} COMMAND"
+      echo "forward:${stack}${param} LOCAL_PORT REMOTE_PORT"
       echo "copy to:${stack}${param} SOURCE_PATH DESTINATION_PATH"
       echo "copy from:${stack}${param} SOURCE_PATH DESTINATION_PATH"
       echo "kill:${stack}${suffix}"
