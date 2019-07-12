@@ -85,17 +85,10 @@ if [[ "${taito_env}" != "local" ]]; then
     docker_compose="true"
     compose_cmd="docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ./test.sh SUITE ${test_filter}'"
 
-    # On CI mode we mount local credentials inside the Taito CLI test proxies
-    # to enable proxy connections to database and Kubernetes services
-    if [[ "${taito_mode:-}" == "ci" ]] && \
-       [[ ! -f taitoflag_docker-compose-test-modified ]] && \
-       [[ "${taito_plugins}" == *"gcp-ci"* ]];
-    then
-      mkdir -p "${HOME}/.config"
-      mkdir -p "${HOME}/.kube"
+    # On CI mode we use root user
+    # TODO: add taito user to image -> local install should replace uid/gid only
+    if [[ "${taito_mode:-}" == "ci" ]]; then
       sed -i '/^    user: taito/d' docker-compose-test.yaml
-      sed -i '/^    image: ${taito_image.*/a\    volumes:\n      - "${HOME}/.config:/root/.config"\n      - "${HOME}/.kube:/root/.kube"' docker-compose-test.yaml
-      echo OK > taitoflag_docker-compose-test-modified
     fi
   else
     compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ./test.sh SUITE ${test_filter}"
