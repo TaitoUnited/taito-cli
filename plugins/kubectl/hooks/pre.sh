@@ -51,6 +51,11 @@ if [[ ${fetch_secrets} ]]; then
   "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
   # shellcheck disable=SC1090
   . "${taito_plugin_path}/util/get-secrets.sh" "true" ${secret_filter}
+
+  if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
+    . "${taito_plugin_path}/util/proxy-secret-get.sh"
+  fi
+
   export kubectl_secrets_retrieved=true
 fi
 
