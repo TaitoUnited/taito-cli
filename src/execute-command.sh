@@ -640,12 +640,7 @@ export taito_original_command_chain="${concat_full_chain[@]}"
 export taito_commands_only_chain="${concat_commands_only_chain[@]}"
 export taito_enabled_plugins="${enabled_plugins}"
 
-if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || ( \
-    [[ "${taito_command:-}" == "test" ]] &&
-    [[ "${taito_plugins:-}" == *"gcp-ci"* ]] &&
-    [[ "${taito_plugins:-}" == *"-db"* ]] &&
-    [[ "${taito_mode:-}" == "ci" ]] \
-  ); then
+if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
   export taito_requires_database_connection="true"
 else
   export taito_requires_database_connection="false"
