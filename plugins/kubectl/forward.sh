@@ -8,7 +8,8 @@ dest_port=${2:-$source_port}
 if "$taito_util_path/is-target-type.sh" container; then
   "${taito_plugin_path}/util/use-context.sh"
   . "${taito_plugin_path}/util/determine-pod-container.sh"
-  (${taito_setv:?}; kubectl port-forward "${pod}" "$source_port:$dest_port")
+  # NOTE: --address 0.0.0.0 requires Kubernetes v1.13
+  (${taito_setv:?}; kubectl port-forward "${pod}" "$source_port:$dest_port" --address 0.0.0.0)
 fi
 
 # Call next command on command chain
