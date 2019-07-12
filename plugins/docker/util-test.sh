@@ -93,7 +93,8 @@ if [[ "${taito_env}" != "local" ]]; then
     then
       mkdir -p "${HOME}/.config"
       mkdir -p "${HOME}/.kube"
-      sed -i '/^    image: ${taito_image.*/a\    volumes:\n      - "${HOME}/.config:/taito/.config"\n      - "${HOME}/.kube:/taito/.kube"' docker-compose-test.yaml
+      sed -i '/^    user: taito/d' docker-compose-test.yaml
+      sed -i '/^    image: ${taito_image.*/a\    volumes:\n      - "${HOME}/.config:/root/.config"\n      - "${HOME}/.kube:/root/.kube"' docker-compose-test.yaml
       echo OK > taitoflag_docker-compose-test-modified
     fi
   else
