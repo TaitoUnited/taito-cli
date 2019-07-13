@@ -13,7 +13,9 @@ fi && \
 
 # Kubernetes credentials for ci
 if [[ "${taito_mode:-}" == "ci" ]] && \
-   [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]]; then
+   [[ ${kubernetes_name:-} ]] && \
+   [[ ! -d "${HOME}/.kube" ]] && \
+   [[ ! -d "/root/.kube" ]]; then
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   echo "Getting GCP credentials for Kubernetes access"
