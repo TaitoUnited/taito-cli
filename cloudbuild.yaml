@@ -1,9 +1,10 @@
 images: [
-  'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:$BRANCH_NAME'
+  'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:$_IMAGE_TAG'
 ]
 
 substitutions:
   _DOCKERFILE: Dockerfile
+  _IMAGE_TAG:
 
 steps:
 - id: install
@@ -19,7 +20,7 @@ steps:
   args:
   - '-c'
   - |
-    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:$BRANCH_NAME \
+    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
       -f docker/${_DOCKERFILE} .
 
 - id: test
@@ -38,6 +39,6 @@ steps:
   - |
     alt_reponame=$${repo_name}
     alt_reponame=${alt_reponame/_taitounited_/-taitounited-}
-    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:$BRANCH_NAME \
-       eu.gcr.io/$${project_id}/${alt_reponame}/cli:$BRANCH_NAME
-    docker push eu.gcr.io/$${project_id}/${alt_reponame}/cli:$BRANCH_NAME
+    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
+       eu.gcr.io/$${project_id}/${alt_reponame}/cli:${_IMAGE_TAG}
+    docker push eu.gcr.io/$${project_id}/${alt_reponame}/cli:${_IMAGE_TAG}

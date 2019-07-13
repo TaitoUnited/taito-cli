@@ -1,6 +1,10 @@
 images: [
-  'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:latest'
+  'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:$_IMAGE_TAG'
 ]
+
+substitutions:
+  _DOCKERFILE: Dockerfile
+  _IMAGE_TAG:
 
 steps:
 - id: install
@@ -60,8 +64,8 @@ steps:
   args:
   - '-c'
   - |
-    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
-      -f docker/Dockerfile .
+    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
+      -f docker/${_DOCKERFILE} .
 
 - id: test
   name: 'gcr.io/cloud-builders/npm'
@@ -91,12 +95,12 @@ steps:
     # and tag image with it
     tag=$$(cat "./taitoflag_version")
     echo "Using tag $${tag}" && \
-    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
-      eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag} && \
+    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
+      eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG}-$${tag} && \
     echo "Pushing latest" && \
-    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:latest && \
+    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} && \
     echo "Pushing $${tag}" && \
-    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:$${tag}
+    docker push eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG}-$${tag}
 
 # TODO: remove once all image references have been updated
 - id: alt-push
@@ -110,6 +114,6 @@ steps:
   - |
     alt_reponame=$${repo_name}
     alt_reponame=${alt_reponame/_taitounited_/-taitounited-}
-    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:latest \
-       eu.gcr.io/$${project_id}/${alt_reponame}/cli:latest
-    docker push eu.gcr.io/$${project_id}/${alt_reponame}/cli:latest
+    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
+       eu.gcr.io/$${project_id}/${alt_reponame}/cli:${_IMAGE_TAG}
+    docker push eu.gcr.io/$${project_id}/${alt_reponame}/cli:${_IMAGE_TAG}

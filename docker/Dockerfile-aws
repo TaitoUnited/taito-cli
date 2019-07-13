@@ -1,7 +1,0 @@
-FROM taitounited/taito-cli-deps:aws
-MAINTAINER Taito United <support@taitounited.fi>
-
-COPY . /taito-cli
-WORKDIR /taito-cli
-RUN ln -s /taito-cli/src/taito.sh /usr/local/bin/taito
-RUN npm run verify
