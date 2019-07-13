@@ -2,6 +2,9 @@ images: [
   'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:$BRANCH_NAME'
 ]
 
+substitutions:
+  _DOCKERFILE: Dockerfile
+
 steps:
 - id: install
   name: 'gcr.io/cloud-builders/npm'
@@ -17,7 +20,7 @@ steps:
   - '-c'
   - |
     docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:$BRANCH_NAME \
-      -f docker/Dockerfile .
+      -f docker/${_DOCKERFILE} .
 
 - id: test
   name: 'gcr.io/cloud-builders/npm'
