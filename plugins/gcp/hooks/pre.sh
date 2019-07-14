@@ -19,14 +19,18 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
     gcloud auth activate-service-account \
       "--key-file=$GOOGLE_APPLICATION_CREDENTIALS" # --project=...
+    # Force kube login on test proxy port forwarding
+    force_kube_login_hack="true"
   fi
 fi && \
 
 # Kubernetes credentials for ci
-if [[ "${taito_mode:-}" == "ci" ]] && \
-   [[ ${kubernetes_name:-} ]] && \
-   [[ ! -d "${HOME}/.kube" ]] && \
-   [[ ! -d "/root/.kube" ]]; then
+if [[ $force_kube_login_hack == "true" ]] || ( \
+     [[ "${taito_mode:-}" == "ci" ]] && \
+     [[ ${kubernetes_name:-} ]] && \
+     [[ ! -d "${HOME}/.kube" ]] && \
+     [[ ! -d "/root/.kube" ]] \
+   ); then
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   echo "Getting GCP credentials for Kubernetes access"
