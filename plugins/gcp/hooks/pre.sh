@@ -11,6 +11,17 @@ if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   "${taito_plugin_path}/util/auth.sh"
 fi && \
 
+if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
+  account=$(gcloud config get-value account 2> /dev/null)
+  if [[ ! $account ]]; then
+    echo
+    echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
+    echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
+    gcloud auth activate-service-account \
+      "--key-file=$GOOGLE_APPLICATION_CREDENTIALS" # --project=...
+  fi
+fi && \
+
 # Kubernetes credentials for ci
 if [[ "${taito_mode:-}" == "ci" ]] && \
    [[ ${kubernetes_name:-} ]] && \
