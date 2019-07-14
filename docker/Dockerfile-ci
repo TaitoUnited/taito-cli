@@ -9,5 +9,4 @@ WORKDIR /taito-cli
 RUN ln -s /taito-cli/src/taito.sh /usr/local/bin/taito
 RUN npm run verify
 
-EXPOSE 2000-9999
 ENTRYPOINT ["taito"]
