@@ -579,9 +579,7 @@ plugins=("${plugins_string}")
 # Find matching plugin commands and assemble chains
 pre_handlers=()
 post_handlers=()
-pre_command_chain=()
-command_chain=()
-post_command_chain=()
+commands=()
 extensions=("${taito_enabled_extensions} ${taito_cli_path}/plugins")
 # TODO plugin_path??
 # commands=($(ls "${plugin_path}/${command}"[\#.]* 2> /dev/null || :))
@@ -607,31 +605,23 @@ do
     done
 
     # Add pre/post handlers
-    # TODO: use 'find path -executable' instead of {sh,py,js,x}
-    pre_handlers+=($(ls "${plugin_path}"/hooks/pre*{sh,py,js,x} 2> /dev/null || :))
-    post_handlers+=($(ls "${plugin_path}"/hooks/post*{sh,py,js,x} 2> /dev/null || :))
+    pre_handlers+=($(ls "${plugin_path}/hooks/pre"-?? 2> /dev/null || :))
+    post_handlers+=($(ls "${plugin_path}/hooks/post"-?? 2> /dev/null || :))
 
     # Add matching commands to command chain
-    commands=($(ls "${plugin_path}/${command}"[\#.]*{sh,py,js,x} 2> /dev/null || :))
-
-    pre_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#pre\." || :))
-    command_chain+=($(printf '%s\n' "${commands[@]}" | grep -v "#\|\.txt\|\.md" || :))
-    post_command_chain+=($(printf '%s\n' "${commands[@]}" | grep "#post\." || :))
+    commands+=($(ls "${plugin_path}/${command}"-?? 2> /dev/null || :))
   fi
 done
 
+concat_commands_only_chain=(
+  $(echo "${commands[@]}" | rev | sort | rev)
+)
+
 # Assemble the final taito command chain
 concat_full_chain=(
-  "${pre_handlers[@]}"
-  "${pre_command_chain[@]}"
-  "${command_chain[@]}"
-  "${post_command_chain[@]}"
-  "${post_handlers[@]}"
-)
-concat_commands_only_chain=(
-  "${pre_command_chain[@]}"
-  "${command_chain[@]}"
-  "${post_command_chain[@]}"
+  $(echo "${pre_handlers[@]}" | rev | sort | rev)
+  "${concat_commands_only_chain[@]}"
+  $(echo "${post_handlers[@]}" | rev | sort | rev)
 )
 
 # Export some variables to be used in command execution
