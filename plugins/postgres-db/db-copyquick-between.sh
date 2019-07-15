@@ -1,4 +1,9 @@
 #!/bin/bash -e
+
+echo "TODO: Does not work yet. Use 'taito db dump:ENV file.sql' and"
+echo "'taito db import:ENV file.sql' instead"
+exit 1
+
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"

@@ -12,12 +12,13 @@
 # Validate env variables
 
 if [[ ${#database_build_password} -lt 20 ]]; then
-  echo "ERROR: database_build_password too short or not set"
+  echo "ERROR: Database mgr user password too short or not set"
   exit 1
 fi
 
 if [[ ${#database_app_password} -lt 20 ]]; then
-  echo "ERROR: database_build_password too short or not set"
+  echo "ERROR: Database app user password too short or not set"
+  echo "TODO: Fails in WordPress projects (there is no app user at all)"
   exit 1
 fi
 
