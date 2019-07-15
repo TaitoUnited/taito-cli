@@ -128,20 +128,40 @@ taito_plugins_path="${taito_cli_path}/plugins" && \
 taito_src_path="${taito_cli_path}/src" && \
 taito_util_path="${taito_cli_path}/src/util" && \
 
-# Determine environment
-# TODO: This is a quick hack. This is done also later.
-taito_hack_env="local"
-if [[ "${args[0]}" == *":"* ]] && [[ "${args[0]}" != *":" ]]; then
-  sect="${args[0]##*:}"
-  if [[ " local dev test stag canary master " == *" ${sect} "* ]] || \
-     [[ "${sect}" == "feat-"* ]]; then
-    taito_hack_env="${sect}"
-  fi
+# Resolve project path
+taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
+cd "${taito_project_path}" && \
+
+# Convert space command syntax to internal hyphen syntax
+if [[ ${shell_command} == false ]];then
+  formatted=()
+  while IFS= read -r line; do
+    formatted+=( "$line" )
+  done < <( "${taito_src_path}/convert-command-syntax.sh" "${args[@]}" )
+  args=("${formatted[@]}")
+fi && \
+
+# Determine command and params given to docker container
+command=$(echo "${args[0]}" | tr '[:upper:]' '[:lower:]')
+params=("${options[@]}" "${args[@]}")
+if [[ -z "${params[*]}" ]]; then
+  params=("--help")
 fi
 
 # Read personal taito-config settings
 export taito_image="taitounited/taito-cli:latest"
-. "${taito_util_path}/read-user-taito-config.sh" "${taito_hack_env}" && \
+. "${taito_util_path}/read-user-taito-config.sh" "${taito_target_env}" && \
+
+# Determine environment
+taito_target_env="local"
+if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
+  sect="${command##*:}"
+  . taito-env-all-config.sh &> /dev/null || . taito-config.sh &> /dev/null || :
+  if [[ " local dev test stag canary prod master ${taito_environments:-} " == *" ${sect} "* ]] || \
+     [[ "${sect}" == "feat-"* ]]; then
+    taito_target_env="${sect}"
+  fi
+fi
 
 # Pull project specific taito-config settings from git
 if [[ "${project}" ]]; then
@@ -158,12 +178,8 @@ if [[ "${project}" ]]; then
   fi
 fi && \
 
-# Resolve project path
-taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
-cd "${taito_project_path}" && \
-
 # Read project specific taito-config settings
-. "${taito_util_path}/read-project-taito-config.sh" "${taito_hack_env}" && \
+. "${taito_util_path}/read-project-taito-config.sh" "${taito_target_env}" && \
 
 # Determine project mount options passed to Docker
 project_mount_options=""
@@ -260,32 +276,6 @@ if [[ ${upgrade} == true ]]; then
   exit 0
 fi
 
-# Convert space command syntax to internal hyphen syntax
-if [[ ${shell_command} == false ]];then
-  formatted=()
-  while IFS= read -r line; do
-    formatted+=( "$line" )
-  done < <( "${taito_src_path}/convert-command-syntax.sh" "${args[@]}" )
-  args=("${formatted[@]}")
-fi && \
-
-# Determine command and params given to docker container
-command=$(echo "${args[0]}" | tr '[:upper:]' '[:lower:]')
-params=("${options[@]}" "${args[@]}")
-if [[ -z "${params[*]}" ]]; then
-  params=("--help")
-fi
-
-# Determine environment
-taito_env="local"
-if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
-  sect="${command##*:}"
-  if [[ " local ${taito_environments:-} master " == *" ${sect} "* ]] || \
-     [[ "${sect}" == "feat-"* ]]; then
-    taito_env="${sect}"
-  fi
-fi
-
 # Determine user details
 export taito_host_user
 export taito_container_home
@@ -374,7 +364,7 @@ fi
 # Link database container if env is local and the command uses database
 # TODO: this is an ugly quick hack
 link_flags=""
-if [[ "${taito_env}" == "local" ]] && \
+if [[ "${taito_target_env}" == "local" ]] && \
    [[ "${command}" != "db-add"* ]] && \
    [[ " ${taito_plugins} " == *"-db"* ]] && \
    [[ " ${params[@]} " != *" -h "* ]] && \
@@ -419,7 +409,7 @@ if [[ "${mode}" == "dev" ]]; then
     -v ${taito_cli_path}:/taito-cli"
 fi
 proxy_flags=""
-if [[ "${command}" == "db-proxy"* ]]; then
+if [[ "${command}" == "db-proxy"* ]] && [[ ${taito_target_env} != "local" ]]; then
   . "${taito_util_path}/read-database-config.sh"
   port="${params[1]}"
   proxy_port=${port:-$database_proxy_port}
