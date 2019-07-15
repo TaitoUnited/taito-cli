@@ -3,7 +3,7 @@
 : "${taito_plugin_path:?}"
 
 echo "TODO confirm and delete all files from destination directory" && \
-"${taito_plugin_path}/util/storage-copy-from.sh" "${@}" && \
+"${taito_plugin_path}/util/storage-copy-from" "${@}" && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

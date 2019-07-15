@@ -8,6 +8,6 @@ npm db-connect:dev;\
 npm custom;\
 "
 
-if ! ../util/verify.sh; then
+if ! ../util/verify; then
   exit 1
 fi

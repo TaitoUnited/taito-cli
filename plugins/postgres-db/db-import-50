@@ -14,9 +14,9 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   (
     cd "${taito_current_path}"
     flags="-f ${filename}"
-    "${taito_plugin_path}/util/psql.sh" "${username}" "${flags}"
+    "${taito_plugin_path}/util/psql" "${username}" "${flags}"
   )
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

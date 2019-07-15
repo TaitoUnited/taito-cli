@@ -18,7 +18,7 @@ echo "Pulling taito-cli directory from git: ${taito_cli_path}"
   if [[ ${branch} != "master" ]]; then
     echo
     echo "WARNING! You are currently using ${branch} branch of taito-cli."
-    if "$taito_util_path/confirm.sh" "Checkout the master branch instead?"; then
+    if "$taito_util_path/confirm" "Checkout the master branch instead?"; then
       git checkout master && \
       git branch --set-upstream-to=origin/master master
     fi
@@ -35,21 +35,21 @@ docker rm taito-save taito-new &> /dev/null
 
 echo "Creating taito user with local user uid and gid on taito-cli image"
 docker_run_flags=
-if [[ -f ${HOME}/.taito/install.sh ]]; then
-  docker_run_flags="-v ${HOME}/.taito/install.sh:/taitoinstall.sh"
+if [[ -f ${HOME}/.taito/install ]]; then
+  docker_run_flags="-v ${HOME}/.taito/install:/taitoinstall"
 fi
 docker run -it --name taito-new --entrypoint /bin/bash ${docker_run_flags} \
   "${taito_image}" -c "
-  /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g)
-  /taito-cli-deps/tools/user-init.sh taito
-  if [[ -f /taitoinstall.sh ]]; then
+  /taito-cli-deps/tools/user-create taito $(id -u) $(id -g)
+  /taito-cli-deps/tools/user-init taito
+  if [[ -f /taitoinstall ]]; then
     echo
-    echo --- Executing \~/.taito/install.sh ---
+    echo --- Executing \~/.taito/install ---
     echo
-    chmod +x /taitoinstall.sh
-    /taitoinstall.sh
+    chmod +x /taitoinstall
+    /taitoinstall
     echo
-    echo --- Done executing \~/.taito/install.sh ---
+    echo --- Done executing \~/.taito/install ---
     echo
   fi
 "
@@ -63,7 +63,7 @@ if docker create --name taito-save "${taito_image}save" &> /dev/null; then
   docker cp taito-save:/home/taito ~/.taito/save &> /dev/null
   docker cp taito-save:/root ~/.taito/save &> /dev/null
 
-  # a quick fix to preserve repositories installed in user-init.sh
+  # a quick fix to preserve repositories installed in user-init
   rm -f ~/.taito/save/taito/.helm/repository/repositories.yaml
   rm -f ~/.taito/save/root/.helm/repository/repositories.yaml
 

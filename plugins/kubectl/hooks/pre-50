@@ -13,8 +13,8 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
   echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
   if [[ "${proxy_running}" == "" ]]; then
     echo "Starting db proxy"
-    "${taito_plugin_path}/util/use-context.sh"
-    "${taito_plugin_path}/util/db-proxy-start.sh" "true"
+    "${taito_plugin_path}/util/use-context"
+    "${taito_plugin_path}/util/db-proxy-start" "true"
   else
     echo "Not Starting db proxy. It is already running."
   fi
@@ -48,16 +48,16 @@ if [[ ${fetch_secrets} ]]; then
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
   echo "Getting secrets from Kubernetes"
-  "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
+  "${taito_cli_path}/plugins/kubectl/util/use-context"
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/get-secrets.sh" "true" ${secret_filter}
+  . "${taito_plugin_path}/util/get-secrets" "true" ${secret_filter}
 
   if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
-    . "${taito_plugin_path}/util/proxy-secret-get.sh"
+    . "${taito_plugin_path}/util/proxy-secret-get"
   fi
 
   export kubectl_secrets_retrieved=true
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

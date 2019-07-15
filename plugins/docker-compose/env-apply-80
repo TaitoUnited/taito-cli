@@ -5,7 +5,7 @@
 : "${taito_env:?}"
 
 echo "Showing information if required"
-"${taito_plugin_path}/util/restart-all.sh"
+"${taito_plugin_path}/util/restart-all"
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

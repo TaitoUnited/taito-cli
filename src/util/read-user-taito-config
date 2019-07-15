@@ -15,7 +15,7 @@ fi
 # Personal organization specific configuration
 org_config_file=""
 if [[ "${taito_organization_param:-}" ]]; then
-  org_config_file="${taito_home_path}/.taito/taito-config-${taito_organization_param}.sh"
+  org_config_file="${taito_home_path}/.taito/taito-config-${taito_organization_param}"
 fi
 
 if [[ "$org_config_file" ]] && [[ -f "${org_config_file}" ]]; then

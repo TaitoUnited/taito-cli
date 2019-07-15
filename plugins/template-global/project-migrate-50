@@ -21,7 +21,7 @@ if [[ "${taito_organization_param:-}" ]]; then
 else
   echo "Migrating project with personal default settings"
 fi
-. "${taito_plugin_path}/util/ask-details.sh"
+. "${taito_plugin_path}/util/ask-details"
 
 # Validate current git repository name
 current_vc_url=$(git config --get remote.origin.url)
@@ -38,7 +38,7 @@ echo
 echo "Please wait."
 rm -rf "./template-tmp"
 mkdir "./template-tmp"
-"${taito_util_path}/execute-on-host-fg.sh" "
+"${taito_util_path}/execute-on-host-fg" "
   set -e
   export GIT_PAGER=''
   git clone -q -b master --single-branch --depth 1 \
@@ -60,4 +60,4 @@ mkdir "./template-tmp"
 "
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

@@ -5,7 +5,7 @@
 name="${1}"
 
 echo "Cleaning up temporary secret files from disk"
-"${taito_plugin_path:?}/util/file-delete.sh"
+"${taito_plugin_path:?}/util/file-delete"
 
 # Call next command on command chain. Exported variables:
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

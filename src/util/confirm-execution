@@ -13,7 +13,7 @@ if [[ "${requested_name}" == "" ]] || \
   else
     text="Execute ${current_name}?"
   fi
-  if "$taito_util_path/confirm.sh" "$text"; then exit 0; fi
+  if "$taito_util_path/confirm" "$text"; then exit 0; fi
 fi
 
 exit 2

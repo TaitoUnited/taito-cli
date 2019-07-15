@@ -1,21 +1,21 @@
 #!/usr/bin/env bats
 
-load "${taito_cli_path}/test/util/test-helper.sh" true "${BATS_TEST_DIRNAME}/.."
+load "${taito_cli_path}/test/util/test-helper" true "${BATS_TEST_DIRNAME}/.."
 
 @test "npm: 'taito command:server:dev --option parameter1 parameter2'" {
   export taito_command="command"
   export taito_target="server"
   export taito_env="dev"
-  test pre.sh --option parameter1 parameter2
+  test pre --option parameter1 parameter2
 
   assert_executed npm run -s command:server:dev:option -- parameter1 parameter2
-  assert_executed call-next.sh --option parameter1 parameter2
+  assert_executed call-next --option parameter1 parameter2
   assert_executed_count 2
 }
 
 @test "npm: 'taito init'" {
   export taito_command="init"
-  test pre.sh
+  test pre
 
   assert_executed npm run -s taito-init
   assert_executed_count 1
@@ -23,7 +23,7 @@ load "${taito_cli_path}/test/util/test-helper.sh" true "${BATS_TEST_DIRNAME}/.."
 
 @test "npm: 'taito init --clean'" {
   export taito_command="init"
-  test pre.sh --clean
+  test pre --clean
 
   assert_executed npm run -s taito-init:clean
   assert_executed_count 1
@@ -32,28 +32,28 @@ load "${taito_cli_path}/test/util/test-helper.sh" true "${BATS_TEST_DIRNAME}/.."
 @test "npm: 'taito -z init'" {
   export taito_command="init"
   export taito_skip_override="true" # -z flag skips scripts with 'taito' prefix
-  test pre.sh
+  test pre
 
   assert_executed npm run -s init
-  assert_executed call-next.sh
+  assert_executed call-next
   assert_executed_count 2
 }
 
 @test "npm: 'taito info:prod'" {
   export taito_command="info"
   export taito_env="prod"
-  test pre.sh
+  test pre
 
   assert_executed npm run -s info:prod
-  assert_executed call-next.sh
+  assert_executed call-next
   assert_executed_count 2
 }
 
 @test "npm: 'taito unknown'" {
   export taito_command="unknown"
-  test pre.sh
+  test pre
 
-  assert_executed call-next.sh
+  assert_executed call-next
   assert_executed_count 1
 }
 
@@ -62,9 +62,9 @@ load "${taito_cli_path}/test/util/test-helper.sh" true "${BATS_TEST_DIRNAME}/.."
   export taito_mode="ci"
   export ci_exec_test="false"
   export taito_env="dev"
-  test pre.sh
+  test pre
 
-  assert_executed call-next.sh
+  assert_executed call-next
   assert_executed_count 1
 }
 
@@ -73,10 +73,10 @@ load "${taito_cli_path}/test/util/test-helper.sh" true "${BATS_TEST_DIRNAME}/.."
   export taito_mode="ci"
   export ci_exec_test="true"
   export taito_env="dev"
-  test pre.sh
+  test pre
 
   assert_executed npm run -s test
-  assert_executed call-next.sh
+  assert_executed call-next
   assert_executed_count 2
 }
 
@@ -90,7 +90,7 @@ load "${taito_cli_path}/test/util/test-helper.sh" true "${BATS_TEST_DIRNAME}/.."
   export TEST_TMPDIR="${BATS_TEST_DIRNAME}/../tmp"
   cd "${TEST_TMPDIR}"
 
-  test pre.sh fail
+  test pre fail
 
   assert_executed npm run -s test -- fail
   assert_executed_count 1

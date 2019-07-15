@@ -8,7 +8,7 @@ function cleanup {
   rm -f ansible-playbooks/taito-ansible.cfg &> /dev/null
 }
 
-if "${taito_util_path}/confirm-execution.sh" "ansible" "${name}" \
+if "${taito_util_path}/confirm-execution" "ansible" "${name}" \
   "Apply changes by running ansible scripts"
 then
   (
@@ -42,7 +42,7 @@ then
     ansible_options="$ansible_options -u ${username:-$taito_host_username}"
 
     if [[ $username == "root" ]]; then
-      if "$taito_util_path/confirm.sh" "Log in with password"; then
+      if "$taito_util_path/confirm" "Log in with password"; then
         ansible_options="$ansible_options --ask-pass"
       fi
     fi
@@ -70,7 +70,7 @@ then
       keyname=${keyname:-id_rsa}
     fi
 
-    "${taito_util_path}/ssh-agent.sh" "
+    "${taito_util_path}/ssh-agent" "
       ${taito_setv:?} && \
       if [[ \"${keyname}\" ]]; then
         ssh-add "${HOME}/.ssh/${keyname:-id_rsa}";
@@ -83,4 +83,4 @@ then
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

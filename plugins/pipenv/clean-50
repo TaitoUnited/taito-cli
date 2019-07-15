@@ -5,9 +5,9 @@
 echo "NOTE: Remember to run 'taito install' after clean"
 
 if [[ ! ${taito_target:-} ]] || [[ ${taito_target} == "pipenv" ]]; then
-  "${taito_util_path}/execute-on-host-fg.sh" \
+  "${taito_util_path}/execute-on-host-fg" \
     "pipenv uninstall --all"
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

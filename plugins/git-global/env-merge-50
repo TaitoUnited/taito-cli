@@ -8,7 +8,7 @@
 
 if ! git rev-parse --is-inside-work-tree &> /dev/null; then
   # Not a git repository -> call next command on command chain and exit
-  "${taito_util_path}/call-next.sh" "${@}"
+  "${taito_util_path}/call-next" "${@}"
   exit
 fi
 
@@ -44,7 +44,7 @@ do
 
     # TODO execution should end if one merge fails
 
-    "${taito_util_path}/execute-on-host-fg.sh" "\
+    "${taito_util_path}/execute-on-host-fg" "\
     (read -t 1 -n 1000 discard || :) && \
     echo -e \"${H2s}Merging ${s} -> ${d}${H2e}\" && \
     read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm && \
@@ -73,4 +73,4 @@ done
 echo
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

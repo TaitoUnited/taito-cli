@@ -41,10 +41,10 @@ else
   if [[ ! -f ./taitoflag_images_exist ]] && \
      ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_build:-}" == "true" ]])
   then
-    "$taito_plugin_path/util/imagepush.sh" "${image_untested}" && \
+    "$taito_plugin_path/util/imagepush" "${image_untested}" && \
     if [[ ${taito_container_registry_provider:-} != "local" ]]; then
-      "$taito_plugin_path/util/imagepush.sh" "${image_latest}" && \
-      "$taito_plugin_path/util/imagepush.sh" "${image_builder}"
+      "$taito_plugin_path/util/imagepush" "${image_latest}" && \
+      "$taito_plugin_path/util/imagepush" "${image_builder}"
     fi
   else
     echo "- Image ${image_tag} already exists. Skipping push."
@@ -53,7 +53,7 @@ else
     echo "- Tagging an existing image with semantic version ${version}"
     (
       (${taito_setv:?}; docker image tag "${image}" "${prefix}:${version}") && \
-      "$taito_plugin_path/util/imagepush.sh" "${prefix}:${version}"
+      "$taito_plugin_path/util/imagepush" "${prefix}:${version}"
     )
   fi
 fi

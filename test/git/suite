@@ -11,6 +11,6 @@ taito git-feat-merge;\
 taito git-feat-pr;\
 "
 
-if ! ../util/verify.sh; then
+if ! ../util/verify; then
   exit 1
 fi

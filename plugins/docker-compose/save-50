@@ -3,14 +3,14 @@
 : "${taito_plugin_path:?}"
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod.sh"
+. "${taito_plugin_path}/util/determine-pod"
 
 echo container: ${pod:?}
 
-"${taito_util_path}/execute-on-host.sh" \
+"${taito_util_path}/execute-on-host" \
   "docker ps; docker commit ${pod:?} ${pod:?}-savetus; echo ------"
-"${taito_util_path}/execute-on-host-fg.sh" \
+"${taito_util_path}/execute-on-host-fg" \
   "docker image tag ${pod:?}-savetus ${pod:?}"
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

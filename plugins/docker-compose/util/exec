@@ -6,14 +6,14 @@
 commands=$(printf '"%s" ' "${@}")
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod.sh" && \
+. "${taito_plugin_path}/util/determine-pod" && \
 
 if [[ -n "${docker_run:-}" ]]; then
   # Using run mode instead of up
   # TODO take --no-deps as param
-  compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh")
-  "${taito_util_path}/execute-on-host-fg.sh" \
+  compose_file=$("$taito_plugin_path/util/prepare-compose-file")
+  "${taito_util_path}/execute-on-host-fg" \
     "docker-compose -f $compose_file run --no-deps --entrypoint ${commands} ${pod}"
 else
-  "${taito_util_path}/execute-on-host-fg.sh" "docker exec -it ${pod} ${commands}"
+  "${taito_util_path}/execute-on-host-fg" "docker exec -it ${pod} ${commands}"
 fi

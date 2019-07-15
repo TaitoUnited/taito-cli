@@ -105,7 +105,7 @@ if [[ ${continue} == false ]] && [[ ${quiet} == false ]] && [[ ${taito_mode:-} !
 fi
 
 # Resolve taito-cli paths
-# NOTE: duplicate with ./taito_impl.sh (taito_cli_path must be resolved before
+# NOTE: duplicate with ./taito_impl (taito_cli_path must be resolved before
 # other scripts can be called)
 export taito_home_path="${TAITO_HOME:-$HOME}"
 export taito_cli_path
@@ -129,7 +129,7 @@ taito_src_path="${taito_cli_path}/src" && \
 taito_util_path="${taito_cli_path}/src/util" && \
 
 # Resolve project path
-taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
+taito_project_path=$("${taito_src_path}/resolve-project-path") && \
 cd "${taito_project_path}" && \
 
 # Convert space command syntax to internal hyphen syntax
@@ -137,7 +137,7 @@ if [[ ${shell_command} == false ]];then
   formatted=()
   while IFS= read -r line; do
     formatted+=( "$line" )
-  done < <( "${taito_src_path}/convert-command-syntax.sh" "${args[@]}" )
+  done < <( "${taito_src_path}/convert-command-syntax" "${args[@]}" )
   args=("${formatted[@]}")
 fi && \
 
@@ -150,7 +150,7 @@ fi
 
 # Read personal taito-config settings
 export taito_image="taitounited/taito-cli:latest"
-. "${taito_util_path}/read-user-taito-config.sh" "${taito_target_env}" && \
+. "${taito_util_path}/read-user-taito-config" "${taito_target_env}" && \
 
 # Determine environment
 taito_target_env="local"
@@ -171,7 +171,7 @@ if [[ "${project}" ]]; then
     cd "${project_local_path}" && \
     git clone --no-checkout --depth 1 -b dev --single-branch --filter=blob:none \
       "${vc_organization:?}/${project}.git" . &> /dev/null && \
-    git checkout dev -- *.sh *.json &> /dev/null
+    git checkout dev -- * *.json &> /dev/null
   else
     cd "${project_local_path}" && \
     git pull &> /dev/null
@@ -179,7 +179,7 @@ if [[ "${project}" ]]; then
 fi && \
 
 # Read project specific taito-config settings
-. "${taito_util_path}/read-project-taito-config.sh" "${taito_target_env}" && \
+. "${taito_util_path}/read-project-taito-config" "${taito_target_env}" && \
 
 # Determine project mount options passed to Docker
 project_mount_options=""
@@ -264,15 +264,15 @@ extension_paths="${extension_paths:1}"
 
 # Handle special modes
 if [[ ${mode} == "autocomplete" ]] || [[ ${mode} == "descriptions" ]]; then
-  "${taito_plugins_path}/${mode}.sh" "${args[*]}"
+  "${taito_plugins_path}/${mode}" "${args[*]}"
   for ext_path in ${extension_local_paths[@]}
   do
-    "${ext_path}/${mode}.sh" "${args[*]}" 2> /dev/null
+    "${ext_path}/${mode}" "${args[*]}" 2> /dev/null
   done
   exit 0
 fi
 if [[ ${upgrade} == true ]]; then
-  "${taito_src_path}/taito-upgrade.sh" && \
+  "${taito_src_path}/taito-upgrade" && \
   exit 0
 fi
 
@@ -302,7 +302,7 @@ fi
 
 # TODO: exit with error if docker has not been installed
 if [[ "$(docker images -q ${taito_image:?} 2> /dev/null || echo "NOT RUNNING")" == "" ]]; then
-  "${taito_src_path}/taito-upgrade.sh"
+  "${taito_src_path}/taito-upgrade"
 fi
 
 # Prepare execution log files
@@ -387,7 +387,7 @@ if [[ "${taito_target_env}" == "local" ]] && \
 
   # TODO remove links and use networks only
   if [[ "${link_flags}" == "" ]]; then
-    all=$("$taito_util_path/get-targets-by-type.sh" database)
+    all=$("$taito_util_path/get-targets-by-type" database)
     databases=("${taito_target:-$all}")
     for database in ${databases[@]}
     do
@@ -410,7 +410,7 @@ if [[ "${mode}" == "dev" ]]; then
 fi
 proxy_flags=""
 if [[ "${command}" == "db-proxy"* ]] && [[ ${taito_target_env} != "local" ]]; then
-  . "${taito_util_path}/read-database-config.sh"
+  . "${taito_util_path}/read-database-config"
   port="${params[1]}"
   proxy_port=${port:-$database_proxy_port}
   echo "Exposing database proxy port: ${proxy_port:-$database_port}"

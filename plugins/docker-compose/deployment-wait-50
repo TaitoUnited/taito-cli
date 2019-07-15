@@ -5,7 +5,7 @@
 : "${taito_command:?}"
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"
 exit $?
 
 # TODO implement
@@ -15,7 +15,7 @@ counter=1 && \
 up="" && \
 while [[ ${counter} -le 120 ]] && [[ ! ${up} ]]
 do
-  compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
+  compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
   if [[ ${counter} -gt 50 ]]; then
     echo "Waiting for docker to start ${counter}."
     docker-compose -f $compose_file ps

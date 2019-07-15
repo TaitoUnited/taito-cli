@@ -22,6 +22,6 @@ taito db-revert;\
 taito db-revert:dev;\
 "
 
-if ! ../util/verify.sh; then
+if ! ../util/verify; then
   exit 1
 fi

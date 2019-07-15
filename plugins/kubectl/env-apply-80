@@ -4,8 +4,8 @@
 : "${taito_namespace:?}"
 
 echo "Confirming restart, if restart is required"
-"${taito_plugin_path}/util/use-context.sh"
-"${taito_plugin_path}/util/restart-all.sh"
+"${taito_plugin_path}/util/use-context"
+"${taito_plugin_path}/util/restart-all"
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

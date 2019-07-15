@@ -7,7 +7,7 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
   echo "Stopping all db proxies"
-  "${taito_plugin_path}/util/db-proxy-stop.sh"
+  "${taito_plugin_path}/util/db-proxy-stop"
 fi
 
 if [[ ${taito_command:-} == "test" ]] && \
@@ -21,4 +21,4 @@ if [[ ${taito_command:-} == "test" ]] && \
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

@@ -5,17 +5,17 @@
 
 export kubernetes_skip_restart="true"
 
-if "${taito_util_path}/confirm-execution.sh" "kubectl-secrets" "" \
+if "${taito_util_path}/confirm-execution" "kubectl-secrets" "" \
   "Save newly created secrets to Kubernetes"
 then
   # Ensure that namespace exists
-  "${taito_plugin_path}/util/use-context.sh"
-  "${taito_plugin_path}/util/ensure-namespace.sh" "${taito_namespace}"
+  "${taito_plugin_path}/util/use-context"
+  "${taito_plugin_path}/util/ensure-namespace" "${taito_namespace}"
 
-  "${taito_plugin_path}/util/use-context.sh"
-  "${taito_plugin_path}/util/save-secrets.sh"
+  "${taito_plugin_path}/util/use-context"
+  "${taito_plugin_path}/util/save-secrets"
   export kubernetes_skip_restart="false"
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

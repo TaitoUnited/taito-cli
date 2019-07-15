@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "executed: docker-commit.sh ${*} :"
+echo "executed: docker-commit ${*} :"

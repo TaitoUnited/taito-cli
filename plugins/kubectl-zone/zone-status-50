@@ -1,7 +1,7 @@
 #!/bin/bash
 : "${taito_util_path:?}"
 
-"${taito_cli_path}/plugins/kubectl/util/use-context.sh"
+"${taito_cli_path}/plugins/kubectl/util/use-context"
 
 echo -e "${H2s}Cluster${H2e}"
 kubectl get componentstatus
@@ -45,4 +45,4 @@ echo "to be static."
 echo
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

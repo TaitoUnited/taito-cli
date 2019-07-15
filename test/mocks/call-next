@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "executed: call-next.sh ${*} :"
+echo "executed: call-next ${*} :"

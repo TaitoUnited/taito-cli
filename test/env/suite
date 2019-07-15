@@ -13,6 +13,6 @@ taito env-rotate:dev;\
 taito env-cert:dev;\
 "
 
-if ! ../util/verify.sh; then
+if ! ../util/verify; then
   exit 1
 fi

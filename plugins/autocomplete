@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
-# TODO refactor: this is duplicate code with descriptions.sh
+# TODO refactor: this is duplicate code with descriptions
 
 cprefix="${1:-*}"
 
@@ -188,7 +188,7 @@ if [[ ${taito_project:-} ]]; then
     echo "status${suffix}"
 
     if [[ "${cprefix}" == "db"* ]] || [[ "${cprefix}" == "*" ]]; then
-      for database in $("$taito_util_path/get-targets-by-type.sh" database)
+      for database in $("$taito_util_path/get-targets-by-type" database)
       do
         db=""
         if [[ "${database}" != "database" ]]; then

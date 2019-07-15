@@ -7,7 +7,7 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-. "${taito_util_path}/database-username-password.sh"
+. "${taito_util_path}/database-username-password"
 
 # Validate env variables
 

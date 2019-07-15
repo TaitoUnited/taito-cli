@@ -19,6 +19,6 @@ taito artifact-publish;\
 taito artifact-release;\
 "
 
-if ! ../util/verify.sh; then
+if ! ../util/verify; then
   exit 1
 fi

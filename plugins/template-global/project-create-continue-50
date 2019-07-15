@@ -47,7 +47,7 @@ if [[ -d alternatives ]]; then
 fi
 
 # Execute create script of template
-"${taito_plugin_path}/util/init.sh" "create"
+"${taito_plugin_path}/util/init" "create"
 
 rm -f ./_template-config.sh
 
@@ -70,7 +70,7 @@ if [[ -f "CONFIGURATION.md" ]]; then
 fi
 
 echo "Please wait."
-"${taito_util_path}/execute-on-host-fg.sh" "
+"${taito_util_path}/execute-on-host-fg" "
   set -e
   export GIT_PAGER=''
   git init -q
@@ -101,4 +101,4 @@ echo "Please wait."
 "
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

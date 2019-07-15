@@ -5,7 +5,7 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-# TODO clean this mess. duplicate code in clean.sh, psql.sh and sqitch.sh
+# TODO clean this mess. duplicate code in clean, psql and sqitch
 
 command="${1}"
 options="${@:2}"
@@ -34,7 +34,7 @@ fi
 
   if [[ "${taito_env}" != "local" ]];then
     # TODO do not reference postgres plugin util directly
-    . "${taito_util_path}/database-username-password.sh"
+    . "${taito_util_path}/database-username-password"
     if [[ "${database_build_password}" != "" ]]; then
       database_user="${database_build_username}"
       sqitch_password="${database_build_password}"

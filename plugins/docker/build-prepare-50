@@ -7,7 +7,7 @@
 image_tag=${1}
 
 if [[ ${taito_container_registry_provider:-} == "local" ]]; then
-  . "${taito_cli_path}/plugins/ssh/util/opts.sh"
+  . "${taito_cli_path}/plugins/ssh/util/opts"
 
   images=$(
     ssh ${opts} "${taito_ssh_user:?}@${taito_host}" "
@@ -25,4 +25,4 @@ if [[ ${taito_container_registry_provider:-} == "local" ]]; then
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

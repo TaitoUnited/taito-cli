@@ -7,7 +7,7 @@
 
 name=${1}
 
-if "${taito_util_path}/confirm-execution.sh" "gcp-ci" "${name}" \
+if "${taito_util_path}/confirm-execution" "gcp-ci" "${name}" \
   "Add a build trigger for ${taito_project} in ${taito_zone}"
 then
   echo "Create a new build trigger with these settings if one does not exist already:"
@@ -29,7 +29,7 @@ then
     opts="authuser=${google_authuser}&"
   fi
 
-  "${taito_util_path}/browser.sh" \
+  "${taito_util_path}/browser" \
     "https://console.cloud.google.com/cloud-build/triggers?${opts}project=${taito_zone}" && \
 
   echo "Press enter when ready" && \
@@ -37,4 +37,4 @@ then
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

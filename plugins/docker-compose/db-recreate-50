@@ -9,15 +9,15 @@ if [[ "${taito_env}" != "local" ]]; then
 else
   echo "Recreating database(s) by cleaning database container(s)"
   (
-    all=$("$taito_util_path/get-targets-by-type.sh" database)
+    all=$("$taito_util_path/get-targets-by-type" database)
     databases=("${taito_target:-$all}")
     for database in ${databases[@]}
     do
-      # TODO: duplicate code with clean.sh
+      # TODO: duplicate code with clean
 
       # shellcheck disable=SC1090
       taito_target=$database
-      . "${taito_plugin_path}/util/determine-pod.sh"
+      . "${taito_plugin_path}/util/determine-pod"
 
       # Docker-compose uses directory name as image prefix by default
       dir_name="${taito_host_project_path:-/taito-cli}"
@@ -25,8 +25,8 @@ else
       dir_name="${dir_name##*/}"
 
 
-      compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
-      "${taito_util_path}/execute-on-host-fg.sh" "
+      compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
+      "${taito_util_path}/execute-on-host-fg" "
         docker-compose -f $compose_file stop ${pod:?}
         docker-compose -f $compose_file rm --force ${pod:?}
         docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
@@ -37,4 +37,4 @@ else
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

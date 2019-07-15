@@ -21,7 +21,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   echo "NOTE: This works only if both databases are located in the same database cluster."
   echo "WARNING! THIS HAS NOT BEEN TESTED AT ALL YET! Use db-copy:ENV instead!"
   echo "WARNING! This operation will disconnect all connections!"
-  "$taito_util_path/confirm.sh"
+  "$taito_util_path/confirm"
 
   db_prefix=${database_name%_*}
 
@@ -33,8 +33,8 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
     -v dest_app=${db_prefix}_${dest}_app"
   echo 'TODO implement: dest is ${database_name}, source is something else'
   exit 1
-  "${taito_plugin_path}/util/psql.sh" "${username}" "${flags}"
+  "${taito_plugin_path}/util/psql" "${username}" "${flags}"
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

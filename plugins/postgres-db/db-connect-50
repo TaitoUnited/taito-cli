@@ -8,8 +8,8 @@
 
 if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   username="${1}"
-  "${taito_plugin_path}/util/psql.sh" "${username}"
+  "${taito_plugin_path}/util/psql" "${username}"
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

@@ -5,9 +5,9 @@
 : "${taito_project:?}"
 
 # Change namespace
-"${taito_plugin_path}/util/use-context.sh"
+"${taito_plugin_path}/util/use-context"
 
-. "${taito_plugin_path}/util/determine-pod-container.sh"
+. "${taito_plugin_path}/util/determine-pod-container"
 
 if [[ -z "${pod}" ]]; then
   echo

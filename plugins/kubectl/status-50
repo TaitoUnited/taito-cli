@@ -22,7 +22,7 @@ do
   esac
 done
 
-"$taito_plugin_path/util/use-context.sh"
+"$taito_plugin_path/util/use-context"
 
 if [ $all = true ]; then
   echo
@@ -71,4 +71,4 @@ if [ ! $kubernetes_params ]; then
 fi
 
 # Call next command on command chain
-"$taito_util_path/call-next.sh" "${args[@]}"
+"$taito_util_path/call-next" "${args[@]}"

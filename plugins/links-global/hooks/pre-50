@@ -11,10 +11,10 @@ fi
 link_name=${taito_command:5:99}
 
 if [[ ! -z ${mode} ]]; then
-  if "${taito_plugin_path}/util/open.sh" "${link_name}" "${mode}"; then
+  if "${taito_plugin_path}/util/open" "${link_name}" "${mode}"; then
     export taito_hook_command_executed="true"
   fi
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

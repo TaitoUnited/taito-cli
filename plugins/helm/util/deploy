@@ -56,7 +56,7 @@ if [[ -d "./scripts/helm" ]]; then
   echo > ${taito_vout}
   echo "Helm does not support environment variables" > ${taito_vout}
   echo "-> Substituting all environment variables in scripts/helm.yaml" > ${taito_vout}
-  "$taito_util_path/replace-variables.sh" scripts/helm.yaml scripts/helm.yaml.tmp
+  "$taito_util_path/replace-variables" scripts/helm.yaml scripts/helm.yaml.tmp
   echo "Substitution DONE" > ${taito_vout}
   echo > ${taito_vout}
 
@@ -71,7 +71,7 @@ if [[ -d "./scripts/helm" ]]; then
     echo > ${taito_vout}
     echo "Helm does not support environment variables" > ${taito_vout}
     echo "-> Substituting all environment variables in ${override_file}" > ${taito_vout}
-    "$taito_util_path/replace-variables.sh" "${override_file}" "${override_file}.tmp"
+    "$taito_util_path/replace-variables" "${override_file}" "${override_file}.tmp"
     helm_deploy_options="${helm_deploy_options} -f ${override_file}.tmp"
     echo "Substitution DONE" > ${taito_vout}
     echo > ${taito_vout}

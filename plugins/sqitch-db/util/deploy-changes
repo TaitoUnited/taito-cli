@@ -3,4 +3,4 @@
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
-"${taito_plugin_path}/util/sqitch.sh" deploy --set env="'${taito_env}'"
+"${taito_plugin_path}/util/sqitch" deploy --set env="'${taito_env}'"

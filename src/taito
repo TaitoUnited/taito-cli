@@ -22,10 +22,10 @@ taito_cli_path=$(
 )
 taito_src_path="${taito_cli_path}/src" && \
 taito_util_path="${taito_cli_path}/src/util" && \
-taito_project_path=$("${taito_src_path}/resolve-project-path.sh") && \
+taito_project_path=$("${taito_src_path}/resolve-project-path") && \
 
 # Set working directory
 cd "${taito_project_path}" && \
 
 # Execute
-"${taito_src_path}/execute-command.sh" "${@}"
+"${taito_src_path}/execute-command" "${@}"

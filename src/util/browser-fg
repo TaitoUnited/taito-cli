@@ -6,12 +6,12 @@
 url="${1:?}"
 
 if [[ "${taito_host_uname}" == *"_NT"* ]]; then
-  "${taito_util_path}/execute-on-host-fg.sh" \
+  "${taito_util_path}/execute-on-host-fg" \
     "start chrome '${url}'"
 elif [[ "${taito_host_uname}" == "Darwin" ]]; then
-  "${taito_util_path}/execute-on-host-fg.sh" \
+  "${taito_util_path}/execute-on-host-fg" \
     "open -a 'Google Chrome' '${url}'"
 else
-  "${taito_util_path}/execute-on-host-fg.sh" \
+  "${taito_util_path}/execute-on-host-fg" \
     "xdg-open '${url}'"
 fi

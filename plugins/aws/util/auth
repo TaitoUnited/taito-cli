@@ -5,7 +5,7 @@
 
 options=" ${*} "
 
-. "${taito_cli_path}/plugins/aws/util/aws-options.sh"
+. "${taito_cli_path}/plugins/aws/util/aws-options"
 
 if ! aws configure $aws_options list &> /dev/null || \
    [[ "${options}" == *" --reset "* ]]; then
@@ -22,18 +22,18 @@ if ! aws configure $aws_options list &> /dev/null || \
   echo
   echo "Press enter to open the AWS IAM console for retrieving the access keys"
   read -r
-  "${taito_util_path}/browser.sh" "https://console.aws.amazon.com/iam/home?#home"
+  "${taito_util_path}/browser" "https://console.aws.amazon.com/iam/home?#home"
   echo
   aws configure $aws_options
   # TODO: docker-commit is called twice on 'taito auth'
-  "${taito_util_path}/docker-commit.sh"
+  "${taito_util_path}/docker-commit"
 else
   echo "Already authenticated with profile '$profile'."
   echo "You can reauthenticate with 'taito auth --reset'."
 fi
 
 if [[ -n "${kubernetes_name:-}" ]]; then
-  "${taito_cli_path}/plugins/aws/util/get-credentials-kube.sh" || (
+  "${taito_cli_path}/plugins/aws/util/get-credentials-kube" || (
     echo "WARNING: Kubernetes authentication failed."
     echo "NOTE: Authentication failure is OK if the Kubernetes cluster does not exist yet."
   )
@@ -42,4 +42,4 @@ fi
 # TODO authenticate also to ECR
 # echo
 # echo "Getting credentials for Elastic Container Registry"
-# "${taito_plugin_path}/util/get-credentials-ecr.sh"
+# "${taito_plugin_path}/util/get-credentials-ecr"

@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "executed: confirm-execution.sh ${*} :"
+echo "executed: confirm-execution ${*} :"

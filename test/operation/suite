@@ -29,6 +29,6 @@ taito kill:dev company-app-server;\
 taito clean;\
 "
 
-if ! ../util/verify.sh; then
+if ! ../util/verify; then
   exit 1
 fi

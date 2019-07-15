@@ -9,9 +9,9 @@ if [[ ! ${image_tag} ]]; then
   image_tag=$(git rev-parse "${taito_branch:?}")
 fi
 
-if "${taito_util_path}/confirm.sh" \
+if "${taito_util_path}/confirm" \
    "Do you want to execute CI/CD for ${taito_target_env}?"; then
-  "${taito_util_path}/execute-on-host-fg.sh" "
+  "${taito_util_path}/execute-on-host-fg" "
     function cleanup {
       rm -rf tmp/ci/$taito_target_env &> /dev/null || :
     }
@@ -24,4 +24,4 @@ if "${taito_util_path}/confirm.sh" \
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

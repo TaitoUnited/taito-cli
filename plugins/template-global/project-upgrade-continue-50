@@ -18,11 +18,11 @@ trap cleanup EXIT
 (
   set -e
   cd "${template_project_path}/template-tmp/${template}"
-  "${taito_plugin_path}/util/init.sh" "upgrade"
+  "${taito_plugin_path}/util/init" "upgrade"
 )
 
 # TODO: remove once all projects have been upgraded
-rm -f taitoless.sh || :
+rm -f taitoless || :
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

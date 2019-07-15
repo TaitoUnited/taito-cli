@@ -14,7 +14,7 @@ echo "Please wait."
 # Clone template git repo to a temporary template-tmp directory
 rm -rf "${template_project_path}/template-tmp"
 mkdir "${template_project_path}/template-tmp"
-"${taito_util_path}/execute-on-host-fg.sh" "\
+"${taito_util_path}/execute-on-host-fg" "\
   set -e
   export GIT_PAGER=''
   git clone -q -b master --single-branch --depth 1 \
@@ -23,4 +23,4 @@ mkdir "${template_project_path}/template-tmp"
 "
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

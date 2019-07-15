@@ -5,14 +5,14 @@
 if [[ -n "${taito_target:-}" ]]; then
   # Restart only the container given as argument
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/determine-pod.sh"
-  compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh")
-  "${taito_util_path}/execute-on-host-fg.sh" \
+  . "${taito_plugin_path}/util/determine-pod"
+  compose_file=$("$taito_plugin_path/util/prepare-compose-file")
+  "${taito_util_path}/execute-on-host-fg" \
     "docker-compose -f $compose_file restart ${pod:?}"
 else
   # Restart all containers
-  "${taito_plugin_path}/util/start.sh" "${@}" --restart
+  "${taito_plugin_path}/util/start" "${@}" --restart
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

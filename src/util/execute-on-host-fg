@@ -17,7 +17,7 @@ if [[ "${taito_host:-}" ]] && \
    [[ "${taito_command}" != "auth" ]] && \
    [[ "${taito_env}" != "local" ]] && \
    [[ "${commands}" == *"docker"* ]]; then
-  . "${taito_cli_path}/plugins/ssh/util/opts.sh"
+  . "${taito_cli_path}/plugins/ssh/util/opts"
   ssh -t ${opts} "${taito_ssh_user:?}@${taito_host}" \
     "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; (${commands})'"
 elif [[ "${taito_mode:-}" == "ci" ]]; then

@@ -11,7 +11,7 @@ secret_value2=""
 
 if [[ "${secret_default_value:-}" ]] && \
    [[ "${secret_method}" == "manual" ]] && \
-   "${taito_util_path}/confirm.sh" \
+   "${taito_util_path}/confirm" \
      "Default value exists. Use the default value for ${taito_env} environment?"
 then
   secret_value="${secret_default_value}"
@@ -120,7 +120,7 @@ if [[ -z "${secret_value}" ]]; then
         echo "Using '${taito_default_password:?}' as random value for local environment"
         secret_value="${taito_default_password}"
       else
-        secret_value=$("$taito_util_path/random-string.sh" 30)
+        secret_value=$("$taito_util_path/random-string" 30)
         echo "Random value generated"
       fi
       ;;

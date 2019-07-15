@@ -4,11 +4,11 @@
 
 hours_app=${1}
 
-if "${taito_util_path}/confirm-execution.sh" "toggl" "${hours_app}" \
+if "${taito_util_path}/confirm-execution" "toggl" "${hours_app}" \
   "Authenticate to Toggl"
 then
-  "${taito_plugin_path}/util/auth.sh"
+  "${taito_plugin_path}/util/auth"
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

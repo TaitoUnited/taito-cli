@@ -8,4 +8,4 @@ while [[ ${#token} -lt 20 ]]; do
 done
 mkdir -p ~/.toggl
 echo "${token}" > ~/.toggl/api-token
-"${taito_util_path}/docker-commit.sh"
+"${taito_util_path}/docker-commit"

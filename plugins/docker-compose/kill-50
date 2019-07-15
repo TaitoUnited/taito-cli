@@ -4,9 +4,9 @@
 : "${taito_project:?}"
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod.sh" && \
+. "${taito_plugin_path}/util/determine-pod" && \
 
-"${taito_util_path}/execute-on-host-fg.sh" "docker kill ${pod:?}" && \
+"${taito_util_path}/execute-on-host-fg" "docker kill ${pod:?}" && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

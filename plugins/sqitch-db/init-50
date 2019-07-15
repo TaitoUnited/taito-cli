@@ -6,22 +6,22 @@
 switches=" ${*} "
 
 (
-  all=$("$taito_util_path/get-targets-by-type.sh" database)
+  all=$("$taito_util_path/get-targets-by-type" database)
   databases=("${taito_target:-$all}")
   for database in ${databases[@]}
   do
     export taito_target="${database}"
-    . "${taito_util_path}/read-database-config.sh" "${database}" && \
+    . "${taito_util_path}/read-database-config" "${database}" && \
 
     if [[ "${switches}" == *"--clean"* ]]; then
       echo "Rebasing database ${database_name:?}"
-      "${taito_plugin_path}/util/sqitch.sh" rebase --set env="'${taito_env}'" || "${taito_plugin_path}/util/deploy-changes.sh"
+      "${taito_plugin_path}/util/sqitch" rebase --set env="'${taito_env}'" || "${taito_plugin_path}/util/deploy-changes"
     else
       echo "Deploying changes to database ${taito_env}" && \
-      "${taito_plugin_path}/util/deploy-changes.sh"
+      "${taito_plugin_path}/util/deploy-changes"
     fi
   done
 ) && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

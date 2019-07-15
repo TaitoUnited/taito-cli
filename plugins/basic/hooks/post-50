@@ -44,7 +44,7 @@ fi
 
 if [[ $exec_after ]]; then
   was_executed=true
-  "${taito_util_path}/execute-on-host-fg.sh" "
+  "${taito_util_path}/execute-on-host-fg" "
     ${exec_after}
   "
 fi
@@ -80,7 +80,7 @@ if [[ ${was_executed} == false ]]; then
       echo "you meant to run. Run 'taito -h' to get more help."
       export taito_command_chain=""
       export taito_plugin_path="${taito_plugin_path}"
-      help=$("${taito_plugin_path}/__help.sh" "${taito_orig_command}")
+      help=$("${taito_plugin_path}/__help" "${taito_orig_command}")
       if [[ ${#help} -le 5 ]]; then
         # No help found. Try with only a first letter of the last word.
         last_word=${taito_orig_command##*-}
@@ -88,11 +88,11 @@ if [[ ${was_executed} == false ]]; then
         if [[ "${taito_orig_command}" == *"-"* ]]; then
           search="${taito_orig_command%-*} ${last_word:0:1}"
         fi
-        help=$("${taito_plugin_path}/__help.sh" "${search}")
+        help=$("${taito_plugin_path}/__help" "${search}")
       fi
       if [[ ${#help} -le 5 ]]; then
         # No help found for command. Try without the last word.
-        help=$("${taito_plugin_path}/__help.sh" "${taito_orig_command%-*}")
+        help=$("${taito_plugin_path}/__help" "${taito_orig_command%-*}")
       fi
       echo "${help}"
     else
@@ -104,4 +104,4 @@ if [[ ${was_executed} == false ]]; then
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

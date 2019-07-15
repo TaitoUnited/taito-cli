@@ -10,7 +10,7 @@ export mode=${1}
 export taito_vc_repository_alt="${taito_vc_repository//-/_}"
 
 # Call create/migrate/upgrade script implemented in template
-if ! "./scripts/taito-template/${mode}.sh"; then
+if ! "./scripts/taito-template/${mode}"; then
   exit 1
 fi
 

@@ -11,7 +11,7 @@ if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}aws${H1e}"
   echo "Authenticating"
-  "${taito_plugin_path}/util/auth.sh"
+  "${taito_plugin_path}/util/auth"
 fi
 
 # Authentication for CI
@@ -39,7 +39,7 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo
     echo -e "${taito_command_context_prefix:-}${H1s}aws${H1e}"
     echo "Getting credentials for Elastic Container Registry"
-    "${taito_plugin_path}/util/get-credentials-ecr.sh"
+    "${taito_plugin_path}/util/get-credentials-ecr"
   fi && \
 
   # Kubernetes (EKS) authentication
@@ -51,9 +51,9 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo
     echo -e "${taito_command_context_prefix:-}${H1s}aws${H1e}"
     echo "Getting credentials for kubernetes"
-    "${taito_plugin_path}/util/get-credentials-kube.sh"
+    "${taito_plugin_path}/util/get-credentials-kube"
   fi
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

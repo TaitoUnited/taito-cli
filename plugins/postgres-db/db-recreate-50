@@ -11,15 +11,15 @@ if [[ "${taito_env}" == "local" ]]; then
 else
   echo "Creating database(s)"
   (
-    all=$("$taito_util_path/get-targets-by-type.sh" database)
+    all=$("$taito_util_path/get-targets-by-type" database)
     databases=("${taito_target:-$all}")
     for database in ${databases[@]}
     do
       export taito_target="${database}"
-      . "${taito_util_path}/read-database-config.sh" "${database}" && \
+      . "${taito_util_path}/read-database-config" "${database}" && \
 
       if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
-        if "${taito_util_path}/confirm-execution.sh" "${database_name}" "${name}" \
+        if "${taito_util_path}/confirm-execution" "${database_name}" "${name}" \
           "Recreate postgres database ${database_name}"
         then
           # Create a subshell to contain password
@@ -27,9 +27,9 @@ else
             export database_username=${database_master_username:-postgres}
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
-            . "${taito_plugin_path}/util/ask-password.sh" && \
-            "${taito_plugin_path}/util/drop-database.sh" && \
-            "${taito_plugin_path}/util/create-database.sh"
+            . "${taito_plugin_path}/util/ask-password" && \
+            "${taito_plugin_path}/util/drop-database" && \
+            "${taito_plugin_path}/util/create-database"
           )
         fi
       fi
@@ -38,4 +38,4 @@ else
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

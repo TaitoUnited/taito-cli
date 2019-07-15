@@ -7,8 +7,8 @@ source="${1:-dev}"
 source="${source/prod/master}"
 dest="${taito_branch:?}"
 
-# TODO duplicate code with git-feat.sh?
-"${taito_util_path}/execute-on-host-fg.sh" "
+# TODO duplicate code with git-feat?
+"${taito_util_path}/execute-on-host-fg" "
 set -e
 if git rev-parse --is-inside-work-tree &> /dev/null && \
    ! git checkout ${dest} 2> /dev/null; then
@@ -29,4 +29,4 @@ fi
 "
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

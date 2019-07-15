@@ -7,21 +7,21 @@ name=${1}
 
 # Delete Helm charts
 if [[ -d "./helm" ]]; then
-  "${taito_cli_path}/plugins/kubectl/util/use-context.sh"
+  "${taito_cli_path}/plugins/kubectl/util/use-context"
   charts=($(cd helm && ls)) && \
   for chart in ${charts[@]}
   do
-    if "${taito_util_path}/confirm-execution.sh" "${chart}" "${name}" \
+    if "${taito_util_path}/confirm-execution" "${chart}" "${name}" \
       "Delete helm chart ${chart} from Kubernetes"
     then
       echo "- Deleting chart ${chart} using Helm"
       (
         ${taito_setv}
-        "${taito_plugin_path}/../helm/util/helm.sh" delete "${chart}" --purge
+        "${taito_plugin_path}/../helm/util/helm" delete "${chart}" --purge
       )
     fi
   done
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

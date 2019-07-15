@@ -12,6 +12,6 @@ zone-doctor;\
 zone-rotate;\
 "
 
-if ! ../util/verify.sh; then
+if ! ../util/verify; then
   exit 1
 fi

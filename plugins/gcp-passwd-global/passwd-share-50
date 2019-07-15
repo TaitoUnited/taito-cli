@@ -5,7 +5,7 @@
 
 name="${1}"
 
-"${taito_util_path}/browser-fg.sh" "TODO" && \
+"${taito_util_path}/browser-fg" "TODO" && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

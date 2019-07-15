@@ -22,7 +22,7 @@ fi && \
 if [[ -n "${kubernetes_name:-}" ]]; then
   if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]]; then
     echo -e "${H2s}gcloud container clusters get-credentials${H2e}"
-    "${taito_plugin_path}/util/get-credentials-kube.sh" || (
+    "${taito_plugin_path}/util/get-credentials-kube" || (
       echo "WARNING: Kubernetes authentication failed."
       echo "NOTE: Authentication failure is OK if the Kubernetes cluster does not exist yet."
     )

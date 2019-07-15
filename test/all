@@ -9,7 +9,7 @@ for suite in ${suites[@]}
 do
   echo "SUITE: ${suite}"
   cd "${suite}" || exit 1
-  if ! ./suite.sh; then
+  if ! ./suite; then
     echo "SUITE ${suite} - FAILED"
     suites_success=false
   fi

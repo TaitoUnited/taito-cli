@@ -126,7 +126,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     #       compatibilty issues.
     taito_hook_command_executed=true
     if [[ "${run_on_host}" == "true" ]]; then
-      "${taito_util_path}/execute-on-host-fg.sh" "
+      "${taito_util_path}/execute-on-host-fg" "
         export taito_command_context='npm ${npm_command}'
         npm run -s ${npm_command}${params}
       "
@@ -145,7 +145,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
 
   if [[ ${running_ci_test} == true ]] && [[ ${exit_code} != 0 ]]; then
     # Notify verify step so that it can revert the changes
-    # TODO move this to src/execute-command.sh
+    # TODO move this to src/execute-command
     cat "failed" > ./taitoflag_test_failed
   fi
 fi
@@ -154,5 +154,5 @@ if [[ ${exit_code} != 0 ]]; then
   exit ${exit_code}
 elif [[ ${skip_remaining_commands} == false ]]; then
   # Call next command on command chain
-  "${taito_util_path}/call-next.sh" "${@}"
+  "${taito_util_path}/call-next" "${@}"
 fi

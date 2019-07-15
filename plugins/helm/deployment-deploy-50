@@ -3,10 +3,10 @@
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 
-"${taito_cli_path}/plugins/kubectl/util/use-context.sh"
+"${taito_cli_path}/plugins/kubectl/util/use-context"
 if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" != "false" ]]; then
-  "${taito_plugin_path}/util/deploy.sh" "${@}"
+  "${taito_plugin_path}/util/deploy" "${@}"
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

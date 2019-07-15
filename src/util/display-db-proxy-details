@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "${taito_util_path:?}/database-username-password.sh"
+. "${taito_util_path:?}/database-username-password"
 
 echo "- host: 127.0.0.1"
 echo "- port: ${database_port:-}"

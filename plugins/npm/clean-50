@@ -3,8 +3,8 @@
 : "${taito_plugin_path:?}"
 
 if [[ ! ${taito_target:-} ]] || [[ ${taito_target} == "npm" ]]; then
-  "${taito_plugin_path}/util/clean.sh"
+  "${taito_plugin_path}/util/clean"
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

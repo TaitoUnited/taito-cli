@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
-all_databases=$("$taito_util_path/get-targets-by-type.sh" database)
+all_databases=$("$taito_util_path/get-targets-by-type" database)
 
 target="${1}"
 if [[ -z ${1} ]] && [[ -n "${taito_target:-}" ]] && \

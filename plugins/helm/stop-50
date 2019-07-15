@@ -3,4 +3,4 @@
 
 echo "TODO scale replicas to 0 instead of deleting"
 echo
-"${taito_plugin_path:?}/down.sh" "${@}"
+"${taito_plugin_path:?}/down" "${@}"

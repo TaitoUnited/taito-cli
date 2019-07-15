@@ -5,7 +5,7 @@
 
 dest="${taito_branch:-dev}"
 
-"${taito_util_path}/execute-on-host-fg.sh" "\
+"${taito_util_path}/execute-on-host-fg" "\
 if git rev-parse --is-inside-work-tree &> /dev/null; then
   set -e
   if [[ \"${1}\" ]]; then
@@ -48,4 +48,4 @@ fi
 " && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

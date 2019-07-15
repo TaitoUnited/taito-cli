@@ -3,7 +3,7 @@
 : "${taito_plugin_path:?}"
 : "${taito_mode:?}"
 
-"${taito_plugin_path}/util/install.sh"
+"${taito_plugin_path}/util/install"
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

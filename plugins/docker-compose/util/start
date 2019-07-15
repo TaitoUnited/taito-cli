@@ -7,7 +7,7 @@
 
 switches=" ${*} "
 
-compose_file=$("$taito_plugin_path/util/prepare-compose-file.sh" false)
+compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
 
 setenv="dockerfile=Dockerfile "
 if [[ "${switches}" == *"--prod"* ]]; then
@@ -17,7 +17,7 @@ fi
 compose_cmd="up"
 if [[ -n "${taito_target:-}" ]]; then
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/determine-pod.sh" && \
+  . "${taito_plugin_path}/util/determine-pod" && \
   compose_cmd="run ${pod:?}"
 fi
 
@@ -73,9 +73,9 @@ if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database
   "
 fi
 
-# TODO: remove taito-run-env.sh (backwards compatibility -> only used in old projects)
-"${taito_util_path}/execute-on-host-fg.sh" "
-  if [ -f ./taito-run-env.sh ]; then . ./taito-run-env.sh; fi
+# TODO: remove taito-run-env (backwards compatibility -> only used in old projects)
+"${taito_util_path}/execute-on-host-fg" "
+  if [ -f ./taito-run-env ]; then . ./taito-run-env; fi
   ${conditional_commands}
   ${setenv}docker-compose -f $compose_file ${compose_cmd} ${flags}
 "

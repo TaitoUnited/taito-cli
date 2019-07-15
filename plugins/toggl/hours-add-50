@@ -17,10 +17,10 @@ fi
   set -e
 
   # API token
-  . "${taito_plugin_path}/util/read-api-token.sh"
+  . "${taito_plugin_path}/util/read-api-token"
 
   # hour entry: project id
-  . "${taito_util_path}/select-item.sh" "Projects:" "Enter project name:" \
+  . "${taito_util_path}/select-item" "Projects:" "Enter project name:" \
     "${toggl_projects}" "${toggl_project_id}" true
   project_id="${item_id}"
   if [[ ! ${project_id} ]]; then
@@ -29,7 +29,7 @@ fi
   fi
 
   # hour entry: task id
-  . "${taito_util_path}/select-item.sh" "Tasks:" \
+  . "${taito_util_path}/select-item" "Tasks:" \
     "Choose task:" "${toggl_tasks}" "${toggl_task_id}"
   task_id="${item_id:-null}"
 
@@ -55,4 +55,4 @@ fi
 
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

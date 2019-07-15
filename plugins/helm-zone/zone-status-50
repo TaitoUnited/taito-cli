@@ -3,7 +3,7 @@
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
-"${taito_plugin_path}/../helm/util/helm.sh" list
+"${taito_plugin_path}/../helm/util/helm" list
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

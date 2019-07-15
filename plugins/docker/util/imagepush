@@ -8,7 +8,7 @@ if [[ ${taito_container_registry_provider:-} != "local" ]]; then
     docker push "$1"
   )
 else
-  . "${taito_cli_path}/plugins/ssh/util/opts.sh"
+  . "${taito_cli_path}/plugins/ssh/util/opts"
   echo "Pushing image $1 to registry. This may take some time. Please be patient."
   (
     ${taito_setv:?}

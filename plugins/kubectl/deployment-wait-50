@@ -2,7 +2,7 @@
 : "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
-"${taito_plugin_path}/util/use-context.sh"
+"${taito_plugin_path}/util/use-context"
 
 # Wait until all containers have been deployed
 sleep 5
@@ -14,4 +14,4 @@ done
 sleep 15
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

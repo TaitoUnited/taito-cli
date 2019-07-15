@@ -4,7 +4,7 @@
 
 link_name=${1}
 mode=${2:-open}
-open_command=${3:-browser-fg.sh}
+open_command=${3:-browser-fg}
 echo_command=${4:-echo}
 
 found=$(echo "${link_global_urls:-}${link_urls:-}" | grep "${link_name}[\[\:\=\#]")

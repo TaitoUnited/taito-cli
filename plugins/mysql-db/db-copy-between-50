@@ -21,4 +21,4 @@ if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
 fi && \
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"

@@ -6,7 +6,7 @@
 
 name=${1}
 
-if "${taito_util_path}/confirm-execution.sh" "sentry" "${name}" \
+if "${taito_util_path}/confirm-execution" "sentry" "${name}" \
   "Configure Sentry project"
 then
   echo "Create a new Sentry project with these settings:"
@@ -29,7 +29,7 @@ then
   echo "Press enter to open Sentry"
   read -r
 
-  "${taito_util_path}/browser.sh" \
+  "${taito_util_path}/browser" \
     "https://sentry.io/organizations/${sentry_organization}/projects/new/"
 
   read -r -t 1 -n 1000 || : # Flush input buffer
@@ -68,4 +68,4 @@ then
 fi
 
 # Call next command on command chain
-"${taito_util_path}/call-next.sh" "${@}"
+"${taito_util_path}/call-next" "${@}"
