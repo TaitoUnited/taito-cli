@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 name=${1}
 
@@ -34,6 +34,6 @@ else
       "
     done
   )
-fi && \
+fi
 
 taito::call_next "${@}"

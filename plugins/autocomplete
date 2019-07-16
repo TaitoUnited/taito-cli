@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 # NOTE: This bash script is run directly on host.
 
 # TODO refactor: this is duplicate code with descriptions
@@ -286,7 +286,7 @@ if [[ ${taito_project:-} ]]; then
       fi
       echo "test:${stack}${suffix}"
       if [[ "${cprefix}" == "test"* || "${cprefix}" == "*" ]]; then
-        suites=($(cat "./${stack}/test-suites" 2> /dev/null)) && \
+        suites=($(cat "./${stack}/test-suites" 2> /dev/null))
         for suite in "${suites[@]}"
         do
           echo "test:${stack}${param} ${suite}"

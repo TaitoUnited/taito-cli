@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
@@ -9,10 +9,10 @@ if [[ "${taito_env}" != "local" ]]; then
     for database in ${databases[@]}
     do
       export taito_target="${database}"
-      . "${taito_util_path}/read_database_config.bash" "${database}" && \
+      . "${taito_util_path}/read_database_config.bash" "${database}"
 
       if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
-        . "${taito_util_path}/database_username_password.bash" && \
+        . "${taito_util_path}/database_username_password.bash"
 
         if [[ -n ${database_build_password:-} ]] && \
            [[ -n ${database_app_password:-} ]] && ( \
@@ -25,13 +25,13 @@ if [[ "${taito_env}" != "local" ]]; then
             export database_username=${database_master_username:-postgres}
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
-            "${taito_plugin_path}/util/create-users" && \
+            "${taito_plugin_path}/util/create-users"
             echo "Altered database user passwords for database ${database_name:-}"
           fi
         fi
       fi
     done
   )
-fi && \
+fi
 
 taito::call_next "${@}"

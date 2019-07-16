@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 # NOTE: This bash script is run directly on host.
 
 if [[ "$(id -u)" == "0" ]]; then
@@ -125,17 +125,17 @@ taito_cli_path=$(
   dir=$(dirname "${source}")
   echo "${dir%/bin}"
 )
-taito_plugins_path="${taito_cli_path}/plugins" && \
-taito_src_path="${taito_cli_path}/src" && \
-taito_lib_path="${taito_cli_path}/src/lib" && \
-taito_util_path="${taito_cli_path}/src/util" && \
+taito_plugins_path="${taito_cli_path}/plugins"
+taito_src_path="${taito_cli_path}/src"
+taito_lib_path="${taito_cli_path}/src/lib"
+taito_util_path="${taito_cli_path}/src/util"
 
 # Load core library
 . "${taito_src_path}/core/core.bash"
 
 # Resolve project path
-taito_project_path=$(taito::core::print_project_path) && \
-cd "${taito_project_path}" && \
+taito_project_path=$(taito::core::print_project_path)
+cd "${taito_project_path}"
 
 # Convert space command syntax to internal hyphen syntax
 if [[ ${shell_command} == false ]];then
@@ -144,7 +144,7 @@ if [[ ${shell_command} == false ]];then
     formatted+=( "$line" )
   done < <( taito::core::print_command_with_internal_syntax "${args[@]}" )
   args=("${formatted[@]}")
-fi && \
+fi
 
 # Determine command and params given to docker container
 command=$(echo "${args[0]}" | tr '[:upper:]' '[:lower:]')
@@ -155,7 +155,7 @@ fi
 
 # Read personal taito-config settings
 export taito_image="taitounited/taito-cli:latest"
-. "${taito_src_path}/core/read_user_taito_config.bash" "${taito_target_env}" && \
+. "${taito_src_path}/core/read_user_taito_config.bash" "${taito_target_env}"
 
 # Determine environment
 taito_target_env="local"
@@ -170,21 +170,21 @@ fi
 
 # Pull project specific taito-config settings from git
 if [[ "${project}" ]]; then
-  project_local_path="${taito_home_path}/.taito/projects/${project}" && \
+  project_local_path="${taito_home_path}/.taito/projects/${project}"
   if [[ ! -d "${project_local_path}" ]]; then
-    mkdir -p "${project_local_path}" && \
-    cd "${project_local_path}" && \
+    mkdir -p "${project_local_path}"
+    cd "${project_local_path}"
     git clone --no-checkout --depth 1 -b dev --single-branch --filter=blob:none \
-      "${vc_organization:?}/${project}.git" . &> /dev/null && \
+      "${vc_organization:?}/${project}.git" . &> /dev/null
     git checkout dev -- * *.json &> /dev/null
   else
-    cd "${project_local_path}" && \
+    cd "${project_local_path}"
     git pull &> /dev/null
   fi
-fi && \
+fi
 
 # Read project specific taito-config settings
-. "${taito_src_path}/core/read_project_taito_config.bash" "${taito_target_env}" && \
+. "${taito_src_path}/core/read_project_taito_config.bash" "${taito_target_env}"
 
 # Determine project mount options passed to Docker
 project_mount_options=""
@@ -277,7 +277,7 @@ if [[ ${mode} == "autocomplete" ]] || [[ ${mode} == "descriptions" ]]; then
   exit 0
 fi
 if [[ ${upgrade} == true ]]; then
-  taito::core::upgrade && \
+  taito::core::upgrade
   exit 0
 fi
 

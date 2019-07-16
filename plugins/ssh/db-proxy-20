@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [[ "${ssh_db_proxy:-}" ]]; then
   . ${taito_plugin_path}/util/opts

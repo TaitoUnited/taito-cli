@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 
 # NOTE: deprecated (moved to bin/taito)
 # TODO: remove this file once everyone has reinstalled taito

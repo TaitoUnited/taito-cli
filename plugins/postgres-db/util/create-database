@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_vout:?}"
@@ -20,7 +20,7 @@
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username:-postgres}" \
       -v "dbuserapp=${database_name}_app" > ${taito_vout}
-  ) && \
+  )
 
   if [[ -f "./${taito_target:-database}/db.sql" ]]; then
     (
@@ -33,9 +33,9 @@
     )
   else
     echo "WARNING: File ./${taito_target:-database}/db.sql does not exist"
-  fi && \
+  fi
 
-  . "${taito_util_path}/database_username_password.bash" && \
+  . "${taito_util_path}/database_username_password.bash"
 
   PGPASSWORD="${secret_value}"
   (

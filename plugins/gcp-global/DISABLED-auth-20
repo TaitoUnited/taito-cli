@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_enabled_plugins:?}"
 
 if [[ " ${taito_enabled_plugins} " != *" gcp "* ]]; then
@@ -7,6 +7,6 @@ if [[ " ${taito_enabled_plugins} " != *" gcp "* ]]; then
     "${taito_cli_path}/plugins/gcp/util/auth" "${@}"
 else
   echo "gcp plugin enabled. let gcp plugin authenticate."
-fi && \
+fi
 
 taito::call_next "${@}"

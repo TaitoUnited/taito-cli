@@ -44,22 +44,22 @@ do
     # TODO execution should end if one merge fails
 
     taito::execute_on_host_fg "\
-    (read -t 1 -n 1000 discard || :) && \
-    echo -e \"${H2s}Merging ${s} -> ${d}${H2e}\" && \
-    read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm && \
-    echo && \
+    (read -t 1 -n 1000 discard || :)
+    echo -e \"${H2s}Merging ${s} -> ${d}${H2e}\"
+    read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm
+    echo
     if ! [[ \${confirm:-y} =~ ^[Yy]*$ ]]; then \
-      echo && \
+      echo
       exit 130; \
-    fi && \
-    echo Merging... && \
-    git fetch origin ${s}:${d} && \
-    git push --no-verify ${git_push_options} origin ${d} && \
-    echo && \
+    fi
+    echo Merging...
+    git fetch origin ${s}:${d}
+    git push --no-verify ${git_push_options} origin ${d}
+    echo
     if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
-      echo ---------------------------------------------------------------------- && \
-      echo TIP: Run \\'taito ci run:${d/master/prod}\\' to execute CI/CD locally. && \
-      echo ---------------------------------------------------------------------- && \
+      echo ----------------------------------------------------------------------
+      echo TIP: Run \\'taito ci run:${d/master/prod}\\' to execute CI/CD locally.
+      echo ----------------------------------------------------------------------
       echo
     fi || \
     (echo && echo 'ERROR: MERGING FAILED!!!!' && echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d} --> TODO --force does not work yet?') \

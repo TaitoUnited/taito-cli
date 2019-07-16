@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [[ $AWS_ACCESS_KEY_ID ]]; then
   profile="env var key"

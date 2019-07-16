@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 name=${1}
@@ -9,6 +9,6 @@ if [[ -n "${kubernetes_name:-}" ]]; then
   then
     "${taito_plugin_path}/util/teardown-build-slack-notifications"
   fi
-fi && \
+fi
 
 taito::call_next "${@}"

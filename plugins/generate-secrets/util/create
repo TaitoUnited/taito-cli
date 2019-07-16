@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 skip_confirm=${1}
@@ -24,6 +24,6 @@ do
     . "${taito_plugin_path}/util/create-by-type"
   fi
   secret_index=$((${secret_index}+1))
-done && \
+done
 
 eval "$exports"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_vout:?}"
 : "${database_host:?}"
 : "${database_port:?}"

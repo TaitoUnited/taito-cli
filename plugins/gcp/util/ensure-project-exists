@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 project_id=$1
 organization_id=$2
@@ -18,7 +18,7 @@ if [[ ${project_id} ]] && ! gcloud projects describe "${project_id}" &> /dev/nul
 
   if [[ ${billing_id} ]] && [[ ${#billing_id} -gt 10 ]]; then
     gcloud projects create "${project_id:?}" \
-      "--organization=${organization_id:?}" && \
+      "--organization=${organization_id:?}"
     gcloud beta billing projects link "${project_id:?}" \
       --billing-account "${billing_id}"
 

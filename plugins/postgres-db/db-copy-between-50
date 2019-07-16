@@ -29,39 +29,39 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   rm -f "${dump_file}" &> /dev/null
   echo "TODO implement: set user/password/database/host/port for source database"
   exit 1
-  "${taito_plugin_path}/util/psql" "" "-f ${dump_file}" "pg_dump" && \
+  "${taito_plugin_path}/util/psql" "" "-f ${dump_file}" "pg_dump"
 
-  echo "- 2. Rename the old database" && \
-  database_username=${database_master_username:-postgres} && \
+  echo "- 2. Rename the old database"
+  database_username=${database_master_username:-postgres}
   echo "HINT: You can get the ${database_username} user password from:"
   echo "${database_master_password_hint:-}"
-  . "${taito_plugin_path}/util/ask-password" && \ # TODO Does not work. Why?
+  . "${taito_plugin_path}/util/ask-password" # TODO Does not work. Why?
   flags="-f ${taito_plugin_path}/resources/rename-db.sql \
     -v dbusermaster=${database_master_username:-postgres} \
     -v database=${db_dest} \
-    -v database_new=${db_dest}_old" && \
-  "${taito_plugin_path}/util/psql" "${username}" "${flags}" && \
+    -v database_new=${db_dest}_old"
+  "${taito_plugin_path}/util/psql" "${username}" "${flags}"
 
-  echo "- 3. Create database" && \
+  echo "- 3. Create database"
   echo "NOTE: use taito secrets:${dest} to get the build password \
-  for ${db_dest}" && \
+  for ${db_dest}"
   # TODO pass username
   # TODO set also cluster name and port
   database_username=${username} database_name=${db_prefix}_${dest} \
-    "${taito_plugin_path}/util/create-database" && \
+    "${taito_plugin_path}/util/create-database"
 
-  echo "- 4. Import dump with a new build username" && \
+  echo "- 4. Import dump with a new build username"
   echo "TODO replace table ownerships in dump e.g xxx_test --> xxx_prod"
   exit 1
   sed -e "s/${db_source}/${db_dest}/g" \
     "${dump_file}" > \
-    "${taito_project_path}/tmp/dump-mod.sql" && \
-  flags="-f ${taito_project_path}/tmp/dump-mod.sql" && \
+    "${taito_project_path}/tmp/dump-mod.sql"
+  flags="-f ${taito_project_path}/tmp/dump-mod.sql"
   database_name=${db_prefix}_${dest} "${taito_plugin_path}/util/psql" \
-    "" "${flags}" && \
+    "" "${flags}"
 
-  rm -f "${taito_project_path}/tmp/dump-mod.sql" && \
+  rm -f "${taito_project_path}/tmp/dump-mod.sql"
   rm -f "${dump_file}"
-fi && \
+fi
 
 taito::call_next "${@}"

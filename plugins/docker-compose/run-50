@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 (
   export docker_run=true
   "${taito_plugin_path}/util/exec" "${@}"
-) && \
+)
 
 taito::call_next "${@}"

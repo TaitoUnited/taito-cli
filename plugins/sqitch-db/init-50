@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
@@ -10,16 +10,16 @@ switches=" ${*} "
   for database in ${databases[@]}
   do
     export taito_target="${database}"
-    . "${taito_util_path}/read_database_config.bash" "${database}" && \
+    . "${taito_util_path}/read_database_config.bash" "${database}"
 
     if [[ "${switches}" == *"--clean"* ]]; then
       echo "Rebasing database ${database_name:?}"
       "${taito_plugin_path}/util/sqitch" rebase --set env="'${taito_env}'" || "${taito_plugin_path}/util/deploy-changes"
     else
-      echo "Deploying changes to database ${taito_env}" && \
+      echo "Deploying changes to database ${taito_env}"
       "${taito_plugin_path}/util/deploy-changes"
     fi
   done
-) && \
+)
 
 taito::call_next "${@}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${secret_method:?}"
 : "${taito_setv:?}"
 : "${taito_env:?}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 name=${1}
 
@@ -9,6 +9,6 @@ if [[ -n "${kubernetes_name:-}" ]]; then
       echo "TODO confirm and upgrade Kubernetes master"
       echo "TODO confirm and upgrade Kubernetes nodes"
   fi
-fi && \
+fi
 
 taito::call_next "${@}"

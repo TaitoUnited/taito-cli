@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Integration test suite for basic commands
 # NOTE: You should also provide some more fine grained tests for each plugin.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 content=$(cat "${taito_project_path}/README.md")
 

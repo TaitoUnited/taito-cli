@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 
 commands=$(printf '"%s" ' "${@}")
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod" && \
+. "${taito_plugin_path}/util/determine-pod"
 
 if [[ -n "${docker_run:-}" ]]; then
   # Using run mode instead of up

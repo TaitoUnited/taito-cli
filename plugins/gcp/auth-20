@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
 
-"${taito_plugin_path}/util/auth" "${@}" && \
+"${taito_plugin_path}/util/auth" "${@}"
 
 taito::call_next "${@}"

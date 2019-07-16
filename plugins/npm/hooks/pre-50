@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_skip_override:?}"
 : "${taito_command:?}"
 : "${taito_env:?}"

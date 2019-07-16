@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 
@@ -8,7 +8,7 @@ if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   echo "Authenticating"
   "${taito_plugin_path}/util/auth"
-fi && \
+fi
 
 if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   account=$(gcloud config get-value account 2> /dev/null)
@@ -21,7 +21,7 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
     # Force kube login on test proxy port forwarding
     force_kube_login_hack="true"
   fi
-fi && \
+fi
 
 # Kubernetes credentials for ci
 if [[ $force_kube_login_hack == "true" ]] || ( \
@@ -34,13 +34,13 @@ if [[ $force_kube_login_hack == "true" ]] || ( \
   echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   echo "Getting GCP credentials for Kubernetes access"
   "${taito_plugin_path}/util/get-credentials-kube"
-fi && \
+fi
 
 # Database proxy
 if [[ ${taito_provider:-} == "gcp" ]] && \
    [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
    [[ ${taito_requires_database_connection:-} == "true" ]]; then
-  proxy_running=$(pgrep "cloud_sql_proxy")
+  proxy_running=$(pgrep "cloud_sql_proxy" || :)
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
   if [[ "${proxy_running}" == "" ]]; then
@@ -49,7 +49,7 @@ if [[ ${taito_provider:-} == "gcp" ]] && \
   else
     echo "Not Starting db proxy. It is already running."
   fi
-fi && \
+fi
 
 # Create new Google project on env apply
 if [[ $taito_command == "env-apply" ]] && \
@@ -71,6 +71,6 @@ if [[ $taito_command == "env-apply" ]] && \
     "${taito_plugin_path}/util/ensure-project-exists" \
       "${taito_uptime_namespace_id:-}" "${taito_uptime_provider_org_id}"
   fi
-fi && \
+fi
 
 taito::call_next "${@}"

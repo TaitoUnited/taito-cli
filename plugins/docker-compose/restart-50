@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 if [[ -n "${taito_target:-}" ]]; then
@@ -11,6 +11,6 @@ if [[ -n "${taito_target:-}" ]]; then
 else
   # Restart all containers
   "${taito_plugin_path}/util/start" "${@}" --restart
-fi && \
+fi
 
 taito::call_next "${@}"

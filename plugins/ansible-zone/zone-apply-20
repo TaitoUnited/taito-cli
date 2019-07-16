@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_host_uname:?}"
 
 name=${1}
@@ -59,7 +59,7 @@ then
       echo "(e.g. UseKeyChain)."
     fi
 
-    cd ansible-playbooks && \
+    cd ansible-playbooks
     if [[ $ansible_options != *"--ask-pass"* ]]; then
       # running ssh-add before ansible-playbook is required because otherwise
       # ansible parallel execution asks for keyphrase for multiple servers at
@@ -70,15 +70,15 @@ then
     fi
 
     taito::execute_with_ssh_agent "
-      ${taito_setv:?} && \
+      ${taito_setv:?}
       if [[ \"${keyname}\" ]]; then
         ssh-add "${HOME}/.ssh/${keyname:-id_rsa}";
-      fi && \
+      fi
       echo
       echo Executing ansible playbooks...
       ansible-playbook ${ansible_options:-} site.yml
     "
   )
-fi && \
+fi
 
 taito::call_next "${@}"

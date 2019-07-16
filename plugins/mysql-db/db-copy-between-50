@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_dest_env:?}"
@@ -17,6 +17,6 @@ if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
   echo "${database_host}"
   echo "${database_port}"
 
-fi && \
+fi
 
 taito::call_next "${@}"

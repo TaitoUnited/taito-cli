@@ -33,6 +33,6 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   echo 'TODO implement: dest is ${database_name}, source is something else'
   exit 1
   "${taito_plugin_path}/util/psql" "${username}" "${flags}"
-fi && \
+fi
 
 taito::call_next "${@}"

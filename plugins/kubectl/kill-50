@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
-"${taito_plugin_path}/util/use-context" && \
+"${taito_plugin_path}/util/use-context"
 
 . "${taito_plugin_path}/util/determine-pods"
 
-(${taito_setv:?}; kubectl delete pod ${pods}) && \
+(${taito_setv:?}; kubectl delete pod ${pods})
 
 taito::call_next "${@}"

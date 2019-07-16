@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 # NOTE: This bash script is run directly on host.
 : "${taito_project_path:?}"
 

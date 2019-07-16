@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Runs a process if ssh_forward_for_XXX setting is set for one of the
 # plugins in the current command chain
@@ -21,9 +21,9 @@ do
     ) || (
       echo "SSH connection failed with options ${opts} ${forward_value}."
       exit 1
-    ) && \
+    )
     ssh_proxy_running="true"
   fi
-done && \
+done
 
 taito::call_next "${@}"

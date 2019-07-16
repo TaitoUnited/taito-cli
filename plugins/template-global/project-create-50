@@ -20,23 +20,23 @@ echo
 echo "Please wait."
 
 taito::execute_on_host_fg "\
-  export GIT_PAGER='' && \
-  git clone -q -b master --single-branch --depth 1 ${template_source_git}/${template}.git ${taito_vc_repository:?} && \
-  cd ${taito_vc_repository} && \
+  export GIT_PAGER=''
+  git clone -q -b master --single-branch --depth 1 ${template_source_git}/${template}.git ${taito_vc_repository:?}
+  cd ${taito_vc_repository}
   # Write project migrate settings to a temporary config file
   # TODO remove unnecessary settings
-  echo 'export template=${template}' >> _template-config.sh && \
-  echo 'export template_name=${template}' >> _template-config.sh && \
-  echo 'export template_source_git=${template_source_git}' >> _template-config.sh && \
-  echo 'export template_dest_git=${template_dest_git}' >> _template-config.sh && \
-  echo 'export template_project_path=${PWD}' >> _template-config.sh && \
-  echo 'export taito_template=${template}' >> _template-config.sh && \
-  echo 'export taito_company=${taito_company:?}' >> _template-config.sh && \
-  echo 'export taito_family=${taito_family:-}' >> _template-config.sh && \
-  echo 'export taito_application=${taito_application:?}' >> _template-config.sh && \
-  echo 'export taito_suffix=${taito_suffix:-}' >> _template-config.sh && \
-  echo 'export taito_vc_repository=${taito_vc_repository}' >> _template-config.sh && \
-  rm -rf .git && \
+  echo 'export template=${template}' >> _template-config.sh
+  echo 'export template_name=${template}' >> _template-config.sh
+  echo 'export template_source_git=${template_source_git}' >> _template-config.sh
+  echo 'export template_dest_git=${template_dest_git}' >> _template-config.sh
+  echo 'export template_project_path=${PWD}' >> _template-config.sh
+  echo 'export taito_template=${template}' >> _template-config.sh
+  echo 'export taito_company=${taito_company:?}' >> _template-config.sh
+  echo 'export taito_family=${taito_family:-}' >> _template-config.sh
+  echo 'export taito_application=${taito_application:?}' >> _template-config.sh
+  echo 'export taito_suffix=${taito_suffix:-}' >> _template-config.sh
+  echo 'export taito_vc_repository=${taito_vc_repository}' >> _template-config.sh
+  rm -rf .git
   taito ${taito_options:-} -c project create continue"
 
 taito::call_next "${@}"

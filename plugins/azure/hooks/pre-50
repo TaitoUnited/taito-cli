@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy")
@@ -10,7 +10,7 @@ if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
   else
     echo "Not Starting db proxy. It is already running."
   fi
-fi && \
+fi
 
 if [[ "${taito_mode:-}" == "ci" ]] && \
    [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]]; then

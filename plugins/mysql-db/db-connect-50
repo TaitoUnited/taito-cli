@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
   "${taito_plugin_path}/util/mysql" "${1}"
-fi && \
+fi
 
 taito::call_next "${@}"

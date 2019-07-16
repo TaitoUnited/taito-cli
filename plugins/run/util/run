@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_vout:?}"
 
 run_env_var_prefix=${1}

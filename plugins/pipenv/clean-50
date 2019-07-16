@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_project_path:?}"
 
 echo "NOTE: Remember to run 'taito install' after clean"

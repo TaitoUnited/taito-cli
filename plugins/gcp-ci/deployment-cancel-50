@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_env:?}"
 : "${taito_vc_repository:?}"
 : "${taito_zone:?}"
@@ -16,7 +16,7 @@ echo
       source.repoSource.branchName:${taito_branch:?}" | \
   grep -v "${ignore_build_id:-OR_DO_NOT_IGNORE}" | \
   cut -d ' ' -f 1 | \
-  xargs -L1 gcloud --project "${taito_zone}" builds cancel &> /dev/null && \
+  xargs -L1 gcloud --project "${taito_zone}" builds cancel &> /dev/null
   echo CANCELLED
 )
 

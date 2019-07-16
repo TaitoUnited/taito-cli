@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 : "${taito_project:?}"
@@ -16,7 +16,7 @@ fi
 compose_cmd="up"
 if [[ -n "${taito_target:-}" ]]; then
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/determine-pod" && \
+  . "${taito_plugin_path}/util/determine-pod"
   compose_cmd="run ${pod:?}"
 fi
 

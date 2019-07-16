@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
 
-taito::commit_changes && \
+taito::commit_changes
 
 taito::call_next "${@}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${database_name:?}"
@@ -15,6 +15,6 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
     flags="-f ${filename}"
     "${taito_plugin_path}/util/psql" "${username}" "${flags}"
   )
-fi && \
+fi
 
 taito::call_next "${@}"

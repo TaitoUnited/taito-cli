@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
@@ -14,7 +14,7 @@ else
     for database in ${databases[@]}
     do
       export taito_target="${database}"
-      . "${taito_util_path}/read_database_config.bash" "${database}" && \
+      . "${taito_util_path}/read_database_config.bash" "${database}"
 
       if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
         if taito::confirm_execution "postgres" "${name}" \
@@ -25,15 +25,15 @@ else
             export database_username=${database_master_username:-postgres}
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
-            . "${taito_plugin_path}/util/ask-password" && \
-            "${taito_plugin_path}/util/create-users" && \
-            "${taito_plugin_path}/util/create-database" && \
+            . "${taito_plugin_path}/util/ask-password"
+            "${taito_plugin_path}/util/create-users"
+            "${taito_plugin_path}/util/create-database"
             echo "Created database ${database_name:-}"
           )
         fi
       fi
     done
   )
-fi && \
+fi
 
 taito::call_next "${@}"

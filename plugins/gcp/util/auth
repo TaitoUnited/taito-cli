@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_env:?}"
 
 # TODO: support for '--reset'
@@ -30,7 +30,7 @@ then
   read -r
   # TODO run 'gcloud auth revoke ${account}' ?
   (${taito_setv:?}; gcloud init --console-only)
-fi && \
+fi
 
 if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || \
     [[ ${type} == "login" ]] || [[ ${type} == "reset" ]]
@@ -38,7 +38,7 @@ then
   echo "gcloud auth application-default login"
   # TODO run 'gcloud auth revoke ${account}' ?
   (${taito_setv:?}; gcloud auth application-default login)
-fi && \
+fi
 
 if [[ -n "${kubernetes_name:-}" ]]; then
   if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]] || [[ ${type} == "reset" ]]

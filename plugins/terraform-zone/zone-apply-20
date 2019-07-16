@@ -21,13 +21,13 @@ then
 
     export TF_LOG_PATH="./terraform.log"
     # shellcheck disable=SC1090
-    . "${taito_cli_path}/plugins/terraform/util/env" && \
-    cd "./terraform" && \
-    terraform init && \
+    . "${taito_cli_path}/plugins/terraform/util/env"
+    cd "./terraform"
+    terraform init
     if [[ -f import_state ]]; then
       ./import_state
-    fi && \
-    terraform apply && \
+    fi
+    terraform apply
 
     if [[ "${taito_zone_initial_database_password:-}" ]] && \
        taito::confirm_execution "" "" \
@@ -55,6 +55,6 @@ then
       read -r
     fi
   )
-fi && \
+fi
 
 taito::call_next "${@}"

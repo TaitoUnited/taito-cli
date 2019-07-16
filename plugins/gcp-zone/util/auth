@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 type=${1}
 account=$(gcloud config get-value account 2> /dev/null)
@@ -11,12 +11,12 @@ if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || [[ ${type} == "init" ]]; the
   echo -e "${H2s}gcloud init${H2e}"
   # NOTE: removed  --project="${taito_zone}"
   (${taito_setv:?}; gcloud init --console-only)
-fi && \
+fi
 
 if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || [[ ${type} == "default" ]]; then
   echo -e "${H2s}gcloud auth application-default login${H2e}"
   (${taito_setv:?}; gcloud auth application-default login)
-fi && \
+fi
 
 if [[ -n "${kubernetes_name:-}" ]]; then
   if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]]; then

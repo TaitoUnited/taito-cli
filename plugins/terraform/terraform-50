@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_provider:?}"
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/env" && \
+. "${taito_plugin_path}/util/env"
 (
-  cd "./scripts/terraform/${taito_provider}" && \
+  cd "./scripts/terraform/${taito_provider}"
   terraform "${@}"
-) && \
+)
 
 taito::call_next "${@}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_zone:?}"
 : "${kubernetes_cluster:?}"
 : "${taito_dout:?}"
@@ -14,7 +14,7 @@ namespace="${taito_namespace:-kube-system}"
   kubectl config set-context "${context}" \
     --namespace="${namespace}" \
     --cluster="${kubernetes_cluster}" \
-    --user="${user}" > "${taito_dout}" && \
+    --user="${user}" > "${taito_dout}"
 
   kubectl config use-context "${context}" > "${taito_dout}"
 )

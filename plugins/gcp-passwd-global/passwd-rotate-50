@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/bash -e
 
 
 filter=${1}
 
-echo "TODO implement" && \
+echo "TODO implement"
 
 taito::call_next "${@}"

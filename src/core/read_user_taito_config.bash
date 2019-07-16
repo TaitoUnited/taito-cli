@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 # NOTE: This bash script is run directly on host.
 
 export taito_env="${1:-$taito_env}"

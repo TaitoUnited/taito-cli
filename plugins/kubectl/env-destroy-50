@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 : "${taito_env:?}"
@@ -6,18 +6,18 @@
 
 name=${1}
 
-"${taito_plugin_path}/util/use-context" && \
+"${taito_plugin_path}/util/use-context"
 
 if taito::confirm_execution "kubectl-delete-secrets" "${name}" \
   "Delete secrets of namespace ${taito_namespace} from Kubernetes"
 then
   "${taito_plugin_path}/util/delete-secrets"
-fi && \
+fi
 
 if taito::confirm_execution "kubectl-delete-namespace" "${name}" \
   "Delete namespace ${taito_namespace} from Kubernetes"
 then
   (${taito_setv:?}; kubectl delete namespace "${taito_namespace}" || :)
-fi && \
+fi
 
 taito::call_next "${@}"

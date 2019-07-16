@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 source $(dirname "${BASH_SOURCE[0]}")/../libs/output.bash
 source $(dirname "${BASH_SOURCE[0]}")/../libs/error.bash

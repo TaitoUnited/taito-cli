@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
-"${taito_plugin_path}/util/sqitch" add "${@:1}" && \
+"${taito_plugin_path}/util/sqitch" add "${@:1}"
 
 taito::call_next "${@}"

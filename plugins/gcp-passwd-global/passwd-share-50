@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
 
 : "${taito_plugin_path:?}"
 
 name="${1}"
 
-taito::open_browser_fg "TODO" && \
+taito::open_browser_fg "TODO"
 
 taito::call_next "${@}"

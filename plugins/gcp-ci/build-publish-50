@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
 
-echo "TODO implement" && \
+echo "TODO implement"
 
 taito::call_next "${@}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_vout:?}"
@@ -18,7 +18,7 @@
       -u "${database_username}" \
       -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source ${taito_plugin_path}/resources/create.sql ;" \
       > ${taito_vout}
-  ) && \
+  )
 
   if [[ -f "./${taito_target:-database}/db.sql" ]]; then
     (

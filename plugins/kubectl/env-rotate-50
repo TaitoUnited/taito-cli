@@ -14,6 +14,6 @@ then
   "${taito_plugin_path}/util/use-context"
   "${taito_plugin_path}/util/save-secrets"
   export kubernetes_skip_restart="false"
-fi && \
+fi
 
 taito::call_next "${@}"

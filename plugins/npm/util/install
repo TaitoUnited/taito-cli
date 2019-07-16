@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 switches=" ${*} "
@@ -16,7 +16,7 @@ elif [[ "${taito_mode:-}" == "ci" ]] && [[ "${task_install_ci_exists:-}" ]]; the
 elif [[ "${taito_mode:-}" != "ci" ]] && [[ "${task_install_dev_exists:-}" ]]; then
   task_postinstall="install-dev"
   do_confirm=true
-fi && \
+fi
 
 install_all=false
 if [[ ${taito_mode} != "ci" ]] && [[ ${do_confirm} ]] && [[ ! $RUNNING_TESTS ]]; then
@@ -31,12 +31,12 @@ fi
 # Run clean
 if [[ "${switches}" == *" --clean "* ]]; then
   "${taito_plugin_path}/util/clean"
-fi && \
+fi
 
 npm_command="install"
 if [[ "${switches}" == *" --lock "* ]]; then
   npm_command="ci"
-fi && \
+fi
 
 # Run npm install
 # NOTE: Changed 'npm install' to run on host because of linux permission issues.
@@ -44,8 +44,8 @@ fi && \
 # TODO add '--python=${npm_python}' for npm install?
 taito::execute_on_host_fg "\
   set -e;
-  echo \"Running 'npm ${npm_command}'\" && \
-  npm ${npm_command}" && \
+  echo \"Running 'npm ${npm_command}'\"
+  npm ${npm_command}"
 
 if [[ "${task_postinstall}" ]]; then
   # TODO add '--python=${npm_python}' for npm run?

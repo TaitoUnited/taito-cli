@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 name=${1}
@@ -8,9 +8,9 @@ if [[ -n "${kubernetes_name:-}" ]]; then
     "Authenticate to Kubernetes ${kubernetes_name:-}"
   then
     echo "Authenticating"
-    "${taito_cli_path}/plugins/aws/util/get-credentials-kube" && \
+    "${taito_cli_path}/plugins/aws/util/get-credentials-kube"
     taito::commit_changes
   fi
-fi && \
+fi
 
 taito::call_next "${@}"

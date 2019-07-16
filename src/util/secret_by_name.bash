@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${find_secret_name:?}"
 
 # TODO refactor secret handling!

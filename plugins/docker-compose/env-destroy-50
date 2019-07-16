@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 : "${taito_env:?}"
@@ -10,6 +10,6 @@ if taito::confirm_execution "docker-delete-secrets" "${name}" \
   "Delete secrets of from ./secrets/${taito_env}"
 then
   "${taito_plugin_path}/util/delete-secrets"
-fi && \
+fi
 
 taito::call_next "${@}"

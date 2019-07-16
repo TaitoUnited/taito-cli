@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_project_path:?}"
 
 filename="${1:?}"

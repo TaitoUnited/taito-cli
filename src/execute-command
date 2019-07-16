@@ -216,8 +216,8 @@ if [[ ${TAITO_CONFIG_OVERRIDE} == *"://"* ]]; then
 fi
 
 # Read taito-config.sh files from all locations
-. "${taito_src_path}/core/read_user_taito_config.bash" "${taito_env}" && \
-. "${taito_src_path}/core/read_project_taito_config.bash" "${taito_env}" && \
+. "${taito_src_path}/core/read_user_taito_config.bash" "${taito_env}"
+. "${taito_src_path}/core/read_project_taito_config.bash" "${taito_env}"
 
 if [[ "${taito_command}" == "test" ]] && \
    [[ "${taito_mode:-}" == "ci" ]] && \
@@ -267,7 +267,7 @@ fi
 export taito_branch="${branch}"
 
 # Execute some additional check only once in a while
-if (( RANDOM % 4 == 0 )) && \
+if (( RANDOM % 4 == 0 ))
    [[ "${taito_mode:-}" != "ci" ]] && \
    [[ ${quiet} != "true" ]] && \
    [[ ${taito_command} != "project-"* ]] && \
@@ -310,7 +310,7 @@ if [[ ${taito_target} ]] && \
 fi
 
 # Select database configs using taito_target
-. "${taito_util_path}/read_database_config.bash" && \
+. "${taito_util_path}/read_database_config.bash"
 
 # Read taito-secrets in case of CI/CD
 if [[ -f ${taito_project_path}/taito-secrets ]]; then

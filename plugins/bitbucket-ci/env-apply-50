@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_env:?}"
 : "${taito_zone:?}"
 : "${taito_vc_repository:?}"
@@ -15,9 +15,9 @@ then
   echo "Press enter to open BitBucket build pipeline management on web your web browser."
   read -r
   taito::open_browser \
-    "https://${taito_vc_repository_url:?}/admin/addon/admin/pipelines/settings" && \
-  echo "Press enter when done" && \
+    "https://${taito_vc_repository_url:?}/admin/addon/admin/pipelines/settings"
+  echo "Press enter when done"
   read -r
-fi && \
+fi
 
 taito::call_next "${@}"

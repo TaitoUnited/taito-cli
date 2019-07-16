@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${database_name:?}"
@@ -9,11 +9,11 @@
   for database in ${databases[@]}
   do
     export taito_target="${database}"
-    . "${taito_util_path}/read_database_config.bash" "${database}" && \
+    . "${taito_util_path}/read_database_config.bash" "${database}"
 
-    echo "Deploying changes to database ${taito_env}" && \
+    echo "Deploying changes to database ${taito_env}"
     "${taito_plugin_path}/util/deploy-changes" "${@}"
   done
-) && \
+)
 
 taito::call_next "${@}"

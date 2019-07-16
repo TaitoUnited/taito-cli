@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 : "${taito_project:?}"
@@ -6,7 +6,7 @@
 source="${1:?}"
 dest="${2:?}"
 
-"${taito_plugin_path}/util/use-context" && \
+"${taito_plugin_path}/util/use-context"
 . "${taito_plugin_path}/util/determine-pod-container"
 
 (${taito_setv:?}; kubectl cp "${pod}:${source}" "${dest}" -c "${container}")

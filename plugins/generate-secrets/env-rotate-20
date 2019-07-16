@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 name_filter="${1}"
@@ -6,6 +6,6 @@ name_filter="${1}"
 echo "Creating secrets"
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/create" && \
+. "${taito_plugin_path}/util/create"
 
 taito::call_next "${@}"

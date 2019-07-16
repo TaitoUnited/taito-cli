@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
@@ -74,8 +74,8 @@ else
       echo "- Pulling the existing image ${image_tag}."
       (
         ${taito_setv:?};
-        "$taito_plugin_path/util/imagepull" "${image}" && \
-        "$taito_plugin_path/util/imagepull" "${image_builder}" && \
+        "$taito_plugin_path/util/imagepull" "${image}"
+        "$taito_plugin_path/util/imagepull" "${image_builder}"
         docker image tag "${image_builder}" "${image_tester}"
       ) && pulled="true"
       if [[ $pulled == "true" ]]; then
@@ -130,7 +130,7 @@ else
         --cache-from "${image_builder}" \
         --tag "${image_builder}" \
         --tag "${image_tester}" \
-        "${build_context}" && \
+        "${build_context}"
       # Build the production runtime
       # TODO use also latest production container as cache?
       docker build \
@@ -144,7 +144,7 @@ else
         --tag "${image_latest}" \
         "${build_context}"
     )
-  fi && \
+  fi
   if [[ ${save_image} == "true" ]]; then
     (
       ${taito_setv:?}

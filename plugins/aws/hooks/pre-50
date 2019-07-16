@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 
@@ -39,7 +39,7 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo -e "${taito_command_context_prefix:-}${H1s}aws${H1e}"
     echo "Getting credentials for Elastic Container Registry"
     "${taito_plugin_path}/util/get-credentials-ecr"
-  fi && \
+  fi
 
   # Kubernetes (EKS) authentication
   if [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]] || \
@@ -52,6 +52,6 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo "Getting credentials for kubernetes"
     "${taito_plugin_path}/util/get-credentials-kube"
   fi
-fi && \
+fi
 
 taito::call_next "${@}"

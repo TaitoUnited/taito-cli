@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_namespace:?}"
 
 if [[ ${kubernetes_skip_restart:-} != "true" ]]; then
-  echo && \
+  echo
   if taito::confirm "Restart all pods in namespace ${taito_namespace}?"; then
-    echo "Restarting pods" && \
-    echo "TODO rolling update instead of delete?" && \
+    echo "Restarting pods"
+    echo "TODO rolling update instead of delete?"
     (${taito_setv:?}; kubectl delete --all pods --namespace="${taito_namespace}")
   fi
 fi

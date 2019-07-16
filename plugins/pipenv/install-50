@@ -1,14 +1,14 @@
-#!/bin/bash
+#!/bin/bash -e
 
 switches=" ${*} "
 
 pipenv_command="pipenv install --dev"
 if [[ "${switches}" == *"--clean"* ]]; then
   pipenv_command="pipenv update --clear --dev"
-fi && \
+fi
 
 taito::execute_on_host_fg "\
-pipenv --python 3.6 && \
-${pipenv_command}" && \
+pipenv --python 3.6
+${pipenv_command}"
 
 taito::call_next "${@}"

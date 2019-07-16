@@ -28,7 +28,7 @@ if ! grep "$TAITO_INSTALL_DIR/bin" ~/.bashrc &> /dev/null; then
   echo "export PATH=\"$TAITO_INSTALL_DIR/bin:\$PATH\"" >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
-if ! grep "$TAITO_INSTALL_DIR/bin" ~/.bash_profile &> /dev/null && \
+if ! grep "$TAITO_INSTALL_DIR/bin" ~/.bash_profile &> /dev/null
    ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
   echo "export PATH=\"$TAITO_INSTALL_DIR/bin:\$PATH\"" >> ~/.bash_profile
   echo "modified ~/.bash_profile"
@@ -43,7 +43,7 @@ echo "[4. Create ~/.taito/taito-config.sh file if it does not exist yet]"
 mkdir -p ~/.taito
 if [[ ! -f ~/.taito/taito-config.sh ]]; then
 cat > ~/.taito/taito-config.sh <<EOL
-#!/bin/bash
+#!/bin/bash -e
 # shellcheck disable=SC2034
 
 # Configuration instructions:
@@ -85,7 +85,7 @@ if ! grep "$TAITO_INSTALL_DIR/support" ~/.bashrc &> /dev/null; then
   echo "source $TAITO_INSTALL_DIR/support/bash/complete" >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
-if ! grep "$TAITO_INSTALL_DIR/support" ~/.bash_profile &> /dev/null && \
+if ! grep "$TAITO_INSTALL_DIR/support" ~/.bash_profile &> /dev/null
    ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
   echo "source $TAITO_INSTALL_DIR/support/bash/complete" >> ~/.bash_profile
   echo "modified ~/.bash_profile"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_zone:?}"
 : "${taito_project:?}"
 
@@ -14,9 +14,9 @@ then
     opts="authuser=${google_authuser}&"
   fi
   taito::open_browser \
-    "https://console.cloud.google.com/cloud-build/triggers?${opts}project=${taito_zone}" && \
+    "https://console.cloud.google.com/cloud-build/triggers?${opts}project=${taito_zone}"
   echo "Press enter when you have deleted the trigger."
   read -r
-fi && \
+fi
 
 taito::call_next "${@}"

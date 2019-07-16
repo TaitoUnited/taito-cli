@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
@@ -32,12 +32,12 @@ if [[ "${taito_is_admin:-}" == true ]] && \
      echo "ERROR: Copying encypted password from bucket failed."
      rm -f "${cipher_path}"
      exit 1
-   fi && \
+   fi
 
-   echo "Decrypting." && \
-   echo && \
+   echo "Decrypting."
+   echo
    # TODO remove env name hardcoding
-   export postgres_password && \
+   export postgres_password
    postgres_password=$( \
      gcloud -q --project "${taito_zone}" kms decrypt --keyring "${taito_secrets_keyring}" \
        --key "${taito_secrets_key}" \
@@ -58,7 +58,7 @@ if [[ "${taito_is_admin:-}" == true ]] && \
      echo "ERROR: Decrypting password failed."
      rm -f "${cipher_path}"
      exit 1
-   fi && \
+   fi
    rm -f "${cipher_path}"
 fi
 

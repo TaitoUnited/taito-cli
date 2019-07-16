@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 : "${taito_env:?}"
@@ -17,7 +17,7 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
   else
     echo "Not Starting db proxy. It is already running."
   fi
-fi && \
+fi
 
 # kubernetes secrets
 # TODO: tighter filter

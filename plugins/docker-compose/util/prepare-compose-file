@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Prepares docker-compose.yaml and docker-nginx.conf by replacing
 # local services. Prints filename of the new docker-compose.yaml

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 echo "Setting default context for Kubernetes: ${taito_namespace:-kube-system}"

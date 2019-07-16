@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 echo "Generating links to README.md"
-"${taito_plugin_path}/util/generate" && \
+"${taito_plugin_path}/util/generate"
 
 taito::call_next "${@}"

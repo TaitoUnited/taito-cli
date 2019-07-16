@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 # NOTE: This bash script is run directly on host.
 
 # TODO refactor: this is duplicate code with autocomplete
@@ -436,7 +436,7 @@ if [[ ${taito_project:-} ]]; then
       echo "test:${stack}${suffix} \
         # Run all integration and e2e tests of the ${stack} container on ${env} environment"
       if [[ "${cprefix}" == "test"* || "${cprefix}" == "*" ]]; then
-        suites=($(cat "./${stack}/test-suites" 2> /dev/null)) && \
+        suites=($(cat "./${stack}/test-suites" 2> /dev/null))
         for suite in "${suites[@]}"
         do
           echo "test:${stack}${param} ${suite} \

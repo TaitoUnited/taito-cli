@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_target_env:?}"
 : "${taito_project_path:?}"
 
@@ -24,9 +24,9 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
     cd "${taito_project_path}/release" || exit 1
     ${taito_setv:?}
     NPM_TOKEN=none GH_TOKEN=${secret_value_github_buildbot_token} \
-      npm run "${command}" && \
+      npm run "${command}"
     rm -f .npmrc
   )
-fi && \
+fi
 
 taito::call_next "${@}"

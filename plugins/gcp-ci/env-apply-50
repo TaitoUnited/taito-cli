@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_env:?}"
 : "${taito_zone:?}"
 : "${taito_vc_repository:?}"
@@ -29,10 +29,10 @@ then
   fi
 
   taito::open_browser \
-    "https://console.cloud.google.com/cloud-build/triggers?${opts}project=${taito_zone}" && \
+    "https://console.cloud.google.com/cloud-build/triggers?${opts}project=${taito_zone}"
 
-  echo "Press enter when ready" && \
+  echo "Press enter when ready"
   read -r
-fi && \
+fi
 
 taito::call_next "${@}"

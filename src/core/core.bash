@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 # NOTE: This bash script is run directly on host.
 
 taito::core::print_command_with_internal_syntax () {
@@ -58,7 +58,7 @@ taito::core::upgrade () {
       echo
       echo "WARNING! You are currently using ${branch} branch of taito-cli."
       if taito::confirm "Checkout the master branch instead?"; then
-        git checkout master && \
+        git checkout master
         git branch --set-upstream-to=origin/master master
       fi
     fi

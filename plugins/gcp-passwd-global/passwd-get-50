@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 : "${taito_plugin_path:?}"
 
@@ -30,11 +30,11 @@ if ! gsutil cp "${taito_secrets_url}/${name}" "${cipher_path}"; then
   echo "ERROR: Copying encypted password from bucket failed."
   rm -f "${cipher_path}"
   exit 1
-fi && \
+fi
 
-echo "Decrypting." && \
-echo && \
-echo "Password for ${name}:" && \
+echo "Decrypting."
+echo
+echo "Password for ${name}:"
 gcloud kms decrypt --keyring "${taito_secrets_keyring}" \
   --key "${taito_secrets_key}" \
   --location "${taito_secrets_region}" \
@@ -46,7 +46,7 @@ if [[ $? -gt 0 ]]; then
   echo "ERROR: Decrypting password failed."
   rm -f "${cipher_path}"
   exit 1
-fi && \
-rm -f "${cipher_path}" && \
+fi
+rm -f "${cipher_path}"
 
 taito::call_next "${@}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 echo
 echo "TIP: Once you have fully configured the zone, run 'taito project settings'"

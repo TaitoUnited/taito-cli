@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod" && \
+. "${taito_plugin_path}/util/determine-pod"
 
-taito::execute_on_host_fg "docker kill ${pod:?}" && \
+taito::execute_on_host_fg "docker kill ${pod:?}"
 
 taito::call_next "${@}"

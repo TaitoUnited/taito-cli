@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${database_name:?}"
@@ -13,8 +13,8 @@ port="${1}"
   echo "Database connection details:"
   taito::show_db_proxy_details
   echo
-  "${taito_plugin_path}/util/db-proxy-start" && \
+  "${taito_plugin_path}/util/db-proxy-start"
   "${taito_plugin_path}/util/db-proxy-stop"
-) && \
+)
 
 taito::call_next "${@}"

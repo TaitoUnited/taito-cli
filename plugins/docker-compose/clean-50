@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 
 if [[ ${taito_target:-} ]] && [[ "${taito_targets:-}" != *"${taito_target}"* ]]; then
@@ -28,6 +28,6 @@ else
   compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
   taito::execute_on_host_fg \
     "docker-compose -f $compose_file down --rmi 'local' --volumes --remove-orphans"
-fi && \
+fi
 
 taito::call_next "${@}"

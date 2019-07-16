@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_project:?}"
 : "${taito_target:?Target not given}"
 : "${taito_target_env:?}"

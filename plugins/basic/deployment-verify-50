@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_env:?}"
 
 if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_test:-}" == "true" ]]; then
@@ -14,6 +14,6 @@ if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_test:-}" == "true" ]]; then
     fi
     exit 1
   fi
-fi && \
+fi
 
 taito::call_next "${@}"

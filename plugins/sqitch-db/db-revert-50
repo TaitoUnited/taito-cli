@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
 "${taito_plugin_path}/util/sqitch" revert "${@}" \
-  --set env="'${taito_env}'" && \
+  --set env="'${taito_env}'"
 
 taito::call_next "${@}"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${secret_index:?}"
 
 # TODO refactor secret handling!

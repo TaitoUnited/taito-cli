@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [[ "${taito_env:-}" == "local" ]]; then
   "${taito_plugin_path:?}/util/install" "${@}"

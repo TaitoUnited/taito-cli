@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # TODO clean this mess. duplicate code in clean, psql and sqitch
 

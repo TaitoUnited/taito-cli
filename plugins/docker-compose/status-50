@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
 taito::execute_on_host_fg "

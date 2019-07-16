@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : "${taito_env:?}"
 
 if [[ "${taito_target_env}" == "prod" ]]; then

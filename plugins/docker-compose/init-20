@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # TODO: duplicate code with env-apply
 
@@ -39,6 +39,6 @@ else
       echo "Done waiting"
     fi
   )
-fi && \
+fi
 
 taito::call_next "${@}"

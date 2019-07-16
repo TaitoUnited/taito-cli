@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 : ${taito_target_env:?}
 
 # Reads postgres usernames and passwords to environment variables.
