@@ -1,24 +1,13 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_project:?}"
-: "${taito_env:?}"
 : "${taito_namespace:?}"
 
-name=${1}
+taito::confirm \
+  "Delete secrets of namespace ${taito_namespace} from Kubernetes" || \
+  taito::skip_to_next "${@}"
 
 kubectl::use_context
-
-if taito::confirm_execution "kubectl-delete-secrets" "${name}" \
-  "Delete secrets of namespace ${taito_namespace} from Kubernetes"
-then
-  kubectl::delete-secrets
-fi
-
-if taito::confirm_execution "kubectl-delete-namespace" "${name}" \
-  "Delete namespace ${taito_namespace} from Kubernetes"
-then
-  (${taito_setv:?}; kubectl delete namespace "${taito_namespace}" || :)
-fi
+kubectl::delete-secrets
 
 taito::call_next "${@}"

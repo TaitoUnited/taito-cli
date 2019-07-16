@@ -1,8 +1,0 @@
-#!/bin/bash -e
-
-echo "Database connection details:"
-taito::show_db_proxy_details
-echo
-echo "TODO implement"
-
-taito::call_next "${@}"

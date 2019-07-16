@@ -8,7 +8,7 @@ taito::skip_if_not container "${@}"
 
 kubectl::use_context
 kubectl::expose_pod_and_container
-(${taito_setv:?}; kubectl exec -it "${pod}" -c "${container}" -- "/bin/sh") || \
-(${taito_setv:?}; kubectl exec -it "${pod}" -- "/bin/sh")
+(taito::executing_start; kubectl exec -it "${pod}" -c "${container}" -- "/bin/sh") || \
+(taito::executing_start; kubectl exec -it "${pod}" -- "/bin/sh")
 
 taito::call_next "${@}"

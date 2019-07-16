@@ -3,8 +3,6 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_env:?}"
 
-name=${1}
-
 if [[ "${taito_env}" == "local" ]]; then
   echo "Skipping database create for local environment"
 else
@@ -12,15 +10,12 @@ else
   (
     all=$(taito::print_targets_of_type database)
     databases=("${taito_target:-$all}")
-    for database in ${databases[@]}
-    do
+    for database in ${databases[@]}; do
       export taito_target="${database}"
       taito::export_database_config "${database}"
 
       if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
-        if taito::confirm_execution "mysql" "${name}" \
-          "Create mysql database ${database_name}"
-        then
+        if taito::confirm "Create mysql database ${database_name}"; then
           # Create a subshell to contain password
           (
             export database_username=${database_master_username:-root}

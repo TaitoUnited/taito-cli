@@ -5,7 +5,7 @@ function mysql::create_database () {
     export MYSQL_PWD
     MYSQL_PWD="${MYSQL_PWD}"
     (
-      ${taito_setv:?}
+      taito::executing_start
       mysql -h "${database_host}" \
         -P "${database_port}" \
         -D mysql \
@@ -16,7 +16,7 @@ function mysql::create_database () {
 
     if [[ -f "./${taito_target:-database}/db.sql" ]]; then
       (
-        ${taito_setv:?}
+        taito::executing_start
         mysql -h "${database_host}" \
         -P "${database_port}" \
         -D "${database_name}" \
@@ -30,7 +30,7 @@ function mysql::create_database () {
 }
 
 function mysql::drop_database () {
-  ${taito_setv:?}
+  taito::executing_start
   mysql -h "${database_host}" \
     -P "${database_port}" \
     -D mysql \
@@ -57,7 +57,7 @@ function mysql::create_users () {
 
   # Execute
 
-  ${taito_setv:?}
+  taito::executing_start
   mysql -h "${database_host}" \
     -P "${database_port}" \
     -D mysql \
@@ -67,7 +67,7 @@ function mysql::create_users () {
 }
 
 function mysql::drop_users () {
-  ${taito_setv:?}
+  taito::executing_start
   mysql -h "${database_host}" \
     -P "${database_port}" \
     -D mysql \

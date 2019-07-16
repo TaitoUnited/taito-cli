@@ -3,19 +3,14 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_namespace:?}"
 
-name=${1}
+taito::confirm "Save secrets to Kubernetes" || \
+  taito::skip_to_next "${@}"
 
+kubectl::use_context
+kubectl::ensure_namespace "${taito_namespace}"
+
+kubectl::use_context
 export kubernetes_skip_restart="true";
-
-if taito::confirm_execution "kubectl-save-secrets" "${name}" \
-  "Save secrets to Kubernetes"
-then
-  # Make sure that namespace exists
-  kubectl::use_context
-  kubectl::ensure_namespace "${taito_namespace}"
-
-  kubectl::use_context
-  kubectl::save-secrets
-fi
+kubectl::save_secrets
 
 taito::call_next "${@}"

@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
 # TODO: sort does not work well with multiline values (links, secrets, plugins)
-env | sort
+(set -o posix; set | sort)
 
 taito::call_next "${@}"

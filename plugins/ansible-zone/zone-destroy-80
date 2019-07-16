@@ -1,11 +1,6 @@
 #!/bin/bash -e
-: "${taito_env:?}"
 
-name=${1}
-
-if [[ ! $name ]] || [[ $name == "ansible" ]]; then
-  echo "Delete servers manually. Press enter when done."
-  read -r
-fi
+echo "Delete servers manually. Press enter when done."
+read -r
 
 taito::call_next "${@}"

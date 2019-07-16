@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
@@ -53,7 +53,7 @@ rm -f ./_template-config.sh
 
 taito ${taito_options:-} project docs
 
-read -t 1 -n 10000 discard || :
+read -t 1 -n 10000 || :
 echo
 echo "Create a new repository: ${template_default_vc_url}/${taito_vc_repository}"
 echo "The new repository must be completely empty (no README.md, LICENSE,"

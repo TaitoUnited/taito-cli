@@ -1,6 +1,8 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
+echo "TODO: implement"
 echo "TODO confirm and delete all files from destination directory"
 gcp-storage::copy-from "${@}"
 

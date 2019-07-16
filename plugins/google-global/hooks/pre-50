@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
 : "${taito_command:?}"
 
 # Add authuser parameter to all google.com links if google_authuser

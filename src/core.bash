@@ -37,7 +37,6 @@ taito::core::export_project_config () {
     export taito_container_registry=${taito_registry:-}
   fi
 }
-export -f taito::core::export_project_config
 
 taito::core::export_user_config () {
   export taito_env="${1:-$taito_env}"
@@ -68,7 +67,6 @@ taito::core::export_user_config () {
     exit 1
   fi
 }
-export -f taito::core::export_user_config
 
 taito::core::print_command_with_internal_syntax () {
   args=("$@")
@@ -96,7 +94,6 @@ taito::core::print_command_with_internal_syntax () {
 
   printf "%s\\n" "${args[@]}"
 }
-export -f taito::core::print_command_with_internal_syntax
 
 # Resolve project root folder by the location of taito-config.sh
 taito::core::print_project_path () {
@@ -111,7 +108,12 @@ taito::core::print_project_path () {
   fi
 }
 
+taito::core::sort_commands_by_priority () {
+  tr ' ' '\n' | sed 's/^\(.*\)\(..\)$/\2\1\2/' | sort | sed 's/^..\(.*\)$/\1/'
+}
+
 taito::core::upgrade () {
+  set +e
   # Make sure that mounted directories exist
   echo "Checking mount directories"
   mkdir -p "${taito_home_path}/.taito"
@@ -146,10 +148,11 @@ taito::core::upgrade () {
   if [[ -f ${HOME}/.taito/install ]]; then
     docker_run_flags="-v ${HOME}/.taito/install:/taitoinstall"
   fi
+  # TODO: remove .sh extension
   docker run -it --name taito-new --entrypoint /bin/bash ${docker_run_flags} \
     "${taito_image}" -c "
-    /taito-cli-deps/tools/user-create taito $(id -u) $(id -g)
-    /taito-cli-deps/tools/user-init taito
+    /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g)
+    /taito-cli-deps/tools/user-init.sh taito
     if [[ -f /taitoinstall ]]; then
       echo
       echo --- Executing \~/.taito/install ---
@@ -198,5 +201,5 @@ taito::core::upgrade () {
   echo "directory. You may find the recommended settings by running"
   echo "'taito open conventions' or 'taito -o ORGANIZATION open conventions'."
   echo
+  set -e
 }
-export -f taito::core::upgrade

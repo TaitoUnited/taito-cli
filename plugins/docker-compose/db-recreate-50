@@ -17,7 +17,6 @@ else
     do
       # TODO: duplicate code with clean
 
-      # shellcheck disable=SC1090
       taito_target=$database
       docker-compose::expose_pod_and_container
 

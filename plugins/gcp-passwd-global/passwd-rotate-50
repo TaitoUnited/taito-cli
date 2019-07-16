@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-
 filter=${1}
 
 echo "TODO implement"

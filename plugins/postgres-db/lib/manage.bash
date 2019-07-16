@@ -5,7 +5,7 @@ function postgres::create_database () {
     export PGPASSWORD
     PGPASSWORD="${PGPASSWORD}"
     (
-      ${taito_setv:?}
+      taito::executing_start
       psql -h "${database_host}" \
         -p "${database_port}" \
         -d postgres \
@@ -18,7 +18,7 @@ function postgres::create_database () {
 
     if [[ -f "./${taito_target:-database}/db.sql" ]]; then
       (
-        ${taito_setv:?}
+        taito::executing_start
         psql -h "${database_host}" \
           -p "${database_port}" \
           -d "${database_name}" \
@@ -33,7 +33,7 @@ function postgres::create_database () {
 
     PGPASSWORD="${secret_value}"
     (
-      ${taito_setv:?}
+      taito::executing_start
       psql -h "${database_host}" \
       -p "${database_port}" \
       -d "${database_name}" \
@@ -47,7 +47,7 @@ function postgres::create_database () {
 }
 
 function postgres::drop_database () {
-  ${taito_setv:?}
+  taito::executing_start
   psql -h "${database_host}" \
     -p "${database_port}" \
     -d postgres \
@@ -74,7 +74,7 @@ function postgres::create_users () {
 
   # Execute
 
-  ${taito_setv:?}
+  taito::executing_start
   psql -h "${database_host}" -p "${database_port}" \
     -d postgres \
     -U "${database_username}" \
@@ -88,7 +88,7 @@ function postgres::create_users () {
 }
 
 function postgres::drop_users () {
-  ${taito_setv:?}
+  taito::executing_start
   psql -h "${database_host}" \
     -p "${database_port}" \
     -d postgres \

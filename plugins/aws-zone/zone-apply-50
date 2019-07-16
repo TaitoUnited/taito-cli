@@ -2,15 +2,12 @@
 # shellcheck source=../aws/lib/all.bash
 . "${taito_cli_path:?}/plugins/aws/lib/all.bash"
 
-[[ -n "${kubernetes_name:-}" ]] || taito::skip_to_next "${@}"
+( [[ "${kubernetes_name:-}" ]] && \
+    taito::confirm "Authenticate to Kubernetes ${kubernetes_name:-}"
+) || taito::skip_to_next "${@}"
 
-name=${1}
-if taito::confirm_execution "aws-auth" "${name}" \
-  "Authenticate to Kubernetes ${kubernetes_name:-}"
-then
-  echo "Authenticating"
-  aws::authenticate_on_kubernetes
-  taito::commit_changes
-fi
+echo "Authenticating"
+aws::authenticate_on_kubernetes
+taito::commit_changes
 
 taito::call_next "${@}"

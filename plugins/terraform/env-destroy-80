@@ -2,50 +2,17 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_env:?}"
-: "${taito_provider:?}"
-: "${taito_resource_namespace:?}"
 
-name=${1}
+# Cloud provider
+terraform::run destroy "${taito_provider:-}" "${taito_env}"
 
-# NOTE: For backwards compatibility
-if [[ $taito_provider == "gcp" ]] && [[ -d "./scripts/terraform/gcloud" ]]; then
-  taito_provider=${taito_provider//gcp/gcloud}
-  taito_uptime_provider=${taito_uptime_provider//gcp/gcloud}
-fi
+# Uptime provider
+[[ ${taito_uptime_provider:-} ]] && \
+  terraform::run destroy "${taito_uptime_provider}-uptime" "${taito_env}"
 
-if [[ -d "./scripts/terraform/${taito_provider}" ]] && \
-   taito::confirm_execution "terraform" "${name}" \
-     "Run terraform scripts for cloud provider ${taito_provider}"
-then
-  (
-    export TF_LOG_PATH="./${taito_env}/terraform.log"
-    # shellcheck disable=SC1090
-    terraform::export_env
-    cd "./scripts/terraform/${taito_provider}"
-    terraform init -backend-config="../common/backend.tf"
-    if [[ -f import_state ]]; then
-      ./import_state
-    fi
-    terraform destroy -state="./${taito_env}/terraform.tfstate"
-  )
-fi
-
-# TODO: duplicate code
-if [[ -d "./scripts/terraform/${taito_uptime_provider:-}-uptime" ]] && \
-   taito::confirm_execution "terraform" "${name}" \
-     "Run terraform scripts for uptime provider ${taito_uptime_provider}"
-then
-  (
-    export TF_LOG_PATH="./${taito_env}/terraform.log"
-    # shellcheck disable=SC1090
-    terraform::export_env
-    cd "./scripts/terraform/${taito_uptime_provider}-uptime"
-    terraform init -backend-config="../common/backend.tf"
-    if [[ -f import_state ]]; then
-      ./import_state
-    fi
-    terraform destroy -state="./${taito_env}/terraform.tfstate"
-  )
-fi
+# Targets (databases, etc)
+for target in ${taito_targets:-}; do
+  terraform::run destroy "${target}" "${taito_env}" "${target}/terraform"
+done
 
 taito::call_next "${@}"

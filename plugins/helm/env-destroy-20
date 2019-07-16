@@ -4,16 +4,14 @@
 # shellcheck source=../kubectl/lib/context.bash
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-name="${1}"
+taito::confirm \
+  "Delete and purge helm release ${taito_project}-${taito_target_env}" || \
+  taito::skip_to_next "${@}"
 
-if taito::confirm_execution "helm" "${name}" \
-  "Delete and purge helm release ${taito_project}-${taito_target_env}"
-then
-  kubectl::use-context
-  (
-    ${taito_setv:?}
-    helm::run delete --purge "${taito_project}-${taito_target_env}"
-  ) || echo "WARNING: Deleting helm release failed. Have you ever deployed?"
-fi
+kubectl::use_context
+(
+  taito::executing_start
+  helm::run delete --purge "${taito_project}-${taito_target_env}"
+) || echo "WARNING: Deleting helm release failed. Have you ever deployed?"
 
 taito::call_next "${@}"

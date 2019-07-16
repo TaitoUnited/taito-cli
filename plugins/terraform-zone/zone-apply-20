@@ -1,60 +1,48 @@
 #!/bin/bash -e
-: "${taito_env:?}"
+# shellcheck source=../terraform/lib/all.bash
+. "${taito_plugin_path:?}/../terraform/lib/all.bash"
 
-name=${1}
+taito::confirm "Apply changes by running terraform scripts" || \
+  taito::skip_to_next "${@}"
 
-if taito::confirm_execution "terraform" "${name}" \
-  "Apply changes by running terraform scripts"
-then
-  (
-    set -e
-    if [[ -f "./terraform/terraform.tfstate" ]]; then
-      echo "Your Terraform state is currently located on local disk. You should"
-      echo "configure remote backend in ./terraform/main.tf before continuing."
-      echo "If you already have configured the remote state, you can delete"
-      echo "./terraform/terraform.tfstate and ./terraform/terraform.tfstate.backup"
-      echo "from your local disk once the state has been transferred to a remote"
-      echo "backend."
-      echo
-      taito::confirm "Do you want to continue anyway?" no
-    fi
+(
+  set -e
+  if [[ -f "./terraform/terraform.tfstate" ]]; then
+    echo "Your Terraform state is currently located on local disk. You should"
+    echo "configure remote backend in ./terraform/main.tf before continuing."
+    echo "If you already have configured the remote state, you can delete"
+    echo "./terraform/terraform.tfstate and ./terraform/terraform.tfstate.backup"
+    echo "from your local disk once the state has been transferred to a remote"
+    echo "backend."
+    echo
+    taito::confirm "Do you want to continue anyway?" no
+  fi
 
-    export TF_LOG_PATH="./terraform.log"
-    # shellcheck disable=SC1090
-    . "${taito_cli_path}/plugins/terraform/util/env"
-    cd "./terraform"
-    terraform init
-    if [[ -f import_state ]]; then
-      ./import_state
-    fi
-    terraform apply
+  terraform::run_zone apply
 
-    if [[ "${taito_zone_initial_database_password:-}" ]] && \
-       taito::confirm_execution "" "" \
-         "Change database master password"
-    then
-      echo
-      echo -e "${H2s}CHANGE DATABASE MASTER PASSWORD${H2e}"
-      echo
-      echo "Your database master password was initially set to the initial password"
-      echo "configured in taito-config.sh. The initial password is stored both in"
-      echo "taito-config.sh and in terraform state as plain text. Therefore"
-      echo "you should change the database administrator password for every"
-      echo "database instance that was created, if you have not done so already."
-      echo
-      echo "You most likely can change the password on cloud provider web console."
-      echo "Look for modify button or users tab in the database section."
-      echo
-      databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$')"
-      if [[ ${databases_link} ]]; then
-        echo "Press enter to open the web console at ${databases_link}"
-        read -r
-        taito::open_browser "${databases_link}"
-      fi
-      echo "Press enter once the password has been changed"
+  if [[ "${taito_zone_initial_database_password:-}" ]] && \
+     taito::confirm "Change database master password"
+  then
+    taito::print_title "CHANGE DATABASE MASTER PASSWORD"
+    echo
+    echo "Your database master password was initially set to the initial password"
+    echo "configured in taito-config.sh. The initial password is stored both in"
+    echo "taito-config.sh and in terraform state as plain text. Therefore"
+    echo "you should change the database administrator password for every"
+    echo "database instance that was created, if you have not done so already."
+    echo
+    echo "You most likely can change the password on cloud provider web console."
+    echo "Look for modify button or users tab in the database section."
+    echo
+    databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$')"
+    if [[ ${databases_link} ]]; then
+      echo "Press enter to open the web console at ${databases_link}"
       read -r
+      taito::open_browser "${databases_link}"
     fi
-  )
-fi
+    echo "Press enter once the password has been changed"
+    read -r
+  fi
+)
 
 taito::call_next "${@}"

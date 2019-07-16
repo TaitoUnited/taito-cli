@@ -5,10 +5,9 @@ function terraform::export_env () {
   export TF_LOG="INFO"
   export TF_PLUGIN_CACHE_DIR="/${HOME}/.terraform.d/plugin-cache"
 
-  # Export all taito_xxx environment variables as TF_VAR terraform variables.
+  # Export all environment variables as TF_VAR terraform variables.
   # If name ends with 's', format value to a terraform list.
   echo "Setting up terraform variables" > "${taito_vout}"
-  env_exports=""
   while IFS='=' read -r name value ; do
     if [[ "${name}" == *"_"* ]] && \
        [[ "${name}" != "link_"* ]] && \
@@ -25,10 +24,45 @@ function terraform::export_env () {
         # Remove last , and add ]
         value_formatted="${value_formatted%?}]"
       fi
-      env_exports="${env_exports}export TF_VAR_${name}='${value_formatted}'; "
       echo "- ${name}=${value_formatted}" > "${taito_vout}"
+      export TF_VAR_${name}="${value_formatted}" || echo failed
     fi
-  done < <(env | sed -z 's/\n  / /g' | sort)
+  done < <(set -o posix; set | sed -z 's/\n  / /g' | sort)
+}
 
-  eval "${env_exports}"
+function terraform::run () {
+  local command=${1}
+  local name=${2}
+  local env=${3}
+  local scripts_path=${4:-scripts/terraform/$name}
+
+  if [[ -d "${scripts_path}" ]] && \
+     taito::confirm "Run terraform scripts for ${name}"
+  then
+    (
+      export TF_LOG_PATH="./${env}/terraform.log"
+      terraform::export_env
+      cd "${scripts_path}" || exit 1
+      mkdir -p "./${env}"
+      terraform init -backend-config="../common/backend.tf"
+      if [[ -f import_state ]]; then
+        ./import_state
+      fi
+      terraform "${command}" -state="./${env}/terraform.tfstate"
+    )
+  fi
+}
+
+function terraform::run_zone () {
+  local command=${1}
+  local scripts_path=${2:-terraform}
+
+  export TF_LOG_PATH="./terraform.log"
+  terraform::export_env
+  cd "${scripts_path}" || exit 1
+  terraform init
+  if [[ -f import_state ]]; then
+    ./import_state
+  fi
+  terraform "${command}"
 }

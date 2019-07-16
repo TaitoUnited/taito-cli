@@ -1,31 +1,40 @@
 #!/bin/bash
 # NOTE: This bash script is run also directly on host. Keep it macOS compatible.
 
-taito::print_targets_of_type () {
-  local target_type=$1
-  local targets
-  local type_variable_name
+taito::confirm () {
+  local text=${1:-Do you want to continue?}
+  local default_reply=${2:-yes}
+  local default_ci=$1
+  local prompt
+  local REPLY
 
-  if [[ $target_type == "database" ]] && [[ ${taito_databases:-} ]]; then
-    # For backwards compatibility
-    targets="$taito_databases"
-  else
-    targets=""
-    for target in ${taito_targets:-}
-    do
-      type_variable_name="taito_target_type_$target"
-      if [[ ${!type_variable_name} == "$target_type" ]] || ( \
-           [[ ! ${!type_variable_name} ]] && \
-           [[ $target_type == "container" ]] \
-         ); then
-        targets="$targets $target"
-      fi
-    done
+  if [[ $taito_mode == "ci" ]] && [[ $default_ci == "yes" ]]; then
+    return 0
+  elif [[ $taito_mode == "ci" ]] && [[ $default_ci == "no" ]]; then
+    return 130
   fi
 
-  echo "$targets"
+  if [[ $default_reply == "yes" ]]; then
+    prompt="$text [Y/n] "
+  else
+    prompt="$text [y/N] "
+  fi
+
+  # Flush input buffer
+  read -r -t 1 -n 1000 || :
+
+  # Display confirm prompt
+  read -p "$prompt" -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]] || ( \
+       [[ $default_reply == "yes" ]] && \
+       [[ $REPLY =~ ^[Yy]*$ ]] \
+     ); then
+    return 0
+  else
+    return 130
+  fi
 }
-export -f taito::print_targets_of_type
 
 taito::export_database_config () {
   # TODO: add support for print
@@ -118,4 +127,28 @@ taito::export_database_config () {
 
   fi
 }
-export -f taito::export_database_config
+
+taito::print_targets_of_type () {
+  local target_type=$1
+  local targets
+  local type_variable_name
+
+  if [[ $target_type == "database" ]] && [[ ${taito_databases:-} ]]; then
+    # For backwards compatibility
+    targets="$taito_databases"
+  else
+    targets=""
+    for target in ${taito_targets:-}
+    do
+      type_variable_name="taito_target_type_$target"
+      if [[ ${!type_variable_name} == "$target_type" ]] || ( \
+           [[ ! ${!type_variable_name} ]] && \
+           [[ $target_type == "container" ]] \
+         ); then
+        targets="$targets $target"
+      fi
+    done
+  fi
+
+  echo "$targets"
+}

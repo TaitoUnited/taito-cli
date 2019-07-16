@@ -4,8 +4,10 @@
 # shellcheck source=../kubectl/lib/context.bash
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-kubectl::use-context
-if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" != "false" ]]; then
+kubectl::use_context
+if [[ "${taito_mode:-}" != "ci" ]] || \
+   [[ "${ci_exec_deploy:-}" != "false" ]]
+then
   helm::deploy "${@}"
 fi
 

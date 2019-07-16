@@ -104,7 +104,7 @@ You can use these environment variables to provide additional output in verbose 
 
     echo "Additional debug output" > ${taito_dout}
     echo "Additional verbose output" > ${taito_vout}
-    (${taito_setv}; kubectl get pods) # The command will printed in verbose mode
+    (taito::executing_start; kubectl get pods) # The command will printed in verbose mode
 
 ### Running commands on host
 

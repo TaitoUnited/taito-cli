@@ -1,29 +1,31 @@
 #!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-"${taito_cli_path}/plugins/kubectl/util/use-context"
+kubectl::use_context
 
-echo -e "${H2s}Cluster${H2e}"
+taito::print_title "Cluster"
 kubectl get componentstatus
-echo
-echo -e "${H2s}Nodes${H2e}"
+
+taito::print_title "Nodes"
 kubectl describe nodes
-echo
-echo -e "${H2s}Top nodes${H2e}"
+
+taito::print_title "Top nodes"
 kubectl top nodes 2> /dev/null
-echo
-echo -e "${H2s}Ingresses${H2e}"
+
+taito::print_title "Ingresses$"
 kubectl get ingress --all-namespaces
-echo
-echo -e "${H2s}Services${H2e}"
+
+taito::print_title "Services"
 kubectl get services --all-namespaces
-echo
-echo -e "${H2s}Pods${H2e}"
+
+taito::print_title "Pods"
 kubectl get pods --all-namespaces
-echo
-echo -e "${H2s}Top pods${H2e}"
+
+taito::print_title "Top pods"
 kubectl top pods --all-namespaces 2> /dev/null
-echo
-echo -e "${H2s}Load Balancer IPs${H2e}"
+
+taito::print_title "Load Balancer IPs"
 kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.spec.loadBalancerIP,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
   --no-headers --all-namespaces 2> /dev/null | \
   grep -v "<none>.*<none>" | \

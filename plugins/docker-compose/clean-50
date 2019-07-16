@@ -6,7 +6,7 @@ if [[ ${taito_target:-} ]] && [[ "${taito_targets:-}" != *"${taito_target}"* ]];
   # Do nothing
   :
 elif [[ ${taito_target:-} ]]; then
-  # shellcheck disable=SC1090
+  taito::skip_if_not container "${@}"
   docker-compose::expose_pod_and_container
 
   # Docker-compose uses directory name as image prefix by default

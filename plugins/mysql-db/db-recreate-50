@@ -2,8 +2,6 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-name=${1}
-
 # TODO: duplicate code with env-apply
 
 if [[ "${taito_env}" == "local" ]]; then
@@ -13,15 +11,12 @@ else
   (
     all=$(taito::print_targets_of_type database)
     databases=("${taito_target:-$all}")
-    for database in ${databases[@]}
-    do
+    for database in ${databases[@]}; do
       export taito_target="${database}"
       taito::export_database_config "${database}"
 
       if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
-        if taito::confirm_execution "mysql" "${name}" \
-          "Create mysql database ${database_name}"
-        then
+        if taito::confirm "Create mysql database ${database_name}"; then
           # Create a subshell to contain password
           (
             export database_username=${database_master_username:-root}

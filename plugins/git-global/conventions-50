@@ -2,8 +2,7 @@
 
 taito::execute_on_host_fg "
 if git rev-parse --is-inside-work-tree &> /dev/null; then
-  echo
-  echo -e "${H2s}Version control conventions${H2e}"
+  taito::print_title "Version control conventions"
   echo
   echo 'Environment branches:'
   echo '- Branch naming: dev, test, stag, canary, master.'

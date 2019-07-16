@@ -47,12 +47,12 @@ function mysql::connect () {
   if [[ "${mysql_password:-}" ]]; then
     (
       export MYSQL_PWD="${mysql_password}"
-      ${taito_setv:?}
+      taito::executing_start
       mysql -h "${database_host}" -P "${database_port}" -D "${database_name}" \
         -u "${mysql_username}"
     )
   else
-    ${taito_setv:?}
+    taito::executing_start
     mysql -p -h "${database_host}" -P "${database_port}" -D "${database_name}" \
       -u "${mysql_username}"
   fi
@@ -87,12 +87,12 @@ function mysql::dump () {
   if [[ "${mysql_password:-}" ]]; then
     (
       export MYSQL_PWD="${mysql_password}"
-      ${taito_setv:?}
+      taito::executing_start
       mysqldump -h "${database_host}" -P "${database_port}" \
         -u "${mysql_username}" "${database_name}"
     )
   else
-    ${taito_setv:?}
+    taito::executing_start
     mysqldump -p -h "${database_host}" -P "${database_port}" \
       -u "${mysql_username}" "${database_name}"
   fi

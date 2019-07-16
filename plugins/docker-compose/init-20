@@ -4,9 +4,9 @@
 
 # TODO: duplicate code with env-apply
 
-switches=" ${*} "
+options=" ${*} "
 
-if [[ "${taito_env}" != "local" ]] || [[ "${switches}" != *" --clean "* ]]; then
+if [[ "${taito_env}" != "local" ]] || [[ "${options}" != *" --clean "* ]]; then
   echo "Not cleaning database containers"
 else
   echo "Cleaning database container(s)"
@@ -17,7 +17,6 @@ else
     do
       # TODO: duplicate code with clean
 
-      # shellcheck disable=SC1090
       taito_target=$database
       docker-compose::expose_pod_and_container
 

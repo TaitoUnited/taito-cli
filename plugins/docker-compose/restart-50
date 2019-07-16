@@ -4,7 +4,7 @@
 
 if [[ -n "${taito_target:-}" ]]; then
   # Restart only the container given as argument
-  # shellcheck disable=SC1090
+  taito::skip_if_not container "${@}"
   docker-compose::expose_pod_and_container
   compose_file=$(docker-compose::prepare_docker_compose_yaml)
   taito::execute_on_host_fg \

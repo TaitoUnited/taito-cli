@@ -11,13 +11,13 @@ function npm::clean () {
 }
 
 function npm::install () {
-  switches=" ${*} "
+  local switches=" ${*} "
 
   # Run postinstall script: install-all, install-ci or install-dev
-  task_postinstall=""
-  do_confirm=
-  task_install_ci_exists="$(npm run | grep 'install-ci$')"
-  task_install_dev_exists="$(npm run | grep 'install-dev$')"
+  local task_postinstall=""
+  local do_confirm=
+  local task_install_ci_exists="$(npm run | grep 'install-ci$')"
+  local task_install_dev_exists="$(npm run | grep 'install-dev$')"
   if [[ "${switches}" == *" --all "* ]]; then
     task_postinstall="install-all"
     do_confirm=true
@@ -28,8 +28,11 @@ function npm::install () {
     do_confirm=true
   fi
 
-  install_all=false
-  if [[ ${taito_mode} != "ci" ]] && [[ ${do_confirm} ]] && [[ ! $RUNNING_TESTS ]]; then
+  local install_all=false
+  if [[ ${taito_mode} != "ci" ]] && \
+     [[ ${do_confirm} ]] && \
+     [[ ! $RUNNING_TESTS ]]
+  then
     if taito::confirm \
       "Install all libraries on host for autocompletion purposes?"; then
       install_all=true
@@ -40,10 +43,10 @@ function npm::install () {
 
   # Run clean
   if [[ "${switches}" == *" --clean "* ]]; then
-    "${taito_plugin_path}/util/clean"
+    npm::clean
   fi
 
-  npm_command="install"
+  local npm_command="install"
   if [[ "${switches}" == *" --lock "* ]]; then
     npm_command="ci"
   fi
@@ -52,15 +55,17 @@ function npm::install () {
   # NOTE: Changed 'npm install' to run on host because of linux permission issues.
   # We are installing libs locally anyway so perhaps it is better this way.
   # TODO add '--python=${npm_python}' for npm install?
-  taito::execute_on_host_fg "\
-    set -e;
+  echo adsf
+  taito::execute_on_host_fg "
+    set -e
     echo \"Running 'npm ${npm_command}'\"
-    npm ${npm_command}"
+    npm ${npm_command}
+  "
 
   if [[ "${task_postinstall}" ]]; then
     # TODO add '--python=${npm_python}' for npm run?
     taito::execute_on_host_fg "
-      set -e;
+      set -e
       if [[ ${install_all} == \"true\" ]]; then
         echo \"Running 'npm run ${task_postinstall}'\"
         npm run ${task_postinstall}

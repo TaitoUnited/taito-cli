@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function docker-compose::exec () {
+  local commands
   commands=$(printf '"%s" ' "${@}")
   docker-compose::expose_pod_and_container
 
@@ -35,50 +36,50 @@ function docker-compose::restart_all () {
 }
 
 function docker-compose::start () {
-  local switches=" ${*} "
+  local options=" ${*} "
 
-  local compose_file=$(docker-compose::prepare_docker_compose_yaml false)
+  local compose_file
+  compose_file=$(docker-compose::prepare_docker_compose_yaml false)
 
   local setenv="dockerfile=Dockerfile "
-  if [[ "${switches}" == *"--prod"* ]]; then
+  if [[ ${options} == *" --prod "* ]]; then
     setenv="dockerfile=Dockerfile.build "
   fi
 
   local compose_cmd="up"
   if [[ -n "${taito_target:-}" ]]; then
-    # shellcheck disable=SC1090
     docker-compose::expose_pod_and_container
     compose_cmd="run ${pod:?}"
   fi
 
   local flags=""
-  if [[ "${switches}" == *"--clean"* ]]; then
+  if [[ ${options} == *" --clean "* ]]; then
     flags="${flags} --force-recreate --build --remove-orphans \
       --renew-anon-volumes"
   fi
-  if [[ "${switches}" == *"-b"* ]] || [[ ${taito_target_env} != "local" ]]; then
+  if [[ ${options} == *"-b"* ]] || [[ ${taito_target_env} != "local" ]]; then
     flags="${flags} --detach"
   fi
 
   local conditional_commands=
-  if [[ "${switches}" == *"--clean"* ]]; then
+  if [[ ${options} == *" --clean "* ]]; then
     # Use longer http timeout
     conditional_commands="
       ${conditional_commands}
       export COMPOSE_HTTP_TIMEOUT=180
     "
   fi
-  if [[ "${switches}" == *"--restart"* ]]; then
+  if [[ ${options} == *" --restart "* ]]; then
     # Run 'docker-compose stop' before start
     conditional_commands="
       ${conditional_commands}
       docker-compose -f $compose_file stop
     "
   fi
-  if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database "* ]]; then
+  if [[ ${options} == *" --init "* ]] && [[ " ${taito_targets:-} " == *" database "* ]]; then
     # Run 'taito init' automatically after database container has started
     local init_flags=
-    # if [[ "${switches}" == *"--clean"* ]]; then
+    # if [[ ${options} == *" --clean "* ]]; then
     #   init_flags="--clean"
     # fi
 

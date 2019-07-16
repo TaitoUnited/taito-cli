@@ -1,10 +1,16 @@
 #!/bin/bash
 # NOTE: This bash script is run also directly on host.
 
-taito::is_current_target_of_type () {
+taito::is_target_of_type () {
   local target_type=$1
-  local type_variable_name="taito_target_type_${taito_target:-}"
+  local target=$2
+  local type_variable_name="taito_target_type_${target}"
   [[ "${!type_variable_name:-container}" == "$target_type" ]]
+}
+export -f taito::is_target_of_type
+
+taito::is_current_target_of_type () {
+  taito::is_target_of_type "${1}" "${taito_target:?}"
 }
 export -f taito::is_current_target_of_type
 

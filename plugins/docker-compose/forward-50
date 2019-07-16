@@ -1,6 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
 
+taito::skip_if_not container "${@}"
 echo "TODO: Not implemented for Docker Compose"
 
 taito::call_next "${@}"

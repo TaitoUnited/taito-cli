@@ -6,9 +6,9 @@
 
 revision="${1:-0}"
 
-kubectl::use-context
+kubectl::use_context
 (
-  ${taito_setv:?}
+  taito::executing_start
   helm::run rollback "${taito_project}-${taito_target_env}" "${revision}"
 )
 

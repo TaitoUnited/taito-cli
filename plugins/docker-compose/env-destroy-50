@@ -5,12 +5,8 @@
 : "${taito_env:?}"
 : "${taito_namespace:?}"
 
-name=${1}
+taito::confirm "Delete secrets of from ./secrets/${taito_env}" || \
+  taito::skip_to_next "${@}"
 
-if taito::confirm_execution "docker-delete-secrets" "${name}" \
-  "Delete secrets of from ./secrets/${taito_env}"
-then
-  docker-compose::delete_secrets
-fi
-
+docker-compose::delete_secrets
 taito::call_next "${@}"

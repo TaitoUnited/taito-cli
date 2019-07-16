@@ -114,8 +114,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
 
   if [[ "${npm_command}" != "" ]]; then
     # Run it
-    echo
-    echo -e "${taito_command_context_prefix:-}${H1s}npm${H1e}"
+    taito::print_plugin_title
     echo "Running script '${npm_command}${params}'"
     # NOTE: Intentionally removed parameter support: -- "${@}"
     # NOTE: All libs are installed using 'npm install' run on directly on host.
@@ -131,7 +130,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     else
       (
         export taito_command_context="npm ${npm_command}"
-        ${taito_setv:?}
+        taito::executing_start
         npm run -s ${npm_command}${params}
       )
       exit_code=$?

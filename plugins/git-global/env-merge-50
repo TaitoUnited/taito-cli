@@ -23,9 +23,10 @@ done
 
 # Execute all merges
 source_found=""
-for merge in ${taito_env_merges[@]}
-do
-  if [[ "${merge}" == "${taito_env_merge_source}->"* ]] || [[ "${source_found}" ]]; then
+for merge in ${taito_env_merges[@]}; do
+  if [[ "${merge}" == "${taito_env_merge_source}->"* ]] || \
+     [[ "${source_found}" ]]
+  then
     source_found=true
     s="${merge%->*}"
     d="${merge##*->}"
@@ -33,7 +34,8 @@ do
     # Check if project has been fully configured
     if [[ ${d} == "master" ]] && \
        [[ ${taito_project:-} != *"-template" ]] && \
-       [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]; then
+       [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]
+    then
       echo
       echo "--------------------------------------------------------"
       echo "WARNING: This project has not yet been fully configured."

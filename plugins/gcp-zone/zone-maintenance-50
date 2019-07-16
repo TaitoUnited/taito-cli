@@ -1,14 +1,9 @@
 #!/bin/bash -e
 
-name=${1}
+taito::confirm "Execute Kubernetes cluster maintenance" || \
+  taito::skip_to_next "${@}"
 
-if [[ -n "${kubernetes_name:-}" ]]; then
-  if taito::confirm_execution "gcp-kubectl" "${name}" \
-    "Execute Kubernetes cluster maintenance"
-  then
-      echo "TODO confirm and upgrade Kubernetes master"
-      echo "TODO confirm and upgrade Kubernetes nodes"
-  fi
-fi
+echo "TODO confirm and upgrade Kubernetes master"
+echo "TODO confirm and upgrade Kubernetes nodes"
 
 taito::call_next "${@}"

@@ -78,7 +78,7 @@ function helm::deploy () {
     echo > "${taito_vout}"
     (
       export taito_provider=${taito_orig_provider:-$taito_provider}
-      ${taito_setv:?}
+      taito::executing_start
       if [[ ${taito_zone} != "gcloud-temp1" ]]; then
         export HELM_TILLER_HISTORY_MAX=10
         helm tiller start-ci > /dev/null
@@ -185,7 +185,7 @@ function helm::run () {
   }
   trap finish EXIT
 
-  ${taito_setv:?}
+  taito::executing_start
   if [[ ${taito_zone} != "gcloud-temp1" ]]; then
     export HELM_TILLER_HISTORY_MAX=10
     helm tiller start-ci > /dev/null

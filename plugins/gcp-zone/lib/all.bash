@@ -1,43 +1,5 @@
 #!/bin/bash
 
-# TODO: duplicate methods with gcp plugin?
-
-function gcp-zone::authenticate () {
-  local type=${1}
-  local account
-  account=$(gcloud config get-value account 2> /dev/null)
-
-  if [[ ${account} ]]; then
-    echo "Logged in as ${account}"
-  fi
-
-  if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || [[ ${type} == "init" ]]; then
-    echo -e "${H2s}gcloud init${H2e}"
-    # NOTE: removed  --project="${taito_zone}"
-    (${taito_setv:?}; gcloud init --console-only)
-  fi
-
-  if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || [[ ${type} == "default" ]]; then
-    echo -e "${H2s}gcloud auth application-default login${H2e}"
-    (${taito_setv:?}; gcloud auth application-default login)
-  fi
-
-  if [[ -n "${kubernetes_name:-}" ]]; then
-    if [[ ${type} == "" ]] || [[ ${type} == "cluster" ]]; then
-      echo -e "${H2s}gcloud container clusters get-credentials${H2e}"
-      "${taito_plugin_path}/util/get-credentials-kube" || (
-        echo "WARNING: Kubernetes authentication failed."
-        echo "NOTE: Authentication failure is OK if the Kubernetes cluster does not exist yet."
-      )
-    fi
-  fi
-}
-
-function gcp-zone::authenticate_on_kubernetes () {
-  (${taito_setv:?}; gcloud container clusters get-credentials "${kubernetes_name}" \
-    --project "${taito_zone}" --zone "${taito_provider_zone}")
-}
-
 function gcp-zone::setup_cloud_build_slack_notifications () {
   function finish {
     rm -rf /tmp/gcp-zone-slack

@@ -2,12 +2,10 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-hours_app=${1}
+taito::confirm "Authenticate to Toggl" || \
+  taito::skip_to_next "${@}"
 
-if taito::confirm_execution "toggl" "${hours_app}" \
-  "Authenticate to Toggl"
-then
-  toggl::authenticate
-fi
+# hours_app=${1}
+toggl::authenticate
 
 taito::call_next "${@}"

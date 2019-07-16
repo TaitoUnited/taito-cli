@@ -1,18 +1,18 @@
 #!/bin/bash -e
 
 taito::execute_on_host_fg "
-  if git rev-parse --is-inside-work-tree &> /dev/null; then
-    set -e
-    git push ${*}
-    if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
-      branch=\$(git branch | grep \\* | cut -d ' ' -f2)
-      echo
-      echo ----------------------------------------------------------------------
-      echo TIP: Run \\'taito ci run:\${branch}\\' to execute CI/CD locally.
-      echo ----------------------------------------------------------------------
-      echo
-    fi
+if git rev-parse --is-inside-work-tree &> /dev/null; then
+  set -e
+  git push ${*}
+  if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
+    branch=\$(git branch | grep \\* | cut -d ' ' -f2)
+    echo
+    echo ----------------------------------------------------------------------
+    echo TIP: Run \\'taito ci run:\${branch}\\' to execute CI/CD locally.
+    echo ----------------------------------------------------------------------
+    echo
   fi
+fi
 "
 
 taito::call_next "${@}"

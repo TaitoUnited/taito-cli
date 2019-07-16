@@ -1,18 +1,15 @@
 #!/bin/bash -e
-: "${taito_setv:?}"
-: "${taito_plugin_path:?}"
-
-name=${1}
+# shellcheck source=../helm/lib/all.bash
+. "${taito_plugin_path:?}/../hell/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
 # Deploy Helm charts
 if [[ -d "./helm" ]]; then
-  "${taito_cli_path}/plugins/kubectl/util/use-context"
+  kubectl::use_context
   charts=($(cd helm && ls))
-  for chart in ${charts[@]}
-  do
-    if taito::confirm_execution "${chart}" "${name}" \
-      "Install helm chart ${chart} on Kubernetes"
-    then
+  for chart in ${charts[@]}; do
+    if taito::confirm "Install helm chart ${chart} on Kubernetes"; then
       # TODO support namespaces
       # TODO duplicate code with helm plugin
       echo "- Deploying chart ${chart} using Helm"
@@ -27,7 +24,7 @@ if [[ -d "./helm" ]]; then
         deploy_options="${deploy_options} -f ${values_tmp_file}"
       fi
       (
-        ${taito_setv}
+        taito::executing_start
         helm dependency update "./helm/${chart}"
         helm upgrade --debug --install --namespace taito-zone \
           ${deploy_options} \

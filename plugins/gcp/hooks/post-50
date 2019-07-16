@@ -2,11 +2,10 @@
 # shellcheck source=../lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ ${taito_provider:-} == "gcp" ]] && \
-   [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
-   [[ ${taito_requires_database_connection:-} == "true" ]]; then
-  echo
-  echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
+# Stop database proxy
+if [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
+   [[ ${taito_command_requires_database:-} == "true" ]]; then
+  taito::print_plugin_title
   echo "Stopping all db proxies"
   gcp::db_proxy_stop
 fi

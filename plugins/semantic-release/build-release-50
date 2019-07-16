@@ -22,7 +22,7 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
   (
     echo "Finalizing release"
     cd "${taito_project_path}/release" || exit 1
-    ${taito_setv:?}
+    taito::executing_start
     NPM_TOKEN=none GH_TOKEN=${secret_value_github_buildbot_token} \
       npm run "${command}"
     rm -f .npmrc

@@ -2,14 +2,8 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-name=${1}
+taito::confirm "Destroy gcp build notifications" || \
+  taito::skip_to_next "${@}"
 
-if [[ -n "${kubernetes_name:-}" ]]; then
-  if taito::confirm_execution "gcp-build-notifications" "${name}" \
-    "Destroy gcp build notifications"
-  then
-    gcp-zone::teardown-cloud-build-slack-notifications
-  fi
-fi
-
+gcp-zone::teardown-cloud-build-slack-notifications
 taito::call_next "${@}"

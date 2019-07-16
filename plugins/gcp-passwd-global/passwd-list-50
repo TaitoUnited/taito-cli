@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-
 if [[ "${1}" == "-c"* ]]; then
   collection="${2}"
   filter="${3}"

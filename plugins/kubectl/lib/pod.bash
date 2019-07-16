@@ -14,6 +14,8 @@ function kubectl::expose_pod_and_container () {
   : "${taito_target:?Target not given}"
   : "${taito_target_env:?}"
 
+  determine_failed_pod=${1}
+
   local prefix="${taito_project}"
   if [[ "${taito_version:-}" -ge "1" ]]; then
     prefix="${taito_project}-${taito_target_env}"
@@ -21,7 +23,7 @@ function kubectl::expose_pod_and_container () {
 
   if [[ ${taito_target} != *"-"* ]]; then
     # Short pod name was given. Determine the full pod name.
-    if [[ $DETERMINE_FAILED_POD = "true" ]]; then
+    if [[ ${determine_failed_pod} == "true" ]]; then
       pod=$(kubectl::get_pods "grep -v Running")
     else
       pod=$(
@@ -72,10 +74,10 @@ function kubectl::exec () {
   if [[ -z "${pod}" ]]; then
     echo
     echo "kubectl: Please give pod name as argument:"
-    (${taito_setv:?}; kubectl get pods)
+    (taito::executing_start; kubectl get pods)
   else
     # Kubernetes
-    (${taito_setv:?}; kubectl exec -it "${pod}" -c "${container}" -- "${@}")
+    (taito::executing_start; kubectl exec -it "${pod}" -c "${container}" -- "${@}")
   fi
 }
 
@@ -85,7 +87,7 @@ function kubectl::restart_all () {
     if taito::confirm "Restart all pods in namespace ${taito_namespace}?"; then
       echo "Restarting pods"
       echo "TODO rolling update instead of delete?"
-      (${taito_setv:?}; kubectl delete --all pods --namespace="${taito_namespace}")
+      (taito::executing_start; kubectl delete --all pods --namespace="${taito_namespace}")
     fi
   fi
 }

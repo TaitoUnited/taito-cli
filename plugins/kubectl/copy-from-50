@@ -4,12 +4,13 @@
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
+taito::skip_if_not container "${@}"
+
 source="${1:?}"
 dest="${2:?}"
 
 kubectl::use_context
 kubectl::expose_pod_and_container
-
-(${taito_setv:?}; kubectl cp "${pod}:${source}" "${dest}" -c "${container}")
+(taito::executing_start; kubectl cp "${pod}:${source}" "${dest}" -c "${container}")
 
 taito::call_next "${@}"

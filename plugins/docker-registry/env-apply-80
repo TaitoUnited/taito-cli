@@ -1,14 +1,11 @@
 #!/bin/bash -e
 
-name=${1}
+taito::confirm "Configure Docker Hub credentials for CI/CD pipeline" || \
+  taito::skip_to_next "${@}"
 
-if taito::confirm_execution "aws" "${name}" \
-  "Configure Docker Hub credentials for CI/CD pipeline"
-then
-  echo "TODO: instructions"
-  echo
-  echo "Press enter when done."
-  read -r
-fi
+echo "TODO: instructions"
+echo
+echo "Press enter when done."
+read -r
 
 taito::call_next "${@}"

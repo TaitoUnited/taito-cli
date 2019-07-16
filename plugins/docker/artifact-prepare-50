@@ -2,6 +2,8 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+taito::skip_if_not container "${@}"
+
 export taito_docker_new_params=true
 docker::build "${@}"
 docker::push "${@}"

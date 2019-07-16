@@ -12,7 +12,7 @@ echo "Please wait."
 # Clone template git repo to a temporary template-tmp directory
 rm -rf "${template_project_path}/template-tmp"
 mkdir "${template_project_path}/template-tmp"
-taito::execute_on_host_fg "\
+taito::execute_on_host_fg "
   set -e
   export GIT_PAGER=''
   git clone -q -b master --single-branch --depth 1 \

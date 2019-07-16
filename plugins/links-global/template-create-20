@@ -5,7 +5,7 @@
 if [[ "${link_global_urls:-}${link_urls:-}" == *" conventions="* ]]; then
   echo "Press enter to open the software development conventions page"
   read -r
-  links-global::open_link "conventions" "open" "browser" ":"
+  links-global::open_link "conventions" "open" "taito::open_browser" ":"
 fi
 
 taito::call_next "${@}"

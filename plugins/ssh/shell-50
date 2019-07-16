@@ -4,7 +4,7 @@
 if [[ ! ${taito_target:-} ]]; then
   taito::expose_ssh_opts
   (
-    ${taito_setv:?}
+    taito::executing_start
     ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
       "cd ${taito_host_dir:?}; bash"
   )

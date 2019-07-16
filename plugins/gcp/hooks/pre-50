@@ -3,19 +3,11 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_command:?}"
 
-# Automatic authentication on 'env apply'
-if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
-  echo
-  echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
-  echo "Authenticating"
-  gcp::authenticate
-fi
-
+# Authenticate automatically if $GOOGLE_APPLICATION_CREDENTIALS has been set
 if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   account=$(gcloud config get-value account 2> /dev/null)
   if [[ ! $account ]]; then
-    echo
-    echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
+    taito::print_plugin_title
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
     gcloud auth activate-service-account \
       "--key-file=$GOOGLE_APPLICATION_CREDENTIALS" # --project=...
@@ -24,52 +16,28 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   fi
 fi
 
-# Kubernetes credentials for ci
+# Authenticate on Kubernetes
 if [[ $force_kube_login_hack == "true" ]] || ( \
      [[ "${taito_mode:-}" == "ci" ]] && \
      [[ ${kubernetes_name:-} ]] && \
      [[ ! -d "${HOME}/.kube" ]] && \
      [[ ! -d "/root/.kube" ]] \
    ); then
-  echo
-  echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
+  taito::print_plugin_title
   echo "Getting GCP credentials for Kubernetes access"
   gcp::authenticate_on_kubernetes
 fi
 
-# Database proxy
-if [[ ${taito_provider:-} == "gcp" ]] && \
-   [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
-   [[ ${taito_requires_database_connection:-} == "true" ]]; then
+# Start database proxy
+if [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
+   [[ ${taito_command_requires_database:-} == "true" ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy" || :)
-  echo
-  echo -e "${taito_command_context_prefix:-}${H1s}gcp${H1e}"
+  taito::print_plugin_title
   if [[ "${proxy_running}" == "" ]]; then
     echo "Starting db proxy"
     gcp::db_proxy_start true
   else
     echo "Not Starting db proxy. It is already running."
-  fi
-fi
-
-# Create new Google project on env apply
-if [[ $taito_command == "env-apply" ]] && \
-   [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
-  if [[ $taito_provider == "gcp" ]] && \
-     [[ ${taito_provider_org_id:-} ]] && \
-     [[ ${taito_zone:-} ]]; then
-    gcp::ensure_project_exists "${taito_zone}" "${taito_provider_org_id}"
-  fi
-  if [[ $taito_provider == "gcp" ]] && \
-     [[ $taito_provider_org_id ]] && \
-     [[ ${taito_resource_namespace_id:-} ]]; then
-    gcp::ensure_project_exists "${taito_resource_namespace_id:?}" \
-      "${taito_provider_org_id}"
-  fi
-  if [[ ${taito_uptime_provider:-} == "gcp" ]] && \
-     [[ ${taito_uptime_provider_org_id:-} ]]; then
-    gcp::ensure_project_exists "${taito_uptime_namespace_id:-}" \
-      "${taito_uptime_provider_org_id}"
   fi
 fi
 

@@ -12,7 +12,7 @@ function docker-compose::export_secrets () {
   local secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
 
     # TODO remove once all project have been converted
     secret_property="SECRET"
@@ -39,7 +39,7 @@ function docker-compose::export_secrets () {
          secret_value=$(ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
            "sudo -- bash -c 'cat ${remote_file} 2> /dev/null'" 2> /dev/null)
       else
-        secret_value=$(cat "${file}" 2> /dev/null)
+        secret_value=$(cat "${file}" 2> /dev/null || :)
       fi
     elif [[ -f ${file} ]]; then
       secret_value="secret_file:${file}"
@@ -65,7 +65,7 @@ function docker-compose::delete_secrets () {
   local secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
 
     # TODO remove once all project have been converted
     secret_property="SECRET"
@@ -77,7 +77,7 @@ function docker-compose::delete_secrets () {
 
     if [[ ${secret_method:?} != "read/"* ]]; then
       (
-        ${taito_setv:?}
+        taito::executing_start
         rm -f "${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}" || :
       )
     fi
@@ -102,7 +102,7 @@ function docker-compose::save_secrets () {
   local secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
 
     if [[ "${secret_changed:-}" ]] && \
        [[ "${secret_value:-}" ]] && \

@@ -1,7 +1,5 @@
 #!/bin/bash -e
 
-: "${taito_plugin_path:?}"
-
 if [[ "${1}" == "-c"* ]]; then
   collection="${2}"
   name="${3}"

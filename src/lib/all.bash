@@ -7,6 +7,8 @@
 . "${taito_lib_path}/exec.bash"
 # shellcheck source=host.bash
 . "${taito_lib_path}/host.bash"
+# shellcheck source=host.bash
+. "${taito_lib_path}/host_exports.bash"
 # shellcheck source=misc.bash
 . "${taito_lib_path}/misc.bash"
 # shellcheck source=open.bash

@@ -4,7 +4,7 @@
 # shellcheck source=../kubectl/lib/context.bash
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-kubectl::use-context
+kubectl::use_context
 helm::deploy
 
 taito::call_next "${@}"

@@ -1,11 +1,8 @@
 #!/bin/bash -e
 
-name=${1}
+taito::confirm "Rotate secrets" || \
+  taito::skip_to_next "${@}"
 
-if taito::confirm_execution "kubectl" "${name}" \
-  "Rotate secrets"
-then
-  echo "TODO rotate secrets"
-fi
+echo "TODO: rotate secrets"
 
 taito::call_next "${@}"

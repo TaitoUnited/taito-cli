@@ -1,6 +1,4 @@
 #!/bin/bash -e
-
-: "${taito_plugin_path:?}"
 : "${taito_command:?}"
 : "${taito_zone:?}"
 
@@ -8,7 +6,7 @@ if [[ "${taito_is_admin:-}" == true ]] && \
    ( [[ "${taito_command}" == "env-"* ]] || \
      [[ "${taito_command}" == "db-"* ]] ); then
 
-   echo -e "${taito_command_context_prefix:-}${H1s}gcp-secrets${H1e}"
+   taito::print_plugin_title
    echo "Getting db password for admin"
 
    # TODO duplicate code with passwd-get

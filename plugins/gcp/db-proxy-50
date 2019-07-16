@@ -1,14 +1,8 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_env:?}"
-: "${database_name:?}"
 
-port="${1}"
-
-if [[ "${port}" ]]; then
-  database_port="${port}"
-fi
+database_port="${1:-$database_port}"
 
 echo "Database connection details:"
 taito::show_db_proxy_details

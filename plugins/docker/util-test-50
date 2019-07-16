@@ -6,6 +6,8 @@
 : "${taito_target_env:?}"
 : "${taito_vc_repository:?}"
 
+taito::skip_if_not container "${@}"
+
 dir="${taito_target:?Target not given}"
 suite_filter="${1}"
 test_filter="${2}"
@@ -13,7 +15,16 @@ test_filter="${2}"
 # TODO: should be in taito-cli core only?
 if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
   taito::call_next "${@}"
-  exit 0
+  exit $?
+fi
+
+if [[ -f ${dir}/test.sh ]]; then
+  test_executable="./test.sh"
+elif [[ -f ${dir}/test ]]; then
+  test_executable="./test"
+else
+  taito::call_next "${@}"
+  exit $?
 fi
 
 echo "Running tests for ${dir} in ${taito_env} environment"
@@ -29,16 +40,16 @@ fi
 # Creates docker parameters: -e ENV_VAR='value' -e ENV_VAR2='value2' ...
 
 # Pass all environment variables with the "test_all_" prefix for the test.
-d_all_env_vars=$(env | grep "test_all_" | grep -v "npm_package_scripts" | sed "s/^test_all_/-e /" \
+d_all_env_vars=$(set -o posix; set | grep "test_all_" | grep -v "npm_package_scripts" | sed "s/^test_all_/-e /" \
   | sed "s/=/='/" | sed "s/$/'/" | tr '\n' ' ' | sed 's/.$//')
-e_all_env_vars=$(env | grep "test_all_" | grep -v "npm_package_scripts" | sed "s/^test_all_/export /" \
+e_all_env_vars=$(set -o posix; set | grep "test_all_" | grep -v "npm_package_scripts" | sed "s/^test_all_/export /" \
   | tr '\n' ' && ' | sed 's/.$//')
 
 # Pass all environment variables with the "test_${dir}_" prefix for the test.
 # TODO duplicate code
-d_target_env_vars=$(env | grep "test_${dir}_" | grep -v "npm_package_scripts" | sed "s/^test_${dir}_/-e /" \
+d_target_env_vars=$(set -o posix; set | grep "test_${dir}_" | grep -v "npm_package_scripts" | sed "s/^test_${dir}_/-e /" \
   | sed "s/=/='/" | sed "s/$/'/" | tr '\n' ' ' | sed 's/.$//')
-e_target_env_vars=$(env | grep "test_${dir}_" | grep -v "npm_package_scripts" | sed "s/^test_${dir}_/export /" \
+e_target_env_vars=$(set -o posix; set | grep "test_${dir}_" | grep -v "npm_package_scripts" | sed "s/^test_${dir}_/export /" \
   | tr '\n' ' && ' | sed 's/.$//')
 
 docker_env_vars="\
@@ -59,13 +70,12 @@ export_env_vars="\
   ${export_env_vars}"
 
 # Determine pod
-# shellcheck disable=SC1090
 docker-compose::expose_pod_and_container
 
 # Determine command to be run on test phase
 docker_compose="false"
 compose_pre_cmd=""
-compose_cmd="docker exec ${docker_env_vars} -it ${pod} ./test SUITE ${test_filter}"
+compose_cmd="docker exec ${docker_env_vars} -it ${pod} ${test_executable} SUITE ${test_filter}"
 if [[ "${taito_env}" != "local" ]]; then
   # Running against a remote service
   container_test="${taito_project}-${dir}-test"
@@ -82,7 +92,7 @@ if [[ "${taito_env}" != "local" ]]; then
   if [[ -f ./docker-compose-test.yaml ]] && \
      [[ $(grep "${container_test}" "./docker-compose-test.yaml") ]]; then
     docker_compose="true"
-    compose_cmd="docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ./test SUITE ${test_filter}'"
+    compose_cmd="docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ${test_executable} SUITE ${test_filter}'"
 
     # On CI mode we use root user
     # TODO: add taito user to image -> local install should replace uid/gid only
@@ -90,7 +100,7 @@ if [[ "${taito_env}" != "local" ]]; then
       sed -i '/^    user: taito/d' docker-compose-test.yaml
     fi
   else
-    compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ./test SUITE ${test_filter}"
+    compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ${test_executable} SUITE ${test_filter}"
   fi
 fi
 
@@ -103,10 +113,10 @@ suites=( $(grep "${suite_filter}" "./${dir}/test-suites" 2> /dev/null) ) || :
 if [[ ${#suites[@]} == 0 ]]; then
   suites=( $(cat "./${dir}/test-suites" | head -1) )
   echo
-  echo -e "${NOTEs}"
+  taito::print_note_start
   echo "WARNING: No suite found with filter: ${suite_filter}"
   echo "Running the default test suite: ${suites[0]}"
-  echo -e "${NOTEe}"
+  taito::print_note_end
   echo
 fi
 for suite in "${suites[@]}"

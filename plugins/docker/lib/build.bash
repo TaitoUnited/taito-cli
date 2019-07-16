@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function docker::build () {
-  : "${taito_plugin_path:?}"
   : "${taito_project:?}"
   : "${taito_project_path:?}"
   : "${taito_container_registry:?}"
@@ -75,9 +74,10 @@ function docker::build () {
       do
         echo "- Pulling the existing image ${image_tag}."
         (
-          ${taito_setv:?};
-          "$taito_plugin_path/util/imagepull" "${image}"
-          "$taito_plugin_path/util/imagepull" "${image_builder}"
+          set +e
+          taito::executing_start;
+          docker::image_pull "${image}" && \
+          docker::image_pull "${image_builder}" && \
           docker image tag "${image_builder}" "${image_tester}"
         ) && pulled="true"
         if [[ $pulled == "true" ]]; then
@@ -118,12 +118,12 @@ function docker::build () {
 
       (
         # Pull latest builder and production image to be used as cache
-        "$taito_plugin_path/util/imagepull" "${image_builder}"
-        "$taito_plugin_path/util/imagepull" "${image_latest}"
+        docker::image_pull "${image_builder}" || :
+        docker::image_pull "${image_latest}" || :
         # Build the build stage container separately so that it can be used as:
         # 1) Build cache for later builds using --cache-from
         # 2) Integration and e2e test executioner
-        ${taito_setv:?}
+        taito::executing_start
         docker build \
           --target builder \
           -f "${service_dir}/${dockerfile}" \
@@ -149,101 +149,11 @@ function docker::build () {
     fi
     if [[ ${save_image} == "true" ]]; then
       (
-        ${taito_setv:?}
+        taito::executing_start
         docker save --output "${name}-tester.docker" "${image_tester}"
         docker save --output "${name}.docker" "${image}"
         pwd
         ls *.docker
-      )
-    fi
-  fi
-}
-
-function docker::image_pull () {
-  if [[ ${taito_container_registry_provider:-} != "local" ]]; then
-    (
-      ${taito_setv:?}
-      docker pull "$1"
-    )
-  fi
-  # TODO: docker pull for host registry provider?
-}
-
-function docker::image_push () {
-  echo
-  if [[ ${taito_container_registry_provider:-} != "local" ]]; then
-    echo "Pushing image $1 to registry. This may take some time. Please be patient."
-    (
-      ${taito_setv:?}
-      docker push "$1"
-    )
-  else
-    taito::expose_ssh_opts
-    echo "Pushing image $1 to registry. This may take some time. Please be patient."
-    (
-      ${taito_setv:?}
-      # TODO add users to docker group to avoid sudo?
-      docker save "$1" | \
-        ssh ${ssh_opts} -C "${taito_ssh_user:?}@${taito_host:?}" sudo docker load
-    )
-  fi
-}
-
-function docker::push () {
-  : "${taito_plugin_path:?}"
-  : "${taito_project:?}"
-  : "${taito_project_path:?}"
-  : "${taito_container_registry:?}"
-  : "${taito_env:?}"
-
-  local name=${taito_target:?Target not given}
-  local image_tag=${1:?Image tag not given}
-  if [[ "${taito_docker_new_params:-}" == "true" ]]; then
-    local save_image=${2}
-    local build_context=${3}
-    local service_dir=${4}
-    local dockerfile=${5}
-    local image_path=${6}
-  else
-    local image_path=${2}
-  fi
-
-  local path_suffix=""
-  if [[ "${name}" != "." ]]; then
-    path_suffix="/${name}"
-  fi
-
-  if [[ "${image_path}" == "" ]]; then
-    image_path="${taito_container_registry}"
-  fi
-
-  local version=$(cat "${taito_project_path}/taitoflag_version" 2> /dev/null)
-
-  local prefix="${image_path}${path_suffix}"
-  local image="${prefix}:${image_tag}"
-  local image_untested="${image}-untested"
-  local image_latest="${prefix}:latest"
-  local image_builder="${prefix}-builder:latest"
-
-  if [[ "${taito_targets:-}" != *"${name}"* ]]; then
-    echo "Skipping push: ${name} not included in taito_targets"
-  else
-    if [[ ! -f ./taitoflag_images_exist ]] && \
-       ([[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_build:-}" == "true" ]])
-    then
-      "$taito_plugin_path/util/imagepush" "${image_untested}"
-      if [[ ${taito_container_registry_provider:-} != "local" ]]; then
-        "$taito_plugin_path/util/imagepush" "${image_latest}"
-        "$taito_plugin_path/util/imagepush" "${image_builder}"
-      fi
-    else
-      echo "- Image ${image_tag} already exists. Skipping push."
-    fi
-    if [[ "${version}" ]]; then
-      echo "- Tagging an existing image with semantic version ${version}"
-      (
-        (${taito_setv:?}; docker image tag "${image}" "${prefix}:${version}")
-        "$taito_plugin_path/util/imagepush" "${prefix}:${version}"
       )
     fi
   fi

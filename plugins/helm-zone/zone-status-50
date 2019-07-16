@@ -1,7 +1,9 @@
 #!/bin/bash -e
-: "${taito_setv:?}"
-: "${taito_plugin_path:?}"
+# shellcheck source=../helm/lib/all.bash
+. "${taito_plugin_path:?}/../hell/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-"${taito_plugin_path}/../helm/util/helm" list
+helm::run list
 
 taito::call_next "${@}"

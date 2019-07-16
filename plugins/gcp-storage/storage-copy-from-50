@@ -1,6 +1,7 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
+echo "TODO: implement"
 gcp-storage::copy-from "${@}"
-
 taito::call_next "${@}"

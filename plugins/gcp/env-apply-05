@@ -1,0 +1,27 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# Authenticate
+echo "Authenticating"
+gcp::authenticate
+
+# Ensure Google project exists (not created with terraform)
+if [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
+  if [[ ${taito_provider:?} == "gcp" ]] && \
+     [[ ${taito_provider_org_id:-} ]] && \
+     [[ ${taito_zone:-} ]]; then
+    gcp::ensure_project_exists "${taito_zone}" "${taito_provider_org_id}"
+  fi
+  if [[ $taito_provider == "gcp" ]] && \
+     [[ $taito_provider_org_id ]] && \
+     [[ ${taito_resource_namespace_id:-} ]]; then
+    gcp::ensure_project_exists "${taito_resource_namespace_id:?}" \
+      "${taito_provider_org_id}"
+  fi
+  if [[ ${taito_uptime_provider:-} == "gcp" ]] && \
+     [[ ${taito_uptime_provider_org_id:-} ]]; then
+    gcp::ensure_project_exists "${taito_uptime_namespace_id:-}" \
+      "${taito_uptime_provider_org_id}"
+  fi
+fi

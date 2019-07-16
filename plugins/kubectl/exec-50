@@ -3,6 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_namespace:?}"
 
-kubectl::exec "${@}"
+taito::skip_if_not container "${@}"
 
+kubectl::exec "${@}"
 taito::call_next "${@}"

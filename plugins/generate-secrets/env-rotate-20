@@ -5,6 +5,6 @@
 name_filter="${1}"
 
 echo "Creating secrets"
-generate-secrets::create
+generate-secrets::create_and_export
 
 taito::call_next "${@}"

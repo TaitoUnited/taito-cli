@@ -4,7 +4,6 @@ function postgres::ask_and_expose_password () {
   local passwd_var="${database_username}_password"
   local passwd="${!passwd_var}"
 
-  PGPASSWORD
   if [[ -n "${passwd}" ]]; then
     # Password already set in environment variable
     PGPASSWORD="${passwd}"
@@ -48,7 +47,7 @@ function postgres::connect () {
 
   (
     export PGPASSWORD="${psql_password}"
-    ${taito_setv:?}
+    taito::executing_start
     ${command} -h "${database_host}" \
     -p "${database_port}" \
     -d "${database_name}" \

@@ -1,7 +1,6 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_setv:?}"
 : "${taito_hours_description:?}"
 
 # Command parameters
@@ -39,7 +38,7 @@ fi
   description="${taito_hours_description}"
 
   # Call Toggl API
-  ${taito_setv:?}
+  taito::executing_start
   output=$(curl -s -u "${toggl_api_token}:api_token" \
   	-H "Content-Type: application/json" \
   	-d "{\"time_entry\":{\"description\":\"${description}\",\"duration\":${duration},\"start\":\"${start}\",\"pid\":${project_id},\"tid\":${task_id},\"created_with\":\"taito-cli\"}}" \

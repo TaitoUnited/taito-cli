@@ -1,8 +1,7 @@
 #!/bin/bash -e
 
 if [[ "${taito_command}" == "db-"* ]]; then
-  echo
-  echo -e "${taito_command_context_prefix:-}${H1s}db-proxy${H1e}"
+  taito::print_plugin_title
   echo "Stopping db proxy for ${database_name}"
   echo
 fi

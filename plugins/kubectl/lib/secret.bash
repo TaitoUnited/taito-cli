@@ -10,12 +10,14 @@ function kubectl::delete_secrets () {
   local secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
 
     # TODO remove once all projects have been converted
     local secret_property="SECRET"
     local formatted_secret_name=${secret_name//_/-}
-    if [[ "${taito_version:-}" -ge "1" ]] || [[ "${formatted_secret_name:0:12}" != *"."* ]]; then
+    if [[ "${taito_version:-}" -ge "1" ]] || \
+       [[ "${formatted_secret_name:0:12}" != *"."* ]]
+    then
       # TODO: ugly hack that currently occurs in 3 places
       secret_property=$(echo ${formatted_secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
       formatted_secret_name=$(echo ${formatted_secret_name} | sed 's/\([^\.]*\).*/\1/')
@@ -24,7 +26,7 @@ function kubectl::delete_secrets () {
     if [[ ${secret_method:?} != "read/"* ]]; then
       (
         # TODO: Do not just ignore fail, check if fail was ok (= not patched)
-        ${taito_setv:?}
+        taito::executing_start
         kubectl patch secret "${formatted_secret_name}" \
           --namespace="${secret_namespace}" \
           -p "{ \"data\": { \"${secret_property}\": null, \"${secret_property}.METHOD\": null } }" || :
@@ -37,7 +39,6 @@ function kubectl::delete_secrets () {
 }
 
 function kubectl::save_proxy_secret_to_disk () {
-  : "${taito_plugin_path:?}"
   : "${taito_project_path:?}"
 
   export taito_proxy_credentials_file=/project/tmp/secrets/proxy_credentials.json
@@ -70,7 +71,7 @@ function kubectl::export_secrets () {
   local secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
 
     if [[ -n ${filter} ]] && \
        [[ "${secret_name}" != *"${filter}"* ]]; then
@@ -131,7 +132,6 @@ function kubectl::export_secrets () {
 }
 
 function kubectl::save_secrets () {
-  : "${taito_plugin_path:?}"
   : "${taito_env:?}"
   : "${taito_project:?}"
   : "${taito_namespace:?}"
@@ -151,7 +151,7 @@ function kubectl::save_secrets () {
   local secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
     if [[ "${secret_value:-}" ]] && [[ ${#secret_value} -lt 8 ]] && \
        [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
       echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
@@ -164,7 +164,7 @@ function kubectl::save_secrets () {
   secret_index=0
   for secret_name in "${secret_names[@]}"
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
 
     if  [[ "${secret_changed:-}" ]] && ( \
           [[ "${secret_value:-}" ]] || [[ ${secret_method} == "copy/"* ]] \
@@ -180,13 +180,13 @@ function kubectl::save_secrets () {
       fi
 
       if [[ ${secret_name} == *"_"* ]]; then
-        echo -e "${NOTEs}"
+        taito::print_note_start
         echo "NOTE: Secret name '${secret_name}' contains an underscore (_)."
         echo "Underscores are converted to hyphen (-) when secret is stored to Kubernetes."
         echo "It's best to avoid underscores in secret names."
         echo
         echo "SECRET NAME WAS CONVERTED TO: ${formatted_secret_name}"
-        echo -e "${NOTEe}"
+        taito::print_note_end
       fi
 
       if [[ ${secret_method} == "copy/"* ]]; then
@@ -197,7 +197,7 @@ function kubectl::save_secrets () {
 
       if [[ ${secret_method} != "read/"* ]]; then
         (
-          ${taito_setv:?}
+          taito::executing_start
           secret_source="literal"
           if [[ ${secret_value} == "secret_file:"* ]]; then
             secret_source="file"
@@ -240,7 +240,7 @@ function kubectl::save_secrets () {
     if taito::confirm "Restart all pods in namespace ${taito_namespace}?"; then
       echo "Restarting pods"
       echo "TODO rolling update instead of delete?"
-      (${taito_setv:?}; kubectl delete --all pods --namespace="${taito_namespace}")
+      (taito::executing_start; kubectl delete --all pods --namespace="${taito_namespace}")
     fi
   fi
 }

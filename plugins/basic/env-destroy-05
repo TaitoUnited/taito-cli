@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+echo "Deleting ${taito_target_env:?} environment of ${taito_project:?}"
+taito::confirm "Do you really want to continue?" no || exit
+
+taito::call_next "${@}"

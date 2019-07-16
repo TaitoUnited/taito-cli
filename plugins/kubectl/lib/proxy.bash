@@ -12,9 +12,11 @@ function kubectl::db_proxy_start () {
       --output=custom-columns=NAME:.metadata.name \
       --namespace tcp-proxy | head -n 1
     )
-    ${taito_setv:?}
-    # TODO: SET "--address $bind_address" ONCE KUBECTL VERSION 1.13
-    kubectl port-forward "${proxy_pod}" "${database_port:?}:${database_real_port:-5432}" \
+    taito::executing_start
+    kubectl port-forward \
+      "${proxy_pod}" \
+      "${database_port:?}:${database_real_port:-5432}" \
+      --address "${bind_address}" \
       --namespace tcp-proxy > /dev/null &
     sleep 1
     if [[ $1 != "true" ]]; then
@@ -26,6 +28,6 @@ function kubectl::db_proxy_start () {
 function kubectl::db_proxy_stop () {
   if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]]; then
     # TODO: kill only the kubectl port-forward execution
-    (${taito_setv:?}; pgrep kubectl | xargs kill)
+    (taito::executing_start; pgrep kubectl | xargs kill)
   fi
 }

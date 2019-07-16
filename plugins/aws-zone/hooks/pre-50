@@ -1,11 +1,9 @@
 #!/bin/bash -e
-# shellcheck source=../aws/lib/all.bash
+# shellcheck source=../../aws/lib/all.bash
 . "${taito_cli_path:?}/plugins/aws/lib/all.bash"
-: "${taito_command:?}"
 
-if [[ $taito_command == "zone-"* ]]; then
-  echo
-  echo -e "${taito_command_context_prefix:-}${H1s}aws-zone${H1e}"
+if [[ ${taito_command:?} == "zone-"* ]]; then
+  taito::print_plugin_title
   aws::authenticate
 fi
 

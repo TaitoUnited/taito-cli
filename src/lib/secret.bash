@@ -9,7 +9,7 @@ taito::expose_db_user_credentials () {
   if [[ ${taito_version:-} -ge "1" ]]; then
     find_secret_name="${database_app_secret:-${database_name}-db-app.password}"
   fi
-  taito::expose_secret_by_name
+  taito::expose_secret_by_name "${find_secret_name}"
   database_app_password="${secret_value}"
   database_app_password_changed="${secret_changed}"
 
@@ -19,7 +19,7 @@ taito::expose_db_user_credentials () {
   if [[ ${taito_version:-} -ge "1" ]]; then
     find_secret_name="${database_mgr_secret:-${database_name}-db-mgr.password}"
   fi
-  taito::expose_secret_by_name
+  taito::expose_secret_by_name "${find_secret_name}"
   database_build_password="${secret_value}"
   database_build_password_changed="${secret_changed}"
 
@@ -48,7 +48,7 @@ export -f taito::expose_db_user_credentials
 # Reads secret info to environment variables. The secret in question is
 # determined by the given ${secret_index}"
 taito::expose_secret_by_index () {
-  local secret_index=${1:-$secret_index} # TODO: remove $secret_index
+  local secret_index=${1}
 
   # TODO: refactor
   secret_namespace_var="secret_namespace_${secret_index}"
@@ -79,7 +79,7 @@ taito::expose_secret_by_index () {
 export -f taito::expose_secret_by_index
 
 taito::expose_secret_by_name () {
-  local find_secret_name=${1:-$find_secret_name} # TODO remove $find_secret_name
+  local find_secret_name=${1}
   local print_creds=${2:-false}
 
   local found_index=-1
@@ -87,7 +87,7 @@ taito::expose_secret_by_name () {
   local secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
     if [[ "${secret_name}" == "${find_secret_name}" ]]; then
       found_index=${secret_index}
       break
@@ -97,7 +97,7 @@ taito::expose_secret_by_name () {
 
   if [[ "${found_index}" != "-1" ]]; then
     secret_index=${found_index}
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
   fi
 
   if [[ ${print_creds} == true ]]; then

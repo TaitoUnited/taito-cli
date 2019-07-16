@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
 
 # TODO refactor: this is duplicate code with descriptions

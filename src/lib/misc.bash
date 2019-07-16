@@ -11,7 +11,7 @@ function taito::expose_ssh_opts () {
     echo "(e.g. UseKeyChain)."
   fi
 
-  read -t 1 -n 10000 discard || :
+  read -t 1 -n 10000 || :
   if [[ ! ${taito_ssh_user} ]]; then
     echo
     echo "SSH username has not been set. Set taito_ssh_user environment variable"
@@ -101,13 +101,13 @@ taito::select_item () {
 export -f taito::select_item
 
 taito::show_db_proxy_details () {
-  . "${taito_util_path:?}/database_username_password.bash"
+  taito::expose_db_user_credentials
 
   echo "- host: 127.0.0.1"
   echo "- port: ${database_port:-}"
   echo "- database: ${database_name:-}"
 
-  if [[ ${taito_mode:-} != "ci" ]]; then
+  if [[ ${taito_mode:-} != "ci" ]] && [[ ${taito_docker:-} != "true" ]]; then
     echo "- username and password:"
     echo "  * Your personal database username and password (if you have one)"
     if [[ "${database_mgr_username:-}" ]]; then
@@ -128,7 +128,7 @@ taito::substitute_variable_values_in_file () {
   # Substitute environment variables
   if [[ $dest_file ]]; then
     (
-      ${taito_setv:?}
+      taito::executing_start
       perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : ""/eg' \
         $source_file > $dest_file
     )

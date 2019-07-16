@@ -4,13 +4,11 @@
 : "${taito_namespace:?}"
 : "${taito_env:?}"
 
-export docker_compose_skip_restart="true"
+taito::confirm "Save newly created secrets to ./secrets/${taito_env}" || \
+  taito::skip_to_next "${@}"
 
-if taito::confirm_execution "kubectl-secrets" "" \
-  "Save newly created secrets to ./secrets/${taito_env}"
-then
-  docker-compose::save_secrets
-  export docker_compose_skip_restart="false"
-fi
+export docker_compose_skip_restart="true"
+docker-compose::save_secrets
+export docker_compose_skip_restart="false"
 
 taito::call_next "${@}"

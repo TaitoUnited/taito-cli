@@ -2,6 +2,8 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+taito::skip_if_not container "${@}"
+
 docker-compose::expose_pod_and_container
 echo container: ${pod:?}
 

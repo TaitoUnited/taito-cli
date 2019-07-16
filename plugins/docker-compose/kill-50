@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+taito::skip_if_not container "${@}"
+
 docker-compose::expose_pod_and_container
 taito::execute_on_host_fg "docker kill ${pod:?}"
+
 taito::call_next "${@}"

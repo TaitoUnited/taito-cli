@@ -1,17 +1,14 @@
 #!/bin/bash -e
 
-name=${1}
+( [[ "${taito_provider:-}" == "ssh" ]] && \
+  [[ "${ci_exec_deploy:-}" == "true" ]] && \
+  taito::confirm "Configure SSH credentials for CI/CD pipeline"
+) || taito::skip_to_next "${@}"
 
-if [[ "${taito_provider:-}" == "ssh" ]] && \
-   [[ "${ci_exec_deploy:-}" == "true" ]] && \
-   taito::confirm_execution "aws" "${name}" \
-   "Configure SSH credentials for CI/CD pipeline"
-then
-  echo
-  echo "TODO: Instructions"
-  echo
-  echo "Press enter when done."
-  read -r
-fi
+echo
+echo "TODO: Instructions"
+echo
+echo "Press enter when done."
+read -r
 
 taito::call_next "${@}"

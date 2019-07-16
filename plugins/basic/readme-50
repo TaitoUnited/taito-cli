@@ -1,11 +1,6 @@
 #!/bin/bash -e
 
-content=$(cat "${taito_project_path}/README.md")
-
-# if [[ -f "${taito_cli_path}/README.md" ]]; then
-#   c=$(cat "${taito_cli_path}/README.md")
-#   content="${content}\n\n\n${c}"
-# fi
-
+content=$(cat "${taito_project_path:?}/README.md")
 echo -e "${content}" | cat
+
 taito::call_next "${@}"

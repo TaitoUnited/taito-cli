@@ -6,6 +6,8 @@
 : "${taito_container_registry:?}"
 : "${taito_env:?}"
 
+taito::skip_if_not container "${@}"
+
 name=${taito_target:?Target not given}
 image_tag=${1:?Image tag not given}
 image_path=${2}
@@ -31,7 +33,7 @@ elif [[ "${taito_targets:-}" != *"${name}"* ]]; then
 else
   if [[ -f "${name}.docker" ]]; then
     echo "Load ${name}.docker"
-    (${taito_setv:?}; docker load --input "${name}.docker")
+    (taito::executing_start; docker load --input "${name}.docker")
   fi
   echo "Push ${image}"
   docker::image_push "${image}"

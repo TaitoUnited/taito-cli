@@ -11,14 +11,17 @@ function run::run () {
   local run_bg_temp_pids=""
   local plugin_suffix
   local plugin_suffices
-  plugin_suffices=$(env | cut -f1 -d= | grep "${run_env_var_prefix}" | \
-    sed "s/${run_env_var_prefix}//" | tr '\n' ' ')
+  plugin_suffices=$(
+    set -o posix; set | \
+      cut -f1 -d= | \
+      grep "${run_env_var_prefix}" | \
+      sed "s/${run_env_var_prefix}//" | tr '\n' ' '
+  )
   for plugin_suffix in ${plugin_suffices[@]}
   do
     if [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
       env_var="${run_env_var_prefix}${plugin_suffix}"
-      echo
-      echo -e "${taito_command_context_prefix:-}${H1s}run${H1e}"
+      taito::print_plugin_title
       echo "Running command: ${!env_var}" > "${taito_vout}"
       if [[ ${run_bg_pids_env_var} ]]; then
         sh -c "${!env_var}" &

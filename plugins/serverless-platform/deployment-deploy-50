@@ -1,6 +1,8 @@
 #!/bin/bash -e
 
-if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" != "false" ]]; then
+if [[ "${taito_mode:-}" != "ci" ]] || \
+   [[ "${ci_exec_deploy:-}" != "false" ]]
+then
   echo "TODO deploy aws/azure/gcp function using serverless.com"
 fi
 

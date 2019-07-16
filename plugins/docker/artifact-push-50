@@ -2,5 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+taito::skip_if_not container "${@}"
+
 docker::push "${@}"
 taito::call_next "${@}"

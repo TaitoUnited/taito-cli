@@ -1,3 +1,0 @@
-# Telepresence
-
-TODO Telepresence plugin

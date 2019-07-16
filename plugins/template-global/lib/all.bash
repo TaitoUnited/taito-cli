@@ -78,9 +78,12 @@ function template-global::init () {
   export taito_vc_repository_alt="${taito_vc_repository//-/_}"
 
   # Call create/migrate/upgrade script implemented in template
-  if ! "./scripts/taito-template/${mode}"; then
+  # TODO: remove .sh suffix
+  set +e
+  if ! "./scripts/taito-template/${mode}.sh"; then
     exit 1
   fi
+  set -e
 
   # Remove template scripts
   rm -rf ./scripts/taito-template

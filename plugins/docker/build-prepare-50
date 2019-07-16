@@ -3,6 +3,8 @@
 : "${taito_vc_repository:?}"
 : "${taito_container_registry:?}"
 
+taito::skip_if_not container "${@}"
+
 image_tag=${1}
 
 if [[ ${taito_container_registry_provider:-} == "local" ]]; then

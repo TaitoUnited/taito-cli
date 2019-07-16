@@ -299,6 +299,7 @@ export taito_branch="${branch}"
 if (( RANDOM % 4 == 0 ))
    [[ "${taito_mode:-}" != "ci" ]] && \
    [[ ${quiet} != "true" ]] && \
+   [[ ${taito_command} != "__help" ]] && \
    [[ ${taito_command} != "project-"* ]] && \
    [[ ${taito_command} != "env-apply" ]]; then
   if [[ ${taito_project:-} != *"-template" ]] && \
@@ -645,14 +646,14 @@ do
 done
 
 concat_commands_only_chain=(
-  $(echo "${commands[@]}" | rev | sort | rev)
+  $(echo "${commands[@]}" | taito::core::sort_commands_by_priority)
 )
 
 # Assemble the final taito command chain
 concat_full_chain=(
-  $(echo "${pre_handlers[@]}" | rev | sort | rev)
+  $(echo "${pre_handlers[@]}" | taito::core::sort_commands_by_priority)
   "${concat_commands_only_chain[@]}"
-  $(echo "${post_handlers[@]}" | rev | sort | rev)
+  $(echo "${post_handlers[@]}" | taito::core::sort_commands_by_priority)
 )
 
 # Export some variables to be used in command execution
@@ -662,9 +663,26 @@ export taito_commands_only_chain="${concat_commands_only_chain[@]}"
 export taito_enabled_plugins="${enabled_plugins}"
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
-  export taito_requires_database_connection="true"
+  export taito_command_requires_database="true"
 else
-  export taito_requires_database_connection="false"
+  export taito_command_requires_database="false"
+fi
+
+if [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]] || \
+   [[ ${taito_commands_only_chain:-} == *"helm/"* ]] || \
+   ( \
+     [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
+     [[ ${taito_command_requires_database:-} == "true" ]] \
+   ); then
+  export taito_command_requires_kubernetes="true"
+else
+  export taito_command_requires_kubernetes="false"
+fi
+
+if [[ ${taito_commands_only_chain:?} == *"docker/"* ]]; then
+  export taito_command_requires_container_registry="true"
+else
+  export taito_command_requires_container_registry="false"
 fi
 
 # Admin credentials pre-handling

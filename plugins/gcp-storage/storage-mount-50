@@ -1,6 +1,8 @@
 #!/bin/bash -e
-: "${taito_env:?}"
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+echo "TODO: implement"
 
 if [[ "${taito_host_uname:-}" == "Darwin" ]]; then
   echo "macOS not supported"
@@ -18,7 +20,7 @@ mkdir -p "${mount_path}"
 #   mount_path="${mount_path}-mount"
 #   mkdir -p "${mount_path}"
 #   (
-#     ${taito_setv:?}
+#     taito::executing_start
 #     sleep 4
 #     echo "Syncing '${sync_path}' '${mount_path}'"
 #     rsync -av --delete "${sync_path}" "${mount_path}"
@@ -27,13 +29,13 @@ mkdir -p "${mount_path}"
 
 echo "Mounting bucket '${bucket}'"
 echo
-echo -e "${NOTEs}"
+taito::print_note_start
 echo "NOTE: Press CTRL-C to unmount"
-echo -e "${NOTEe}"
+taito::print_note_end
 echo
 
 (
-  ${taito_setv:?}
+  taito::executing_start
   # TODO remove 777 permission flags once files are no longer owned by root
   gcsfuse --dir-mode 777 --file-mode 777 "${@}" "${bucket}" "${mount_path}"
 )

@@ -8,22 +8,21 @@ function generate-secrets::create_and_export () {
   local exports=""
   local secret_index=0
   local secret_names=(${taito_secret_names})
-  for secret_name in ${secret_names[@]}
-  do
-    taito::expose_secret_by_index
+  for secret_name in ${secret_names[@]}; do
+    taito::expose_secret_by_index ${secret_index}
     if [[ "${secret_method}" != "read/"* ]] && ( \
          [[ -z "${name_filter}" ]] || \
          [[ ${secret_name} == *"${name_filter}"* ]] \
        ) && ( \
          [[ ${skip_confirm} == "true" ]] || \
-         taito::confirm_execution "${secret_name}" "" \
+         taito::confirm \
            "Create new value for '${secret_name}' with method ${secret_method:-}"
        )
     then
       if [[ ${skip_confirm} == "true" ]]; then
-        echo -e "${H2s}${secret_name} (${secret_method:-})${H2e}"
+        taito::print_title "${secret_name} (${secret_method:-})"
       fi
-      generate-secrets::generate_by_type
+      generate-secrets::generate_by_type ${secret_index}
     fi
     secret_index=$((${secret_index}+1))
   done
@@ -39,7 +38,7 @@ function generate-secrets::delete_temporary_files () {
   local secret_names=(${taito_secret_names})
   for secret_name in ${secret_names[@]}
   do
-    taito::expose_secret_by_index
+    taito::expose_secret_by_index ${secret_index}
     if [[ "${secret_changed:-}" ]] && \
        [[ "${secret_value:-}" == "secret_file:"* ]]; then
       set -e
@@ -53,15 +52,16 @@ function generate-secrets::delete_temporary_files () {
 }
 
 function generate-secrets::generate_by_type () {
-  local secret_value=""
-  local secret_value2=""
-
-  local secret_value
-  local secret_method
-  local key_file
-  local csr_file
-  local opts
-  local htpasswd_options
+  taito::expose_secret_by_index "${1}"
+  # local secret_value=""
+  # local secret_value2=""
+  #
+  # local secret_value
+  # local secret_method
+  # local key_file
+  # local csr_file
+  # local opts
+  # local htpasswd_options
 
   if [[ "${secret_default_value:-}" ]] && \
      [[ "${secret_method}" == "manual" ]] && \
@@ -122,7 +122,7 @@ function generate-secrets::generate_by_type () {
         rm -f "${key_file}"
         rm -f "${csr_file}"
         (
-          ${taito_setv}
+          taito::executing_start
           openssl req -new -newkey rsa:2048 -nodes \
             -keyout "${key_file}" -out "${csr_file}"
         )

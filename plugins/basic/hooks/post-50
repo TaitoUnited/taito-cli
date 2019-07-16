@@ -4,7 +4,7 @@
 : "${taito_orig_command:?}"
 : "${taito_env:?}"
 
-switches=" ${*} "
+options=" ${*} "
 
 was_executed=false
 if [[ "${taito_hook_command_executed:-}" == true ]] || \
@@ -21,22 +21,22 @@ if [[ ${taito_command} == "kaboom" ]]; then
     export taito_command_context='env apply'
     taito ${taito_options:-} env-apply:${taito_env} --clean --start --init"
 elif [[ ${taito_command} == "env-apply" ]]; then
-  if [[ "${switches}" == *"--start"* ]]; then
+  if [[ "${options}" == *" --start "* ]]; then
     # taito start [--init]
     exec_after="
       export taito_command_context='start'
       taito ${taito_options:-} start:${taito_env} --restart"
-    if [[ "${switches}" == *"--init"* ]]; then
+    if [[ "${options}" == *" --init "* ]]; then
       exec_after="${exec_after} --init"
     fi
-  elif [[ "${switches}" == *"--init"* ]]; then
+  elif [[ "${options}" == *" --init "* ]]; then
     # taito init
     exec_after="
       export taito_command_context='init'
       taito ${taito_options:-} init:${taito_env}"
   fi
 fi
-if [[ $exec_after ]] && [[ "${switches}" == *"--clean"* ]]; then
+if [[ $exec_after ]] && [[ "${options}" == *" --clean "* ]]; then
   # taito xxx --clean
   exec_after="${exec_after} --clean"
 fi
@@ -48,38 +48,34 @@ if [[ $exec_after ]]; then
   "
 fi
 
+# Default handling for commands that were not implemented by any plugin
 if [[ ${was_executed} == false ]]; then
   if [[ "${taito_command}" == "build-prepare" ]]; then
     # None of the enabled plugins has implemented build prepare
-    echo
-    echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
+    taito::print_plugin_title
     echo "Nothing to prepare"
   elif [[ "${taito_command}" == "build-release" ]]; then
     # None of the enabled plugins has implemented build release
-    echo
-    echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
+    taito::print_plugin_title
     echo "DONE!"
   elif [[ "${taito_command}" == "init" ]]; then
     # None of the enabled plugins has implemented init
-    echo
-    echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
+    taito::print_plugin_title
     echo "Nothing to initialize"
   elif [[ "${taito_command}" == "db-deploy" ]]; then
     # None of the enabled plugins has implemented db deploy
-    echo
-    echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
+    taito::print_plugin_title
     echo "No database deployment plugin enabled"
   elif [[ ${was_executed} == false ]]; then
     # Command not found
     if [[ "${taito_orig_command}" != " " ]]; then
       # Show matching commands
-      echo
-      echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
+      taito::print_plugin_title
       echo "Unknown command: '${taito_orig_command//-/ }'. Perhaps one of the following commands is the one"
       echo "you meant to run. Run 'taito -h' to get more help."
       export taito_command_chain=""
       export taito_plugin_path="${taito_plugin_path}"
-      help=$("${taito_plugin_path}/__help" "${taito_orig_command}")
+      help=$("${taito_plugin_path}/__help-50" "${taito_orig_command}")
       if [[ ${#help} -le 5 ]]; then
         # No help found. Try with only a first letter of the last word.
         last_word=${taito_orig_command##*-}
@@ -87,11 +83,11 @@ if [[ ${was_executed} == false ]]; then
         if [[ "${taito_orig_command}" == *"-"* ]]; then
           search="${taito_orig_command%-*} ${last_word:0:1}"
         fi
-        help=$("${taito_plugin_path}/__help" "${search}")
+        help=$("${taito_plugin_path}/__help-50" "${search}")
       fi
       if [[ ${#help} -le 5 ]]; then
         # No help found for command. Try without the last word.
-        help=$("${taito_plugin_path}/__help" "${taito_orig_command%-*}")
+        help=$("${taito_plugin_path}/__help-50" "${taito_orig_command%-*}")
       fi
       echo "${help}"
     else

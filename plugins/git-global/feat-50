@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
 
 source="${taito_branch:-dev}"
 

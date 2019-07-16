@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function sqitch::deploy () {
-  "${taito_plugin_path}/util/sqitch" deploy --set env="'${taito_env}'"
+  sqitch::run deploy --set env="'${taito_env}'"
 }
 
 function sqitch::run () {
@@ -54,7 +54,7 @@ function sqitch::run () {
     export SQITCH_PASSWORD
     SQITCH_PASSWORD="${sqitch_password}"
     (
-      ${taito_setv:?}
+      taito::executing_start
       sqitch ${sqitch_options} "${command}" "${@:2}"
     )
   )

@@ -4,18 +4,18 @@ taito::call_next () {
   local chain=(${taito_command_chain[@]})
   local next="${chain[0]}"
   local name
+  local plugin_path
 
   if [[ "${next}" != "" ]]; then
     name="${next//\/taito-cli\/plugins\//}"
     name=$(echo "${name}" | cut -f 1 -d '/')
+    plugin_path=$(echo "${next/\hooks/}" | sed -e 's/\/[^\/]*$//g')
     if [[ ${taito_quiet:-} != "true" ]] && ( \
          [[ "${taito_debug}" == "true" ]] || [[ "${next}" != *"/hooks/"* ]] \
        ); then
-      echo
-      echo -e "${taito_command_context_prefix:-}${H1s}${name}${H1e}"
+      taito_plugin_path="${plugin_path}" taito::print_plugin_title
     fi
-    taito_plugin_path=$(echo "${next/\hooks/}" | sed -e 's/\/[^\/]*$//g') \
-      taito_command_chain="${chain[@]:1}" \
+    taito_plugin_path="${plugin_path}" taito_command_chain="${chain[@]:1}" \
       "${next}" "${@}"
     exit $?
   else

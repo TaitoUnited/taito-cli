@@ -8,17 +8,17 @@ function links-global::generate_docs () {
   fi
 
   # Generate markdown links
-  markdown_links=""
+  local markdown_links=""
 
   # Generate links for every environment
-  envs=("${taito_environments:-}")
+  local envs=("${taito_environments:-}")
   if ! [[ ${taito_environments:-} ]]; then
     envs=("dummyenv")
   fi
 
   for env in ${envs[@]}
   do
-    output=$( (
+    local output=$( (
       export taito_target_env="${env}"
       export taito_env="${env}"
       set -a
@@ -101,7 +101,7 @@ function links-global::show_help () {
 function links-global::open_link () {
   link_name=${1}
   mode=${2:-open}
-  open_command=${3:-browser-fg}
+  open_command=${3:-taito::open_browser_fg}
   echo_command=${4:-echo}
 
   found=$(echo "${link_global_urls:-}${link_urls:-}" | grep "${link_name}[\[\:\=\#]")
@@ -130,7 +130,7 @@ function links-global::open_link () {
                 ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
                 ${echo_command} Opening link "${url}"
               fi
-              "${taito_util_path}/${open_command}" "${url}"
+              "${open_command}" "${url}"
             else
               [[ ${taito_quiet:-} != "true" ]] && \
                 ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"

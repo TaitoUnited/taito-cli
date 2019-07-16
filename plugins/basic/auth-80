@@ -3,7 +3,11 @@
 if [[ -n "${taito_admin_key}" ]]; then
   echo "Encrypting admin credentials"
   (cd ~ && tar -zcvf admin_creds.tar.gz .config .kube)
-  openssl aes-256-cbc -salt -in ~/admin_creds.tar.gz -out ~/admin_creds.enc \
+  openssl \
+    aes-256-cbc \
+    -salt \
+    -in ~/admin_creds.tar.gz \
+    -out ~/admin_creds.enc \
     -pass env:taito_admin_key
   rm -rf ~/admin_creds.tar.gz ~/.config ~/.kube
 

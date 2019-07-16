@@ -7,8 +7,7 @@ if [[ "${taito_env}" != "local" ]]; then
   (
     all=$(taito::print_targets_of_type database)
     databases=("${taito_target:-$all}")
-    for database in ${databases[@]}
-    do
+    for database in ${databases[@]}; do
       export taito_target="${database}"
       taito::export_database_config "${database}"
 
@@ -20,7 +19,7 @@ if [[ "${taito_env}" != "local" ]]; then
              [[ ${database_build_password_changed:-} ]] || \
              [[ ${database_app_password_changed:-} ]]
            ); then
-          if taito::confirm_execution "mysql" "" \
+          if taito::confirm \
             "Set new passwords for mysql database ${database_name:-}"
           then
             export database_username=${database_master_username:-root}
