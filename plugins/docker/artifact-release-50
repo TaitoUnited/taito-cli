@@ -1,4 +1,6 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
 : "${taito_container_registry:?}"
@@ -32,7 +34,7 @@ else
     (${taito_setv:?}; docker load --input "${name}.docker")
   fi
   echo "Push ${image}"
-  "$taito_plugin_path/util/imagepush" "${image}"
+  docker::image_push "${image}"
 fi
 
 taito::call_next "${@}"

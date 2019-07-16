@@ -1,4 +1,6 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 echo "TODO: Does not work yet. Use 'taito db dump:ENV file.sql' and"
 echo "'taito db import:ENV file.sql' instead"
@@ -32,7 +34,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
     -v dest_app=${db_prefix}_${dest}_app"
   echo 'TODO implement: dest is ${database_name}, source is something else'
   exit 1
-  "${taito_plugin_path}/util/psql" "${username}" "${flags}"
+  postgres::connect "${username}" "${flags}"
 fi
 
 taito::call_next "${@}"

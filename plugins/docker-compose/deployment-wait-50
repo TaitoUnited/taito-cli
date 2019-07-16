@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_project_path:?}"
 : "${taito_command:?}"
 
@@ -13,7 +14,7 @@ counter=1
 up=""
 while [[ ${counter} -le 120 ]] && [[ ! ${up} ]]
 do
-  compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
+  compose_file=$(docker-compose::prepare_docker_compose_yaml false)
   if [[ ${counter} -gt 50 ]]; then
     echo "Waiting for docker to start ${counter}."
     docker-compose -f $compose_file ps

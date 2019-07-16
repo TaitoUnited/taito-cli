@@ -1,6 +1,6 @@
 #!/bin/bash -e
 : "${taito_plugin_path:?}"
 
-"${taito_plugin_path}/util/storage-copy-to" "${@}"
+gcp-storage::storage-copy-to "${@}"
 
 taito::call_next "${@}"

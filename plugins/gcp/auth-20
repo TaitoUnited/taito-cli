@@ -1,5 +1,7 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
-"${taito_plugin_path}/util/auth" "${@}"
+gcp::authenticate "${@}"
 
 taito::call_next "${@}"

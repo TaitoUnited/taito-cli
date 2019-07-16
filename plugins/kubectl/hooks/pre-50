@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_command:?}"
 : "${taito_env:?}"
 
@@ -12,8 +13,8 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
   echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
   if [[ "${proxy_running}" == "" ]]; then
     echo "Starting db proxy"
-    "${taito_plugin_path}/util/use-context"
-    "${taito_plugin_path}/util/db-proxy-start" "true"
+    kubectl::use_context
+    kubectl::db_proxy_start true
   else
     echo "Not Starting db proxy. It is already running."
   fi
@@ -21,15 +22,13 @@ fi
 
 # kubernetes secrets
 # TODO: tighter filter
-# NOTE: ci-release is deprecated
 fetch_secrets=
 secret_filter=
 if [[ $kubectl_secrets_retrieved != true ]]; then
   if [[ ${taito_command} == "build-prepare" ]] || \
      [[ ${taito_command} == "build-release" ]] || \
      [[ ${taito_command} == "artifact-prepare" ]] || \
-     [[ ${taito_command} == "artifact-release" ]] || \
-     [[ ${taito_command} == "ci-release" ]]; then
+     [[ ${taito_command} == "artifact-release" ]]; then
     fetch_secrets="true"
     secret_filter="git"
   elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
@@ -47,12 +46,11 @@ if [[ ${fetch_secrets} ]]; then
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}kubectl${H1e}"
   echo "Getting secrets from Kubernetes"
-  "${taito_cli_path}/plugins/kubectl/util/use-context"
-  # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/get-secrets" "true" ${secret_filter}
+  kubectl::use_context
+  kubectl::export_secrets true ${secret_filter}
 
   if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
-    . "${taito_plugin_path}/util/proxy-secret-get"
+    kubectl::save_proxy_secret_to_disk
   fi
 
   export kubectl_secrets_retrieved=true

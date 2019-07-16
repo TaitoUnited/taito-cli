@@ -1,6 +1,8 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
 : "${taito_command:?}"
+
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 # Set default region just in case
 export AWS_DEFAULT_REGION="${taito_provider_region:?}"
@@ -10,7 +12,7 @@ if [[ $taito_command == "env-apply" ]] && [[ "${taito_mode:-}" != "ci" ]]; then
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}aws${H1e}"
   echo "Authenticating"
-  "${taito_plugin_path}/util/auth"
+  aws::authenticate
 fi
 
 # Authentication for CI
@@ -38,7 +40,7 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo
     echo -e "${taito_command_context_prefix:-}${H1s}aws${H1e}"
     echo "Getting credentials for Elastic Container Registry"
-    "${taito_plugin_path}/util/get-credentials-ecr"
+    aws::authenticate_on_ecr
   fi
 
   # Kubernetes (EKS) authentication
@@ -50,7 +52,7 @@ if [[ "${taito_mode:-}" == "ci" ]]; then
     echo
     echo -e "${taito_command_context_prefix:-}${H1s}aws${H1e}"
     echo "Getting credentials for kubernetes"
-    "${taito_plugin_path}/util/get-credentials-kube"
+    aws::authenticate_on_kubernetes
   fi
 fi
 

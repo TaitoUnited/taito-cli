@@ -1,20 +1,19 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_env:?}"
 : "${database_name:?}"
 
 port="${1}"
 
-(
-  if [[ "${port}" ]]; then
-    export database_port="${port}"
-  fi
+if [[ "${port}" ]]; then
+  database_port="${port}"
+fi
 
-  echo "Database connection details:"
-  taito::show_db_proxy_details
-  echo
-  "${taito_plugin_path}/util/db-proxy-start"
-  "${taito_plugin_path}/util/db-proxy-stop"
-)
+echo "Database connection details:"
+taito::show_db_proxy_details
+echo
+gcp::db_proxy_start false
+gcp::db_proxy_stop
 
 taito::call_next "${@}"

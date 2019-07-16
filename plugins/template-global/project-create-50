@@ -1,6 +1,6 @@
 #!/bin/bash -e
-
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 export template="${1:?Template not given}"
 export template_source_git="${template_default_source_git:?}"
@@ -14,7 +14,7 @@ if [[ "${taito_organization_param:-}" ]]; then
 else
   echo "Creating project with personal default settings"
 fi
-. "${taito_plugin_path}/util/ask-details"
+template-global::ask_and_export_details
 
 echo
 echo "Please wait."

@@ -1,13 +1,14 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
 source="${1:?}"
 dest="${2:?}"
 
-"${taito_plugin_path}/util/use-context"
-. "${taito_plugin_path}/util/determine-pod-container"
+kubectl::use_context
+kubectl::expose_pod_and_container
 
 (${taito_setv:?}; kubectl cp "${source}" "${pod}:${dest}" -c "${container}")
 

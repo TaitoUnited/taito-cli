@@ -1,5 +1,7 @@
 #!/bin/bash -e
-: "${taito_env:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_target_env:?}"
 
 if [[ "${taito_target_env}" == "prod" ]]; then
   echo "NOTE: Delete these manually:"

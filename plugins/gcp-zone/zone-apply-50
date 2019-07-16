@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_zone:?}"
 
 name=${1}
@@ -8,14 +9,14 @@ if [[ -n "${kubernetes_name:-}" ]]; then
   if taito::confirm_execution "gcp-auth" "${name}" \
     "Authenticate to Kubernetes ${kubernetes_name:-}"
   then
-      "${taito_cli_path}/plugins/gcp/util/get-credentials-kube"
-      taito::commit_changes
+    gcp-zone::authenticate_on_kubernetes
+    taito::commit_changes
   fi
 
   if taito::confirm_execution "gcp-build-notifications" "${name}" \
     "Configure gcp build notifications"
   then
-    "${taito_plugin_path}/util/setup-build-slack-notifications"
+    gcp-zone::setup-cloud-build-slack-notifications
   fi
 
 fi

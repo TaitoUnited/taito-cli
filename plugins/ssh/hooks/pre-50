@@ -11,15 +11,15 @@ do
      [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
     echo
     echo -e "${taito_command_context_prefix:-}${H1s}ssh${H1e}"
-    . ${taito_plugin_path}/util/opts
+    taito::expose_ssh_opts
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"
     forward_value=$(echo "$forward_value" | taito::substitute_variable_values_in_file)
     (
       ${taito_setv:?}
-      sh -c "ssh ${opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 60"
+      sh -c "ssh ${ssh_opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 60"
     ) || (
-      echo "SSH connection failed with options ${opts} ${forward_value}."
+      echo "SSH connection failed with options ${ssh_opts} ${forward_value}."
       exit 1
     )
     ssh_proxy_running="true"

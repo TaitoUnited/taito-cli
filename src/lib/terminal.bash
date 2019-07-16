@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 taito::confirm () {
   local text=${1:-Do you want to continue?}

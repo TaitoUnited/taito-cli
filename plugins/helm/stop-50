@@ -1,6 +1,9 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
 echo "TODO scale replicas to 0 instead of deleting"
 echo
-"${taito_plugin_path:?}/down" "${@}"
+"${taito_plugin_path:?}/down-50" "${@}"

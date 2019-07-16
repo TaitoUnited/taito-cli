@@ -1,7 +1,8 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 echo "Generating links to README.md"
-"${taito_plugin_path}/util/generate"
+links-global::generate_docs
 
 taito::call_next "${@}"

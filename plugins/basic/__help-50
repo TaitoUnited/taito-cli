@@ -1,16 +1,16 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=../lib/links-global/all.bash
+. "${taito_cli_path:?}/plugins/links-global/lib/all.bash"
 
 filter=${1}
 
 echo
 
 # Hack: Show dynamic links of link plugin in the correct place
-links=$("${taito_cli_path}/plugins/links-global/util/help" | \
-  sed ':a $!{N; ba}; s/\n/\\n/g')
+links=$(links-global::show_help | sed ':a $!{N; ba}; s/\n/\\n/g')
 
 if [[ -z "${filter}" ]]; then
-  "${taito_plugin_path}/util/show_file" help.txt | \
+  taito::show_file help.txt | \
     sed -e "s|PROJECT: DATABASE OPERATIONS|${links}\nPROJECT: DATABASE OPERATIONS|"
 else
   echo QUICK EXAMPLES
@@ -20,7 +20,7 @@ else
   echo
   echo COMMANDS
   echo
-  "${taito_plugin_path}/util/show_file" help.txt | \
+  taito::show_file help.txt | \
     sed -e "s|PROJECT: DATABASE OPERATIONS|${links}\nPROJECT: DATABASE OPERATIONS|" | \
     awk "/^  [a-z]+/ && /${filter//-/ }/,/^$/"
 fi

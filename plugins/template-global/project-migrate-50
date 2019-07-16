@@ -1,9 +1,10 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 echo "'project migrate' command under construction"
 exit 1
 
-: "${taito_plugin_path:?}"
 : "${template_default_source_git:?}"
 
 export template="${1:?Template not given}"
@@ -20,7 +21,7 @@ if [[ "${taito_organization_param:-}" ]]; then
 else
   echo "Migrating project with personal default settings"
 fi
-. "${taito_plugin_path}/util/ask-details"
+template-global::ask_and_export_details
 
 # Validate current git repository name
 current_vc_url=$(git config --get remote.origin.url)

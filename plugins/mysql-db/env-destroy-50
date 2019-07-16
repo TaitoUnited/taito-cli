@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_env:?}"
 
 name=${1}
@@ -11,7 +12,7 @@ if [[ "${taito_env}" != "local" ]]; then
     for database in ${databases[@]}
     do
       export taito_target="${database}"
-      . "${taito_util_path}/read_database_config.bash" "${database}"
+      taito::export_database_config "${database}"
 
       if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
         if taito::confirm_execution "mysql" "${name}" \
@@ -22,9 +23,9 @@ if [[ "${taito_env}" != "local" ]]; then
             export database_username=${database_master_username:-root}
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
-            . "${taito_plugin_path}/util/ask-password"
-            "${taito_plugin_path}/util/drop-database"
-            "${taito_plugin_path}/util/drop-users"
+            mysql::ask_and_expose_password
+            mysql::drop_database
+            mysql::drop_users
           )
         fi
       fi

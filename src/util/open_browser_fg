@@ -1,4 +1,0 @@
-#!/bin/bash -e
-# shellcheck source=../lib/open.bash
-. "${taito_lib_path:?}/open.bash"
-taito::open_browser_fg "${@}"

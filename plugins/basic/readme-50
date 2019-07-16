@@ -8,5 +8,4 @@ content=$(cat "${taito_project_path}/README.md")
 # fi
 
 echo -e "${content}" | cat
-
 taito::call_next "${@}"

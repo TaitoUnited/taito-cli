@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_command:?}"
 
 if [[ "${taito_command}" == "open-"* ]]; then
@@ -10,7 +11,7 @@ fi
 link_name=${taito_command:5:99}
 
 if [[ ! -z ${mode} ]]; then
-  if "${taito_plugin_path}/util/open" "${link_name}" "${mode}"; then
+  if links-global::open_link "${link_name}" "${mode}"; then
     export taito_hook_command_executed="true"
   fi
 fi

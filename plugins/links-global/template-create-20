@@ -1,10 +1,11 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 if [[ "${link_global_urls:-}${link_urls:-}" == *" conventions="* ]]; then
   echo "Press enter to open the software development conventions page"
   read -r
-  "${taito_plugin_path}/util/open" "conventions" "open" "browser" ":"
+  links-global::open_link "conventions" "open" "browser" ":"
 fi
 
 taito::call_next "${@}"

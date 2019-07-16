@@ -1,10 +1,10 @@
 #!/bin/bash -e
-: "${database_name:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 echo "Database connection details:"
 taito::show_db_proxy_details
 echo
-
 echo "TODO implement"
 
 taito::call_next "${@}"

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 : "${taito_plugin_path:?}"
 
-"${taito_plugin_path}/util/use-context"
+kubectl::use_context
 
 # Wait until all containers have been deployed
 sleep 5

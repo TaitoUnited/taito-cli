@@ -1,3 +1,0 @@
-#!/bin/bash -e
-echo "NOTE: ci release pre is deprecated"
-"${taito_plugin_path:?}/build-prepare#post" "${@}"

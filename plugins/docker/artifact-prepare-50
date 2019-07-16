@@ -1,8 +1,9 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 export taito_docker_new_params=true
-"${taito_plugin_path}/util/build" "${@}"
-"${taito_plugin_path}/util/push" "${@}"
+docker::build "${@}"
+docker::push "${@}"
 
 taito::call_next "${@}"

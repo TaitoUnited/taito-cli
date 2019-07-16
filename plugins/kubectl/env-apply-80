@@ -1,9 +1,10 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_namespace:?}"
 
 echo "Confirming restart, if restart is required"
-"${taito_plugin_path}/util/use-context"
-"${taito_plugin_path}/util/restart-all"
+kubectl::use_context
+kubectl::restart_all
 
 taito::call_next "${@}"

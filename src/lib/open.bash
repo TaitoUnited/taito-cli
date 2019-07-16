@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 taito::open_browser () {
   local url="${1:?}"

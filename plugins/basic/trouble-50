@@ -1,7 +1,4 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
-: "${taito_skip_override:?}"
 
-"${taito_plugin_path}/util/show_file" trouble.txt taito-cli-first
-
+taito::show_file trouble.txt taito-cli-first
 taito::call_next "${@}"

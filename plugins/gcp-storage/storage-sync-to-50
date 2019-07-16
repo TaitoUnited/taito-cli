@@ -2,6 +2,6 @@
 : "${taito_plugin_path:?}"
 
 echo "TODO confirm and delete all files from destination bucket"
-"${taito_plugin_path}/util/storage-copy-to" "${@}"
+gcp-storage::copy-to "${@}"
 
 taito::call_next "${@}"

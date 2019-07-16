@@ -1,7 +1,36 @@
 #!/bin/bash -e
 
+# Resolve paths
+# NOTE: duplicate with ./taito (taito_cli_path must be resolved before
+# other scripts can be called)
+export taito_home_path="${TAITO_HOME:-$HOME}"
+export taito_cli_path
+export taito_src_path
+export taito_lib_path
+export taito_util_path
+export taito_project_path
+taito_cli_path=$(
+  # Resolve taito-cli path by following symlinks
+  source="${BASH_SOURCE[0]}"
+  while [[ -h "${source}" ]]; do # resolve until the file is no longer a symlink
+    dir="$( cd -P "$( dirname "${source}" )" && pwd )"
+    source=$(readlink "${source}")
+    [[ "${source}" != /* ]] && source="${taito_cli_path}/${source}"
+  done
+  dir=$(dirname "${source}")
+  echo "${dir%/src}"
+)
+taito_src_path="${taito_cli_path}/src"
+taito_lib_path="${taito_cli_path}/src/lib"
+taito_util_path="${taito_cli_path}/src/util"
 # shellcheck source=lib/all.bash
 . "${taito_lib_path}/all.bash"
+# shellcheck source=core.bash
+. "${taito_src_path}/core.bash"
+taito_project_path=$(taito::core::print_project_path)
+
+# Set working directory
+cd "${taito_project_path}"
 
 # Parse options
 verbose=false # "${taito_verbose:-false}"
@@ -216,8 +245,8 @@ if [[ ${TAITO_CONFIG_OVERRIDE} == *"://"* ]]; then
 fi
 
 # Read taito-config.sh files from all locations
-. "${taito_src_path}/core/read_user_taito_config.bash" "${taito_env}"
-. "${taito_src_path}/core/read_project_taito_config.bash" "${taito_env}"
+taito::core::export_user_config "${taito_env}"
+taito::core::export_project_config "${taito_env}"
 
 if [[ "${taito_command}" == "test" ]] && \
    [[ "${taito_mode:-}" == "ci" ]] && \
@@ -310,7 +339,7 @@ if [[ ${taito_target} ]] && \
 fi
 
 # Select database configs using taito_target
-. "${taito_util_path}/read_database_config.bash"
+taito::export_database_config
 
 # Read taito-secrets in case of CI/CD
 if [[ -f ${taito_project_path}/taito-secrets ]]; then

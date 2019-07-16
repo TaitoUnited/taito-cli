@@ -1,15 +1,14 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
-# TODO: do is-target-type check elsewhere also
-if taito::is_current_target_of_type container; then
-  "${taito_plugin_path}/util/use-context"
+taito::skip_if_not container "${@}"
 
-  . "${taito_plugin_path}/util/determine-pod-container"
-  (${taito_setv:?}; kubectl exec -it "${pod}" -c "${container}" -- "/bin/sh") || \
-  (${taito_setv:?}; kubectl exec -it "${pod}" -- "/bin/sh")
-fi
+kubectl::use_context
+kubectl::expose_pod_and_container
+(${taito_setv:?}; kubectl exec -it "${pod}" -c "${container}" -- "/bin/sh") || \
+(${taito_setv:?}; kubectl exec -it "${pod}" -- "/bin/sh")
 
 taito::call_next "${@}"

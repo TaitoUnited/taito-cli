@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_dest_env:?}"
 : "${database_name:?}"

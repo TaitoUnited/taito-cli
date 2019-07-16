@@ -1,4 +1,0 @@
-#!/bin/bash -e
-# shellcheck source=../lib/exec.bash
-. "${taito_lib_path:?}/exec.bash"
-taito::execute_on_host_fg "${@}"

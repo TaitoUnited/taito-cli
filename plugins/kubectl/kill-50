@@ -1,11 +1,12 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
-"${taito_plugin_path}/util/use-context"
+kubectl::use_context
 
-. "${taito_plugin_path}/util/determine-pods"
+kubectl::expose_pods
 
 (${taito_setv:?}; kubectl delete pod ${pods})
 

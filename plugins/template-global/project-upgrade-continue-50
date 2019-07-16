@@ -1,6 +1,7 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
-: "${taito_plugin_path:?}"
 : "${template_name:?}"
 : "${template_source_git:?}"
 
@@ -17,7 +18,7 @@ trap cleanup EXIT
 (
   set -e
   cd "${template_project_path}/template-tmp/${template}"
-  "${taito_plugin_path}/util/init" "upgrade"
+  template-global::init upgrade
 )
 
 # TODO: remove once all projects have been upgraded

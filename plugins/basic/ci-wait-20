@@ -1,3 +1,0 @@
-#!/bin/bash -e
-echo "NOTE: ci wait is deprecated"
-"${taito_plugin_path:?}/deployment-wait#pre" "${@}"

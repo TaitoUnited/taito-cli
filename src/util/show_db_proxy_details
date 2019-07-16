@@ -1,4 +1,0 @@
-#!/bin/bash -e
-# shellcheck source=../lib/misc.bash
-. "${taito_lib_path:?}/misc.bash"
-taito::show_db_proxy_details "${@}"

@@ -1,4 +1,6 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 options=" ${*} "
 if [[ "${options}" == *" --down "* ]]; then
@@ -9,12 +11,11 @@ fi
 if [[ -n "${taito_target:-}" ]]; then
   # Restart only the container given as argument
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/determine-pod"
+  docker-compose::expose_pod_and_container
 fi
 
-compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
-taito::execute_on_host_fg "
-  docker-compose -f $compose_file stop ${pod:-}
-"
+compose_file=$(docker-compose::prepare_docker_compose_yaml false)
+taito::execute_on_host_fg \
+  "docker-compose -f $compose_file stop ${pod:-}"
 
 taito::call_next "${@}"

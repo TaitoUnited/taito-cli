@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
-taito::execute_on_host_fg \
-"docker kill \$(docker ps -q)"
+taito::execute_on_host_fg "
+  docker kill \$(docker ps -q)
+"
 
 taito::call_next "${@}"

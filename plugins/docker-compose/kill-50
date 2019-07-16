@@ -1,10 +1,5 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
-: "${taito_project:?}"
 
-# shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod"
-
+docker-compose::expose_pod_and_container
 taito::execute_on_host_fg "docker kill ${pod:?}"
-
 taito::call_next "${@}"

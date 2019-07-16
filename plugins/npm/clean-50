@@ -1,8 +1,9 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 if [[ ! ${taito_target:-} ]] || [[ ${taito_target} == "npm" ]]; then
-  "${taito_plugin_path}/util/clean"
+  npm::clean
 fi
 
 taito::call_next "${@}"

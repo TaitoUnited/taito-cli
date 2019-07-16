@@ -1,9 +1,9 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ "${taito_env:-}" == "local" ]]; then
-  "${taito_plugin_path:?}/util/install" "${@}"
-else
-  echo "Skipping install for non-local environment"
-fi
+[[ "${taito_env:-}" == "local" ]] ||
+  echo "Skipping install for non-local environment" && taito::skip_to_next
 
-"${taito_util_path:?}/call-next" "${@}"
+npm::install "${@}"
+taito::call_next "${@}"

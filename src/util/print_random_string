@@ -1,4 +1,0 @@
-#!/bin/bash -e
-# shellcheck source=../lib/secret.bash
-. "${taito_lib_path:?}/secret.bash"
-taito::print_random_string "${@}"

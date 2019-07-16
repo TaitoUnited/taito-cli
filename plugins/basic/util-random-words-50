@@ -1,5 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 
 taito::print_random_words "$@"
-
 taito::call_next "${@}"

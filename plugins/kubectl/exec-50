@@ -1,7 +1,8 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_namespace:?}"
 
-"${taito_plugin_path}/util/exec" "${@}"
+kubectl::exec "${@}"
 
 taito::call_next "${@}"

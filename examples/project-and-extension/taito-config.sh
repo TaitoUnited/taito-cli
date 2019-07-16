@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 # shellcheck disable=SC2034
 : "${taito_target_env:?}"
 

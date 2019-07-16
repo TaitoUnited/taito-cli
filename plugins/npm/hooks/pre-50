@@ -98,10 +98,8 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     taito_hook_command_executed=true
   fi
 
-  # NOTE: ci-release is deprecated
   if [[ "${taito_command}" == "build-release"* ]] || \
-     [[ "${taito_command}" == "artifact-release"* ]] || \
-     [[ "${taito_command}" == "ci-release"* ]]; then
+     [[ "${taito_command}" == "artifact-release"* ]]; then
     # TODO: remove this artifact-release skip hack
     npm_command=""
   fi

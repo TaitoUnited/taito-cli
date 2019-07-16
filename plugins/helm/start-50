@@ -1,8 +1,10 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
-: "${taito_namespace:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-"${taito_cli_path}/plugins/kubectl/util/use-context"
-"${taito_plugin_path}/util/deploy"
+kubectl::use-context
+helm::deploy
 
 taito::call_next "${@}"

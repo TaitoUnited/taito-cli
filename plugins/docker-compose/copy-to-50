@@ -1,12 +1,13 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_target:?}"
 
 source="${1:?}"
 dest="${2:?}"
 
 # shellcheck disable=SC1090
-. "${taito_plugin_path}/util/determine-pod"
+docker-compose::expose_pod_and_container
 
 docker_cmd="docker cp ${source} ${pod:?}:${dest}"
 taito::execute_on_host_fg "${docker_cmd}"

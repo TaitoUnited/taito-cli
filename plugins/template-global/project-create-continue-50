@@ -1,8 +1,9 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 . _template-config.sh
 
-: "${taito_plugin_path:?}"
 : "${taito_vc_repository:?}"
 : "${template_dest_git:?}"
 : "${template_default_vc_url:?}"
@@ -46,7 +47,7 @@ if [[ -d alternatives ]]; then
 fi
 
 # Execute create script of template
-"${taito_plugin_path}/util/init" "create"
+template-global::init create
 
 rm -f ./_template-config.sh
 

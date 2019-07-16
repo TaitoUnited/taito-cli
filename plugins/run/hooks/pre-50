@@ -1,12 +1,13 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_command:?}"
 : "${run_scripts_location:?}"
 
 # Runs a process if run_for_XXX or run_bg_for_XXX setting is set for one of the
 # plugins in the current command chain
-. ${taito_plugin_path}/util/run run_bg_for_ run_background_pids
-. ${taito_plugin_path}/util/run run_for_
+run::run run_bg_for_ run_background_pids
+run::run run_for_
 
 # Run scripts from scripts/run directory
 script="${run_scripts_location}/taito-${taito_command}"

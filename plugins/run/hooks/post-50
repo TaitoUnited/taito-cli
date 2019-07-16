@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_command:?}"
 : "${run_scripts_location:?}"
 
@@ -16,7 +17,7 @@ fi
 
 # Runs a process if run_after_for_XXX setting is set for one of the
 # plugins in the current command chain
-. ${taito_plugin_path}/util/run run_after_for_
+run::run run_after_for_
 
 # kill started run processes
 for run_pid in ${ssh_background_pids:-}

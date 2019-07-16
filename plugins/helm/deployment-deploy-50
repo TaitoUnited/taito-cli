@@ -1,10 +1,12 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
-: "${taito_namespace:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-"${taito_cli_path}/plugins/kubectl/util/use-context"
+kubectl::use-context
 if [[ "${taito_mode:-}" != "ci" ]] || [[ "${ci_exec_deploy:-}" != "false" ]]; then
-  "${taito_plugin_path}/util/deploy" "${@}"
+  helm::deploy "${@}"
 fi
 
 taito::call_next "${@}"

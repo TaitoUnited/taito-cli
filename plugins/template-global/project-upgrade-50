@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-: "${taito_plugin_path:?}"
 : "${template_name:?}"
 : "${template_source_git:?}"
 

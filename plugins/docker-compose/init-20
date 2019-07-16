@@ -1,4 +1,6 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 # TODO: duplicate code with env-apply
 
@@ -17,14 +19,14 @@ else
 
       # shellcheck disable=SC1090
       taito_target=$database
-      . "${taito_plugin_path}/util/determine-pod"
+      docker-compose::expose_pod_and_container
 
       # Docker-compose uses directory name as image prefix by default
       dir_name="${taito_host_project_path:-/taito-cli}"
       # Leave only directory name
       dir_name="${dir_name##*/}"
 
-      compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
+      compose_file=$(docker-compose::prepare_docker_compose_yaml false)
       taito::execute_on_host "
         docker-compose -f $compose_file stop ${pod:?}
         docker-compose -f $compose_file rm --force ${pod:?}

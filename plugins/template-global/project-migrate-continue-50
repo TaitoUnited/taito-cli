@@ -1,4 +1,7 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
 . _template-config.sh
 rm -f _template-config.sh
 rm -f taito-config.sh
@@ -17,7 +20,7 @@ trap cleanup EXIT
 (
   set -e
   cd "${template_project_path:?}/template-tmp/${template:?}"
-  "${taito_plugin_path}/util/init" "migrate"
+  template-global::init migrate
 )
 
 taito::execute_on_host_fg "

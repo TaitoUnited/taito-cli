@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_namespace:?}"
 
 export kubernetes_skip_restart="true"
@@ -8,11 +9,11 @@ if taito::confirm_execution "kubectl-secrets" "" \
   "Save newly created secrets to Kubernetes"
 then
   # Ensure that namespace exists
-  "${taito_plugin_path}/util/use-context"
-  "${taito_plugin_path}/util/ensure-namespace" "${taito_namespace}"
+  kubectl::use_context
+  kubectl::ensure-namespace "${taito_namespace}"
 
-  "${taito_plugin_path}/util/use-context"
-  "${taito_plugin_path}/util/save-secrets"
+  kubectl::use_context
+  kubectl::save_secrets
   export kubernetes_skip_restart="false"
 fi
 

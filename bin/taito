@@ -1,5 +1,6 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 # NOTE: This bash script is run directly on host.
+set -e
 
 if [[ "$(id -u)" == "0" ]]; then
   echo "This script should not be run as root" 1>&2
@@ -131,7 +132,10 @@ taito_lib_path="${taito_cli_path}/src/lib"
 taito_util_path="${taito_cli_path}/src/util"
 
 # Load core library
-. "${taito_src_path}/core/core.bash"
+# shellcheck source=../src/lib/host.bash
+. "${taito_lib_path}/host.bash"
+# shellcheck source=../src/core.bash
+. "${taito_src_path}/core.bash"
 
 # Resolve project path
 taito_project_path=$(taito::core::print_project_path)
@@ -155,7 +159,7 @@ fi
 
 # Read personal taito-config settings
 export taito_image="taitounited/taito-cli:latest"
-. "${taito_src_path}/core/read_user_taito_config.bash" "${taito_target_env}"
+taito::core::export_user_config "${taito_target_env}"
 
 # Determine environment
 taito_target_env="local"
@@ -184,7 +188,7 @@ if [[ "${project}" ]]; then
 fi
 
 # Read project specific taito-config settings
-. "${taito_src_path}/core/read_project_taito_config.bash" "${taito_target_env}"
+taito::core::export_project_config "${taito_target_env}"
 
 # Determine project mount options passed to Docker
 project_mount_options=""
@@ -415,7 +419,7 @@ if [[ "${mode}" == "dev" ]]; then
 fi
 proxy_flags=""
 if [[ "${command}" == "db-proxy"* ]] && [[ ${taito_target_env} != "local" ]]; then
-  . "${taito_util_path}/read_database_config.bash"
+  taito::export_database_config
   port="${params[1]}"
   proxy_port=${port:-$database_proxy_port}
   echo "Exposing database proxy port: ${proxy_port:-$database_port}"

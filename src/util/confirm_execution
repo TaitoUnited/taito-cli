@@ -1,4 +1,0 @@
-#!/bin/bash -e
-# shellcheck source=../lib/terminal.bash
-. "${taito_lib_path:?}/terminal.bash"
-taito::confirm_execution "${@}"

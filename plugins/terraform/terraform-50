@@ -1,10 +1,10 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_provider:?}"
 
-# shellcheck disable=SC1090
-. "${taito_plugin_path}/util/env"
 (
+  terraform::export_env
   cd "./scripts/terraform/${taito_provider}"
   terraform "${@}"
 )

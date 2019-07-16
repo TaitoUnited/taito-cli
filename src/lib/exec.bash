@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 taito::call_next () {
   local chain=(${taito_command_chain[@]})
@@ -39,8 +39,8 @@ taito::execute_on_host () {
      [[ "${taito_command}" != "auth" ]] && \
      [[ "${taito_env}" != "local" ]] && \
      [[ "${commands}" == *"docker"* ]]; then
-    . "${taito_cli_path}/plugins/ssh/util/opts"
-    ssh -t ${opts} "${taito_ssh_user:?}@${taito_host}" \
+    taito::expose_ssh_opts
+    ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
       "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; ${commands}'"
   elif [[ "${taito_mode:-}" == "ci" ]]; then
     eval "${commands}"
@@ -74,8 +74,8 @@ taito::execute_on_host_fg () {
      [[ "${taito_command}" != "auth" ]] && \
      [[ "${taito_env}" != "local" ]] && \
      [[ "${commands}" == *"docker"* ]]; then
-    . "${taito_cli_path}/plugins/ssh/util/opts"
-    ssh -t ${opts} "${taito_ssh_user:?}@${taito_host}" \
+    taito::expose_ssh_opts
+    ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
       "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; (${commands})'"
   elif [[ "${taito_mode:-}" == "ci" ]]; then
     eval "(${commands})"
@@ -110,3 +110,14 @@ taito::execute_with_ssh_agent () {
   ${runner} "${commands} \"\${@}\"" -- "${@:2}"
 }
 export -f taito::execute_with_ssh_agent
+
+taito::skip_to_next () {
+  taito::call_next "${@}"
+  exit $?
+}
+export -f taito::skip_to_next
+
+taito::skip_if_not () {
+  taito::is_current_target_of_type "${1}" || taito::skip_to_next "${@:2}"
+}
+export -f taito::skip_if_not

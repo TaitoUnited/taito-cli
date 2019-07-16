@@ -1,9 +1,9 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
-: "${taito_project:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 if [[ ${taito_target:-} ]]; then
-  "${taito_plugin_path}/util/exec" "/bin/sh"
+  docker-compose::exec "/bin/sh"
 fi
 
 taito::call_next "${@}"

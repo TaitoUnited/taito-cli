@@ -1,12 +1,13 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
 name="${1}"
 
 if taito::confirm_execution "generate-secrets" "${name}" \
     "Generate secrets"; then
   # shellcheck disable=SC1090
-  . "${taito_plugin_path}/util/create" true
+  generate-secrets::create true
 fi
 
 taito::call_next "${@}"

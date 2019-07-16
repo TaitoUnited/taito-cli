@@ -1,12 +1,13 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${database_name:?}"
 
 if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
   dump_file="${1:?}"
 
   echo "Dumping database ${database_name} to file ${dump_file}. Please wait."
-  "${taito_plugin_path}/util/mysqldump" > "${dump_file}"
+  mysql::dump > "${dump_file}"
 fi
 
 taito::call_next "${@}"

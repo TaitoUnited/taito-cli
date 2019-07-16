@@ -1,12 +1,12 @@
-#!/bin/bash -e
+#!/bin/bash
 : "${taito_lib_path:?}"
 
-# shellcheck source=config.bash
-. "${taito_lib_path}/config.bash"
 # shellcheck source=docker.bash
 . "${taito_lib_path}/docker.bash"
 # shellcheck source=exec.bash
 . "${taito_lib_path}/exec.bash"
+# shellcheck source=host.bash
+. "${taito_lib_path}/host.bash"
 # shellcheck source=misc.bash
 . "${taito_lib_path}/misc.bash"
 # shellcheck source=open.bash

@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+# ------------------------------------------------------------------
+# Use this executable to execute taito bash functions from non-bash
+# taito plugin implementations. Example:
+#
+#   ${taito_lib_path}/execute taito::browser https://www.google.com
+#
+# ------------------------------------------------------------------
+
+# shellcheck source=../lib/all.bash
+. "${taito_lib_path:?}/all.bash"
+${1} "${@}"

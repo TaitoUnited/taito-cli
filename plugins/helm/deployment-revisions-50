@@ -1,14 +1,13 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
-: "${taito_namespace:?}"
-: "${taito_project:?}"
-: "${taito_target_env:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-"${taito_cli_path}/plugins/kubectl/util/use-context"
+kubectl::use-context
 (
   ${taito_setv:?}
-  "${taito_plugin_path}/util/helm" history \
-    "${taito_project}-${taito_target_env}"
+  helm::run history "${taito_project}-${taito_target_env}"
 )
 
 taito::call_next "${@}"

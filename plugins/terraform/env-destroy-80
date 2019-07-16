@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${taito_plugin_path:?}"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_env:?}"
 : "${taito_provider:?}"
 : "${taito_resource_namespace:?}"
@@ -19,7 +20,7 @@ then
   (
     export TF_LOG_PATH="./${taito_env}/terraform.log"
     # shellcheck disable=SC1090
-    . "${taito_plugin_path}/util/env"
+    terraform::export_env
     cd "./scripts/terraform/${taito_provider}"
     terraform init -backend-config="../common/backend.tf"
     if [[ -f import_state ]]; then
@@ -37,7 +38,7 @@ then
   (
     export TF_LOG_PATH="./${taito_env}/terraform.log"
     # shellcheck disable=SC1090
-    . "${taito_plugin_path}/util/env"
+    terraform::export_env
     cd "./scripts/terraform/${taito_uptime_provider}-uptime"
     terraform init -backend-config="../common/backend.tf"
     if [[ -f import_state ]]; then
