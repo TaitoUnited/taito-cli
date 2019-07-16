@@ -1,9 +1,11 @@
 #!/bin/bash -e
 
 taito::confirm () {
-  text=${1:-Do you want to continue?}
-  default_reply=${2:-yes}
-  default_ci=$1
+  local text=${1:-Do you want to continue?}
+  local default_reply=${2:-yes}
+  local default_ci=$1
+  local prompt
+  local REPLY
 
   if [[ $taito_mode == "ci" ]] && [[ $default_ci == "yes" ]]; then
     exit 0
@@ -35,9 +37,10 @@ taito::confirm () {
 export -f taito::confirm
 
 taito::confirm_execution () {
-  current_name=${1}
-  requested_name=${2}
-  prompt=${3}
+  local current_name=${1}
+  local requested_name=${2}
+  local prompt=${3}
+  local text
 
   if [[ "${requested_name}" == "" ]] || \
      [[ "${requested_name}" == "-"* ]] || \

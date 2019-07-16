@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 taito::open_browser () {
-  url="${1:?}"
+  local url="${1:?}"
 
   if [[ "${taito_host_uname}" == *"_NT"* ]]; then
     taito::execute_on_host "start chrome '${url}'"
@@ -14,7 +14,7 @@ taito::open_browser () {
 export -f taito::open_browser
 
 taito::open_browser_fg () {
-  url="${1:?}"
+  local url="${1:?}"
 
   if [[ "${taito_host_uname}" == *"_NT"* ]]; then
     taito::execute_on_host_fg \

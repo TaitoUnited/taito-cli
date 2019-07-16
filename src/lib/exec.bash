@@ -1,8 +1,9 @@
 #!/bin/bash -e
 
 taito::call_next () {
-  chain=(${taito_command_chain[@]})
-  next="${chain[0]}"
+  local chain=(${taito_command_chain[@]})
+  local next="${chain[0]}"
+  local name
 
   if [[ "${next}" != "" ]]; then
     name="${next//\/taito-cli\/plugins\//}"
@@ -13,9 +14,9 @@ taito::call_next () {
       echo
       echo -e "${taito_command_context_prefix:-}${H1s}${name}${H1e}"
     fi
-    export taito_plugin_path
-    taito_plugin_path=$(echo "${next/\hooks/}" | sed -e 's/\/[^\/]*$//g')
-    taito_command_chain="${chain[@]:1}" "${next}" "${@}"
+    taito_plugin_path=$(echo "${next/\hooks/}" | sed -e 's/\/[^\/]*$//g') \
+      taito_command_chain="${chain[@]:1}" \
+      "${next}" "${@}"
     exit $?
   else
     exit 0
@@ -26,8 +27,8 @@ export -f taito::call_next
 # Executes the given shell commands on host
 # NOTE: executes in container if ci mode is enabled.
 taito::execute_on_host () {
-  commands="${*:1}"
-  sleep_seconds="${2}"
+  local commands="${*:1}"
+  local sleep_seconds="${2}"
 
   echo "+ ${commands}" > "${taito_vout}"
 
@@ -62,7 +63,7 @@ export -f taito::execute_on_host
 # Executes the given shell commands on host
 # NOTE: executes in container if ci mode is enabled.
 taito::execute_on_host_fg () {
-  commands="${*:1}"
+  local commands="${*:1}"
 
   echo "+ ${commands}" > "${taito_vout}"
 
@@ -92,9 +93,10 @@ taito::execute_on_host_fg () {
 export -f taito::execute_on_host_fg
 
 taito::execute_with_ssh_agent () {
-  commands=$1
+  local commands=$1
+  local use_agent=true
+  local runner
 
-  use_agent=true
   if [[ ${SSH_AUTH_SOCK} ]]; then
     # Already running
     use_agent=false

@@ -2,8 +2,8 @@
 
 taito::substitute_variable_values_in_file () {
   # TODO: REMOVE THESE. ALWAYS USE PIPING!
-  source_file=$1
-  dest_file=$2
+  local source_file=$1
+  local dest_file=$2
 
   # Substitute environment variables
   if [[ $dest_file ]]; then
