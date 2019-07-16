@@ -1,5 +1,7 @@
 #!/bin/bash -e
-# NOTE: This bash script is run inside docker container.
+
+# shellcheck source=lib/all.bash
+. "${taito_lib_path}/all.bash"
 
 # Parse options
 verbose=false # "${taito_verbose:-false}"
@@ -77,7 +79,7 @@ done
 formatted=()
 while IFS= read -r line; do
   formatted+=( "$line" )
-done < <( "${taito_src_path}/convert-command-syntax" "${args[@]}" )
+done < <( taito::core::print_command_with_internal_syntax "${args[@]}" )
 args=("${formatted[@]}")
 
 # Determine command, target, env and parameters from args
@@ -214,8 +216,8 @@ if [[ ${TAITO_CONFIG_OVERRIDE} == *"://"* ]]; then
 fi
 
 # Read taito-config.sh files from all locations
-. "${taito_util_path}/read-user-taito-config" "${taito_env}" && \
-. "${taito_util_path}/read-project-taito-config" "${taito_env}" && \
+. "${taito_src_path}/core/read_user_taito_config.bash" "${taito_env}" && \
+. "${taito_src_path}/core/read_project_taito_config.bash" "${taito_env}" && \
 
 if [[ "${taito_command}" == "test" ]] && \
    [[ "${taito_mode:-}" == "ci" ]] && \
@@ -303,12 +305,12 @@ if [[ ${taito_target} ]] && \
   echo "Valid environments: local ${taito_environments}"
   echo "Valid targets: ${taito_targets}"
   echo "Valid build targets: ${taito_build_targets}"
-  echo "Valid databases: $("$taito_util_path/get-targets-by-type" database)"
+  echo "Valid databases: $(taito::print_targets_of_type database)"
   exit 1
 fi
 
 # Select database configs using taito_target
-. "${taito_util_path}/read-database-config" && \
+. "${taito_util_path}/read_database_config.bash" && \
 
 # Read taito-secrets in case of CI/CD
 if [[ -f ${taito_project_path}/taito-secrets ]]; then
@@ -422,7 +424,7 @@ if [[ "${taito_command}" == "zone-"* ]] && \
    [[ ${quiet} != "true" ]]; then
   echo
   echo "The operation is targetting zone ${taito_zone:-}."
-  "$taito_util_path/confirm"
+  taito::confirm
 fi
 
 # Confirm prod operations
@@ -435,13 +437,13 @@ if ( [[ "${taito_env}" == "prod" ]] || [[ "${taito_dest_env}" == "prod" ]] ) && 
    [[ ${quiet} != "true" ]]; then
   echo
   echo "The operation is targetting prod environment of ${taito_project:-}."
-  "$taito_util_path/confirm" "Do you want to continue anyway?" no
+  taito::confirm "Do you want to continue anyway?" no
 
   # Confirm suspicious operations
   if [[ "${taito_command}" == "init" ]]; then
     echo
     echo "Command 'taito ${orig_command}' is not meant to be run on production environment."
-    "$taito_util_path/confirm" "Do you want to continue anyway?" no
+    taito::confirm "Do you want to continue anyway?" no
   fi
 fi
 
@@ -454,7 +456,7 @@ if [[ ${taito_command} == "env-apply" ]] || \
     echo
     echo "Running 'taito ${taito_command//-/ }' on $taito_target_env environment most likely"
     echo "requires admin privileges. You may not be allowed to execute all operations."
-    "$taito_util_path/confirm" "Do you want to continue anyway?" no
+    taito::confirm "Do you want to continue anyway?" no
   fi
 fi
 
@@ -715,7 +717,7 @@ else
   fi
 
   # Execute taito-cli command chain
-  "${taito_util_path}/ssh-agent" "$taito_util_path/call-next" "${params[@]}"
+  taito::execute_with_ssh_agent "taito::call_next" "${params[@]}"
   # "${taito_util_path}/call-next" "${params[@]}"
   exit_code=${?}
   if [[ ${exit_code} == 130 ]]; then

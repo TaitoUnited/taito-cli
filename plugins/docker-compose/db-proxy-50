@@ -2,9 +2,8 @@
 
 if [[ ${taito_target_env:-} == "local" ]]; then
   echo "No database proxy required. Just connect with the following details:"
-  "${taito_util_path}/display-db-proxy-details"
+  taito::show_db_proxy_details
   echo
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

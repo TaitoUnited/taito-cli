@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_env:?}"
 : "${taito_organization:?}"
 : "${taito_provider_region:?}"
@@ -9,7 +8,7 @@ name=${1}
 (
   cd terraform || exit 1
 
-  if "${taito_util_path}/confirm-execution" "terraform" "${name}" \
+  if taito::confirm_execution "terraform" "${name}" \
     "Replace placeholders with real values in taito_config and terraform/*"
   then
     # For AWS: determine hex string for region from database endpoint URL
@@ -76,5 +75,4 @@ name=${1}
   terraform output
 )
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

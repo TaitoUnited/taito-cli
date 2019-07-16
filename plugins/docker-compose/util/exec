@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 
@@ -12,8 +11,8 @@ if [[ -n "${docker_run:-}" ]]; then
   # Using run mode instead of up
   # TODO take --no-deps as param
   compose_file=$("$taito_plugin_path/util/prepare-compose-file")
-  "${taito_util_path}/execute-on-host-fg" \
+  taito::execute_on_host_fg \
     "docker-compose -f $compose_file run --no-deps --entrypoint ${commands} ${pod}"
 else
-  "${taito_util_path}/execute-on-host-fg" "docker exec -it ${pod} ${commands}"
+  taito::execute_on_host_fg "docker exec -it ${pod} ${commands}"
 fi

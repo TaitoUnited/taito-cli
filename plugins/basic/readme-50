@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 
 content=$(cat "${taito_project_path}/README.md")
 
@@ -10,5 +9,4 @@ content=$(cat "${taito_project_path}/README.md")
 
 echo -e "${content}" | cat
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

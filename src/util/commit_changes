@@ -1,0 +1,4 @@
+#!/bin/bash -e
+# shellcheck source=../lib/docker.bash
+. "${taito_lib_path:?}/docker.bash"
+taito::commit_changes "${@}"

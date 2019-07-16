@@ -1,18 +1,16 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 name=${1}
 
 if [[ -n "${kubernetes_name:-}" ]]; then
-  if "${taito_util_path}/confirm-execution" "aws-auth" "${name}" \
+  if taito::confirm_execution "aws-auth" "${name}" \
     "Authenticate to Kubernetes ${kubernetes_name:-}"
   then
     echo "Authenticating"
     "${taito_cli_path}/plugins/aws/util/get-credentials-kube" && \
-    "${taito_util_path}/docker-commit"
+    taito::commit_changes
   fi
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

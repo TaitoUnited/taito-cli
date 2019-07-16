@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${template_default_zone_source_git:?}"
 
 export template="${1:?Template not given}"
@@ -17,7 +16,7 @@ read -r -t 1 -n 1000 || : # Flush input buffer
 echo "Zone name (e.g. my-$template)?"
 read -r zone
 
-"${taito_util_path}/execute-on-host-fg" "
+taito::execute_on_host_fg "
   export GIT_PAGER='' &&
   mkdir -p \${HOME}/.taito/tmp &&
   rm -rf \${HOME}/.taito/tmp/${zone} &&
@@ -35,5 +34,4 @@ read -r zone
   echo
 "
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

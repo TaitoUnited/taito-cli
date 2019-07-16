@@ -1,6 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 options=" ${*} "
@@ -22,11 +20,11 @@ if ! aws configure $aws_options list &> /dev/null || \
   echo
   echo "Press enter to open the AWS IAM console for retrieving the access keys"
   read -r
-  "${taito_util_path}/browser" "https://console.aws.amazon.com/iam/home?#home"
+  taito::open_browser "https://console.aws.amazon.com/iam/home?#home"
   echo
   aws configure $aws_options
   # TODO: docker-commit is called twice on 'taito auth'
-  "${taito_util_path}/docker-commit"
+  taito::commit_changes
 else
   echo "Already authenticated with profile '$profile'."
   echo "You can reauthenticate with 'taito auth --reset'."

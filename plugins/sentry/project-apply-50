@@ -1,12 +1,11 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_vc_repository:?}"
 : "${sentry_organization:?}"
 : "${taito_project_path:?}"
 
 name=${1}
 
-if "${taito_util_path}/confirm-execution" "sentry" "${name}" \
+if taito::confirm_execution "sentry" "${name}" \
   "Configure Sentry project"
 then
   echo "Create a new Sentry project with these settings:"
@@ -29,7 +28,7 @@ then
   echo "Press enter to open Sentry"
   read -r
 
-  "${taito_util_path}/browser" \
+  taito::open_browser \
     "https://sentry.io/organizations/${sentry_organization}/projects/new/"
 
   read -r -t 1 -n 1000 || : # Flush input buffer
@@ -67,5 +66,4 @@ then
   fi
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

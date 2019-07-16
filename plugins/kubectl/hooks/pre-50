@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 : "${taito_env:?}"
@@ -59,5 +58,4 @@ if [[ ${fetch_secrets} ]]; then
   export kubectl_secrets_retrieved=true
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

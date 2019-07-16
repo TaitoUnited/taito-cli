@@ -4,7 +4,6 @@ echo "TODO: Does not work yet. Use 'taito db dump:ENV file.sql' and"
 echo "'taito db import:ENV file.sql' instead"
 exit 1
 
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_dest_env:?}"
@@ -21,7 +20,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   echo "NOTE: This works only if both databases are located in the same database cluster."
   echo "WARNING! THIS HAS NOT BEEN TESTED AT ALL YET! Use db-copy:ENV instead!"
   echo "WARNING! This operation will disconnect all connections!"
-  "$taito_util_path/confirm"
+  taito::confirm
 
   db_prefix=${database_name%_*}
 
@@ -36,5 +35,4 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   "${taito_plugin_path}/util/psql" "${username}" "${flags}"
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

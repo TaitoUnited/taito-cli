@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 switches=" ${*} "
@@ -21,7 +20,7 @@ fi && \
 
 install_all=false
 if [[ ${taito_mode} != "ci" ]] && [[ ${do_confirm} ]] && [[ ! $RUNNING_TESTS ]]; then
-  if "$taito_util_path/confirm" \
+  if taito::confirm \
     "Install all libraries on host for autocompletion purposes?"; then
     install_all=true
   fi
@@ -43,14 +42,14 @@ fi && \
 # NOTE: Changed 'npm install' to run on host because of linux permission issues.
 # We are installing libs locally anyway so perhaps it is better this way.
 # TODO add '--python=${npm_python}' for npm install?
-"${taito_util_path}/execute-on-host-fg" "\
+taito::execute_on_host_fg "\
   set -e;
   echo \"Running 'npm ${npm_command}'\" && \
   npm ${npm_command}" && \
 
 if [[ "${task_postinstall}" ]]; then
   # TODO add '--python=${npm_python}' for npm run?
-  "${taito_util_path}/execute-on-host-fg" "
+  taito::execute_on_host_fg "
     set -e;
     if [[ ${install_all} == \"true\" ]]; then
       echo \"Running 'npm run ${task_postinstall}'\"

@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 
 options=" ${*} "
 if [[ "${options}" == *" --down "* ]]; then
@@ -14,9 +13,8 @@ if [[ -n "${taito_target:-}" ]]; then
 fi
 
 compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
-"${taito_util_path}/execute-on-host-fg" "
+taito::execute_on_host_fg "
   docker-compose -f $compose_file stop ${pod:-}
 "
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

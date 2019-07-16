@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_command:?}"
 
 link_name=${1}

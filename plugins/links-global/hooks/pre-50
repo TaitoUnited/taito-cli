@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 
@@ -16,5 +15,4 @@ if [[ ! -z ${mode} ]]; then
   fi
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

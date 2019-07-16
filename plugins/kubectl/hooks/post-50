@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
@@ -20,5 +19,4 @@ if [[ ${taito_command:-} == "test" ]] && \
   rm -f "$taito_proxy_credentials_local_file"
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

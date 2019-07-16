@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_project:?}"
 
 type=$1
@@ -22,5 +21,4 @@ if [[ "$files" ]]; then
   )
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

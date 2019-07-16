@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_setv:?}"
 : "${taito_hours_description:?}"
@@ -20,7 +19,7 @@ fi
   . "${taito_plugin_path}/util/read-api-token"
 
   # hour entry: project id
-  . "${taito_util_path}/select-item" "Projects:" "Enter project name:" \
+  . "${taito_util_path}/select_item.bash" "Projects:" "Enter project name:" \
     "${toggl_projects}" "${toggl_project_id}" true
   project_id="${item_id}"
   if [[ ! ${project_id} ]]; then
@@ -29,7 +28,7 @@ fi
   fi
 
   # hour entry: task id
-  . "${taito_util_path}/select-item" "Tasks:" \
+  . "${taito_util_path}/select_item.bash" "Tasks:" \
     "Choose task:" "${toggl_tasks}" "${toggl_task_id}"
   task_id="${item_id:-null}"
 
@@ -54,5 +53,4 @@ fi
 )
 
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

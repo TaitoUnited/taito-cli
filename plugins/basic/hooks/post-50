@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 : "${taito_orig_command:?}"
@@ -44,7 +43,7 @@ fi
 
 if [[ $exec_after ]]; then
   was_executed=true
-  "${taito_util_path}/execute-on-host-fg" "
+  taito::execute_on_host_fg "
     ${exec_after}
   "
 fi
@@ -103,5 +102,4 @@ if [[ ${was_executed} == false ]]; then
   fi
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

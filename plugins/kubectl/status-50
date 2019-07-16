@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 : "${taito_target_env:?}"
@@ -70,5 +69,4 @@ if [ ! $kubernetes_params ]; then
   echo "See all namespaces with '--all-namespaces'"
 fi
 
-# Call next command on command chain
-"$taito_util_path/call-next" "${args[@]}"
+taito::call_next "${args[@]}"

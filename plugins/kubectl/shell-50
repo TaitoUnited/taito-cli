@@ -1,11 +1,10 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 : "${taito_project:?}"
 
 # TODO: do is-target-type check elsewhere also
-if "$taito_util_path/is-target-type" container; then
+if taito::is_current_target_of_type container; then
   "${taito_plugin_path}/util/use-context"
 
   . "${taito_plugin_path}/util/determine-pod-container"
@@ -13,5 +12,4 @@ if "$taito_util_path/is-target-type" container; then
   (${taito_setv:?}; kubectl exec -it "${pod}" -- "/bin/sh")
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 "${taito_plugin_path}/util/use-context"
@@ -13,5 +12,4 @@ do
 done
 sleep 15
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_target_env:?}"
 
 image_tag=$1
@@ -14,8 +13,7 @@ function cleanup {
   cp -r secrets "tmp/ci/$taito_target_env" &> /dev/null || :
   cd "tmp/ci/$taito_target_env"
   echo "Image tag: ${image_tag}"
-  "${taito_util_path}/ssh-agent" "./local-ci ${taito_target_env} ${image_tag}"
+  taito::execute_with_ssh_agent "./local-ci ${taito_target_env} ${image_tag}"
 )
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

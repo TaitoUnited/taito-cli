@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_branch:?}"
 : "${taito_vc_repository_url:?}"
 : "${taito_target_env:?}"
@@ -9,9 +8,9 @@ if [[ ! ${image_tag} ]]; then
   image_tag=$(git rev-parse "${taito_branch:?}")
 fi
 
-if "${taito_util_path}/confirm" \
+if taito::confirm \
    "Do you want to execute CI/CD for ${taito_target_env}?"; then
-  "${taito_util_path}/execute-on-host-fg" "
+  taito::execute_on_host_fg "
     function cleanup {
       rm -rf tmp/ci/$taito_target_env &> /dev/null || :
     }
@@ -23,5 +22,4 @@ if "${taito_util_path}/confirm" \
   "
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

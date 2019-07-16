@@ -1,0 +1,4 @@
+#!/bin/bash -e
+# shellcheck source=../lib/misc.bash
+. "${taito_lib_path:?}/misc.bash"
+taito::substitute_variable_values_in_file "${@}"

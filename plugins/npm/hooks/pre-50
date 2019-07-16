@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_skip_override:?}"
 : "${taito_command:?}"
 : "${taito_env:?}"
@@ -126,7 +125,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     #       compatibilty issues.
     taito_hook_command_executed=true
     if [[ "${run_on_host}" == "true" ]]; then
-      "${taito_util_path}/execute-on-host-fg" "
+      taito::execute_on_host_fg "
         export taito_command_context='npm ${npm_command}'
         npm run -s ${npm_command}${params}
       "
@@ -153,6 +152,5 @@ fi
 if [[ ${exit_code} != 0 ]]; then
   exit ${exit_code}
 elif [[ ${skip_remaining_commands} == false ]]; then
-  # Call next command on command chain
-  "${taito_util_path}/call-next" "${@}"
+  taito::call_next "${@}"
 fi

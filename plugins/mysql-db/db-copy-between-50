@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_dest_env:?}"
@@ -20,5 +19,4 @@ if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
 
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

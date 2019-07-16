@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_env:?}"
 : "${taito_vc_repository:?}"
 : "${taito_container_registry:?}"
@@ -24,5 +23,4 @@ if [[ ${taito_container_registry_provider:-} == "local" ]]; then
   fi
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

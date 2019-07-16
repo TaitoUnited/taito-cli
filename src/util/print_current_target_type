@@ -1,0 +1,4 @@
+#!/bin/bash -e
+# shellcheck source=../lib/target.bash
+. "${taito_lib_path:?}/target.bash"
+taito::print_current_target_type "${@}"

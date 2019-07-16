@@ -1,19 +1,18 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_zone:?}"
 
 name=${1}
 
 if [[ -n "${kubernetes_name:-}" ]]; then
-  if "${taito_util_path}/confirm-execution" "gcp-auth" "${name}" \
+  if taito::confirm_execution "gcp-auth" "${name}" \
     "Authenticate to Kubernetes ${kubernetes_name:-}"
   then
       "${taito_cli_path}/plugins/gcp/util/get-credentials-kube" && \
-      "${taito_util_path}/docker-commit"
+      taito::commit_changes
   fi && \
 
-  if "${taito_util_path}/confirm-execution" "gcp-build-notifications" "${name}" \
+  if taito::confirm_execution "gcp-build-notifications" "${name}" \
     "Configure gcp build notifications"
   then
     "${taito_plugin_path}/util/setup-build-slack-notifications"
@@ -22,7 +21,7 @@ if [[ -n "${kubernetes_name:-}" ]]; then
 fi && \
 
 if [[ ${taito_uptime_provider:-} == "gcp" ]] && [[ ! ${taito_uptime_channels:-} ]] ; then
-  if "${taito_util_path}/confirm-execution" "gcp-uptime" "${name}" \
+  if taito::confirm_execution "gcp-uptime" "${name}" \
     "Configure monitoring channels for Google StackDriver"
   then
     echo "Add the following ${taito_messaging_app:-} channels with StackDriver web gui:"
@@ -33,7 +32,7 @@ if [[ ${taito_uptime_provider:-} == "gcp" ]] && [[ ! ${taito_uptime_channels:-} 
     echo
     echo "Press enter to open StackDriver workspace settings in browser"
     read -r
-    "${taito_util_path}/browser" "https://app.google.stackdriver.com/settings/accounts/notifications/slack?project=${taito_zone}"
+    taito::open_browser "https://app.google.stackdriver.com/settings/accounts/notifications/slack?project=${taito_zone}"
     echo "Press enter once done"
     echo
     gcloud -q --project "${taito_zone}" alpha monitoring channels list
@@ -49,5 +48,4 @@ if [[ ${taito_uptime_provider:-} == "gcp" ]] && [[ ! ${taito_uptime_channels:-} 
   fi
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

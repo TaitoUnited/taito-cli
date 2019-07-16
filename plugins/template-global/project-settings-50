@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 
 if [[ ${taito_type:-} == "zone" ]]; then
   # Postgres
@@ -184,5 +183,4 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

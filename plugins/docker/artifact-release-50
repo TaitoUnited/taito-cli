@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_project:?}"
 : "${taito_project_path:?}"
 : "${taito_container_registry:?}"
@@ -36,5 +35,4 @@ else
   "$taito_plugin_path/util/imagepush" "${image}"
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

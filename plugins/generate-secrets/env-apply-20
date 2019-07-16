@@ -1,14 +1,12 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 name="${1}"
 
-if "${taito_util_path}/confirm-execution" "generate-secrets" "${name}" \
+if taito::confirm_execution "generate-secrets" "${name}" \
     "Generate secrets"; then
   # shellcheck disable=SC1090
   . "${taito_plugin_path}/util/create" true
 fi && \
 
-# Call next command on command chain. Exported variables:
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

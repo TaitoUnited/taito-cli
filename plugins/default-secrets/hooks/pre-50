@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_env:?}"
 : "${taito_project_path:?}"
 : "${taito_command:?}"
@@ -42,5 +41,4 @@ if ( [[ ${taito_command} == "env-apply" ]] || \
   fi
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

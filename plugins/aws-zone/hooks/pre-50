@@ -1,6 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 
@@ -10,5 +8,4 @@ if [[ $taito_command == "zone-"* ]]; then
   "${taito_cli_path}/plugins/aws/util/auth"
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

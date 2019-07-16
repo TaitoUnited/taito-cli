@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_project_path:?}"
 
 filename="${1:?}"

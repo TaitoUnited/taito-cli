@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_target_env:?}"
 : "${taito_branch:?}"
 : "${taito_organization:?}"
@@ -69,5 +68,4 @@ if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
   )
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

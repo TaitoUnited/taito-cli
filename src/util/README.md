@@ -1,3 +1,3 @@
 # Utils
 
-Common utils that plugins may use to implement their functionality.
+Executable files for calling taito functions from non-bash plugin implementations.

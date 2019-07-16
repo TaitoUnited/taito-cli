@@ -1,16 +1,14 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 name=${1}
 
 if [[ -n "${kubernetes_name:-}" ]]; then
-  if "${taito_util_path}/confirm-execution" "gcp-build-notifications" "${name}" \
+  if taito::confirm_execution "gcp-build-notifications" "${name}" \
     "Destroy gcp build notifications"
   then
     "${taito_plugin_path}/util/teardown-build-slack-notifications"
   fi
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

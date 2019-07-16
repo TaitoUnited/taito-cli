@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_command:?}"
 
 if [[ ${taito_command} == "zone-"* ]]; then
@@ -9,5 +8,4 @@ if [[ ${taito_command} == "zone-"* ]]; then
   export HELM_HOST=127.0.0.1:44134
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

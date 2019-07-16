@@ -3,7 +3,6 @@
 echo "'project migrate' command under construction"
 exit 1
 
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${template_default_source_git:?}"
 
@@ -38,7 +37,7 @@ echo
 echo "Please wait."
 rm -rf "./template-tmp"
 mkdir "./template-tmp"
-"${taito_util_path}/execute-on-host-fg" "
+taito::execute_on_host_fg "
   set -e
   export GIT_PAGER=''
   git clone -q -b master --single-branch --depth 1 \
@@ -59,5 +58,4 @@ mkdir "./template-tmp"
   taito ${taito_options:-} project migrate continue
 "
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

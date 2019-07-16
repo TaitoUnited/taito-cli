@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_enabled_plugins:?}"
 
 if [[ " ${taito_enabled_plugins} " != *" gcp "* ]]; then
@@ -10,5 +9,4 @@ else
   echo "gcp plugin enabled. let gcp plugin authenticate."
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

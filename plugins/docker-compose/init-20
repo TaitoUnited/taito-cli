@@ -9,7 +9,7 @@ if [[ "${taito_env}" != "local" ]] || [[ "${switches}" != *" --clean "* ]]; then
 else
   echo "Cleaning database container(s)"
   (
-    all=$("$taito_util_path/get-targets-by-type" database)
+    all=$(taito::print_targets_of_type database)
     databases=("${taito_target:-$all}")
     for database in ${databases[@]}
     do
@@ -25,7 +25,7 @@ else
       dir_name="${dir_name##*/}"
 
       compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
-      "${taito_util_path}/execute-on-host" "
+      taito::execute_on_host "
         docker-compose -f $compose_file stop ${pod:?}
         docker-compose -f $compose_file rm --force ${pod:?}
         docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
@@ -41,5 +41,4 @@ else
   )
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 
@@ -11,5 +10,4 @@ else
   echo "See helm releases with '--all'"
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

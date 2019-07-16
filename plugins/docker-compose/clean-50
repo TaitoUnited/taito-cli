@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 if [[ ${taito_target:-} ]] && [[ "${taito_targets:-}" != *"${taito_target}"* ]]; then
@@ -16,7 +15,7 @@ elif [[ ${taito_target:-} ]]; then
 
   # echo "NOTE: You must run 'taito stop' first or else clean fails"
   compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
-  "${taito_util_path}/execute-on-host-fg" "
+  taito::execute_on_host_fg "
     docker-compose -f $compose_file stop ${pod:?}
     docker-compose -f $compose_file rm --force ${pod:?}
     docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
@@ -27,9 +26,8 @@ else
   echo "Docker will remove images and volumes after taito-cli has exited"
 
   compose_file=$("$taito_plugin_path/util/prepare-compose-file" false)
-  "${taito_util_path}/execute-on-host-fg" \
+  taito::execute_on_host_fg \
     "docker-compose -f $compose_file down --rmi 'local' --volumes --remove-orphans"
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

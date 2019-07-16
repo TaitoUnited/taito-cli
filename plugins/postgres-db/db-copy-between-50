@@ -4,7 +4,6 @@ echo "TODO: Does not work yet. Use 'taito db dump:ENV file.sql' and"
 echo "'taito db import:ENV file.sql' instead"
 exit 1
 
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${taito_dest_env:?}"
@@ -17,7 +16,7 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   dest="${taito_dest_env}"
   username="${1:-postgres}"
 
-  "$taito_util_path/confirm" \
+  taito::confirm \
     "Copying ${source} to ${dest}. Do you want to continue?"
 
   db_prefix=${database_name%_*}
@@ -28,7 +27,6 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   dump_file="${taito_project_path}/tmp/dump.sql"
   mkdir -p "${taito_project_path}/tmp" &> /dev/null
   rm -f "${dump_file}" &> /dev/null
-  # TODO use: . "${taito_util_path}/read-project-taito-config" "${source}"
   echo "TODO implement: set user/password/database/host/port for source database"
   exit 1
   "${taito_plugin_path}/util/psql" "" "-f ${dump_file}" "pg_dump" && \
@@ -66,5 +64,4 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
   rm -f "${dump_file}"
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

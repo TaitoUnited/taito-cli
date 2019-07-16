@@ -1,9 +1,8 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 
 name=${1}
 
-if [[ "${kubernetes_name}" ]] && "${taito_util_path}/confirm-execution" "aws" "${name}" \
+if [[ "${kubernetes_name}" ]] && taito::confirm_execution "aws" "${name}" \
   "Configure AWS credentials for CI/CD pipeline"
 then
   echo "Your CI/CD requires AWS access keys with the following settings and"
@@ -26,7 +25,7 @@ then
   echo
   echo "Press enter to open the AWS IAM console for retrieving the access keys"
   read -r
-  "${taito_util_path}/browser" "https://console.aws.amazon.com/iam/home?#home"
+  taito::open_browser "https://console.aws.amazon.com/iam/home?#home"
   echo
   echo "Now add AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) to your"
   echo "CI/CD pipeline according to your CI/CD provider instructions. If you"
@@ -51,5 +50,4 @@ then
   read -r
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

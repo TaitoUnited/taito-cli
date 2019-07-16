@@ -1,6 +1,5 @@
 #!/bin/bash
 
-: "${taito_util_path:?}"
 
 if [[ "${1}" == "-c"* ]]; then
   collection="${2}"
@@ -15,5 +14,4 @@ taito_secrets_url=gs://TODO/secrets/${collection}
 gsutil ls "${taito_secrets_url}" | \
   sed -e "s|${taito_secrets_url}/||" | grep "${filter}" && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

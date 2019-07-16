@@ -1,10 +1,9 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_env:?}"
 
 name=${1}
 
-if "${taito_util_path}/confirm-execution" "terraform" "${name}" \
+if taito::confirm_execution "terraform" "${name}" \
   "Apply changes by running terraform scripts"
 then
   (
@@ -17,7 +16,7 @@ then
       echo "from your local disk once the state has been transferred to a remote"
       echo "backend."
       echo
-      "$taito_util_path/confirm" "Do you want to continue anyway?" no
+      taito::confirm "Do you want to continue anyway?" no
     fi
 
     export TF_LOG_PATH="./terraform.log"
@@ -31,7 +30,7 @@ then
     terraform apply && \
 
     if [[ "${taito_zone_initial_database_password:-}" ]] && \
-       "${taito_util_path}/confirm-execution" "" "" \
+       taito::confirm_execution "" "" \
          "Change database master password"
     then
       echo
@@ -50,7 +49,7 @@ then
       if [[ ${databases_link} ]]; then
         echo "Press enter to open the web console at ${databases_link}"
         read -r
-        "${taito_util_path}/browser" "${databases_link}"
+        taito::open_browser "${databases_link}"
       fi
       echo "Press enter once the password has been changed"
       read -r
@@ -58,5 +57,4 @@ then
   )
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

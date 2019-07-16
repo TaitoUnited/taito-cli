@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_env:?}"
 
 # TODO: support for '--reset'

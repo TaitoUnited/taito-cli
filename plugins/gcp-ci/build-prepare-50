@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_env:?}"
 : "${taito_vc_repository:?}"
 : "${taito_container_registry:?}"
@@ -33,5 +32,4 @@ else
   echo "exist" > ./taitoflag_images_exist
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

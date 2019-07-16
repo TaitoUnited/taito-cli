@@ -1,7 +1,5 @@
 #!/bin/sh
-: "${taito_util_path:?}"
 
-"$taito_util_path/replace-variables" "$@"
+taito::substitute_variable_values_in_file "$@"
 
-# Call next command on command chain
-"$taito_util_path/call-next" "$@"
+taito::call_next "${@}"

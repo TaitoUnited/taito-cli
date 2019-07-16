@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_target:?}"
 
@@ -10,7 +9,6 @@ dest="${2:?}"
 . "${taito_plugin_path}/util/determine-pod" && \
 
 docker_cmd="docker cp ${pod:?}:${source} ${dest}"
-"${taito_util_path}/execute-on-host-fg" "${docker_cmd}"
+taito::execute_on_host_fg "${docker_cmd}"
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 if [[ "${1}" == "-c"* ]]; then
@@ -27,7 +26,7 @@ if [[ "${name}" == "" ]]; then
   read -r name
 fi
 
-if "$taito_util_path/confirm" "Generate a random password?"; then
+if taito::confirm "Generate a random password?"; then
   # TODO better tool for this?
   password=$(openssl rand -base64 30 | sed -e 's/[^a-zA-Z0-9]/a/g')
   password2=${password}
@@ -88,5 +87,4 @@ fi && \
 # Clean up
 rm -f "${cipher_path}" && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

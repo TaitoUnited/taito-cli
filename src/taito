@@ -1,5 +1,4 @@
-#!/bin/bash
-# NOTE: This bash script is run inside docker container.
+#!/bin/bash -e
 
 # Resolve paths
 # NOTE: duplicate with ./taito (taito_cli_path must be resolved before
@@ -7,6 +6,7 @@
 export taito_home_path="${TAITO_HOME:-$HOME}"
 export taito_cli_path
 export taito_src_path
+export taito_lib_path
 export taito_util_path
 export taito_project_path
 taito_cli_path=$(
@@ -20,12 +20,15 @@ taito_cli_path=$(
   dir=$(dirname "${source}")
   echo "${dir%/src}"
 )
-taito_src_path="${taito_cli_path}/src" && \
-taito_util_path="${taito_cli_path}/src/util" && \
-taito_project_path=$("${taito_src_path}/resolve-project-path") && \
+taito_src_path="${taito_cli_path}/src"
+# shellcheck source=core/core.bash
+. "${taito_src_path}/core/core.bash"
+taito_lib_path="${taito_cli_path}/src/lib"
+taito_util_path="${taito_cli_path}/src/util"
+taito_project_path=$(taito::core::print_project_path)
 
 # Set working directory
-cd "${taito_project_path}" && \
+cd "${taito_project_path}"
 
 # Execute
 "${taito_src_path}/execute-command" "${@}"

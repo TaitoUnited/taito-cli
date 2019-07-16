@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 
@@ -7,15 +6,15 @@ name=${1}
 
 if [[ "${taito_env}" != "local" ]]; then
   (
-    all=$("$taito_util_path/get-targets-by-type" database)
+    all=$(taito::print_targets_of_type database)
     databases=("${taito_target:-$all}")
     for database in ${databases[@]}
     do
       export taito_target="${database}"
-      . "${taito_util_path}/read-database-config" "${database}" && \
+      . "${taito_util_path}/read_database_config.bash" "${database}" && \
 
       if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
-        if "${taito_util_path}/confirm-execution" "mysql" "${name}" \
+        if taito::confirm_execution "mysql" "${name}" \
           "Delete mysql database ${database_name}"
         then
           # Create a subshell to contain password
@@ -33,5 +32,4 @@ if [[ "${taito_env}" != "local" ]]; then
   )
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

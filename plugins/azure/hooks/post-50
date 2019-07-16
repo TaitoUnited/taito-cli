@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
   echo
@@ -8,5 +7,4 @@ if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]; then
   echo "TODO implement"
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

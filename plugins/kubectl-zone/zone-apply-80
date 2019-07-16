@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 name=${1}
@@ -7,7 +6,7 @@ name=${1}
 "${taito_cli_path}/plugins/kubectl/util/use-context"
 
 # TODO: Already stopped on gcp?
-# if "${taito_util_path}/confirm-execution" "kubectl-dashboard" "${name}" \
+# if taito::confirm_execution "kubectl-dashboard" "${name}" \
 #   "Stop dashboard of Kubernetes as it is not needed in most cloud setups"
 # then
 #   kubectl scale --replicas=0 --namespace kube-system deployment/kubernetes-dashboard || :
@@ -17,13 +16,13 @@ name=${1}
 
 # TODO: Only needed if database manager and github token are saved on Kubernetes.
 # But extra namespace does not matter either.
-# if "${taito_util_path}/confirm-execution" "kubectl-devops-namespace" "${name}" \
+# if taito::confirm_execution "kubectl-devops-namespace" "${name}" \
 #   "Create 'devops' namespace on Kubernetes"
 # then
 #   "${taito_plugin_path}/../kubectl/util/ensure-namespace" devops
 # fi
 
-# if "${taito_util_path}/confirm-execution" "kubectl-cloudsql-secret" "${name}" \
+# if taito::confirm_execution "kubectl-cloudsql-secret" "${name}" \
 #   "Create service acccount for Cloud SQL access and save it to devops namespace"
 # then
 #   echo && \
@@ -42,7 +41,7 @@ name=${1}
 
 # TODO: GitHub token handling should be implemented somewhere else, but might be
 # needed on Kubernetes for some setups.
-# if "${taito_util_path}/confirm-execution" "kubectl-github-secret" "${name}" \
+# if taito::confirm_execution "kubectl-github-secret" "${name}" \
 #   "ONLY FOR PRODUCTION CLUSTER: Save GitHub token to devops namespace for tagging releases"
 # then
 #   echo && \
@@ -56,7 +55,7 @@ name=${1}
 #     --from-file=token=tmp/github
 # fi
 
-if "${taito_util_path}/confirm-execution" "kubectl" "${name}" \
+if taito::confirm_execution "kubectl" "${name}" \
   "Configure DNS"
 then
   echo
@@ -102,5 +101,4 @@ then
   fi
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

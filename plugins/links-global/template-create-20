@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 
 if [[ "${link_global_urls:-}${link_urls:-}" == *" conventions="* ]]; then
@@ -8,5 +7,4 @@ if [[ "${link_global_urls:-}${link_urls:-}" == *" conventions="* ]]; then
   "${taito_plugin_path}/util/open" "conventions" "open" "browser" ":"
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

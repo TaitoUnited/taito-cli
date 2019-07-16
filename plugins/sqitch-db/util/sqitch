@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_env:?}"
 : "${database_name:?}"
 : "${database_host:?}"
@@ -34,7 +33,7 @@ fi
 
   if [[ "${taito_env}" != "local" ]];then
     # TODO do not reference postgres plugin util directly
-    . "${taito_util_path}/database-username-password"
+    . "${taito_util_path}/database_username_password.bash"
     if [[ "${database_build_password}" != "" ]]; then
       database_user="${database_build_username}"
       sqitch_password="${database_build_password}"

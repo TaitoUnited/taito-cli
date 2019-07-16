@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_project_path:?}"
 
 # Skip link generation for template projects and non-projects

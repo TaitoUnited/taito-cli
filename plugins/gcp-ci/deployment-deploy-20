@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_zone:?}"
 
@@ -21,5 +20,4 @@ if [[ -z $1 ]]; then
   echo "Using tag: ${taito_target_image}"
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

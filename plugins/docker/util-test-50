@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project:?}"
 : "${taito_env:?}"
@@ -12,8 +11,7 @@ test_filter="${2}"
 
 # TODO: should be in taito-cli core only?
 if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
-  # Call next command on command chain
-  "${taito_util_path}/call-next" "${@}"
+  taito::call_next "${@}"
   exit 0
 fi
 
@@ -123,14 +121,13 @@ if [[ ! -z ${commands} ]]; then
     echo "${compose_pre_cmd}${commands}"
     echo "-----------------"
   fi
-  "${taito_util_path}/execute-on-host-fg" "${compose_pre_cmd}${commands}"
+  taito::execute_on_host_fg "${compose_pre_cmd}${commands}"
 fi && \
 
 # Stop all test containers started by docker-compose
 if [[ ${docker_compose} == "true" ]]; then
-  "${taito_util_path}/execute-on-host-fg" \
+  taito::execute_on_host_fg \
     "docker-compose -f ./docker-compose-test.yaml down || echo OK"
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

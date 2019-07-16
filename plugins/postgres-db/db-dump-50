@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_env:?}"
 : "${database_name:?}"
@@ -15,5 +14,4 @@ if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
     "-f ${dump_file}" "pg_dump"
 fi && \
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

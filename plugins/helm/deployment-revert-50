@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_namespace:?}"
 : "${taito_project:?}"
@@ -14,5 +13,4 @@ revision="${1:-0}"
     "${taito_project}-${taito_target_env}" "${revision}"
 )
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

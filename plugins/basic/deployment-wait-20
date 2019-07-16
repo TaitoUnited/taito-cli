@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_app_url:?}"
 : "${taito_target_env:?}"
 
@@ -15,8 +14,7 @@ if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
   echo
 else
   extra_sleep_secs=${ci_test_wait:-35}
-  # Call next command on command chain
-  "${taito_util_path}/call-next" "${@}"
+  taito::call_next "${@}"
   echo
   echo
   echo -e "${NOTEs}"

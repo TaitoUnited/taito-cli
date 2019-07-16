@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_env:?}"
 : "${taito_plugin_path:?}"
 
@@ -39,5 +38,4 @@ echo
   gcsfuse --dir-mode 777 --file-mode 777 "${@}" "${bucket}" "${mount_path}"
 )
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_project_path:?}"
 : "${taito_command:?}"
@@ -26,8 +25,7 @@ if [[ ${taito_command:-} == "env-destroy" ]] || \
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}basic${H1e}"
   echo "Deleting ${taito_target_env:?} environment of ${taito_project:?}"
-  "${taito_util_path}/confirm" "Do you really want to continue?" no
+  taito::confirm "Do you really want to continue?" no
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

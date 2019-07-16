@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 : "${run_scripts_location:?}"
@@ -15,10 +14,9 @@ if [[ -f ${script} ]]; then
   export taito_hook_command_executed=true
   echo
   echo -e "${taito_command_context_prefix:-}${H1s}run${H1e}"
-  if "$taito_util_path/confirm" "Run script ${script}?" yes yes; then
-    "${taito_util_path}/ssh-agent" "${script}" "${@}"
+  if taito::confirm "Run script ${script}?" yes yes; then
+    taito::execute_with_ssh_agent "${script}" "${@}"
   fi
 fi
 
-# Call next command on command chain
-"${taito_util_path}/call-next" "${@}"
+taito::call_next "${@}"

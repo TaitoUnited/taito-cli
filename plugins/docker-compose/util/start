@@ -1,5 +1,4 @@
 #!/bin/bash
-: "${taito_util_path:?}"
 : "${taito_plugin_path:?}"
 : "${taito_command:?}"
 : "${taito_project:?}"
@@ -74,7 +73,7 @@ if [[ "${switches}" == *"--init"* ]] && [[ " ${taito_targets:-} " == *" database
 fi
 
 # TODO: remove taito-run-env (backwards compatibility -> only used in old projects)
-"${taito_util_path}/execute-on-host-fg" "
+taito::execute_on_host_fg "
   if [ -f ./taito-run-env ]; then . ./taito-run-env; fi
   ${conditional_commands}
   ${setenv}docker-compose -f $compose_file ${compose_cmd} ${flags}
