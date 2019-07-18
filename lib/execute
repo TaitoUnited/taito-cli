@@ -8,6 +8,6 @@
 #
 # ------------------------------------------------------------------
 
-# shellcheck source=../lib/all.bash
-. "${taito_lib_path:?}/all.bash"
+# shellcheck source=bash/all.bash
+. "${taito_lib_path:?}/bash/all.bash"
 ${1} "${@}"

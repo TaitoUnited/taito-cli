@@ -128,12 +128,12 @@ taito_cli_path=$(
 )
 taito_plugins_path="${taito_cli_path}/plugins"
 taito_src_path="${taito_cli_path}/src"
-taito_lib_path="${taito_cli_path}/src/lib"
+taito_lib_path="${taito_cli_path}/lib"
 taito_util_path="${taito_cli_path}/src/util"
 
 # Load core library
 # shellcheck source=../src/lib/host.bash
-. "${taito_lib_path}/host.bash"
+. "${taito_lib_path}/bash/host.bash"
 # shellcheck source=../src/core.bash
 . "${taito_src_path}/core.bash"
 
