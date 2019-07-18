@@ -1,7 +1,7 @@
 #!/bin/bash
 # NOTE: This bash script is run also directly on host. Keep it macOS compatible.
 
-taito::confirm () {
+function taito::confirm () {
   local text=${1:-Do you want to continue?}
   local default_reply=${2:-yes}
   local default_ci=$1
@@ -36,7 +36,7 @@ taito::confirm () {
   fi
 }
 
-taito::export_database_config () {
+function taito::export_database_config () {
   # TODO: add support for print
   # local print_config=${1:-false}
 
@@ -128,7 +128,7 @@ taito::export_database_config () {
   fi
 }
 
-taito::print_targets_of_type () {
+function taito::print_targets_of_type () {
   local target_type=$1
   local targets
   local type_variable_name

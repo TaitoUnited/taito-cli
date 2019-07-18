@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run also directly on host.
 
-taito::core::export_project_config () {
+function taito::core::export_project_config () {
   export taito_env="${1:-$taito_env}"
   export taito_target_env="${taito_target_env:-$taito_env}"
 
@@ -25,7 +25,7 @@ taito::core::export_project_config () {
   export taito_build_targets=${taito_build_targets:-$taito_targets}
 }
 
-taito::core::export_user_config () {
+function taito::core::export_user_config () {
   export taito_env="${1:-$taito_env}"
   export taito_target_env="${taito_target_env:-$taito_env}"
 
@@ -55,7 +55,7 @@ taito::core::export_user_config () {
   fi
 }
 
-taito::core::print_command_with_internal_syntax () {
+function taito::core::print_command_with_internal_syntax () {
   args=("$@")
 
   # Convert space syntax to internal hyphen syntax
@@ -83,7 +83,7 @@ taito::core::print_command_with_internal_syntax () {
 }
 
 # Resolve project root folder by the location of taito-config.sh
-taito::core::print_project_path () {
+function taito::core::print_project_path () {
   current_path="${PWD}"
   while [[ "${PWD}" != "/" ]]; do
     ls | grep taito-config.sh > /dev/null && break; cd ..;
@@ -95,11 +95,11 @@ taito::core::print_project_path () {
   fi
 }
 
-taito::core::sort_commands_by_priority () {
+function taito::core::sort_commands_by_priority () {
   tr ' ' '\n' | sed 's/^\(.*\)\(..\)$/\2\1\2/' | sort | sed 's/^..\(.*\)$/\1/'
 }
 
-taito::core::upgrade () {
+function taito::core::upgrade () {
   set +e
   # Make sure that mounted directories exist
   echo "Checking mount directories"

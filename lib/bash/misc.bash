@@ -66,7 +66,7 @@ function taito::show_file () {
 }
 export -f taito::show_file
 
-taito::select_item () {
+function taito::select_item () {
   local title="${1}"
   local question="${2}"
   local items=("${3}")
@@ -100,7 +100,7 @@ taito::select_item () {
 }
 export -f taito::select_item
 
-taito::show_db_proxy_details () {
+function taito::show_db_proxy_details () {
   taito::expose_db_user_credentials
 
   echo "- host: 127.0.0.1"
@@ -120,7 +120,7 @@ taito::show_db_proxy_details () {
 }
 export -f taito::show_db_proxy_details
 
-taito::substitute_variable_values_in_file () {
+function taito::substitute_variable_values_in_file () {
   # TODO: REMOVE THESE. ALWAYS USE PIPING!
   local source_file=$1
   local dest_file=$2

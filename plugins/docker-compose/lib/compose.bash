@@ -87,7 +87,7 @@ function docker-compose::start () {
     # TODO: how to avoid hardcoded 'sleep 40'? DB container does not provide health checks.
     conditional_commands="
       ${conditional_commands}
-      init() {
+      function init() {
         count=0
         sleep 5
         while [ \$count -lt 3000 ] && \

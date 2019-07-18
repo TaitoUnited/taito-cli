@@ -1,6 +1,6 @@
 #!/bin/bash
 
-taito::commit_changes () {
+function taito::commit_changes () {
   if [[ $RUNNING_TESTS == true ]]; then
     exit 0
   fi

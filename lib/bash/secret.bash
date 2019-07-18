@@ -1,6 +1,6 @@
 #!/bin/bash
 
-taito::expose_db_user_credentials () {
+function taito::expose_db_user_credentials () {
   local print_creds=${1:-false}
 
   database_app_username="${database_app_username:-${database_name}_app}"
@@ -47,7 +47,7 @@ export -f taito::expose_db_user_credentials
 
 # Reads secret info to environment variables. The secret in question is
 # determined by the given ${secret_index}"
-taito::expose_secret_by_index () {
+function taito::expose_secret_by_index () {
   local secret_index=${1}
 
   # TODO: refactor
@@ -78,7 +78,7 @@ taito::expose_secret_by_index () {
 }
 export -f taito::expose_secret_by_index
 
-taito::expose_secret_by_name () {
+function taito::expose_secret_by_name () {
   local find_secret_name=${1}
   local print_creds=${2:-false}
 
@@ -106,7 +106,7 @@ taito::expose_secret_by_name () {
 }
 export -f taito::expose_secret_by_name
 
-taito::print_random_string () {
+function taito::print_random_string () {
   local length=$1
   local value
 
@@ -119,7 +119,7 @@ taito::print_random_string () {
 }
 export -f taito::print_random_string
 
-taito::print_random_words () {
+function taito::print_random_words () {
   local num_of_words=$1
 
   cat /usr/share/dict/words | sort -R | head -n $num_of_words | \

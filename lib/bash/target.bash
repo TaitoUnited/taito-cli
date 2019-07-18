@@ -1,7 +1,7 @@
 #!/bin/bash
 # NOTE: This bash script is run also directly on host.
 
-taito::is_target_of_type () {
+function taito::is_target_of_type () {
   local target_type=$1
   local target=$2
   local type_variable_name="taito_target_type_${target}"
@@ -9,12 +9,12 @@ taito::is_target_of_type () {
 }
 export -f taito::is_target_of_type
 
-taito::is_current_target_of_type () {
+function taito::is_current_target_of_type () {
   taito::is_target_of_type "${1}" "${taito_target:?}"
 }
 export -f taito::is_current_target_of_type
 
-taito::print_current_target_type () {
+function taito::print_current_target_type () {
   local type_variable_name="taito_target_type_${taito_target:-}"
   echo "${!type_variable_name:-container}"
 }

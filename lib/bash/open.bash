@@ -1,6 +1,6 @@
 #!/bin/bash
 
-taito::open_browser () {
+function taito::open_browser () {
   local url="${1:?}"
 
   if [[ "${taito_host_uname}" == *"_NT"* ]]; then
@@ -13,7 +13,7 @@ taito::open_browser () {
 }
 export -f taito::open_browser
 
-taito::open_browser_fg () {
+function taito::open_browser_fg () {
   local url="${1:?}"
 
   if [[ "${taito_host_uname}" == *"_NT"* ]]; then

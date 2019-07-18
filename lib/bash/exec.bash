@@ -1,6 +1,6 @@
 #!/bin/bash
 
-taito::call_next () {
+function taito::call_next () {
   local chain=(${taito_command_chain[@]})
   local next="${chain[0]}"
   local name
@@ -26,7 +26,7 @@ export -f taito::call_next
 
 # Executes the given shell commands on host
 # NOTE: executes in container if ci mode is enabled.
-taito::execute_on_host () {
+function taito::execute_on_host () {
   local commands="${*:1}"
   local sleep_seconds="${2}"
 
@@ -62,7 +62,7 @@ export -f taito::execute_on_host
 
 # Executes the given shell commands on host
 # NOTE: executes in container if ci mode is enabled.
-taito::execute_on_host_fg () {
+function taito::execute_on_host_fg () {
   local commands="${*:1}"
 
   echo "+ ${commands}" > "${taito_vout}"
@@ -92,7 +92,7 @@ taito::execute_on_host_fg () {
 }
 export -f taito::execute_on_host_fg
 
-taito::execute_with_ssh_agent () {
+function taito::execute_with_ssh_agent () {
   local commands=$1
   local use_agent=true
   local runner
@@ -111,13 +111,13 @@ taito::execute_with_ssh_agent () {
 }
 export -f taito::execute_with_ssh_agent
 
-taito::skip_to_next () {
+function taito::skip_to_next () {
   taito::call_next "${@}"
   exit $?
 }
 export -f taito::skip_to_next
 
-taito::skip_if_not () {
+function taito::skip_if_not () {
   taito::is_current_target_of_type "${1}" || taito::skip_to_next "${@:2}"
 }
 export -f taito::skip_if_not
