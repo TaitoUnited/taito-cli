@@ -133,22 +133,17 @@ taito::print_targets_of_type () {
   local targets
   local type_variable_name
 
-  if [[ $target_type == "database" ]] && [[ ${taito_databases:-} ]]; then
-    # For backwards compatibility
-    targets="$taito_databases"
-  else
-    targets=""
-    for target in ${taito_targets:-}
-    do
-      type_variable_name="taito_target_type_$target"
-      if [[ ${!type_variable_name} == "$target_type" ]] || ( \
-           [[ ! ${!type_variable_name} ]] && \
-           [[ $target_type == "container" ]] \
-         ); then
-        targets="$targets $target"
-      fi
-    done
-  fi
+  targets=""
+  for target in ${taito_targets:-}
+  do
+    type_variable_name="taito_target_type_$target"
+    if [[ ${!type_variable_name} == "$target_type" ]] || ( \
+         [[ ! ${!type_variable_name} ]] && \
+         [[ $target_type == "container" ]] \
+       ); then
+      targets="$targets $target"
+    fi
+  done
 
   echo "$targets"
 }

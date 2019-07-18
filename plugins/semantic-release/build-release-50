@@ -2,13 +2,6 @@
 : "${taito_target_env:?}"
 : "${taito_project_path:?}"
 
-# NOTE: for backwards compatibility. can be removed later.
-if [[ -z "${secret_value_github_buildbot_token:-}" ]]; then
-  secret_value_github_buildbot_token="${secret_value_git_github_build:-}"
-fi
-if [[ -z "${secret_value_github_buildbot_token:-}" ]]; then
-  secret_value_github_buildbot_token="${secret_value_ext_github_build:-}"
-fi
 if [[ $secret_value_github_buildbot_token == "secret_file:"* ]]; then
   secret_value_github_buildbot_token="$(cat ${secret_value_github_buildbot_token#secret_file:})"
 fi

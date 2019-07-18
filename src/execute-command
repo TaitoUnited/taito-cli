@@ -272,15 +272,6 @@ if [[ ${taito_command_context:-} ]]; then
   taito_command_context_prefix="${H1Ps}${taito_command_context}${H1Pe} "
 fi
 
-# For backwards compatibility --> TODO remove!
-if [[ ! "${taito_version}" ]]; then
-  if [[ "${taito_secrets}" == *"git.github.build"* ]]; then
-    export taito_version="0"
-  else
-    export taito_version="1"
-  fi
-fi
-
 # Concatenate all secrets
 if [[ "${taito_env}" != "local" ]]; then
   export taito_secrets="${taito_secrets} ${taito_remote_secrets:-}"
@@ -348,32 +339,6 @@ if [[ -f ${taito_project_path}/taito-secrets ]]; then
   # shellcheck disable=SC1091
   . ${taito_project_path}/taito-secrets
 fi
-
-# TODO remove: for backwards compatibility
-export taito_company="${taito_company:-$taito_customer}"
-if [[ -n "${postgres_name:-}" ]]; then
-  export database_instance="${postgres_name:-}"
-  export database_name="${postgres_database:-}"
-  export database_host="${postgres_host:-}"
-  export database_port="${postgres_port:-}"
-fi
-
-# TODO remove: for backwards compatibility
-export kubectl_name=${kubectl_name:-$kubernetes_name}
-export kubectl_replicas=${kubectl_replicas:-$kubernetes_replicas}
-export kubectl_cluster=${kubectl_cluster:-$kubernetes_cluster}
-export kubectl_user=${kubectl_user:-$kubernetes_user}
-export kubernetes_name=${kubectl_name}
-export kubernetes_replicas=${kubectl_replicas}
-export kubernetes_cluster=${kubectl_cluster}
-export kubernetes_user=${kubectl_user}
-export gcloud_project=${gcloud_project:-$taito_zone}
-export gcloud_region=${gcloud_region:-$taito_provider_region}
-export gcloud_zone=${gcloud_zone:-$taito_provider_zone}
-export taito_provider_org_id=${taito_provider_org_id:-$gcloud_org_id}
-export taito_provider_region=${taito_provider_region:-$gcloud_region}
-export taito_provider_zone=${taito_provider_zone:-$gcloud_zone}
-export taito_container_registry=${taito_container_registry:-$taito_image_registry}
 
 # TODO ^^^^^ clean up code ^^^^^
 
@@ -579,29 +544,10 @@ done
 
 eval "$secret_exports"
 
-# NOTE: For backwards compatibility (plugins were renamed)
-export taito_global_plugins="${taito_global_plugins//gcloud/gcp}"
-export taito_plugins="${taito_plugins//gcloud/gcp}"
-export taito_plugins="${taito_plugins// git / git-global }"
-export taito_plugins="${taito_plugins// dev-secrets / default-secrets }"
-export taito_plugins="${taito_plugins// gcp-builder:-local/ gcp-builder:-local gcp-ci:-local}"
-
-# NOTE: For backwards compatibility (provider was renamed)
-export taito_orig_provider="${taito_provider}"
-export taito_provider="${taito_provider//gcloud/gcp}"
-export taito_uptime_provider="${taito_uptime_provider//gcloud/gcp}"
-
 # Determine enabled plugins
 enabled_plugins=""
 plugins_string=$(echo "${taito_plugins:-} ${taito_global_plugins:-} basic " \
   | awk '{for (i=1;i<=NF;i++) if (!a[$i]++) printf("%s%s",$i,FS)}{printf("\n")}')
-# TODO remove this (backwards compatibility)
-plugins_string="${plugins_string/postgres /postgres-db }"
-# TODO remove this (sqitch added for backwards compatibility)
-if [[ "${plugins_string}" == *"postgres-db"* ]] && \
-   [[ "${plugins_string}" != *"sqitch-db"* ]]; then
-  plugins_string="sqitch-db ${plugins_string}"
-fi
 # Hack: move google-global to first because it modifies link urls
 if [[ "${plugins_string}" == *" google-global "* ]]; then
   plugins_string="google-global ${plugins_string/ google-global / }"

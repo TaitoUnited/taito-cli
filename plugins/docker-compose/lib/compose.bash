@@ -104,9 +104,7 @@ function docker-compose::start () {
     "
   fi
 
-  # TODO: remove taito-run-env (backwards compatibility -> only used in old projects)
   taito::execute_on_host_fg "
-    if [ -f ./taito-run-env ]; then . ./taito-run-env; fi
     ${conditional_commands}
     ${setenv}docker-compose -f $compose_file ${compose_cmd} ${flags}
   "

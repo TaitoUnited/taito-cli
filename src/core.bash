@@ -23,19 +23,6 @@ taito::core::export_project_config () {
 
   # Set defaults
   export taito_build_targets=${taito_build_targets:-$taito_targets}
-
-  # For backwards compatibility
-  # TODO remove
-  export taito_plugins="${taito_plugins/ secrets/ generate-secrets}"
-  export taito_plugins="${taito_plugins/ semantic / semantic-release }"
-
-  # For backwards compatibility
-  # TODO remove
-  export dockerfile=Dockerfile
-  if [[ ${taito_repo_name:-} ]]; then
-    export taito_vc_repository=${taito_repo_name:?}
-    export taito_container_registry=${taito_registry:-}
-  fi
 }
 
 taito::core::export_user_config () {

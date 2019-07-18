@@ -22,19 +22,6 @@ function docker::build () {
     local image_path=${5}
   fi
 
-  # NOTE: For backwards compatibility
-  if [[ "${2}" == "eu.gcr.io"* ]]; then
-    local image_path=${2}
-    local build_context=${3}
-    local service_dir=${4}
-  fi
-
-  # NOTE: For backwards compatibility
-  if [[ "${4}" == "eu.gcr.io"* ]]; then
-    local image_path=${4}
-    local dockerfile=""
-  fi
-
   if [[ "${build_context}" == "" ]]; then
     local build_context="./${name}"
   fi
