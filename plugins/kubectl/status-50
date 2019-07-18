@@ -1,0 +1,70 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_namespace:?}"
+: "${taito_target_env:?}"
+
+all=false
+kubernetes_params=""
+args=( "$@"  )
+while [ $# -gt 0 ]
+do
+  case $1 in
+    --all)
+      all=true
+      shift || :
+      ;;
+    --all-namespaces)
+      kubernetes_params="--all-namespaces"
+      shift || :
+      ;;
+  esac
+done
+
+kubectl::use_context
+
+if [ $all = true ]; then
+  taito::print_title "Node details"
+  ($taito_setv; kubectl describe nodes)
+
+  taito::print_title "Nodes"
+  ($taito_setv; kubectl top nodes 2> /dev/null)
+
+  taito::print_title "Ingress"
+  ($taito_setv; kubectl get ingress $kubernetes_params)
+
+  taito::print_title "Jobs"
+  ($taito_setv; kubectl get jobs $kubernetes_params)
+fi
+
+taito::print_title "Cron jobs"
+($taito_setv; kubectl get cronjobs $kubernetes_params)
+
+if [ "${taito_version:-}" -ge "1" ]; then
+  taito::print_title "Pods"
+  (
+    $taito_setv
+    kubectl get pods $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
+  )
+
+  taito::print_title "Resource usage"
+  ($taito_setv; kubectl top pod $kubernetes_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME")
+else
+  taito::print_title "Pods"
+  ($taito_setv; kubectl get pods $kubernetes_params)
+
+  taito::print_title "Resource usage"
+  ($taito_setv; kubectl top pod $kubernetes_params 2> /dev/null)
+fi
+
+if [ $all = false ] || [ ! $kubernetes_params ]; then
+  taito::print_title "More info"
+fi
+if [ $all = false ]; then
+  echo "See more info with '--all'"
+fi
+if [ ! $kubernetes_params ]; then
+  echo "See all namespaces with '--all-namespaces'"
+fi
+
+taito::call_next "${args[@]}"

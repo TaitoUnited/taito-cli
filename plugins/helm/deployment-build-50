@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+kubectl::use_context
+echo "TODO implement: build, push and deploy single container"
+
+taito::call_next "${@}"

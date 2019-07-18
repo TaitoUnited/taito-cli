@@ -1,0 +1,48 @@
+#!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+kubectl::use_context
+
+taito::print_title "Cluster"
+kubectl get componentstatus
+
+taito::print_title "Nodes"
+kubectl describe nodes
+
+taito::print_title "Top nodes"
+kubectl top nodes 2> /dev/null
+
+taito::print_title "Ingresses$"
+kubectl get ingress --all-namespaces
+
+taito::print_title "Services"
+kubectl get services --all-namespaces
+
+taito::print_title "Pods"
+kubectl get pods --all-namespaces
+
+taito::print_title "Top pods"
+kubectl top pods --all-namespaces 2> /dev/null
+
+taito::print_title "Load Balancer IPs"
+kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.spec.loadBalancerIP,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
+  --no-headers --all-namespaces 2> /dev/null | \
+  grep -v "<none>.*<none>" | \
+  sed s/\\s*\<none\>\\s*//g
+echo
+echo "Your load balancer IP addresses are presented above. You should configure"
+echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"
+echo "if you have not done so already. Example DNS entry:"
+echo
+echo "          A  *.mydomain.com  ->  123.123.123.123"
+echo
+echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to"
+echo "make sure that a static IP has been reserved for the hostname. Then resolve"
+echo "the IP by running 'taito -- host HOSTNAME' and add a DNS entry for that IP."
+echo
+echo "TODO: For AWS use the lowest IP:s only (e.g. starting with 3.) as they seem"
+echo "to be static."
+echo
+
+taito::call_next "${@}"

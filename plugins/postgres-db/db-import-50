@@ -1,0 +1,21 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_env:?}"
+: "${database_name:?}"
+: "${database_host:?}"
+: "${database_port:?}"
+
+if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
+  filename="${1:?Filename not given}"
+  username="${2}"
+  echo "Importing ${1}"
+
+  (
+    cd "${taito_current_path}"
+    flags="-f ${filename}"
+    postgres::connect "${username}" "${flags}"
+  )
+fi
+
+taito::call_next "${@}"

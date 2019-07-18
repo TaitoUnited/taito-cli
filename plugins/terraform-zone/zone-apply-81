@@ -1,0 +1,12 @@
+#!/bin/bash -e
+: "${taito_env:?}"
+: "${taito_organization:?}"
+: "${taito_provider_region:?}"
+
+(
+  cd terraform || exit 1
+  echo "Displaying some zone details."
+  terraform output
+)
+
+taito::call_next "${@}"

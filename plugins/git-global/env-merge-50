@@ -1,0 +1,76 @@
+#!/bin/bash -e
+: "${taito_environments:?Environments not set in taito config}"
+: "${taito_target_env:?}"
+: "${taito_env_merge_source:?}"
+: "${taito_env_merge_dest:?}"
+: "${taito_env_merges:?}"
+
+if ! git rev-parse --is-inside-work-tree &> /dev/null; then
+  # Not a git repository -> call next command on command chain and exit
+  taito::call_next "${@}"
+  exit
+fi
+
+# Parse arguments
+git_push_options=""
+while [[ $# -gt 0 ]]
+do
+  if [[ ${1} == "--force" ]]; then
+    git_push_options="--force-with-lease"
+  fi
+  shift || :
+done
+
+# Execute all merges
+source_found=""
+for merge in ${taito_env_merges[@]}; do
+  if [[ "${merge}" == "${taito_env_merge_source}->"* ]] || \
+     [[ "${source_found}" ]]
+  then
+    source_found=true
+    s="${merge%->*}"
+    d="${merge##*->}"
+
+    # Check if project has been fully configured
+    if [[ ${d} == "master" ]] && \
+       [[ ${taito_project:-} != *"-template" ]] && \
+       [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]
+    then
+      echo
+      echo "--------------------------------------------------------"
+      echo "WARNING: This project has not yet been fully configured."
+      echo "See the '[ ] All done' checkboxes in CONFIGURATION.md."
+      echo "--------------------------------------------------------"
+    fi
+
+    # TODO execution should end if one merge fails
+
+    taito::execute_on_host_fg "\
+    (read -t 1 -n 1000 discard || :)
+    echo -e \"${H2s}Merging ${s} -> ${d}${H2e}\"
+    read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm
+    echo
+    if ! [[ \${confirm:-y} =~ ^[Yy]*$ ]]; then \
+      echo
+      exit 130; \
+    fi
+    echo Merging...
+    git fetch origin ${s}:${d}
+    git push --no-verify ${git_push_options} origin ${d}
+    echo
+    if [[ \"${taito_ci_provider:-}\" == \"local\" ]]; then
+      echo ----------------------------------------------------------------------
+      echo TIP: Run \\'taito ci run:${d/master/prod}\\' to execute CI/CD locally.
+      echo ----------------------------------------------------------------------
+      echo
+    fi || \
+    (echo && echo 'ERROR: MERGING FAILED!!!!' && echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d} --> TODO --force does not work yet?') \
+    "
+  fi
+  if [[ "${merge}" == *"->${taito_env_merge_dest}" ]]; then
+    break
+  fi
+done
+echo
+
+taito::call_next "${@}"

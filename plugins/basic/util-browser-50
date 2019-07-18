@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+taito::open_browser "${1}"
+taito::call_next "${@}"

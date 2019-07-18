@@ -1,3 +1,0 @@
-# Ambassador
-
-TODO Ambassador plugin

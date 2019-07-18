@@ -1,0 +1,73 @@
+#!/bin/bash -e
+: "${taito_env:?}"
+: "${taito_organization:?}"
+: "${taito_provider_region:?}"
+
+taito::confirm \
+  "Replace placeholders with real values in taito_config and terraform/*" || \
+  taito::skip_to_next "${@}"
+
+(
+  cd terraform || exit 1
+
+  # For AWS: determine hex string for region from database endpoint URL
+  if [[ ${taito_provider:-} == "aws" ]]; then
+    database=
+    instance=
+    if [[ ${postgres_instances:-} ]]; then
+      database=postgres
+      instance=${postgres_instances:-}
+    elif [[ ${mysql_instances:-} ]]; then
+      database=mysql
+      instance=${mysql_instances:-}
+    fi
+    if [[ "${database}" ]] && \
+       [[ "${taito_provider_region_hexchars:-}" == "TAITO_PROVIDER_REGION_HEXCHARS" ]]; then
+      echo "Detemining hexadecimal string for region ${taito_provider_region}"
+      hexchars=$(terraform output ${database}_instance_endpoint | \
+        sed "s/$instance\\.\\(.*\\)\\.$taito_provider_region.*/\\1/" \
+      )
+      if [[ $hexchars ]]; then
+        export taito_provider_region_hexchars=$hexchars
+        echo "$hexchars"
+      else
+        echo "WARNING: Could not determine hexadecimal string"
+      fi
+      echo
+    fi
+  fi
+
+  echo "Replacing hardcoded example values in taito_config and terraform/*"
+  echo TAITO_ORGANIZATION
+  sed -i "s/TAITO_ORGANIZATION/$taito_organization/g" ./*.tf ./*.yaml
+  if [[ "${taito_provider_region_hexchars:-}" ]]; then
+    echo TAITO_PROVIDER_REGION_HEXCHARS
+    sed -i "s/TAITO_PROVIDER_REGION_HEXCHARS/$taito_provider_region_hexchars/g" ./*.tf ./*.yaml ../taito-config.sh
+  fi
+  echo TAITO_PROVIDER_REGION
+  sed -i "s/TAITO_PROVIDER_REGION/$taito_provider_region/g" ./*.tf ./*.yaml
+  if [[ "${taito_zone_state_bucket:-}" ]]; then
+    echo TAITO_ZONE_STATE_BUCKET
+    sed -i "s/TAITO_ZONE_STATE_BUCKET/$taito_zone_state_bucket/g" ./*.tf ./*.yaml
+  fi
+  if [[ "${mysql_instances:-}" ]]; then
+    echo MYSQL_INSTANCES
+    sed -i "s/MYSQL_INSTANCES/$mysql_instances/g" ./*.tf ./*.yaml
+  else
+    echo "Removing mysql configuration from terraform/*.yaml"
+    sed -i "/mysql/d" ./*.yaml
+    sed -i "/3306/d" ./*.yaml
+    sed -i "/MYSQL_INSTANCES/d" ./*.tf ./*.yaml
+  fi
+  if [[ "${postgres_instances:-}" ]]; then
+    echo POSTGRES_INSTANCES
+    sed -i "s/POSTGRES_INSTANCES/$postgres_instances/g" ./*.tf ./*.yaml
+  else
+    echo "Removing postgres configuration from terraform/*.yaml"
+    sed -i "/postgres/d" ./*.yaml
+    sed -i "/5432/d" ./*.yaml
+  fi
+  echo
+)
+
+taito::call_next "${@}"

@@ -1,0 +1,33 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_namespace:?}"
+: "${taito_project:?}"
+
+taito::skip_if_not container "${@}"
+
+container="${1}"
+
+kubectl::use_context
+kubectl::expose_pod_and_container true
+echo pod: "${pod}"
+echo container: "${container}"
+
+if [[ -z "${pod}" ]]; then
+  echo
+  echo "kubectl: Please give pod name as argument:"
+  echo
+  (taito::executing_start; kubectl get pods)
+else
+  # Kubernetes
+  taito::print_title "Desciption"
+  (taito::executing_start; kubectl describe pod "${pod}")
+  echo
+  taito::print_title "Logs"
+  if ! (taito::executing_start; kubectl logs -f --tail=400 "${pod}" "${container}")
+  then
+    exit 1
+  fi
+fi
+
+taito::call_next "${@}"

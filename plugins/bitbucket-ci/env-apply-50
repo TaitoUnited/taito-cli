@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+taito::confirm "Enable build pipelines for ${taito_project:?}" || \
+  taito::skip_to_next "${@}"
+
+echo "Enable build pipelines and configure build notifications (e.g. Slack)"
+echo "in BitBucket web user interface."
+echo
+echo "Press enter to open BitBucket build pipeline management on web your web browser."
+read -r
+taito::open_browser \
+  "https://${taito_vc_repository_url:?}/admin/addon/admin/pipelines/settings"
+echo "Press enter when done"
+read -r
+
+taito::call_next "${@}"

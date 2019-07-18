@@ -1,0 +1,19 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::skip_if_not container "${@}"
+
+source_port=$1
+dest_port=${2:-$source_port}
+
+if taito::is_current_target_of_type container; then
+  kubectl::use_context
+  kubectl::expose_pod_and_container
+  (
+    taito::executing_start;
+    kubectl port-forward "${pod}" "$source_port:$dest_port" --address 0.0.0.0
+  )
+fi
+
+taito::call_next "${@}"

@@ -1,0 +1,33 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_zone:?}"
+
+( [[ ${taito_uptime_provider:-} == "gcp" ]] && \
+  [[ ! ${taito_uptime_channels:-} ]] && \
+  taito::confirm "Configure monitoring channels for Google StackDriver"
+) || taito::skip_to_next "${@}"
+
+echo "Add the following ${taito_messaging_app:-} channels with StackDriver web gui:"
+echo
+echo "- ${taito_messaging_builds_channel:-}"
+echo "- ${taito_messaging_critical_channel:-}"
+echo "- ${taito_messaging_monitoring_channel:-}"
+echo
+echo "Press enter to open StackDriver workspace settings in browser"
+read -r
+taito::open_browser "https://app.google.stackdriver.com/settings/accounts/notifications/slack?project=${taito_zone}"
+echo "Press enter once done"
+echo
+gcloud -q --project "${taito_zone}" alpha monitoring channels list
+echo
+echo "Channels are shown above. Configure taito_uptime_channels setting in"
+echo "taito-config.sh using the ${taito_messaging_monitoring_channel} channel name"
+echo "For example:"
+echo
+echo "taito_uptime_channels=\"projects/${taito_zone}/notificationChannels/1234567890\""
+echo
+echo "Press enter once done"
+read -r
+
+taito::call_next "${@}"

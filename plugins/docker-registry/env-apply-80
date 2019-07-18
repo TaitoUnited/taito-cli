@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+taito::confirm "Configure Docker Hub credentials for CI/CD pipeline" || \
+  taito::skip_to_next "${@}"
+
+echo "TODO: instructions"
+echo
+echo "Press enter when done."
+read -r
+
+taito::call_next "${@}"

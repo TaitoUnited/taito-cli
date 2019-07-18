@@ -1,0 +1,27 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+: "${template_name:?}"
+: "${template_source_git:?}"
+
+export template="${template_name}"
+export template_project_path="${PWD}"
+
+function cleanup {
+  # Delete temporary template files and configs
+  rm -rf "${template_project_path}/template-tmp"
+}
+trap cleanup EXIT
+
+# Execute create upgrade of template
+(
+  set -e
+  cd "${template_project_path}/template-tmp/${template}"
+  template-global::init upgrade
+)
+
+# TODO: remove once all projects have been upgraded
+rm -f taitoless || :
+
+taito::call_next "${@}"

@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+taito::confirm "Rotate secrets" || \
+  taito::skip_to_next "${@}"
+
+echo "TODO: rotate secrets"
+
+taito::call_next "${@}"

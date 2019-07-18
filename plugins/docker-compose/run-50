@@ -1,0 +1,12 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::skip_if_not container "${@}"
+
+(
+  export docker_run=true
+  docker-compose::exec "${@}"
+)
+
+taito::call_next "${@}"

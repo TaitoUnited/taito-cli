@@ -1,0 +1,26 @@
+#!/bin/bash -e
+: "${taito_env:?}"
+: "${taito_vc_repository:?}"
+: "${taito_container_registry:?}"
+
+image_tag=${1}
+
+if [[ ${taito_container_registry_provider:-} == "local" ]]; then
+  taito::expose_ssh_opts
+
+  images=$(
+    ssh ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" "
+      sudo bash -c '
+        sudo docker images | grep ${taito_container_registry} | grep [[:space:]]${image_tag}[[:space:]]
+      '
+    "
+  )
+
+  if [[ ${images} ]]; then
+    echo "exist" > ./taitoflag_images_exist
+    echo "Images already exist on host:"
+    echo "${images}"
+  fi
+fi
+
+taito::call_next "${@}"

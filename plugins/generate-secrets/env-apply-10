@@ -1,0 +1,9 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::confirm "Generate secrets" || \
+  taito::skip_to_next "${@}"
+
+generate-secrets::create_and_export true
+taito::call_next "${@}"

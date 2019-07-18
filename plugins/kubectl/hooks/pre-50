@@ -1,0 +1,56 @@
+#!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_command:?}"
+: "${taito_env:?}"
+: "${taito_mode:?}"
+
+# Start database proxy
+if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
+   [[ ${taito_command_requires_database:-} == "true" ]]; then
+  proxy_running=$(pgrep "kubectl")
+  taito::print_plugin_title
+  if [[ "${proxy_running}" == "" ]]; then
+    echo "Starting db proxy"
+    kubectl::use_context
+    kubectl::db_proxy_start true
+  else
+    echo "Not Starting db proxy. It is already running."
+  fi
+fi
+
+# Determine which secrets should be fetched from Kubernetes
+# TODO: tighter filter
+fetch_secrets=
+secret_filter=
+if [[ $kubectl_secrets_retrieved != true ]]; then
+  if [[ ${taito_command} == "build-prepare" ]] || \
+     [[ ${taito_command} == "build-release" ]]; then
+    fetch_secrets="true"
+    secret_filter="git"
+  elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
+       [[ ${taito_command} == "db-proxy" ]]; then
+    fetch_secrets="true"
+    secret_filter="db"
+  elif [[ ${taito_command} == "test" ]] &&
+       [[ "stag canary prod" != *"${taito_env}"* ]]; then
+    fetch_secrets="true"
+    secret_filter=
+  fi
+fi
+
+# Fetch secrets from Kubernetes
+if [[ ${fetch_secrets} ]]; then
+  taito::print_plugin_title
+  echo "Getting secrets from Kubernetes"
+  kubectl::use_context
+  kubectl::export_secrets true ${secret_filter}
+
+  if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
+    kubectl::save_proxy_secret_to_disk
+  fi
+
+  export kubectl_secrets_retrieved=true
+fi
+
+taito::call_next "${@}"

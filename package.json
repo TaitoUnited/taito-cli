@@ -31,7 +31,7 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "if [[ $taito_mode != 'ci' ]]; then npm run precommit:branch && npm run precommit:lint; fi",
-      "pre-push": "if [[ $taito_mode != 'ci' ]]; then npm run verify; fi"
+      "pre-push": "if [[ $taito_mode != 'ci' ]]; then echo npm run verify; fi"
     }
   },
   "commitlint": {

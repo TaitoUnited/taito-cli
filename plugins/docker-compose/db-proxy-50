@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+if [[ ${taito_target_env:-} == "local" ]]; then
+  echo "No database proxy required. Just connect with the following details:"
+  taito::show_db_proxy_details
+  echo
+fi
+
+taito::call_next "${@}"

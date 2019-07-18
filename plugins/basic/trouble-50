@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+taito::show_file trouble.txt taito-cli-first
+taito::call_next "${@}"

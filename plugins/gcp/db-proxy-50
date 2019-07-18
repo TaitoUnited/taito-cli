@@ -1,0 +1,13 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+database_port="${1:-$database_port}"
+
+echo "Database connection details:"
+taito::show_db_proxy_details
+echo
+gcp::db_proxy_start false
+gcp::db_proxy_stop
+
+taito::call_next "${@}"

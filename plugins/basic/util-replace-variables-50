@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+taito::substitute_variable_values_in_file "$@"
+taito::call_next "${@}"

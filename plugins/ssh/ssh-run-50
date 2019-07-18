@@ -1,0 +1,7 @@
+#!/bin/bash -e
+: "${taito_host_uname:?}"
+
+taito::expose_ssh_opts
+ssh "${ssh_opts}" "${@}"
+
+taito::call_next "${@}"

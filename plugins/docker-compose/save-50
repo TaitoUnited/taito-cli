@@ -1,0 +1,15 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::skip_if_not container "${@}"
+
+docker-compose::expose_pod_and_container
+echo container: ${pod:?}
+
+taito::execute_on_host \
+  "docker ps; docker commit ${pod:?} ${pod:?}-savetus; echo ------"
+taito::execute_on_host_fg \
+  "docker image tag ${pod:?}-savetus ${pod:?}"
+
+taito::call_next "${@}"

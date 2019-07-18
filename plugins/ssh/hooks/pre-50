@@ -1,0 +1,28 @@
+#!/bin/bash -e
+
+# Runs a process if ssh_forward_for_XXX setting is set for one of the
+# plugins in the current command chain
+export ssh_proxy_running="${ssh_proxy_running:-false}"
+plugin_suffices=$(set -o posix; set | cut -f1 -d= | grep "ssh_forward_for_" | \
+  sed "s/ssh_forward_for_//" | tr '\n' ' ')
+for plugin_suffix in ${plugin_suffices[@]}; do
+  if [[ $ssh_proxy_running == "false" ]] && \
+     [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
+    taito::print_plugin_title
+    taito::expose_ssh_opts
+    forward_env_var_name="ssh_forward_for_${plugin_suffix}"
+    forward_value="${!forward_env_var_name}"
+    forward_value=$(echo "$forward_value" | \
+      taito::substitute_variable_values_in_file)
+    (
+      taito::executing_start
+      sh -c "ssh ${ssh_opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 60"
+    ) || (
+      echo "SSH connection failed with options ${ssh_opts} ${forward_value}."
+      exit 1
+    )
+    ssh_proxy_running="true"
+  fi
+done
+
+taito::call_next "${@}"

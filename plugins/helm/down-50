@@ -1,0 +1,18 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+kubectl::use_context
+
+echo -e "Deleting ${taito_project}-${taito_target_env}."
+  "This may also delete data that\\nhas been stored on a persistent volume."
+taito::confirm "Do you really want to continue?" no
+
+(
+  taito::executing_start
+  helm::run delete --purge "${taito_project}-${taito_target_env}"
+)
+
+taito::call_next "${@}"

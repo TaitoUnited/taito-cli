@@ -1,0 +1,10 @@
+#!/bin/bash -e
+# shellcheck source=../../aws/lib/all.bash
+. "${taito_cli_path:?}/plugins/aws/lib/all.bash"
+
+if [[ ${taito_command:?} == "zone-"* ]]; then
+  taito::print_plugin_title
+  aws::authenticate
+fi
+
+taito::call_next "${@}"

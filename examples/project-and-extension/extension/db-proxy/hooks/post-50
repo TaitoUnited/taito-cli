@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+if [[ "${taito_command}" == "db-"* ]]; then
+  taito::print_plugin_title
+  echo "Stopping db proxy for ${database_name}"
+  echo
+fi
+
+# Call next command on command chain
+taito::call_next "${@}"

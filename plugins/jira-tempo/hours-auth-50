@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+taito::confirm "Authenticate to JIRA" || \
+  taito::skip_to_next "${@}"
+
+# hours_app=${1}
+echo "TODO implement. Use jq, python or node for json handling."
+
+taito::call_next "${@}"

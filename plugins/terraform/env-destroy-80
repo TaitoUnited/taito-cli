@@ -1,0 +1,18 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_env:?}"
+
+# Cloud provider
+terraform::run destroy "${taito_provider:-}" "${taito_env}"
+
+# Uptime provider
+[[ ${taito_uptime_provider:-} ]] && \
+  terraform::run destroy "${taito_uptime_provider}-uptime" "${taito_env}"
+
+# Targets (databases, etc)
+for target in ${taito_targets:-}; do
+  terraform::run destroy "${target}" "${taito_env}" "${target}/terraform"
+done
+
+taito::call_next "${@}"

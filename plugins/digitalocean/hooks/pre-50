@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+echo "TODO: implement. See AWS and GCP for an example"
+
+taito::call_next "${@}"

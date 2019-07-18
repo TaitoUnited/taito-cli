@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+echo "Delete servers manually. Press enter when done."
+read -r
+
+taito::call_next "${@}"

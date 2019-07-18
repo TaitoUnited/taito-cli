@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+taito::execute_on_host_fg \
+  "pipenv lock"
+
+taito::call_next "${@}"

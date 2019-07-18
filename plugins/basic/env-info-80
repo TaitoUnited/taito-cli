@@ -1,0 +1,8 @@
+#!/bin/bash -e
+: "${taito_env:?}"
+
+echo "Domain: ${taito_domain:-}"
+echo "IP addresses:"
+getent hosts "${taito_domain:-$taito_default_domain}" | awk '{ print $1 }'
+
+taito::call_next "${@}"

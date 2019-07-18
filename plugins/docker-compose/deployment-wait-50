@@ -1,0 +1,24 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# NOTE: Skip for now
+taito::call_next "${@}"
+
+# TODO implement
+# echo
+# echo "Waiting for docker to start."
+# counter=1
+# up=""
+# while [[ ${counter} -le 120 ]] && [[ ! ${up} ]]
+# do
+#   compose_file=$(docker-compose::prepare_docker_compose_yaml false)
+#   if [[ ${counter} -gt 50 ]]; then
+#     echo "Waiting for docker to start ${counter}."
+#     docker-compose -f $compose_file ps
+#   fi
+#   up=$(docker-compose -f $compose_file ps | grep " Up " | grep -E "\-server|\-client")
+#   sleep "${ci_wait_test_sleep:-5}"
+#   ((counter++))
+# done
+# sleep "${ci_wait_test_sleep:-5}"

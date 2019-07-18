@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+echo "TODO implement. Use jq, python or node for json handling."
+
+taito::call_next "${@}"

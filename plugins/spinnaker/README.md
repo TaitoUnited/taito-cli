@@ -1,3 +1,0 @@
-# Spinnaker
-
-TODO Spinnaker plugin

@@ -1,0 +1,13 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+kubectl::use_context
+(
+  taito::executing_start
+  helm::run history "${taito_project}-${taito_target_env}"
+)
+
+taito::call_next "${@}"

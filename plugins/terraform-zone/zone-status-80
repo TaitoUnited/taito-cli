@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+(cd terraform && terraform output)
+
+taito::call_next "${@}"

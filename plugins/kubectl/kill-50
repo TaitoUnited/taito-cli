@@ -1,0 +1,13 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_namespace:?}"
+: "${taito_project:?}"
+
+taito::skip_if_not container "${@}"
+
+kubectl::use_context
+kubectl::expose_pods
+(taito::executing_start; kubectl delete pod ${pods})
+
+taito::call_next "${@}"

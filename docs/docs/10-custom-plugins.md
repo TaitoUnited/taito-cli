@@ -29,26 +29,26 @@ This is how you implement your own custom plugin:
    ```
 
    ```shell
-   #!/bin/sh
+   #!/bin/bash -e
    # shellcheck disable=SC2034
    taito_image="taitounited/taito-cli:latest"
    taito_plugins="npm"
    ```
 
-3. Add some executable commands to one of the plugins as `.sh`, `.py`, `.js` or `.x` files). Optionally add also documentation in help.txt, trouble.txt and README.md files. With the #pre and #post prefixes you can define that your command should be run in pre or post phase instead of the normal execute phase (more on that later).
+3. Add some executable commands to one of the plugins as ``, `.py`, `.js` or `.x` files). Optionally add also documentation in help.txt, trouble.txt and README.md files. With the #pre and #post prefixes you can define that your command should be run in pre or post phase instead of the normal execute phase (more on that later).
 
    ```shell
    my-plugin/
      resources/
        my-script.sql
      util/
-       my-util.sh
+       my-util
      my-command.bats
-     my-command.sh
+     my-command
      env-apply#post.bats
-     env-apply#post.sh
+     env-apply#post
      env-apply#pre.bats
-     env-apply#pre.sh
+     env-apply#pre
      help.txt
      README.md
      trouble.txt
@@ -59,8 +59,8 @@ This is how you implement your own custom plugin:
    ```
    my-plugin/
      hooks/
-       pre.sh
-       post.sh
+       pre
+       post
    ```
 
 5. Add the extension directory to your _taito_global_extensions_ or _taito_extensions_ definition and the plugin to your _taito_global_plugins_ or _taito_plugins_ definition. You can reference extension either by file path or git url.
@@ -72,7 +72,7 @@ This is how you implement your own custom plugin:
 
 6. Implement unit tests for your commands with [bats](https://github.com/bats-core/bats-core). See `.bats` files under `taito-cli/plugins` as an example. You can run your unit tests with the `taito unit` command.
 
-7. Optionally provide autocomplete and descriptions support for you commands by adding `autocomplete.sh` and `descriptions.sh` to the root folder of your extension. See [autocomplete.sh](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/autocomplete.sh) and [descriptions.sh](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/descriptions.sh) as an example.
+7. Optionally provide autocomplete and descriptions support for you commands by adding `autocomplete` and `descriptions` to the root folder of your extension. See [autocomplete](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/autocomplete) and [descriptions](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/descriptions) as an example.
 
 Now you should be able to call `taito my command`. And when you call `taito env apply`, your `env-apply#pre` and `env-apply#post` commands will be called before and after all `env-apply` commands defined by other enabled plugins. And if you defined also pre and post hooks, they will be called before and after any commands despite the command name.
 
@@ -83,7 +83,7 @@ Note that you can also add a project specific extension to your project subdirec
 
 NOTE: Always remember to call the next command of the command chain at some point during command execution (usually at the end) unless you want to stop the command chain execution:
 
-    "${taito_util_path}/call-next.sh" "${@}"
+    taito::call_next "${@}"
 
 NOTE: Do not call another command directly from another. It's error prone; you'll easily mess up the command chain execution, and also clarity of user friendly info messages. Place the common logic shared by multiple commands in a separate util instead.
 
@@ -104,17 +104,17 @@ You can use these environment variables to provide additional output in verbose 
 
     echo "Additional debug output" > ${taito_dout}
     echo "Additional verbose output" > ${taito_vout}
-    (${taito_setv}; kubectl get pods) # The command will printed in verbose mode
+    (taito::executing_start; kubectl get pods) # The command will printed in verbose mode
 
 ### Running commands on host
 
-If your plugin needs to run some commands on host machine, execute `"${taito_util_path}/execute-on-host.sh" COMMANDS` to run them immediately in the background. Alternatively you can use the `"${taito_util_path}/execute-on-host-fg.sh" COMMANDS` to run the commands on foreground after the taito container has exited. Note that if some of the commands might require user input, you must run the commands on foreground.
+If your plugin needs to run some commands on host machine, execute `taito::execute_on_host COMMANDS` to run them immediately in the background. Alternatively you can use the `taito::execute_on_host_fg COMMANDS` to run the commands on foreground after the taito container has exited. Note that if some of the commands might require user input, you must run the commands on foreground.
 
 Currently this mechanism is used e.g. for executing docker commands on host and launching browser.
 
 ### Committing changes to the Taito CLI container image
 
-If your plugin needs to save some data permanently on the container image, execute `"${taito_util_path}/docker-commit.sh"`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
+If your plugin needs to save some data permanently on the container image, execute `taito::commit_changes`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
 
 ### Command chains and passing data
 

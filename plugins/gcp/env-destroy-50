@@ -1,0 +1,14 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ "${taito_target_env:?}" == "prod" ]]; then
+  echo "NOTE: Delete these manually:"
+  echo "- DNS settings"
+  echo "- Optional: Custom log alert rules defined for the project"
+  echo
+  echo "Press enter when done"
+  read -r
+fi
+
+taito::call_next "${@}"

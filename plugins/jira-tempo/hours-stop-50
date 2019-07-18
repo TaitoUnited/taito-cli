@@ -1,0 +1,8 @@
+#!/bin/bash -e
+: "${taito_hours_description:?}"
+
+echo "TODO implement. Use jq, python or node for json handling."
+echo "Project id: ${jira_project_id:-}"
+echo "Description: ${taito_hours_description}"
+
+taito::call_next "${@}"

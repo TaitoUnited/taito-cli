@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [[ ${*} == "ps -a -q" ]]; then
   echo CONTAINER_ID_1

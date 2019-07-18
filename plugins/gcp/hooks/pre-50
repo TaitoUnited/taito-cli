@@ -1,0 +1,44 @@
+#!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_command:?}"
+
+# Authenticate automatically if $GOOGLE_APPLICATION_CREDENTIALS has been set
+if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
+  account=$(gcloud config get-value account 2> /dev/null)
+  if [[ ! $account ]]; then
+    taito::print_plugin_title
+    echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
+    gcloud auth activate-service-account \
+      "--key-file=$GOOGLE_APPLICATION_CREDENTIALS" # --project=...
+    # Force kube login on test proxy port forwarding
+    force_kube_login_hack="true"
+  fi
+fi
+
+# Authenticate on Kubernetes
+if [[ $force_kube_login_hack == "true" ]] || ( \
+     [[ "${taito_mode:-}" == "ci" ]] && \
+     [[ ${kubernetes_name:-} ]] && \
+     [[ ! -d "${HOME}/.kube" ]] && \
+     [[ ! -d "/root/.kube" ]] \
+   ); then
+  taito::print_plugin_title
+  echo "Getting GCP credentials for Kubernetes access"
+  gcp::authenticate_on_kubernetes
+fi
+
+# Start database proxy
+if [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
+   [[ ${taito_command_requires_database:-} == "true" ]]; then
+  proxy_running=$(pgrep "cloud_sql_proxy" || :)
+  taito::print_plugin_title
+  if [[ "${proxy_running}" == "" ]]; then
+    echo "Starting db proxy"
+    gcp::db_proxy_start true
+  else
+    echo "Not Starting db proxy. It is already running."
+  fi
+fi
+
+taito::call_next "${@}"

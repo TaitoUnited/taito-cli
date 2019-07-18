@@ -1,0 +1,10 @@
+#!/bin/bash -e
+# shellcheck source=../terraform/lib/all.bash
+. "${taito_plugin_path:?}/../terraform/lib/all.bash"
+
+taito::confirm "Destroy zone by running terraform scripts" || \
+  taito::skip_to_next "${@}"
+
+terraform::run_zone destroy
+
+taito::call_next "${@}"

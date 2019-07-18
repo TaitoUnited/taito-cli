@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# NOTE: This bash script is run also directly on host.
+set -e
 
 # NOTE: deprecated (moved to bin/taito)
 # TODO: remove this file once everyone has reinstalled taito

@@ -1,0 +1,41 @@
+#!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# Set default region just in case
+export AWS_DEFAULT_REGION="${taito_provider_region:?}"
+
+# Authentication for CI
+if [[ "${taito_mode:-}" == "ci" ]]; then
+  # Ensure that AWS credentials exist
+  if [[ ! "${AWS_ACCESS_KEY_ID}" ]]; then
+    taito::print_plugin_title
+    echo
+    echo "ERROR: AWS_ACCESS_KEY_ID environment variable not set."
+    echo "Configure AWS_ACCESS_KEY_ID in your CI/CD settings."
+    exit 1
+  fi
+  if [[ ! "${AWS_SECRET_ACCESS_KEY}" ]]; then
+    taito::print_plugin_title
+    echo
+    echo "ERROR: AWS_SECRET_ACCESS_KEY environment variable not set"
+    echo "Configure AWS_SECRET_ACCESS_KEY in your CI/CD settings."
+    exit 1
+  fi
+
+  # Container registry (ECR) authentication
+  if [[ ${taito_command_requires_container_registry:?} == "true" ]]; then
+    taito::print_plugin_title
+    echo "Getting credentials for Elastic Container Registry"
+    aws::authenticate_on_ecr
+  fi
+
+  # Kubernetes (EKS) authentication
+  if [[ ${taito_command_requires_kubernetes:?} == "true" ]]; then
+    taito::print_plugin_title
+    echo "Getting credentials for Kubernetes"
+    aws::authenticate_on_kubernetes
+  fi
+fi
+
+taito::call_next "${@}"

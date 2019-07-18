@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+taito::commit_changes
+taito::call_next "${@}"

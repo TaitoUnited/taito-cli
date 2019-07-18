@@ -1,0 +1,12 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_project:?}"
+: "${taito_env:?}"
+: "${taito_namespace:?}"
+
+taito::confirm "Delete secrets of from ./secrets/${taito_env}" || \
+  taito::skip_to_next "${@}"
+
+docker-compose::delete_secrets
+taito::call_next "${@}"

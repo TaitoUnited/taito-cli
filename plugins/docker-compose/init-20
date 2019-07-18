@@ -1,0 +1,45 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# TODO: duplicate code with env-apply
+
+options=" ${*} "
+
+if [[ "${taito_env}" != "local" ]] || [[ "${options}" != *" --clean "* ]]; then
+  echo "Not cleaning database containers"
+else
+  echo "Cleaning database container(s)"
+  (
+    all=$(taito::print_targets_of_type database)
+    databases=("${taito_target:-$all}")
+    for database in ${databases[@]}
+    do
+      # TODO: duplicate code with clean
+
+      taito_target=$database
+      docker-compose::expose_pod_and_container
+
+      # Docker-compose uses directory name as image prefix by default
+      dir_name="${taito_host_project_path:-/taito-cli}"
+      # Leave only directory name
+      dir_name="${dir_name##*/}"
+
+      compose_file=$(docker-compose::prepare_docker_compose_yaml false)
+      taito::execute_on_host "
+        docker-compose -f $compose_file stop ${pod:?}
+        docker-compose -f $compose_file rm --force ${pod:?}
+        docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
+        docker-compose -f $compose_file start ${pod:?}
+      "
+    done
+    if [[ ${all} ]]; then
+      sleep 15
+      echo "Waiting for databases to start..."
+      sleep 25
+      echo "Done waiting"
+    fi
+  )
+fi
+
+taito::call_next "${@}"

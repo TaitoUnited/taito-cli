@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+taito::confirm "Execute Kubernetes cluster maintenance" || \
+  taito::skip_to_next "${@}"
+
+echo "TODO confirm and upgrade Kubernetes master"
+echo "TODO confirm and upgrade Kubernetes nodes"
+
+taito::call_next "${@}"

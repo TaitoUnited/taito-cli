@@ -1,0 +1,11 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+
+name=$1
+
+if [[ -z $name ]] || [[ $name == "monitoring" ]]; then
+  echo "Google Stackdriver monitoring channels:"
+  gcloud -q --project "${taito_zone}" alpha monitoring channels list
+fi
+
+taito::call_next "${@}"

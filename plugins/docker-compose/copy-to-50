@@ -1,0 +1,15 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_target:?}"
+
+taito::skip_if_not container "${@}"
+
+source="${1:?}"
+dest="${2:?}"
+
+docker-compose::expose_pod_and_container
+docker_cmd="docker cp ${source} ${pod:?}:${dest}"
+taito::execute_on_host_fg "${docker_cmd}"
+
+taito::call_next "${@}"

@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+echo "${taito_environments/prod/master}"
+
+taito::call_next "${@}"

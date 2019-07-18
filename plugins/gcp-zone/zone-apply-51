@@ -1,0 +1,11 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+( [[ -n "${kubernetes_name:-}" ]] && \
+  taito::confirm "Configure gcp build notifications"
+) || taito::skip_to_next "${@}"
+
+gcp-zone::setup-cloud-build-slack-notifications
+
+taito::call_next "${@}"

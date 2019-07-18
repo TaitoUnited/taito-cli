@@ -1,0 +1,10 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_namespace:?}"
+: "${taito_env:?}"
+
+echo "Showing information if required"
+docker-compose::restart_all
+
+taito::call_next "${@}"

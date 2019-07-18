@@ -1,0 +1,9 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::confirm "Destroy gcp build notifications" || \
+  taito::skip_to_next "${@}"
+
+gcp-zone::teardown-cloud-build-slack-notifications
+taito::call_next "${@}"

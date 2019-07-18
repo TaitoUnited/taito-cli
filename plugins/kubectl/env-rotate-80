@@ -1,0 +1,9 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_namespace:?}"
+
+kubectl::use_context
+kubectl::restart-all
+
+taito::call_next "${@}"

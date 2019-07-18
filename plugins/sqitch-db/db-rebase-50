@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+change="${1}"
+sqitch::run rebase "${change}" --set env="'${taito_env}'"
+
+taito::call_next "${@}"

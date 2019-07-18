@@ -1,0 +1,54 @@
+#!/bin/bash -e
+
+source $(dirname "${BASH_SOURCE[0]}")/../libs/output.bash
+source $(dirname "${BASH_SOURCE[0]}")/../libs/error.bash
+source $(dirname "${BASH_SOURCE[0]}")/../libs/lang.bash
+source $(dirname "${BASH_SOURCE[0]}")/../libs/assert.bash
+
+create_temp_dir="${2}"
+taito_plugin_path="${3:-$BATS_TEST_DIRNAME}"
+
+test() {
+  run "${BATS_TEST_DIRNAME}/${1}" "${@:2}"
+}
+
+assert_status() {
+  assert_equal "${status}" "${1}"
+}
+
+assert_executed() {
+  assert_output --partial "executed: ${*} :" || \
+    assert_output --partial "executed: ${*}  :"
+}
+
+assert_executed_count() {
+  count=$(echo "${output:-}" | grep -c executed:)
+  assert_equal "${count}" "${1}"
+}
+
+setup() {
+  # Setup temporary project directory
+  TEST_TMPDIR="${taito_plugin_path}/tmp"
+  if [[ "${create_temp_dir}" == "true" ]]; then
+    mkdir -p "${TEST_TMPDIR}/node_modules"
+    mkdir -p "${TEST_TMPDIR}/client/node_modules"
+    cd "${TEST_TMPDIR}"
+  fi
+
+  # Override some executables with mocks
+  export PATH="${taito_plugin_path}/mocks:${PATH}"
+  export taito_util_path
+  taito_util_path=$(dirname "${BASH_SOURCE[0]}")/../mocks
+
+  # Set some variables
+  export taito_env="local"
+  export taito_vout="/dev/stdout"
+  export taito_dout="/dev/stdout"
+  export taito_skip_override="false"
+  export taito_testing="true"
+}
+
+teardown() {
+  # Delete temporary directory if it exists
+  if [[ -d "${TEST_TMPDIR}" ]]; then rm -rf "${TEST_TMPDIR}"; fi
+}

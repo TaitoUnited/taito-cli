@@ -1,0 +1,16 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+kubectl::use_context
+
+# Wait until all containers have been deployed
+sleep 5
+while [[ -n $(kubectl get pods | grep ContainerCreating) ]]
+do
+  echo "Waiting until all containers have been deployed"
+  sleep 5
+done
+sleep 15
+
+taito::call_next "${@}"

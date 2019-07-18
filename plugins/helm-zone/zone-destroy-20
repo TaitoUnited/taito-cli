@@ -1,0 +1,22 @@
+#!/bin/bash -e
+# shellcheck source=../helm/lib/all.bash
+. "${taito_plugin_path:?}/../hell/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+# Delete Helm charts
+if [[ -d "./helm" ]]; then
+  kubectl::use_context
+  charts=($(cd helm && ls))
+  for chart in ${charts[@]}; do
+    if taito::confirm "Delete helm chart ${chart} from Kubernetes"; then
+      echo "- Deleting chart ${chart} using Helm"
+      (
+        taito::executing_start
+        helm::run delete "${chart}" --purge
+      )
+    fi
+  done
+fi
+
+taito::call_next "${@}"

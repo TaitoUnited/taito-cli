@@ -1,0 +1,6 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+sqitch::run log
+taito::call_next "${@}"

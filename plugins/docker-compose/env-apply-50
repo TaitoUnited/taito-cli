@@ -1,0 +1,12 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_env:?}"
+
+taito::confirm "Save secrets to ./secrets/${taito_env}" || \
+  taito::skip_to_next "${@}"
+
+export docker_compose_skip_restart="true"
+docker-compose::save_secrets
+
+taito::call_next "${@}"

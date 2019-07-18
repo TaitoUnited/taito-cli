@@ -1,0 +1,16 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_namespace:?}"
+
+taito::confirm "Save secrets to Kubernetes" || \
+  taito::skip_to_next "${@}"
+
+kubectl::use_context
+kubectl::ensure_namespace "${taito_namespace}"
+
+kubectl::use_context
+export kubernetes_skip_restart="true";
+kubectl::save_secrets
+
+taito::call_next "${@}"

@@ -1,0 +1,18 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+(
+  all=$(taito::print_targets_of_type database)
+  databases=("${taito_target:-$all}")
+  for database in ${databases[@]}
+  do
+    export taito_target="${database}"
+    taito::export_database_config "${database}"
+
+    echo "Deploying changes to database ${taito_env}"
+    sqitch::deploy "${@}"
+  done
+)
+
+taito::call_next "${@}"

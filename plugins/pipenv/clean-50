@@ -1,0 +1,11 @@
+#!/bin/bash -e
+: "${taito_project_path:?}"
+
+echo "NOTE: Remember to run 'taito install' after clean"
+
+if [[ ! ${taito_target:-} ]] || [[ ${taito_target} == "pipenv" ]]; then
+  taito::execute_on_host_fg \
+    "pipenv uninstall --all"
+fi
+
+taito::call_next "${@}"

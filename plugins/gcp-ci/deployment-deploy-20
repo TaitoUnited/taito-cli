@@ -1,0 +1,24 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+: "${taito_project:?}"
+: "${taito_branch:?}"
+
+if [[ -z $1 ]]; then
+  echo "Fetching latest image tag from build history."
+  # Detetermine target image automatically
+  export taito_target_image
+  taito::executing_start
+  taito_target_image=$(
+    gcloud -q --project "${taito_zone}" builds list \
+      --sort-by="~createTime" --format="value(images)" \
+      --filter=" \
+        status:SUCCESS AND \
+        source.repoSource.repoName~.*${taito_project} AND \
+        source.repoSource.branchName:${taito_branch}" | \
+      head -1 | \
+      sed "s/^.*:\([^;]*\)\(;\|$\)/\1/"
+  )
+  echo "Using tag: ${taito_target_image}"
+fi
+
+taito::call_next "${@}"

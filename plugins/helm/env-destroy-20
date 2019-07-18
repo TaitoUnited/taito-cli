@@ -1,0 +1,17 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+taito::confirm \
+  "Delete and purge helm release ${taito_project}-${taito_target_env}" || \
+  taito::skip_to_next "${@}"
+
+kubectl::use_context
+(
+  taito::executing_start
+  helm::run delete --purge "${taito_project}-${taito_target_env}"
+) || echo "WARNING: Deleting helm release failed. Have you ever deployed?"
+
+taito::call_next "${@}"

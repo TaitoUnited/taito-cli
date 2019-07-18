@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+content=$(cat "${taito_project_path:?}/README.md")
+echo -e "${content}" | cat
+
+taito::call_next "${@}"

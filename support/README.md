@@ -2,10 +2,10 @@
 
 ## Autocompletion for bash
 
-Source the `complete.sh` file in your startup script. For example in your
+Source the `complete` file in your startup script. For example in your
 `~/.bashrc`:
 
-    source ~/xxx/taito-cli/support/bash/complete.sh
+    source ~/xxx/taito-cli/support/bash/complete
 
 Note that on some distributions (e.g. macOS) you need to add the line also to your `~/.bash_profile` file. Alternatively you can source the `~/.bashrc` file in your `~/.bash_profile`: `source ~/.bashrc`.
 

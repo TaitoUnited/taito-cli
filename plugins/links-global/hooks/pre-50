@@ -1,0 +1,19 @@
+#!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_command:?}"
+
+if [[ "${taito_command}" == "open-"* ]]; then
+  mode="open"
+elif [[ "${taito_command}" == "link-"* ]]; then
+  mode="link"
+fi
+link_name=${taito_command:5:99}
+
+if [[ ! -z ${mode} ]]; then
+  if links-global::open_link "${link_name}" "${mode}"; then
+    export taito_hook_command_executed="true"
+  fi
+fi
+
+taito::call_next "${@}"

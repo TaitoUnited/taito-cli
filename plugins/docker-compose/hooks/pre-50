@@ -1,0 +1,19 @@
+#!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_env:?}"
+
+if [[ ${taito_command_requires_database:?} == "true" ]] || \
+   [[ ${taito_command:-} == "db-proxy" ]] || \
+   [[ ${taito_commands_only_chain:-} == *"build-release"* ]] || \
+   [[ ${taito_commands_only_chain:-} == *"artifact-release"* ]]; then
+  if [[ $docker_compose_secrets_retrieved != true ]]; then
+    # TODO fetch db secrets only? does artifact-release still require secrets?
+    taito::print_plugin_title
+    echo "Getting secrets from ./secrets/${taito_env}"
+    docker-compose::export_secrets
+    export docker_compose_secrets_retrieved=true
+  fi
+fi
+
+taito::call_next "${@}"

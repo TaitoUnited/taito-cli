@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+taito::execute_on_host_fg "
+if git rev-parse --is-inside-work-tree &> /dev/null; then
+  git commit ${*}
+fi
+"
+
+taito::call_next "${@}"

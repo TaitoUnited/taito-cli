@@ -1,0 +1,6 @@
+#!/bin/bash -e
+# shellcheck source=../aws/lib/all.bash
+. "${taito_cli_path:?}/plugins/aws/lib/all.bash"
+
+aws::authenticate
+taito::call_next "${@}"

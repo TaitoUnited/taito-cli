@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+taito::execute_on_host_fg "
+if git rev-parse --is-inside-work-tree &> /dev/null; then
+  read -t 1 -n 1000 discard || :
+  read -p \"Create a new commit that reverts the latest commit? [y/N] \" -n 1 -r confirm
+  echo
+  if [[ \${confirm} =~ ^[Yy]$ ]]; then
+    git revert HEAD
+  else
+    echo Cancelled
+  fi
+fi
+"
+
+taito::call_next "${@}"

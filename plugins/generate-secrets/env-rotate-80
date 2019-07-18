@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+echo "Cleaning up secrets from disk"
+generate-secrets::delete_temporary_files
+
+taito::call_next "${@}"

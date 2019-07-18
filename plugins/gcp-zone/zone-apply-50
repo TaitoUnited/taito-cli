@@ -1,0 +1,12 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+( [[ -n "${kubernetes_name:-}" ]] && \
+  taito::confirm "Authenticate to Kubernetes ${kubernetes_name:-}"
+) || taito::skip_to_next "${@}"
+
+gcp::authenticate_on_kubernetes
+taito::commit_changes
+
+taito::call_next "${@}"

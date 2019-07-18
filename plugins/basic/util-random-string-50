@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+taito::print_random_string "$@"
+taito::call_next "${@}"

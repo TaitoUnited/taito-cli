@@ -1,0 +1,21 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+options=" ${*} "
+if [[ "${options}" == *" --down "* ]]; then
+  echo "ERROR: 'taito stop --down' is deprecated. Run 'taito down' instead".
+  exit 1
+fi
+
+if [[ -n "${taito_target:-}" ]]; then
+  # Restart only the container given as argument
+  taito::skip_if_not container "${@}"
+  docker-compose::expose_pod_and_container
+fi
+
+compose_file=$(docker-compose::prepare_docker_compose_yaml false)
+taito::execute_on_host_fg \
+  "docker-compose -f $compose_file stop ${pod:-}"
+
+taito::call_next "${@}"
