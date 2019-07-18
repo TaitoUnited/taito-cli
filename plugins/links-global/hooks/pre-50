@@ -4,14 +4,14 @@
 : "${taito_command:?}"
 
 if [[ "${taito_command}" == "open-"* ]]; then
-  mode="open"
+  link_mode="open"
 elif [[ "${taito_command}" == "link-"* ]]; then
-  mode="link"
+  link_mode="link"
 fi
 link_name=${taito_command:5:99}
 
-if [[ ! -z ${mode} ]]; then
-  if links-global::open_link "${link_name}" "${mode}"; then
+if [[ ! -z ${link_mode} ]]; then
+  if links-global::open_link "${link_name}" "${link_mode}"; then
     export taito_hook_command_executed="true"
   fi
 fi

@@ -43,7 +43,9 @@ echo "params suffix: ${params}" > ${taito_dout}
 
 if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
   # Read command names from package.json
-  commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
+  # TODO: why npm run fails on taito calls taito?
+  # commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
+  commands=$(set +e; npm run 2> /dev/null | grep '^  [^ ]*$' | sed -e 's/ //g')
 
   # TODO refactor: this is awful!
   if [[ ${taito_skip_override} == false ]] && \

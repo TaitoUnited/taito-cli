@@ -21,6 +21,8 @@ trap cleanup EXIT
   template-global::init upgrade
 )
 
+taito project docs
+
 # TODO: remove once all projects have been upgraded
 rm -f taitoless || :
 
