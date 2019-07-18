@@ -55,7 +55,6 @@ function npm::install () {
   # NOTE: Changed 'npm install' to run on host because of linux permission issues.
   # We are installing libs locally anyway so perhaps it is better this way.
   # TODO add '--python=${npm_python}' for npm install?
-  echo adsf
   taito::execute_on_host_fg "
     set -e
     echo \"Running 'npm ${npm_command}'\"

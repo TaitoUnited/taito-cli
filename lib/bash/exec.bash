@@ -9,7 +9,7 @@ taito::call_next () {
   if [[ "${next}" != "" ]]; then
     name="${next//\/taito-cli\/plugins\//}"
     name=$(echo "${name}" | cut -f 1 -d '/')
-    plugin_path=$(echo "${next/\hooks/}" | sed -e 's/\/[^\/]*$//g')
+    plugin_path=$(echo "${next/\/hooks/}" | sed -e 's/\/[^\/]*$//g')
     if [[ ${taito_quiet:-} != "true" ]] && ( \
          [[ "${taito_debug}" == "true" ]] || [[ "${next}" != *"/hooks/"* ]] \
        ); then

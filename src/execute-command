@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+export taito_mode="${taito_mode:-normal}"
+
 # Resolve paths
 # NOTE: duplicate with ./taito (taito_cli_path must be resolved before
 # other scripts can be called)
@@ -291,6 +293,8 @@ if (( RANDOM % 4 == 0 ))
    [[ "${taito_mode:-}" != "ci" ]] && \
    [[ ${quiet} != "true" ]] && \
    [[ ${taito_command} != "__help" ]] && \
+   [[ ${taito_command} != "readme" ]] && \
+   [[ ${taito_command} != "trouble" ]] && \
    [[ ${taito_command} != "project-"* ]] && \
    [[ ${taito_command} != "env-apply" ]]; then
   if [[ ${taito_project:-} != *"-template" ]] && \
@@ -625,7 +629,7 @@ else
   export taito_command_requires_kubernetes="false"
 fi
 
-if [[ ${taito_commands_only_chain:?} == *"docker/"* ]]; then
+if [[ ${taito_commands_only_chain:-} == *"docker/"* ]]; then
   export taito_command_requires_container_registry="true"
 else
   export taito_command_requires_container_registry="false"
