@@ -5,7 +5,7 @@ function template-global::ask_and_export_details () {
   : "${template_default_dest_git:?}"
   : "${template:?}"
 
-  export mode=${1}
+  export template_mode=${1} # TODO: remove export?
 
   export taito_company
   export taito_family
@@ -74,12 +74,12 @@ function template-global::init () {
   : "${template_default_dest_git:?}"
   : "${template:?}"
 
-  export mode=${1}
+  export template_mode=${1} # TODO: remove export
   export taito_vc_repository_alt="${taito_vc_repository//-/_}"
 
   # Call create/migrate/upgrade script implemented in template
   # TODO: remove .sh suffix
-  "./scripts/taito-template/${mode}.sh"
+  "./scripts/taito-template/${template_mode}.sh"
 
   # Remove template scripts
   rm -rf ./scripts/taito-template
