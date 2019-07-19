@@ -132,7 +132,7 @@ taito_lib_path="${taito_cli_path}/lib"
 taito_util_path="${taito_cli_path}/src/util"
 
 # Load core library
-# shellcheck source=../src/lib/host.bash
+# shellcheck source=../lib/bash/host.bash
 . "${taito_lib_path}/bash/host.bash"
 # shellcheck source=../src/core.bash
 . "${taito_src_path}/core.bash"
@@ -273,6 +273,8 @@ extension_paths="${extension_paths:1}"
 
 # Handle special modes
 if [[ ${mode} == "autocomplete" ]] || [[ ${mode} == "descriptions" ]]; then
+  # shellcheck source=../lib/bash/host.bash
+  . "${taito_lib_path}/bash/host_exports.bash"
   "${taito_plugins_path}/${mode}" "${args[*]}"
   for ext_path in ${extension_local_paths[@]}
   do
