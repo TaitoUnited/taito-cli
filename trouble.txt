@@ -6,16 +6,29 @@ TAITO CLI TROUBLESHOOTING
       plugins run during command execution. If you want to see even more output,
       use the `--debug` flag.
 
-  Read timeout on 'taito kaboom' or `taito start --clean`:
+  Read timeout on 'taito kaboom' or 'taito start --clean':
     If the kaboom command fails with Docker Compose read timeout error, stop it
     with ctrl+c, start it again with 'taito start', and then run 'taito init'.
     For more info, see https://github.com/docker/compose/issues/3927
+
+  Application hangs on 'taito kaboom' or 'taito start':
+    There is probably something wrong with your docker. You can try some of the
+    following alternatives:
+    - Restart docker daemon
+    - Clean up docker with 'taito workspace kill' and 'taito workspace clean'
+    - Reset docker to factory defaults
+      (on macOS: preferences -> reset -> reset to factory defaults)
+
+  Taito CLI hangs after displaying the copyright notice
+    First try restarting your Docker daemon. If the problem persists after
+    Docker restart, try Docker reset as your Docker virtual disk might have
+    been corrupted.
 
   Connection or authorization error
     If you run into a connection or authorization error during Taito CLI
     command execution, the command probably requires authentication and you
     either have not authenticated or your authentication has expired. In such
-    case, run 'taito auth:ENV' to authenticate.
+    case, run 'taito auth:ENV' or 'taito auth:ENV reset' to authenticate.
 
   'No space left on device'
     Try cleaning your local workspace by running 'taito workspace kill' and
@@ -28,11 +41,6 @@ TAITO CLI TROUBLESHOOTING
     just clean it by running 'taito workspace kill' and 'taito workspace clean'.
     Adjust your Docker resource limits (on macOS: preferences -> disk,
     preferences -> advanced).
-
-  Taito CLI hangs after displaying the copyright notice
-    First try restarting your Docker daemon. If the problem persists after
-    Docker restart, try Docker reset as your Docker virtual disk might have
-    been corrupted.
 
   Some library directories are owned by root (e.g. node_modules)
     You probably have run `taito start` before installing libraries with
