@@ -62,7 +62,7 @@ batslib_err() {
 batslib_count_lines() {
   local -i n_lines=0
   local line
-  while IFS='' read -r line || [[ -n $line ]]; do
+  while IFS='' read -r line || [[ $line ]]; do
     (( ++n_lines ))
   done < <(printf '%s' "$1")
   echo "$n_lines"
@@ -215,7 +215,7 @@ batslib_print_kv_single_or_multi() {
 batslib_prefix() {
   local -r prefix="${1:-  }"
   local line
-  while IFS='' read -r line || [[ -n $line ]]; do
+  while IFS='' read -r line || [[ $line ]]; do
     printf '%s%s\n' "$prefix" "$line"
   done
 }
@@ -244,7 +244,7 @@ batslib_mark() {
 
   local line
   local -i idx=0
-  while IFS='' read -r line || [[ -n $line ]]; do
+  while IFS='' read -r line || [[ $line ]]; do
     if (( ${1:--1} == idx )); then
       printf '%s\n' "${symbol}${line:${#symbol}}"
       shift

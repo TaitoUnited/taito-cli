@@ -4,7 +4,7 @@ function postgres::ask_and_expose_password () {
   local passwd_var="${database_username}_password"
   local passwd="${!passwd_var}"
 
-  if [[ -n "${passwd}" ]]; then
+  if [[ ${passwd} ]]; then
     # Password already set in environment variable
     PGPASSWORD="${passwd}"
   else

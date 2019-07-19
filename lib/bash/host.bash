@@ -43,7 +43,7 @@ function taito::export_database_config () {
   all_databases=$(taito::print_targets_of_type database)
 
   target="${1}"
-  if [[ -z ${1} ]] && [[ -n "${taito_target:-}" ]] && \
+  if [[ -z ${1} ]] && [[ ${taito_target:-} ]] && \
      [[ "${all_databases:-}" == *"${taito_target}"* ]]; then
     target="${taito_target:-}"
   fi
@@ -52,7 +52,7 @@ function taito::export_database_config () {
   echo "Determining database settings by ${target}" > "${taito_dout:-/dev/null}"
 
   env_var_name="db_${target}_name"
-  if [[ -n "${target}" ]] && [[ -n "${!env_var_name}" ]]; then
+  if [[ ${target} ]] && [[ ${!env_var_name} ]]; then
     env_var_name="db_${target}_instance"
     export database_instance="${!env_var_name}"
     echo "- database_instance: ${database_instance}" > "${taito_dout:-/dev/null}"

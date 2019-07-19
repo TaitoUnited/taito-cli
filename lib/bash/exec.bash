@@ -44,7 +44,7 @@ function taito::execute_on_host () {
       "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; ${commands}'"
   elif [[ "${taito_mode:-}" == "ci" ]]; then
     eval "${commands}"
-  elif [[ -n ${taito_run:-} ]]; then
+  elif [[ ${taito_run:-} ]]; then
     echo "${commands}" >> ${taito_run}
     sleep "${sleep_seconds:-2}"
   else
@@ -79,7 +79,7 @@ function taito::execute_on_host_fg () {
       "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; (${commands})'"
   elif [[ "${taito_mode:-}" == "ci" ]]; then
     eval "(${commands})"
-  elif [[ -n ${taito_run_fg:-} ]]; then
+  elif [[ ${taito_run_fg:-} ]]; then
     echo "(${commands})" >> ${taito_run_fg}
   else
     echo

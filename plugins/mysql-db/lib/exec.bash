@@ -5,7 +5,7 @@ function mysql::ask_and_expose_password () {
   local passwd="${!passwd_var}"
 
   MYSQL_PWD
-  if [[ -n "${passwd}" ]]; then
+  if [[ ${passwd} ]]; then
     # Password already set in environment variable
     MYSQL_PWD="${passwd}"
   else

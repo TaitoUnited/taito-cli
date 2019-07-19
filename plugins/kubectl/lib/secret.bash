@@ -73,7 +73,7 @@ function kubectl::export_secrets () {
   do
     taito::expose_secret_by_index ${secret_index}
 
-    if [[ -n ${filter} ]] && \
+    if [[ ${filter} ]] && \
        [[ "${secret_name}" != *"${filter}"* ]]; then
       secret_index=$((${secret_index}+1))
       continue

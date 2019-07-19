@@ -11,7 +11,7 @@ function terraform::export_env () {
   while IFS='=' read -r name value ; do
     if [[ "${name}" == *"_"* ]] && \
        [[ "${name}" != "link_"* ]] && \
-       [[ -n "${value}" ]]; then
+       [[ ${value} ]]; then
       value_formatted="${value}"
       if [[ "${name: -1}" == "s" ]]; then
         # Format to terraform list

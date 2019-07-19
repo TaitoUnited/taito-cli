@@ -77,7 +77,7 @@ function taito::select_item () {
   local id
   local item_id
   local skip=false
-  while [[ ${skip} == false ]] && [[ ! "${item_id}" ]] && [[ -n "${items[*]}" ]]; do
+  while [[ ${skip} == false ]] && [[ ! "${item_id}" ]] && [[ ${items[*]} ]]; do
     echo "${title}"
     for item in ${items[@]}; do echo "- ${item%:*}"; done
     echo

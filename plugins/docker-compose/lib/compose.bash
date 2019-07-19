@@ -5,7 +5,7 @@ function docker-compose::exec () {
   commands=$(printf '"%s" ' "${@}")
   docker-compose::expose_pod_and_container
 
-  if [[ -n "${docker_run:-}" ]]; then
+  if [[ ${docker_run:-} ]]; then
     # Using run mode instead of up
     # TODO take --no-deps as param
     compose_file=$(docker-compose::prepare_docker_compose_yaml)
@@ -47,7 +47,7 @@ function docker-compose::start () {
   fi
 
   local compose_cmd="up"
-  if [[ -n "${taito_target:-}" ]]; then
+  if [[ ${taito_target:-} ]]; then
     docker-compose::expose_pod_and_container
     compose_cmd="run ${pod:?}"
   fi

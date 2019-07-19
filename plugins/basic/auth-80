@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [[ -n "${taito_admin_key}" ]]; then
+if [[ ${taito_admin_key} ]]; then
   echo "Encrypting admin credentials"
   (cd ~ && tar -zcvf admin_creds.tar.gz .config .kube)
   openssl \

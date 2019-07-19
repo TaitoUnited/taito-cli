@@ -40,7 +40,7 @@ function aws::authenticate () {
     echo "You can reauthenticate with 'taito auth --reset'."
   fi
 
-  if [[ -n "${kubernetes_name:-}" ]]; then
+  if [[ ${kubernetes_name:-} ]]; then
     aws::authenticate_on_kubernetes ||
       echo -e "WARNING: Kubernetes authentication failed." \
         "\\nNOTE: Authentication failure is OK if the Kubernetes cluster does" \

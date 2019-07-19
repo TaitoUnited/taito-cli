@@ -2,7 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ -n "${taito_target:-}" ]]; then
+if [[ ${taito_target:-} ]]; then
   # Restart only the container given as argument
   taito::skip_if_not container "${@}"
   docker-compose::expose_pod_and_container
