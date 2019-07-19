@@ -21,7 +21,9 @@ else
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
             mysql::ask_and_expose_password
+            echo "Creating users"
             mysql::create_users
+            echo "Creating database"
             mysql::create_database
             echo "Created database ${database_name:-}"
           )

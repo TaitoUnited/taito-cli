@@ -51,8 +51,10 @@ function docker::build () {
        ([[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "false" ]])
     then
       # Image should exist.
-      # We have to pull the existing image so that it exists at the end
-      # We also pull the builder image for integration tests
+      # We pull the builder image for integration tests
+      # On Google Cloud Build we always have to pull the existing image so that
+      # it exists at the end (images: [ ... ])
+      # TODO: optimize so that images are pulled only if required
       local count=0
       local pulled="false"
       while true

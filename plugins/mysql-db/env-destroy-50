@@ -18,7 +18,9 @@ if [[ ${taito_env:?} != "local" ]]; then
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
             mysql::ask_and_expose_password
+            echo "Dropping database"
             mysql::drop_database
+            echo "Dropping users"
             mysql::drop_users
           )
         fi
