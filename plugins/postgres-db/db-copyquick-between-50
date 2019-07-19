@@ -6,15 +6,9 @@ echo "TODO: Does not work yet. Use 'taito db dump:ENV file.sql' and"
 echo "'taito db import:ENV file.sql' instead"
 exit 1
 
-: "${taito_env:?}"
-: "${taito_dest_env:?}"
-: "${database_name:?}"
-: "${database_host:?}"
-: "${database_port:?}"
-
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
-  source="${taito_env}"
-  dest="${taito_dest_env}"
+  source="${taito_env:?}"
+  dest="${taito_dest_env:?}"
   username="${1:-postgres}"
 
   echo "Copying ${source} to ${dest}"

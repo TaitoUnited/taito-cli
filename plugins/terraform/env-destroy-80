@@ -1,10 +1,9 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_env:?}"
 
 # Cloud provider
-terraform::run destroy "${taito_provider:-}" "${taito_env}"
+terraform::run destroy "${taito_provider:-}" "${taito_env:?}"
 
 # Uptime provider
 [[ ${taito_uptime_provider:-} ]] && \

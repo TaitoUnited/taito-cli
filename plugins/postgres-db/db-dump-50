@@ -1,16 +1,12 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_env:?}"
-: "${database_name:?}"
-: "${database_host:?}"
-: "${database_port:?}"
 
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   dump_file="${1:?}"
   username=""
 
-  echo "Dumping database ${database_name} to ${dump_file}. Please wait."
+  echo "Dumping database ${database_name:?} to ${dump_file}. Please wait."
   postgres::connect "${username}" "-f ${dump_file}" "pg_dump"
 fi
 

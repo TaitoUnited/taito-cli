@@ -1,7 +1,6 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_hours_description:?}"
 
 # Command parameters
 duration_hours="${1:?duration not given}"
@@ -35,7 +34,7 @@ fi
   # hour entry: time and description
   duration=$(awk "BEGIN { print ${duration_hours/,/.}*3600 }")
   start="$(date -d ${weekday} --iso-8601)T05:00:00.000Z"
-  description="${taito_hours_description}"
+  description="${taito_hours_description:?}"
 
   # Call Toggl API
   taito::executing_start

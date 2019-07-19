@@ -6,7 +6,7 @@
 
 options=" ${*} "
 
-if [[ ${taito_env} != "local" ]] || [[ ${options} != *" --clean "* ]]; then
+if [[ ${taito_env:?} != "local" ]] || [[ ${options} != *" --clean "* ]]; then
   echo "Not cleaning database containers"
 else
   echo "Cleaning database container(s)"

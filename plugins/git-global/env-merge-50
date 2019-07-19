@@ -1,6 +1,4 @@
 #!/bin/bash -e
-: "${taito_environments:?Environments not set in taito config}"
-: "${taito_target_env:?}"
 : "${taito_env_merge_source:?}"
 : "${taito_env_merge_dest:?}"
 : "${taito_env_merges:?}"

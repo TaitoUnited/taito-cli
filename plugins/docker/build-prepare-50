@@ -1,6 +1,4 @@
 #!/bin/bash -e
-: "${taito_env:?}"
-: "${taito_vc_repository:?}"
 : "${taito_container_registry:?}"
 
 image_tag=${1}

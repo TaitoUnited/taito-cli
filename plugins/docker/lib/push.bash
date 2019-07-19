@@ -31,10 +31,8 @@ function docker::image_push () {
 }
 
 function docker::push () {
-  : "${taito_project:?}"
   : "${taito_project_path:?}"
   : "${taito_container_registry:?}"
-  : "${taito_env:?}"
 
   local name=${taito_target:?Target not given}
   local image_tag=${1:?Image tag not given}

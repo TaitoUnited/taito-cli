@@ -1,9 +1,8 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_namespace:?}"
 
-taito::confirm "Delete namespace ${taito_namespace} from Kubernetes" || \
+taito::confirm "Delete namespace ${taito_namespace:?} from Kubernetes" || \
   taito::skip_to_next "${@}"
 
 kubectl::use_context

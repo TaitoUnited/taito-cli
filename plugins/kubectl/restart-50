@@ -1,9 +1,6 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_namespace:?}"
-: "${taito_project:?}"
-: "${taito_target_env:?}"
 
 kubectl::use_context
 
@@ -12,11 +9,11 @@ if [[ ${taito_target:-} ]]; then
   # Restart only the container given as argument
   taito::skip_if_not container "${@}"
   kubectl::expose_pod_and_container
-  (taito::executing_start; kubectl delete pod "${pod}")
+  (taito::executing_start; kubectl delete pod "${pod:?}")
 else
   (
     taito::executing_start
-    kubectl delete pods -l release="${taito_project}-${taito_target_env}"
+    kubectl delete pods -l release="${taito_project:?}-${taito_target_env:?}"
   )
 fi
 

@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_env:?}"
 : "${taito_zone:?}"
 : "${taito_vc_repository:?}"
 : "${taito_project:?}"

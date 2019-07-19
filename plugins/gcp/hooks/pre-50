@@ -1,7 +1,6 @@
 #!/bin/bash -e
 # shellcheck source=../lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_command:?}"
 
 # Authenticate automatically if $GOOGLE_APPLICATION_CREDENTIALS has been set
 if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then

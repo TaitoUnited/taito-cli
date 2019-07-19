@@ -1,13 +1,10 @@
 #!/bin/bash -e
-: "${taito_vc_repository:?}"
-: "${sentry_organization:?}"
-: "${taito_project_path:?}"
 
 taito::confirm "Configure Sentry project" || \
   taito::skip_to_next "${@}"
 
 echo "Create a new Sentry project with these settings:"
-echo "- Name: ${taito_vc_repository}"
+echo "- Name: ${taito_vc_repository:?}"
 echo "- Default environment: prod"
 echo "- Alert when: 'An event is seen AND An event's environment equals prod'"
 echo "- Enable Slack integration: Send alerts to monitoring channel"
@@ -27,7 +24,7 @@ echo "Press enter to open Sentry"
 read -r
 
 taito::open_browser \
-  "https://sentry.io/organizations/${sentry_organization}/projects/new/"
+  "https://sentry.io/organizations/${sentry_organization:?}/projects/new/"
 
 read -r -t 1 -n 1000 || : # Flush input buffer
 echo "Press enter when ready"
@@ -50,7 +47,7 @@ fi
 echo "Replacing Sentry DSN keys in heml.yaml and Dockerfile.build"
 echo
 
-if [[ -f "${taito_project_path}/scripts/helm.yaml" ]]; then
+if [[ -f "${taito_project_path:?}/scripts/helm.yaml" ]]; then
   sed -i -- "s/#sentryDSN/${dsn}/g" "${taito_project_path}/scripts/helm.yaml"
   sed -i -- "s/#sentryPublicDSN/${dsn_public}/g" \
     "${taito_project_path}/scripts/helm.yaml"

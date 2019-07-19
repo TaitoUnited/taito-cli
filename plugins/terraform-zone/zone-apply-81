@@ -1,7 +1,4 @@
 #!/bin/bash -e
-: "${taito_env:?}"
-: "${taito_organization:?}"
-: "${taito_provider_region:?}"
 
 (
   cd terraform || exit 1

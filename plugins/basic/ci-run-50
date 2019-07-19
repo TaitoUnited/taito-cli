@@ -13,13 +13,13 @@ fi
 
 taito::execute_on_host_fg "
   function cleanup {
-    rm -rf tmp/ci/$taito_target_env &> /dev/null || :
+    rm -rf tmp/ci/${taito_target_env} &> /dev/null || :
   }
   cleanup
   trap cleanup EXIT
   mkdir -p tmp/ci
-  git clone --single-branch --branch $taito_branch git@${taito_vc_repository_url/\//:} tmp/ci/$taito_target_env
-  taito -r ${taito_options:-} ci run continue:$taito_target_env ${image_tag}
+  git clone --single-branch --branch ${taito_branch} git@${taito_vc_repository_url/\//:} tmp/ci/${taito_target_env}
+  taito -r ${taito_options:-} ci run continue:${taito_target_env} ${image_tag}
 "
 
 taito::call_next "${@}"

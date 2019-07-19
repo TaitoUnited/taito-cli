@@ -1,11 +1,9 @@
 #!/bin/bash -e
 # shellcheck source=../lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_command:?}"
-: "${run_scripts_location:?}"
 
 # Run post scripts from scripts/run directory
-script="${run_scripts_location}/taito-${taito_command}#post"
+script="${run_scripts_location:?}/taito-${taito_command:?}#post"
 if [[ -f ${script} ]]; then
   export taito_hook_command_executed=true
   taito::print_plugin_title

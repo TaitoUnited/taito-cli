@@ -1,18 +1,15 @@
 #!/bin/bash -e
-: "${taito_env:?}"
-: "${taito_zone:?}"
-: "${taito_project:?}"
 
-image_tag=${1}
+image_tag=${1:?}
 
 echo "Checking if image already exists in the container registry"
 echo "TODO check from container registry instead as there might be manual \
 builds also"
 
 check=$(
-  gcloud -q --project "${taito_zone}" builds list \
+  gcloud -q --project "${taito_zone:?}" builds list \
   --filter="status:SUCCESS AND \
-            source.repoSource.repoName~.*${taito_project} AND \
+            source.repoSource.repoName~.*${taito_project:?} AND \
             images~.*\\:${image_tag}"
 )
 

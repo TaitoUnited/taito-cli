@@ -1,7 +1,6 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
-: "${taito_zone:?}"
 
 ( [[ ${taito_uptime_provider:-} == "gcp" ]] && \
   [[ ! ${taito_uptime_channels:-} ]] && \
@@ -16,7 +15,7 @@ echo "- ${taito_messaging_monitoring_channel:-}"
 echo
 echo "Press enter to open StackDriver workspace settings in browser"
 read -r
-taito::open_browser "https://app.google.stackdriver.com/settings/accounts/notifications/slack?project=${taito_zone}"
+taito::open_browser "https://app.google.stackdriver.com/settings/accounts/notifications/slack?project=${taito_zone:?}"
 echo "Press enter once done"
 echo
 gcloud -q --project "${taito_zone}" alpha monitoring channels list

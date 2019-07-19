@@ -3,6 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 options=" ${*} "
+
 if [[ ${options} == *" --down "* ]]; then
   echo "ERROR: 'taito stop --down' is deprecated. Run 'taito down' instead".
   exit 1

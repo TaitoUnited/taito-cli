@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_target_env:?}"
 
 source="${1:-dev}"
 source="${source/prod/master}"

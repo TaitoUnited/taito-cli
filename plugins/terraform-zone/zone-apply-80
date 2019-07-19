@@ -1,7 +1,4 @@
 #!/bin/bash -e
-: "${taito_env:?}"
-: "${taito_organization:?}"
-: "${taito_provider_region:?}"
 
 taito::confirm \
   "Replace placeholders with real values in taito_config and terraform/*" || \
@@ -23,7 +20,7 @@ taito::confirm \
     fi
     if [[ ${database} ]] && \
        [[ ${taito_provider_region_hexchars:-} == "TAITO_PROVIDER_REGION_HEXCHARS" ]]; then
-      echo "Detemining hexadecimal string for region ${taito_provider_region}"
+      echo "Detemining hexadecimal string for region ${taito_provider_region:?}"
       hexchars=$(terraform output ${database}_instance_endpoint | \
         sed "s/$instance\\.\\(.*\\)\\.$taito_provider_region.*/\\1/" \
       )
@@ -39,7 +36,7 @@ taito::confirm \
 
   echo "Replacing hardcoded example values in taito_config and terraform/*"
   echo TAITO_ORGANIZATION
-  sed -i "s/TAITO_ORGANIZATION/$taito_organization/g" ./*.tf ./*.yaml
+  sed -i "s/TAITO_ORGANIZATION/${taito_organization:?}/g" ./*.tf ./*.yaml
   if [[ ${taito_provider_region_hexchars:-} ]]; then
     echo TAITO_PROVIDER_REGION_HEXCHARS
     sed -i "s/TAITO_PROVIDER_REGION_HEXCHARS/$taito_provider_region_hexchars/g" ./*.tf ./*.yaml ../taito-config.sh
