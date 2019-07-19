@@ -264,6 +264,8 @@ if [[ ${taito_project:-} ]]; then
           if [[ ${storage} != "${taito_storages}" ]]; then
             st=":${storage}"
           fi
+          echo "storage ls${st}${suffix}"
+          echo "storage ls${st}${param} MOUNT_PATH"
           echo "storage mount${st}${suffix}"
           echo "storage mount${st}${param} MOUNT_PATH"
           echo "storage copy from${st}${param} SOURCE LOCAL_DEST"

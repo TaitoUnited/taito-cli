@@ -101,6 +101,7 @@ QUICK EXAMPLES
     db copyquick between:test:dev      # Copy test database to dev (WARNING!!)
 
   STORAGES
+    storage ls:dev /my-dir             # List storage files
     storage mount:dev                  # Mount dev storage bucket to ./mnt/BUCKT
     storage mount:dev ./mymount        # Mount dev storage bucket to ./mymount
     storage copy from:dev /sour ./dest # Copy files from dev bucket
@@ -764,6 +765,9 @@ PROJECT: DATABASE OPERATIONS
     be safe to use it with a live production database.
 
 PROJECT: STORAGE OPERATIONS
+
+  storage ls[:TARGET]:ENV [PATH]
+    List files of storage bucket.
 
   storage mount[:TARGET]:ENV [MOUNT_PATH]
     Mount storage bucket to MOUNT_PATH or ./mnt/BUCKET

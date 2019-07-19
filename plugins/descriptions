@@ -390,6 +390,10 @@ if [[ ${taito_project:-} ]]; then
           if [[ ${storage} != "${taito_storages}" ]]; then
             st=":${storage}"
           fi
+          echo "storage ls${st}${suffix}                         " \
+            "# List files of ${env} storage bucket"
+          echo "storage ls${st}${param} PATH                     " \
+            "# List files of ${env} storage bucket on PATH"
           echo "storage mount${st}${suffix}                      " \
             "# Mount ${env} storage bucket to ./mnt/BUCKET"
           echo "storage mount${st}${param} MOUNT_PATH            " \
