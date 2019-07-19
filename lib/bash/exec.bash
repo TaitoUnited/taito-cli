@@ -1,6 +1,8 @@
 #!/bin/bash
 
 function taito::call_next () {
+  taito::executing_stop # Just in case
+
   local chain=(${taito_command_chain[@]})
   local next="${chain[0]}"
   local name

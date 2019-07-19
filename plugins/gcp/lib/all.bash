@@ -91,7 +91,7 @@ function gcp::db_proxy_start () {
         bind_address="127.0.0.1"
       fi
 
-      echo "BIND ADDRESS: ${bind_address}" > ${taito_vout}
+      echo "BIND ADDRESS: ${bind_address}" > "${taito_vout:-}"
 
       (
         taito::executing_start

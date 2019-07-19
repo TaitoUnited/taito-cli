@@ -196,7 +196,6 @@ export taito_target="${target}"
 export taito_verbose=false
 export taito_debug=false
 export taito_quiet=${quiet}
-export taito_setv=":"
 export taito_vout="/dev/null" # verbode mode output
 export taito_dout="/dev/null" # debug mode output
 export taito_options="-c"
@@ -212,7 +211,6 @@ fi
 if [[ ${verbose} == true ]]; then
   # Helper environment variables to be used in verbose mode
   taito_verbose=true
-  taito_setv="set -x"
   taito_vout="/dev/stdout"
   taito_options="${taito_options} -v"
 fi

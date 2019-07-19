@@ -98,12 +98,11 @@ Values of the following environment variables are set depending on verbose mode:
 
 - **taito_verbose**: `true` or `false`
 - **taito_vout**: `/dev/stdout` or `/dev/null`
-- **taito_setv**: `set -x` or `:`
 
 You can use these environment variables to provide additional output in verbose or debug mode. For example:
 
-    echo "Additional debug output" > ${taito_dout}
-    echo "Additional verbose output" > ${taito_vout}
+    echo "Additional debug output" > "${taito_dout}"
+    echo "Additional verbose output" > "${taito_vout}"
     (taito::executing_start; kubectl get pods) # The command will printed in verbose mode
 
 ### Running commands on host
@@ -155,7 +154,6 @@ All settings defined in `taito-config.sh` are visible for plugins. See [configur
 - **taito_project_path**: Path to project root directory.
 - **taito_command_chain**: Chain of commands to be executed next.
 - **taito_verbose**: `true` in verbose mode, otherwise `false`.
-- **taito_setv**: `set -x` in verbose mode, otherwise `:`.
 - **taito_vout**: `/dev/stdout` in verbose mode, otherwise `/dev/null`.
 
 TODO update the list of environment variables

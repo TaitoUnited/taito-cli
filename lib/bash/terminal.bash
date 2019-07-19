@@ -2,14 +2,16 @@
 # NOTE: This bash script is run also directly on host.
 
 function taito::executing_start () {
-  ${taito_setv:?}
+  if [[ ${taito_verbose:-} == "true" ]]; then
+    set -x
+  fi
 }
 export -f taito::executing_start
 
-function taito::executing_end () {
+function taito::executing_stop () {
   set +x
 }
-export -f taito::executing_end
+export -f taito::executing_stop
 
 function taito::print_plugin_title () {
   local path="${taito_plugin_path:?}"

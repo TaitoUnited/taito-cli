@@ -13,7 +13,7 @@ function postgres::create_database () {
         -f "${taito_plugin_path}/resources/create.sql" \
         -v "database=${database_name}" \
         -v "dbusermaster=${database_master_username:-postgres}" \
-        -v "dbuserapp=${database_name}_app" > ${taito_vout}
+        -v "dbuserapp=${database_name}_app" > "${taito_vout}"
     )
 
     if [[ -f "./${taito_target:-database}/db.sql" ]]; then
@@ -23,7 +23,7 @@ function postgres::create_database () {
           -p "${database_port}" \
           -d "${database_name}" \
           -U "${database_username}" \
-          < "./${taito_target:-database}/db.sql" > ${taito_vout}
+          < "./${taito_target:-database}/db.sql" > "${taito_vout}"
       )
     else
       echo "WARNING: File ./${taito_target:-database}/db.sql does not exist"
@@ -41,7 +41,7 @@ function postgres::create_database () {
       -f "${taito_plugin_path}/resources/grant.sql" \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username:-postgres}" \
-      -v "dbuserapp=${database_name}_app" > ${taito_vout}
+      -v "dbuserapp=${database_name}_app" > "${taito_vout}"
     )
   )
 }
@@ -54,7 +54,7 @@ function postgres::drop_database () {
     -U "${database_username}" \
     -f "${taito_plugin_path}/resources/drop.sql" \
     -v "database=${database_name}" \
-    -v "databaseold=${database_name}_old" > ${taito_vout} 2>&1
+    -v "databaseold=${database_name}_old" > "${taito_vout}" 2>&1
 }
 
 function postgres::create_users () {
@@ -84,7 +84,7 @@ function postgres::create_users () {
     -v "dbuserapp=${database_name}_app" \
     -v "passwordapp=${database_app_password}" \
     -v "passwordbuild=${database_build_password}" \
-    > ${taito_vout} 2>&1
+    > "${taito_vout}" 2>&1
 }
 
 function postgres::drop_users () {
@@ -96,5 +96,5 @@ function postgres::drop_users () {
     -f "${taito_plugin_path}/resources/drop-users.sql" \
     -v "database=${database_name}" \
     -v "dbusermaster=${database_master_username:-postgres}" \
-    -v "dbuserapp=${database_name}_app" > ${taito_vout}
+    -v "dbuserapp=${database_name}_app" > "${taito_vout}"
 }

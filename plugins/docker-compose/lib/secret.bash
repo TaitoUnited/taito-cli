@@ -24,7 +24,7 @@ function docker-compose::export_secrets () {
 
     echo "+ reading ${secret_name} from " \
       "${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}" > \
-      "${taito_vout:?}"
+      "${taito_vout:-}"
 
     file="${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
     if [[ ${secret_method} == "random" ]] || \

@@ -42,12 +42,12 @@ function helm::deploy () {
 
     local helm_deploy_options="${helm_deploy_options:-}"
 
-    echo > ${taito_vout}
-    echo "Helm does not support environment variables" > ${taito_vout}
-    echo "-> Substituting all environment variables in scripts/helm.yaml" > ${taito_vout}
+    echo > "${taito_vout:-}"
+    echo "Helm does not support environment variables" > "${taito_vout}"
+    echo "-> Substituting all environment variables in scripts/helm.yaml" > "${taito_vout}"
     taito::substitute_variable_values_in_file scripts/helm.yaml scripts/helm.yaml.tmp
-    echo "Substitution DONE" > ${taito_vout}
-    echo > ${taito_vout}
+    echo "Substitution DONE" > "${taito_vout}"
+    echo > "${taito_vout}"
 
     # helm-ENV.yaml overrides default settings of helm.yaml
     local override_file=""
@@ -57,13 +57,13 @@ function helm::deploy () {
       override_file="scripts/helm-${taito_env}.yaml"
     fi
     if [[ ${override_file} ]]; then
-      echo > ${taito_vout}
-      echo "Helm does not support environment variables" > ${taito_vout}
-      echo "-> Substituting all environment variables in ${override_file}" > ${taito_vout}
+      echo > "${taito_vout}"
+      echo "Helm does not support environment variables" > "${taito_vout}"
+      echo "-> Substituting all environment variables in ${override_file}" > "${taito_vout}"
       taito::substitute_variable_values_in_file "${override_file}" "${override_file}.tmp"
       helm_deploy_options="${helm_deploy_options} -f ${override_file}.tmp"
-      echo "Substitution DONE" > ${taito_vout}
-      echo > ${taito_vout}
+      echo "Substitution DONE" > "${taito_vout}"
+      echo > "${taito_vout}"
     fi
 
     # For Google Cloud builder

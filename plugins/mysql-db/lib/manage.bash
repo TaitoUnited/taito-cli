@@ -11,7 +11,7 @@ function mysql::create_database () {
         -D mysql \
         -u "${database_username}" \
         -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source ${taito_plugin_path}/resources/create.sql ;" \
-        > ${taito_vout}
+        > "${taito_vout}"
     )
 
     if [[ -f "./${taito_target:-database}/db.sql" ]]; then
@@ -21,7 +21,7 @@ function mysql::create_database () {
         -P "${database_port}" \
         -D "${database_name}" \
         -u "${database_username}" \
-        -e "source ./${taito_target:-database}/db.sql ;" > ${taito_vout}
+        -e "source ./${taito_target:-database}/db.sql ;" > "${taito_vout}"
       )
     else
       echo "WARNING: File ./${taito_target:-database}/db.sql does not exist"
@@ -36,7 +36,7 @@ function mysql::drop_database () {
     -D mysql \
     -u "${database_username}" \
     -e "set @database='${database_name}'; set @databaseold='${database_name}old'; source ${taito_plugin_path}/resources/drop.sql ;" \
-    > ${taito_vout}
+    > "${taito_vout}"
 }
 
 function mysql::create_users () {
@@ -63,7 +63,7 @@ function mysql::create_users () {
     -D mysql \
     -u "${database_username}" \
     -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; set @passwordapp='${database_app_password}'; set @passwordmgr='${database_build_password}'; source ${taito_plugin_path}/resources/users.sql ;" \
-    > ${taito_vout} 2>&1
+    > "${taito_vout}" 2>&1
 }
 
 function mysql::drop_users () {
@@ -73,5 +73,5 @@ function mysql::drop_users () {
     -D mysql \
     -u "${database_username}" \
     -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source ${taito_plugin_path}/resources/drop-users.sql ;" \
-    > ${taito_vout}
+    > "${taito_vout}"
 }
