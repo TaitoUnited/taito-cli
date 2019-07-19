@@ -8,6 +8,6 @@ taito::confirm \
   taito::skip_to_next "${@}"
 
 kubectl::use_context
-kubectl::delete-secrets
+kubectl::delete_secrets
 
 taito::call_next "${@}"

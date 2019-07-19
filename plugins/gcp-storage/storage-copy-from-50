@@ -3,5 +3,5 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 echo "TODO: implement"
-gcp-storage::copy-from "${@}"
+gcp-storage::copy_from "${@}"
 taito::call_next "${@}"

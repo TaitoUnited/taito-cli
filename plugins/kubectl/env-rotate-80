@@ -4,6 +4,6 @@
 : "${taito_namespace:?}"
 
 kubectl::use_context
-kubectl::restart-all
+kubectl::restart_all
 
 taito::call_next "${@}"

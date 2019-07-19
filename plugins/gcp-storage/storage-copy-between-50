@@ -3,5 +3,5 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 echo "TODO: implement"
-gcp-storage::copy-between "${@}"
+gcp-storage::copy_between "${@}"
 taito::call_next "${@}"

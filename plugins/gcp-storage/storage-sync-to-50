@@ -4,6 +4,6 @@
 
 echo "TODO: implement"
 echo "TODO confirm and delete all files from destination bucket"
-gcp-storage::copy-to "${@}"
+gcp-storage::copy_to "${@}"
 
 taito::call_next "${@}"

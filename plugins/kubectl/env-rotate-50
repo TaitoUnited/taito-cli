@@ -7,7 +7,7 @@ taito::confirm "Save newly created secrets to Kubernetes" || \
   taito::skip_to_next "${@}"
 
 kubectl::use_context
-kubectl::ensure-namespace "${taito_namespace}"
+kubectl::ensure_namespace "${taito_namespace}"
 
 kubectl::use_context
 export kubernetes_skip_restart="true"
