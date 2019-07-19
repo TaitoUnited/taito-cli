@@ -6,6 +6,7 @@
 
 taito::skip_if_not container "${@}"
 
+echo "Starting shell..."
 kubectl::use_context
 kubectl::expose_pod_and_container
 (taito::executing_start; kubectl exec -it "${pod}" -c "${container}" -- "/bin/sh") || \
