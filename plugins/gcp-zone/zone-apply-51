@@ -6,6 +6,6 @@
   taito::confirm "Configure gcp build notifications"
 ) || taito::skip_to_next "${@}"
 
-gcp-zone::setup-cloud-build-slack-notifications
+gcp-zone::setup_cloud_build_slack_notifications
 
 taito::call_next "${@}"
