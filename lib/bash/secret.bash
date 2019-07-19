@@ -70,7 +70,7 @@ function taito::expose_secret_by_index () {
   secret_changed_var="secret_changed_${secret_index}"
   secret_changed=${!secret_changed_var}
 
-  if [[ "${secret_method}" == *"/"* ]]; then
+  if [[ ${secret_method} == *"/"* ]]; then
     secret_source_namespace="${secret_method##*/}"
   else
     secret_source_namespace="${secret_namespace}"
@@ -88,14 +88,14 @@ function taito::expose_secret_by_name () {
   for secret_name in "${secret_names[@]}"
   do
     taito::expose_secret_by_index ${secret_index}
-    if [[ "${secret_name}" == "${find_secret_name}" ]]; then
+    if [[ ${secret_name} == "${find_secret_name}" ]]; then
       found_index=${secret_index}
       break
     fi
     secret_index=$((${secret_index}+1))
   done
 
-  if [[ "${found_index}" != "-1" ]]; then
+  if [[ ${found_index} != "-1" ]]; then
     secret_index=${found_index}
     taito::expose_secret_by_index ${secret_index}
   fi

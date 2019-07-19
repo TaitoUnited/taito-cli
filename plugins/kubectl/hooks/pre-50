@@ -10,7 +10,7 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
    [[ ${taito_command_requires_database:-} == "true" ]]; then
   proxy_running=$(pgrep "kubectl")
   taito::print_plugin_title
-  if [[ "${proxy_running}" == "" ]]; then
+  if [[ ${proxy_running} == "" ]]; then
     echo "Starting db proxy"
     kubectl::use_context
     kubectl::db_proxy_start true

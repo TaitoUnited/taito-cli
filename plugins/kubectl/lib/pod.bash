@@ -17,7 +17,7 @@ function kubectl::expose_pod_and_container () {
   determine_failed_pod=${1}
 
   local prefix="${taito_project}"
-  if [[ "${taito_version:-}" -ge "1" ]]; then
+  if [[ ${taito_version:-} -ge "1" ]]; then
     prefix="${taito_project}-${taito_target_env}"
   fi
 
@@ -38,8 +38,8 @@ function kubectl::expose_pod_and_container () {
   fi
 
   if [[ -z "${container}" ]] || \
-     [[ "${container}" == "--" ]] || \
-     [[ "${container}" == "-" ]]; then
+     [[ ${container} == "--" ]] || \
+     [[ ${container} == "-" ]]; then
     # No container name was given. Determine container name.
     container=$(echo "${pod}" | \
       sed -e 's/\([^0-9]*\)*/\1/;s/-[a-z0-9]*-[a-z0-9]*$//' | \
@@ -53,7 +53,7 @@ function kubectl::expose_pods () {
   : "${taito_target_env:?}"
 
   local prefix="${taito_project}"
-  if [[ "${taito_version:-}" -ge "1" ]]; then
+  if [[ ${taito_version:-} -ge "1" ]]; then
     prefix="${taito_project}-${taito_target_env}"
   fi
 

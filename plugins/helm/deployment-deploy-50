@@ -5,8 +5,8 @@
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
 kubectl::use_context
-if [[ "${taito_mode:-}" != "ci" ]] || \
-   [[ "${ci_exec_deploy:-}" != "false" ]]
+if [[ ${taito_mode:-} != "ci" ]] || \
+   [[ ${ci_exec_deploy:-} != "false" ]]
 then
   helm::deploy "${@}"
 fi

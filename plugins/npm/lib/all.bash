@@ -18,12 +18,12 @@ function npm::install () {
   local do_confirm=
   local task_install_ci_exists="$(npm run | grep 'install-ci$')"
   local task_install_dev_exists="$(npm run | grep 'install-dev$')"
-  if [[ "${switches}" == *" --all "* ]]; then
+  if [[ ${switches} == *" --all "* ]]; then
     task_postinstall="install-all"
     do_confirm=true
-  elif [[ "${taito_mode:-}" == "ci" ]] && [[ "${task_install_ci_exists:-}" ]]; then
+  elif [[ ${taito_mode:-} == "ci" ]] && [[ ${task_install_ci_exists:-} ]]; then
     task_postinstall="install-ci"
-  elif [[ "${taito_mode:-}" != "ci" ]] && [[ "${task_install_dev_exists:-}" ]]; then
+  elif [[ ${taito_mode:-} != "ci" ]] && [[ ${task_install_dev_exists:-} ]]; then
     task_postinstall="install-dev"
     do_confirm=true
   fi
@@ -42,12 +42,12 @@ function npm::install () {
   fi
 
   # Run clean
-  if [[ "${switches}" == *" --clean "* ]]; then
+  if [[ ${switches} == *" --clean "* ]]; then
     npm::clean
   fi
 
   local npm_command="install"
-  if [[ "${switches}" == *" --lock "* ]]; then
+  if [[ ${switches} == *" --lock "* ]]; then
     npm_command="ci"
   fi
 
@@ -61,7 +61,7 @@ function npm::install () {
     npm ${npm_command}
   "
 
-  if [[ "${task_postinstall}" ]]; then
+  if [[ ${task_postinstall} ]]; then
     # TODO add '--python=${npm_python}' for npm run?
     taito::execute_on_host_fg "
       set -e

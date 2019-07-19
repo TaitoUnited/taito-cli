@@ -16,7 +16,7 @@ function docker-compose::export_secrets () {
 
     # TODO remove once all project have been converted
     secret_property="SECRET"
-    if [[ "${taito_version:-}" -ge "1" ]] || [[ "${secret_name:0:12}" != *"."* ]]; then
+    if [[ ${taito_version:-} -ge "1" ]] || [[ ${secret_name:0:12} != *"."* ]]; then
       # TODO: ugly hack that currently occurs in 4 places
       secret_property=$(echo ${secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
       secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')
@@ -27,13 +27,13 @@ function docker-compose::export_secrets () {
       "${taito_vout:?}"
 
     file="${taito_project_path}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
-    if [[ "${secret_method}" == "random" ]] || \
-       [[ "${secret_method}" == "manual" ]] || ( \
-         [[ "${secret_method}" == "htpasswd-plain" ]] && \
-         [[ "${taito_env}" != "local" ]] \
+    if [[ ${secret_method} == "random" ]] || \
+       [[ ${secret_method} == "manual" ]] || ( \
+         [[ ${secret_method} == "htpasswd-plain" ]] && \
+         [[ ${taito_env} != "local" ]] \
       ); then
-      if [[ "${taito_host:-}" ]] && \
-         [[ "${taito_env}" != "local" ]]; then
+      if [[ ${taito_host:-} ]] && \
+         [[ ${taito_env} != "local" ]]; then
          remote_file="${taito_host_dir:?}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
          taito::expose_ssh_opts
          secret_value=$(ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
@@ -69,7 +69,7 @@ function docker-compose::delete_secrets () {
 
     # TODO remove once all project have been converted
     secret_property="SECRET"
-    if [[ "${taito_version:-}" -ge "1" ]] || [[ "${secret_name:0:12}" != *"."* ]]; then
+    if [[ ${taito_version:-} -ge "1" ]] || [[ ${secret_name:0:12} != *"."* ]]; then
       # TODO: ugly hack that currently occurs in 4 places
       secret_property=$(echo ${secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
       secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')
@@ -104,13 +104,13 @@ function docker-compose::save_secrets () {
   do
     taito::expose_secret_by_index ${secret_index}
 
-    if [[ "${secret_changed:-}" ]] && \
-       [[ "${secret_value:-}" ]] && \
-       [[ "${secret_method:-}" != "read/"* ]]; then
+    if [[ ${secret_changed:-} ]] && \
+       [[ ${secret_value:-} ]] && \
+       [[ ${secret_method:-} != "read/"* ]]; then
 
       # TODO remove once all projects have been converted
       secret_property="SECRET"
-      if [[ "${taito_version:-}" -ge "1" ]] || [[ "${secret_name:0:12}" != *"."* ]]; then
+      if [[ ${taito_version:-} -ge "1" ]] || [[ ${secret_name:0:12} != *"."* ]]; then
         # TODO: ugly hack that currently occurs in multiple places
         secret_property=$(echo ${secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
         secret_name=$(echo ${secret_name} | sed 's/\([^\.]*\).*/\1/')

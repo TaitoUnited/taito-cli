@@ -13,11 +13,11 @@ image_tag=${1:?Image tag not given}
 image_path=${2}
 
 path_suffix=""
-if [[ "${name}" != "." ]]; then
+if [[ ${name} != "." ]]; then
   path_suffix="/${name}"
 fi
 
-if [[ "${image_path}" == "" ]]; then
+if [[ ${image_path} == "" ]]; then
   image_path="${taito_container_registry}"
 fi
 
@@ -28,7 +28,7 @@ echo "image: ${image}"
 
 if [[ -f ./taitoflag_images_exist ]]; then
   echo "Skipping artifact release. Image already exists in registry."
-elif [[ "${taito_targets:-}" != *"${name}"* ]]; then
+elif [[ ${taito_targets:-} != *"${name}"* ]]; then
   echo "Skipping artifact release. Artifact ${name} not included in taito_targets."
 else
   if [[ -f "${name}.docker" ]]; then

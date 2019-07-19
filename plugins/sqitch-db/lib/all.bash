@@ -26,19 +26,19 @@ function sqitch::run () {
     else
       database_user="${database_name}_app"
     fi
-    if [[ "${database_username:-}" ]]; then
+    if [[ ${database_username:-} ]]; then
       database_user="${database_username}"
     fi
     sqitch_password="${database_password:-$taito_default_password}"
     # TODO: Remove? -/
 
-    if [[ "${taito_env}" != "local" ]];then
+    if [[ ${taito_env} != "local" ]];then
       # TODO do not reference postgres plugin util directly
       taito::expose_db_user_credentials
-      if [[ "${database_build_password}" != "" ]]; then
+      if [[ ${database_build_password} != "" ]]; then
         database_user="${database_build_username}"
         sqitch_password="${database_build_password}"
-      elif [[ "${database_build_username:-}" != "" ]]; then
+      elif [[ ${database_build_username:-} != "" ]]; then
         database_user="${database_build_username}"
         echo "Password for ${database_user}:"
         read -s -r sqitch_password

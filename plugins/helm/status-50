@@ -5,7 +5,7 @@
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
 options=" ${*} "
-if [[ "${options}" == *" --all "* ]]; then
+if [[ ${options} == *" --all "* ]]; then
   kubectl::use_context
   helm::run list --namespace "${taito_namespace}"
 else

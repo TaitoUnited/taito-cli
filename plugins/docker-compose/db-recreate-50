@@ -6,7 +6,7 @@ name=${1}
 
 # TODO: duplicate code with env-apply
 
-if [[ "${taito_env}" != "local" ]]; then
+if [[ ${taito_env} != "local" ]]; then
   echo "Skipping database create for remote environment"
 else
   echo "Recreating database(s) by cleaning database container(s)"

@@ -6,7 +6,7 @@
 export AWS_DEFAULT_REGION="${taito_provider_region:?}"
 
 # Authentication for CI
-if [[ "${taito_mode:-}" == "ci" ]]; then
+if [[ ${taito_mode:-} == "ci" ]]; then
   # Ensure that AWS credentials exist
   if [[ ! "${AWS_ACCESS_KEY_ID}" ]]; then
     taito::print_plugin_title

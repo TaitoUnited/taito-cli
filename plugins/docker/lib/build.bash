@@ -9,7 +9,7 @@ function docker::build () {
 
   local name=${taito_target:?Target not given}
   local image_tag=${1:-dry-run}
-  if [[ "${taito_docker_new_params:-}" == "true" ]]; then
+  if [[ ${taito_docker_new_params:-} == "true" ]]; then
     local save_image=${2}
     local build_context=${3}
     local service_dir=${4}
@@ -22,20 +22,20 @@ function docker::build () {
     local image_path=${5}
   fi
 
-  if [[ "${build_context}" == "" ]]; then
+  if [[ ${build_context} == "" ]]; then
     local build_context="./${name}"
   fi
 
-  if [[ "${service_dir}" == "" ]]; then
+  if [[ ${service_dir} == "" ]]; then
     local service_dir="./${name}"
   fi
 
-  if [[ "${image_path}" == "" ]]; then
+  if [[ ${image_path} == "" ]]; then
     local image_path="${taito_container_registry}"
   fi
 
   local path_suffix=""
-  if [[ "${name}" != "." ]]; then
+  if [[ ${name} != "." ]]; then
     path_suffix="/${name}"
   fi
 
@@ -46,11 +46,11 @@ function docker::build () {
   local image_builder="${prefix}-builder:latest"
   local image_tester="${taito_project}-${name}-tester:latest"
 
-  if [[ "${taito_targets:-}" != *"${name}"* ]]; then
+  if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "Skipping build: ${name} not included in taito_targets"
   else
     if [[ -f ./taitoflag_images_exist ]] || \
-       ([[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_build:-}" == "false" ]])
+       ([[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "false" ]])
     then
       # Image should exist.
       # We have to pull the existing image so that it exists at the end

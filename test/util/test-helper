@@ -29,7 +29,7 @@ assert_executed_count() {
 setup() {
   # Setup temporary project directory
   TEST_TMPDIR="${taito_plugin_path}/tmp"
-  if [[ "${create_temp_dir}" == "true" ]]; then
+  if [[ ${create_temp_dir} == "true" ]]; then
     mkdir -p "${TEST_TMPDIR}/node_modules"
     mkdir -p "${TEST_TMPDIR}/client/node_modules"
     cd "${TEST_TMPDIR}"

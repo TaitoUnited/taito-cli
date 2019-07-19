@@ -3,9 +3,9 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_command:?}"
 
-if [[ "${taito_command}" == "open-"* ]]; then
+if [[ ${taito_command} == "open-"* ]]; then
   link_mode="open"
-elif [[ "${taito_command}" == "link-"* ]]; then
+elif [[ ${taito_command} == "link-"* ]]; then
   link_mode="link"
 fi
 link_name=${taito_command:5:99}

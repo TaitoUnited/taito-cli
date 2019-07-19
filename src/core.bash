@@ -39,7 +39,7 @@ function taito::core::export_user_config () {
 
   # Personal organization specific configuration
   org_config_file=""
-  if [[ "${taito_organization_param:-}" ]]; then
+  if [[ ${taito_organization_param:-} ]]; then
     org_config_file="${taito_home_path}/.taito/taito-config-${taito_organization_param}"
   fi
 
@@ -59,16 +59,16 @@ function taito::core::print_command_with_internal_syntax () {
   args=("$@")
 
   # Convert space syntax to internal hyphen syntax
-  if [[ "${args[0]}" != *"-"* ]]; then
+  if [[ ${args[0]} != *"-"* ]]; then
     space_cmd=()
     space_args=()
     mark_found="false"
     for arg in "${args[@]}"
     do
-      if [[ "${arg}" == "-"* ]] || [[ ${mark_found} == "true" ]]; then
+      if [[ ${arg} == "-"* ]] || [[ ${mark_found} == "true" ]]; then
         mark_found="true"
         space_args+=("${arg}")
-      elif [[ "${arg}" == *":"* ]] && [[ ${mark_found} == "false" ]]; then
+      elif [[ ${arg} == *":"* ]] && [[ ${mark_found} == "false" ]]; then
         mark_found="true"
         space_cmd+=("${arg}")
       elif [[ ${mark_found} == "false" ]]; then
@@ -85,7 +85,7 @@ function taito::core::print_command_with_internal_syntax () {
 # Resolve project root folder by the location of taito-config.sh
 function taito::core::print_project_path () {
   current_path="${PWD}"
-  while [[ "${PWD}" != "/" ]]; do
+  while [[ ${PWD} != "/" ]]; do
     ls | grep taito-config.sh > /dev/null && break; cd ..;
   done
   if [[ ${PWD} != "/" ]]; then

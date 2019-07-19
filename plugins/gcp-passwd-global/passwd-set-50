@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [[ "${1}" == "-c"* ]]; then
+if [[ ${1} == "-c"* ]]; then
   collection="${2}"
   name="${3}"
 else
@@ -19,7 +19,7 @@ echo "NOTE: If the secret is project specific, use git repository name as"
 echo "a prefix. For example: auron-exlib-example"
 echo
 
-if [[ "${name}" == "" ]]; then
+if [[ ${name} == "" ]]; then
   echo "Secret name:"
   read -r name
 fi
@@ -38,14 +38,14 @@ else
 fi
 
 echo "Validating."
-if [[ "${password}" != "${password2}" ]]; then
+if [[ ${password} != "${password2}" ]]; then
   echo "ERROR: Passwords do not match"
   exit 1
 elif [[ ! "${#password}" -ge 10 ]]; then
   (>&2 echo "ERROR: Why so short password? :( I'm not gonna save it!!!!")
   (>&2 echo)
   exit 1
-elif [[ "${#password}" -ge 20 ]]; then
+elif [[ ${#password} -ge 20 ]]; then
   echo "OK! Now that's a long password ;)"
 else
   echo "OK!"

@@ -2,7 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ "${database_type:-}" == "pg" ]] || [[ -z "${database_type}" ]]; then
+if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   username="${1}"
   postgres::connect "${username}"
 fi

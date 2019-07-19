@@ -13,7 +13,7 @@ suite_filter="${1}"
 test_filter="${2}"
 
 # TODO: should be in taito-cli core only?
-if [[ "${taito_mode:-}" == "ci" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
+if [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_test:-} != "true" ]]; then
   taito::call_next "${@}"
   exit $?
 fi
@@ -32,7 +32,7 @@ echo
 
 # Determine command to be run on init phase
 init_command="echo 'Not running init (ci_exec_test_init=false)'"
-if [[ "${ci_exec_test_init:-}" == "true" ]]; then
+if [[ ${ci_exec_test_init:-} == "true" ]]; then
   init_command="taito ${taito_options:-} init:${taito_env} --clean"
 fi
 
@@ -76,12 +76,12 @@ docker-compose::expose_pod_and_container
 docker_compose="false"
 compose_pre_cmd=""
 compose_cmd="docker exec ${docker_env_vars} -it ${pod} ${test_executable} SUITE ${test_filter}"
-if [[ "${taito_env}" != "local" ]]; then
+if [[ ${taito_env} != "local" ]]; then
   # Running against a remote service
   container_test="${taito_project}-${dir}-test"
   image_test="${container_test}:latest"
   image_src="${container_test}er:latest"
-  if [[ "${taito_mode:-}" != "ci" ]]; then
+  if [[ ${taito_mode:-} != "ci" ]]; then
     # Use development image for testing
     # NOTE: does not exist if project dir is not named after taito_vc_repository
     # NOTE: was ${taito_vc_repository/-/}
@@ -96,7 +96,7 @@ if [[ "${taito_env}" != "local" ]]; then
 
     # On CI mode we use root user
     # TODO: add taito user to image -> local install should replace uid/gid only
-    if [[ "${taito_mode:-}" == "ci" ]]; then
+    if [[ ${taito_mode:-} == "ci" ]]; then
       sed -i '/^    user: taito/d' docker-compose-test.yaml
     fi
   else
@@ -127,7 +127,7 @@ done
 # Execute tests
 if [[ ! -z ${commands} ]]; then
   commands=": ${commands} && :"
-  if [[ "${taito_mode:-}" == "ci" ]]; then
+  if [[ ${taito_mode:-} == "ci" ]]; then
     echo "--- EXECUTING ---"
     echo "${compose_pre_cmd}${commands}"
     echo "-----------------"

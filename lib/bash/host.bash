@@ -44,7 +44,7 @@ function taito::export_database_config () {
 
   target="${1}"
   if [[ -z ${1} ]] && [[ ${taito_target:-} ]] && \
-     [[ "${all_databases:-}" == *"${taito_target}"* ]]; then
+     [[ ${all_databases:-} == *"${taito_target}"* ]]; then
     target="${taito_target:-}"
   fi
   target="${target:-database}"

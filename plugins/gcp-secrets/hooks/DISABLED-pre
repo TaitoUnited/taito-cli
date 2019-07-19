@@ -2,9 +2,9 @@
 : "${taito_command:?}"
 : "${taito_zone:?}"
 
-if [[ "${taito_is_admin:-}" == true ]] && \
-   ( [[ "${taito_command}" == "env-"* ]] || \
-     [[ "${taito_command}" == "db-"* ]] ); then
+if [[ ${taito_is_admin:-} == true ]] && \
+   ( [[ ${taito_command} == "env-"* ]] || \
+     [[ ${taito_command} == "db-"* ]] ); then
 
    taito::print_plugin_title
    echo "Getting db password for admin"

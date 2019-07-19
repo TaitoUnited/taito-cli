@@ -3,7 +3,7 @@
 function kubectl::db_proxy_start () {
   local proxy_pod
   local bind_address="127.0.0.1"
-  if [[ "${taito_docker:-}" == "true" ]]; then
+  if [[ ${taito_docker:-} == "true" ]]; then
     bind_address="0.0.0.0"
   fi
 

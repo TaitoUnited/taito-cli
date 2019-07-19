@@ -2,7 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-( [[ "${kubernetes_name}" ]] && \
+( [[ ${kubernetes_name} ]] && \
     taito::confirm "Configure AWS credentials for CI/CD pipeline"
 ) || taito::skip_to_next "${@}"
 

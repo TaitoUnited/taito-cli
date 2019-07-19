@@ -43,7 +43,7 @@ fi
   	-H "Content-Type: application/json" \
   	-d "{\"time_entry\":{\"description\":\"${description}\",\"duration\":${duration},\"start\":\"${start}\",\"pid\":${project_id},\"tid\":${task_id},\"created_with\":\"taito-cli\"}}" \
   	https://www.toggl.com/api/v8/time_entries)
-  if [[ "${output}" == *"${description}"* ]]; then
+  if [[ ${output} == *"${description}"* ]]; then
     echo "Hour entry was saved to Toggl"
   else
     echo "ERROR:"

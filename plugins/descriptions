@@ -118,7 +118,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
 else
   global_links="${link_global_urls:-}"
 fi
-if [[ "${cprefix}" == "open"* || "${cprefix}" == "*" ]]; then
+if [[ ${cprefix} == "open"* || "${cprefix}" == "*" ]]; then
   while IFS='*' read -ra items; do
     for item in "${items[@]}"; do
       words=(${item})
@@ -174,7 +174,7 @@ if [[ ${taito_project:-} ]]; then
     "# Undo the latest commit from local and remote branch. Leave local files untouched."
   echo "commit erase                     " \
     "# Erase the latest commit from local and remote branch."
-  if [[ "${cprefix}" == "feat"* ]]; then
+  if [[ ${cprefix} == "feat"* ]]; then
   features=$(git branch -a 2> /dev/null | \
     grep " feature/" | sed -e 's|feature/||')
   for feature in ${features}
@@ -236,7 +236,7 @@ if [[ ${taito_project:-} ]]; then
 
     echo "env apply${suffix}         &focus        " \
       "# Apply project specific changes to ${env} environment"
-    if [[ "${env}" == "local" ]]; then
+    if [[ ${env} == "local" ]]; then
       # TOOD: Handle all option permutations nicely
       echo "env apply${suffix} --clean &focus      " \
         "# Clean and apply changes to ${env} environment"
@@ -276,11 +276,11 @@ if [[ ${taito_project:-} ]]; then
     echo "status${suffix}                          " \
       "# Show application status of ${env} environment"
 
-    if [[ "${cprefix}" == "db"* ]] || [[ "${cprefix}" == "*" ]]; then
+    if [[ ${cprefix} == "db"* ]] || [[ ${cprefix} == "*" ]]; then
       for database in $(taito::print_targets_of_type database)
       do
         db=""
-        if [[ "${database}" != "database" ]]; then
+        if [[ ${database} != "database" ]]; then
           db=":${database}"
         fi
         echo "db proxy${db}${suffix}                     " \
@@ -315,7 +315,7 @@ if [[ ${taito_project:-} ]]; then
     fi
 
     # Local-only commands
-    if [[ "${env}" == "local" ]]; then
+    if [[ ${env} == "local" ]]; then
       echo "kaboom${suffix}                        " \
         "# Start application in a cleaned and initialized local environment with a single command"
       echo "start${suffix} --background            " \
@@ -349,7 +349,7 @@ if [[ ${taito_project:-} ]]; then
     fi
 
     # Remote-only commands
-    if [[ "${env}" != "local" ]]; then
+    if [[ ${env} != "local" ]]; then
       echo "auth${suffix}                &focus    " \
         "# Authenticate for the ${env} environment"
       echo "env:${env}                             " \
@@ -378,16 +378,16 @@ if [[ ${taito_project:-} ]]; then
         "# Prepare artifacts for ${env} environment"
       echo "build publish${suffix}                 " \
         "# Publish artifacts for ${env} environment"
-      if [[ "${env}" == "prod" ]]; then
+      if [[ ${env} == "prod" ]]; then
         echo "build release${suffix}               " \
           "# Release artifacts for ${env} environment"
       fi
 
-      if [[ "${cprefix}" == "storage"* ]] || [[ "${cprefix}" == "*" ]]; then
+      if [[ ${cprefix} == "storage"* ]] || [[ ${cprefix} == "*" ]]; then
         for storage in ${taito_storages:-}
         do
           st=""
-          if [[ "${storage}" != "${taito_storages}" ]]; then
+          if [[ ${storage} != "${taito_storages}" ]]; then
             st=":${storage}"
           fi
           echo "storage mount${st}${suffix}                      " \
@@ -413,7 +413,7 @@ if [[ ${taito_project:-} ]]; then
     # Stack component commands
     for stack in ${taito_targets}
     do
-      if [[ "${env}" == "local" ]]; then
+      if [[ ${env} == "local" ]]; then
         echo "unit:${stack}${suffix}                   " \
           "# Run all unit tests"
         echo "unit:${stack}${param} TEST               " \
@@ -421,7 +421,7 @@ if [[ ${taito_project:-} ]]; then
       fi
       echo "test:${stack}${suffix}                               " \
         "# Run all integration and e2e tests of the ${stack} container on ${env} environment"
-      if [[ "${cprefix}" == "test"* || "${cprefix}" == "*" ]]; then
+      if [[ ${cprefix} == "test"* || "${cprefix}" == "*" ]]; then
         suites=($(cat "./${stack}/test-suites" 2> /dev/null))
         for suite in "${suites[@]}"
         do
@@ -457,7 +457,7 @@ if [[ ${taito_project:-} ]]; then
     done
 
     # Links
-    if [[ "${cprefix}" == "open"* || "${cprefix}" == "*" ]]; then
+    if [[ ${cprefix} == "open"* || "${cprefix}" == "*" ]]; then
       while IFS='*' read -ra items; do
         for item in "${items[@]}"; do
           words=(${item})
@@ -466,17 +466,17 @@ if [[ ${taito_project:-} ]]; then
             prefix="$( cut -d '=' -f 1 <<< "$link" )";
             command=${prefix%#*}
             name=${prefix##*#}
-            if [[ "${command}" == *"[:ENV]"* ]]; then
+            if [[ ${command} == *"[:ENV]"* ]]; then
               command_env=${command/\[:ENV\]/$suffix}
               echo "open ${command_env}                     " \
                 "# Open ${env} environment ${name} in browser"
-            elif [[ "${command}" == *":ENV"* ]] && \
-                 [[ "${env_orig}" != "loc" ]]; then
+            elif [[ ${command} == *":ENV"* ]] && \
+                 [[ ${env_orig} != "loc" ]]; then
               command_env=${command/:ENV/$suffix}
               echo "open ${command_env}                     " \
                 "# Open ${env} environment ${name} in browser"
-            elif [[ "${command}" != *":ENV"* ]] && \
-                 [[ "${env_orig}" == "loc" ]]; then
+            elif [[ ${command} != *":ENV"* ]] && \
+                 [[ ${env_orig} == "loc" ]]; then
               echo "open ${command}                         " \
                 "# Open ${name} in browser"
             fi

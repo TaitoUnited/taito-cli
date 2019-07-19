@@ -24,8 +24,8 @@ done
 # Execute all merges
 source_found=""
 for merge in ${taito_env_merges[@]}; do
-  if [[ "${merge}" == "${taito_env_merge_source}->"* ]] || \
-     [[ "${source_found}" ]]
+  if [[ ${merge} == "${taito_env_merge_source}->"* ]] || \
+     [[ ${source_found} ]]
   then
     source_found=true
     s="${merge%->*}"
@@ -67,7 +67,7 @@ for merge in ${taito_env_merges[@]}; do
     (echo && echo 'ERROR: MERGING FAILED!!!!' && echo 'NOTE: You can do force push with --force if you really want to overwrite all changes on branch ${d} --> TODO --force does not work yet?') \
     "
   fi
-  if [[ "${merge}" == *"->${taito_env_merge_dest}" ]]; then
+  if [[ ${merge} == *"->${taito_env_merge_dest}" ]]; then
     break
   fi
 done

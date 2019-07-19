@@ -9,11 +9,11 @@ function terraform::export_env () {
   # If name ends with 's', format value to a terraform list.
   echo "Setting up terraform variables" > "${taito_vout}"
   while IFS='=' read -r name value ; do
-    if [[ "${name}" == *"_"* ]] && \
-       [[ "${name}" != "link_"* ]] && \
+    if [[ ${name} == *"_"* ]] && \
+       [[ ${name} != "link_"* ]] && \
        [[ ${value} ]]; then
       value_formatted="${value}"
-      if [[ "${name: -1}" == "s" ]]; then
+      if [[ ${name: -1} == "s" ]]; then
         # Format to terraform list
         value_formatted="["
         words=("${value}")

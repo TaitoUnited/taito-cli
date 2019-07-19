@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [[ "${*}" == "run" ]]; then
+if [[ ${*} == "run" ]]; then
   # list all script names for tests
   echo "  install-ci"
   echo "    description"
@@ -25,6 +25,6 @@ else
   echo "executed: npm ${*} :"
 fi
 
-if [[ "${*}" == *"fail" ]]; then
+if [[ ${*} == *"fail" ]]; then
   exit 2
 fi

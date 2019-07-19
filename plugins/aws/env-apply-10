@@ -2,7 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ "${taito_mode:-}" != "ci" ]]; then
+if [[ ${taito_mode:-} != "ci" ]]; then
   echo "Authenticating"
   aws::authenticate
 fi

@@ -5,7 +5,7 @@
 : "${database_host:?}"
 : "${database_port:?}"
 
-if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
+if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
   source="${taito_env}"
   dest="${taito_dest_env}"
   username="${1:-root}"

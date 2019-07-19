@@ -6,12 +6,12 @@ function taito::call_next () {
   local name
   local plugin_path
 
-  if [[ "${next}" != "" ]]; then
+  if [[ ${next} != "" ]]; then
     name="${next//\/taito-cli\/plugins\//}"
     name=$(echo "${name}" | cut -f 1 -d '/')
     plugin_path=$(echo "${next/\/hooks/}" | sed -e 's/\/[^\/]*$//g')
     if [[ ${taito_quiet:-} != "true" ]] && ( \
-         [[ "${taito_debug}" == "true" ]] || [[ "${next}" != *"/hooks/"* ]] \
+         [[ ${taito_debug} == "true" ]] || [[ ${next} != *"/hooks/"* ]] \
        ); then
       taito_plugin_path="${plugin_path}" taito::print_plugin_title
     fi
@@ -33,16 +33,16 @@ function taito::execute_on_host () {
   echo "+ ${commands}" > "${taito_vout}"
 
   # TODO: clean up this hack (for running docker commands on remote host)
-  if [[ "${taito_host:-}" ]] && \
-     [[ "${taito_command}" != "util-test" ]] && \
-     [[ "${taito_command}" != "test" ]] && \
-     [[ "${taito_command}" != "auth" ]] && \
-     [[ "${taito_env}" != "local" ]] && \
-     [[ "${commands}" == *"docker"* ]]; then
+  if [[ ${taito_host:-} ]] && \
+     [[ ${taito_command} != "util-test" ]] && \
+     [[ ${taito_command} != "test" ]] && \
+     [[ ${taito_command} != "auth" ]] && \
+     [[ ${taito_env} != "local" ]] && \
+     [[ ${commands} == *"docker"* ]]; then
     taito::expose_ssh_opts
     ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
       "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; ${commands}'"
-  elif [[ "${taito_mode:-}" == "ci" ]]; then
+  elif [[ ${taito_mode:-} == "ci" ]]; then
     eval "${commands}"
   elif [[ ${taito_run:-} ]]; then
     echo "${commands}" >> ${taito_run}
@@ -68,16 +68,16 @@ function taito::execute_on_host_fg () {
   echo "+ ${commands}" > "${taito_vout}"
 
   # TODO: clean up this hack (for running docker commands on remote host)
-  if [[ "${taito_host:-}" ]] && \
-     [[ "${taito_command}" != "util-test" ]] && \
-     [[ "${taito_command}" != "test" ]] && \
-     [[ "${taito_command}" != "auth" ]] && \
-     [[ "${taito_env}" != "local" ]] && \
-     [[ "${commands}" == *"docker"* ]]; then
+  if [[ ${taito_host:-} ]] && \
+     [[ ${taito_command} != "util-test" ]] && \
+     [[ ${taito_command} != "test" ]] && \
+     [[ ${taito_command} != "auth" ]] && \
+     [[ ${taito_env} != "local" ]] && \
+     [[ ${commands} == *"docker"* ]]; then
     taito::expose_ssh_opts
     ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
       "sudo -- bash -c 'cd ${taito_host_dir:?}; . ./taito-config.sh; (${commands})'"
-  elif [[ "${taito_mode:-}" == "ci" ]]; then
+  elif [[ ${taito_mode:-} == "ci" ]]; then
     eval "(${commands})"
   elif [[ ${taito_run_fg:-} ]]; then
     echo "(${commands})" >> ${taito_run_fg}

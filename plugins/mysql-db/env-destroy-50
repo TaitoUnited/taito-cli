@@ -3,7 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_env:?}"
 
-if [[ "${taito_env}" != "local" ]]; then
+if [[ ${taito_env} != "local" ]]; then
   (
     all=$(taito::print_targets_of_type database)
     databases=("${taito_target:-$all}")
@@ -11,7 +11,7 @@ if [[ "${taito_env}" != "local" ]]; then
       export taito_target="${database}"
       taito::export_database_config "${database}"
 
-      if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
+      if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
         if taito::confirm "Delete mysql database ${database_name}"; then
           # Create a subshell to contain password
           (

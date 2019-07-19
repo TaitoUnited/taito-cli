@@ -11,7 +11,7 @@ options=" ${*} "
     export taito_target="${database}"
     taito::export_database_config "${database}"
 
-    if [[ "${options}" == *" --clean "* ]]; then
+    if [[ ${options} == *" --clean "* ]]; then
       echo "Rebasing database ${database_name:?}"
       sqitch::run rebase --set env="'${taito_env}'" || sqitch::deploy
     else

@@ -38,7 +38,7 @@ function links-global::generate_docs () {
               description=${command/\[:ENV\]/:${env}}
               description=${description/:ENV/:${env}}
             fi
-            if [[ ${url} ]] && [[ "${url}" != "https:///"* ]]; then
+            if [[ ${url} ]] && [[ ${url} != "https:///"* ]]; then
               echo "* [${description}](${url})"
             fi
           fi
@@ -116,7 +116,7 @@ function links-global::open_link () {
           command_prototype=${prefix%#*}
           command=${command_prototype%:*}
           command=${command%[*}
-          if [[ "${command// /-}" == "${link_name}" ]]; then
+          if [[ ${command// /-} == "${link_name}" ]]; then
             name=${prefix##*#}
             url="$( cut -d '=' -f 2- <<< "$link" )"
             ${echo_command}
@@ -125,7 +125,7 @@ function links-global::open_link () {
               host_ip=$(echo "$DOCKER_HOST" | sed "s/.*:\\(.*\\):.*/\\1/")
               url=${url//:\/\/localhost/://$host_ip}
             fi
-            if [[ "${mode}" == "open" ]]; then
+            if [[ ${mode} == "open" ]]; then
               if [[ ${taito_quiet:-} != "true" ]]; then
                 ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
                 ${echo_command} Opening link "${url}"

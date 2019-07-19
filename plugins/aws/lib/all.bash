@@ -16,7 +16,7 @@ function aws::authenticate () {
   aws::expose_aws_options
 
   if ! aws configure ${aws_options} list &> /dev/null || \
-     [[ "${options}" == *" --reset "* ]]; then
+     [[ ${options} == *" --reset "* ]]; then
     echo "Authenticating with profile name '$profile'."
     echo
     echo "Provide access keys with proper access rights. Instructions:"

@@ -77,15 +77,15 @@ function gcp::db_proxy_start () {
       )
       # TODO: Implement robust wait for 'ready for connections' status
       sleep 1
-      if [[ "${taito_verbose:?}" == "true" ]] || \
-         [[ "${taito_mode:-}" == "ci" ]]
+      if [[ ${taito_verbose:?} == "true" ]] || \
+         [[ ${taito_mode:-} == "ci" ]]
       then
         sleep 2
         cat /tmp/proxy-out.tmp
       fi
     else
       local bind_address
-      if [[ "${taito_docker:-}" == "true" ]]; then
+      if [[ ${taito_docker:-} == "true" ]]; then
         bind_address="0.0.0.0"
       else
         bind_address="127.0.0.1"

@@ -4,7 +4,7 @@
 
 # TODO: duplicate code with env-apply
 
-if [[ "${taito_env}" == "local" ]]; then
+if [[ ${taito_env} == "local" ]]; then
   echo "Skipping database recreate for local environment"
 else
   echo "Creating database(s)"
@@ -15,7 +15,7 @@ else
       export taito_target="${database}"
       taito::export_database_config "${database}"
 
-      if [[ "${database_type:-}" == "mysql" ]] || [[ -z "${database_type}" ]]; then
+      if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
         if taito::confirm "Create mysql database ${database_name}"; then
           # Create a subshell to contain password
           (

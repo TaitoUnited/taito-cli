@@ -6,8 +6,8 @@ function helm::deploy () {
 
   # Determine image
   # TODO: this is a quick hack
-  if [[ "${taito_mode:-}" == "ci" ]] && \
-     [[ "${ci_exec_build:-}" == "true" ]] && \
+  if [[ ${taito_mode:-} == "ci" ]] && \
+     [[ ${ci_exec_build:-} == "true" ]] && \
      [[ ${image} != *"-untested" ]] && \
      [[ ! -f ./taitoflag_images_exist ]]; then
     image="${image}-untested"
@@ -67,7 +67,7 @@ function helm::deploy () {
     fi
 
     # For Google Cloud builder
-    if [[ "${taito_mode:-}" == "ci" ]] && [[ "${HOME}" == "/builder/home" ]]; then
+    if [[ ${taito_mode:-} == "ci" ]] && [[ ${HOME} == "/builder/home" ]]; then
       export HELM_HOME="/root/.helm"
     fi
 

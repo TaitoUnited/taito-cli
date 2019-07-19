@@ -18,7 +18,7 @@ fi
 
 # Authenticate on Kubernetes
 if [[ $force_kube_login_hack == "true" ]] || ( \
-     [[ "${taito_mode:-}" == "ci" ]] && \
+     [[ ${taito_mode:-} == "ci" ]] && \
      [[ ${kubernetes_name:-} ]] && \
      [[ ! -d "${HOME}/.kube" ]] && \
      [[ ! -d "/root/.kube" ]] \
@@ -33,7 +33,7 @@ if [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
    [[ ${taito_command_requires_database:-} == "true" ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy" || :)
   taito::print_plugin_title
-  if [[ "${proxy_running}" == "" ]]; then
+  if [[ ${proxy_running} == "" ]]; then
     echo "Starting db proxy"
     gcp::db_proxy_start true
   else

@@ -4,7 +4,7 @@ function taito::expose_ssh_opts () {
   ssh_opts=""
   if [[ -f "${HOME}/.ssh/config.taito" ]]; then
     ssh_opts="-F${HOME}/.ssh/config.taito"
-  elif [[ "${taito_host_uname}" == "Darwin" ]]; then
+  elif [[ ${taito_host_uname} == "Darwin" ]]; then
     echo
     echo "WARNING! ~/.ssh/config.taito file does not exist! SSH execution will"
     echo "fail if your ~/.ssh/config file contains any macOS specific properties"
@@ -29,7 +29,7 @@ function taito::show_file () {
 
   local content
   local c
-  if [[ "${mode}" == "taito-cli-first" ]]; then
+  if [[ ${mode} == "taito-cli-first" ]]; then
     c=$(cat "${taito_cli_path}/${filename}")
     content="${content}${c}\n\n"
   fi
@@ -39,7 +39,7 @@ function taito::show_file () {
     content="${content}${c}\n\n"
   fi
 
-  if [[ "${mode}" != "taito-cli-first" ]]; then
+  if [[ ${mode} != "taito-cli-first" ]]; then
     c=$(cat "${taito_cli_path}/${filename}")
     content="${content}${c}\n\n"
   fi
@@ -81,7 +81,7 @@ function taito::select_item () {
     echo "${title}"
     for item in ${items[@]}; do echo "- ${item%:*}"; done
     echo
-    if [[ "${allow_skip}" == "true" ]]; then
+    if [[ ${allow_skip} == "true" ]]; then
       echo "You can enter hyphen(-) to skip."
     fi
     echo "${question}"
@@ -93,7 +93,7 @@ function taito::select_item () {
         item_id="${id}"
       fi
     done
-    if [[ "${selected_name}" == "-" ]] && [[ "${allow_skip}" == "true" ]]; then
+    if [[ ${selected_name} == "-" ]] && [[ ${allow_skip} == "true" ]]; then
       skip=true
     fi
   done
@@ -110,10 +110,10 @@ function taito::show_db_proxy_details () {
   if [[ ${taito_mode:-} != "ci" ]] && [[ ${taito_docker:-} != "true" ]]; then
     echo "- username and password:"
     echo "  * Your personal database username and password (if you have one)"
-    if [[ "${database_mgr_username:-}" ]]; then
+    if [[ ${database_mgr_username:-} ]]; then
       echo "  * ${database_mgr_username} / ${database_build_password:-}"
     fi
-    if [[ "${database_app_username:-}" ]]; then
+    if [[ ${database_app_username:-} ]]; then
       echo "  * ${database_app_username} / ${database_app_password:-}"
     fi
   fi

@@ -2,7 +2,7 @@
 
 options=" ${*} "
 
-if [[ "${options}" == *" --clean "* ]]; then
+if [[ ${options} == *" --clean "* ]]; then
   echo "Deleting old temporary files"
   rm -rf "${taito_project_path:?}/tmp"
   rm -rf "${taito_project_path}/secrets"

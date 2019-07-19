@@ -18,7 +18,7 @@ skip_remaining_commands=false
 # - params = " -- suite user"
 
 target=""
-if [[ "${taito_target:-}" ]]; then
+if [[ ${taito_target:-} ]]; then
   target=":${taito_target}"
 fi
 
@@ -41,7 +41,7 @@ echo "target suffix: ${target}" > ${taito_dout}
 echo "options suffix: ${options}" > ${taito_dout}
 echo "params suffix: ${params}" > ${taito_dout}
 
-if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
+if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
   # Read command names from package.json
   # TODO: why npm run fails on taito calls taito?
   # commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
@@ -82,39 +82,39 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
 
   # TODO: 'npm_command == test' and 'npm_command == taito-test' can be removed?
   running_ci_test="false"
-  if [[ "${taito_mode:-}" == "ci" ]] && \
+  if [[ ${taito_mode:-} == "ci" ]] && \
      ( \
-       [[ "${taito_command}" == "test" ]] || \
-       [[ "${npm_command}" == "test" ]] || \
-       [[ "${npm_command%%:*}" == "test" ]] || \
-       [[ "${npm_command%%:*}" == "taito-test" ]] \
+       [[ ${taito_command} == "test" ]] || \
+       [[ ${npm_command} == "test" ]] || \
+       [[ ${npm_command%%:*} == "test" ]] || \
+       [[ ${npm_command%%:*} == "taito-test" ]] \
      ); then
      running_ci_test="true"
   fi
 
   # TODO: should be in taito-cli core only?
-  if [[ "${running_ci_test}" == "true" ]] && [[ "${ci_exec_test:-}" != "true" ]]; then
+  if [[ ${running_ci_test} == "true" ]] && [[ ${ci_exec_test:-} != "true" ]]; then
     echo "Skipping test because ci_exec_test != true"
     npm_command=""
     running_ci_test=false
     taito_hook_command_executed=true
   fi
 
-  if [[ "${taito_command}" == "build-release"* ]] || \
-     [[ "${taito_command}" == "artifact-release"* ]]; then
+  if [[ ${taito_command} == "build-release"* ]] || \
+     [[ ${taito_command} == "artifact-release"* ]]; then
     # TODO: remove this artifact-release skip hack
     npm_command=""
   fi
 
   # run npm command
 
-  if [[ "${taito_debug:-}" == "true" ]]; then
+  if [[ ${taito_debug:-} == "true" ]]; then
     echo "taito_mode: ${taito_mode:-}"
     echo "taito_command: ${taito_command}"
     echo "npm_command: ${taito_command}"
   fi
 
-  if [[ "${npm_command}" != "" ]]; then
+  if [[ ${npm_command} != "" ]]; then
     # Run it
     taito::print_plugin_title
     echo "Running script '${npm_command}${params}'"
@@ -123,7 +123,7 @@ if [[ -f "./package.json" ]] || [[ "${taito_testing:-}" ]]; then
     #       Perhaps some npm scripts should also be run on host to avoid
     #       compatibilty issues.
     taito_hook_command_executed=true
-    if [[ "${run_on_host}" == "true" ]]; then
+    if [[ ${run_on_host} == "true" ]]; then
       taito::execute_on_host_fg "
         export taito_command_context='npm ${npm_command}'
         npm run -s ${npm_command}${params}

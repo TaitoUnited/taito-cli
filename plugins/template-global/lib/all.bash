@@ -28,7 +28,7 @@ function template-global::ask_and_export_details () {
   read -r -t 1 -n 1000 || : # Flush input buffer
   echo "1) Customer, company or business unit (e.g. 'taito')?"
   read -r taito_company
-  if ! [[ "${taito_company}" =~ ^[a-z][a-z1-9]+$ ]] || \
+  if ! [[ ${taito_company} =~ ^[a-z][a-z1-9]+$ ]] || \
      [[ ${#taito_company} -gt 14 ]]; then
     echo "ERROR: invalid value or too long"
     exit 1
@@ -37,7 +37,7 @@ function template-global::ask_and_export_details () {
   read -r -t 1 -n 1000 || : # Flush input buffer
   echo "2) Optional: Product family (e.g. 'office')?"
   read -r taito_family
-  if ! [[ "${taito_family}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
+  if ! [[ ${taito_family} =~ ^[a-z]?[a-z1-9]*$ ]] || \
      [[ ${#taito_family} -gt 14 ]]; then
     echo "ERROR: invalid value or too long"
     exit 1
@@ -46,7 +46,7 @@ function template-global::ask_and_export_details () {
   read -r -t 1 -n 1000 || : # Flush input buffer
   echo "3) Application name (e.g. 'chat')?"
   read -r taito_application
-  if ! [[ "${taito_application}" =~ ^[a-z][a-z1-9]+$ ]] || \
+  if ! [[ ${taito_application} =~ ^[a-z][a-z1-9]+$ ]] || \
      [[ ${#taito_application} -gt 14 ]]; then
     echo "ERROR: invalid value or too long"
     exit 1
@@ -55,13 +55,13 @@ function template-global::ask_and_export_details () {
   read -r -t 1 -n 1000 || : # Flush input buffer
   echo "4) Optional: service or name suffix (e.g. 'api', 'gui', ...)"
   read -r taito_suffix # TODO application_suffix
-  if ! [[ "${taito_suffix}" =~ ^[a-z]?[a-z1-9]*$ ]] || \
+  if ! [[ ${taito_suffix} =~ ^[a-z]?[a-z1-9]*$ ]] || \
      [[ ${#taito_suffix} -gt 10 ]]; then
     echo "ERROR: invalid value or too long"
     exit 1
   fi
 
-  if [[ "${taito_suffix}" != "" ]]; then
+  if [[ ${taito_suffix} != "" ]]; then
     taito_vc_repository="${taito_family:-$taito_company}-${taito_application}-${taito_suffix}"
   else
     taito_vc_repository="${taito_family:-$taito_company}-${taito_application}"

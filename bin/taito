@@ -121,7 +121,7 @@ taito_cli_path=$(
   while [[ -h "${source}" ]]; do # resolve until the file is no longer a symlink
     dir="$( cd -P "$( dirname "${source}" )" && pwd )"
     source=$(readlink "${source}")
-    [[ "${source}" != /* ]] && source="${taito_cli_path}/${source}"
+    [[ ${source} != /* ]] && source="${taito_cli_path}/${source}"
   done
   dir=$(dirname "${source}")
   echo "${dir%/bin}"
@@ -163,17 +163,17 @@ taito::core::export_user_config "${taito_target_env}"
 
 # Determine environment
 taito_target_env="local"
-if [[ "${command}" == *":"* ]] && [[ "${command}" != *":" ]]; then
+if [[ ${command} == *":"* ]] && [[ ${command} != *":" ]]; then
   sect="${command##*:}"
   . taito-env-all-config.sh &> /dev/null || . taito-config.sh &> /dev/null || :
   if [[ " local dev test stag canary prod master ${taito_environments:-} " == *" ${sect} "* ]] || \
-     [[ "${sect}" == "feat-"* ]]; then
+     [[ ${sect} == "feat-"* ]]; then
     taito_target_env="${sect}"
   fi
 fi
 
 # Pull project specific taito-config settings from git
-if [[ "${project}" ]]; then
+if [[ ${project} ]]; then
   project_local_path="${taito_home_path}/.taito/projects/${project}"
   if [[ ! -d "${project_local_path}" ]]; then
     mkdir -p "${project_local_path}"
@@ -373,17 +373,17 @@ fi
 # Link database container if env is local and the command uses database
 # TODO: this is an ugly quick hack
 link_flags=""
-if [[ "${taito_target_env}" == "local" ]] && \
-   [[ "${command}" != "db-add"* ]] && \
+if [[ ${taito_target_env} == "local" ]] && \
+   [[ ${command} != "db-add"* ]] && \
    [[ " ${taito_plugins} " == *"-db"* ]] && \
    [[ " ${params[@]} " != *" -h "* ]] && \
    [[ " ${params[@]} " != *" --help "* ]] && \
    (
-     [[ "${command}" == "db-"* ]] || \
-     [[ "${command}" == "init"* ]]
+     [[ ${command} == "db-"* ]] || \
+     [[ ${command} == "init"* ]]
    ); then
   docker_project=$(echo "${PWD##*/}" | tr '[:upper:]' '[:lower:]')
-  if [[ "${docker_legacy_networking}" == "true" ]] || \
+  if [[ ${docker_legacy_networking} == "true" ]] || \
      [[ $taito_host_uname == *"_NT"* ]]; then
     docker_project="${docker_project//-/}"
     docker_project="${docker_project//_/}"
@@ -395,7 +395,7 @@ if [[ "${taito_target_env}" == "local" ]] && \
   done
 
   # TODO remove links and use networks only
-  if [[ "${link_flags}" == "" ]]; then
+  if [[ ${link_flags} == "" ]]; then
     all=$(taito::print_targets_of_type database)
     databases=("${taito_target:-$all}")
     for database in ${databases[@]}
@@ -413,12 +413,12 @@ taito_image_name="${taito_image:?}"
 image_flag="--rm ${taito_image_name}"
 docker_it=""
 [[ -t 1 ]] && docker_it="-it"
-if [[ "${mode}" == "dev" ]]; then
+if [[ ${mode} == "dev" ]]; then
   extension_mount_flags="${extension_mount_flags} \
     -v ${taito_cli_path}:/taito-cli"
 fi
 proxy_flags=""
-if [[ "${command}" == "db-proxy"* ]] && [[ ${taito_target_env} != "local" ]]; then
+if [[ ${command} == "db-proxy"* ]] && [[ ${taito_target_env} != "local" ]]; then
   taito::export_database_config
   port="${params[1]}"
   proxy_port=${port:-$database_proxy_port}
@@ -427,7 +427,7 @@ if [[ "${command}" == "db-proxy"* ]] && [[ ${taito_target_env} != "local" ]]; th
     --expose=${proxy_port:-$database_port} \
     -p 127.0.0.1:${proxy_port:-$database_port}:${proxy_port:-$database_port}"
 fi
-if [[ "${command}" == "forward"* ]] && [[ ${params[1]} ]]; then
+if [[ ${command} == "forward"* ]] && [[ ${params[1]} ]]; then
   proxy_port="${params[1]}"
   echo "Exposing proxy port: ${proxy_port}"
   proxy_flags="--expose=${proxy_port} -p 127.0.0.1:${proxy_port}:${proxy_port}"
@@ -435,7 +435,7 @@ fi
 
 # gcsfuse mounting requires privileged mode
 misc_flags=""
-if [[ "${command}" == "storage"* ]]; then
+if [[ ${command} == "storage"* ]]; then
   misc_flags="--privileged"
 fi
 
@@ -488,7 +488,7 @@ if [[ " ${params[@]} " == *" -h "* ]] || \
    [[ ${command} == "trouble" ]] || \
    [[ ${command} == "readme" ]]; then
   # Filter some control characters for a cleaner output
-  if [[ "${taito_host_uname}" == "Darwin" ]]; then
+  if [[ ${taito_host_uname} == "Darwin" ]]; then
    ctrl_filter=" tr -d '[:cntrl:]' "
   else
    ctrl_filter=" grep -axv '.*' "
@@ -508,8 +508,8 @@ if [[ ${exit_code} == 0 ]]; then
   exit_code=$?
 fi
 
-if [[ "${exit_code}" != "0" ]] && \
-   [[ "${exit_code}" != "130" ]] && \
+if [[ ${exit_code} != "0" ]] && \
+   [[ ${exit_code} != "130" ]] && \
    [[ ${continue} == false ]]; then
   echo
   echo "HINT: Run 'taito trouble' to see troubleshoothing"

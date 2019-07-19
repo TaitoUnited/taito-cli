@@ -27,24 +27,24 @@ function mysql::connect () {
   local mysql_password
 
   mysql_username="${database_name}a"
-  if [[ "${database_username:-}" ]]; then
+  if [[ ${database_username:-} ]]; then
     mysql_username="${database_username}"
   fi
   mysql_password="${database_password:-$taito_default_password}"
 
-  if [[ "${username}" != "" ]]; then
+  if [[ ${username} != "" ]]; then
     mysql_username="${username}"
     mysql_password=""
-  elif [[ "${taito_env}" != "local" ]]; then
+  elif [[ ${taito_env} != "local" ]]; then
     taito::expose_db_user_credentials
-    if [[ "${database_build_username}" ]] && \
-       [[ "${database_build_password}" ]]; then
+    if [[ ${database_build_username} ]] && \
+       [[ ${database_build_password} ]]; then
       mysql_username="${database_build_username}"
       mysql_password="${database_build_password}"
     fi
   fi
 
-  if [[ "${mysql_password:-}" ]]; then
+  if [[ ${mysql_password:-} ]]; then
     (
       export MYSQL_PWD="${mysql_password}"
       taito::executing_start
@@ -67,24 +67,24 @@ function mysql::dump () {
   local mysql_password
 
   mysql_username="${database_name}a"
-  if [[ "${database_username:-}" ]]; then
+  if [[ ${database_username:-} ]]; then
     mysql_username="${database_username}"
   fi
   mysql_password="${database_password:-$taito_default_password}"
 
-  if [[ "${username}" != "" ]]; then
+  if [[ ${username} != "" ]]; then
     mysql_username="${username}"
     mysql_password=""
-  elif [[ "${taito_env}" != "local" ]]; then
+  elif [[ ${taito_env} != "local" ]]; then
     taito::expose_db_user_credentials
-    if [[ "${database_build_username}" ]] && \
-       [[ "${database_build_password}" ]]; then
+    if [[ ${database_build_username} ]] && \
+       [[ ${database_build_password} ]]; then
       mysql_username="${database_build_username}"
       mysql_password="${database_build_password}"
     fi
   fi
 
-  if [[ "${mysql_password:-}" ]]; then
+  if [[ ${mysql_password:-} ]]; then
     (
       export MYSQL_PWD="${mysql_password}"
       taito::executing_start

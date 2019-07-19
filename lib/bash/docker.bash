@@ -5,7 +5,7 @@ function taito::commit_changes () {
     exit 0
   fi
 
-  if [[ -z "${taito_admin_key:-}" ]] || [[ "${taito_is_admin:-}" == true ]]; then
+  if [[ -z "${taito_admin_key:-}" ]] || [[ ${taito_is_admin:-} == true ]]; then
     sleep 1
     taito::execute_on_host \
       "docker commit ${HOSTNAME} ${taito_image_name}save > /dev/null"

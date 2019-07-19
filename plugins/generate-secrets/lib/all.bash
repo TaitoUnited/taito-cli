@@ -10,7 +10,7 @@ function generate-secrets::create_and_export () {
   local secret_names=(${taito_secret_names})
   for secret_name in ${secret_names[@]}; do
     taito::expose_secret_by_index ${secret_index}
-    if [[ "${secret_method}" != "read/"* ]] && ( \
+    if [[ ${secret_method} != "read/"* ]] && ( \
          [[ -z "${name_filter}" ]] || \
          [[ ${secret_name} == *"${name_filter}"* ]] \
        ) && ( \
@@ -39,8 +39,8 @@ function generate-secrets::delete_temporary_files () {
   for secret_name in ${secret_names[@]}
   do
     taito::expose_secret_by_index ${secret_index}
-    if [[ "${secret_changed:-}" ]] && \
-       [[ "${secret_value:-}" == "secret_file:"* ]]; then
+    if [[ ${secret_changed:-} ]] && \
+       [[ ${secret_value:-} == "secret_file:"* ]]; then
       set -e
       file="${secret_value#secret_file:}"
       echo "Deleting file '${file}'"
@@ -63,8 +63,8 @@ function generate-secrets::generate_by_type () {
   # local opts
   # local htpasswd_options
 
-  if [[ "${secret_default_value:-}" ]] && \
-     [[ "${secret_method}" == "manual" ]] && \
+  if [[ ${secret_default_value:-} ]] && \
+     [[ ${secret_method} == "manual" ]] && \
      taito::confirm \
        "Default value exists. Use the default value for ${taito_env} environment?"
   then
@@ -74,7 +74,7 @@ function generate-secrets::generate_by_type () {
   if [[ -z "${secret_value}" ]]; then
     case "${secret_method}" in
       manual)
-        while [[ ${#secret_value} -lt 8 ]] || [[ "${secret_value}" != "${secret_value2}" ]]; do
+        while [[ ${#secret_value} -lt 8 ]] || [[ ${secret_value} != "${secret_value2}" ]]; do
           echo "New secret value (min 8 characters):"
           read -r -s secret_value
           echo "New secret value again:"
@@ -82,8 +82,8 @@ function generate-secrets::generate_by_type () {
         done
         ;;
       file)
-        if [[ "${taito_provider:-}" == "gcp" ]] && \
-           [[ "${secret_name}" == *"serviceaccount"* ]]; then
+        if [[ ${taito_provider:-} == "gcp" ]] && \
+           [[ ${secret_name} == *"serviceaccount"* ]]; then
           opts=""
           if [[ ${google_authuser:-} ]]; then
             opts="authuser=${google_authuser}&"
@@ -150,7 +150,7 @@ function generate-secrets::generate_by_type () {
         echo "environments from the public. Enter usernames and passwords below."
         echo "Enter an empty username when you are done."
         echo
-        if [[ "${secret_method}" == "htpasswd-plain" ]]; then
+        if [[ ${secret_method} == "htpasswd-plain" ]]; then
           htpasswd_options="-p"
           echo "NOTE: All passwords will be stored in plain text. You should not use"
           echo "them for anything important."
@@ -164,13 +164,13 @@ function generate-secrets::generate_by_type () {
         do
           until htpasswd ${htpasswd_options} "${file}" "${username}"; do :; done
         done
-        if [[ "${secret_method}" == "htpasswd-plain" ]]; then
+        if [[ ${secret_method} == "htpasswd-plain" ]]; then
           sed -i -- "s/:/:{PLAIN}/" "${file}"
         fi
         secret_value="secret_file:${file}"
         ;;
       random)
-        if [[ "${taito_env}" == "local" ]]; then
+        if [[ ${taito_env} == "local" ]]; then
           echo "Using '${taito_default_password:?}' as random value for local environment"
           secret_value="${taito_default_password}"
         else
@@ -179,8 +179,8 @@ function generate-secrets::generate_by_type () {
         fi
         ;;
       *)
-        if [[ "${secret_method}" != "read/"* ]] && \
-           [[ "${secret_method}" != "copy/"* ]]; then
+        if [[ ${secret_method} != "read/"* ]] && \
+           [[ ${secret_method} != "copy/"* ]]; then
           echo "ERROR: Unknown secret method: ${secret_method}"
           exit 1
         fi

@@ -15,8 +15,8 @@ function kubectl::delete_secrets () {
     # TODO remove once all projects have been converted
     local secret_property="SECRET"
     local formatted_secret_name=${secret_name//_/-}
-    if [[ "${taito_version:-}" -ge "1" ]] || \
-       [[ "${formatted_secret_name:0:12}" != *"."* ]]
+    if [[ ${taito_version:-} -ge "1" ]] || \
+       [[ ${formatted_secret_name:0:12} != *"."* ]]
     then
       # TODO: ugly hack that currently occurs in 3 places
       secret_property=$(echo ${formatted_secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
@@ -74,7 +74,7 @@ function kubectl::export_secrets () {
     taito::expose_secret_by_index ${secret_index}
 
     if [[ ${filter} ]] && \
-       [[ "${secret_name}" != *"${filter}"* ]]; then
+       [[ ${secret_name} != *"${filter}"* ]]; then
       secret_index=$((${secret_index}+1))
       continue
     fi
@@ -82,7 +82,7 @@ function kubectl::export_secrets () {
     # TODO remove once all project have been converted
     local secret_property="SECRET"
     local formatted_secret_name=${secret_name//_/-}
-    if [[ "${taito_version:-}" -ge "1" ]] || [[ "${formatted_secret_name:0:12}" != *"."* ]]; then
+    if [[ ${taito_version:-} -ge "1" ]] || [[ ${formatted_secret_name:0:12} != *"."* ]]; then
       # TODO: ugly hack that currently occurs in 3 places
       secret_property=$(echo ${formatted_secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
       formatted_secret_name=$(echo ${formatted_secret_name} | sed 's/\([^\.]*\).*/\1/')
@@ -98,7 +98,7 @@ function kubectl::export_secrets () {
 
     if [[ ${base64} ]]; then
       # write secret value to file
-      if [[ "${save_to_disk}" == "true" ]]; then
+      if [[ ${save_to_disk} == "true" ]]; then
         mkdir -p "${taito_project_path}/tmp/secrets/${taito_env}"
         file="${taito_project_path}/tmp/secrets/${taito_env}/${secret_name}"
         echo "Saving secret to ${file}" > "${taito_vout}"
@@ -107,10 +107,10 @@ function kubectl::export_secrets () {
         secret_value="secret_file:${file}"
       fi
 
-      if [[ "${secret_method:?}" == "random" ]] || \
-         [[ "${secret_method}" == "manual" ]] || (
-           [[ "${secret_method}" == "htpasswd"* ]] && \
-           [[ "${save_to_disk}" == "false" ]] \
+      if [[ ${secret_method:?} == "random" ]] || \
+         [[ ${secret_method} == "manual" ]] || (
+           [[ ${secret_method} == "htpasswd"* ]] && \
+           [[ ${save_to_disk} == "false" ]] \
          ); then
         # use secret as value instead of file path
         secret_value=$(echo "${base64}" | base64 --decode)
@@ -152,7 +152,7 @@ function kubectl::save_secrets () {
   for secret_name in "${secret_names[@]}"
   do
     taito::expose_secret_by_index ${secret_index}
-    if [[ "${secret_value:-}" ]] && [[ ${#secret_value} -lt 8 ]] && \
+    if [[ ${secret_value:-} ]] && [[ ${#secret_value} -lt 8 ]] && \
        [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
       echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
       exit 1
@@ -166,14 +166,14 @@ function kubectl::save_secrets () {
   do
     taito::expose_secret_by_index ${secret_index}
 
-    if  [[ "${secret_changed:-}" ]] && ( \
-          [[ "${secret_value:-}" ]] || [[ ${secret_method} == "copy/"* ]] \
+    if  [[ ${secret_changed:-} ]] && ( \
+          [[ ${secret_value:-} ]] || [[ ${secret_method} == "copy/"* ]] \
         ); then
 
       # TODO remove once all projects have been converted
       secret_property="SECRET"
       formatted_secret_name=${secret_name//_/-}
-      if [[ "${taito_version:-}" -ge "1" ]] || [[ "${formatted_secret_name:0:12}" != *"."* ]]; then
+      if [[ ${taito_version:-} -ge "1" ]] || [[ ${formatted_secret_name:0:12} != *"."* ]]; then
         # TODO: ugly hack that currently occurs in 3 places
         secret_property=$(echo ${formatted_secret_name} | sed 's/[^\.]*\.\(.*\)/\1/')
         formatted_secret_name=$(echo ${formatted_secret_name} | sed 's/\([^\.]*\).*/\1/')

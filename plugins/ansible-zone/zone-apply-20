@@ -55,7 +55,7 @@ taito::confirm "Apply changes by running ansible scripts" || \
       > ansible-playbooks/taito-ansible.cfg
     export ANSIBLE_CONFIG="${PWD}/ansible-playbooks/taito-ansible.cfg"
     set +x
-  elif [[ "${taito_host_uname}" == "Darwin" ]]; then
+  elif [[ ${taito_host_uname} == "Darwin" ]]; then
     echo
     echo "WARNING! ~/.ssh/config.taito file does not exist! SSH execution will"
     echo "fail if your ~/.ssh/config file contains any macOS specific properties"

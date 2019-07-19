@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [[ "${1}" == "-c"* ]]; then
+if [[ ${1} == "-c"* ]]; then
   collection="${2}"
   name="${3}"
 else
@@ -14,7 +14,7 @@ taito_secrets_region=TODO
 taito_secrets_tzone=TODO
 taito_secrets_url=gs://TODO/secrets/${collection}
 
-if [[ "${name}" == "" ]]; then
+if [[ ${name} == "" ]]; then
   echo "Secret name:"
   read -r name
 fi
