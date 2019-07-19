@@ -187,8 +187,11 @@ if [[ ${taito_project:-} ]]; then
   # Build target commands
   echo "build                            " \
     "# Build all"
-  for stack in ${taito_build_targets:-}
-  do
+  for stack in ${taito_build_targets:-}; do
+    type_variable_name="taito_target_type_${stack}"
+    if [[ ${!type_variable_name:-container} != "container" ]]; then
+      continue;
+    fi
     echo "build:${stack}                   " \
       "# Build ${stack} module"
     echo "save:${stack}                    " \
@@ -415,8 +418,12 @@ if [[ ${taito_project:-} ]]; then
     fi
 
     # Stack component commands
-    for stack in ${taito_targets}
-    do
+    for stack in ${taito_targets}; do
+      type_variable_name="taito_target_type_${stack}"
+      if [[ ${!type_variable_name:-container} != "container" ]]; then
+        continue;
+      fi
+
       if [[ ${env} == "local" ]]; then
         echo "unit:${stack}${suffix}                   " \
           "# Run all unit tests"

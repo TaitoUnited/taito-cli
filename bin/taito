@@ -276,10 +276,9 @@ if [[ ${mode} == "autocomplete" ]] || [[ ${mode} == "descriptions" ]]; then
   # shellcheck source=../lib/bash/host.bash
   . "${taito_lib_path}/bash/host_exports.bash"
   "${taito_plugins_path}/${mode}" "${args[*]}"
-  for ext_path in ${extension_local_paths[@]}
-  do
+  for ext_path in ${extension_local_paths[@]}; do
     "${ext_path}/${mode}" "${args[*]}" 2> /dev/null
-  done
+  done || :
   exit 0
 fi
 if [[ ${upgrade} == true ]]; then
