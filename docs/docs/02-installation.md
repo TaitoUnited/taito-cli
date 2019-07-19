@@ -19,14 +19,14 @@ The following software needs to be installed on your computer before you can ins
     ```shell
     export TAITO_INSTALL_DIR=~/taito-cli
     export TAITO_GIT_CLONE_METHOD=https  # https or ssh
-    curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install | bash
+    curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash
     ```
 
 2. Optional: Install Taito CLI plugin for your [Visual Studio Code](https://github.com/TaitoUnited/TODO/) or [Atom](https://atom.io/packages/atom-taito-cli) editor.
 
 ### Manual installation
 
-1. See the [install](https://github.com/TaitoUnited/taito-cli/blob/master/install) script and execute the steps manually in any way you like.
+1. See the [install.sh](https://github.com/TaitoUnited/taito-cli/blob/master/install.sh) script and execute the steps manually in any way you like.
 
 2. Optional: Install Taito CLI plugin for your [Visual Studio Code](https://github.com/TaitoUnited/TODO/) or [Atom](https://atom.io/packages/atom-taito-cli) editor.
 
