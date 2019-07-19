@@ -22,7 +22,7 @@ For website development, see the [www/README.md](www/README.md).
 
 ### Taito CLI development
 
-Install Taito CLI normally using the [installation instructions](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/manual/02-installation.md). You can run a taito command in development mode by using the `-d, --dev` flag (e.g. `taito -d status`). In the development mode your local taito-cli directory is mounted in the Taito CLI container. If you are working with your own fork, update your PATH or taito symlink so that it points to your forked version of the Taito CLI.
+Install Taito CLI normally using the [installation instructions](https://taitounited.github.io/taito-cli/docs/02-installation/). You can run a taito command in development mode by using the `-d, --dev` flag (e.g. `taito -d status`). In the development mode your local taito-cli directory is mounted in the Taito CLI container. If you are working with your own fork, update your PATH or taito symlink so that it points to your forked version of the Taito CLI.
 
 How to implement a command:
 
@@ -34,7 +34,7 @@ How to implement a command:
 6. Add the plugin to [plugins.md](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) file if it is not there already.
 7. Make a pull request.
 
-For detailed instructions, see plugin development instructions on the [docs](https://github.com/TaitoUnited/taito-cli/tree/master/docs/manual/10-custom-plugins.md) and on the [tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/16-creating-a-plugin.md).
+For detailed instructions, see plugin development instructions on the [docs](https://taitounited.github.io/taito-cli/docs) and on the [tutorial](https://taitounited.github.io/taito-cli/tutorial).
 
 ## License
 
