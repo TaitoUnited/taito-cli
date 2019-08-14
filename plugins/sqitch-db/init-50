@@ -13,7 +13,7 @@ options=" ${*} "
 
     if [[ ${options} == *" --clean "* ]]; then
       echo "Rebasing database ${database_name:?}"
-      sqitch::run rebase --set env="'${taito_env}'" || sqitch::deploy
+      (sqitch::run rebase --set env="'${taito_env}'") || sqitch::deploy
     else
       echo "Deploying changes to database ${taito_env}"
       sqitch::deploy
