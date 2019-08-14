@@ -4,7 +4,7 @@ function links-global::generate_docs () {
   # Skip link generation for template projects and non-projects
   if [[ ${taito_project:-} == *"-template" ]] || \
      [[ ! -f "${taito_project_path}/taito-config.sh" ]]; then
-    exit 0
+    return 0
   fi
 
   # Generate markdown links
