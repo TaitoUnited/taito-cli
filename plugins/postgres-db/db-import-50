@@ -8,7 +8,8 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   echo "Importing ${1}"
 
   (
-    cd "${taito_current_path:?}"
+    # TODO: change to current path (subdir where user was located on host)
+    # cd "${taito_current_path:?}"
     flags="-f ${filename}"
     postgres::connect "${username}" "${flags}"
   )
