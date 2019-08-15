@@ -165,7 +165,13 @@ taito::core::export_user_config "${taito_target_env}"
 taito_target_env="local"
 if [[ ${command} == *":"* ]] && [[ ${command} != *":" ]]; then
   sect="${command##*:}"
-  . taito-env-all-config.sh &> /dev/null || . taito-config.sh &> /dev/null || :
+  if [[ -f taito-project-config.sh ]]; then
+    . taito-project-config.sh
+  elif [[ -f taito-env-all-config.sh ]]; then # TODO: remove (deprecated)
+    . taito-env-all-config.sh
+  elif [[ -f taito-config.sh ]]; then
+    . taito-config.sh
+  fi
   if [[ " local dev test stag canary prod master ${taito_environments:-} " == *" ${sect} "* ]] || \
      [[ ${sect} == "feat-"* ]]; then
     taito_target_env="${sect}"
