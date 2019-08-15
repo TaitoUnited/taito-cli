@@ -22,7 +22,13 @@ TAITO CLI TROUBLESHOOTING
   Taito CLI hangs after displaying the copyright notice
     First try restarting your Docker daemon. If the problem persists after
     Docker restart, try Docker reset as your Docker virtual disk might have
-    been corrupted.
+    been corrupted. Rebooting your computer might also help.
+
+  Strange Docker problems
+    Try to reset docker to factory defaults (on macOS: preferences -> reset) or
+    just clean it by running 'taito workspace kill' and 'taito workspace clean'.
+    Adjust your Docker resource limits (on macOS: preferences -> disk,
+    preferences -> advanced).
 
   Connection or authorization error
     If you run into a connection or authorization error during Taito CLI
@@ -36,11 +42,15 @@ TAITO CLI TROUBLESHOOTING
     disk in your docker preferences. Also check that you have disk space
     available on your computer.
 
-  Strange Docker problems
-    Try to reset docker to factory defaults (on macOS: preferences -> reset) or
-    just clean it by running 'taito workspace kill' and 'taito workspace clean'.
-    Adjust your Docker resource limits (on macOS: preferences -> disk,
-    preferences -> advanced).
+  502 Bad Gateway
+    Check application status with `taito status:ENV` and
+    `taito logs:CONTAINER:ENV` commands, and fix the problem. If everything
+    seems fine, check ingress logs. Perhaps you have not set basic auth secrets
+    required by ingress.
+
+  Invalid SSL certificate (NET::ERR_CERT_AUTHORITY_INVALID)
+    Check ingress logs. Perhaps SSL certificate processing has failed for some
+    reason.
 
   Some library directories are owned by root (e.g. node_modules)
     You probably have run `taito start` before installing libraries with
