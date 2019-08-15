@@ -69,7 +69,7 @@ taito auth:test
 Create the test environment:
 
 ```shell
-EDIT taito-env-all-config.sh       # Add 'test' to 'taito_environments'
+EDIT taito-project-config.sh       # Add 'test' to 'taito_environments'
 taito env apply:test               # Create the test environment
 taito env merge:dev test           # Merge changes from dev to test
 ```
@@ -139,7 +139,7 @@ NOTE: Since canary environment uses production resources, you don't need to run 
 Create the canary environment:
 
 ```shell
-EDIT taito-env-all-config.sh       # Add 'canary' to 'taito_environments'
+EDIT taito-project-config.sh       # Add 'canary' to 'taito_environments'
 taito env merge:test canary        # Merge changes from test to canary
 ```
 
