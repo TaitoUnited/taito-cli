@@ -27,7 +27,7 @@ params=""
 for arg
 do
   if [[ "$arg" == "--"* ]] && [[ -z "${params}" ]]; then
-    options="${options}:${1#--}"
+    options="${options}:${arg#--}"
   elif [[ -z "${params}" ]]; then
     params=" -- ${arg}"
   else
