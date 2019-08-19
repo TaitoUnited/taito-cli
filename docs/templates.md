@@ -14,7 +14,7 @@ Officially recommended project templates are listed below. All of them include t
 
 * [react-native-template](https://github.com/TaitoUnited/react-native-template): Template for React Native applications. Visual Studio App Center for CI/CD and monitoring.
 
-* [minimal-template](https://github.com/TaitoUnited/minimal-template): Minimal project template for Taito CLI. It includes support for version control, links, and npm. It also provides CI/CD templates for multiple providers, and some documentation templates.
+* [minimal-template](https://github.com/TaitoUnited/minimal-template): Minimal project template for Taito CLI. It includes support for version control, code quality checking, links, and npm. It also provides CI/CD templates for multiple providers, and some documentation templates.
 
 * [npm-template](https://github.com/TaitoUnited/npm-template): Template for npm libraries. Includes monorepo support.
 
