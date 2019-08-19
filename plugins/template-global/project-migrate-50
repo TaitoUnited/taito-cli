@@ -2,9 +2,6 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-echo "'project migrate' command under construction"
-exit 1
-
 : "${template_default_source_git:?}"
 
 export template="${1:?Template not given}"
@@ -44,7 +41,7 @@ taito::execute_on_host_fg "
   git clone -q -b master --single-branch --depth 1 \
     ${template_source_git}/${template}.git ./template-tmp/${template}
   rm -rf ./template-tmp/${template}/.git
-  yes | cp ./template-tmp/${template}/taito-config.sh .
+  yes | cp ./template-tmp/${template}/taito*config.sh .
   echo 'export template=${template}' >> _template-config.sh
   echo 'export template_name=${template}' >> _template-config.sh
   echo 'export template_source_git=${template_source_git}' >> _template-config.sh
