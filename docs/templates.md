@@ -42,7 +42,7 @@ Use one of the **Kubernetes as a service** infrastructure templates, but do not 
 
 * [aws](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/aws): Amazon Web Services
 * [azure](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/azure): Microsoft Azure (Coming soon)
-* [digitalocean](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/digitalocean): Digital Ocean (Coming soon)
+* [do](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/do): Digital Ocean (Coming soon)
 * [gcp](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/gcp): Google Cloud Platform
 * [scaleway](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/scaleway): Scaleway (TODO)
 * [vmware](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/vmware): VMWare Cloud (Coming soon)
