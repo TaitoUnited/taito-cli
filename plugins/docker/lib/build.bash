@@ -47,7 +47,15 @@ function docker::build () {
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "Skipping build: ${name} not included in taito_targets"
   else
-    if [[ -f ./taitoflag_images_exist ]] || \
+    if [[ ${ci_exec_build:-} == "false" ]] && \
+       [[ ${ci_exec_test:-false} == "false" ]] && \
+       # On GCP cloud build we must always pull the images if they have been
+       # defined as build artifacts (images) for the build
+       ! grep ":\$COMMIT_SHA'" cloudbuild.yaml &> /dev/null
+    then
+      echo "Not pulling Docker images from registry as both ci_exec_build and" \
+        "ci_exec_test are 'false'."
+    elif [[ -f ./taitoflag_images_exist ]] || \
        ([[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "false" ]])
     then
       # Image should exist.
