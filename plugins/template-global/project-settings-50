@@ -47,7 +47,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: Taito CLI image"
   echo "# TIP: Pull taito image from private registry to keep CI/CD fast."
   # TODO: select taito-cli image by provider
-  echo "template_default_taito_image=taitounited/taito-cli:latest"
+  echo "template_default_taito_image=taitounited/taito-cli:cli"
   echo "template_default_taito_image_username="
   echo "template_default_taito_image_password="
   echo "template_default_taito_image_email="
