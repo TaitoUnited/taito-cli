@@ -15,7 +15,7 @@ TAITO CLI TROUBLESHOOTING
     There is probably something wrong with your docker. You can try some of the
     following alternatives:
     - Restart docker daemon
-    - Clean up docker with 'taito workspace kill' and 'taito workspace clean'
+    - Clean up docker with 'taito workspace clean'
     - Reset docker to factory defaults
       (on macOS: preferences -> reset -> reset to factory defaults)
 
@@ -26,9 +26,8 @@ TAITO CLI TROUBLESHOOTING
 
   Strange Docker problems
     Try to reset docker to factory defaults (on macOS: preferences -> reset) or
-    just clean it by running 'taito workspace kill' and 'taito workspace clean'.
-    Adjust your Docker resource limits (on macOS: preferences -> disk,
-    preferences -> advanced).
+    just clean it by running 'taito workspace clean'. Adjust your Docker
+    resource limits (on macOS: preferences -> disk, preferences -> advanced).
 
   Connection or authorization error
     If you run into a connection or authorization error during Taito CLI
@@ -37,10 +36,9 @@ TAITO CLI TROUBLESHOOTING
     case, run 'taito auth:ENV' or 'taito auth:ENV reset' to authenticate.
 
   'No space left on device'
-    Try cleaning your local workspace by running 'taito workspace kill' and
-    'taito workspace clean'. You can also try to enlarge the docker virtual
-    disk in your docker preferences. Also check that you have disk space
-    available on your computer.
+    Try cleaning your local workspace by running 'taito workspace clean'. You
+    can also try to enlarge the docker virtual disk in your docker preferences.
+    Also check that you have free disk space available on your computer.
 
   502 Bad Gateway
     Check application status with `taito status:ENV` and

@@ -2,7 +2,7 @@
 
 taito::execute_on_host_fg "
   echo Stopping containers:
-  docker stop \$(docker ps -a -q)
+  docker stop \$(docker ps -a -q) || :
   sleep 2
   echo
   echo docker volume prune:
