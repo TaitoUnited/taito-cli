@@ -248,7 +248,7 @@ if [[ ${taito_project:-} ]]; then
       echo "env apply${suffix} --clean --start --init &focus" \
         "# Clean and apply changes to ${env}, start and initialize"
       echo "env apply${suffix} --start                &focus" \
-        "# Apply changes to ${env} environment, start &focus" \
+        "# Apply changes to ${env} environment, start &focus"
       echo "env apply${suffix} --start --init               " \
         "# Apply changes to ${env}, start and initialize"
     fi
