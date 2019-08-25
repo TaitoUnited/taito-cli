@@ -10,7 +10,7 @@ check=$(
   gcloud -q --project "${taito_zone:?}" builds list \
   --filter="status:SUCCESS AND \
             source.repoSource.repoName~.*${taito_project:?} AND \
-            images~.*\\:${image_tag}"
+            sourceProvenance.resolvedRepoSource.commitSha:${image_tag}"
 )
 
 export taito_images_exist
