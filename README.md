@@ -8,7 +8,20 @@ To get started see the [website](https://taitounited.github.io/taito-cli/). For 
 
 ## Container images
 
-TODO: The default Taito CLI docker image contains all the tools. Slimmed down images are optimized for CI/CD builds.
+Taito CLI provides the following stable Docker images:
+
+* `cli`: Taito CLI image to be used locally on command line. Includes tools for all major cloud providers.
+* `ci`: CI/CD optimized image without any cloud provider specific tools.
+* `ci-aws` CI/CD optimized image for Amazon Web Services.
+* `ci-azure` CI/CD optimized image for Microsoft Azure (TODO).
+* `ci-gcp` CI/CD optimized image for Google Cloud Platform.
+* `ci-do` CI/CD optimized image for Digital Ocean (TODO).
+
+Taito CLI provides also some alternative versions for each image:
+
+* `*-canary`: Canary version includes all the latest implemented features.
+* `*-dev`: Development version includes latest changes made during development.
+* `*-N.N.N`: Docker image tagged with Taito CLI version in case you need an older version of Taito CLI. It is recommended to always use the latest stable release available.
 
 ## Contributing
 
@@ -38,4 +51,4 @@ For detailed instructions, see plugin development instructions on the [docs](htt
 
 ## License
 
-Taito CLI is licensed under the [MIT license](https://github.com/TaitoUnited/taito-cli/blob/master/LICENSE), and supported by [Taito United](http://taitounited.fi/).
+Taito CLI is licensed under the [MIT license](https://github.com/TaitoUnited/taito-cli/blob/master/LICENSE), and supported by [Taito United](https://taitounited.fi/).
