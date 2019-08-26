@@ -320,7 +320,7 @@ if [[ " local ${taito_environments:-} " != *" ${taito_env} "* ]]; then
 fi
 if [[ ${taito_target} ]] && \
    [[ ${taito_mode:-} != "ci" ]] && \
-   [[ ${taito_targets:-} != *"${taito_target}"* ]] && \
+   [[ "${taito_targets:-} root" != *"${taito_target}"* ]] && \
    [[ ${taito_build_targets:-} != *"${taito_target}"* ]]; then
   echo
   echo "ERROR: Unknown target '${taito_target}'"
