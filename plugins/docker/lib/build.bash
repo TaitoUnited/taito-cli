@@ -47,7 +47,8 @@ function docker::build () {
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "Skipping build: ${name} not included in taito_targets"
   else
-    if [[ ${ci_exec_build:-} == "false" ]] && \
+    if [[ -f ./taitoflag_images_exist ]] && \
+       [[ ${ci_exec_build:-} == "false" ]] && \
        [[ ${ci_exec_test:-false} == "false" ]] && \
        # On GCP cloud build we must always pull the images if they have been
        # defined as build artifacts (images) for the build
