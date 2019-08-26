@@ -51,7 +51,10 @@ function docker::build () {
        [[ ${ci_exec_test:-false} == "false" ]] && \
        # On GCP cloud build we must always pull the images if they have been
        # defined as build artifacts (images) for the build
-       ! grep ":\$COMMIT_SHA'" cloudbuild.yaml &> /dev/null
+       (
+         [[ ${taito_ci_provider:-} != "gcp" ]] || \
+         ! grep "^images:" cloudbuild.yaml &> /dev/null
+       )
     then
       echo "Not pulling Docker images from registry as both ci_exec_build and" \
         "ci_exec_test are 'false'."
