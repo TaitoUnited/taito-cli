@@ -25,3 +25,5 @@ if [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
       "${taito_uptime_provider_org_id}"
   fi
 fi
+
+taito::call_next "${@}"
