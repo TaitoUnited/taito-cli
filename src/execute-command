@@ -51,19 +51,6 @@ do
         echo "TODO: print Taito CLI version"
         exit
         ;;
-        check)
-        if [[ $(whoami) == "taito" ]]; then
-          echo
-          echo "Taito CLI is OK!"
-          exit
-        else
-          echo
-          echo "ERROR: 'taito' user has not been initialized properly."
-          echo
-          echo "Run 'taito upgrade'."
-          exit 1
-        fi
-        ;;
         -c|--continue)
         continue=true
         shift || :
@@ -247,6 +234,20 @@ fi
 # Read taito-config.sh files from all locations
 taito::core::export_user_config "${taito_env}"
 taito::core::export_project_config "${taito_env}"
+
+if [[ ${taito_command} == "check" ]]; then
+  if [[ $(whoami) == "taito" ]] || [[ $(whoami) == "root" ]]; then
+    echo
+    echo "Taito CLI is OK!"
+    exit
+  else
+    echo
+    echo "ERROR: 'taito' user has not been initialized properly."
+    echo
+    echo "Run 'taito upgrade'."
+    exit 1
+  fi
+fi
 
 if [[ ${taito_command} == "test" ]] && \
    [[ ${taito_mode:-} == "ci" ]] && \
