@@ -52,14 +52,16 @@ function links-global::generate_docs () {
   markdown_links=$(echo -e "${markdown_links:-}" | sort -u)
 
   # Add links to README.md
-  {
-    sed '/GENERATED LINKS START/q' README.md
-    echo -e "${markdown_links}\n"
-    sed -n -e '/GENERATED LINKS END/,$p' README.md
-  } > README.md.tmp
-  truncate --size 0 README.md
-  cat README.md.tmp > README.md
-  rm -f README.md.tmp
+  if grep "GENERATED LINKS START" README.md > /dev/null; then
+    {
+      sed '/GENERATED LINKS START/q' README.md
+      echo -e "${markdown_links}\n"
+      sed -n -e '/GENERATED LINKS END/,$p' README.md
+    } > README.md.tmp
+    truncate --size 0 README.md
+    cat README.md.tmp > README.md
+    rm -f README.md.tmp
+  fi
 }
 
 function links-global::show_help () {
