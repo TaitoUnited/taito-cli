@@ -14,4 +14,5 @@ Taito CLI is a lightweight wrapper that reduces technology and vendor lock-in by
 
 ---
 
-**Next:** [2. Installation and upgrade](/docs/02-installation)
+**Next:** [2. Installation and upgrade](02-installation.md)
+ab

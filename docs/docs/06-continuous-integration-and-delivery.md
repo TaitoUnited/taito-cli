@@ -53,4 +53,4 @@ Note that the CI/CD process may slightly differ depending on environment. On dev
 
 ---
 
-**Next:** [7. Infrastructure management](/docs/07-infrastructure-management)
+**Next:** [7. Infrastructure management](07-infrastructure-management.md)

@@ -155,4 +155,4 @@ Run `taito -h` to show more taito commands that you can use, or see the [help.tx
 
 ---
 
-**Next:** [4. Usage](/docs/04-usage)
+**Next:** [4. Usage](04-usage)

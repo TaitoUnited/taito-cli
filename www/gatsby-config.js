@@ -12,7 +12,7 @@ module.exports = {
     author: 'Jukka Keski-Luopa',
   },
 
-  pathPrefix: '/taito-cli',
+  pathPrefix: !IS_DEV ? '/taito-cli' : undefined,
 
   plugins: [
     !IS_DEV && false && {
@@ -47,7 +47,7 @@ module.exports = {
 
           // NOTE: add `pathPrefix` to relative links in Markdown files
           // https://github.com/gatsbyjs/gatsby/issues/3316
-          !IS_DEV && 'gatsby-remark-links-path-prefix',
+          'gatsby-remark-links-path-prefix',
 
           {
             resolve: 'gatsby-remark-prismjs',

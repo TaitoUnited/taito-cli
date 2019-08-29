@@ -36,4 +36,4 @@ You can upgrade Taito CLI and its extensions anytime by running `taito upgrade`.
 
 ---
 
-**Next:** [3. Quick start](/docs/03-quick-start)
+**Next:** [3. Quick start](03-quick-start.md)

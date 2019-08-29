@@ -32,4 +32,4 @@ taito [-o ORG] zone create: TEMPLATE
 
 ---
 
-**Next:** [8. ChatOps](/docs/08-chatops)
+**Next:** [8. ChatOps](08-chatops.md)
