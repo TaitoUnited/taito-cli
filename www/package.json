@@ -6,7 +6,7 @@
     "start": "npm run develop",
     "build": "gatsby build --prefix-paths",
     "serve": "gatsby serve",
-    "deploy": "npm run build && gh-pages -d public",
+    "deploy": "NODE_ENV=production npm run build && gh-pages -d public",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "dependencies": {
