@@ -8,24 +8,26 @@ To get started see the [website](https://taitounited.github.io/taito-cli/). For 
 
 ## Container images
 
-Taito CLI [docker repository](https://hub.docker.com/r/taitounited/taito-cli/) provides the following stable Docker images for local command line usage:
+Taito CLI [docker repository](https://hub.docker.com/r/taitounited/taito-cli/) provides the following stable image optimized for local command line usage:
 
-* `cli`: Taito CLI image to be used locally on command line. This is the default Docker image for Taito CLI, and it includes tools for all major cloud providers.
+* `cli`: Taito CLI image to be used locally on command line. This is the default Docker image for Taito CLI. It includes tools for all major cloud providers.
 
-Taito CLI [docker repository](https://hub.docker.com/r/taitounited/taito-cli/) provides the following stable CI/CD optimized Docker images:
+Stable images optimized for CI/CD:
 
 * `ci`: CI/CD image without any cloud provider specific tools.
 * `ci-aws`: CI/CD image for **Amazon Web Services**.
 * `ci-azure`: CI/CD image for **Microsoft Azure** (TODO).
 * `ci-gcp`: CI/CD image for **Google Cloud Platform**.
 * `ci-do`: CI/CD image for **Digital Ocean** (TODO).
-* `ci-all`: CI/CD image that includes tools for all cloud providers (TODO).
+* `ci-all`: CI/CD image that includes tools for all cloud providers.
 
-Additional special purpose Docker images:
+> TIP: If your CI/CD pulls the whole Docker image on each build, optimize the image pull by setting up caching on your CI/CD, or by using your own Docker registry as a mirror. You can also create a custom Docker image, that includes only the tools that you actually need.
+
+Special purpose Docker images:
 
 * `all`: Taito CLI image that contains all tools required either locally or on CI/CD. It is used for running the Taito CLI [integration test suite](https://github.com/TaitoUnited/taito-cli-test).
 
-Taito CLI [docker repository](https://hub.docker.com/r/taitounited/taito-cli/) provides also some alternative versions for each image:
+Alternative versions for each image:
 
 * `*-canary`: Canary version includes all the latest implemented features.
 * `*-dev`: Development version includes the latest changes made during Taito CLI development.
