@@ -109,4 +109,4 @@ taito env rotate:prod my-secret
 
 ---
 
-**Next:** [7. Databases and files](/tutorial/07-databases-and-files)
+**Next:** [7. Databases and files](07-databases-and-files.md)

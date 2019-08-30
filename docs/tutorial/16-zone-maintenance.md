@@ -10,4 +10,4 @@ TODO Taito CLI commands for maintenance:
 
 ---
 
-**Next:** [17. Zone monitoring](/tutorial/17-zone-monitoring)
+**Next:** [17. Zone monitoring](17-zone-monitoring.md)

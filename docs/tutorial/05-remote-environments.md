@@ -128,7 +128,7 @@ taito open client:prod         # Open application GUI
 
 CI/CD deploys database migrations automatically, but not any data. You can manually import data from any sql file with `taito db import:prod FILE`. You should not use `taito init:prod` command with a live production environment that already contains some important data.
 
-> At this point your production environment already exists. However, before releasing it to the real end-users, you might want to do some additional tasks that are explained in chapter [10. Production setup](/tutorial/10-production-setup).
+> At this point your production environment already exists. However, before releasing it to the real end-users, you might want to do some additional tasks that are explained in chapter [10. Production setup](10-production-setup.md).
 
 ### 5.5. Create canary environment
 
@@ -233,4 +233,4 @@ Advanced features (TODO not all implemented yet):
 
 ---
 
-**Next:** [6. Environment variables and secrets](/tutorial/06-env-variables-and-secrets)
+**Next:** [6. Environment variables and secrets](06-env-variables-and-secrets.md)

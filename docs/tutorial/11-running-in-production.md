@@ -18,7 +18,7 @@ TODO
 
 ### 11.5. Zone monitoring
 
-Mostly for DevOps personnel. See chapter [17. Zone monitoring](/tutorial/17-zone-monitoring).
+Mostly for DevOps personnel. See chapter [17. Zone monitoring](17-zone-monitoring.md).
 
 ### 11.6. Security updates
 
@@ -34,4 +34,4 @@ TODO
 
 ---
 
-**Next:** [PART III: Customizing Taito CLI](/tutorial/12-creating-a-custom-command)
+**Next:** [PART III: Customizing Taito CLI](12-creating-a-custom-command.md)

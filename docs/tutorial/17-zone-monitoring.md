@@ -6,4 +6,4 @@ TODO Taito CLI commands for monitoring, anomaly detection, etc.
 
 ---
 
-**Next:** [18. Zone recovery](/tutorial/18-zone-recovery)
+**Next:** [18. Zone recovery](18-zone-recovery.md)

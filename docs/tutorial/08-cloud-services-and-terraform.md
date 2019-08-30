@@ -5,4 +5,4 @@
 
 ---
 
-**Next:** [9. full-stack-template specific details](/tutorial/09-full-stack-template-specific)
+**Next:** [9. full-stack-template specific details](09-full-stack-template-specific.md)

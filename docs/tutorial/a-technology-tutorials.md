@@ -66,7 +66,7 @@ Some of the components are containers. Container components know about applicati
 
 #### Tutorials:
 
-* [React: Tutorial](https://reactjs.org/tutorial/tutorial.html)
+* [React: Tutorial](https://reactjs.orgtutorial.html.md)
 * [React: Main Concepts](https://reactjs.org/docs/hello-world.html)
 * [Egghead: React](https://egghead.io/browse/frameworks/react): For example, [The Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-react) or [Start Learning React](https://egghead.io/courses/start-learning-react)
 
@@ -103,4 +103,4 @@ TODO
 
 ---
 
-**Next:** [APPENDIX B: Software design](/tutorial/b-software-design)
+**Next:** [APPENDIX B: Software design](b-software-design.md)

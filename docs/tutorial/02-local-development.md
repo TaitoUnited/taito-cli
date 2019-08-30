@@ -54,11 +54,11 @@ Alternatively, if you would like to write plain JavaScript (*.js), you can enabl
 
 Make up some simple idea that you would like to implement, and add a new empty page for it. If you don't come up with any idea yourself, just reimplement the posts page that lets you add new posts, but replace posts with articles. Don't worry about API or database for now. Just implement a dummy user interface that works, but doesn't actually store data anywhere permanently.
 
-If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A: Technology tutorials](/tutorial/a-technology-tutorials) provides some tips and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/) for managing state and side effects.
+If you are not yet familiar with [React](https://reactjs.org/), you should implement the UI state management using only functionality that React provides out-of-the-box. [Appendix A: Technology tutorials](a-technology-tutorials) provides some tips and other resources that might be useful while learning React, HTML and CSS. If you already know React, you may choose to use additional libraries like [Redux](https://redux.js.org/) and [redux-saga](https://redux-saga.js.org/.md) for managing state and side effects.
 
 The application is built automatically in the background when you make changes. If build fails for some reason, you should see errors on your command line console. You should see the same errors also on your editor, if your editor has been configured properly.
 
-You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](/tutorial/a-technology-tutorials#browser-extensions) for some additional browser extensions that might also be useful.
+You can debug the implementation with your web browser. [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/) is a set of web developer tools built directly into the Google Chrome browser. Other web browsers include similar tools also. These tools let you examine generated HTML, change CSS styles directly in browser, and debug implementation by setting breakpoints and executing code line by line in browser. Note that you can find source code of your UI implementation under the webpack folder: **Chrome DevTools** -> **Sources tab** -> **webpack://** -> **.** -> **src**. See [appendix A](a-technology-tutorials#browser-extensions.md) for some additional browser extensions that might also be useful.
 
 > If web development is new for you and you are insterested in it, just take your time learning the web development basics before continuing the Taito CLI tutorial.
 
@@ -84,7 +84,7 @@ taito pull            # Pull changes from remote git repository using rebase and
 taito push            # Push changes to remote git repository
 ```
 
-For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): my short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](/tutorial/03-version-control).
+For now, you should commit all your changes to the dev branch that is checked out by default. You should also write commit messages in the following format: `wip(articles): my short lowercase message`. Branches and commit message conventions are explained later in chapter [3. Version control](03-version-control.md).
 
 ### 2.7. Add a database table
 
@@ -106,7 +106,7 @@ taito init --clean
 
 The _deploy.sql_ script creates a database table, the _verify.sql_ script verifies that the database table exists, and the _revert.sql_ script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
 
-Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [appendix A](/tutorial/a-technology-tutorials#sql-and-relational-databases) for some SQL and relational database tutorials.
+Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [appendix A](a-technology-tutorials#sql-and-relational-databases.md) for some SQL and relational database tutorials.
 
 ### 2.8. Add some example data to database
 
@@ -133,7 +133,7 @@ select * from articles; # Show all articles (SQL command)
 \q                      # Quit (postgres)
 ```
 
-If you are not yet familiar with SQL, you should try to execute also some additional SQL commands just for the fun of it. See [appendix A](/tutorial/a-technology-tutorials#sql-and-relational-databases) for some SQL tutorials.
+If you are not yet familiar with SQL, you should try to execute also some additional SQL commands just for the fun of it. See [appendix A](a-technology-tutorials#sql-and-relational-databases.md) for some SQL tutorials.
 
 > TIP: If you have installed some database GUI tool, you can run `taito db proxy` to display database connection details and you can use those details to connect to the local database.
 
@@ -178,7 +178,7 @@ Your UI implementation needs to access the data located in database. However, ac
 UI (on browser)  ->  API (on server)  ->  database
 ```
 
-The API should be stateless. That is, the API implementation should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](/tutorial/b-software-design#api-design).
+The API should be stateless. That is, the API implementation should not keep any state in memory or on local disk between requests. This is explained in more detail in [appendix B](b-software-design#api-design.md).
 
 TODO: Some tips for debugging.
 
@@ -193,13 +193,13 @@ Implement a RESTful API endpoint for your UI and modify your UI implementation t
 - `PATCH /articles/432`: Update article 432 (only given fields)
 - `DELETE /articles/432`: Delete article 432
 
-See [appendix A](/tutorial/a-technology-tutorials#restful-api) for some RESTful API tutorials.
+See [appendix A](a-technology-tutorials#restful-api.md) for some RESTful API tutorials.
 
 #### b) GraphQL API
 
 TODO: Later
 
-See [appendix A](/tutorial/a-technology-tutorials#graphql-api) for some GraphQL API tutorials.
+See [appendix A](a-technology-tutorials#graphql-api.md) for some GraphQL API tutorials.
 
 ### 2.12. Use environment variables for configuration
 
@@ -231,7 +231,7 @@ Data changes made by a service should be atomic to preserve data integrity. That
 
 #### a) Transactions with a relational database
 
-With relational databases you can use transactions to achieve atomicity. The full-stack-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. full-stack-template specific details](/tutorial/09-full-stack-template-specific) if you'd like to know how to customize your transactions.
+With relational databases you can use transactions to achieve atomicity. The full-stack-template starts a transaction automatically for all POST, PUT, PATCH and DELETE requests (see `server/src/infra/transaction.middleware.js`). This is a good default for most cases. See chapter [10. full-stack-template specific details](09-full-stack-template-specific.md) if you'd like to know how to customize your transactions.
 
 Try if transactions work like they should:
 
@@ -278,7 +278,7 @@ taito test:server           # Run all API tests of server against locally runnin
 taito test:client cypress   # Run all cypress UI tests of client against locally running application
 ```
 
-You can run UI and API tests also against remote environments, but this is explained in chapter [5. Remote environments](/tutorial/05-remote-environments).
+You can run UI and API tests also against remote environments, but this is explained in chapter [5. Remote environments](05-remote-environments.md).
 
 You should not test implementation in your test scripts. Instead, you should always find some kind of 'public API' that is designed not to change very often, and test behaviour of that API. Here public API can be provided by a class, module, library, service or UI for example. This way you can make changes to the underlying implementation, and the existing tests protect you from breaking anything.
 
@@ -339,8 +339,8 @@ taito workspace clean          # Remove all unused build artifacts (e.g. images)
 
 ### 2.18. Read some software design basics
 
-If you did not already, read [Appendix B: Software design](/tutorial/b-software-design) for some tips on how to design your application.
+If you did not already, read [Appendix B: Software design](b-software-design.md) for some tips on how to design your application.
 
 ---
 
-**Next:** [3. Version control](/tutorial/03-version-control)
+**Next:** [3. Version control](03-version-control.md)
