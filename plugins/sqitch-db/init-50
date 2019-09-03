@@ -16,7 +16,7 @@ options=" ${*} "
       (sqitch::run rebase --set env="'${taito_env}'") || sqitch::deploy
     else
       echo "Deploying changes to database ${taito_env}"
-      sqitch::deploy
+      (sqitch::deploy) || :
     fi
   done
 )
