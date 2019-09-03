@@ -6,7 +6,7 @@
 
 kubectl::use_context
 
-echo -e "Deleting ${taito_project}-${taito_target_env}."
+echo -e "Deleting ${taito_project}-${taito_target_env}." \
   "This may also delete data that\\nhas been stored on a persistent volume."
 taito::confirm "Do you really want to continue?" no
 
