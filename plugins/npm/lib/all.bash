@@ -4,6 +4,8 @@ function npm::clean () {
   # NOTE: Changed clean to run on host because of linux permission issues.
   # We are installing libs locally anyway so perhaps it is better this way.
   taito::execute_on_host_fg "\
+    echo \"Deleting all package-lock.json files\"
+    find . -name \"package-lock.json\" -type f -prune -exec rm -rf '{}' +
     echo \"Deleting all node_modules directories\"
     find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +"
 
