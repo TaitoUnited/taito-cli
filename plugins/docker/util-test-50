@@ -92,7 +92,7 @@ if [[ ${taito_env} != "local" ]]; then
   if [[ -f ./docker-compose-test.yaml ]] && \
      [[ $(grep "${container_test}" "./docker-compose-test.yaml") ]]; then
     docker_compose="true"
-    compose_cmd="docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ${test_executable} SUITE ${test_filter}'"
+    compose_cmd="COMPOSE_HTTP_TIMEOUT=90 docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ${test_executable} SUITE ${test_filter}'"
 
     # On CI mode we use root user
     # TODO: add taito user to image -> local install should replace uid/gid only
