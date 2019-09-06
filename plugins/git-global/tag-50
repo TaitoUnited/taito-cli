@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+tag="${1}"
+comment="${2:-$tag}"
+
+taito::execute_on_host_fg "
+if git rev-parse --is-inside-work-tree &> /dev/null; then
+  set -e
+  git tag -a ${tag} -m '${comment}'
+  git push origin ${tag}
+fi
+"
+
+taito::call_next "${@}"

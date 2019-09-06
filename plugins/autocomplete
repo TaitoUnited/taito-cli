@@ -111,9 +111,14 @@ if [[ ${taito_project:-} ]]; then
   echo "feat: FEATURE"
   echo "pull"
   echo "push"
+  echo "stage"
+  echo "unstage"
+  echo "discard"
   echo "commit revert"
   echo "commit undo"
   echo "commit erase"
+  echo "tag: TAG"
+  echo "untag: TAG"
   if [[ ${cprefix} == "feat"* ]]; then
     features=$(git branch -a 2> /dev/null | \
       grep " feature/" | sed -e 's|feature/||')

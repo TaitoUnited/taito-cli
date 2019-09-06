@@ -166,6 +166,12 @@ if [[ ${taito_project:-} ]]; then
     "# Switch to a feature branch"
   echo "pull                             " \
     "# Pull changes"
+  echo "stage                            " \
+    "# Stage all changes"
+  echo "unstage                          " \
+    "# Unstage all changes"
+  echo "discard                          " \
+    "# Discard unstaged changes"
   echo "push                             " \
     "# Push changes"
   echo "commit revert                    " \
@@ -174,6 +180,10 @@ if [[ ${taito_project:-} ]]; then
     "# Undo the latest commit from local and remote branch. Leave local files untouched."
   echo "commit erase                     " \
     "# Erase the latest commit from local and remote branch."
+  echo "tag: TAG                         " \
+    "# Create tag"
+  echo "untag: TAG                         " \
+    "# Delete tag"
   if [[ ${cprefix} == "feat"* ]]; then
   features=$(git branch -a 2> /dev/null | \
     grep " feature/" | sed -e 's|feature/||')
