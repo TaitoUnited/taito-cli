@@ -4,12 +4,18 @@
 
 taito::skip_if_not container "${@}"
 
-source_port=$1
-dest_port=${2:-$source_port}
+if [[ $1 =~ ^[0-9]$ ]]; then
+  pod_index="${1}"
+  source_port=$2
+  dest_port=${3:-$source_port}
+else
+  source_port=$1
+  dest_port=${2:-$source_port}
+fi
 
 if taito::is_current_target_of_type container; then
   kubectl::use_context
-  kubectl::expose_pod_and_container
+  kubectl::expose_pod_and_container false "${pod_index}"
   (
     taito::executing_start;
     kubectl port-forward "${pod}" "$source_port:$dest_port" --address 0.0.0.0

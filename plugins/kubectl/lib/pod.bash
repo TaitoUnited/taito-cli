@@ -1,12 +1,17 @@
 #!/bin/bash -e
 
 function kubectl::get_pods() {
-  kubectl get pods ${2} | \
-    ${1} | \
+  filter_command=$1
+  kube_flags=$2
+  pod_index=${3:-0}
+
+  kubectl get pods ${kube_flags} | \
+    ${filter_command} | \
     grep "${prefix}" | \
     sed -e "s/${prefix}-//" | \
     grep "${taito_target}" | \
-    head -n1 | awk "{print \"${prefix}-\" \$1;}"
+    sed -n $((pod_index + 1))p | \
+    awk "{print \"${prefix}-\" \$1;}"
 }
 
 function kubectl::expose_pod_and_container () {
@@ -15,6 +20,7 @@ function kubectl::expose_pod_and_container () {
   : "${taito_target_env:?}"
 
   determine_failed_pod=${1}
+  pod_index=${2}
 
   local prefix="${taito_project}"
   if [[ ${taito_version:-} -ge "1" ]]; then
@@ -23,13 +29,14 @@ function kubectl::expose_pod_and_container () {
 
   if [[ ${taito_target} != *"-"* ]]; then
     # Short pod name was given. Determine the full pod name.
-    if [[ ${determine_failed_pod} == "true" ]]; then
+    if [[ ${determine_failed_pod} == "true" ]] && [[ ! ${pod_index} ]]; then
       pod=$(kubectl::get_pods "grep -v Running")
     else
       pod=$(
         kubectl::get_pods \
           "grep -v CrashLoopBackOff" \
-          "--field-selector=status.phase=Running"
+          "--field-selector=status.phase=Running" \
+          "${pod_index}"
       )
     fi
     if [[ ! ${pod} ]]; then
@@ -68,8 +75,13 @@ function kubectl::expose_pods () {
 }
 
 function kubectl::exec () {
+  if [[ $1 =~ ^[0-9]+$ ]]; then
+    pod_index="${1}"
+    shift
+  fi
+
   kubectl::use_context
-  kubectl::expose_pod_and_container
+  kubectl::expose_pod_and_container false "${pod_index}"
 
   if [[ -z "${pod}" ]]; then
     echo

@@ -4,11 +4,13 @@
 
 kubectl::use_context
 
+pod_index=${1}
+
 echo "kubectl: TODO rolling restart instead of kill"
 if [[ ${taito_target:-} ]]; then
   # Restart only the container given as argument
   taito::skip_if_not container "${@}"
-  kubectl::expose_pod_and_container
+  kubectl::expose_pod_and_container false "${pod_index}"
   (taito::executing_start; kubectl delete pod "${pod:?}")
 else
   (

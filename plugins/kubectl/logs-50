@@ -4,10 +4,11 @@
 
 taito::skip_if_not container "${@}"
 
-container="${1}"
+pod_index="${1}"
+container="${2}"
 
 kubectl::use_context
-kubectl::expose_pod_and_container true
+kubectl::expose_pod_and_container true "${pod_index}"
 echo pod: "${pod}"
 echo container: "${container}"
 

@@ -71,15 +71,22 @@ QUICK EXAMPLES
 
   CONTAINERS
     logs:server:dev                    # Tail logs of a container named 'server'
+    logs:server:dev 0                  # Tail logs of a specific server instance
     kill:server:dev                    # Kill a container named 'server'
+    kill:server:dev 0                  # Kill specific server instance
     restart:server:dev                 # Restart container named 'server'
+    restart:server:dev 0               # Restart specific server instance
     shell:server:dev                   # Start a shell on a container named 'server'
+    shell:server:dev 0                 # Start a shell on a specific server instance
     exec:server:dev echo foo           # Execute a command in a container named 'server'
+    exec:server:dev 0 echo foo         # Execute a command in a specific server instance
     forward:redis:dev 6000 6379        # Forward local port 6000 to container port 6379
     save:client                        # Save changes to client container image
     clean:server                       # Clean server container by deleting it
     copy to:server:dev ./file /dir     # Copy a file/folder to server container
+    copy to:server:dev 0 ./file /dir   # Copy a file/folder to server container
     copy from:server:dev /dir/file .   # Copy a file/folder from server containr
+    copy from:server:dev 0 /dir/file . # Copy a file/folder from server containr
     sync to:server:dev ./dir /dir      # Sync folder to server container
     sync from:server:dev /dir .        # Sync folder from server container
 
@@ -375,11 +382,12 @@ PROJECT: BASIC OPERATIONS
     TARGET: Start only the given pod/container/function/module/program
     ARGS: Additional arguments
 
-  restart[:TARGET][:ENV]
+  restart[:TARGET][:ENV] [INDEX]
     Starts the defined environment e.g 'taito restart' or 'taito restart:dev'.
     Optional arguments:
     .
-    TARGET: Start only the given pod/container/function/module/program
+    TARGET: Restart only the given pod/container/function/module/program
+    INDEX: Restart only the specific instance (0-N)
 
   run[:TARGET]:ENV [--no-deps] [-d,--device] [ARGS]
     Runs the application in the defined environment e.g 'taito run:ios'.
@@ -454,60 +462,84 @@ PROJECT: BASIC OPERATIONS
     Show status summary of environment (status of services, pods, etc.).
     Show more details with '--all'. Show all namespaces with '--all-namespaces'.
 
-  logs[:TARGET][:ENV]
+  logs[:TARGET][:ENV] [INDEX]
     Follow logs of a pod. Examples:
     $ taito logs:client
     $ taito logs:client:dev
+    $ taito logs:client:dev 1
     $ taito logs:my-app-client-3034393823-2f5jf:dev
+    .
+    INDEX: Show logs of a specific instance (0-N)
 
   shell[:TARGET][:ENV]
     Start a shell on a container. Examples:
     $ taito shell: client
     $ taito shell:dev client
+    $ taito shell:dev client 1
     $ taito shell:dev my-app-client-3034393823-2f5jf
+    .
+    INDEX: Start shell on a specific instance (0-N)
 
-  exec[:TARGET][:ENV] COMMAND
+  exec[:TARGET][:ENV] [INDEX] COMMAND
     Execute command in container.
     Examples:
     $ taito exec:client echo "taito!"
     $ taito exec:client:dev echo "taito!"
+    $ taito exec:client:dev 1 echo "taito!"
     $ taito exec:my-app-client-3034393823-2f5jf:dev echo "taito!"
+    .
+    INDEX: Execute on a specific instance (0-N)
 
-  forward:TARGET[:ENV] LOCAL_PORT [REMOTE_PORT]
+  forward:TARGET[:ENV] [INDEX] LOCAL_PORT [REMOTE_PORT]
     Forward local port to remote container port
     Examples:
     $ taito forward:redis:dev 6379
     $ taito forward:redis:dev 6000 6379
+    .
+    INDEX: Forward to a specific instance (0-N)
 
-  copy to:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
+  copy to:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
     Copy a file or folder. Examples:
     $ taito copy to:client foo.txt /client/foo.txt
     $ taito copy to:client:dev foo.txt client:/client/foo.txt
-    TODO IMPLEMENT
+    $ taito copy to:client:dev 1 foo.txt client:/client/foo.txt
+    .
+    INDEX: Copy to a specific instance (0-N)
 
-  copy from:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
+  copy from:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
     Copy a file or folder. Examples:
     $ taito copy from:client /client/foo.txt .
     $ taito copy from:client:dev /client/foo.txt .
-    TODO IMPLEMENT
+    $ taito copy from:client:dev 1 /client/foo.txt .
+    .
+    INDEX: Copy to a specific instance (0-N)
 
-  sync to:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
+  sync to:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
     Sync a folder. Examples:
     $ taito sync to:client ./foo /foo
     $ taito sync to:client:dev ./foo /foo
+    $ taito sync to:client:dev 1 ./foo /foo
     TODO IMPLEMENT
+    .
+    INDEX: Sync to a specific instance (0-N)
 
-  sync from:TARGET[:ENV] SOURCE_PATH DESTINATION_PATH
+  sync from:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
     Sync a folder. Examples:
     $ taito sync from:client /foo ./foo
     $ taito sync from:client:dev /foo ./foo
+    $ taito sync from:client:dev 1 /foo ./foo
     TODO IMPLEMENT
+    .
+    INDEX: Sync from a specific instance (0-N)
 
-  kill:TARGET[:ENV]
+  kill:TARGET[:ENV] [INDEX]
     Kill a container. Examples:
     $ taito kill:client
     $ taito kill:client:dev
+    $ taito kill:client:dev 1
     $ taito kill:my-app-client-3034393823-2f5jf:dev
+    .
+    INDEX: Kill a specific instance (0-N)
 
   save:TARGET
     Save changes to a container

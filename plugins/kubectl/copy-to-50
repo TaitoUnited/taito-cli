@@ -4,11 +4,17 @@
 
 taito::skip_if_not container "${@}"
 
-source="${1:?}"
-dest="${2:?}"
+if [[ $1 =~ ^[0-9]+$ ]]; then
+  pod_index="${1}"
+  source="${2:?}"
+  dest="${3:?}"
+else
+  source="${1:?}"
+  dest="${2:?}"
+fi
 
 kubectl::use_context
-kubectl::expose_pod_and_container
+kubectl::expose_pod_and_container false "${pod_index}"
 (taito::executing_start; kubectl cp "${source}" "${pod}:${dest}" -c "${container}")
 
 taito::call_next "${@}"

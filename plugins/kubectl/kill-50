@@ -4,8 +4,15 @@
 
 taito::skip_if_not container "${@}"
 
+pod_index="${1}"
+
 kubectl::use_context
-kubectl::expose_pods
-(taito::executing_start; kubectl delete pod ${pods})
+if [[ $pod_index ]]; then
+  kubectl::expose_pod_and_container false "${pod_index}"
+  (taito::executing_start; kubectl delete pod "${pod:?}")
+else
+  kubectl::expose_pods
+  (taito::executing_start; kubectl delete pod ${pods})
+fi
 
 taito::call_next "${@}"

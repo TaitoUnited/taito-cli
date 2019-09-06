@@ -4,9 +4,11 @@
 
 taito::skip_if_not container "${@}"
 
+pod_index=${1}
+
 echo "Starting shell..."
 kubectl::use_context
-kubectl::expose_pod_and_container
+kubectl::expose_pod_and_container false "${pod_index}"
 (taito::executing_start; kubectl exec -it "${pod:?}" -c "${container:-}" -- "/bin/sh") || \
 (taito::executing_start; kubectl exec -it "${pod}" -- "/bin/sh")
 
