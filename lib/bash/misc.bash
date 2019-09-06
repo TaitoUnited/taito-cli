@@ -137,3 +137,19 @@ function taito::substitute_variable_values_in_file () {
   fi
 }
 export -f taito::substitute_variable_values_in_file
+
+function taito::print_variable () {
+  name=$1
+  determine_suffix=$2
+  suffix=$3
+
+  if [[ ! ${suffix} ]] && \
+     [[ ${determine_suffix} == "true" ]] && \
+     [[ " prod canary stag " == *"${taito_target_env}"* ]]; then
+    suffix="_prod"
+  fi
+
+  env_var_name="${name}${suffix}"
+  echo "${!env_var_name}"
+}
+export -f taito::print_variable

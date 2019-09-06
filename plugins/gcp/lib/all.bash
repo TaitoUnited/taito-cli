@@ -110,6 +110,16 @@ function gcp::db_proxy_stop () {
   fi
 }
 
+function gcp::grant_role () {
+  project=$1
+  role=$2
+  users=$3
+  for user in ${users[@]}; do
+    gcloud projects add-iam-policy-binding "${project_id}" \
+      --member "${user}" --role "${role}"
+  done
+}
+
 function gcp::ensure_project_exists () {
   local project_id=$1
   local organization_id=$2
@@ -131,10 +141,24 @@ function gcp::ensure_project_exists () {
     fi
 
     if [[ ${billing_id} ]] && [[ ${#billing_id} -gt 10 ]]; then
+      echo
+      echo "Creating project ${project_id}"
       gcloud projects create "${project_id:?}" \
         "--organization=${organization_id:?}"
+
+      echo
+      echo "Enabling billing for project ${project_id}"
       gcloud beta billing projects link "${project_id:?}" \
         --billing-account "${billing_id}"
+
+      echo
+      echo "Setting user rights for project ${project_id}"
+      gcp::grant_role "${project_id}" roles/owner \
+        "$(taito::print_variable template_default_project_owners true)"
+      gcp::grant_role "${project_id}" roles/editor \
+        "$(taito::print_variable template_default_project_editors true)"
+      gcp::grant_role "${project_id}" roles/viewer \
+        "$(taito::print_variable template_default_project_viewers true)"
 
       # NOTE: hack for https://github.com/terraform-providers/terraform-provider-google/issues/2605
       if [[ $project_id == "${taito_uptime_namespace_id:-}" ]]; then
