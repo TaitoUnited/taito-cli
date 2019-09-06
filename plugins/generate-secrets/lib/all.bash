@@ -63,6 +63,7 @@ function generate-secrets::generate_by_type () {
   # local opts
   # local htpasswd_options
 
+  secret_value=
   if [[ ${secret_default_value:-} ]] && \
      [[ ${secret_method} == "manual" ]] && \
      taito::confirm \
