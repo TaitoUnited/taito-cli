@@ -45,7 +45,8 @@ function docker::build () {
   local image_tester="${taito_project}-${name}-tester:latest"
 
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
-    echo "Skipping build: ${name} not included in taito_targets"
+    echo "ERROR: ${name} not included in taito_targets"
+    exit 1
   else
     if [[ -f ./taitoflag_images_exist ]] && \
        [[ ${ci_exec_build:-} == "false" ]] && \

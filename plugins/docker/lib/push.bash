@@ -64,7 +64,8 @@ function docker::push () {
   local image_builder="${prefix}-builder:latest"
 
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
-    echo "Skipping push: ${name} not included in taito_targets"
+    echo "ERROR: ${name} not included in taito_targets"
+    exit 1
   else
     if [[ ! -f ./taitoflag_images_exist ]] && \
        ([[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_build:-} == "true" ]])

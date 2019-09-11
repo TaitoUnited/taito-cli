@@ -26,7 +26,8 @@ echo "image: ${image}"
 if [[ -f ./taitoflag_images_exist ]]; then
   echo "Skipping artifact release. Image already exists in registry."
 elif [[ ${taito_targets:-} != *"${name}"* ]]; then
-  echo "Skipping artifact release. Artifact ${name} not included in taito_targets."
+  echo "ERROR: Artifact ${name} not included in taito_targets."
+  exit 1
 else
   if [[ -f "${name}.docker" ]]; then
     echo "Load ${name}.docker"
