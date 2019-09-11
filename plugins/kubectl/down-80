@@ -1,0 +1,31 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::confirm "Forcefully clean up all project resources?" no || \
+  taito::skip_to_next "${@}"
+
+kubectl::delete_resources Ingress || :
+kubectl::delete_resources Service || :
+kubectl::delete_resources Deployment || :
+kubectl::delete_resources CronJob || :
+kubectl::delete_resources HorizontalPodAutoscaler || :
+kubectl::delete_resources PersistentVolumeClaim || :
+kubectl::delete_resources DaemonSet || :
+kubectl::delete_resources ReplicaSet || :
+kubectl::delete_resources rc || :
+kubectl::delete_resources RoleBinding || :
+kubectl::delete_resources Role || :
+kubectl::delete_resources ServiceAccount || :
+kubectl::delete_resources PodSecurityPolicy || :
+kubectl::delete_resources Certificate || :
+kubectl::delete_resources ConfigMap || :
+kubectl::delete_resources LimitRange || :
+# NOTE: pods are deleted automatically (kubectl::delete_resources pod)
+
+echo
+if taito::confirm "Delete also secrets?" no; then
+  kubectl::delete_resources Secret
+fi
+
+taito::call_next "${@}"

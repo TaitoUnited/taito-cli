@@ -6,5 +6,7 @@
 . "${taito_plugin_path}/lib/pod.bash"
 # shellcheck source=proxy.bash
 . "${taito_plugin_path}/lib/proxy.bash"
+# shellcheck source=resource.bash
+. "${taito_plugin_path}/lib/resource.bash"
 # shellcheck source=secret.bash
 . "${taito_plugin_path}/lib/secret.bash"
