@@ -1,2 +1,14 @@
 * text eol=lf
 *.bats text eol=lf
+
+*.gif binary
+*.jpg binary
+*.png binary
+
+*.heic binary
+*.webp binary
+
+*.eot binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
