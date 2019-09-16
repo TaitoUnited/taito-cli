@@ -1,5 +1,10 @@
 #!/bin/bash -e
+# shellcheck source=../../do/lib/all.bash
+. "${taito_cli_path:?}/plugins/do/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
+if [[ ${taito_command:?} == "zone-"* ]]; then
+  taito::print_plugin_title
+  do::authenticate
+fi
 
 taito::call_next "${@}"

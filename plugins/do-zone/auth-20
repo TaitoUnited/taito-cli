@@ -1,5 +1,6 @@
 #!/bin/bash -e
+# shellcheck source=../do/lib/all.bash
+. "${taito_cli_path:?}/plugins/do/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
-
+do::authenticate
 taito::call_next "${@}"

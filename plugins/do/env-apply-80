@@ -1,5 +1,40 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
+( [[ ${kubernetes_name} ]] && \
+    taito::confirm "Configure DO credentials for CI/CD pipeline"
+) || taito::skip_to_next "${@}"
+
+echo "Your CI/CD requires DO access keys with read & write access."
+echo
+echo "If you have already configured a DO access token for your CI/CD, you can ignore"
+echo "this step."
+echo
+echo "Press enter to open the DO control panel for retrieving the access tokens"
+read -r
+taito::open_browser "https://cloud.digitalocean.com/account/api/tokens"
+echo
+echo "Now add DO access token (DO_API_KEY) to your"
+echo "CI/CD pipeline according to your CI/CD provider instructions. If you"
+echo "configure them on organization/account level, you don't have to configure"
+echo "them for each git repository separately. You should mask and encrypt the"
+echo "DO_API_KEY value if your CI/CD provides such an option."
+echo
+echo "Press enter when done."
+read -r
+echo
+echo "The CI/CD user needs to have deployment rights for the Kubernetes cluster."
+echo "You most likely can add the rights in your taito zone configuration files"
+echo "like this:"
+echo
+echo "- Edit 'terraform/variables.tf': add the CI/CD user to 'map_users'"
+echo "  and increase the 'map_users_count' by one."
+echo "- Run 'taito zone apply'."
+echo
+echo "TODO: Limited Kubernetes group for CI/CD (not system:masters)"
+echo
+echo "Press enter when done."
+read -r
 
 taito::call_next "${@}"
