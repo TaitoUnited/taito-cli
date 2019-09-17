@@ -134,9 +134,10 @@ function links-global::open_link () {
               fi
               "${open_command}" "${url}"
             else
-              [[ ${taito_quiet:-} != "true" ]] && \
+              if [[ ${taito_quiet:-} != "true" ]]; then
                 ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
                 ${echo_command} "Showing link ${name}"
+              fi
               ${echo_command} "${url}"
             fi
             exit 0
