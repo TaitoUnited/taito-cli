@@ -40,7 +40,7 @@ function taito::core::export_user_config () {
   # Personal organization specific configuration
   org_config_file=""
   if [[ ${taito_organization_param:-} ]]; then
-    org_config_file="${taito_home_path}/.taito/taito-config-${taito_organization_param}"
+    org_config_file="${taito_home_path}/.taito/taito-config-${taito_organization_param}.sh"
   fi
 
   if [[ "$org_config_file" ]] && [[ -f "${org_config_file}" ]]; then
