@@ -111,16 +111,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Kubernetes"
   echo "template_default_kubernetes=${kubernetes_name:-}"
-
-  if [[ $taito_provider == "gcp" ]]; then
-    echo "template_default_kubernetes_cluster_prefix=gke_${taito_zone}_${taito_provider_zone}_"
-  elif [[ $taito_provider == "aws" ]]; then
-    echo "template_default_kubernetes_cluster_prefix=arn:aws:eks:$taito_provider_region:$taito_provider_org_id:cluster/"
-  elif [[ $taito_provider == "linux" ]]; then
-    echo "template_default_kubernetes_cluster_prefix="
-  else
-    echo "template_default_kubernetes_cluster_prefix=TODO"
-  fi
+  echo "template_default_kubernetes_cluster_prefix=${kubernetes_cluster_prefix:-}"
 
   echo
   echo "# Template: Postgres"
