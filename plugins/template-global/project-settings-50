@@ -95,11 +95,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: CI/CD provider"
   echo "template_default_ci_provider=$taito_ci_provider"
   echo "template_default_ci_exec_deploy=true"
-  if [[ $taito_container_registry == "local" ]]; then
-    echo "template_default_container_registry_provider=local"
-  else
-    echo "template_default_container_registry_provider=$taito_provider"
-  fi
+  echo "template_default_container_registry_provider=$taito_container_registry_provider"
   echo "template_default_container_registry=$taito_container_registry"
   echo
   echo "# Template: Misc providers"
