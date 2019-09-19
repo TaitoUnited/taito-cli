@@ -1,6 +1,8 @@
 #!/bin/bash
 
 function do::authenticate () {
+  local options=" ${*} "
+
   if ! doctl account get &> /dev/null || \
      [[ ${options} == *" --reset "* ]]; then
     echo "Provide access keys with proper access rights. Instructions:"
@@ -12,6 +14,7 @@ function do::authenticate () {
     echo
     echo "Note: The inputted API key won't be shown in the terminal."
     echo
+    rm -f ~/.config/doctl/config.yaml &> /dev/null || :
     doctl auth init
     # TODO: docker-commit is called twice on 'taito auth'
     taito::commit_changes
@@ -30,5 +33,5 @@ function do::authenticate () {
 
 function do::authenticate_on_kubernetes () {
   taito::executing_start
-  doctl kubernetes cluster kubeconfig "${kubernetes_name}" > "${taito_vout:-}"
+  doctl kubernetes cluster kubeconfig save "${kubernetes_name}" > "${taito_vout:-}"
 }

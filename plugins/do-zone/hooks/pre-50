@@ -5,6 +5,8 @@
 if [[ ${taito_command:?} == "zone-"* ]]; then
   taito::print_plugin_title
   do::authenticate
+  export DO_API_KEY="$(grep 'access-token:' ~/.config/doctl/config.yaml | sed -E 's/.* (.+)/\1/')"
+  export taito_provider_do_token="${DO_API_KEY}"
 fi
 
 taito::call_next "${@}"
