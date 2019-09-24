@@ -33,5 +33,9 @@ function do::authenticate () {
 
 function do::authenticate_on_kubernetes () {
   taito::executing_start
-  doctl kubernetes cluster kubeconfig save "${kubernetes_name}" > "${taito_vout:-}"
+  if [[ ${DO_API_KEY:-} ]]; then
+    doctl -t "${DO_API_KEY}" kubernetes cluster kubeconfig save "${kubernetes_name}" > "${taito_vout:-}"
+  else
+    doctl kubernetes cluster kubeconfig save "${kubernetes_name}" > "${taito_vout:-}"
+  fi
 }
