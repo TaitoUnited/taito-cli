@@ -5,6 +5,13 @@
 : "${taito_env:?}"
 : "${taito_mode:?}"
 
+# Ensure namespace exists
+if [[ ${taito_command} == "env-apply" ]]; then
+  kubectl::use_context
+  kubectl::ensure_namespace "${taito_namespace:?}"
+  kubectl::use_context
+fi
+
 # Start database proxy
 if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
    [[ ${taito_command_requires_database:-} == "true" ]]; then
