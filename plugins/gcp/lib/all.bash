@@ -39,7 +39,8 @@ function gcp::authenticate () {
     (taito::executing_start; gcloud auth application-default login)
   fi
 
-  if [[ ${kubernetes_name:-} ]]; then
+  if [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
+     [[ ${kubernetes_name:-} ]]; then
     if [[ ${type} == "" ]] || \
        [[ ${type} == "cluster" ]] || \
        [[ ${type} == "reset" ]]
