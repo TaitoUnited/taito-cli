@@ -13,6 +13,8 @@ if [[ ${taito_mode:-} == "ci" ]]; then
     exit 1
   fi
 
+  doctl -t "${DO_API_KEY}" auth init
+
   # Kubernetes (EKS) authentication
   if [[ ${taito_command_requires_kubernetes:?} == "true" ]]; then
     taito::print_plugin_title
