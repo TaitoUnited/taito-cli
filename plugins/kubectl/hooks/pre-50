@@ -26,6 +26,9 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
   fi
 fi
 
+echo "taito_command_requires_secrets: ${taito_command_requires_secrets:-}"
+echo "kubectl_secrets_retrieved: ${kubectl_secrets_retrieved:-}"
+
 # Determine which secrets should be fetched from Kubernetes
 # TODO: tighter filter
 fetch_secrets=
@@ -58,7 +61,8 @@ if [[ ${fetch_secrets} ]]; then
     kubectl::save_proxy_secret_to_disk
   fi
 
-  export kubectl_secrets_retrieved=true
+  # TODO: set to true
+  export kubectl_secrets_retrieved=false
 fi
 
 taito::call_next "${@}"
