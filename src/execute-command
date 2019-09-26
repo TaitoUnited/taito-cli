@@ -630,11 +630,12 @@ if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]
   taito_command_requires_secrets="true"
 fi
 
+# TODO: ${taito_command_chain:-} == *"kube-secrets/"*
 if [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]] || \
    [[ ${taito_commands_only_chain:-} == *"helm/"* ]] || \
    ( \
      [[ ${taito_command_requires_secrets} == "true" ]] && \
-     [[ ${taito_command_chain:-} == *"kubectl/"* ]] \ # TODO: *"kube-secrets/"*
+     [[ ${taito_command_chain:-} == *"kubectl/"* ]] \
    ) || \
    ( \
      [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
