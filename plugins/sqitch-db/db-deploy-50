@@ -5,7 +5,6 @@
 (
   all=$(taito::print_targets_of_type database)
   databases=("${taito_target:-$all}")
-  kubectl get secret
   for database in ${databases[@]}
   do
     export taito_target="${database}"
