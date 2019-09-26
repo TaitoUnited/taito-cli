@@ -619,7 +619,7 @@ fi
 
 export taito_command_requires_secrets
 taito_command_requires_secrets="false"
-if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]
+if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
    [[ ${taito_command} == "db-proxy" ]] || \
    [[ ${taito_command} == "build-prepare" ]] || \
    [[ ${taito_command} == "build-release" ]] || \
