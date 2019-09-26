@@ -30,7 +30,8 @@ fi
 # TODO: tighter filter
 fetch_secrets=
 secret_filter=
-if [[ $kubectl_secrets_retrieved != true ]]; then
+if [[ ${taito_command_requires_secrets:-} == true ]] && \
+   [[ $kubectl_secrets_retrieved != true ]]; then
   if [[ ${taito_command} == "build-prepare" ]] || \
      [[ ${taito_command} == "build-release" ]]; then
     fetch_secrets="true"

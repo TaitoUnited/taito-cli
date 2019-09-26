@@ -617,8 +617,25 @@ else
   export taito_command_requires_database="false"
 fi
 
+export taito_command_requires_secrets
+taito_command_requires_secrets="false"
+if [[ ${taito_commands_only_chain:-} == *"-db/"* ]]
+   [[ ${taito_command} == "db-proxy" ]] || \
+   [[ ${taito_command} == "build-prepare" ]] || \
+   [[ ${taito_command} == "build-release" ]] || \
+   ( \
+     [[ ${taito_command} == "test" ]] && \
+     [[ "stag canary prod" != *"${taito_env}"* ]] \
+   ); then
+  taito_command_requires_secrets="true"
+fi
+
 if [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]] || \
    [[ ${taito_commands_only_chain:-} == *"helm/"* ]] || \
+   ( \
+     [[ ${taito_command_requires_secrets} == "true" ]] && \
+     [[ ${taito_command_chain:-} == *"kubectl/"* ]] \ # TODO: *"kube-secrets/"*
+   ) || \
    ( \
      [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
      [[ ${taito_command_requires_database:-} == "true" ]] \
