@@ -2,5 +2,5 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-default-secrets::fetch_default_secrets
+default-secrets::fetch_default_secrets || :
 taito::call_next "${@}"
