@@ -13,7 +13,7 @@ if [[ ${taito_mode:-} == "ci" ]]; then
     exit 1
   fi
 
-  doctl -t "${DO_API_KEY}" auth init
+  doctl -t "${DO_API_KEY}" auth init > "${taito_dout:-}"
 
   # Kubernetes (EKS) authentication
   if [[ ${taito_command_requires_kubernetes:?} == "true" ]]; then
