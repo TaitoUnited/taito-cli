@@ -93,6 +93,14 @@ function taito::export_database_config () {
     export database_external_port="${!env_var_name}"
     echo "- database_external_port: ${database_external_port}" > "${taito_dout:-/dev/null}"
 
+    env_var_name="db_${target}_ssl_enabled"
+    export database_ssl_enabled="${!env_var_name:-true}"
+    echo "- database_ssl_enabled: ${database_ssl_enabled}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="db_${target}_proxy_ssl_enabled"
+    export database_proxy_ssl_enabled="${!env_var_name:-true}"
+    echo "- database_proxy_ssl_enabled: ${database_proxy_ssl_enabled}" > "${taito_dout:-/dev/null}"
+
     env_var_name="db_${target}_master_username"
     export database_master_username="${!env_var_name}"
     echo "- database_master_username: ${database_master_username}" > "${taito_dout:-/dev/null}"
