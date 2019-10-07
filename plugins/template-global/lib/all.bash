@@ -82,5 +82,7 @@ function template-global::init () {
   "./scripts/taito-template/${template_mode}.sh"
 
   # Remove template scripts
-  rm -rf ./scripts/taito-template
+  if [[ -d "${template_project_path:-.}/scripts/taito-template" ]]; then
+    rm -rf "${template_project_path:-.}/scripts/taito-template"
+  fi
 }
