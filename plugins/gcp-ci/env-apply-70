@@ -6,8 +6,10 @@
 taito::confirm "Add a build trigger for ${taito_project} in ${taito_zone}" || \
   taito::skip_to_next "${@}"
 
+# TODO: Support for Google Cloud Build GitHub App (currently in beta)
+# --> Does not provide original source repository information in build history
 echo "Create a new build trigger with these settings if one does not exist already:"
-echo "- Source: ${taito_vc_provider:-GitHub}"
+echo "- Source: ${taito_vc_provider:-GitHub} (mirror)"
 echo "- Repository: ${taito_vc_repository}"
 echo "- Name: ${taito_project}"
 echo "- Description: ${taito_project}"

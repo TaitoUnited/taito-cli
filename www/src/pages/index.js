@@ -80,7 +80,7 @@ export default () => (
 
       <Section>
         <SectionText>
-          <SectionTitle>Multicloud, on any platform</SectionTitle>
+          <SectionTitle>Any cloud, hybrid cloud, multicloud</SectionTitle>
           <p>
             Deploy your applications to multiple platforms without any extra
             hassle. Leverage public cloud for fluent collaboration between
