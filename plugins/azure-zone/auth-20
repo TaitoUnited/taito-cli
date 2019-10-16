@@ -1,5 +1,6 @@
 #!/bin/bash -e
+# shellcheck source=../azure/lib/all.bash
+. "${taito_cli_path:?}/plugins/azure/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
-
+azure::authenticate "${@}"
 taito::call_next "${@}"

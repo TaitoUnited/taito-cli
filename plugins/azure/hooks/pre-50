@@ -1,5 +1,27 @@
 #!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
+# Authentication for CI
+if [[ ${taito_mode:-} == "ci" ]]; then
+  # Ensure that AWS credentials exist
+  if [[ ! "${AZURE_CLIENT_ID}" ]] || [[ ! "${AZURE_CLIENT_SECRET}" ]]; then
+    taito::print_plugin_title
+    echo
+    echo "ERROR: AZURE_CLIENT_ID and AZURE_CLIENT_SECRET environment variables not set."
+    echo "Configure them in your CI/CD settings."
+    exit 1
+  fi
+
+  az login --service-principal -u "${AZURE_CLIENT_ID}" -p "${AZURE_CLIENT_SECRET}" --tenant "${taito_provider_tenant}"
+  az account set --subscription "${taito_provider_billing_account_id}"
+
+  # Kubernetes (EKS) authentication
+  if [[ ${taito_command_requires_kubernetes:?} == "true" ]]; then
+    taito::print_plugin_title
+    echo "Getting credentials for Kubernetes"
+    do::authenticate_on_kubernetes
+  fi
+fi
 
 taito::call_next "${@}"

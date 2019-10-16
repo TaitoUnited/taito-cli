@@ -1,5 +1,45 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
+( [[ ${kubernetes_name} ]] && \
+    taito::confirm "Configure Azure credentials for CI/CD pipeline"
+) || taito::skip_to_next "${@}"
+
+echo "Your CI/CD requires Azure service principal access keys."
+echo
+echo "If you have already configured service principal access keys for your CI/CD,"
+echo "you can ignore this step."
+
+taito::confirm "Generate Azure credentials for CI/CD pipeline" || taito::skip_to_next "${@}"
+
+echo "Make sure to take note of the client id and client secret. They can't be retrieved again."
+echo "Press enter when ready."
+read -r
+
+az ad sp create-for-rbac --name "${taito_zone}-ci"
+
+echo
+echo "Now add the client ID (AZURE_CLIENT_ID) and client secret (AZURE_CLIENT_SECRET) to your"
+echo "CI/CD pipeline according to your CI/CD provider instructions. If you"
+echo "configure them on organization/account level, you don't have to configure"
+echo "them for each git repository separately. You should mask and encrypt their"
+echo "AZURE_CLIENT_SECRET value if your CI/CD provides such an option."
+echo
+echo "Press enter when done."
+read -r
+echo
+echo "The CI/CD user needs to have deployment rights for the Kubernetes cluster."
+echo "You most likely can add the rights in your taito zone configuration files"
+echo "like this:"
+echo
+echo "- Edit 'terraform/variables.tf': add the CI/CD user to 'map_users'"
+echo "  and increase the 'map_users_count' by one."
+echo "- Run 'taito zone apply'."
+echo
+echo "TODO: Limited Kubernetes group for CI/CD (not system:masters)"
+echo
+echo "Press enter when done."
+read -r
 
 taito::call_next "${@}"
