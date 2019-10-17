@@ -1,5 +1,10 @@
 #!/bin/bash -e
+# shellcheck source=../../azure/lib/all.bash
+. "${taito_cli_path:?}/plugins/azure/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
+if [[ ${taito_command:?} == "zone-"* ]]; then
+  taito::print_plugin_title
+  azure::authenticate
+fi
 
 taito::call_next "${@}"

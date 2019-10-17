@@ -1,5 +1,13 @@
 #!/bin/bash -e
+# shellcheck source=../azure/lib/all.bash
+. "${taito_cli_path:?}/plugins/azure/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
+( [[ ${kubernetes_name:-} ]] && \
+    taito::confirm "Authenticate to Kubernetes ${kubernetes_name:-}"
+) || taito::skip_to_next "${@}"
+
+echo "Authenticating"
+azure::authenticate_on_kubernetes
+taito::commit_changes
 
 taito::call_next "${@}"

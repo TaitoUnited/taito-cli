@@ -1,5 +1,10 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 
-echo "TODO: implement. See AWS and GCP for an example"
+if [[ ${taito_mode:-} != "ci" ]]; then
+  echo "authenticating"
+  azure::authenticate
+fi
 
 taito::call_next "${@}"
