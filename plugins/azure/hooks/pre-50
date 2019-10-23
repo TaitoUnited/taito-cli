@@ -20,7 +20,7 @@ if [[ ${taito_mode:-} == "ci" ]]; then
   if [[ ${taito_command_requires_kubernetes:?} == "true" ]]; then
     taito::print_plugin_title
     echo "Getting credentials for Kubernetes"
-    do::authenticate_on_kubernetes
+    azure::authenticate_on_kubernetes
   fi
 fi
 
