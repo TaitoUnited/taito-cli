@@ -32,6 +32,6 @@ function azure::authenticate_on_kubernetes () {
   taito::executing_start
   az aks get-credentials \
     --name "${kubernetes_name}" \
-    --resource-group "${taito_zone}" \
+    --resource-group "${azure_resource_group:-$taito_zone}" \
     --overwrite-existing > "${taito_vout:-}"
 }
