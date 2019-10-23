@@ -1,7 +1,9 @@
 #!/bin/bash
 
 function postgres::ask_and_expose_password () {
-  local passwd_var="${database_username}_password"
+  # HACK: Remove everything after a @. Azure uses @ in usernames, but bash
+  # doesn't allow it in variable names
+  local passwd_var="${database_username%%@*}_password"
   local passwd="${!passwd_var}"
 
   if [[ ${passwd} ]]; then

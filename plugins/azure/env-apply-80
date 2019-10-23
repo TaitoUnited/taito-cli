@@ -13,14 +13,14 @@ echo "you can ignore this step."
 
 taito::confirm "Generate Azure credentials for CI/CD pipeline" || taito::skip_to_next "${@}"
 
-echo "Make sure to take note of the client id and client secret. They can't be retrieved again."
+echo "Make sure to take note of the app id and password. They can't be retrieved again."
 echo "Press enter when ready."
 read -r
 
 az ad sp create-for-rbac --name "${taito_zone}-ci"
 
 echo
-echo "Now add the client ID (AZURE_CLIENT_ID) and client secret (AZURE_CLIENT_SECRET) to your"
+echo "Now add the app ID (AZURE_CLIENT_ID) and password (AZURE_CLIENT_SECRET) to your"
 echo "CI/CD pipeline according to your CI/CD provider instructions. If you"
 echo "configure them on organization/account level, you don't have to configure"
 echo "them for each git repository separately. You should mask and encrypt their"
