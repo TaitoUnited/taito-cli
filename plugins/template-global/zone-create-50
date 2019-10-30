@@ -13,7 +13,11 @@ else
 fi
 
 read -r -t 1 -n 1000 || : # Flush input buffer
-echo "Zone name (e.g. my-$template)?"
+echo
+echo "HINT: Some namespaces are global in cloud environments. Therefore it is best"
+echo "to use globally unique names to avoid naming conflicts."
+echo
+echo "Zone name (e.g. myorg-$template)? (preferably globally unique)"
 read -r zone
 
 taito::execute_on_host_fg "
@@ -30,7 +34,8 @@ taito::execute_on_host_fg "
   echo
   echo \"1) Go to the new directory: cd $zone\"
   echo \"2) Edit taito-config.sh and change at least all settings marked with '# CHANGE'\"
-  echo \"3) Run 'taito zone apply' and follow instructions\"
+  echo \"3) Run 'taito auth' and follow instructions\"
+  echo \"4) Run 'taito zone apply' and follow instructions\"
   echo
 "
 

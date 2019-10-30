@@ -14,19 +14,20 @@ if [[ ${taito_container_registry_provider:-} == "aws" ]]; then
   echo "- AmazonEC2ContainerRegistryPowerUser policy for reading and writing"
   echo "  container images."
 fi
-echo "- KubernetesFullAccess policy for deploying application to Kubernetes."
+echo "- AmazonEKSAdminPolicy policy for deploying application to Kubernetes."
 echo "  You can create the policy according to these instructions if it does"
 echo "  not exist yet:"
-echo "  https://docs.aws.amazon.com/eks/latest/userguide/EKS_IAM_user_policies.html"
+echo "  https://docs.aws.amazon.com/eks/latest/userguide/security_iam_id-based-policy-examples.html"
 echo
-echo "TODO: Define more limited custom policies for CI/CD."
+echo "WARNING: AmazonEKSAdminPolicy should not be used for production!"
+echo "TODO: Define limited custom policies for CI/CD."
 echo
 echo "If you have already configured AWS credentials for your CI/CD, you can ignore"
 echo "this step."
 echo
 echo "Press enter to open the AWS IAM console for retrieving the access keys"
 read -r
-taito::open_browser "https://console.aws.amazon.com/iam/home?#home"
+taito::open_browser "https://console.aws.amazon.com/iam/home?#users"
 echo
 echo "Now add AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) to your"
 echo "CI/CD pipeline according to your CI/CD provider instructions. If you"
@@ -41,8 +42,7 @@ echo "The CI/CD user needs to have deployment rights for the Kubernetes cluster.
 echo "You most likely can add the rights in your taito zone configuration files"
 echo "like this:"
 echo
-echo "- Edit 'terraform/variables.tf': add the CI/CD user to 'map_users'"
-echo "  and increase the 'map_users_count' by one."
+echo "- Edit 'terraform/variables.tf': add the CI/CD user to 'map_users'."
 echo "- Run 'taito zone apply'."
 echo
 echo "TODO: Limited Kubernetes group for CI/CD (not system:masters)"

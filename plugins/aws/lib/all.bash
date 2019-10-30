@@ -30,7 +30,7 @@ function aws::authenticate () {
     echo
     echo "Press enter to open the AWS IAM console for retrieving the access keys"
     read -r
-    taito::open_browser "https://console.aws.amazon.com/iam/home?#home"
+    taito::open_browser "https://console.aws.amazon.com/iam/home?#users"
     echo
     aws configure ${aws_options}
     # TODO: docker-commit is called twice on 'taito auth'
