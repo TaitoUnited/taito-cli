@@ -27,7 +27,7 @@ function terraform::export_env () {
       echo "- ${name}=${value_formatted}" > "${taito_vout}"
       export TF_VAR_${name}="${value_formatted}" || echo failed
     fi
-  done < <(set -o posix; set | sed -z 's/\n  / /g' | sort)
+  done < <(set -o posix; set | sed -z 's/\n  / /g' | sed "s/='/=/" | sed "s/'$//" | sort)
 }
 
 function terraform::run () {
