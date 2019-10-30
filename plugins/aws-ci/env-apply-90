@@ -4,10 +4,11 @@
 : "${taito_vc_repository:?}"
 : "${taito_project:?}"
 
-taito::confirm "Add a build trigger for ${taito_project} in ${taito_zone}" || \
+taito::confirm "Create a AWS CodeBuild build project for ${taito_project} in ${taito_zone}" || \
   taito::skip_to_next "${@}"
 
-echo "Create a new build project with these settings if one does not exist already:"
+echo
+echo "Create a new AWS CodeBuild build project with the following settings if one does not exist already."
 echo
 echo "Project"
 echo "- Project name: ${taito_project}"
@@ -39,10 +40,15 @@ echo "- Environment image: ${taito_image_ci:-taitounited/taito-cli:ci-aws}"
 echo "- Service role: Existing service role"
 echo "- Role ARN: Role ARN of your CI/CD role (see https://console.aws.amazon.com/iam/home?#/roles)"
 echo
-echo "TIP: If you cannot use Taito CLI image on your CI/CD, see https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
+echo "TIPS:"
+echo "- If you want AWS CodeBuild to build only (not deploy and test), set 'ci_exec_deploy=false' in taito-project-config.sh and 'ci_exec_test=false' in taito-testing-config.sh"
+echo "- If you cannot use Taito CLI image on your CI/CD, see: https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
 echo
 echo "Press enter to open build trigger management"
 read -r
+
+        # deploy automatically
+         # execute test suites after deploy
 
 taito::open_browser \
   "https://console.aws.amazon.com/codesuite/codebuild/projects?region=${taito_provider_region}"

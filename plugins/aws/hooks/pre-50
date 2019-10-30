@@ -8,14 +8,14 @@ export AWS_DEFAULT_REGION="${taito_provider_region:?}"
 # Authentication for CI
 if [[ ${taito_mode:-} == "ci" ]]; then
   # Ensure that AWS credentials exist
-  if [[ ! "${AWS_ACCESS_KEY_ID}" ]]; then
+  if [[ ! "${AWS_ACCESS_KEY_ID}" ]] && [[ ${taito_ci_provider:-} != "aws" ]]; then
     taito::print_plugin_title
     echo
     echo "ERROR: AWS_ACCESS_KEY_ID environment variable not set."
     echo "Configure AWS_ACCESS_KEY_ID in your CI/CD settings."
     exit 1
   fi
-  if [[ ! "${AWS_SECRET_ACCESS_KEY}" ]]; then
+  if [[ ! "${AWS_SECRET_ACCESS_KEY}" ]] && [[ ${taito_ci_provider:-} != "aws" ]]; then
     taito::print_plugin_title
     echo
     echo "ERROR: AWS_SECRET_ACCESS_KEY environment variable not set"
