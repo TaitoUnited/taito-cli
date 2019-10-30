@@ -1,0 +1,18 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+: "${taito_provider_region:?}"
+: "${taito_project:?}"
+
+taito::confirm "Remove build trigger of ${taito_project} from ${taito_zone}" || \
+  taito::skip_to_next "${@}"
+
+echo "Delete trigger manually. Press enter to open build trigger management."
+read -r
+
+taito::open_browser \
+  "https://console.aws.amazon.com/codesuite/codebuild/projects?region=${taito_provider_region}"
+
+echo "Press enter when you have deleted the trigger."
+read -r
+
+taito::call_next "${@}"

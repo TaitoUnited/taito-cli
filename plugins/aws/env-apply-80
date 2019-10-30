@@ -3,51 +3,63 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 ( [[ ${kubernetes_name} ]] && \
-    taito::confirm "Configure AWS credentials for CI/CD pipeline"
+    echo "NOTE: The same CI/CD user or role is usually used in multiple projects." && \
+    echo "You can skip this step, if the CI/CD user or role already exists." && \
+    taito::confirm "Create new user/role for CI/CD pipeline"
 ) || taito::skip_to_next "${@}"
 
-echo "Your CI/CD requires AWS access keys with the following settings and"
-echo "policies enabled:"
 echo
-echo "- Access type: Programmatic access"
+if [[ ${taito_ci_provider:-} == "aws" ]]; then
+  echo "Your CI/CD requires a role with the following policies enabled:"
+  echo
+else
+  echo "Your CI/CD requires a user with the following settings and"
+  echo "policies enabled:"
+  echo
+  echo "- Access type: Programmatic access"
+fi
+
 if [[ ${taito_container_registry_provider:-} == "aws" ]]; then
   echo "- AmazonEC2ContainerRegistryPowerUser policy for reading and writing"
   echo "  container images."
 fi
+
 echo "- AmazonEKSAdminPolicy policy for deploying application to Kubernetes."
 echo "  You can create the policy according to these instructions if it does"
 echo "  not exist yet:"
 echo "  https://docs.aws.amazon.com/eks/latest/userguide/security_iam_id-based-policy-examples.html"
 echo
 echo "WARNING: AmazonEKSAdminPolicy should not be used for production!"
-echo "TODO: Define limited custom policies for CI/CD."
+echo "TODO: Define limited custom policies for CI/CD!"
 echo
-echo "If you have already configured AWS credentials for your CI/CD, you can ignore"
-echo "this step."
-echo
-echo "Press enter to open the AWS IAM console for retrieving the access keys"
-read -r
-taito::open_browser "https://console.aws.amazon.com/iam/home?#users"
-echo
-echo "Now add AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) to your"
-echo "CI/CD pipeline according to your CI/CD provider instructions. If you"
-echo "configure them on organization/account level, you don't have to configure"
-echo "them for each git repository separately. You should mask and encrypt the"
-echo "AWS_SECRET_ACCESS_KEY value if your CI/CD provides such an option."
-echo
-echo "Press enter when done."
-read -r
-echo
-echo "The CI/CD user needs to have deployment rights for the Kubernetes cluster."
-echo "You most likely can add the rights in your taito zone configuration files"
-echo "like this:"
-echo
-echo "- Edit 'terraform/variables.tf': add the CI/CD user to 'map_users'."
-echo "- Run 'taito zone apply'."
-echo
-echo "TODO: Limited Kubernetes group for CI/CD (not system:masters)"
-echo
-echo "Press enter when done."
-read -r
+
+if [[ ${taito_ci_provider} == "aws" ]]; then
+  echo "Press enter to open the AWS IAM console for creating the role"
+  read -r
+  taito::open_browser "https://console.aws.amazon.com/iam/home?#roles"
+else
+  echo "NOTE: You can skip this step, if you have already created a user for your CI/CD"
+  echo "Press enter to open the AWS IAM console for retrieving the access keys"
+  read -r
+  taito::open_browser "https://console.aws.amazon.com/iam/home?#users"
+fi
+
+if [[ ${kubernetes_name} ]]; then
+  echo "The CI/CD user/role needs to have deployment rights for the Kubernetes cluster."
+  echo "You most likely can add the rights in your taito zone configuration files"
+  echo "like this, if you have not done so already:"
+  echo
+  if [[ ${taito_ci_provider} == "aws" ]]; then
+    echo "- Edit 'terraform/variables.tf': add the CI/CD role to 'map_roles'."
+  else
+    echo "- Edit 'terraform/variables.tf': add the CI/CD user to 'map_users'."
+  fi
+  echo "- Run 'taito zone apply' and execute only the terraform step."
+  echo
+  echo "TODO: Limited Kubernetes group for CI/CD (not system:masters)"
+  echo
+  echo "Press enter when done."
+  read -r
+fi
 
 taito::call_next "${@}"

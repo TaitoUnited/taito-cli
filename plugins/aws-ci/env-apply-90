@@ -1,0 +1,53 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+: "${taito_provider_region:?}"
+: "${taito_vc_repository:?}"
+: "${taito_project:?}"
+
+taito::confirm "Add a build trigger for ${taito_project} in ${taito_zone}" || \
+  taito::skip_to_next "${@}"
+
+echo "Create a new build project with these settings if one does not exist already:"
+echo
+echo "Project"
+echo "- Project name: ${taito_project}"
+echo
+echo "Source"
+echo "- Source provider: ${taito_vc_provider:-GitHub}"
+echo "- Repository: ${taito_vc_repository}"
+echo
+echo "Primary source webhook events"
+echo "- Rebuild every time a code change is pushed to this repository: yes"
+echo "- Filter group for dev branch:"
+echo "  * Event type: PUSH"
+echo "  * HEAD_REF: refs/heads/dev"
+echo "- Filter group for test branch:"
+echo "  * Event type: PUSH"
+echo "  * HEAD_REF: refs/heads/test"
+echo "- Filter group for stag branch:"
+echo "  * Event type: PUSH"
+echo "  * HEAD_REF: refs/heads/stag"
+echo "- Filter group for canary branch:"
+echo "  * Event type: PUSH"
+echo "  * HEAD_REF: refs/heads/canary"
+echo "- Filter group for master branch:"
+echo "  * Event type: PUSH"
+echo "  * HEAD_REF: refs/heads/master"
+echo
+echo "Environment"
+echo "- Environment image: ${taito_image_ci:-taitounited/taito-cli:ci-aws}"
+echo "- Service role: Existing service role"
+echo "- Role ARN: Role ARN of your CI/CD role (see https://console.aws.amazon.com/iam/home?#/roles)"
+echo
+echo "TIP: If you cannot use Taito CLI image on your CI/CD, see https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
+echo
+echo "Press enter to open build trigger management"
+read -r
+
+taito::open_browser \
+  "https://console.aws.amazon.com/codesuite/codebuild/projects?region=${taito_provider_region}"
+
+echo "Press enter when ready"
+read -r
+
+taito::call_next "${@}"
