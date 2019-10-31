@@ -127,7 +127,7 @@ done
 # Execute tests
 if [[ ! -z ${commands} ]]; then
   commands=": ${commands} && :"
-  if [[ ${taito_mode:-} == "ci" ]]; then
+  if [[ ${taito_verbose:-} == true ]]; then
     echo "--- EXECUTING ---"
     echo "${compose_pre_cmd}${commands}"
     echo "-----------------"
