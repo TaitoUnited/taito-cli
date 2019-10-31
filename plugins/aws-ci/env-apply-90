@@ -37,7 +37,7 @@ echo "  * HEAD_REF: refs/heads/master"
 echo
 echo "Environment"
 echo "- Environment image: ${taito_image_ci:-taitounited/taito-cli:ci-aws}"
-echo "- Privileged: true (we want to build Docker images)"
+echo "- Privileged: true (we want to build, push, and pull Docker images)"
 echo "- Service role: Existing service role"
 echo "- Role ARN: Role ARN of your CI/CD role (see https://console.aws.amazon.com/iam/home?#/roles)"
 echo
@@ -49,7 +49,6 @@ echo "a) Separate build and deploy phases"
 echo
 echo "   Create another build project for the deploy phase:"
 echo "   - Project name: ${taito_project}-deploy"
-echo "   - Environment - privileged: false"
 echo "   - Environment variables: taito_ci_phases=deploy,test,release"
 echo "   - No primary source webhook events (deploy is triggered manually)"
 echo "   - Set all other settings as defined previously"
