@@ -40,6 +40,7 @@ echo "- Environment image: ${taito_image_ci:-taitounited/taito-cli:ci-aws}"
 echo "- Privileged: true (we want to build, push, and pull Docker images)"
 echo "- Service role: Existing service role"
 echo "- Role ARN: Role ARN of your CI/CD role (see https://console.aws.amazon.com/iam/home?#/roles)"
+echo "- Environment variables: taito_image=${taito_image_ci:-taitounited/taito-cli:ci-aws}"
 echo
 echo "--------------------------------"
 echo "Additional configuration options"
