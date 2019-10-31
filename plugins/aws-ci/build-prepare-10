@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+if [[ ${taito_mode:-} == "ci" ]] && \
+   [[ ${ci_exec_build:-} == "true" ]] && \
+   [[ ${taito_container_registry:-} ]]; then
+  echo "Starting dockerd (required for Docker builds on AWS CodeBuild)"
+  (
+    taito::executing_start
+    nohup /usr/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+  )
+fi
+
+taito::call_next "${@}"
