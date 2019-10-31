@@ -267,6 +267,15 @@ if [[ ${taito_command} == "release" ]] && \
   exit 0
 fi
 
+if [[ ${taito_command} == "build-prepare" ]]; then
+  echo
+  echo "-----------------------------------------------------------------"
+  echo "ENVIRONMENT: ${taito_target_env}"
+  echo "IMAGE_TAG: ${params[0]}"
+  echo "-----------------------------------------------------------------"
+  echo
+fi
+
 # Set output formatting
 export H1s="${taito_style_h1_s:-\\x1B[92m\\x1B[1m[}"  # Heading 1 start: Light green, bold
 export H1e="${taito_style_h1_e:-]\\x1B[0m}"           # Heading 1 end
