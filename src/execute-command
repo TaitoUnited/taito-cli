@@ -2,6 +2,14 @@
 
 export taito_mode="${taito_mode:-normal}"
 
+if [[ ${taito_mode} == "ci" ]]; then
+  echo
+  echo "--------------------------------------------------------------"
+  echo taito "$@"
+  echo "--------------------------------------------------------------"
+  echo
+fi
+
 # Resolve paths
 # NOTE: duplicate with ./taito (taito_cli_path must be resolved before
 # other scripts can be called)
@@ -200,10 +208,6 @@ if [[ ${verbose} == true ]]; then
   taito_verbose=true
   taito_vout="/dev/stdout"
   taito_options="${taito_options} -v"
-fi
-
-if [[ ${taito_mode} == "ci" ]]; then
-  echo "[${taito_command}]"
 fi
 
 if [[ ${debug} == true ]]; then
