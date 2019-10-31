@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 # NOTE: This bash script is run also directly on host.
 
+function taito::core::ci_enabled () {
+  local enabled_phases=$1
+  local phase=$2
+  local default_value=$3
+  if [[ ${enabled_phases} ]] && [[ " ${enabled_phases} " != *"${phase}"* ]]; then
+    echo "false"
+  else
+    echo "${default_value:-true}"
+  fi
+}
+
 function taito::core::export_project_config () {
   export taito_env="${1:-$taito_env}"
   export taito_target_env="${taito_target_env:-$taito_env}"
@@ -23,6 +34,16 @@ function taito::core::export_project_config () {
 
   # Set defaults
   export taito_build_targets=${taito_build_targets:-$taito_targets}
+
+  # Set ci flags depending on phase
+  export ci_exec_build
+  ci_exec_build=$(taito::core::ci_enabled "${taito_ci_phases:-}" "build" "${ci_exec_build}")
+  export ci_exec_deploy
+  ci_exec_deploy=$(taito::core::ci_enabled "${taito_ci_phases:-}" "deploy" "${ci_exec_deploy}")
+  export ci_exec_test
+  ci_exec_test=$(taito::core::ci_enabled "${taito_ci_phases:-}" "test" "${ci_exec_test}")
+  export ci_exec_release
+  ci_exec_release=$(taito::core::ci_enabled "${taito_ci_phases:-}" "release" "${ci_exec_release}")
 }
 
 function taito::core::export_user_config () {

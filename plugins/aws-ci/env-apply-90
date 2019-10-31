@@ -37,18 +37,33 @@ echo "  * HEAD_REF: refs/heads/master"
 echo
 echo "Environment"
 echo "- Environment image: ${taito_image_ci:-taitounited/taito-cli:ci-aws}"
+echo "- Privileged: true (we want to build Docker images)"
 echo "- Service role: Existing service role"
 echo "- Role ARN: Role ARN of your CI/CD role (see https://console.aws.amazon.com/iam/home?#/roles)"
 echo
-echo "TIPS:"
-echo "- If you want AWS CodeBuild to build only (not deploy and test), set 'ci_exec_deploy=false' in taito-project-config.sh and 'ci_exec_test=false' in taito-testing-config.sh"
-echo "- If you cannot use Taito CLI image on your CI/CD, see: https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
+echo "--------------------------------"
+echo "Additional configuration options"
+echo "--------------------------------"
+echo
+echo "a) Separate build and deploy phases"
+echo
+echo "   Create another build project for the deploy phase:"
+echo "   - Project name: ${taito_project}-deploy"
+echo "   - Environment - privileged: false"
+echo "   - Environment variables: taito_ci_phases=deploy,test,release"
+echo "   - No primary source webhook events (deploy is triggered manually)"
+echo "   - Set all other settings as defined previously"
+echo
+echo "   Modify the original build project:"
+echo "   - Environment variables: taito_ci_phases=build"
+echo "   - Optional: remove all other webhook events but dev"
+echo
+echo "b) Execute CI/CD steps without Taito CLI"
+echo
+echo "   If you cannot use Taito CLI image on your CI/CD, see: https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
 echo
 echo "Press enter to open build trigger management"
 read -r
-
-        # deploy automatically
-         # execute test suites after deploy
 
 taito::open_browser \
   "https://console.aws.amazon.com/codesuite/codebuild/projects?region=${taito_provider_region}"

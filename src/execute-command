@@ -258,6 +258,15 @@ if [[ ${taito_command} == "test" ]] && \
   exit 0
 fi
 
+if [[ ${taito_command} == "release" ]] && \
+   [[ ${taito_mode:-} == "ci" ]] && \
+   [[ ${ci_exec_release:-} != "true" ]]; then
+  echo
+  echo "Skipping ${taito_command} in ci mode. ci_exec_release is false."
+  echo
+  exit 0
+fi
+
 # Set output formatting
 export H1s="${taito_style_h1_s:-\\x1B[92m\\x1B[1m[}"  # Heading 1 start: Light green, bold
 export H1e="${taito_style_h1_e:-]\\x1B[0m}"           # Heading 1 end
@@ -274,6 +283,9 @@ if [[ ${taito_command_context:-} ]]; then
 fi
 
 # Concatenate all secrets
+if [[ ${taito_env} == "local" ]]; then
+  export taito_secrets="${taito_secrets} ${taito_local_secrets:-}"
+fi
 if [[ ${taito_env} != "local" ]]; then
   export taito_secrets="${taito_secrets} ${taito_remote_secrets:-}"
 fi
