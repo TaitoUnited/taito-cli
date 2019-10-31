@@ -1,0 +1,15 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+database_port="${1:-$database_port}"
+
+if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]]; then
+  echo "Database connection details:"
+  taito::show_db_proxy_details
+  echo
+  kubectl::db_proxy_start false
+  kubectl::db_proxy_stop
+fi
+
+taito::call_next "${@}"
