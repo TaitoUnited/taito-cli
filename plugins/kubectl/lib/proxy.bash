@@ -18,7 +18,7 @@ function kubectl::db_proxy_start () {
       "${database_port:?}:${database_real_port:-5432}" \
       --address "${bind_address}" \
       --namespace tcp-proxy > /dev/null &
-    sleep 1
+    sleep 4
     if [[ $1 != "true" ]]; then
       wait
     fi
