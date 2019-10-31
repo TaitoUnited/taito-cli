@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 if [[ ${taito_mode:-} == "ci" ]] && \
-   [[ ${ci_exec_build:-} == "true" ]] && \
    [[ ${taito_container_registry:-} ]]; then
   echo "Starting dockerd (required for Docker builds on AWS CodeBuild)"
   (
