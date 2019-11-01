@@ -1,13 +1,16 @@
 #!/bin/bash -e
 
 function kubectl::db_proxy_start () {
-  local proxy_pod
-  local bind_address="127.0.0.1"
-  if [[ ${taito_docker:-} == "true" ]]; then
-    bind_address="0.0.0.0"
-  fi
-
   if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]]; then
+    local proxy_pod
+    local bind_address="127.0.0.1"
+    if [[ ${taito_docker:-} == "true" ]]; then
+      bind_address="0.0.0.0"
+    fi
+
+    bind_address="0.0.0.0" # TODO: remove
+    echo "BIND ADDRESS: ${bind_address}" > "${taito_vout:-}"
+
     proxy_pod=$(kubectl get pods --no-headers \
       --output=custom-columns=NAME:.metadata.name \
       --namespace tcp-proxy | head -n 1
