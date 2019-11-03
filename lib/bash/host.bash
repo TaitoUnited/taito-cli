@@ -41,14 +41,12 @@ function taito::export_database_config () {
   # local print_config=${1:-false}
 
   all_databases=$(taito::print_targets_of_type database)
-
   target="${1}"
   if [[ -z ${1} ]] && [[ ${taito_target:-} ]] && \
      [[ ${all_databases:-} == *"${taito_target}"* ]]; then
     target="${taito_target:-}"
   fi
   target="${target:-database}"
-
   echo "Determining database settings by ${target}" > "${taito_dout:-/dev/null}"
 
   env_var_name="db_${target}_name"
@@ -156,8 +154,80 @@ function taito::export_database_config () {
     env_var_name="db_${target}_build_username_internal"
     export database_build_username_internal="${!env_var_name:-$database_build_username}"
     echo "- database_build_username_internal: ${database_build_username_internal}" > "${ttaito_dout:-/dev/null}"
-
   fi
+}
+
+function taito::export_storage_config () {
+  # TODO: add support for print
+  # local print_config=${1:-false}
+
+  all_storages=$(taito::print_targets_of_type storage)
+  target="${1}"
+  if [[ -z ${1} ]] && [[ ${taito_target:-} ]] && \
+     [[ ${all_storages:-} == *"${taito_target}"* ]]; then
+    target="${taito_target:-}"
+  fi
+  target="${target:-storage}"
+  echo "Determining storage settings by ${target}" > "${taito_dout:-/dev/null}"
+
+  env_var_name="st_${target}_name"
+  if [[ ${target} ]] && [[ ${!env_var_name} ]]; then
+    env_var_name="st_${target}_name"
+    export storage_name="${!env_var_name}"
+    echo "- storage_name: ${storage_name}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="st_${target}_class"
+    export storage_class="${!env_var_name}"
+    echo "- storage_class: ${storage_class}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="st_${target}_location"
+    export storage_location="${!env_var_name}"
+    echo "- storage_location: ${storage_location}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="st_${target}_days"
+    export storage_days="${!env_var_name}"
+    echo "- storage_days: ${storage_days}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="st_${target}_backup_location"
+    export storage_backup_location="${!env_var_name}"
+    echo "- storage_backup_location: ${storage_backup_location}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="st_${target}_backup_days"
+    export storage_backup_days="${!env_var_name}"
+    echo "- storage_backup_days: ${storage_backup_days}" > "${taito_dout:-/dev/null}"
+  fi
+}
+
+function taito::export_storage_attributes () {
+  if [[ ${taito_storages} ]]; then
+    # project taito-config.sh has already defined taito_storages
+    return
+  fi
+
+  # Storage definitions for Terraform
+  export taito_storages=
+  export taito_storage_classes=
+  export taito_storage_locations=
+  export taito_storage_days=
+  export taito_backup_locations=
+  export taito_backup_days=
+
+  all_storages=$(taito::print_targets_of_type storage)
+  for target in ${all_storages}
+  do
+    env_var_name="st_${target}_name"
+    taito_storages="${taito_storages} ${!env_var_name}"
+    env_var_name="st_${target}_class"
+    taito_storage_classes="${taito_storage_classes} ${!env_var_name}"
+    env_var_name="st_${target}_location"
+    taito_storage_locations="${taito_storage_locations} ${!env_var_name}"
+    env_var_name="st_${target}_days"
+    taito_storage_days="${taito_storage_days} ${!env_var_name}"
+    env_var_name="st_${target}_backup_location"
+    taito_backup_locations="${taito_backup_locations} ${!env_var_name}"
+    env_var_name="st_${target}_backup_days"
+    taito_backup_days="${taito_backup_days} ${!env_var_name}"
+  done
 }
 
 function taito::print_targets_of_type () {

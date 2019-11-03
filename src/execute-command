@@ -374,6 +374,12 @@ fi
 # Select database configs using taito_target
 taito::export_database_config
 
+# Export storage configs using taito_target
+taito::export_storage_config
+
+# Export storage attributes in array format (required for terraform)
+taito::export_storage_attributes
+
 # Read taito-secrets in case of CI/CD
 if [[ -f ${taito_project_path}/taito-secrets ]]; then
   # Taito secrets for CI/CD
