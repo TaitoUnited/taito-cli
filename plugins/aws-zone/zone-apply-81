@@ -1,0 +1,42 @@
+#!/bin/bash -e
+
+taito::confirm "Create CI/CD user or role?" || taito::skip_to_next "${@}"
+
+echo
+if [[ ${taito_ci_provider:-} == "aws" ]]; then
+  echo "Your CI/CD requires a role with the following policies enabled:"
+  echo
+else
+  echo "Your CI/CD requires a user with the following settings and"
+  echo "policies enabled:"
+  echo
+  echo "- Access type: Programmatic access"
+fi
+
+if [[ ${taito_container_registry_provider:-} == "aws" ]]; then
+  echo "- AmazonEC2ContainerRegistryPowerUser policy for reading and writing"
+  echo "  container images."
+fi
+if [[ ${kubernetes_name} ]]; then
+  echo "- KubernetesCICD policy for deploying application to Kubernetes."
+fi
+
+if [[ ${taito_ci_provider} == "aws" ]]; then
+  echo
+  echo "NOTE: You can skip this step if you have already previously created"
+  echo "CI/CD role on your AWS account for some other taito zone"
+  echo
+  echo "Press enter to open the AWS IAM console for creating the role"
+  read -r
+  taito::open_browser "https://console.aws.amazon.com/iam/home?#roles"
+else
+  echo
+  echo "NOTE: You can skip this step if you have already previously created"
+  echo "CI/CD user on your AWS account for some other taito zone"
+  echo
+  echo "Press enter to open the AWS IAM console for creating the user"
+  read -r
+  taito::open_browser "https://console.aws.amazon.com/iam/home?#users"
+fi
+
+taito::call_next "${@}"
