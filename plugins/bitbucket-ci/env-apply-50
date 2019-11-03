@@ -6,7 +6,6 @@ taito::confirm "Enable build pipelines for ${taito_project:?}" || \
 echo "Enable build pipelines and configure build notifications (e.g. Slack)"
 echo "in BitBucket web user interface."
 echo
-echo
 echo "--------------------------------"
 echo "Additional configuration options"
 echo "--------------------------------"

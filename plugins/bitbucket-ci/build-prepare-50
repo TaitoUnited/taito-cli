@@ -1,5 +1,5 @@
 #!/bin/bash -e
 
-echo "TODO: implement"
+echo "TODO: Check if image already exists (see gcp-ci)"
 
 taito::call_next "${@}"

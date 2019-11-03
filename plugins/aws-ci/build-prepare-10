@@ -9,4 +9,7 @@ if [[ ${taito_mode:-} == "ci" ]] && \
   )
 fi
 
+echo
+echo "TODO: Check if image already exists (see gcp-ci)"
+
 taito::call_next "${@}"
