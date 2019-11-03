@@ -27,7 +27,18 @@ echo "--------------------------------"
 echo "Additional configuration options"
 echo "--------------------------------"
 echo
-echo "a) Separate build and deploy phases"
+echo "a) Protect staging, canary, and production branches"
+echo
+echo "   Use branch protection features of the version control provider (${taito_vc_provider:-GitHub})"
+echo "   to limit push access to staging (stag), canary (canary), and production"
+echo "   (master) branches."
+echo
+echo "b) Deploy manually to staging, canary, and production environments"
+echo
+echo "   Set trigger status to 'disabled' after you have created to build"
+echo "   trigger for stag/canary/master branches."
+echo
+echo "c) Automatic build and manual deploy phases"
 echo
 echo "   Create a separate trigger for the deploy phase:"
 echo "   - Name: ${taito_project}-deploy"
@@ -39,7 +50,7 @@ echo "   Modify the original trigger:"
 echo "   - Substitution variables: _TAITO_CI_PHASES=build"
 echo "   - Branch (regex): dev"
 echo
-echo "b) Execute CI/CD steps without Taito CLI"
+echo "d) Execute CI/CD steps without Taito CLI"
 echo
 echo "   If you cannot use Taito CLI image on your CI/CD, see: https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
 echo

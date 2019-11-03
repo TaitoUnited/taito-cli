@@ -11,14 +11,19 @@ echo "--------------------------------"
 echo "Additional configuration options"
 echo "--------------------------------"
 echo
-echo "a) Separate build and deploy phases"
+echo "a) Protect staging, canary, and production branches"
+echo
+echo "   Use BitBucket branch permissions to limit push access to staging (stag),"
+echo "   canary (canary), and production (master) branches."
+echo
+echo "b) Automatic build and manual deploy phases"
 echo
 echo "   Modify bitbucket-pipelines.yml:"
 echo "   - Remove all other branches but dev: '{dev}'"
 echo "   - Enable all the 'export taito_ci_phases=build' lines"
 echo "   - Enable the custom section"
 echo
-echo "b) Execute CI/CD steps without Taito CLI"
+echo "c) Execute CI/CD steps without Taito CLI"
 echo
 echo "   If you cannot use Taito CLI image on your CI/CD, see: https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
 echo
@@ -28,27 +33,5 @@ taito::open_browser \
   "https://${taito_vc_repository_url:?}/admin/addon/admin/pipelines/settings"
 echo "Press enter when done"
 read -r
-
-echo "--------------------------------"
-echo "Additional configuration options"
-echo "--------------------------------"
-echo
-echo "a) Separate build and deploy phases"
-echo
-echo "   Create a separate trigger for the deploy phase:"
-echo "   - Name: ${taito_project}-deploy"
-echo "   - Substitution variables: _TAITO_CI_PHASES=deploy,test,release"
-echo "   - Set all other settings as defined previously"
-echo "   - Set 'status=disabled' after trigger creation (use manual triggering)"
-echo
-echo "   Modify the original trigger:"
-echo "   - Substitution variables: _TAITO_CI_PHASES=build"
-echo "   - Branch (regex): dev"
-echo
-echo "b) Execute CI/CD steps without Taito CLI"
-echo
-echo "   If you cannot use Taito CLI image on your CI/CD, see: https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
-
-
 
 taito::call_next "${@}"
