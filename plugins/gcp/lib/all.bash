@@ -68,12 +68,14 @@ function gcp::db_proxy_start () {
     local database_id
     database_id="${taito_zone:?}:${taito_provider_region:?}:${database_instance:?}"
 
+    echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
+
     if [[ $1 == "true" ]]; then
       # Run in background
       (
         taito::executing_start
         cloud_sql_proxy \
-          "-instances=${database_id}=tcp:0.0.0.0:${database_port:?}" \
+          "-instances=${database_id}=tcp:${taito_db_proxy_bind_address}:${database_port:?}" \
           &> /tmp/proxy-out.tmp &
       )
       # TODO: Implement robust wait for 'ready for connections' status
@@ -85,15 +87,6 @@ function gcp::db_proxy_start () {
         cat /tmp/proxy-out.tmp
       fi
     else
-      local bind_address
-      if [[ ${taito_docker:-} == "true" ]]; then
-        bind_address="0.0.0.0"
-      else
-        bind_address="127.0.0.1"
-      fi
-
-      echo "BIND ADDRESS: ${bind_address}" > "${taito_vout:-}"
-
       (
         taito::executing_start
         cloud_sql_proxy \

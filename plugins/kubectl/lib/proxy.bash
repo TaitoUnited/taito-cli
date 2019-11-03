@@ -3,23 +3,16 @@
 function kubectl::db_proxy_start () {
   if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]]; then
     local proxy_pod
-    local bind_address="127.0.0.1"
-    if [[ ${taito_docker:-} == "true" ]]; then
-      bind_address="0.0.0.0"
-    fi
-
-    bind_address="0.0.0.0" # TODO: remove
-    echo "BIND ADDRESS: ${bind_address}" > "${taito_vout:-}"
-
     proxy_pod=$(kubectl get pods --no-headers \
       --output=custom-columns=NAME:.metadata.name \
       --namespace tcp-proxy | head -n 1
     )
+    echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
     taito::executing_start
     kubectl port-forward \
       "${proxy_pod}" \
       "${database_port:?}:${database_real_port:-5432}" \
-      --address "${bind_address}" \
+      --address "${taito_db_proxy_bind_address}" \
       --namespace tcp-proxy > /dev/null &
     sleep 1
     if [[ $1 != "true" ]]; then

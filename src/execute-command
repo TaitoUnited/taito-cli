@@ -217,6 +217,12 @@ if [[ ${verbose} == true ]]; then
   taito_options="${taito_options} -v"
 fi
 
+# TODO: rename taito_docker to something better (e.g. external host)
+export taito_db_proxy_bind_address="127.0.0.1"
+if [[ ${taito_docker:-} == "true" ]]; then
+  taito_db_proxy_bind_address="0.0.0.0"
+fi
+
 if [[ ${debug} == true ]]; then
   taito_debug=true
   echo taito_command: "${taito_command}"
