@@ -21,7 +21,9 @@ Stable images optimized for CI/CD:
 * `ci-do`: CI/CD image for **Digital Ocean** (TODO).
 * `ci-all`: CI/CD image that includes tools for all cloud providers.
 
-> TIP: If your CI/CD pulls the whole Docker image on each build, optimize the image pull by setting up caching on your CI/CD, or by using your own Docker registry as a mirror. You can also create a custom Docker image, that includes only the tools that you actually need.
+> TIP: If your CI/CD pulls the whole Docker image on each build, optimize the image pull by setting up caching on your CI/CD, or by using your own Docker registry as a mirror. You can also create a custom Docker image that includes only the tools you actually need.
+
+> TIP: Read [this](https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli) if you cannot use Taito CLI on your CI/CD.
 
 Special purpose Docker images:
 
