@@ -2,7 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-taito::skip_if_not container "${@}"
+taito::skip_if_not "container storage" "${@}"
 
 pod_index="${1}"
 container="${2}"

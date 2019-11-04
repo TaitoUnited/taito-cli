@@ -5,7 +5,7 @@ function taito::is_target_of_type () {
   local target_type=$1
   local target=$2
   local type_variable_name="taito_target_type_${target}"
-  [[ ${!type_variable_name:-container} == "$target_type" ]]
+  [[ "$target_type" == *"${!type_variable_name:-container}"* ]]
 }
 export -f taito::is_target_of_type
 
