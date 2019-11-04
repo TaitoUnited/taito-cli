@@ -228,6 +228,14 @@ function taito::export_storage_attributes () {
     env_var_name="st_${target}_backup_days"
     taito_backup_days="${taito_backup_days} ${!env_var_name}"
   done
+
+  # Trim whitespace
+  taito_storages=$(echo "${taito_storages}" | xargs)
+  taito_storage_classes=$(echo "${taito_storage_classes}" | xargs)
+  taito_storage_locations=$(echo "${taito_storage_locations}" | xargs)
+  taito_storage_days=$(echo "${taito_storage_days}" | xargs)
+  taito_backup_locations=$(echo "${taito_backup_locations}" | xargs)
+  taito_backup_days=$(echo "${taito_backup_days}" | xargs)
 }
 
 function taito::print_targets_of_type () {
