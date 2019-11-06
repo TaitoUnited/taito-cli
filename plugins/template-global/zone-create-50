@@ -17,7 +17,7 @@ echo
 echo "HINT: Some namespaces are global in cloud environments. Therefore it is best"
 echo "to use globally unique names to avoid naming conflicts."
 echo
-echo "Zone name (e.g. myorg-$template)? (preferably globally unique)"
+echo "Zone name? (e.g. 'myorg-$template', preferably globally unique)"
 read -r zone
 
 taito::execute_on_host_fg "

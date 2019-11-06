@@ -8,6 +8,7 @@ taito::confirm "Apply changes by running terraform scripts" || \
 (
   set -e
   if [[ -f "./terraform/terraform.tfstate" ]]; then
+    echo
     echo "Your Terraform state is currently located on local disk. You should"
     echo "configure remote backend in ./terraform/main.tf before continuing."
     echo "If you already have configured the remote state, you can delete"
