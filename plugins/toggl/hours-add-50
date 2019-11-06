@@ -8,7 +8,7 @@ weekday="${2:-today}"
 
 # with weekdays we always mean 'last mon', 'last tue'
 if [[ ${#weekday} -lt 4 ]]; then
-  weekday="last ${weekday}"
+  weekday="last-${weekday}"
 fi
 
 (
