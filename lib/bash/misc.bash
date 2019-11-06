@@ -70,12 +70,11 @@ function taito::select_item () {
   local title="${1}"
   local question="${2}"
   local items=("${3}")
-  local item_id="${4}"
+  item_id="${4}"
   local allow_skip="${5}"
 
   local name
   local id
-  local item_id
   local skip=false
   while [[ ${skip} == false ]] && [[ ! "${item_id}" ]] && [[ ${items[*]} ]]; do
     echo "${title}"
