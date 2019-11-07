@@ -1,0 +1,10 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+: "${taito_project:?}"
+: "${taito_branch:?}"
+
+if [[ -z $1 ]]; then
+V echo "TODO: Fetching latest image tag from build history."
+fi
+
+taito::call_next "${@}"

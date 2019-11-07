@@ -1,0 +1,11 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+: "${taito_vc_repository:?}"
+: "${taito_project:?}"
+
+taito::confirm "Add a build trigger for ${taito_project} in ${taito_zone}" || \
+  taito::skip_to_next "${@}"
+
+echo "TODO: implement"
+
+taito::call_next "${@}"

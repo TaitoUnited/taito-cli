@@ -1,0 +1,7 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+: "${taito_project:?}"
+
+echo "TODO: implement"
+
+taito::call_next "${@}"

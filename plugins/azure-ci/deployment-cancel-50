@@ -1,0 +1,10 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+: "${taito_project:?}"
+: "${taito_branch:?}"
+
+ignore_build_id=${1}
+
+echo "TODO: implement"
+
+taito::call_next "${@}"
