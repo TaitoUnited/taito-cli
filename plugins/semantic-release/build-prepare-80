@@ -5,6 +5,9 @@
 : "${taito_vc_repository:?}"
 : "${taito_project_path:?}"
 
+# Currently only github is supported
+[[ ${taito_vc_provider:-} == "github" ]] || taito::skip_to_next
+
 # Execute semantic prepare only if ci_exec_release is enabled
 [[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_release:-} == "true" ]] || \
   taito::skip_to_next
