@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+name=$1
+
+if [[ -z $name ]] || [[ $name == "monitoring" ]]; then
+  echo
+  echo "taito_uptime_channels: Use a single email address"
+  echo "--> TODO: support multiple protocols and multiple emails"
+  echo
+fi
+
+taito::call_next "${@}"
