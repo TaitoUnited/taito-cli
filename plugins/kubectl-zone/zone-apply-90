@@ -12,13 +12,14 @@ taito::confirm \
 # needed on Kubernetes for some setups.
 kubectl::use_context
 echo
-echo "GitHub token for tagging releases:"
-echo
-echo "Save your personal GitHub token to file './tmp/github'."
-echo "It will be used for tagging git releases. You can delete the file afterwards."
-echo "Press enter after you have saved the file."
-read -r
-kubectl create secret generic "github-buildbot" --namespace=devops \
-  --from-file=token=tmp/github
+echo "Enter GitHub token for tagging releases:"
+read -r -s github_token_secret_value
+if [[ ${github_token_secret_value} ]]; then
+  mkdir -p ./tmp
+  echo "${github_token_secret_value}" > ./tmp/github
+  kubectl create secret generic "github-buildbot" --namespace=devops \
+    --from-file=token=tmp/github
+  rm -rf ./tmp/github
+fi
 
 taito::call_next "${@}"
