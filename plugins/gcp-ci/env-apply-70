@@ -6,6 +6,7 @@
 taito::confirm "Add a build trigger for ${taito_project} in ${taito_zone}" || \
   taito::skip_to_next "${@}"
 
+# TODO: Use Terraform to create the trigger (requires version control auth)
 # TODO: Support for Google Cloud Build GitHub App (currently in beta)
 # --> Does not provide original source repository information in build history
 echo
@@ -39,7 +40,7 @@ echo
 echo "   Set trigger status to 'disabled' after you have created to build"
 echo "   trigger for stag/canary/master branches."
 echo
-echo "c) Automatic build and manual deploy phases"
+echo "c) Phases: Build automatically, deploy manually"
 echo
 echo "   Create a separate trigger for the deploy phase:"
 echo "   - Name: ${taito_project}-deploy"

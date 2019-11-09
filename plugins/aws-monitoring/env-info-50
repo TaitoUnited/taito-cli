@@ -4,7 +4,7 @@ name=$1
 
 if [[ -z $name ]] || [[ $name == "monitoring" ]]; then
   echo
-  echo "taito_uptime_channels: Use a single email address"
+  echo "taito_uptime_channels: Enter a single email address"
   echo "--> TODO: support multiple protocols and multiple emails"
   echo
 fi

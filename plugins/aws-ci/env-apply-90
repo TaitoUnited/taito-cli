@@ -7,8 +7,10 @@
 taito::confirm "Create a AWS CodeBuild build project for ${taito_project} in ${taito_zone}" || \
   taito::skip_to_next "${@}"
 
+# TODO: Use Terraform to create the trigger (requires version control auth)
 echo
-echo "Create a new AWS CodeBuild build project with the following settings if one does not exist already."
+echo "Create a new AWS CodeBuild build project with the following settings"
+echo "if one does not exist already."
 echo
 echo "Project"
 echo "- Project name: ${taito_project}"
@@ -56,7 +58,7 @@ echo "b) Deploy manually to staging, canary, and production environments"
 echo
 echo "   Do not set source webhook events for stag/canary/master branches."
 echo
-echo "c) Automatic build and manual deploy phases"
+echo "c) Phases: Build automatically, deploy manually"
 echo
 echo "   Create another build project for the deploy phase:"
 echo "   - Project name: ${taito_project}-deploy"

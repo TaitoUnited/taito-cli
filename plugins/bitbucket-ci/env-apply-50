@@ -3,6 +3,7 @@
 taito::confirm "Enable build pipelines for ${taito_project:?}" || \
   taito::skip_to_next "${@}"
 
+# TODO: Use Terraform to create the trigger (requires version control auth)
 echo "Enable build pipelines and configure build notifications (e.g. Slack)"
 echo "in BitBucket web user interface."
 echo
@@ -15,7 +16,7 @@ echo
 echo "   Use BitBucket branch permissions to limit push access to staging (stag),"
 echo "   canary (canary), and production (master) branches."
 echo
-echo "b) Automatic build and manual deploy phases"
+echo "b) Phases: Build automatically, deploy manually"
 echo
 echo "   Modify bitbucket-pipelines.yml:"
 echo "   - Remove all other branches but dev: '{dev}'"
