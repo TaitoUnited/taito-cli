@@ -5,8 +5,8 @@
 : "${taito_vc_repository:?}"
 : "${taito_project_path:?}"
 
-# Execute semantic prepare only if release is enabled
-[[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_release:-} != "true" ]] || \
+# Execute semantic prepare only if ci_exec_release is enabled
+[[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_release:-} == "true" ]] || \
   taito::skip_to_next
 
 if [[ $secret_value_github_buildbot_token == "secret_file:"* ]]; then
