@@ -1,0 +1,24 @@
+#!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+echo "NOTE: GitHub token is completely optional and should be set on production"
+echo "clusters only. It is used by semantic-release plugin to tag releases."
+taito::confirm \
+  "OPTIONAL: Set GitHub token on production cluster for tagging releases" || \
+  taito::skip_to_next "${@}"
+
+# TODO: GitHub token handling should be implemented somewhere else, but might be
+# needed on Kubernetes for some setups.
+kubectl::use_context
+echo
+echo "GitHub token for tagging releases:"
+echo
+echo "Save your personal GitHub token to file './tmp/github'."
+echo "It will be used for tagging git releases. You can delete the file afterwards."
+echo "Press enter after you have saved the file."
+read -r
+kubectl create secret generic "github-buildbot" --namespace=devops \
+  --from-file=token=tmp/github
+
+taito::call_next "${@}"

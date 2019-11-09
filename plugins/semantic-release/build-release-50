@@ -6,12 +6,12 @@
 
 if [[ ${taito_vc_provider:-} != "github" ]]; then
   echo "Currently only GitHub is supported. Skipping semantic release."
-  taito::skip_to_next
+  taito::skip_to_next "${@}"
 fi
 
 if [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_release:-} != "true" ]]; then
   echo "ci_exec_release setting is disabled. Skipping semantic release."
-  taito::skip_to_next
+  taito::skip_to_next "${@}"
 fi
 
 if [[ $secret_value_github_buildbot_token == "secret_file:"* ]]; then
@@ -20,7 +20,7 @@ fi
 
 if [[ ${secret_value_github_buildbot_token} != "ci" ]]; then
   echo "WARN: GitHub token has not been set. Skipping semantic release."
-  taito::skip_to_next
+  taito::skip_to_next "${@}"
 fi
 
 # Determine npm command based on environment
