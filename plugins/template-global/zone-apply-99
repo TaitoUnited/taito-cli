@@ -2,7 +2,7 @@
 
 echo
 echo "TIP: Once you have fully configured the zone, run 'taito project settings'"
-echo "to see how to create a new project."
+echo "to see how to create a new project for the zone."
 echo
 
 taito::call_next "${@}"
