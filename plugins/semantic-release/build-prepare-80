@@ -19,7 +19,7 @@ if [[ $secret_value_github_buildbot_token == "secret_file:"* ]]; then
   secret_value_github_buildbot_token="$(cat ${secret_value_github_buildbot_token#secret_file:})"
 fi
 
-if [[ ${secret_value_github_buildbot_token} != "ci" ]]; then
+if [[ ! ${secret_value_github_buildbot_token} ]]; then
   echo "WARN: GitHub token has not been set. Skipping semantic release."
   taito::skip_to_next "${@}"
 fi

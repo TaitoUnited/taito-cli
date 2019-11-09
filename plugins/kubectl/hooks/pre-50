@@ -51,7 +51,11 @@ fi
 # Fetch secrets from Kubernetes
 if [[ ${fetch_secrets} ]]; then
   taito::print_plugin_title
-  echo "Getting secrets from Kubernetes"
+  if [[ ${secret_filter} ]]; then
+    echo "Getting secrets from Kubernetes for ${secret_filter}"
+  else
+    echo "Getting secrets from Kubernetes"
+  fi
   kubectl::use_context
   kubectl::export_secrets true ${secret_filter}
 
