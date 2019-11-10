@@ -36,6 +36,11 @@ function terraform::run () {
   local env=${3}
   local scripts_path=${4:-scripts/terraform/$name}
 
+  local options=""
+  if [[ ${taito_mode:-} == "ci" ]] && [[ ${command} == "apply" ]]; then
+    options="-auto-approve"
+  fi
+
   if [[ -d "${scripts_path}" ]] && \
      taito::confirm "Run terraform scripts for ${name}"
   then
@@ -48,7 +53,7 @@ function terraform::run () {
       if [[ -f import_state ]]; then
         ./import_state
       fi
-      terraform "${command}" -state="./${env}/terraform.tfstate"
+      terraform "${command}" ${options} -state="./${env}/terraform.tfstate"
     )
   fi
 }
