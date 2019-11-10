@@ -59,16 +59,19 @@ function docker::build () {
   local image_builder="${prefix}-builder:latest"
   local image_tester="${taito_project}-${name}-tester:latest"
 
+  # REFACTOR: clean up this mess
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "ERROR: ${name} not included in taito_targets"
     exit 1
   else
-    if [[ -f ./taitoflag_images_exist ]] && \
-       [[ ${ci_exec_build:-} == "false" ]] && \
+    if [[ ${ci_exec_build:-} == "false" ]] && \
        [[ ${ci_exec_test:-false} == "false" ]] && \
-       # On GCP cloud build we must always pull the images if they have been
-       # defined as build artifacts (images) for the build
        (
+         [[ -f ./taitoflag_images_exist ]] || \
+         ! taito::is_current_target_of_type container
+       ) && (
+         # On GCP cloud build we must always pull the images if they have been
+         # defined as build artifacts (images) for the build
          [[ ${taito_ci_provider:-} != "gcp" ]] || \
          ! grep "^images:" cloudbuild.yaml &> /dev/null
        )
