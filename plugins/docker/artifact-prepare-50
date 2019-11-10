@@ -1,11 +1,20 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_target:?}"
 
-taito::skip_if_not container "${@}"
+# Containers, functions and static assets are built with Docker
+taito::skip_if_not "container function static" "${@}"
 
 export taito_docker_new_params=true
 docker::build "${@}"
-docker::push "${@}"
+
+if taito::is_current_target_of_type container; then
+  # Push docker image
+  docker::push "${@}"
+else
+  # Copy files on host and create a package
+  docker::package "${@}"
+fi
 
 taito::call_next "${@}"

@@ -71,3 +71,20 @@ function aws::authenticate_on_kubernetes () {
     --name "${kubernetes_name}" \
     --alias "${kubernetes_name}" > "${taito_vout:-}"
 }
+
+# TODO: copy static files also in case index.html is served from container
+# and other static assets are served from CDN
+function aws::copy_target_assets () {
+  if [[ -f ./taitoflag_images_exist ]] || ( \
+     [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "false" ]] \
+    ); then
+      return
+  fi
+
+  image_tag="${1}${2}"
+  path="${taito_project:?}/${image_tag}/${taito_target:?}.tar.gz"
+  bucket="${taito_zone:?}-projects"
+  echo "Copying ${taito_target} assets to bucket ${bucket}"
+  taito::executing_start
+  aws s3 cp "/tmp/${taito_target}.tar.gz" "s3://${bucket}/${path}"
+}

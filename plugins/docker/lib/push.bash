@@ -34,6 +34,7 @@ function docker::push () {
   : "${taito_project_path:?}"
   : "${taito_container_registry:?}"
 
+  # REFACTOR: duplicate code with docker::build and docker::package
   local name=${taito_target:?Target not given}
   local image_tag=${1:?Image tag not given}
   if [[ ${taito_docker_new_params:-} == "true" ]]; then
@@ -70,6 +71,7 @@ function docker::push () {
     if [[ ! -f ./taitoflag_images_exist ]] && \
        ([[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_build:-} == "true" ]])
     then
+      echo "- Pushing images"
       docker::image_push "${image_untested}"
       if [[ ${taito_container_registry_provider:-} != "local" ]]; then
         docker::image_push "${image_latest}"
@@ -85,5 +87,55 @@ function docker::push () {
         docker::image_push "${prefix}:${version}"
       )
     fi
+  fi
+}
+
+function docker::package () {
+  : "${taito_project_path:?}"
+  : "${taito_container_registry:?}"
+
+  # REFACTOR: duplicate code with docker::build and docker::push
+  local name=${taito_target:?Target not given}
+  local image_tag=${1:?Image tag not given}
+  if [[ ${taito_docker_new_params:-} == "true" ]]; then
+    local save_image=${2}
+    local build_context=${3}
+    local service_dir=${4}
+    local dockerfile=${5}
+    local image_path=${6}
+  else
+    local image_path=${2}
+  fi
+
+  local path_suffix=""
+  if [[ ${name} != "." ]]; then
+    path_suffix="/${name}"
+  fi
+
+  if [[ ${image_path} == "" ]]; then
+    image_path="${taito_container_registry}"
+  fi
+
+  local prefix="${image_path}${path_suffix}"
+  local image="${prefix}:${image_tag}"
+  local image_untested="${image}-untested"
+
+  if [[ ${taito_targets:-} != *"${name}"* ]]; then
+    echo "ERROR: ${name} not included in taito_targets"
+    exit 1
+  else
+    # Copy and package files
+    # TODO: copy static files also in case index.html is served from container
+    # and rest of the static assets are served from CDN
+    (
+      echo "Packaging /tmp/${taito_target}.tar.gz for deployment"
+      taito::executing_start
+      docker run \
+        -v "/tmp/${taito_target}:/tmp/${taito_target}" \
+        --entrypoint /bin/sh \
+        "${image_untested}" \
+        -c "cp -r /service /tmp/${taito_target}"
+      tar -cpvzf "/tmp/${taito_target}.tar.gz" "/tmp/${taito_target}/service"
+    )
   fi
 }

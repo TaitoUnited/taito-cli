@@ -5,6 +5,7 @@ function docker::build () {
   : "${taito_container_registry:?}"
   : "${taito_target_env:?}"
 
+  # REFACTOR: duplicate code with docker::push and docker::package
   local name=${taito_target:?Target not given}
   local image_tag=${1:-dry-run}
   if [[ ${taito_docker_new_params:-} == "true" ]]; then
@@ -35,6 +36,20 @@ function docker::build () {
   local path_suffix=""
   if [[ ${name} != "." ]]; then
     path_suffix="/${name}"
+  fi
+
+  if [[ -z "${dockerfile}" ]]; then
+    if [[ -f "${service_dir}/Dockerfile.build" ]]; then
+      dockerfile="Dockerfile.build"
+    else
+      dockerfile="Dockerfile"
+    fi
+  fi
+
+  if ! taito::is_current_target_of_type container && \
+     [[ ! -f "${dockerfile}" ]]; then
+    echo "Skipping build. Target is not a container and dockerfile doesn't exists."
+    return
   fi
 
   local prefix="${image_path}${path_suffix}"
@@ -93,14 +108,6 @@ function docker::build () {
     else
       # Image does not exist. Build it.
       echo "- Building image"
-
-      if [[ -z "${dockerfile}" ]]; then
-        if [[ -f "${service_dir}/Dockerfile.build" ]]; then
-          dockerfile="Dockerfile.build"
-        else
-          dockerfile="Dockerfile"
-        fi
-      fi
 
       if [[ -d "./shared" ]]; then
         shared_dest="${service_dir}/shared"
