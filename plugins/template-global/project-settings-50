@@ -38,8 +38,6 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "1) Configure your personal config file (~/.taito/taito-config.sh) or"
   echo "   organizational config file (~/.taito/taito-config-${taito_organization_abbr:-myorg}.sh)"
   echo "   according to the example settings displayed below."
-  echo "2) Create a new project based on full-stack-template by running"
-  echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: full-stack-template'"
   echo
   echo "Press enter to display the example settings"
   read -r
@@ -162,7 +160,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_container_registry_prod=$taito_container_registry"
   echo "template_default_uptime_provider_prod=$taito_uptime_provider"
   echo "template_default_uptime_provider_org_id_prod=$taito_uptime_provider_org_id"
-  echo "template_default_uptime_channels_prod=$taito_uptime_channels"
+  echo "template_default_uptime_channels_prod=$taito_messaging_uptime_channels"
   echo "template_default_postgres_host_prod=\"${postgres_host_prod:-$postgres_host}\""
   echo "template_default_mysql_host_prod=\"${mysql_host_prod:-$mysql_host}\""
   echo "template_default_storage_class_prod=REGIONAL"
@@ -181,6 +179,11 @@ if [[ ${taito_type:-} == "zone" ]]; then
     echo "template_default_kubernetes_cluster_prefix_prod=TODO"
   fi
 
+  echo
+  echo "# ------------------------------------------------------------------"
+  echo
+  echo "2) Create a new project based on full-stack-template by running"
+  echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: full-stack-template'"
   echo
 fi
 

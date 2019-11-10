@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 taito::confirm \
-  "Replace placeholders with real values in taito_config and terraform/*" || \
+  "Replace placeholders with real values in taito_config.sh and terraform/*" || \
   taito::skip_to_next "${@}"
 
 (
