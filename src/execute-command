@@ -384,6 +384,10 @@ taito::export_storage_attributes
 export taito_container_targets
 taito_container_targets=$(taito::print_targets_of_type container)
 
+# Export taito_function_targets for terraform
+export taito_function_targets
+taito_function_targets=$(taito::print_targets_of_type function)
+
 # Read taito-secrets in case of CI/CD
 if [[ -f ${taito_project_path}/taito-secrets ]]; then
   # Taito secrets for CI/CD

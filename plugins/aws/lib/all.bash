@@ -82,9 +82,9 @@ function aws::copy_target_assets () {
   fi
 
   image_tag="${1}${2}"
-  path="${taito_project:?}/${image_tag}/${taito_target:?}.tar.gz"
+  path="${taito_project:?}/${taito_target:?}/${image_tag}.zip"
   bucket="${taito_zone:?}-projects"
   echo "Copying ${taito_target} assets to bucket ${bucket}"
   taito::executing_start
-  aws s3 cp "/tmp/${taito_target}.tar.gz" "s3://${bucket}/${path}"
+  aws s3 cp "./tmp/${taito_target}.zip" "s3://${bucket}/${path}"
 }

@@ -128,14 +128,17 @@ function docker::package () {
     # TODO: copy static files also in case index.html is served from container
     # and rest of the static assets are served from CDN
     (
-      echo "Packaging /tmp/${taito_target}.tar.gz for deployment"
+      echo "Packaging ./tmp/${taito_target}.zip for deployment"
       taito::executing_start
+      mkdir -p "./tmp/${taito_target}"
       docker run \
-        -v "/tmp/${taito_target}:/tmp/${taito_target}" \
+        --user 0:0 \
+        -v "${PWD}/tmp/${taito_target}:/tmp/${taito_target}" \
         --entrypoint /bin/sh \
         "${image_untested}" \
         -c "cp -r /service /tmp/${taito_target}"
-      tar -cpvzf "/tmp/${taito_target}.tar.gz" "/tmp/${taito_target}/service"
+      cd "./tmp/${taito_target}/service"
+      zip -r "../../${taito_target}.zip" .* *
     )
   fi
 }

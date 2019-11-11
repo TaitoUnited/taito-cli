@@ -75,6 +75,16 @@ function generate-secrets::generate_by_type () {
   if [[ -z "${secret_value}" ]]; then
     case "${secret_method}" in
       manual)
+        if [[ ${taito_provider:-} == "aws" ]] && \
+           [[ ${secret_name} == *"storage"* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "You most likely can find the security credentials from the following webpage."
+          echo "Look for a user named: ${taito_project:-}-${taito_env}-application"
+          echo
+          echo "https://console.aws.amazon.com/iam/home?region=${taito_provider_region:-}#/users"
+          echo ------------------------------------------------------------------------------
+          echo
+        fi
         while [[ ${#secret_value} -lt 8 ]] || [[ ${secret_value} != "${secret_value2}" ]]; do
           echo "New secret value (min 8 characters):"
           read -r -s secret_value

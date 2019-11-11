@@ -16,7 +16,8 @@ taito::confirm "Apply changes by running terraform scripts" || \
     echo "from your local disk once the state has been transferred to a remote"
     echo "backend."
     echo
-    taito::confirm "Do you want to continue anyway?" no
+    echo "Press enter to continue."
+    read -r
   fi
 
   terraform::run_zone apply

@@ -5,7 +5,16 @@
 # Cloud provider
 if [[ ! ${taito_deployment_platforms:-} ]] || \
    [[ ${taito_deployment_platforms} == *"terraform"* ]]; then
-  terraform::run apply "${taito_provider:-}-deploy" "${taito_env:?}"
+  # TODO: this is a quick hack (the same logic also in helm/all.bash)
+  image="${1}"
+  if [[ ${taito_mode:-} == "ci" ]] && \
+     [[ ${ci_exec_build:-} == "true" ]] && \
+     [[ ${image} != *"-untested" ]] && \
+     [[ ! -f ./taitoflag_images_exist ]]; then
+    image="${image}-untested"
+  fi
+  taito_build_image_tag="${image}" \
+    terraform::run apply "${taito_provider:-}-deploy" "${taito_env:?}"
 fi
 
 taito::call_next "${@}"

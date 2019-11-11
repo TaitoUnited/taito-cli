@@ -47,7 +47,7 @@ function docker::build () {
   fi
 
   if ! taito::is_current_target_of_type container && \
-     [[ ! -f "${dockerfile}" ]]; then
+     [[ ! -f "${service_dir}/${dockerfile}" ]]; then
     echo "Skipping build. Target is not a container and dockerfile doesn't exists."
     return
   fi
