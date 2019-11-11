@@ -53,6 +53,8 @@ function terraform::run () {
       if [[ -f import_state ]]; then
         ./import_state
       fi
+      # TODO: Remove hadcoded taint
+      terraform taint aws_api_gateway_deployment.gateway || :
       terraform "${command}" ${options} -state="./${env}/terraform.tfstate"
     )
   fi
