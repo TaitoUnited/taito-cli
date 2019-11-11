@@ -6,6 +6,6 @@
 : "${taito_zone:?}"
 
 taito::skip_if_not "function static" "${@}"
-aws::publish_current_target_assets "${1}" "-untested"
+aws::publish_current_target_assets "${1}"
 
 taito::call_next "${@}"

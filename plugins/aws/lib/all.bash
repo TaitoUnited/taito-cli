@@ -80,7 +80,7 @@ function aws::publish_current_target_assets () {
   fi
 
   # TODO: make assets and project buckets + path prefix configurable
-  image_tag="${1}${2}"
+  image_tag="${1}"
   if taito::is_current_target_of_type "function"; then
     # Publish function zip package to projects bucket
     source="./tmp/${taito_target:?}.zip"
