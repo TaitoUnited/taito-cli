@@ -139,6 +139,7 @@ function docker::build () {
           -f "${service_dir}/${dockerfile}" \
           --build-arg BUILD_VERSION="UNKNOWN" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
+          --build-arg BUILD_STATIC_ASSETS_LOCATION="${ci_static_assets_location:-}" \
           --cache-from "${image_builder}" \
           --tag "${image_builder}" \
           --tag "${image_tester}" \
@@ -151,6 +152,7 @@ function docker::build () {
           --cache-from "${image_latest}" \
           --build-arg BUILD_VERSION="UNKNOWN" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
+          --build-arg BUILD_STATIC_ASSETS_LOCATION="${ci_static_assets_location}" \
           --tag "${image}" \
           --tag "${image_untested}" \
           --tag "${image_latest}" \
