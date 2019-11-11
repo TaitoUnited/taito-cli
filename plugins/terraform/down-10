@@ -1,0 +1,12 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# Cloud provider
+if [[ ! ${taito_deployment_platforms:-} ]] || \
+   [[ ${taito_deployment_platforms} == *"terraform"* ]]; then
+  taito_build_image_tag="destroy" \
+    terraform::run destroy "${taito_provider:-}-deploy" "${taito_target_env:?}"
+fi
+
+taito::call_next "${@}"

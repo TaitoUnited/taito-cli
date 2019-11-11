@@ -12,8 +12,7 @@ for plugin_suffix in ${plugin_suffices[@]}; do
     taito::expose_ssh_opts
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"
-    forward_value=$(echo "$forward_value" | \
-      taito::substitute_variable_values_in_file)
+    forward_value=$(echo "$forward_value" | envsubst)
     (
       taito::executing_start
       sh -c "ssh ${ssh_opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 60"

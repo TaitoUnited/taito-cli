@@ -1,0 +1,15 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# Cloud provider
+if [[ -d "scripts/terraform/${taito_provider:-}-deploy" ]] && (
+     [[ ! ${taito_deployment_platforms:-} ]] || \
+     [[ ${taito_deployment_platforms} == *"terraform"* ]]
+   ); then
+  echo "NOTE: 'taito stop:${taito_target_env:-}' is not supported by terraform plugin."
+  echo "Run 'taito down:${taito_target_env:-}' destroy deployments."
+  echo
+fi
+
+taito::call_next "${@}"

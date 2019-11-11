@@ -119,24 +119,6 @@ function taito::show_db_proxy_details () {
 }
 export -f taito::show_db_proxy_details
 
-function taito::substitute_variable_values_in_file () {
-  # TODO: REMOVE THESE. ALWAYS USE PIPING!
-  local source_file=$1
-  local dest_file=$2
-
-  # Substitute environment variables
-  if [[ $dest_file ]]; then
-    (
-      taito::executing_start
-      perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : ""/eg' \
-        $source_file > $dest_file
-    )
-  else
-    perl -p -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : ""/eg'
-  fi
-}
-export -f taito::substitute_variable_values_in_file
-
 function taito::print_variable () {
   name=$1
   determine_suffix=$2

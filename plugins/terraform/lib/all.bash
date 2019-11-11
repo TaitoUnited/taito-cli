@@ -45,6 +45,11 @@ function terraform::run () {
      taito::confirm "Run terraform scripts for ${name}"
   then
     (
+      echo "Substituting variables in ./scripts/terraform*.yaml files" > "${taito_vout}"
+      dest=./scripts/terraform.tmp
+      envsubst < "./scripts/terraform-${taito_target_env:-}.yaml" > $dest || \
+        envsubst < "./scripts/terraform.yaml" > $dest || :
+
       export TF_LOG_PATH="./${env}/terraform.log"
       terraform::export_env
       cd "${scripts_path}" || exit 1
@@ -56,6 +61,7 @@ function terraform::run () {
       # TODO: Remove hadcoded taint
       terraform taint aws_api_gateway_deployment.gateway || :
       terraform "${command}" ${options} -state="./${env}/terraform.tfstate"
+      rm -f "${dest}"
     )
   fi
 }
