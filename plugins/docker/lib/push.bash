@@ -138,7 +138,7 @@ function docker::package () {
         "${image_untested}" \
         -c "cp -r /service /tmp/${taito_target}"
       cd "./tmp/${taito_target}/service"
-      zip -r "../../${taito_target}.zip" .* *
+      zip -rq "../../${taito_target}.zip" .* *
     )
   fi
 }

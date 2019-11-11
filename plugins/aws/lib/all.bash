@@ -72,19 +72,29 @@ function aws::authenticate_on_kubernetes () {
     --alias "${kubernetes_name}" > "${taito_vout:-}"
 }
 
-# TODO: copy static files also in case index.html is served from container
-# and other static assets are served from CDN
-function aws::copy_target_assets () {
+function aws::publish_current_target_assets () {
   if [[ -f ./taitoflag_images_exist ]] || ( \
      [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "false" ]] \
     ); then
-      return
+    return
   fi
 
+  # TODO: make assets and project buckets + path prefix configurable
   image_tag="${1}${2}"
-  path="${taito_project:?}/${taito_target:?}/${image_tag}.zip"
-  bucket="${taito_zone:?}-projects"
-  echo "Copying ${taito_target} assets to bucket ${bucket}"
+  if taito::is_current_target_of_type "function"; then
+    # Publish function zip package to projects bucket
+    source="./tmp/${taito_target:?}.zip"
+    dest="s3://${taito_zone:?}-projects/${taito_project:?}/${taito_target}/${image_tag}.zip"
+    options=""
+  else
+    # Publish static assets to assets bucket
+    source="./tmp/${taito_target}/service"
+    dest="s3://${taito_zone}-assets/${taito_project}/${taito_target}/${image_tag}"
+    options="--recursive"
+  fi
+
+  echo "Copying ${taito_target} assets to ${dest}"
+  aws::expose_aws_options
   taito::executing_start
-  aws s3 cp "./tmp/${taito_target}.zip" "s3://${bucket}/${path}"
+  aws $aws_options s3 cp "${source}" "${dest}" ${options}
 }
