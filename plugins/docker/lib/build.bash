@@ -140,7 +140,7 @@ function docker::build () {
           --build-arg BUILD_TARGET="${name}" \
           --build-arg BUILD_VERSION="UNKNOWN" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-          --build-arg BUILD_STATIC_ASSETS_LOCATION="${taito_static_assets_bucket:-}/${taito_static_assets_path:-}" \
+          --build-arg BUILD_STATIC_ASSETS_LOCATION="${taito_static_assets_location:-}" \
           --cache-from "${image_builder}" \
           --tag "${image_builder}" \
           --tag "${image_tester}" \
@@ -154,7 +154,7 @@ function docker::build () {
           --build-arg BUILD_TARGET="${name}" \
           --build-arg BUILD_VERSION="UNKNOWN" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
-          --build-arg BUILD_STATIC_ASSETS_LOCATION="${taito_static_assets_bucket:-}/${taito_static_assets_path:-}" \
+          --build-arg BUILD_STATIC_ASSETS_LOCATION="${taito_static_assets_location:-}" \
           --tag "${image}" \
           --tag "${image_untested}" \
           --tag "${image_latest}" \
