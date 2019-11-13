@@ -3,4 +3,5 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 docker-compose::restart_all
+
 taito::call_next "${@}"

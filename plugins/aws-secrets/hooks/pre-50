@@ -1,0 +1,33 @@
+#!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_command:?}"
+: "${taito_mode:?}"
+: "${taito_env:?}"
+
+# Fetch required secrets from AWS
+taito::expose_required_secrets_filter
+if [[ ${fetch_secrets:?} ]]; then
+  taito::print_plugin_title
+  if [[ ${secret_filter:-} ]]; then
+    echo "Getting secrets from AWS SSM Parameter Store (${taito_env}) for ${secret_filter}"
+  else
+    echo "Getting secrets from AWS SSM Parameter Store (${taito_env})"
+  fi
+
+  save_to_disk=true
+  taito::export_secrets \
+    aws-secrets::get_secret_value \
+    ${save_to_disk} \
+    "${secret_filter}"
+
+  if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
+    # Save database proxy secret to disk for running tests
+    taito::save_proxy_secret_to_disk \
+      aws-secrets::get_secret_value
+  fi
+
+  export taito_secrets_retrieved=true
+fi
+
+taito::call_next "${@}"

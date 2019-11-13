@@ -43,6 +43,9 @@ function aws::authenticate () {
     echo "You can reauthenticate with 'taito auth --reset'."
   fi
 
+  # Set sane AWS defaults: https://github.com/aws/aws-cli/issues/2507
+  aws configure set cli_follow_urlparam false
+
   if [[ ${kubernetes_name:-} ]]; then
     aws::authenticate_on_kubernetes ||
       echo -e "WARNING: Kubernetes authentication failed." \
@@ -97,4 +100,10 @@ function aws::publish_current_target_assets () {
   aws::expose_aws_options
   taito::executing_start
   aws $aws_options s3 cp "${source}" "${dest}" ${options}
+}
+
+function aws::restart_all_functions () {
+  echo "TODO: 'restart all functions' not implemented."
+  echo "TIP: Change function environment variables to force restart."
+  echo
 }

@@ -23,6 +23,11 @@ if [[ ${taito_mode:-} == "ci" ]]; then
     exit 1
   fi
 
+  # Temporary credentials for database proxy access during testing
+  if [[ ${taito_command:-} == "test" ]] && [[ ! "${AWS_ACCESS_KEY_ID}" ]]; then
+    echo TODO aws sts get-session-token
+  fi
+
   # Container registry (ECR) authentication
   if [[ ${taito_command_requires_container_registry:?} == "true" ]]; then
     taito::print_plugin_title

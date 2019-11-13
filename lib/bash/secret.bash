@@ -45,6 +45,17 @@ function taito::expose_db_user_credentials () {
 }
 export -f taito::expose_db_user_credentials
 
+function taito::get_secret_value_format () {
+  if [[ ${secret_method} == "random" ]] ||
+     [[ ${secret_method} == "manual" ]]
+  then
+    echo "literal"
+  else
+    echo "file"
+  fi
+}
+export -f taito::get_secret_value_format
+
 # Reads secret info to environment variables. The secret in question is
 # determined by the given ${secret_index}"
 function taito::expose_secret_by_index () {
@@ -66,6 +77,14 @@ function taito::expose_secret_by_index () {
 
   secret_method_var="secret_method_${secret_index}"
   secret_method=${!secret_method_var}
+
+  secret_value_format=$(taito::get_secret_value_format "${secret_method}")
+  if [[ ${secret_value_format} == "file" ]]; then
+    # if [[ ${secret_value} == "secret_file:"* ]]; then
+    secret_filename=${secret_value#secret_file:}
+  else
+    secret_filename=""
+  fi
 
   secret_changed_var="secret_changed_${secret_index}"
   secret_changed=${!secret_changed_var}
@@ -106,6 +125,49 @@ function taito::expose_secret_by_name () {
 }
 export -f taito::expose_secret_by_name
 
+function taito::validate_secret_values () {
+  local secret_index=0
+  local secret_names=(${taito_secret_names})
+  for secret_name in "${secret_names[@]}"
+  do
+    taito::expose_secret_by_index ${secret_index}
+    if [[ ${secret_value:-} ]] && [[ ${#secret_value} -lt 8 ]] && \
+       [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
+      echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
+      exit 1
+    fi
+    secret_index=$((${secret_index}+1))
+  done
+}
+export -f taito::validate_secret_values
+
+function taito::print_secret_values () {
+  save_to_disk=${1}
+  rm taito-secrets &> /dev/null || :
+  secret_index=0
+  secret_names=(${taito_secret_names})
+  for secret_name in "${secret_names[@]}"
+  do
+    taito::expose_secret_by_index ${secret_index}
+
+    if [[ ${save_to_disk} == "true" ]]; then
+      if [[ ${secret_value} ]]; then
+        echo "export ${secret_value_var}=\"${secret_value}\"; " >> taito-secrets
+      fi
+    else
+      echo "Secret ${secret_name}:"
+      if [[ ${secret_value_format} == "file" ]] && [[ ${secret_value} ]]; then
+        echo "FILE"
+      else
+        echo "${secret_value}"
+      fi
+      echo
+    fi
+    secret_index=$((${secret_index}+1))
+  done
+}
+export -f taito::print_secret_values
+
 function taito::print_random_string () {
   local length=$1
   local value
@@ -127,3 +189,238 @@ function taito::print_random_words () {
     tr ' ' '-'
 }
 export -f taito::print_random_words
+
+function taito::save_secrets () {
+  : "${taito_zone:?}"
+  local get_secret_func="${1}"
+  local put_secret_func="${2}"
+
+  local secret_value
+  local secret_filename
+
+  # TODO: why here? should be in generate secrets.
+  taito::validate_secret_values
+
+  # Save secret values
+  secret_index=0
+  local secret_names=(${taito_secret_names})
+  for secret_name in "${secret_names[@]}"
+  do
+    taito::expose_secret_by_index ${secret_index}
+
+    if [[ ${secret_changed:-} ]] && (
+          [[ ${secret_value:-} ]] || \
+          [[ ${secret_method} == "copy/"* ]]
+       ); then
+
+      # REFACTOR: move elsewhere?
+      if [[ ${secret_name} == *"_"* ]]; then
+        taito::print_note_start
+        echo "WARNING: Secret name '${secret_name}' contains an underscore (_)."
+        echo "It's best to avoid underscores in secret names."
+        taito::print_note_end
+      fi
+
+      if [[ ${secret_method} == "copy/"* ]]; then
+        echo "Read secret ${secret_name} for copy" > "${taito_vout:-}"
+        secret_value=$(
+          "${get_secret_func}" \
+            "${taito_zone}" \
+            "${secret_source_namespace}" \
+            "${secret_name}" \
+            "${secret_method}"
+        )
+        if [[ ${secret_value_format} == "file" ]]; then
+          mkdir -p "${taito_project_path}/tmp/secrets/${taito_env}"
+          secret_filename="${taito_project_path}/tmp/secrets/${taito_env}/${secret_name}"
+          echo "${secret_value}" | base64 --decode > "${secret_filename}"
+          secret_value="secret_file:${secret_filename}"
+        fi
+      fi
+
+      if [[ ${secret_method} != "read/"* ]]; then
+        echo "Save secret ${secret_name}" > "${taito_vout:-}"
+        "${put_secret_func}" \
+          "${taito_zone}" \
+          "${secret_namespace}" \
+          "${secret_name}" \
+          "${secret_method}" \
+          "${secret_value}" \
+          "${secret_filename}"
+        # shellcheck disable=SC2181
+        if [[ $? -gt 0 ]]; then
+         exit 1
+        fi
+      fi
+    fi
+    secret_index=$((${secret_index}+1))
+  done
+}
+export -f taito::save_secrets
+
+function taito::export_secrets () {
+  : "${taito_project_path:?}"
+  : "${taito_env:?}"
+  local get_secret_func=$1
+  local save_to_disk=$2
+  local filter=$3
+
+  # Get secret values
+  local secret_index=0
+  local secret_names=(${taito_secret_names})
+  for secret_name in "${secret_names[@]}"
+  do
+    taito::expose_secret_by_index ${secret_index}
+
+    if [[ ${filter} ]] && [[ ${secret_name} != *"${filter}"* ]]; then
+      secret_index=$((${secret_index}+1))
+      continue
+    fi
+
+    local secret_value
+    secret_value=$(
+      "${get_secret_func}" \
+        "${taito_zone}" \
+        "${secret_source_namespace}" \
+        "${secret_name}" \
+        "${secret_method}"
+    )
+
+    if [[ ${secret_value} ]]; then
+      if [[ ${save_to_disk} == "true" ]]; then
+        mkdir -p "${taito_project_path}/tmp/secrets/${taito_env}"
+        file="${taito_project_path}/tmp/secrets/${taito_env}/${secret_name}"
+
+        echo "Saving secret to ${file}" > "${taito_vout}"
+        if [[ ${secret_value_format} == "file" ]]; then
+          # Secret values of type 'file' are base64 encoded strings
+          echo "${secret_value}" | base64 --decode > "${file}"
+        else
+          echo "${secret_value}" > "${file}"
+        fi
+
+        # TODO: save to a separate env var (secret_value should always be value)
+        secret_value="secret_file:${file}"
+      fi
+
+      # HACK: Used only for showing plain text basic auth on 'taito secrets'?
+      if [[ ${secret_method} == "htpasswd"* ]] &&
+         [[ ${save_to_disk} == "false" ]]
+      then
+        # Use secret as value instead of file path
+        secret_value=$(echo "${secret_value}" | base64 --decode)
+      fi
+
+      set +x
+      # shellcheck disable=SC2181
+      if [[ $? -gt 0 ]]; then
+        exit 1
+      fi
+      exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
+      exports="${exports}export ${secret_value_var2}=\"${secret_value}\"; "
+    fi
+
+    secret_index=$((${secret_index}+1))
+  done
+
+  eval "$exports"
+}
+export -f taito::export_secrets
+
+function taito::delete_secrets () {
+  : "${taito_zone:?}"
+  : "${taito_secret_names:?}"
+  local delete_secret_func=$1
+
+  local secret_name
+  local secret_index=0
+  local secret_names=(${taito_secret_names})
+  for secret_name in "${secret_names[@]}"
+  do
+    taito::expose_secret_by_index ${secret_index}
+    if [[ ${secret_method:?} != "read/"* ]]; then
+      "${delete_secret_func}" \
+        "${taito_zone}" \
+        "${secret_namespace}" \
+        "${secret_name}"
+    fi
+    secret_index=$((${secret_index}+1))
+  done
+
+  echo
+}
+export -f taito::delete_secrets
+
+function taito::save_proxy_secret_to_disk () {
+  : "${taito_project_path:?}"
+  local get_secret_func=$1
+
+  export taito_proxy_credentials_file=/project/tmp/secrets/proxy_credentials.json
+  export taito_proxy_credentials_local_file="$taito_project_path/tmp/secrets/proxy_credentials.json"
+
+  local namespace=devops
+  local taito_proxy_secret_name=
+  local taito_proxy_secret_key=
+  local taito_proxy_secret_method=
+  if [[ ${taito_ci_provider:-} == "gcp" ]]; then
+    taito_proxy_secret_name=gcp-proxy-gserviceaccount
+    taito_proxy_secret_key=key
+    taito_proxy_secret_method="file"
+  fi
+
+  local decode
+  if [[ ${taito_proxy_secret_method} == "file" ]]; then
+    decode="| base64 --decode"
+  fi
+
+  if [[ $taito_proxy_secret_name ]]; then
+    echo "Reading proxy secret (${namespace}/${taito_proxy_secret_name}.${taito_proxy_secret_key})"
+    mkdir -p "$taito_project_path/tmp/secrets"
+
+    "${get_secret_func}" \
+      "${taito_zone}" \
+      "${namespace}" \
+      "${taito_proxy_secret_name}.${taito_proxy_secret_key}" \
+      "${taito_proxy_secret_method}" \
+        ${decode} > "$taito_proxy_credentials_local_file"
+
+    if [[ ! -s "$taito_proxy_credentials_local_file" ]]; then
+      echo "WARNING: Failed to get the proxy secret from Kubernetes"
+    fi
+  fi
+}
+export -f taito::save_proxy_secret_to_disk
+
+function taito::expose_required_secrets_filter () {
+  # Determine which secrets should be fetched from AWS
+  # TODO: tighter filter
+  fetch_secrets=false
+  secret_filter=
+  if [[ ${taito_command_requires_secrets:-} == true ]] && \
+     [[ $taito_secrets_retrieved != true ]]; then
+    if [[ ${taito_command} == "build-prepare" ]] || \
+       [[ ${taito_command} == "build-release" ]]; then
+      fetch_secrets="true"
+      secret_filter="git"
+    elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
+         [[ ${taito_command} == "db-proxy" ]]; then
+      fetch_secrets="true"
+      secret_filter="db"
+    elif [[ ${taito_command} == "test" ]] &&
+         [[ "stag canary prod" != *"${taito_env}"* ]]; then
+      fetch_secrets="true"
+      secret_filter=
+    fi
+  fi
+}
+export -f taito::expose_required_secrets_filter
+
+function taito::get_secret_name () {
+  echo "${1//_/-}" | sed 's/\([^\.]*\).*/\1/'
+}
+export -f taito::get_secret_name
+
+function taito::get_secret_property () {
+  echo "${1//_/-}" | sed 's/[^\.]*\.\(.*\)/\1/'
+}
+export -f taito::get_secret_property

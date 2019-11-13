@@ -24,15 +24,13 @@ function docker-compose::expose_pod_and_container () {
 }
 
 function docker-compose::restart_all () {
-  if [[ ${docker_compose_skip_restart:-} != "true" ]]; then
-    echo
-    echo "You may need to restart at least some of the containers to deploy the"
-    echo "new secrets. For example:"
-    echo
-    echo "$ taito restart:server"
-    echo "$ taito restart"
-    echo
-  fi
+  echo
+  echo "You may need to restart at least some of the containers to deploy the"
+  echo "new secrets. For example:"
+  echo
+  echo "$ taito restart:server"
+  echo "$ taito restart"
+  echo
 }
 
 function docker-compose::start () {

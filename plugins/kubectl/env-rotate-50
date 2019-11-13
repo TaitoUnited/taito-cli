@@ -9,8 +9,8 @@ kubectl::use_context
 kubectl::ensure_namespace "${taito_namespace:?}"
 
 kubectl::use_context
-export kubernetes_skip_restart="true"
-kubectl::save_secrets
-export kubernetes_skip_restart="false"
+taito::save_secrets \
+  kubectl::get_secret_value \
+  kubectl::put_secret_value
 
 taito::call_next "${@}"

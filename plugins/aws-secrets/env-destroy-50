@@ -2,12 +2,10 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-taito::confirm \
-  "Delete secrets of namespace ${taito_namespace:?} from Kubernetes" || \
+taito::confirm "Delete secrets of namespace ${taito_namespace:?} from AWS" ||
   taito::skip_to_next "${@}"
 
-kubectl::use_context
 taito::delete_secrets \
-  kubectl::delete_secret_value
+  aws-secrets::delete_secret_value
 
 taito::call_next "${@}"

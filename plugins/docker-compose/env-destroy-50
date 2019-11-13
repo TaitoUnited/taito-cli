@@ -5,5 +5,7 @@
 taito::confirm "Delete secrets of from ./secrets/${taito_env:?}" || \
   taito::skip_to_next "${@}"
 
-docker-compose::delete_secrets
+taito::delete_secrets \
+  docker-compose::delete_secret_value
+
 taito::call_next "${@}"

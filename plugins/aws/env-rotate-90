@@ -2,8 +2,6 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ ${taito_env:-} != "local" ]]; then
-  docker-compose::restart_all
-fi
+aws::restart_all_functions
 
 taito::call_next "${@}"

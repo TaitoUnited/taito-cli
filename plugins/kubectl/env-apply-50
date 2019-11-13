@@ -6,7 +6,8 @@ taito::confirm "Save secrets to Kubernetes" || \
   taito::skip_to_next "${@}"
 
 kubectl::use_context
-export kubernetes_skip_restart="true";
-kubectl::save_secrets
+taito::save_secrets \
+  kubectl::get_secret_value \
+  kubectl::put_secret_value
 
 taito::call_next "${@}"
