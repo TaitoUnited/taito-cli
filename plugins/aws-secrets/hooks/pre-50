@@ -7,7 +7,7 @@
 
 # Fetch required secrets from AWS
 taito::expose_required_secrets_filter
-if [[ ${fetch_secrets:?} ]]; then
+if [[ ${fetch_secrets:?} == "true" ]]; then
   taito::print_plugin_title
   if [[ ${secret_filter:-} ]]; then
     echo "Getting secrets from AWS SSM Parameter Store (${taito_env}) for ${secret_filter}"
