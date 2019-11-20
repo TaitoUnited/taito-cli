@@ -157,7 +157,7 @@ function taito::core::upgrade () {
     docker_run_flags="-v ${HOME}/.taito/install:/taitoinstall"
   fi
   # TODO: remove .sh extension
-  "${winpty}" docker run -it --name taito-new \
+  ${winpty} docker run -it --name taito-new \
     --entrypoint ${winptyprefix:-}/bin/bash \
     ${docker_run_flags} "${taito_image}" -c "
       /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g)
