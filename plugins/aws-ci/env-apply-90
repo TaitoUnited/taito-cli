@@ -44,6 +44,13 @@ echo "- Service role: Existing service role"
 echo "- Role ARN: Role ARN of ${taito_zone}-cicd role"
 echo "  (see https://console.aws.amazon.com/iam/home?#/roles)"
 echo "- Environment variables: taito_image=${taito_ci_image:-taitounited/taito-cli:ci-aws}"
+if [[ ! ${kubernetes_name:-} ]]; then
+  echo "- VPC: Use virtual private cloud of ${taito_zone}, for example"
+  echo "  * VPC: ${taito_zone}-vpc"
+  # TODO: vpc-private vs vpc-public vs vpc-db?
+  echo "  * Subnets: ${taito_zone}-vpc-private-${taito_provider_region}a"
+  echo "  * Security groups: default"
+fi
 echo
 echo "--------------------------------"
 echo "Additional configuration options"
