@@ -156,7 +156,10 @@ function taito::print_secret_values () {
       fi
     else
       echo "Secret ${secret_name}:"
-      if [[ ${secret_value_format} == "file" ]] && [[ ${secret_value} ]]; then
+      if [[ ${secret_method} == "htpasswd-plain"* ]]; then
+        # Show base64 decoded value
+        echo "${secret_value}" | base64 --decode | sed 's/{PLAIN}/ /'
+      elif [[ ${secret_value_format} == "file" ]] && [[ ${secret_value} ]]; then
         echo "FILE"
       else
         echo "${secret_value}"
@@ -295,20 +298,12 @@ function taito::export_secrets () {
         if [[ ${secret_value_format} == "file" ]]; then
           # Secret values of type 'file' are base64 encoded strings
           echo "${secret_value}" | base64 --decode > "${file}"
+          # Replace secret value with a file path
+          # TODO: save file path to a separate env var (secret_value should always be value)
+          secret_value="secret_file:${file}"
         else
           echo "${secret_value}" > "${file}"
         fi
-
-        # TODO: save to a separate env var (secret_value should always be value)
-        secret_value="secret_file:${file}"
-      fi
-
-      # HACK: Used only for showing plain text basic auth on 'taito secrets'?
-      if [[ ${secret_method} == "htpasswd"* ]] &&
-         [[ ${save_to_disk} == "false" ]]
-      then
-        # Use secret as value instead of file path
-        secret_value=$(echo "${secret_value}" | base64 --decode)
       fi
 
       set +x
