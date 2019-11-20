@@ -2,6 +2,13 @@
 
 export taito_mode="${taito_mode:-normal}"
 
+if [[ ${taito_host_os:-} == "windows" ]]; then
+  # Remove winptyprefix
+  export taito_run="${taito_run//\/\//\/}"
+  export taito_run_fg="${taito_run_fg//\/\//\/}"
+  export taito_enabled_extensions="${taito_enabled_extensions//\/\//\/}"
+fi
+
 if [[ ${taito_mode} == "ci" ]]; then
   echo
   echo "--------------------------------------------------------------"

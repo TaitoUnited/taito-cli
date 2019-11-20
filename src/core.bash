@@ -157,20 +157,21 @@ function taito::core::upgrade () {
     docker_run_flags="-v ${HOME}/.taito/install:/taitoinstall"
   fi
   # TODO: remove .sh extension
-  docker run -it --name taito-new --entrypoint /bin/bash ${docker_run_flags} \
-    "${taito_image}" -c "
-    /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g)
-    /taito-cli-deps/tools/user-init.sh taito
-    if [[ -f /taitoinstall ]]; then
-      echo
-      echo --- Executing \~/.taito/install ---
-      echo
-      chmod +x /taitoinstall
-      /taitoinstall
-      echo
-      echo --- Done executing \~/.taito/install ---
-      echo
-    fi
+  "${winpty}" docker run -it --name taito-new \
+    --entrypoint ${winptyprefix:-}/bin/bash \
+    ${docker_run_flags} "${taito_image}" -c "
+      /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g)
+      /taito-cli-deps/tools/user-init.sh taito
+      if [[ -f /taitoinstall ]]; then
+        echo
+        echo --- Executing \~/.taito/install ---
+        echo
+        chmod +x /taitoinstall
+        /taitoinstall
+        echo
+        echo --- Done executing \~/.taito/install ---
+        echo
+      fi
   "
 
   # Copy credentials from old image

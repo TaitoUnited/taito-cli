@@ -4,7 +4,7 @@ function taito::expose_ssh_opts () {
   ssh_opts=""
   if [[ -f "${HOME}/.ssh/config.taito" ]]; then
     ssh_opts="-F${HOME}/.ssh/config.taito"
-  elif [[ ${taito_host_uname} == "Darwin" ]]; then
+  elif [[ ${taito_host_os:-} == "macos" ]]; then
     echo
     echo "WARNING! ~/.ssh/config.taito file does not exist! SSH execution will"
     echo "fail if your ~/.ssh/config file contains any macOS specific properties"

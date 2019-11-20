@@ -7,6 +7,27 @@ if [[ "$(id -u)" == "0" ]]; then
   exit 1
 fi
 
+# Host environment
+export taito_host_user
+export taito_host_uname
+export taito_host_os
+taito_host_user="$(id -u):$(id -g)"
+taito_host_uname="$(uname)"
+winpty=
+winptyprefix=
+if [[ $taito_host_uname == *"_NT"* ]]; then
+  taito_host_os=windows
+  # add extra / to paths (see https://github.com/docker/for-win/issues/1588)
+  if [[ ! $DOCKER_HOST ]]; then
+    winpty="winpty"
+    winptyprefix="/"
+  fi
+elif [[ $taito_host_uname == "Darwin" ]]; then
+  taito_host_os=macos
+else
+  taito_host_os=linux
+fi
+
 # Parse arguments
 # TODO rename variables
 mode="${taito_mode:-normal}"
@@ -292,10 +313,8 @@ if [[ ${upgrade} == true ]]; then
   exit 0
 fi
 
-# Determine user details
-export taito_host_user
+# Determine user specific options
 export taito_container_home
-taito_host_user="$(id -u):$(id -g)"
 docker_user_opts="--user $taito_host_user"
 taito_container_home="/home/taito"
 if [[ ${admin} == true ]] || [[ ${root} == true ]]; then
@@ -353,14 +372,12 @@ trap cleanup EXIT
 
 # Set some variables to be used later
 export taito_host_username
-export taito_host_uname
 taito_host_username="$(whoami)"
-taito_host_uname="$(uname)"
 taito_run="${log_file/${taito_home_path}/${taito_container_home}}"
 taito_run_fg="${log_file_fg/${taito_home_path}/${taito_container_home}}"
 
 # Fix for Docker Toolbox on Windows
-if [[ $taito_host_uname == *"_NT"* ]] && [[ -f "./docker.exe" ]]; then
+if [[ ${taito_host_os} == "windows" ]] && [[ -f "./docker.exe" ]]; then
   echo
   echo "Current directory contains docker.exe. Execute the command in some"
   echo "other directory."
@@ -391,7 +408,7 @@ if [[ ${taito_target_env} == "local" ]] && \
    ); then
   docker_project=$(echo "${PWD##*/}" | tr '[:upper:]' '[:lower:]')
   if [[ ${docker_legacy_networking} == "true" ]] || \
-     [[ $taito_host_uname == *"_NT"* ]]; then
+     [[ ${taito_host_os} == "windows" ]]; then
     docker_project="${docker_project//-/}"
     docker_project="${docker_project//_/}"
   fi
@@ -415,11 +432,23 @@ if [[ ${taito_target_env} == "local" ]] && \
   fi
 fi
 
+# Pipe taito docker container output to 'less' in case the command is `help`,
+# `trouble` or `readme`.
+if [[ " ${params[@]} " == *" -h "* ]] || \
+   [[ " ${options[*]} " == *" -h "* ]] || \
+   [[ " ${options[*]} " == *" --help "* ]] || \
+   [[ ${command} == "trouble" ]] || \
+   [[ ${command} == "readme" ]]; then
+  pipe_to_less=true
+fi
+
 # Prepare docker options
 taito_image_name="${taito_image:?}"
 image_flag="--rm ${taito_image_name}"
 docker_it=""
-[[ -t 1 ]] && docker_it="-it"
+if [[ -t 1 ]] && [[ ! ${pipe_to_less} ]]; then
+  docker_it="-it"
+fi
 if [[ ${mode} == "dev" ]]; then
   extension_mount_flags="${extension_mount_flags} \
     -v ${taito_cli_path}:/taito-cli"
@@ -446,34 +475,63 @@ if [[ ${command} == "storage"* ]]; then
   misc_flags="--privileged"
 fi
 
-# TTY fix for Docker Destop for Windows
-# https://github.com/docker/for-win/issues/1588
-winpty=""
-if [[ $taito_host_uname == *"_NT"* ]] && [[ ! $DOCKER_HOST ]]; then
-  winpty="winpty"
+# Basic mounts
+basic_mount_options="
+  -v ${taito_home_path}/.taito:${taito_container_home}/.taito
+  -v ${taito_home_path}/.ssh:${taito_container_home}/.ssh
+  -v ${taito_home_path}/.terraform.d:${taito_container_home}/.terraform.d
+  -v $(pwd):/project
+"
+
+# Use winpty only with the -it switch
+if [[ ${docker_it} ]]; then
+  docker_winpty="${winpty}"
+else
+  docker_winpty=
+fi
+
+# Convert paths for winpty (see https://github.com/docker/for-win/issues/1588)
+taito_host_project_path="${taito_project_path}"
+if [[ ${docker_winpty} ]]; then
+  function winpty_mount_paths () {
+    # -v /c/dir1/dir2:/home/mydir  -->  -v c:/dir1/dir2://home/mydir
+    echo "$1" | sed "s|:/|:${winptyprefix:-}/|g" | sed 's| /\(.\)/| \1:/|g'
+  }
+  function winpty_host_paths () {
+    # /c/dir1/dir2 --> c:/dir1/dir2
+    echo " $1" | sed 's| /\(.\)/| \1:/|g' | sed 's|^ ||g'
+  }
+  function winpty_paths () {
+    # /home/mydir --> //home/mydir
+    echo " $1" | sed "s| /| ${winptyprefix:-}/|g" | sed 's|^ ||g'
+  }
+  basic_mount_options=$(winpty_mount_paths "${basic_mount_options}")
+  user_mount_options=$(winpty_mount_paths "${user_mount_options}")
+  project_mount_options=$(winpty_mount_paths "${project_mount_options}")
+  extension_mount_flags=$(winpty_mount_paths "${extension_mount_flags}")
+  taito_host_project_path=$(winpty_host_paths "${taito_host_project_path}")
+  extension_paths=$(winpty_paths "${extension_paths}")
 fi
 
 # TODO do not pass taito_admin_key as command line argument
 docker_command="
-  ${winpty} docker run ${docker_it}
-    -v ${taito_home_path}/.taito:${taito_container_home}/.taito
-    -v ${taito_home_path}/.ssh:${taito_container_home}/.ssh
-    -v ${taito_home_path}/.terraform.d:${taito_container_home}/.terraform.d
-    -v $(pwd):/project
-    -w /project
+  ${docker_winpty} docker run ${docker_it}
     ${docker_user_opts}
     ${proxy_flags}
+    -w ${winptyprefix}/project
+    ${basic_mount_options}
     ${user_mount_options}
     ${project_mount_options}
     ${extension_mount_flags}
     ${link_flags}
     ${misc_flags}
     -e taito_enabled_extensions=${extension_paths}
-    -e taito_run=${taito_run}
-    -e taito_run_fg=${taito_run_fg}
+    -e taito_run=${winptyprefix}${taito_run}
+    -e taito_run_fg=${winptyprefix}${taito_run_fg}
     -e taito_host_username=${taito_host_username}
     -e taito_host_uname=${taito_host_uname}
-    -e taito_host_project_path=${taito_project_path}
+    -e taito_host_os=${taito_host_os}
+    -e taito_host_project_path=${taito_host_project_path}
     -e taito_mode=${mode}
     -e taito_docker=true
     -e taito_image_name=${taito_image_name}
@@ -486,16 +544,9 @@ docker_command="
     ${image_flag}
 "
 
-# Execute command in Taito CLI docker container
-# Forward taito docker container output to 'less' in case the command is `help`,
-# `trouble` or `readme`.
-if [[ " ${params[@]} " == *" -h "* ]] || \
-   [[ " ${options[*]} " == *" -h "* ]] || \
-   [[ " ${options[*]} " == *" --help "* ]] || \
-   [[ ${command} == "trouble" ]] || \
-   [[ ${command} == "readme" ]]; then
+if [[ ${pipe_to_less} ]]; then
   # Filter some control characters for a cleaner output
-  if [[ ${taito_host_uname} == "Darwin" ]]; then
+  if [[ ${taito_host_os} == "macos" ]]; then
    ctrl_filter=" tr -d '[:cntrl:]' "
   else
    ctrl_filter=" grep -axv '.*' "

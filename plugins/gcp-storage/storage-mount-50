@@ -4,7 +4,7 @@
 
 echo "TODO: implement"
 
-if [[ ${taito_host_uname:-} == "Darwin" ]]; then
+if [[ ${taito_host_os:-} == "macos" ]]; then
   echo "macOS not supported"
   echo
   exit 1
@@ -15,7 +15,7 @@ mount_path="./mounts/${bucket}"
 mkdir -p "${mount_path}"
 
 # Start rsync for mac hosts (not working)
-# if [[ ${taito_host_uname:-} == "Darwin" ]]; then
+# if [[ ${taito_host_os:-} == "macos" ]]; then
 #   sync_path="${mount_path}"
 #   mount_path="${mount_path}-mount"
 #   mkdir -p "${mount_path}"
