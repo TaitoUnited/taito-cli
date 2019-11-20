@@ -5,7 +5,7 @@ if [[ ${ssh_db_proxy:-} ]]; then
   forward_value=$(echo "$ssh_db_proxy" | envsubst)
   (
     taito::executing_start
-    sh -c "ssh ${ssh_opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 180"
+    sh -c "ssh ${ssh_opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 2000"
   )
 
   echo

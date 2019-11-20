@@ -47,7 +47,7 @@ taito::confirm \
   sed -i "s/TAITO_PROVIDER_REGION/$taito_provider_region/g" ./*.tf
   if [[ ${taito_zone_bastion_public_ip} ]]; then
     echo TAITO_ZONE_BASTION_PUBLIC_IP
-    sed -i "s/TAITO_BASTION_PUBLIC_IP/$taito_zone_bastion_public_ip/g" ./*.tf
+    sed -i "s/TAITO_BASTION_PUBLIC_IP/$taito_zone_bastion_public_ip/g" ../taito-config.sh
   fi
   if [[ ${taito_zone_state_bucket:-} ]]; then
     echo TAITO_ZONE_STATE_BUCKET

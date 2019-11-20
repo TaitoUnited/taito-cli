@@ -20,6 +20,7 @@ function get_parameter () {
   value=$(
     aws ${aws_options} ssm get-parameter \
       --name "${1}" \
+      --output json \
       --with-decryption 2> /dev/null |
         jq -r -e '.Parameter.Value'
   ) || value=""
