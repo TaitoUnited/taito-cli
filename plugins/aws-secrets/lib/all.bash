@@ -21,7 +21,7 @@ function get_parameter () {
     aws ${aws_options} ssm get-parameter \
       --name "${1}" \
       --output json \
-      --with-decryption 2> /dev/null |
+      --with-decryption |
         jq -r -e '.Parameter.Value'
   ) || value=""
   echo "${value}"

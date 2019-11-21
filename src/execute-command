@@ -676,6 +676,14 @@ else
   export taito_command_requires_database="false"
 fi
 
+export taito_command_requires_db_proxy="false"
+if [[ ${taito_command_requires_database} == "true" ]] && (
+     [[ ${taito_mode} != "ci" ]] ||
+     [[ ${ci_disable_db_proxy:-} != "true" ]]
+   ); then
+  export taito_command_requires_db_proxy="true"
+fi
+
 export taito_command_requires_secrets
 taito_command_requires_secrets="false"
 if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \

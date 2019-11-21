@@ -31,8 +31,8 @@ if [[ $force_kube_login_hack == "true" ]] || ( \
 fi
 
 # Start database proxy
-if [[ ${gcp_db_proxy_enabled:-} != "false" ]] && \
-   [[ ${taito_command_requires_database:-} == "true" ]]; then
+if [[ ${gcp_db_proxy_enabled:-} != "false" ]] &&
+   [[ ${taito_command_requires_db_proxy:-} == "true" ]]; then
   proxy_running=$(pgrep "cloud_sql_proxy" || :)
   taito::print_plugin_title
   if [[ ${proxy_running} == "" ]]; then

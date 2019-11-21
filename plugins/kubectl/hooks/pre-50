@@ -15,7 +15,7 @@ fi
 
 # Start database proxy
 if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
-   [[ ${taito_command_requires_database:-} == "true" ]]; then
+   [[ ${taito_command_requires_db_proxy:-} == "true" ]]; then
   proxy_running=$(pgrep "kubectl") || :
   taito::print_plugin_title
   if [[ ${proxy_running} == "" ]]; then

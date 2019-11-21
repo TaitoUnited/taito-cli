@@ -6,7 +6,9 @@ export ssh_proxy_running="${ssh_proxy_running:-false}"
 plugin_suffices=$(set -o posix; set | cut -f1 -d= | grep "ssh_forward_for_" | \
   sed "s/ssh_forward_for_//" | tr '\n' ' ')
 for plugin_suffix in ${plugin_suffices[@]}; do
-  if [[ $ssh_proxy_running == "false" ]] && \
+  if [[ ${ssh_db_proxy_enabled:-} == "true" ]] &&
+     [[ ${taito_command_requires_db_proxy:-} == "true" ]] &&
+     [[ $ssh_proxy_running == "false" ]] &&
      [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
     taito::print_plugin_title
     taito::expose_ssh_opts

@@ -75,6 +75,7 @@ function taito::export_database_config () {
     export database_real_port="${!env_var_name}"
     echo "- database_real_port: ${database_real_port}" > "${taito_dout:-/dev/null}"
 
+    # TODO: is database_proxy_host used anywhere?
     env_var_name="db_${target}_proxy_host"
     export database_proxy_host="${!env_var_name}"
     echo "- database_proxy_host: ${database_proxy_host}" > "${taito_dout:-/dev/null}"
@@ -154,6 +155,14 @@ function taito::export_database_config () {
     env_var_name="db_${target}_build_username_internal"
     export database_build_username_internal="${!env_var_name:-$database_build_username}"
     echo "- database_build_username_internal: ${database_build_username_internal}" > "${ttaito_dout:-/dev/null}"
+
+    if [[ ${taito_command_requires_db_proxy:-} == "false" ]]; then
+      echo "db proxy disabled -> use real host and port" > "${taito_dout:-/dev/null}"
+      export database_host="${database_real_host:-$database_host}"
+      export database_port="${database_real_port:-$database_port}"
+      echo "- database_host: ${database_host}" > "${taito_dout:-/dev/null}"
+      echo "- database_port: ${database_port}" > "${taito_dout:-/dev/null}"
+    fi
   fi
 }
 
