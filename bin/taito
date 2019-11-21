@@ -514,7 +514,7 @@ if [[ ${docker_winpty} ]]; then
 fi
 
 # TODO do not pass taito_admin_key as command line argument
-docker_command="
+docker_command=$(echo "
   ${docker_winpty} docker run ${docker_it}
     ${docker_user_opts}
     ${proxy_flags}
@@ -542,7 +542,7 @@ docker_command="
     -e TAITO_CONFIG_OVERRIDE=${TAITO_CONFIG_OVERRIDE}
     --entrypoint taito
     ${image_flag}
-"
+" | tr '\n' ' ')
 
 if [[ ${pipe_to_less} ]]; then
   # Filter some control characters for a cleaner output

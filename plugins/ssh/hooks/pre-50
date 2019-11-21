@@ -11,6 +11,7 @@ for plugin_suffix in ${plugin_suffices[@]}; do
      [[ $ssh_proxy_running == "false" ]] &&
      [[ ${taito_commands_only_chain:-} == *"${plugin_suffix}/"* ]]; then
     taito::print_plugin_title
+    echo "Starting db proxy"
     taito::expose_ssh_opts
     forward_env_var_name="ssh_forward_for_${plugin_suffix}"
     forward_value="${!forward_env_var_name}"
