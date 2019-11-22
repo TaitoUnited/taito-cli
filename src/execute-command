@@ -384,17 +384,6 @@ taito::export_database_config
 # Export storage configs using taito_target
 taito::export_storage_config
 
-# Export storage attributes in array format (required for terraform)
-taito::export_storage_attributes
-
-# Export taito_container_targets for terraform
-export taito_container_targets
-taito_container_targets=$(taito::print_targets_of_type container)
-
-# Export taito_function_targets for terraform
-export taito_function_targets
-taito_function_targets=$(taito::print_targets_of_type function)
-
 # Read taito-secrets in case of CI/CD
 if [[ -f ${taito_project_path}/taito-secrets ]]; then
   # Taito secrets for CI/CD
