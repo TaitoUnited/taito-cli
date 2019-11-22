@@ -22,6 +22,7 @@ taito::confirm "Apply changes by running terraform scripts" || \
 
   terraform::run_zone apply
 
+  echo
   if [[ ${taito_zone_initial_database_password:-} ]] && \
      taito::confirm "Change database master password"
   then

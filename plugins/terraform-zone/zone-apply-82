@@ -1,0 +1,35 @@
+#!/bin/bash -e
+: "${taito_zone:?}"
+
+(
+  cd terraform || exit 1
+  bastion_public_ip=$(terraform output bastion_public_ip || :)
+
+  ( [[ -f id_rsa ]] &&
+    [[ -f id_rsa.pub ]] &&
+    [[ ${bastion_public_ip} ]] &&
+    taito::confirm "Move bastion host SSH keys from ./terraform to ~/.ssh?"
+  ) || taito::skip_to_next "${@}"
+
+  echo "Moving bastion host key: ${taito_zone}_rsa"
+  mv id_rsa "${HOME}/.ssh/${taito_zone}_rsa"
+  mv id_rsa.pub "${HOME}/.ssh/${taito_zone}_rsa.pub"
+  chmod 600 "${HOME}/.ssh/${taito_zone}_rsa"
+  chmod 600 "${HOME}/.ssh/${taito_zone}_rsa.pub"
+
+  ssh_config_file="${HOME}/.ssh/config"
+  if [[ -f "${HOME}/.ssh/config.taito" ]]; then
+    ssh_config_file="${HOME}/.ssh/config.taito"
+  fi
+
+  if ! grep "${bastion_public_ip}" ~/.ssh/config.taito > /dev/null; then
+    echo "Adding bastion host ${bastion_public_ip} to ${ssh_config_file}"
+    echo "
+Host ${bastion_public_ip}
+    IdentityFile ~/.ssh/${taito_zone}_rsa
+" >> "${ssh_config_file}"
+  fi
+
+)
+
+taito::call_next "${@}"
