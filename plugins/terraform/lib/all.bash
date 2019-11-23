@@ -30,8 +30,7 @@ function terraform::export_env () {
     value_formatted="${value}"
     if [[ ${name: -1} == "s" ]] &&
        [[ -f "${scripts_path}/variables.tf" ]] &&
-       grep "list(string)" "${scripts_path}/variables.tf"; then
-      echo AARGH!
+       grep "list(string)" "${scripts_path}/variables.tf" &> /dev/null; then
       # Format to terraform list
       value_formatted="["
       words=("${value}")
@@ -51,6 +50,14 @@ function terraform::export_env () {
   done
 }
 
+function terraform::yaml2json () {
+  source=$1
+  tmp="${source/.yaml/.tmp}"
+  dest="${source/.yaml/.json.tmp}"
+  envsubst < "${source}" > "${tmp}" || echo > "${tmp}"
+  yaml2json -p "${tmp}"> "${dest}"
+}
+
 function terraform::run () {
   local command=${1}
   local name=${2}
@@ -65,12 +72,16 @@ function terraform::run () {
   if [[ -d "${scripts_path}" ]] && \
      taito::confirm "Run terraform scripts for ${name}"
   then
-    (
-      echo "Substituting variables in ./scripts/terraform*.yaml files" > "${taito_vout}"
-      dest=./scripts/terraform.tmp
-      envsubst < "./scripts/terraform-${taito_target_env:-}.yaml" > $dest || \
-        envsubst < "./scripts/terraform.yaml" > $dest || :
+    echo "Substituting variables in ./scripts/terraform*.yaml files" \
+      > "${taito_vout}"
+    terraform::yaml2json ./scripts/terraform.yaml
+    terraform::yaml2json "./scripts/terraform-${taito_target_env:-}.yaml"
 
+    echo "Merging yaml files" > "${taito_vout}"
+    jq -s '.[0] * .[1]' ./scripts/terraform.json.tmp \
+      "./scripts/terraform-${taito_target_env:-}.json.tmp" \
+      > ./scripts/terraform-merged.json.tmp
+    (
       export TF_LOG_PATH="./${env}/terraform.log"
       terraform::export_env "${scripts_path}"
       cd "${scripts_path}" || exit 1
@@ -80,10 +91,12 @@ function terraform::run () {
         ./import_state
       fi
       # TODO: Remove hadcoded taint
-      terraform taint aws_api_gateway_deployment.gateway || :
+      terraform taint module.aws.aws_api_gateway_deployment.gateway || :
       terraform "${command}" ${options} -state="./${env}/terraform.tfstate"
-      rm -f "${dest}"
     )
+
+    # Remove *.tmp files
+    rm -f ./scripts/*.tmp
   fi
 }
 
