@@ -54,8 +54,12 @@ function terraform::yaml2json () {
   source=$1
   tmp="${source/.yaml/.tmp}"
   dest="${source/.yaml/.json.tmp}"
-  envsubst < "${source}" > "${tmp}" || echo > "${tmp}"
-  yaml2json -p "${tmp}"> "${dest}"
+  if [[ -f "${source}" ]]; then
+    envsubst < "${source}" > "${tmp}"
+  else
+    echo "{}" > "${tmp}"
+  fi
+  yaml2json -p "${tmp}" > "${dest}"
 }
 
 function terraform::run () {
