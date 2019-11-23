@@ -1,5 +1,4 @@
-# TODO: rename latest -> cli
-FROM taitounited/taito-cli-deps:latest
+FROM taitounited/taito-cli-deps:cli
 MAINTAINER Taito United <support@taitounited.fi>
 LABEL fi.taitounited.taito-cli="true"
 
