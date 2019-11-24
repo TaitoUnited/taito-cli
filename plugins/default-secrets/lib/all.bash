@@ -27,7 +27,7 @@ function default-secrets::fetch_default_secrets () {
       taito::print_plugin_title
       echo "Getting default secret values from ${source_env} environment"
       rm -f "${taito_secrets_path}" &> /dev/null || :
-      taito_command_context="default-secrets" \
+      yes | taito_command_context="default-secrets" \
         taito -q secrets:${source_env} --save-as-taito-secrets
 
       sed -i 's/^export /export default_/' \
