@@ -11,8 +11,8 @@ function azure::authenticate () {
     echo "This'll open the authentication page automatically."
     read -r
     taito::open_browser "https://microsoft.com/devicelogin"
-    az login --tenant "${taito_provider_tenant}"
-    az account set --subscription "${taito_provider_billing_account_id}"
+    az login --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
+    az account set --subscription "${taito_provider_billing_account_id:?}"
     # TODO: docker-commit is called twice on 'taito auth'
     taito::commit_changes
   else
@@ -26,6 +26,11 @@ function azure::authenticate () {
         "\\nNOTE: Authentication failure is OK if the Kubernetes cluster does" \
         "not exist yet."
   fi
+}
+
+function azure::authenticate_on_acr () {
+  taito::executing_start
+  az acr login --name "${taito_container_registry%.*}" > "${taito_vout:-}"
 }
 
 function azure::authenticate_on_kubernetes () {

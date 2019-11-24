@@ -29,7 +29,9 @@ if [[ ${taito_mode:-} == "ci" ]]; then
   fi
 
   # Container registry (ECR) authentication
-  if [[ ${taito_command_requires_container_registry:?} == "true" ]]; then
+  if [[ ${taito_command_requires_container_registry:?} == "true" ]] &&
+     [[ ${taito_container_registry_provider:-} == "aws" ]]
+  then
     taito::print_plugin_title
     echo "Getting credentials for Elastic Container Registry"
     aws::authenticate_on_ecr
