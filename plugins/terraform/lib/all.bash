@@ -81,7 +81,7 @@ function terraform::run () {
     terraform::yaml2json ./scripts/terraform.yaml
     terraform::yaml2json "./scripts/terraform-${taito_target_env:-}.yaml"
 
-    echo "Merging yaml files" > "${taito_vout}"
+    echo "Merging yaml files to terraform-merged.json.tmp" > "${taito_vout}"
     jq -s '.[0] * .[1]' ./scripts/terraform.json.tmp \
       "./scripts/terraform-${taito_target_env:-}.json.tmp" \
       > ./scripts/terraform-merged.json.tmp
@@ -94,8 +94,6 @@ function terraform::run () {
       if [[ -f import_state ]]; then
         ./import_state
       fi
-      # TODO: Remove hadcoded taint
-      terraform taint module.aws.aws_api_gateway_deployment.gateway || :
       terraform "${command}" ${options} -state="./${env}/terraform.tfstate"
     )
 
