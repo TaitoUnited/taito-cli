@@ -3,6 +3,8 @@
 : "${template_name:?}"
 : "${template_source_git:?}"
 
+branch=${1:-master}
+
 export template="${template_name}"
 export template_project_path="${PWD}"
 
@@ -15,7 +17,7 @@ mkdir "${template_project_path}/template-tmp"
 taito::execute_on_host_fg "
   set -e
   export GIT_PAGER=''
-  git clone -q -b master --single-branch --depth 1 \
+  git clone -q -b ${branch} --single-branch --depth 1 \
     ${template_source_git}/${template}.git ./template-tmp/${template}
   taito ${taito_options:-} project upgrade continue
 "

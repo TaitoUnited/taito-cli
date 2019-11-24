@@ -886,13 +886,13 @@ PROJECT: BUILDS (mainly for CI/CD)
 
 PROJECT: TEMPLATES
 
-  project create: TEMPLATE
+  project create: TEMPLATE [BRANCH]
     Create a new project using a template.
 
-  project migrate: TEMPLATE
+  project migrate: TEMPLATE [BRANCH]
     Migrate an old project to use the given template.
 
-  project upgrade
+  project upgrade: [BRANCH]
     Upgrade current project to the latest version of the project template.
 
 PROJECT: BASIC SETUP

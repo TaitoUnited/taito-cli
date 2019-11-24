@@ -5,6 +5,8 @@
 : "${template_default_source_git:?}"
 
 export template="${1:?Template not given}"
+branch=${2:-master}
+
 export template_name="${template}"
 export template_project_path="${PWD}"
 export template_source_git="${template_default_source_git}"
@@ -38,7 +40,7 @@ mkdir "./template-tmp"
 taito::execute_on_host_fg "
   set -e
   export GIT_PAGER=''
-  git clone -q -b master --single-branch --depth 1 \
+  git clone -q -b ${branch} --single-branch --depth 1 \
     ${template_source_git}/${template}.git ./template-tmp/${template}
   rm -rf ./template-tmp/${template}/.git
   yes | cp ./template-tmp/${template}/taito*config.sh .

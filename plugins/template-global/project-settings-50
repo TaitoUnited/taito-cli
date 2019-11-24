@@ -96,7 +96,11 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: CI/CD provider"
   echo "template_default_ci_provider=$taito_ci_provider"
   echo "template_default_ci_exec_deploy=true"
-  echo "template_default_container_registry_provider=$taito_container_registry_provider"
+  if [[ $taito_container_registry == "local" ]]; then
+    echo "template_default_container_registry_provider=local"
+  else
+    echo "template_default_container_registry_provider=$taito_container_registry_provider"
+  fi
   echo "template_default_container_registry=$taito_container_registry"
   echo
   echo "# Template: Misc providers"
@@ -155,7 +159,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   if [[ $taito_container_registry == "local" ]]; then
     echo "template_default_container_registry_provider_prod=local"
   else
-    echo "template_default_container_registry_provider_prod=$taito_provider"
+    echo "template_default_container_registry_provider_prod=$taito_container_registry_provider"
   fi
   echo "template_default_container_registry_prod=$taito_container_registry"
   echo "template_default_uptime_provider_prod=$taito_uptime_provider"
