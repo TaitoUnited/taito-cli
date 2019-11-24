@@ -35,7 +35,7 @@ echo "Your load balancer IP addresses are presented above. You should configure"
 echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"
 echo "if you have not done so already. Example DNS entry:"
 echo
-echo "          A  *.mydomain.com  ->  123.123.123.123"
+echo "          A  *.${taito_default_domain:-mydomain.com}  ->  123.123.123.123"
 echo
 echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to "
 echo "make sure that a static IP has been reserved for the hostname. Then resolve"

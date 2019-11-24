@@ -5,7 +5,7 @@
 echo "NOTE: GitHub token is completely optional and should be set on production"
 echo "clusters only. It is used by semantic-release plugin to tag releases."
 taito::confirm \
-  "OPTIONAL: Set GitHub token on production cluster for tagging releases" || \
+  "OPTIONAL: Set GitHub token on production cluster for tagging releases" no || \
   taito::skip_to_next "${@}"
 
 # TODO: GitHub token handling should be implemented somewhere else, but might be

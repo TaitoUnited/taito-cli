@@ -32,8 +32,6 @@ taito::confirm \
       fi
       echo
     fi
-    echo "Detemining bastion public IP"
-    taito_zone_bastion_public_ip=$(terraform output bastion_public_ip || :)
   fi
 
   echo "Replacing hardcoded example values in taito_config and terraform/*"
@@ -45,10 +43,6 @@ taito::confirm \
   fi
   echo TAITO_PROVIDER_REGION
   sed -i "s/TAITO_PROVIDER_REGION/$taito_provider_region/g" ./*.tf
-  if [[ ${taito_zone_bastion_public_ip} ]]; then
-    echo TAITO_ZONE_BASTION_PUBLIC_IP
-    sed -i "s/TAITO_BASTION_PUBLIC_IP/$taito_zone_bastion_public_ip/g" ../taito-config.sh
-  fi
   if [[ ${taito_zone_state_bucket:-} ]]; then
     echo TAITO_ZONE_STATE_BUCKET
     sed -i "s/TAITO_ZONE_STATE_BUCKET/$taito_zone_state_bucket/g" ./*.tf
@@ -61,6 +55,21 @@ taito::confirm \
     echo POSTGRES_INSTANCES
     sed -i "s/POSTGRES_INSTANCES/$postgres_instances/g" ./*.tf
   fi
+
+  echo TAITO_ZONE_ABBR
+  sed -i "s/TAITO_ZONE_ABBR/${taito_zone//-/}/g" ./*.tf
+  echo TAITO_ZONE
+  sed -i "s/TAITO_ZONE/$taito_zone/g" ./*.tf
+
+  if grep TAITO_BASTION_PUBLIC_IP ../taito-config.sh; then
+    echo "Determining bastion public IP"
+    taito_zone_bastion_public_ip=$(terraform output bastion_public_ip || :)
+    if [[ ${taito_zone_bastion_public_ip} ]]; then
+      echo TAITO_ZONE_BASTION_PUBLIC_IP
+      sed -i "s/TAITO_BASTION_PUBLIC_IP/$taito_zone_bastion_public_ip/g" ../taito-config.sh
+    fi
+  fi
+
   echo
 )
 
