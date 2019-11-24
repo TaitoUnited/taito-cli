@@ -385,10 +385,10 @@ taito::export_database_config
 taito::export_storage_config
 
 # Read taito-secrets in case of CI/CD
-if [[ -f ${taito_project_path}/taito-secrets ]]; then
+if [[ -f "${taito_project_path:?}/tmp/secrets/taito-secrets" ]]; then
   # Taito secrets for CI/CD
   # shellcheck disable=SC1091
-  . ${taito_project_path}/taito-secrets
+  . "${taito_project_path:?}/tmp/secrets/taito-secrets"
 fi
 
 # TODO ^^^^^ clean up code ^^^^^

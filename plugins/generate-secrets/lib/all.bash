@@ -65,7 +65,7 @@ function generate-secrets::generate_by_type () {
 
   secret_value=
   if [[ ${secret_default_value:-} ]] && \
-     [[ ${secret_method} == "manual" ]] && \
+     [[ ${secret_method} != "random" ]] && \
      taito::confirm \
        "Default value exists. Use the default value for ${taito_env} environment?"
   then

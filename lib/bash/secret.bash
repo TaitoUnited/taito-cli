@@ -142,8 +142,13 @@ function taito::validate_secret_values () {
 export -f taito::validate_secret_values
 
 function taito::print_secret_values () {
-  save_to_disk=${1}
-  rm taito-secrets &> /dev/null || :
+  local save_to_disk=${1}
+  local taito_secrets_path="${taito_project_path:?}/tmp/secrets/taito-secrets"
+  if [[ ${save_to_disk} == "true" ]]; then
+    rm -f "${taito_secrets_path}" &> /dev/null || :
+    mkdir -p "${taito_project_path}/tmp/secrets"
+  fi
+
   secret_index=0
   secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
@@ -152,7 +157,7 @@ function taito::print_secret_values () {
 
     if [[ ${save_to_disk} == "true" ]]; then
       if [[ ${secret_value} ]]; then
-        echo "export ${secret_value_var}=\"${secret_value}\"; " >> taito-secrets
+        echo "export ${secret_value_var}=\"${secret_value}\"; " >> "${taito_secrets_path}"
       fi
     else
       echo "Secret ${secret_name}:"
@@ -198,6 +203,7 @@ function taito::save_secrets () {
   local get_secret_func="${1}"
   local put_secret_func="${2}"
 
+  local tmp_secrets_dir="/tmp/secrets/${taito_project:?}/${taito_env:?}"
   local secret_value
   local secret_filename
 
@@ -234,8 +240,8 @@ function taito::save_secrets () {
             "${secret_method}"
         )
         if [[ ${secret_value_format} == "file" ]]; then
-          mkdir -p "${taito_project_path}/tmp/secrets/${taito_env}"
-          secret_filename="${taito_project_path}/tmp/secrets/${taito_env}/${secret_name}"
+          mkdir -p "${tmp_secrets_dir}"
+          secret_filename="${tmp_secrets_dir}/${secret_name}"
           echo "${secret_value}" | base64 --decode > "${secret_filename}"
           secret_value="secret_file:${secret_filename}"
         fi
@@ -268,6 +274,8 @@ function taito::export_secrets () {
   local save_to_disk=$2
   local filter=$3
 
+  local tmp_secrets_dir="/tmp/secrets/${taito_project:?}/${taito_env:?}"
+
   # Get secret values
   local secret_index=0
   local secret_names=(${taito_secret_names})
@@ -291,8 +299,8 @@ function taito::export_secrets () {
 
     if [[ ${secret_value} ]]; then
       if [[ ${save_to_disk} == "true" ]]; then
-        mkdir -p "${taito_project_path}/tmp/secrets/${taito_env}"
-        file="${taito_project_path}/tmp/secrets/${taito_env}/${secret_name}"
+        mkdir -p "${tmp_secrets_dir}"
+        file="${tmp_secrets_dir}/${secret_name}"
 
         echo "Saving secret to ${file}" > "${taito_vout}"
         if [[ ${secret_value_format} == "file" ]]; then
@@ -370,7 +378,7 @@ function taito::save_proxy_secret_to_disk () {
 
   if [[ $taito_proxy_secret_name ]]; then
     echo "Reading proxy secret (${namespace}/${taito_proxy_secret_name}.${taito_proxy_secret_key})"
-    mkdir -p "$taito_project_path/tmp/secrets"
+    mkdir -p "/project/tmp/secrets"
 
     "${get_secret_func}" \
       "${taito_zone}" \
