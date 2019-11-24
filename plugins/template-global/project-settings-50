@@ -82,6 +82,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: Cloud provider"
   echo "template_default_provider=$taito_provider"
   echo "template_default_provider_org_id=$taito_provider_org_id"
+  echo "template_default_provider_billing_account_id=$taito_provider_billing_account_id"
   echo "template_default_provider_region=$taito_provider_region"
   echo "template_default_provider_zone=$taito_provider_zone"
   echo
@@ -152,6 +153,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_project_viewers_prod="
   echo "template_default_provider_prod=$taito_provider"
   echo "template_default_provider_org_id_prod=$taito_provider_org_id"
+  echo "template_default_provider_billing_account_id_prod=$taito_provider_billing_account_id"
   echo "template_default_provider_region_prod=$taito_provider_region"
   echo "template_default_provider_zone_prod=$taito_provider_zone"
   echo "template_default_ci_provider_prod=$taito_ci_provider"
