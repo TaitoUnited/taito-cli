@@ -113,7 +113,6 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Kubernetes"
   echo "template_default_kubernetes=${kubernetes_name:-}"
-  echo "template_default_kubernetes_cluster_prefix=${kubernetes_cluster_prefix:-}"
 
   echo
   echo "# Template: Postgres"
@@ -167,6 +166,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_uptime_provider_prod=$taito_uptime_provider"
   echo "template_default_uptime_provider_org_id_prod=$taito_uptime_provider_org_id"
   echo "template_default_uptime_channels_prod=$taito_messaging_uptime_channels"
+  echo "template_default_kubernetes_prod=${kubernetes_name:-}"
   echo "template_default_postgres_host_prod=\"${postgres_host_prod:-$postgres_host}\""
   echo "template_default_mysql_host_prod=\"${mysql_host_prod:-$mysql_host}\""
   echo "template_default_storage_class_prod=REGIONAL"
@@ -174,16 +174,6 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_storage_days_prod=60"
   echo "template_default_backup_location_prod=$taito_provider_region"
   echo "template_default_backup_days_prod=60"
-
-  if [[ $taito_provider == "gcp" ]]; then
-    echo "template_default_kubernetes_cluster_prefix_prod=gke_${taito_zone}_${taito_provider_zone}_"
-  elif [[ $taito_provider == "aws" ]]; then
-    echo "template_default_kubernetes_cluster_prefix_prod=arn:aws:eks:$taito_provider_region:$taito_provider_org_id:cluster/"
-  elif [[ $taito_provider == "linux" ]]; then
-    echo "template_default_kubernetes_cluster_prefix_prod="
-  else
-    echo "template_default_kubernetes_cluster_prefix_prod=TODO"
-  fi
 
   echo
   echo "# ------------------------------------------------------------------"

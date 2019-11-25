@@ -104,33 +104,13 @@ function taito::export_database_config () {
     export database_master_username="${!env_var_name}"
     echo "- database_master_username: ${database_master_username}" > "${taito_dout:-/dev/null}"
 
-    env_var_name="db_${target}_master_username_internal"
-    export database_master_username_internal="${!env_var_name:-$database_master_username}"
-    echo "- database_master_username_internal: ${database_master_username_internal}" > "${taito_dout:-/dev/null}"
-
     env_var_name="db_${target}_master_password_hint"
     export database_master_password_hint="${!env_var_name}"
     echo "- database_master_password_hint: ${database_master_password_hint}" > "${taito_dout:-/dev/null}"
 
-    env_var_name="db_${target}_username"
-    export database_username="${!env_var_name}"
-    echo "- database_username: ${database_username}" > "${taito_dout:-/dev/null}"
-
-    env_var_name="db_${target}_username_internal"
-    export database_username_internal="${!env_var_name:-$database_username}"
-    echo "- database_username_internal: ${database_username_internal}" > "${taito_dout:-/dev/null}"
-
-    env_var_name="db_${target}_password"
-    export database_password="${!env_var_name}"
-    echo "- database_password: ${database_password}" > "${taito_dout:-/dev/null}"
-
     env_var_name="db_${target}_app_username"
     export database_app_username="${!env_var_name}"
     echo "- database_app_username: ${database_app_username}" > "${taito_dout:-/dev/null}"
-
-    env_var_name="db_${target}_app_username_internal"
-    export database_app_username_internal="${!env_var_name:-$database_app_username}"
-    echo "- database_app_username_internal: ${database_app_username_internal}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_app_secret"
     export database_app_secret="${!env_var_name}"
@@ -140,18 +120,35 @@ function taito::export_database_config () {
     export database_mgr_username="${!env_var_name}"
     echo "- database_mgr_username: ${database_mgr_username}" > "${taito_dout:-/dev/null}"
 
-    env_var_name="db_${target}_mgr_username_internal"
-    export database_mgr_username_internal="${!env_var_name:-$database_mgr_username}"
-    echo "- database_mgr_username_internal: ${database_mgr_username_internal}" > "${ttaito_dout:-/dev/null}"
-
     env_var_name="db_${target}_mgr_secret"
     export database_mgr_secret="${!env_var_name}"
     echo "- database_mgr_secret: ${database_mgr_secret}" > "${taito_dout:-/dev/null}"
 
+    export database_master_username_internal="${database_master_username%@*}"
+    export database_app_username_internal="${database_app_username%@*}"
+    export database_mgr_username_internal="${database_mgr_username%@*}"
+
+    # TODO: remove?
+    env_var_name="db_${target}_username"
+    export database_username="${!env_var_name}"
+    echo "- database_username: ${database_username}" > "${taito_dout:-/dev/null}"
+
+    # TODO: remove?
+    env_var_name="db_${target}_username_internal"
+    export database_username_internal="${!env_var_name:-$database_username}"
+    echo "- database_username_internal: ${database_username_internal}" > "${taito_dout:-/dev/null}"
+
+    # TODO: remove?
+    env_var_name="db_${target}_password"
+    export database_password="${!env_var_name}"
+    echo "- database_password: ${database_password}" > "${taito_dout:-/dev/null}"
+
+    # TODO: remove?
     env_var_name="db_${target}_build_username"
     export database_build_username="${!env_var_name}"
     echo "- database_build_username: ${database_build_username}" > "${taito_dout:-/dev/null}"
 
+    # TODO: remove?
     env_var_name="db_${target}_build_username_internal"
     export database_build_username_internal="${!env_var_name:-$database_build_username}"
     echo "- database_build_username_internal: ${database_build_username_internal}" > "${ttaito_dout:-/dev/null}"

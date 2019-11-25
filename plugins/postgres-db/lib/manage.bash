@@ -13,7 +13,7 @@ function postgres::create_database () {
         -f "${taito_plugin_path}/resources/create.sql" \
         -v "database=${database_name}" \
         -v "dbusermaster=${database_master_username_internal:-postgres}" \
-        -v "dbuserapp=${database_name}_app" > "${taito_vout}"
+        -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
     )
 
     if [[ -f "./${taito_target:-database}/db.sql" ]]; then
@@ -41,7 +41,7 @@ function postgres::create_database () {
       -f "${taito_plugin_path}/resources/grant.sql" \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
-      -v "dbuserapp=${database_name}_app" > "${taito_vout}"
+      -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
     )
   )
 }
@@ -81,7 +81,7 @@ function postgres::create_users () {
     -f "${taito_plugin_path}/resources/users.sql" \
     -v "database=${database_name}" \
     -v "dbusermaster=${database_master_username_internal:-postgres}" \
-    -v "dbuserapp=${database_name}_app" \
+    -v "dbuserapp=${database_app_username_internal}" \
     -v "passwordapp=${database_app_password}" \
     -v "passwordbuild=${database_build_password}" \
     > "${taito_vout}" 2>&1
@@ -96,5 +96,5 @@ function postgres::drop_users () {
     -f "${taito_plugin_path}/resources/drop-users.sql" \
     -v "database=${database_name}" \
     -v "dbusermaster=${database_master_username_internal:-postgres}" \
-    -v "dbuserapp=${database_name}_app" > "${taito_vout}"
+    -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
 }

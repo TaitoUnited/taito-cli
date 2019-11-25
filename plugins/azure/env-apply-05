@@ -3,7 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 if [[ ${taito_mode:-} != "ci" ]]; then
-  echo "authenticating"
+  echo "Authenticating"
   azure::authenticate
 fi
 

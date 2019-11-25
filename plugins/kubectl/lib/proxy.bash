@@ -17,18 +17,20 @@ function kubectl::db_proxy_start () {
       --namespace "${proxy_namespace}" | grep "${proxy_instance}" | head -n 1
     )
     echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
-    taito::executing_start
-    kubectl port-forward \
-      "${proxy_pod}" \
-      "${database_port:?}:${database_real_port:-5432}" \
-      --address "${taito_db_proxy_bind_address}" \
-      --namespace "${proxy_namespace}" > /dev/null &
-    sleep 1
-    if [[ $1 != "true" ]]; then
-      wait
-    else
-      sleep 3
-    fi
+    (
+      taito::executing_start
+      kubectl port-forward \
+        "${proxy_pod}" \
+        "${database_port:?}:${database_real_port:-5432}" \
+        --address "${taito_db_proxy_bind_address}" \
+        --namespace "${proxy_namespace}" > /dev/null &
+      sleep 1
+      if [[ $1 != "true" ]]; then
+        wait
+      else
+        sleep 3
+      fi
+    )
   fi
 }
 

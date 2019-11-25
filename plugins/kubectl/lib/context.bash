@@ -3,14 +3,14 @@
 function kubectl::ensure_namespace () {
   local namespace=${1:?}
 
-  # Ensure namespace exists and it uses safe defaults
-  taito::executing_start
-  kubectl create namespace "${namespace}" &> /dev/null && \
-    echo "Namespace ${namespace} created" && \
-    kubectl patch serviceaccount default \
-      -p "automountServiceAccountToken: false" --namespace "${namespace}" || :
-
-  echo
+  (
+    # Ensure namespace exists and it uses safe defaults
+    taito::executing_start
+    kubectl create namespace "${namespace}" &> /dev/null && \
+      echo "Namespace ${namespace} created" && \
+      kubectl patch serviceaccount default \
+        -p "automountServiceAccountToken: false" --namespace "${namespace}" || :
+  )
 }
 
 function kubectl::use_context () {

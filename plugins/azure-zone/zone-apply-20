@@ -1,0 +1,19 @@
+#!/bin/bash -e
+# shellcheck source=../azure/lib/all.bash
+. "${taito_cli_path:?}/plugins/azure/lib/all.bash"
+
+( [[ ${kubernetes_name:-} ]] && \
+    taito::confirm "Enable Azure monitoring and logs for ${kubernetes_name}"
+) || taito::skip_to_next "${@}"
+
+echo "Note that enabling this feature will increase costs."
+echo
+echo "Press enter to open Azure monitoring on your web browser."
+read -r
+
+taito::open_browser "https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/taito-azure-zone1/providers/Microsoft.ContainerService/managedClusters/${kubernetes_name}/logs"
+
+echo "Press enter when you have enabled the service."
+read -r
+
+taito::call_next "${@}"

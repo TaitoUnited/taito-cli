@@ -28,18 +28,5 @@ echo "AZURE_CLIENT_SECRET value if your CI/CD provides such an option."
 echo
 echo "Press enter when done."
 read -r
-echo
-echo "TODO: REMOVE THIS? -->"
-echo "The CI/CD user needs to have deployment rights for the Kubernetes cluster."
-echo "You most likely can add the rights in your taito zone configuration files"
-echo "like this:"
-echo
-echo "- Edit 'terraform/variables.tf': add the CI/CD user to 'map_users'."
-echo "- Run 'taito zone apply'."
-echo
-echo "TODO: Limited Kubernetes group for CI/CD (not system:masters)"
-echo
-echo "Press enter when done."
-read -r
 
 taito::call_next "${@}"

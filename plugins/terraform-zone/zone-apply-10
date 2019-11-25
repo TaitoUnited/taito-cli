@@ -35,13 +35,15 @@ taito::confirm "Apply changes by running terraform scripts" || \
     echo "database instance that was created, if you have not done so already."
     echo
     echo "You most likely can change the password on cloud provider web console."
-    echo "Look for modify button or users tab in the database section."
+    echo "Look for 'reset password', 'modify', or 'users' in the database section."
     echo
-    databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$')"
-    if [[ ${databases_link} ]]; then
-      echo "Press enter to open the web console at ${databases_link}"
+    dashboard_link="$(taito -q ${taito_options:-} link-dashboard | grep -v '^\s*$' || :)"
+    databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$' || :)"
+    if [[ ${databases_link} ]] || [[ ${dashboard_link} ]]; then
+      echo "Press enter to open the web console at:"
+      echo "${databases_link:-$dashboard_link}"
       read -r
-      taito::open_browser "${databases_link}"
+      taito::open_browser "${databases_link:-$dashboard_link}"
     fi
     echo "Press enter once the password has been changed"
     read -r
