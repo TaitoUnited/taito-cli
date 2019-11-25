@@ -88,14 +88,15 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Version control provider"
   echo "template_default_vc_provider=$taito_vc_provider"
-  echo "template_default_vc_organization=$taito_organization"
-  echo "template_default_vc_url=$taito_vc_domain/$taito_organization"
+  echo "template_default_vc_organization=${taito_vc_organization:-$taito_organization}"
+  echo "template_default_vc_url=$taito_vc_domain/${taito_vc_organization:-$taito_organization}"
   echo "template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure//templates"
   echo "template_default_source_git=git@github.com:TaitoUnited"
-  echo "template_default_dest_git=git@$taito_vc_domain:$taito_organization"
+  echo "template_default_dest_git=git@$taito_vc_domain:${taito_vc_organization:-$taito_organization}"
   echo
   echo "# Template: CI/CD provider"
   echo "template_default_ci_provider=$taito_ci_provider"
+  echo "template_default_ci_organization=${taito_ci_organization:-$taito_organization}"
   echo "template_default_ci_exec_deploy=true"
   if [[ $taito_container_registry == "local" ]]; then
     echo "template_default_container_registry_provider=local"
@@ -156,6 +157,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_region_prod=$taito_provider_region"
   echo "template_default_provider_zone_prod=$taito_provider_zone"
   echo "template_default_ci_provider_prod=$taito_ci_provider"
+  echo "template_default_ci_organization_prod=${taito_ci_organization:-$taito_organization}"
   echo "template_default_ci_exec_deploy_prod=true # Set to 'false' for security critical environments"
   if [[ $taito_container_registry == "local" ]]; then
     echo "template_default_container_registry_provider_prod=local"

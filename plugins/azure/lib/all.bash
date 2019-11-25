@@ -30,7 +30,7 @@ function azure::authenticate () {
 
 function azure::authenticate_on_acr () {
   taito::executing_start
-  az acr login --name "${taito_container_registry%.*}" > "${taito_vout:-}"
+  az acr login --name "${taito_container_registry%%.*}" > "${taito_vout:-}"
 }
 
 function azure::authenticate_on_kubernetes () {
