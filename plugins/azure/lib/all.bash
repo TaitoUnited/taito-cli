@@ -40,3 +40,22 @@ function azure::authenticate_on_kubernetes () {
     --resource-group "${azure_resource_group:-$taito_zone}" \
     --overwrite-existing > "${taito_vout:-}"
 }
+
+function azure::ensure_resource_group_exists () {
+  local name=${1:?}
+  local region=${2:?}
+  local subscription=${3:?}
+  local exists=$(
+    az group exists \
+      --name "${name}" \
+      --subscription "${subscription}"
+  )
+  if [[ ${exists} == "true" ]]; then return; fi
+
+  echo "Creating resource group ${name}"
+  taito::executing_start
+  az group create \
+    --name "${name}" \
+    --location "${region}" \
+    --subscription "${subscription}"
+}

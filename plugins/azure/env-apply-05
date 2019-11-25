@@ -7,4 +7,24 @@ if [[ ${taito_mode:-} != "ci" ]]; then
   azure::authenticate
 fi
 
+# Ensure Google project exists (not created with terraform)
+if [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
+  echo "Ensuring required Azure resource groups exist"
+  if [[ ${taito_provider:?} == "azure" ]] && \
+     [[ ${taito_provider_org_id} ]] && \
+     [[ ${taito_resource_namespace_id:-} ]]; then
+    azure::ensure_resource_group_exists \
+      "${taito_resource_namespace_id:?}" \
+      "${taito_provider_region:?}" \
+      "${taito_provider_billing_account_id:?}"
+  fi
+  if [[ ${taito_uptime_provider:-} == "azure" ]] && \
+     [[ ${taito_uptime_provider_org_id:-} ]]; then
+    azure::ensure_resource_group_exists \
+      "${taito_uptime_namespace_id:?}" \
+      "${taito_provider_region:?}" \
+      "${taito_provider_billing_account_id:?}"
+  fi
+fi
+
 taito::call_next "${@}"

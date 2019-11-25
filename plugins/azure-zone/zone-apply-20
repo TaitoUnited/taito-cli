@@ -7,6 +7,7 @@
 ) || taito::skip_to_next "${@}"
 
 echo "Note that enabling this feature will increase costs."
+echo "Select ${taito_zone} as log analytics workspace."
 echo
 echo "Press enter to open Azure monitoring on your web browser."
 read -r

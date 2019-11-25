@@ -8,7 +8,7 @@
 # Ensure namespace exists
 if [[ ${taito_command} == "env-apply" ]]; then
   taito::print_plugin_title
-  echo "Ensuring namespace exists: ${taito_namespace:?}"
+  echo "Ensuring Kubernetes namespace exists: ${taito_namespace:?}"
   kubectl::use_context
   kubectl::ensure_namespace "${taito_namespace}"
   kubectl::use_context
