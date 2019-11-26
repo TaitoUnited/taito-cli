@@ -1,5 +1,26 @@
 #!/bin/bash
 
+function postgres::export_pgsslmode () {
+  # Set PGSSLMODE
+  # TODO: Add support for verify-full
+  if (
+       [[ ${taito_command_requires_db_proxy:-} == "false" ]] &&
+       [[ ${database_ssl_enabled:-} == "false" ]]
+     ) || (
+       [[ ${taito_command_requires_db_proxy:-} == "true" ]] &&
+       [[ ${database_proxy_ssl_enabled:-} == "false" ]]
+     ); then
+    PGSSLMODE="prefer"
+  else
+    PGSSLMODE="require"
+  fi
+
+  # TODO: remove
+  if [[ ${taito_zone:?} == "gcloud-temp1" ]]; then
+    PGSSLMODE="prefer"
+  fi
+}
+
 function postgres::ask_and_expose_password () {
   # HACK: Remove everything after a @. Azure uses @ in usernames, but bash
   # doesn't allow it in variable names
@@ -48,6 +69,7 @@ function postgres::connect () {
   fi
 
   (
+    postgres::export_pgsslmode
     export PGPASSWORD="${psql_password}"
     taito::executing_start
     ${command} -h "${database_host}" \

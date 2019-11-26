@@ -75,6 +75,15 @@ function generate-secrets::generate_by_type () {
   if [[ -z "${secret_value}" ]]; then
     case "${secret_method}" in
       manual)
+        if [[ ${taito_provider:-} == "azure" ]] && \
+           [[ ${secret_name} == *"storage"* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "You most likely can find the security credentials from the following webpage."
+          echo
+          echo "https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/${taito_resource_namespace_id}/providers/Microsoft.Storage/storageAccounts/${taito_project//-/}${taito_env//-/}/keys"
+          echo ------------------------------------------------------------------------------
+          echo
+        fi
         if [[ ${taito_provider:-} == "aws" ]] && \
            [[ ${secret_name} == *"storage"* ]]; then
           echo ------------------------------------------------------------------------------

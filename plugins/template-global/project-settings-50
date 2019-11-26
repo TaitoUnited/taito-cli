@@ -5,6 +5,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   postgres_host=${postgres_default_host:-}
   postgres_host_prod=${postgres_default_host_prod:-}
   postgres_admin=${postgres_default_admin:-}
+  postgres_username_suffix=$(echo "${postgres_username_suffixes:-}" | awk '{print $1;}')
   postgres_instance=$(echo "${postgres_instances:-}" | awk '{print $1;}')
   if [[ ! $postgres_host ]]; then
     postgres_host=$(echo "${postgres_hosts:-127.0.0.1}" | awk '{print $1;}')
@@ -20,6 +21,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   mysql_host=${mysql_default_host:-}
   mysql_host_prod=${mysql_default_host_prod:-}
   mysql_admin=${mysql_default_admin:-}
+  mysql_username_suffix=$(echo "${mysql_username_suffixes:-}" | awk '{print $1;}')
   mysql_instance=$(echo "${mysql_instances:-}" | awk '{print $1;}')
   if [[ ! $mysql_host ]]; then
     mysql_host=$(echo "${mysql_hosts:-127.0.0.1}" | awk '{print $1;}')
@@ -121,12 +123,16 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_postgres_host=\"${postgres_host}\""
   echo "template_default_postgres_master_username=${postgres_admin}"
   echo "template_default_postgres_master_password_hint=\"Hint where to get the password\""
+  echo "template_default_postgres_username_suffix=${postgres_username_suffix}"
+  echo "template_default_postgres_ssl_enabled=${postgres_ssl_enabled:-true}"
   echo
   echo "# Template: MySQL"
   echo "template_default_mysql=${mysql_instance}"
   echo "template_default_mysql_host=\"${mysql_host}\""
   echo "template_default_mysql_master_username=${mysql_admin}"
   echo "template_default_mysql_master_password_hint=\"Hint where to get the password\""
+  echo "template_default_mysql_username_suffix=${mysql_username_suffix}"
+  echo "template_default_mysql_ssl_enabled=${mysql_ssl_enabled:-true}"
   echo
   echo "# Template: Storage"
   echo "template_default_storage_class=REGIONAL"
@@ -170,7 +176,11 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_uptime_channels_prod=$taito_messaging_uptime_channels"
   echo "template_default_kubernetes_prod=${kubernetes_name:-}"
   echo "template_default_postgres_host_prod=\"${postgres_host_prod:-$postgres_host}\""
+  echo "template_default_postgres_username_suffix_prod=${postgres_username_suffix}"
+  echo "template_default_postgres_ssl_enabled_prod=${postgres_ssl_enabled:-true}"
   echo "template_default_mysql_host_prod=\"${mysql_host_prod:-$mysql_host}\""
+  echo "template_default_mysql_username_suffix_prod=${mysql_username_suffix}"
+  echo "template_default_mysql_ssl_enabled_prod=${mysql_ssl_enabled:-true}"
   echo "template_default_storage_class_prod=REGIONAL"
   echo "template_default_storage_location_prod=$taito_provider_region"
   echo "template_default_storage_days_prod=60"

@@ -2,6 +2,7 @@
 
 function postgres::create_database () {
   (
+    postgres::export_pgsslmode
     export PGPASSWORD
     PGPASSWORD="${PGPASSWORD}"
     (
@@ -47,6 +48,7 @@ function postgres::create_database () {
 }
 
 function postgres::drop_database () {
+  postgres::export_pgsslmode
   taito::executing_start
   psql -h "${database_host}" \
     -p "${database_port}" \
@@ -73,7 +75,7 @@ function postgres::create_users () {
   fi
 
   # Execute
-
+  postgres::export_pgsslmode
   taito::executing_start
   psql -h "${database_host}" -p "${database_port}" \
     -d postgres \
@@ -88,6 +90,7 @@ function postgres::create_users () {
 }
 
 function postgres::drop_users () {
+  postgres::export_pgsslmode
   taito::executing_start
   psql -h "${database_host}" \
     -p "${database_port}" \
