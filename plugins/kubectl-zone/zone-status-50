@@ -26,10 +26,8 @@ taito::print_title "Top pods"
 kubectl top pods --all-namespaces 2> /dev/null
 
 taito::print_title "Load Balancer IPs"
-kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.spec.loadBalancerIP,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
-  --no-headers --all-namespaces 2> /dev/null | \
-  grep -v "<none>.*<none>" | \
-  sed s/\\s*\<none\>\\s*//g
+kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.status.loadBalancer.ingress[0].ip,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
+  --no-headers --all-namespaces 2> /dev/null | grep -v "<none>.*<none>" | sed s/\\s*\<none\>\\s*//g
 echo
 echo "Your load balancer IP addresses are presented above. You should configure"
 echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"

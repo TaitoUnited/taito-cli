@@ -43,9 +43,9 @@ taito::confirm \
   fi
   echo TAITO_PROVIDER_REGION
   sed -i "s/TAITO_PROVIDER_REGION/$taito_provider_region/g" ./*.tf
-  if [[ ${taito_zone_state_bucket:-} ]]; then
-    echo TAITO_ZONE_STATE_BUCKET
-    sed -i "s/TAITO_ZONE_STATE_BUCKET/$taito_zone_state_bucket/g" ./*.tf
+  if [[ ${taito_state_bucket:-} ]]; then
+    echo TAITO_STATE_BUCKET
+    sed -i "s/TAITO_STATE_BUCKET/$taito_state_bucket/g" ./*.tf
   fi
   if [[ ${mysql_instances:-} ]]; then
     echo MYSQL_INSTANCES
@@ -63,10 +63,10 @@ taito::confirm \
 
   if grep TAITO_BASTION_PUBLIC_IP ../taito-config.sh; then
     echo "Determining bastion public IP"
-    taito_zone_bastion_public_ip=$(terraform output bastion_public_ip || :)
-    if [[ ${taito_zone_bastion_public_ip} ]]; then
-      echo TAITO_ZONE_BASTION_PUBLIC_IP
-      sed -i "s/TAITO_BASTION_PUBLIC_IP/$taito_zone_bastion_public_ip/g" ../taito-config.sh
+    taito_bastion_public_ip=$(terraform output bastion_public_ip || :)
+    if [[ ${taito_bastion_public_ip} ]]; then
+      echo TAITO_BASTION_PUBLIC_IP
+      sed -i "s/TAITO_BASTION_PUBLIC_IP/$taito_bastion_public_ip/g" ../taito-config.sh
     fi
   fi
 

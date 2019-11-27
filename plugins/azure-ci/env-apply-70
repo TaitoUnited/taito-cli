@@ -41,10 +41,10 @@ echo
 echo "c) Phases: Always build automatically, and deploy manually"
 echo
 echo "   Modify current pipeline on DevOps web console:"
-echo "   - Variables: _TAITO_CI_PHASES=build"
+echo "   - Variables: TAITO_CI_PHASES=build"
 echo
 echo "   Deploy manually with 'taito ci run:ENV' or create another pipeline with:"
-echo "   - Variables: _TAITO_CI_PHASES=deploy,test,release"
+echo "   - Variables: TAITO_CI_PHASES=deploy,test,release"
 echo "   - Override YAML triggers: -"
 echo
 echo "d) Execute CI/CD steps without Taito CLI"

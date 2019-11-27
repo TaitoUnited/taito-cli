@@ -6,8 +6,9 @@
     taito::confirm "Enable Azure monitoring and logs for ${kubernetes_name}"
 ) || taito::skip_to_next "${@}"
 
+echo
 echo "Note that enabling this feature will increase costs."
-echo "Select ${taito_zone} as log analytics workspace."
+echo "Select '${taito_zone}' as log analytics workspace."
 echo
 echo "Press enter to open Azure monitoring on your web browser."
 read -r

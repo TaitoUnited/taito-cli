@@ -37,6 +37,9 @@ taito::execute_on_host_fg "
   echo \"3) Run 'taito auth' and follow instructions\"
   echo \"4) Run 'taito zone apply' and follow instructions\"
   echo
+  echo \"TIP: If you encounter an error while running Terrafom, just try to run\"
+  echo \"'taito zone apply' again.\"
+  echo
 "
 
 taito::call_next "${@}"

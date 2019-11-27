@@ -22,20 +22,41 @@ taito::confirm "Apply changes by running terraform scripts" || \
 
   terraform::run_zone apply
 
+  # echo
+  # if [[ ${taito_provider:-} == "azure" ]] &&
+  #    taito::confirm "Configure database firewall for Kubernetes access"
+  # then
+  #   taito::print_title "CONFIGURE DATABASE FIREWALL"
+  #   echo
+  #   echo "Terraform azurerm_sql_firewall_rule resource is broken at the moment."
+  #   echo "You need to manually add the following IP addresses to the database firewall"
+  #   echo "rules on Azure web console: database -> connection security -> firewall rules."
+  #   echo
+  #   (
+  #     cd terraform &> /dev/null || :
+  #     terraform output kubernetes_lb_ip_address || :
+  #   )
+  #   dashboard_link="$(taito -q ${taito_options:-} link-dashboard | grep -v '^\s*$' || :)"
+  #   databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$' || :)"
+  #   if [[ ${databases_link} ]] || [[ ${dashboard_link} ]]; then
+  #     echo "Press enter to open the web console at:"
+  #     echo "${databases_link:-$dashboard_link}"
+  #     read -r
+  #     taito::open_browser "${databases_link:-$dashboard_link}"
+  #   fi
+  #   echo "Press enter once the database firewalls has been configured."
+  #   echo "TIP: Do not forget to press the 'save' button on web console!"
+  #   read -r
+  # fi
+
   echo
-  if [[ ${taito_zone_initial_database_password:-} ]] && \
-     taito::confirm "Change database master password"
-  then
+  if taito::confirm "Change database master password"; then
     taito::print_title "CHANGE DATABASE MASTER PASSWORD"
     echo
-    echo "Your database master password was initially set to the initial password"
-    echo "configured in taito-config.sh. The initial password is stored both in"
-    echo "taito-config.sh and in terraform state as plain text. Therefore"
-    echo "you should change the database administrator password for every"
-    echo "database instance that was created, if you have not done so already."
-    echo
-    echo "You most likely can change the password on cloud provider web console."
-    echo "Look for 'reset password', 'modify', or 'users' in the database section."
+    echo "Your database admin password was saved to Terraform state in plain text"
+    echo "and you may want to change it. You most likely can change the password"
+    echo "on cloud provider web console. Look for 'reset password', 'modify', or"
+    echo "'users' in the database section."
     echo
     dashboard_link="$(taito -q ${taito_options:-} link-dashboard | grep -v '^\s*$' || :)"
     databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$' || :)"
@@ -48,6 +69,7 @@ taito::confirm "Apply changes by running terraform scripts" || \
     echo "Press enter once the password has been changed"
     read -r
   fi
+
 )
 
 taito::call_next "${@}"

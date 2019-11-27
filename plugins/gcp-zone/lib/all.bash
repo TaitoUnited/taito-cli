@@ -23,7 +23,7 @@ function gcp-zone::setup_cloud_build_slack_notifications () {
     gcloud --project "${taito_zone}" \
       functions deploy cloudBuildSlackNotifications \
       --source "/tmp/gcp-zone-slack" \
-      --stage-bucket "${taito_zone_functions_bucket}" \
+      --stage-bucket "${taito_functions_bucket}" \
       --trigger-topic cloud-builds \
       --entry-point subscribe \
       --region "europe-west1"
