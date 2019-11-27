@@ -142,7 +142,7 @@ If you need to alter default behaviour of a plugin in some way, you can override
 
 All settings defined in `taito-config.sh` are visible for plugins. See [configuration](04-configuration.md) chapter for more info. Additionally the following environment variables are defined by Taito CLI:
 
-- **taito_env**: The selected environment (e.g. local, feat-NAME, dev, test, stag, canary, prod)
+- **taito_env**: The selected environment (e.g. local, feat-NAME, dev, test, uat, stag, canary, prod)
 - **taito_target_env**: TODO ....
 - **taito_target**: Command target (e.g. admin, client, server, worker, ...)
 - **taito_command**: The user given command without the target and environment suffix.

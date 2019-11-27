@@ -67,9 +67,9 @@ The aforementioned command should display the following version control conventi
 
 ```shell
 Environment branches:
-- Branch naming: dev, test, stag, canary, master.
+- Branch naming: dev, test, uat, stag, canary, master.
 - Environment branches should be merged to one another in the following
-  order: dev -> test -> stag -> canary -> master.
+  order: dev -> test -> uat -> stag -> canary -> master.
 - Environment branches should be merged using fast-forward only.
 - 'dev' is the only environment branch that you should commit changes to.
 

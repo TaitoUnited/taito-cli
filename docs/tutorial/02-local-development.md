@@ -104,7 +104,7 @@ If you modify the `deploy/articles.sql` after you have already deployed it, you 
 taito init --clean
 ```
 
-The _deploy.sql_ script creates a database table, the _verify.sql_ script verifies that the database table exists, and the _revert.sql_ script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production).
+The _deploy.sql_ script creates a database table, the _verify.sql_ script verifies that the database table exists, and the _revert.sql_ script reverts the changes by dropping the database table. You can find example deploy, revert and verify scripts in the `database/` directory. These migration scripts will be run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, user acceptance testing, staging, canary, production).
 
 Migrations are executed with Sqitch. See [Sqitch tutorial for PostgreSQL](https://metacpan.org/pod/sqitchtutorial) if you need further instructions on editing the migration scripts. See [appendix A](a-technology-tutorials#sql-and-relational-databases.md) for some SQL and relational database tutorials.
 
@@ -262,7 +262,7 @@ Try this yourself by modifying the implementation that you made in exercise 2.10
 
 ### 2.16. Automatic testing
 
-Test scripts are run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, staging, canary, production). You can also run these tests manually with the following commands:
+Test scripts are run automatically by [CI/CD pipeline](https://en.wikipedia.org/wiki/CI/CD) when the application is deployed to different environments (e.g. local, development, testing, user acceptance testing, staging, canary, production). You can also run these tests manually with the following commands:
 
 ```shell
 taito unit                  # Run all unit tests

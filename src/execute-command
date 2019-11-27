@@ -134,11 +134,11 @@ if [[ ${env_command} == *":"* ]]; then
     # TODO: Remove hardcoded envs. They are currently required because
     # taito-config.sh has not been read yet at this point of execution
     elif [[ -z "${env}" ]] && ( \
-         [[ " local dev test stag staging cana canary prod master " == *" ${sect} "* ]] || \
+         [[ " local dev test uat stag staging cana canary prod master " == *" ${sect} "* ]] || \
          [[ ${sect} == "feat-"* ]] ); then
       env="${sect}"
     elif [[ -z "${dest_env}" ]] && ( \
-         [[ " local dev test stag staging cana canary prod master " == *" ${sect} "* ]] || \
+         [[ " local dev test uat stag staging cana canary prod master " == *" ${sect} "* ]] || \
          [[ ${sect} == "feat-"* ]] ); then
       dest_env="${sect}"
     else

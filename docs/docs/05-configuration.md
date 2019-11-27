@@ -69,7 +69,7 @@ Assets:
 
 Environments:
 
-- **taito_environments:** Environments (e.g `dev`, `test`, `stag`, `canary`, `prod`). You can also define feature environments using `f-` as prefix (e.g. `f-create-user`).
+- **taito_environments:** Environments (e.g `dev`, `test`, `uat`, `stag`, `canary`, `prod`). You can also define feature environments using `f-` as prefix (e.g. `f-create-user`).
 
 URLs:
 
