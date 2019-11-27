@@ -18,12 +18,11 @@ if [[ ${fetch_secrets:?} == "true" ]]; then
     ${save_to_disk} \
     "${secret_filter}"
 
-  # TODO: Remove this? Not required?
-  # if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
-  #   # Save database proxy secret to disk for running tests
-  #   taito::save_proxy_secret_to_disk \
-  #     docker-compose::get_secret_value
-  # fi
+  if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
+    # Save database proxy secret to disk for running tests
+    taito::save_proxy_secret_to_disk \
+      docker-compose::get_secret_value
+  fi
 
   export taito_secrets_retrieved=true
 fi
