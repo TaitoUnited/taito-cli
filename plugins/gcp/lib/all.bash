@@ -90,7 +90,7 @@ function gcp::db_proxy_start () {
       (
         taito::executing_start
         cloud_sql_proxy \
-          "-instances=${database_id}=tcp:${bind_address}:${database_port}"
+          "-instances=${database_id}=tcp:${taito_db_proxy_bind_address}:${database_port}"
       )
     fi
 
