@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-taito::confirm "Configure Sentry project" || \
+taito::confirm "Configure Sentry project" no || \
   taito::skip_to_next "${@}"
 
 echo "Create a new Sentry project with these settings:"
