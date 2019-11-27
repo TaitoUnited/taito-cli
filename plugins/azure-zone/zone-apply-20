@@ -13,7 +13,7 @@ echo
 echo "Press enter to open Azure monitoring on your web browser."
 read -r
 
-taito::open_browser "https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/taito-azure-zone1/providers/Microsoft.ContainerService/managedClusters/${kubernetes_name}/logs"
+taito::open_browser "https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/${taito_zone}/providers/Microsoft.ContainerService/managedClusters/${kubernetes_name}/logs"
 
 echo "Press enter when you have enabled the service."
 read -r

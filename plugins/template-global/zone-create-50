@@ -38,7 +38,7 @@ taito::execute_on_host_fg "
   echo \"4) Run 'taito zone apply' and follow instructions\"
   echo
   echo \"TIP: If you encounter an error while running Terrafom, just try to run\"
-  echo \"'taito zone apply' again.\"
+  echo \"'taito zone apply' again, or try to reauthenticate with 'taito auth'.\"
   echo
 "
 
