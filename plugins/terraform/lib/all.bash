@@ -70,7 +70,11 @@ function terraform::run () {
 
   local options=""
   if [[ ${taito_mode:-} == "ci" ]] && [[ ${command} == "apply" ]]; then
-    options="-auto-approve"
+    options="${options} -auto-approve"
+  fi
+
+  if [[ ${terraform_target:-} ]]; then
+    options="${options} -target=${terraform_target}"
   fi
 
   if [[ -d "${scripts_path}" ]] && \
@@ -90,7 +94,8 @@ function terraform::run () {
       terraform::export_env "${scripts_path}"
       cd "${scripts_path}" || exit 1
       mkdir -p "./${env}"
-      terraform init -backend-config="../common/backend.tf"
+      taito::executing_start
+      terraform init ${options} -backend-config="../common/backend.tf"
       if [[ -f import_state ]]; then
         ./import_state
       fi
@@ -106,12 +111,18 @@ function terraform::run_zone () {
   local command=${1}
   local scripts_path=${2:-terraform}
 
+  local options=""
+  if [[ ${terraform_target:-} ]]; then
+    options="${options} -target=${terraform_target}"
+  fi
+
   export TF_LOG_PATH="./terraform.log"
   terraform::export_env "${scripts_path}"
   cd "${scripts_path}" || exit 1
-  terraform init
+  taito::executing_start
+  terraform init ${options}
   if [[ -f import_state ]]; then
     ./import_state
   fi
-  terraform "${command}"
+  terraform "${command}" ${options}
 }
