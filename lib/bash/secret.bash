@@ -302,12 +302,12 @@ function taito::export_secrets () {
         echo "Saving secret to ${file}" > "${taito_vout}"
         if [[ ${secret_value_format} == "file" ]]; then
           # Secret values of type 'file' are base64 encoded strings
-          echo "${secret_value}" | base64 --decode > "${file}"
+          echo -n "${secret_value}" | base64 --decode > "${file}"
           # Replace secret value with a file path
           # TODO: save file path to a separate env var (secret_value should always be value)
           secret_value="secret_file:${file}"
         else
-          echo "${secret_value}" > "${file}"
+          echo -n "${secret_value}" > "${file}"
         fi
       fi
 
