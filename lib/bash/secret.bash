@@ -379,7 +379,7 @@ function taito::save_proxy_secret_to_disk () {
 
   if [[ $taito_proxy_secret_name ]]; then
     echo "Reading proxy secret (${namespace}/${taito_proxy_secret_name}.${taito_proxy_secret_key})"
-    mkdir -p "/project/tmp/secrets"
+    mkdir -p "$taito_project_path/tmp/secrets"
 
     "${get_secret_func}" \
       "${taito_zone}" \
