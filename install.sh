@@ -67,7 +67,9 @@ link_global_urls="
 "
 
 # --- infrastructure template settings ---
-template_default_zone_source_git=git@github.com:TaitoUnited/taito-infrastructure//templates
+template_default_source_git=git@github.com:TaitoUnited
+template_default_dest_git=git@github.com:myorganization
+template_default_vc_url=github.com/myorganization
 
 # --- Project template settings ---
 # Define default settings for newly created projects here
