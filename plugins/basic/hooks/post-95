@@ -62,6 +62,10 @@ if [[ ${was_executed} == false ]]; then
     # None of the enabled plugins has implemented init
     taito::print_plugin_title
     echo "Nothing to initialize"
+  elif [[ ${taito_command} == "secrets" ]]; then
+    # None of the enabled plugins has implemented secrets
+    taito::print_plugin_title
+    echo "No secrets available"
   elif [[ ${taito_command} == "db-deploy" ]]; then
     # None of the enabled plugins has implemented db deploy
     taito::print_plugin_title
