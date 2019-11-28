@@ -6,19 +6,42 @@
     taito::confirm "Configure Azure credentials for CI/CD pipeline"
 ) || taito::skip_to_next "${@}"
 
+echo
 echo "Your CI/CD requires Azure service principal access keys."
 echo
-echo "If you have already configured service principal access keys for your CI/CD,"
-echo "you can ignore this step."
-
-taito::confirm "Generate Azure credentials for CI/CD pipeline" || taito::skip_to_next "${@}"
-
-echo "Make sure to take note of the app id and password. They can't be retrieved again."
+echo "NOTE: If you have already configured service principal access keys for your"
+echo "CI/CD, you can ignore this step. You should use the same CI/CD access key"
+echo "for all of your projects on this ${taito_zone} zone."
+echo
+echo "Make sure to take note of the app id and password."
 echo "Press enter when ready."
 read -r
 
-az ad sp create-for-rbac --name "${taito_zone}-ci"
+scope="/subscriptions/${taito_provider_billing_account_id:?}/resourceGroups/${taito_zone:?}"
 
+az ad sp create-for-rbac \
+  --name "${taito_zone}-ci" \
+  --role "Azure Kubernetes Service Cluster User Role" \
+  --scopes "${scope}"
+
+echo "Assigning more roles. Please wait..."
+
+az role assignment create \
+  --assignee "http://${taito_zone}-ci" \
+  --role "AcrPush" \
+  --scope "${scope}" \
+  --subscription "${taito_provider_billing_account_id}" > /dev/null
+
+az role assignment create \
+  --assignee "http://${taito_zone}-ci" \
+  --role "AcrPull" \
+  --scope "${scope}" \
+  --subscription "${taito_provider_billing_account_id}" > /dev/null
+
+echo
+echo "Assigned the following roles for the ${taito_zone}-ci service principal:"
+echo "- Kubernetes: Azure Kubernetes Service Cluster User Role"
+echo "- Container Registry: AcrPush, AcrPull"
 echo
 echo "Now add the app ID (AZURE_CLIENT_ID) and password (AZURE_CLIENT_SECRET) to your"
 echo "CI/CD pipeline according to your CI/CD provider instructions. If you"
