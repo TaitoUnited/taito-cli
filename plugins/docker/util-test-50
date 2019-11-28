@@ -72,6 +72,11 @@ export_env_vars="\
 # Determine pod
 docker-compose::expose_pod_and_container
 
+docker_compose_test_file=docker-compose-test.yaml
+if [[ -f "./docker-compose-test-${taito_ci_provider:-}.yaml" ]]; then
+  docker_compose_test_file="docker-compose-test-${taito_ci_provider}.yaml"
+fi
+
 # Determine command to be run on test phase
 docker_compose="false"
 compose_pre_cmd=""
@@ -89,15 +94,15 @@ if [[ ${taito_env} != "local" ]]; then
   fi
   compose_pre_cmd="(docker image tag ${image_src} ${image_test} || \
     (echo ERROR: Container ${image_src} must be built before tests can be run. HINT: taito start && (exit 1))) && "
-  if [[ -f ./docker-compose-test.yaml ]] && \
-     [[ $(grep "${container_test}" "./docker-compose-test.yaml") ]]; then
+  if [[ -f "./${docker_compose_test_file}" ]] && \
+     [[ $(grep "${container_test}" "./${docker_compose_test_file}") ]]; then
     docker_compose="true"
-    compose_cmd="COMPOSE_HTTP_TIMEOUT=90 docker-compose -f ./docker-compose-test.yaml run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ${test_executable} SUITE ${test_filter}'"
+    compose_cmd="COMPOSE_HTTP_TIMEOUT=90 docker-compose -f ./${docker_compose_test_file} run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ${test_executable} SUITE ${test_filter}'"
 
     # On CI mode we use root user
     # TODO: add taito user to image -> local install should replace uid/gid only
     if [[ ${taito_mode:-} == "ci" ]]; then
-      sed -i '/^    user: taito/d' docker-compose-test.yaml
+      sed -i '/^    user: taito/d' "${docker_compose_test_file}"
     fi
   else
     compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ${test_executable} SUITE ${test_filter}"
@@ -138,7 +143,7 @@ fi
 # Stop all test containers started by docker-compose
 if [[ ${docker_compose} == "true" ]]; then
   taito::execute_on_host_fg \
-    "docker-compose -f ./docker-compose-test.yaml down || echo OK"
+    "docker-compose -f ./${docker_compose_test_file} down || echo OK"
 fi
 
 taito::call_next "${@}"
