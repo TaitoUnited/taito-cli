@@ -9,14 +9,6 @@ if [[ ${taito_host_os:-} == "windows" ]]; then
   export taito_enabled_extensions="${taito_enabled_extensions//\/\//\/}"
 fi
 
-if [[ ${taito_mode} == "ci" ]]; then
-  echo
-  echo "--------------------------------------------------------------"
-  echo taito "$@"
-  echo "--------------------------------------------------------------"
-  echo
-fi
-
 # Resolve paths
 # NOTE: duplicate with ./taito (taito_cli_path must be resolved before
 # other scripts can be called)
@@ -48,6 +40,17 @@ taito_project_path=$(taito::core::print_project_path)
 
 # Set working directory
 cd "${taito_project_path}"
+
+if [[ ${taito_mode} == "ci" ]]; then
+  echo
+  echo "--------------------------------------------------------------"
+  echo taito "$@"
+  echo "--------------------------------------------------------------"
+  echo
+  echo "current directory: ${PWD}"
+  echo "taito_project_path: ${taito_project_path}"
+  echo
+fi
 
 # Parse options
 verbose=false # "${taito_verbose:-false}"

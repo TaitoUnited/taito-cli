@@ -299,7 +299,11 @@ function taito::export_secrets () {
         mkdir -p "${taito_tmp_secrets_dir}"
         file="${taito_tmp_secrets_dir}/${secret_name}"
 
-        echo "Saving secret to ${file}" > "${taito_vout}"
+        if [[ ${taito_mode:-} == "ci" ]]; then
+          echo "Saving secret to ${file}"
+        else
+          echo "Saving secret to ${file}" > "${taito_vout}"
+        fi
         if [[ ${secret_value_format} == "file" ]]; then
           # Secret values of type 'file' are base64 encoded strings
           echo -n "${secret_value}" | base64 --decode > "${file}"
