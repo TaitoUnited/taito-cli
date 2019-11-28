@@ -273,6 +273,10 @@ function taito::export_secrets () {
   local save_to_disk=$2
   local filter=$3
 
+  if [[ ${save_to_disk} == "true" ]]; then
+    mkdir -p "${taito_tmp_secrets_dir}"
+  fi
+
   # Get secret values
   local secret_index=0
   local secret_names=(${taito_secret_names})
@@ -296,7 +300,6 @@ function taito::export_secrets () {
 
     if [[ ${secret_value} ]]; then
       if [[ ${save_to_disk} == "true" ]]; then
-        mkdir -p "${taito_tmp_secrets_dir}"
         file="${taito_tmp_secrets_dir}/${secret_name}"
 
         if [[ ${taito_mode:-} == "ci" ]]; then
@@ -326,6 +329,14 @@ function taito::export_secrets () {
 
     secret_index=$((${secret_index}+1))
   done
+
+  if [[ ${taito_command} == "test" ]] &&
+     [[ ${taito_mode:-} == "ci" ]] &&
+     [[ ${save_to_disk} == "true" ]]
+  then
+    echo "Secrets in ${taito_tmp_secrets_dir} (for tests):"
+    ls "${taito_tmp_secrets_dir}"
+  fi
 
   eval "$exports"
 }

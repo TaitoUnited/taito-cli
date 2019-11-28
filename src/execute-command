@@ -47,7 +47,9 @@ if [[ ${taito_mode} == "ci" ]]; then
   echo taito "$@"
   echo "--------------------------------------------------------------"
   echo
-  echo "current directory: ${PWD}"
+  echo "USER: $(whoami)"
+  echo "HOME: ${HOME}"
+  echo "PWD: ${PWD}"
   echo "taito_project_path: ${taito_project_path}"
   echo
 fi
