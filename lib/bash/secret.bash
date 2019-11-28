@@ -330,14 +330,6 @@ function taito::export_secrets () {
     secret_index=$((${secret_index}+1))
   done
 
-  if [[ ${taito_command} == "test" ]] &&
-     [[ ${taito_mode:-} == "ci" ]] &&
-     [[ ${save_to_disk} == "true" ]]
-  then
-    echo "Secrets in ${taito_tmp_secrets_dir} (for tests):"
-    ls "${taito_tmp_secrets_dir}"
-  fi
-
   eval "$exports"
 }
 export -f taito::export_secrets
@@ -408,22 +400,31 @@ export -f taito::save_proxy_secret_to_disk
 
 function taito::expose_required_secrets_filter () {
   # Determine which secrets should be fetched from AWS
-  # TODO: tighter filter
+  # TODO: tighter secret filter for running tests
+  # TODO: not always necessary to save to disk?
   fetch_secrets=false
+  save_secrets_to_disk=false
+  secret_purpose=
   secret_filter=
   if [[ ${taito_command_requires_secrets:-} == true ]] && \
      [[ $taito_secrets_retrieved != true ]]; then
     if [[ ${taito_command} == "build-prepare" ]] || \
        [[ ${taito_command} == "build-release" ]]; then
       fetch_secrets="true"
+      save_secrets_to_disk="true"
+      secret_purpose="git release"
       secret_filter="git"
     elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
          [[ ${taito_command} == "db-proxy" ]]; then
       fetch_secrets="true"
+      save_secrets_to_disk="true"
+      secret_purpose="database proxy"
       secret_filter="db"
     elif [[ ${taito_command} == "test" ]] &&
          [[ "stag canary prod" != *"${taito_env}"* ]]; then
       fetch_secrets="true"
+      save_secrets_to_disk="true"
+      secret_purpose="test suites"
       secret_filter=
     fi
   fi

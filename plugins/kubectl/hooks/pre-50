@@ -32,16 +32,12 @@ fi
 taito::expose_required_secrets_filter
 if [[ ${fetch_secrets:?} == "true" ]]; then
   taito::print_plugin_title
-  if [[ ${secret_filter} ]]; then
-    echo "Getting secrets from Kubernetes (${taito_env}) for ${secret_filter}"
-  else
-    echo "Getting secrets from Kubernetes (${taito_env})"
-  fi
+  echo "Getting secrets from Kubernetes (${taito_env}) for ${secret_purpose:?}"
+
   kubectl::use_context
-  save_to_disk=true
   taito::export_secrets \
     kubectl::get_secret_value \
-    ${save_to_disk} \
+    "${save_secrets_to_disk:-}" \
     "${secret_filter}"
 
   if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
