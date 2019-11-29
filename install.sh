@@ -12,9 +12,11 @@ echo
 echo "[1. Download Taito CLI from https://github.com/TaitoUnited/taito-cli.git]"
 rm -rf "$TAITO_INSTALL_DIR" &> /dev/null || :
 if [[ $TAITO_GIT_CLONE_METHOD == "ssh" ]]; then
-  git clone git@github.com:TaitoUnited/taito-cli.git "$TAITO_INSTALL_DIR"
+  git_url_prefix="git@github.com:"
+  git clone "${git_url_prefix}TaitoUnited/taito-cli.git" "$TAITO_INSTALL_DIR"
 else
-  git clone https://github.com/TaitoUnited/taito-cli.git "$TAITO_INSTALL_DIR"
+  git_url_prefix="https://github.com/"
+  git clone ${git_url_prefix}TaitoUnited/taito-cli.git "$TAITO_INSTALL_DIR"
 fi
 
 echo
@@ -67,8 +69,8 @@ link_global_urls="
 "
 
 # --- infrastructure template settings ---
-template_default_source_git=https://github.com/TaitoUnited
-template_default_dest_git=https://github.com/myorganization
+template_default_source_git=${git_url_prefix}TaitoUnited
+template_default_dest_git=${git_url_prefix}myorganization
 template_default_vc_url=github.com/myorganization
 
 # --- Project template settings ---
