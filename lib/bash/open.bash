@@ -3,6 +3,7 @@
 function taito::convert_link () {
   url=$1
   if [[ ${taito_host_os:-} == "windows" ]] && [[ ${DOCKER_HOST} ]]; then
+    # TODO: DOCKER_HOST contains the host ip? Use it instead of the hard coded
     url="${url/:\/\/localhost/://192.168.99.100}"
   fi
   echo "${url}"
