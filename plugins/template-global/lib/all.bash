@@ -86,3 +86,16 @@ function template-global::init () {
     rm -rf "${template_project_path:-.}/scripts/taito-template"
   fi
 }
+
+function template-global::hack_windows_symlinks () {
+  if [[ ${taito_host_os:-} == "windows" ]] && [[ -d ./shared ]]; then
+    for target in ${taito_targets:-}
+    do
+      if [[ -d "./${target}" ]] && [[ ! -L "./${target}/shared" ]]; then
+        echo "echo ./${target}/shared"
+        echo "rm -rf ./${target}/shared &> /dev/null || :"
+        echo "ln -s ../shared ./${target}/shared"
+      fi
+    done
+  fi
+}
