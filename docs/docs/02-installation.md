@@ -8,9 +8,13 @@ The following software needs to be installed on your computer before you can ins
 - [Git](https://git-scm.com/)
 - [Docker](https://docs.docker.com/install/)
 
-**Note for Windows:** [Git for Windows](https://gitforwindows.org/) includes both git and bash. [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/) is recommended, but you can also use the legacy [Docker Toolbox](https://docs.docker.com/toolbox/overview/) instead. If you are using Docker Toolbox, it is recommended to use the Docker Toolbox as your unix-like shell instead of Git Bash. **UPDATE:** Taito CLI does not fully work on Windows yet because of [docker-compose#6585](https://github.com/docker/compose/issues/6585) and [docker-for-win#1588](https://github.com/docker/for-win/issues/1588).
+#### Additional details
 
-**Note for Linux:** See [Docker Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/).
+**Linux:** See [Docker Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/).
+
+**Docker Desktop for Windows:** Install [Git for Windows](https://gitforwindows.org/). It provides both Git and Bash. Use Git Bash as your shell. However, issue [docker-for-win#1588](https://github.com/docker/for-win/issues/1588) may cause you some trouble with MinTTY terminal emulation. Select *Windows default console window* as your Git Bash terminal emulation to see if it works (not tested yet). Or just use Docker Toolbox instead (see below).
+
+**Docker Toolbox for Windows:** Install [Git for Windows](https://gitforwindows.org/). Use Docker Toolbox as your shell instead of Git Bash. Note that Docker Compose secret mounts do not currently work on Docker Toolbox (issue [docker-compose#6585](https://github.com/docker/compose/issues/6585)).
 
 ### Automatic installation
 

@@ -18,10 +18,10 @@ winptyprefix=
 if [[ $taito_host_uname == *"_NT"* ]]; then
   taito_host_os=windows
   # add extra / to paths (see https://github.com/docker/for-win/issues/1588)
-  if [[ ! $DOCKER_HOST ]]; then
-    winpty="winpty"
-    winptyprefix="/"
-  fi
+  # if [[ ! $DOCKER_HOST ]]; then
+  #   winpty="winpty"
+  #   winptyprefix="/"
+  # fi
 elif [[ $taito_host_uname == "Darwin" ]]; then
   taito_host_os=macos
 else
