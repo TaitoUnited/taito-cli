@@ -3,7 +3,8 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 # Cloud provider
-terraform::run apply "${taito_provider:-}" "${taito_env:?}"
+[[ ${taito_provider:-} ]] && \
+  terraform::run apply "${taito_provider:-}" "${taito_env:?}"
 
 # Uptime provider
 [[ ${taito_uptime_provider:-} ]] && \
