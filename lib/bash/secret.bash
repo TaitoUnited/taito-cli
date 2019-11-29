@@ -418,7 +418,7 @@ function taito::expose_required_secrets_filter () {
          [[ ${taito_command} == "db-proxy" ]]; then
       fetch_secrets="true"
       save_secrets_to_disk="true"
-      secret_purpose="database proxy"
+      secret_purpose="database access"
       secret_filter="db"
     elif [[ ${taito_command} == "test" ]] &&
          [[ "stag canary prod" != *"${taito_env}"* ]]; then
