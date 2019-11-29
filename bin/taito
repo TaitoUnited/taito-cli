@@ -407,8 +407,7 @@ if [[ ${taito_target_env} == "local" ]] && \
      [[ ${command} == "init"* ]]
    ); then
   docker_project=$(echo "${PWD##*/}" | tr '[:upper:]' '[:lower:]')
-  if [[ ${docker_legacy_networking} == "true" ]] || \
-     [[ ${taito_host_os} == "windows" ]]; then
+  if [[ ${docker_legacy_networking} == "true" ]]; then
     docker_project="${docker_project//-/}"
     docker_project="${docker_project//_/}"
   fi
