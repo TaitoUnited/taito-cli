@@ -127,7 +127,7 @@ function docker-compose::prepare_docker_compose_yaml () {
       for service in $docker_compose_local_services; do
         name="${service%:*}"
         port="${service##*:}"
-        sed -i "/^  $name:\$/,/^$/d" docker-compose.yaml.tmp > /dev/null
+        sed -i "/^  $name:\r*\$/,/^\r*$/d" docker-compose.yaml.tmp > /dev/null
         sed -i "s/$name:.*;/host.docker.internal:$port;/" docker-nginx.conf.tmp \
           > /dev/null
       done
