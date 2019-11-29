@@ -109,22 +109,15 @@ if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
 fi
 
 echo
-echo "[8. Pull Taito CLI container image and check version]"
-taito version
-
-# NOTE: Upgrade just in case. Sometimes resolves some user uid/gid issues.
-echo
-echo "[9. Taito CLI upgrade]"
-taito upgrade
-
-echo
-echo "[10. Taito CLI installation check]"
-taito check
-
-echo
-echo "[11. Success]"
+echo "[8. Success]"
 echo
 echo "Taito CLI was installed successfully! Start a new shell by opening a new"
 echo "terminal window or by running 'bash' in the current terminal. Then try taito"
-echo "by running 'taito -h'. If you have problems, try to run 'taito upgrade'."
+echo "by running the following commands:"
+echo
+echo "taito upgrade   # Upgrade"
+echo "taito check     # Check installation"
+echo "taito -h        # Show help"
+echo
+echo "TIP: If you have problems, try to run 'taito upgrade' or 'taito trouble'."
 echo
