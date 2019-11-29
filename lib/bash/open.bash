@@ -1,7 +1,16 @@
 #!/bin/bash
 
+function taito::convert_link () {
+  url=$1
+  if [[ ${taito_host_os:-} == "windows" ]] && [[ ${DOCKER_HOST} ]]; then
+    url="${url/:\/\/localhost/://192.168.99.100}"
+  fi
+  echo "${url}"
+}
+export -f taito::convert_link
+
 function taito::open_browser () {
-  local url="${1:?}"
+  local url=$(taito::convert_link "${1:?}")
 
   if [[ ${taito_host_os:-} == "windows" ]]; then
     taito::execute_on_host "start chrome '${url}'"
@@ -14,7 +23,7 @@ function taito::open_browser () {
 export -f taito::open_browser
 
 function taito::open_browser_fg () {
-  local url="${1:?}"
+  local url=$(taito::convert_link "${1:?}")
 
   if [[ ${taito_host_os:-} == "windows" ]]; then
     taito::execute_on_host_fg \

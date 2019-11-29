@@ -122,11 +122,7 @@ function links-global::open_link () {
             name=${prefix##*#}
             url="$( cut -d '=' -f 2- <<< "$link" )"
             ${echo_command}
-            if [[ $DOCKER_HOST ]] && [[ $url == "://localhost" ]]; then
-              # Replace localhost with docker host ip address
-              host_ip=$(echo "$DOCKER_HOST" | sed "s/.*:\\(.*\\):.*/\\1/")
-              url=${url//:\/\/localhost/://$host_ip}
-            fi
+            url=$(taito::convert_link "${url}")
             if [[ ${mode} == "open" ]]; then
               if [[ ${taito_quiet:-} != "true" ]]; then
                 ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
