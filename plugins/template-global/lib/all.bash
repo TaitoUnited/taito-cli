@@ -88,13 +88,11 @@ function template-global::init () {
 }
 
 function template-global::hack_windows_symlinks () {
+  # Docker Compose cannot mount directory over an existing symlink on Windows
   if [[ ${taito_host_os:-} == "windows" ]] && [[ -d ./shared ]]; then
-    for target in ${taito_targets:-}
-    do
-      if [[ -d "./${target}" ]] && [[ ! -L "./${target}/shared" ]]; then
-        echo "echo ./${target}/shared"
-        echo "rm -rf ./${target}/shared &> /dev/null || :"
-        echo "ln -s ../shared ./${target}/shared"
+    for target in ${taito_targets:-}; do
+      if [[ -f "./${target}/shared" ]]; then
+        rm -rf "./${target}/shared"
       fi
     done
   fi

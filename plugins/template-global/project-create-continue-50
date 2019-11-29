@@ -3,6 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 . _template-config.sh
+template-global::hack_windows_symlinks
 
 : "${taito_vc_repository:?}"
 : "${template_dest_git:?}"
@@ -65,7 +66,6 @@ fi
 read -t 1 -n 10000 || :
 taito::execute_on_host_fg "
   set -e
-  $(template-global::hack_windows_symlinks)
   echo
   echo Create a new repository: ${template_default_vc_url}/${taito_vc_repository}
   echo The new repository must be completely empty \\(no README.md, LICENSE,
