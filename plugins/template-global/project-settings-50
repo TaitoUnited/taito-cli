@@ -33,16 +33,18 @@ if [[ ${taito_type:-} == "zone" ]]; then
     mysql_admin=$(echo "${mysql_admins:-}" | awk '{print $1;}')
   fi
 
-  echo
-  echo "Once you have configured the zone, you can create a new project on"
-  echo "this zone like this:"
-  echo
-  echo "1) Configure your personal config file (~/.taito/taito-config.sh) or"
-  echo "   organizational config file (~/.taito/taito-config-${taito_organization_abbr:-myorg}.sh)"
-  echo "   according to the example settings displayed below."
-  echo
-  echo "Press enter to display the example settings"
-  read -r
+  if [[ ${taito_quiet:-} != "true" ]]; then
+    echo
+    echo "Once you have configured the zone, you can create a new project on"
+    echo "this zone like this:"
+    echo
+    echo "1) Configure your personal config file (~/.taito/taito-config.sh) or"
+    echo "   organizational config file (~/.taito/taito-config-${taito_organization_abbr:-myorg}.sh)"
+    echo "   according to the example settings displayed below."
+    echo
+    echo "Press enter to display the example settings"
+    read -r
+  fi
   echo
   echo "# --- Project template settings ---"
   echo "# (default settings for newly created projects)"
@@ -116,7 +118,6 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Kubernetes"
   echo "template_default_kubernetes=${kubernetes_name:-}"
-
   echo
   echo "# Template: Postgres"
   echo "template_default_postgres=${postgres_instance}"
@@ -194,9 +195,11 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# ------------------------------------------------------------------"
   echo
-  echo "2) Create a new project based on full-stack-template by running"
-  echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: full-stack-template'"
-  echo
+  if [[ ${taito_quiet:-} != "true" ]]; then
+    echo "2) Create a new project based on full-stack-template by running"
+    echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: full-stack-template'"
+    echo
+  fi
 fi
 
 taito::call_next "${@}"
