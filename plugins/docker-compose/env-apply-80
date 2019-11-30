@@ -4,6 +4,8 @@
 
 if [[ ${taito_env:-} != "local" ]]; then
   docker-compose::restart_all
+else
+  echo "Restart not required for local environment"
 fi
 
 taito::call_next "${@}"

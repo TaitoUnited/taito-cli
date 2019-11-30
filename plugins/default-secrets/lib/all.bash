@@ -24,7 +24,6 @@ function default-secrets::fetch_default_secrets () {
     if [[ ${source_env} ]] && \
        [[ " ${taito_environments:-} "  == *" ${source_env} "* ]]
     then
-      taito::print_plugin_title
       echo "Getting default secret values from ${source_env} environment"
       rm -f "${taito_secrets_path}" &> /dev/null || :
       yes | taito_command_context="default-secrets" \

@@ -2,7 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-echo "Generating links to README.md"
+echo "Updating links of README.md"
 links-global::generate_docs
 
 taito::call_next "${@}"
