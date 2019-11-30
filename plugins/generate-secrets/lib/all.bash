@@ -2,25 +2,28 @@
 
 function generate-secrets::create_and_export () {
   local skip_confirm=${1}
-
   local secret_name
-
   local exports=""
   local secret_index=0
   local secret_names=(${taito_secret_names})
+
+  local prefix="${taito_project:-}-${taito_env:-}-"
+
   for secret_name in ${secret_names[@]}; do
     taito::expose_secret_by_index ${secret_index}
-    if [[ ${secret_method} != "read/"* ]] && ( \
-         [[ -z "${name_filter}" ]] || \
-         [[ ${secret_name} == *"${name_filter}"* ]] \
-       ) && ( \
-         [[ ${skip_confirm} == "true" ]] || \
-         taito::confirm \
-           "Create new value for '${secret_name}' with method ${secret_method:-}"
+    if [[ ${secret_method} != "read/"* ]] && (
+         [[ -z "${name_filter}" ]] ||
+         [[ ${secret_name} == *"${name_filter}"* ]]
+       ) && (
+         [[ ${skip_confirm} == "true" ]] || (
+           taito::print_title "${secret_name/$prefix/}"
+           taito::confirm \
+             "Create new value for '${secret_name/$prefix/}' with method ${secret_method:-}"
+         )
        )
     then
       if [[ ${skip_confirm} == "true" ]]; then
-        taito::print_title "${secret_name} (${secret_method:-})"
+        taito::print_title "${secret_name/$prefix/}"
       fi
       generate-secrets::generate_by_type ${secret_index}
     fi
@@ -163,7 +166,6 @@ function generate-secrets::generate_by_type () {
         file="./tmp/${secret_name}"
         rm -f "${file}"
         touch "${file}"
-        echo
         echo "BASIC AUTH CREDENTIALS"
         echo
         echo "Basic autentication is typically used for hiding non-production"
@@ -206,7 +208,6 @@ function generate-secrets::generate_by_type () {
         fi
         ;;
     esac
-    echo
   fi
 
   exports="${exports}export ${secret_value_var}=\"${secret_value}\"; export ${secret_changed_var}=\"true\"; "
