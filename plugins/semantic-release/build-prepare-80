@@ -20,7 +20,12 @@ if [[ $secret_value_github_buildbot_token == "secret_file:"* ]]; then
 fi
 
 if [[ ! ${secret_value_github_buildbot_token} ]]; then
-  echo "WARN: GitHub token has not been set. Skipping semantic release."
+  secret_value_github_buildbot_token="${GH_TOKEN}"
+fi
+
+if [[ ! ${secret_value_github_buildbot_token} ]]; then
+  echo "WARN: Skipping semantic release. Neither 'github-buildbot.token:read/devops'"
+  echo "secret nor GH_TOKEN environment variable has been set."
   taito::skip_to_next "${@}"
 fi
 
