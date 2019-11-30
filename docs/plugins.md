@@ -20,11 +20,11 @@ Application control plugins typically implement the following commands:
 
 Plugins:
 
-- [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README): Manage containers running on docker-compose using Taito CLI commands.
-- [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl/README): Manage containers running on Kubernetes using Taito CLI commands.
-- [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README): Manage serverless workloads (containers/functions) running on Knative using Taito CLI commands.
-- [telepresence](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/telepresence/README): Manage microservices running locally and connected to a remote Kubernetes cluster.
-- [serverless-platform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless-platform/README): Manage serverless workloads (containers/functions) running on Serverless Platform using Taito CLI commands.
+- [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README.md): Manage containers running on docker-compose using Taito CLI commands.
+- [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl/README.md): Manage containers running on Kubernetes using Taito CLI commands.
+- [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README.md): Manage serverless workloads (containers/functions) running on Knative using Taito CLI commands.
+- [telepresence](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/telepresence/README.md): Manage microservices running locally and connected to a remote Kubernetes cluster.
+- [serverless-platform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/serverless-platform/README.md): Manage serverless workloads (containers/functions) running on Serverless Platform using Taito CLI commands.
 
 > TIP: It is quite common to run docker-compose in local development and Kubernetes on server environments. You can do this by enabling the docker-compose plugin for local environment and the kubectl plugin for all other environments.
 
@@ -40,12 +40,12 @@ Build tool plugins typically implement the following:
 
 Plugins:
 
-- [docker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker/README): Build and push Docker container images using the `taito artifact prepare` and `taito artifact release` commands.
-- [helm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm/README): Manage Helm deployments on Kubernetes using the `taito deployment *` commands.
-- [make](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/make/README): Execute make scripts with Taito CLI.
-- [npm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/npm/README): Execute npm scripts with Taito CLI.
-- [pipenv](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/pipenv/README): Execute pipenv scripts with Taito CLI.
-- [semantic-release](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/semantic-release/README): Make a new release using the `taito build release` command. The [semantic-release](https://github.com/semantic-release/semantic-release) library will handle semantic versioning and release notes automatically based on your git commit messages.
+- [docker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker/README.md): Build and push Docker container images using the `taito artifact prepare` and `taito artifact release` commands.
+- [helm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm/README.md): Manage Helm deployments on Kubernetes using the `taito deployment *` commands.
+- [make](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/make/README.md): Execute make scripts with Taito CLI.
+- [npm](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/npm/README.md): Execute npm scripts with Taito CLI.
+- [pipenv](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/pipenv/README.md): Execute pipenv scripts with Taito CLI.
+- [semantic-release](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/semantic-release/README.md): Make a new release using the `taito build release` command. The [semantic-release](https://github.com/semantic-release/semantic-release) library will handle semantic versioning and release notes automatically based on your git commit messages.
 
 You typically need to implement the following Taito CLI commands in _package.json_, _Makefile_ or _Pipfile_ of your project. Note that the commands should support also server environments in addition to the local development environment (expect for `unit` and `check` commands, that are run only locally). See [package.json](https://github.com/TaitoUnited/full-stack-template/blob/master/package.json) of the full-stack-template as an example.
 
@@ -67,11 +67,11 @@ Cloud provider plugins typically implement the following commands:
 
 Plugins:
 
-- [aws](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws/README): AWS cloud environment.
-- [azure](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure/README): Azure cloud environment.
-- [gcp](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp/README): Google Cloud environment.
-- [gcp-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-global/README): Google Cloud environment.
-- [ssh](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ssh/README): For accessing virtual machines or dedicated servers with plain ssh.
+- [aws](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws/README.md): AWS cloud environment.
+- [azure](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure/README.md): Azure cloud environment.
+- [gcp](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp/README.md): Google Cloud environment.
+- [gcp-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-global/README.md): Google Cloud environment.
+- [ssh](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ssh/README.md): For accessing virtual machines or dedicated servers with plain ssh.
 
 ## CI/CD
 
@@ -85,11 +85,11 @@ CI/CD plugins typically implement the following commands:
 
 Plugins:
 
-- [gcp-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-ci/README): Use Google Cloud Build as your CI/CD pipeline.
-- [github-actions](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-actions/README): Use GitHub actions as your CI/CD pipeline.
-- [gitlab-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-ci/README): Use GitLab CI/CD as your CI/CD pipeline.
-- [jenkins](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jenkins/README): Use Jenkins as your CI/CD pipeline.
-- [spinnaker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/travis/README): Use Spinnaker as your CI/CD pipeline.
+- [gcp-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-ci/README.md): Use Google Cloud Build as your CI/CD pipeline.
+- [github-actions](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-actions/README.md): Use GitHub actions as your CI/CD pipeline.
+- [gitlab-ci](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-ci/README.md): Use GitLab CI/CD as your CI/CD pipeline.
+- [jenkins](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jenkins/README.md): Use Jenkins as your CI/CD pipeline.
+- [spinnaker](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/travis/README.md): Use Spinnaker as your CI/CD pipeline.
 
 ## Databases
 
@@ -102,9 +102,9 @@ Database plugins typically implement the following commands:
 
 Plugins:
 
-- [mysql-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/mysql-db/README): Taito CLI support for MySQL.
-- [postgres-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/postgres-db/README): Taito CLI support for PostgreSQL.
-- [sqitch-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sqitch-db/README): Taito CLI support for Sqitch.
+- [mysql-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/mysql-db/README.md): Taito CLI support for MySQL.
+- [postgres-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/postgres-db/README.md): Taito CLI support for PostgreSQL.
+- [sqitch-db](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sqitch-db/README.md): Taito CLI support for Sqitch.
 
 ## Hour reporting
 
@@ -114,8 +114,8 @@ Hour reporting plugins typically implement the following commands:
 
 Plugins:
 
-- [jira-tempo](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jira-tempo/README): Taito CLI support for JIRA Tempo.
-- [toggl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/toggl/README): Taito CLI support for Toggl.
+- [jira-tempo](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jira-tempo/README.md): Taito CLI support for JIRA Tempo.
+- [toggl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/toggl/README.md): Taito CLI support for Toggl.
 
 TIP: You can report your work hours to multiple hour reporting systems at once with a single Taito CLI command. You just need to enable multiple hour reporting plugins. For example, if one of the plugins should always be enabled and the other one only when you are working with a certain project, you can enable one plugin globally in you personal `taito-config.sh` file, and the other one in the `taito-config.sh` file of the project. On the other hand, if both plugins should be enabled when you are working for a certain organization, you can enable both plugins in the `taito-config.sh` file of the organization.
 
@@ -128,8 +128,8 @@ Project infrastructure management plugins typically implement the following comm
 
 Plugins:
 
-- [ansible](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ansible/README)
-- [terraform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/terraform/README)
+- [ansible](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ansible/README.md)
+- [terraform](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/terraform/README.md)
 
 ## Infrastructure management for zones
 
@@ -139,16 +139,16 @@ Zone infrastructure management plugins typically implement the following command
 
 Tool plugins:
 
-- [ansible-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ansible-zone/README)
-- [helm-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm-zone/README)
-- [kubectl-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl-zone/README)
-- [terraform-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/terraform-zone/README)
+- [ansible-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ansible-zone/README.md)
+- [helm-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/helm-zone/README.md)
+- [kubectl-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl-zone/README.md)
+- [terraform-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/terraform-zone/README.md)
 
 Cloud provider plugins:
 
-- [aws-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-zone/README)
-- [azure-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-zone/README)
-- [gcp-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-zone/README)
+- [aws-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-zone/README.md)
+- [azure-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-zone/README.md)
+- [gcp-zone](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-zone/README.md)
 
 ## Issue management
 
@@ -158,24 +158,24 @@ Issue management plugins typically implement the following commands:
 
 Plugins:
 
-- [github-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-issues/README): Taito CLI support for GitHub issues.
-- [gitlab-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-issues/README): Taito CLI support for GitLab issues.
-- [jira-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jira-issues/README): Taito CLI support for JIRA issues.
+- [github-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/github-issues/README.md): Taito CLI support for GitHub issues.
+- [gitlab-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gitlab-issues/README.md): Taito CLI support for GitLab issues.
+- [jira-issues](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/jira-issues/README.md): Taito CLI support for JIRA issues.
 
 ## Miscellaneous
 
-- [basic](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/basic/README): The basic plugin is always enabled. It implements some of the basic Taito CLI functionality like `taito --help`, `taito readme` and `taito trouble`.
-- [docker-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-global/README): Clean up your Docker with the `taito workspace clean` and `taito workspace kill` commands.
-- [links-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/links-global/README): Provides support for links by implementing the `taito open *` and `taito link *` commands. Also generates links to project README.md on `taito project apply` and `taito project docs`.
-- [run](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/run/README): TODO
-- [template-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/template-global/README): Provides support for project templates by implementing the `taito project create`, `taito project upgrade` and `taito project migrate` commands.
+- [basic](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/basic/README.md): The basic plugin is always enabled. It implements some of the basic Taito CLI functionality like `taito --help`, `taito readme` and `taito trouble`.
+- [docker-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-global/README.md): Clean up your Docker with the `taito workspace clean` and `taito workspace kill` commands.
+- [links-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/links-global/README.md): Provides support for links by implementing the `taito open *` and `taito link *` commands. Also generates links to project README.md on `taito project apply` and `taito project docs`.
+- [run](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/run/README.md): TODO
+- [template-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/template-global/README.md): Provides support for project templates by implementing the `taito project create`, `taito project upgrade` and `taito project migrate` commands.
 
 ## Monitoring and error tracking
 
 Plugins:
 
-- [gcp-monitoring](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-monitoring/README): Lists available monitoring channels, etc.
-- [sentry](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sentry/README): Creates a Sentry project on `taito project apply`.
+- [gcp-monitoring](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-monitoring/README.md): Lists available monitoring channels, etc.
+- [sentry](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/sentry/README.md): Creates a Sentry project on `taito project apply`.
 
 You can open monitoring systems on your browser with the following commands, if the links have been configured in `taito-config.sh` file of your project.
 
@@ -197,7 +197,7 @@ Password management plugins are meant for managing commonly shared passwords. Ty
 
 Plugins:
 
-- [gcp-passwd-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-passwd-global/README):
+- [gcp-passwd-global](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-passwd-global/README.md):
 
 ## Secret management
 
@@ -210,11 +210,11 @@ Secret management plugins typically implement the following commands:
 
 Plugins:
 
-- [default-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/default-secrets/README): Uses stag environent secrets as default values for prod secrets, prod environent secrets as default values for stag secrets, and dev secrets as default values for all other environments.
-- [generate-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/generate-secrets/README): Generates secret values on demand either by generating random values or by querying secret details from user.
-- [gcp-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-secrets/README): Uses Google Cloud KMS and Google Cloud Storage to store or backup secrets.
-- [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kube-secrets/README): Uses Kubernetes to store secrets.
-- [vault-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/vault-secrets/README): Uses [Vault](https://www.vaultproject.io/) to manage secrets.
+- [default-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/default-secrets/README.md): Uses stag environent secrets as default values for prod secrets, prod environent secrets as default values for stag secrets, and dev secrets as default values for all other environments.
+- [generate-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/generate-secrets/README.md): Generates secret values on demand either by generating random values or by querying secret details from user.
+- [gcp-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-secrets/README.md): Uses Google Cloud KMS and Google Cloud Storage to store or backup secrets.
+- [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kube-secrets/README.md): Uses Kubernetes to store secrets.
+- [vault-secrets](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/vault-secrets/README.md): Uses [Vault](https://www.vaultproject.io/) to manage secrets.
 
 > TIP: You can enable multiple secret plugins at the same time. For example, enable the kubectl plugin so that secrets are available for Kubernetes deployments. Additionally, enable the gcp-secrets plugin so that at least non-random secrets will be saved to a storage bucket just in case you accidentally delete secrets from Kubernetes.
 
@@ -226,8 +226,8 @@ Service plugins typically implement the following commands:
 
 Plugins:
 
-- [ambassador](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ambassador/README) TODO
-- [istio](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/istio/README)
+- [ambassador](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/ambassador/README.md) TODO
+- [istio](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/istio/README.md)
 
 ## Storage
 
@@ -237,9 +237,9 @@ Storage plugins typically implement the following commands:
 
 Plugins:
 
-- [aws-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-storage/README): Taito CLI support for AWS storage buckets (S3).
-- [azure-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-storage/README): Taito CLI support for Azure storage buckets.
-- [gcp-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-storage/README): Taito CLI support for Google Cloud storage buckets.
+- [aws-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/aws-storage/README.md): Taito CLI support for AWS storage buckets (S3).
+- [azure-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/azure-storage/README.md): Taito CLI support for Azure storage buckets.
+- [gcp-storage](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/gcp-storage/README.md): Taito CLI support for Google Cloud storage buckets.
 
 ## Version control
 
@@ -251,4 +251,4 @@ Version control plugins typically implement the following commands:
 
 Plugins:
 
-- [git](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/git/README)
+- [git](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/git/README.md)

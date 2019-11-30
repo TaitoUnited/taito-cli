@@ -55,13 +55,13 @@ You can create a new zone with the following steps:
     taito kaboom
     ```
 
+    > In case of trouble, run `taito trouble`. Sometimes `taito kaboom` might fail and hopefully `taito trouble` helps.
+
 3. Open application web UI on your browser:
 
     ```shell
     taito open client
     ```
-
-> In case of trouble, run `taito trouble`. Sometimes `taito kaboom` might fail and hopefully `taito trouble` helps.
 
 #### Apply project wide settings
 
@@ -180,6 +180,8 @@ You can create a new zone with the following steps:
     ```shell
     taito open releases
     ```
+
+    > Release notes will be generated only if you configured GitHub token during the zone creation, or you configured GH_TOKEN for your CI/CD pipeline. TODO: Some CI/CD pipelines have git push permission by default (in such case separate token should not be required).
 
 ### Taito command reference
 

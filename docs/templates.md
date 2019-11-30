@@ -40,12 +40,13 @@ Use one of the **Kubernetes as a service** infrastructure templates, but do not 
 
 ### Kubernetes, database, and object storage as a service
 
+* [alibaba](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/alibaba): Alibaba Cloud (TODO)
 * [aws](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/aws): Amazon Web Services
-* [azure](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/azure): Microsoft Azure (Coming soon)
-* [do](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/do): Digital Ocean (Coming soon)
+* [azure](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/azure): Microsoft Azure
+* [do](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/do): Digital Ocean
 * [gcp](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/gcp): Google Cloud Platform
 * [scaleway](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/scaleway): Scaleway (TODO)
-* [vmware](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/vmware): VMWare Cloud (Coming soon)
+* [vmware](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/vmware): VMWare Cloud (TODO)
 
 ### Kubernetes distributions for cloud and on-premises
 

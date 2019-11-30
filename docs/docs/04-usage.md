@@ -8,9 +8,9 @@ Run `taito -h` to show a list of all predefined commands of Taito CLI and additi
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito auth:dev`). Note that your credentials are saved on the Taito CLI container image, as you don't need them lying on your host file system anymore.
 
-[Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README) guides you through common software development scenarios in a chronological order. You may consider it as a chronological Taito CLI manual.
+[Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order. You may consider it as a chronological Taito CLI manual.
 
-See the [DEVELOPMENT.md](https://github.com/TaitoUnited/full-stack-template/blob/master/DEVELOPMENT) of the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) as an example on how to use Taito CLI with your project.
+See the [DEVELOPMENT.md](https://github.com/TaitoUnited/full-stack-template/blob/master/DEVELOPMENT.md) of the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) as an example on how to use Taito CLI with your project.
 
 ### Troubleshooting
 
