@@ -505,8 +505,8 @@ if [[ ${taito_command} == "env-apply" ]] || \
      [[ $taito_target_env == "canary" ]] || \
      [[ $taito_target_env == "stag" ]]; then
     echo
-    echo "Running 'taito ${taito_command//-/ }' on $taito_target_env environment most likely"
-    echo "requires admin privileges. You may not be allowed to execute all operations."
+    echo "Running 'taito ${taito_command//-/ }' on $taito_target_env environment most likely requires"
+    echo "admin privileges. You may not be allowed to execute all operations."
     taito::confirm "Do you want to continue anyway?" no
   fi
 fi

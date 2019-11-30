@@ -94,7 +94,6 @@ function kubectl::exec () {
 }
 
 function kubectl::restart_all () {
-  echo
   if taito::confirm "Restart all pods in namespace ${taito_namespace}?"; then
     echo "Restarting pods"
     echo "TODO rolling update instead of delete?"

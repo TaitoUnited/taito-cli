@@ -1,9 +1,16 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_env:?}"
+
+default=
+if [[ ${kubernetes_name} ]] && [[ ${taito_env} != "dev" ]]; then
+  echo "NOTE: You most likely already have configured the Azure credentials."
+  default=no
+fi
 
 ( [[ ${kubernetes_name} ]] && \
-    taito::confirm "Configure Azure credentials for CI/CD pipeline"
+    taito::confirm "Configure Azure credentials for CI/CD pipeline" "${default}"
 ) || taito::skip_to_next "${@}"
 
 echo

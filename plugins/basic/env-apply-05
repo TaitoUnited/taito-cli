@@ -6,6 +6,8 @@ if [[ ${options} == *" --clean "* ]]; then
   echo "Deleting old temporary files"
   rm -rf "${taito_project_path:?}/tmp"
   rm -rf "${taito_project_path}/secrets"
+else
+  echo "Not cleaning any files"
 fi
 
 taito::call_next "${@}"

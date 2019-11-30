@@ -5,7 +5,9 @@ function default-secrets::fetch_default_secrets () {
   secret_defaults_already_exist=$(
     set -o posix; set | grep -q "default_secret_value_" || :
   )
-  if [[ ! ${secret_defaults_already_exist} ]]; then
+  if [[ ${secret_defaults_already_exist} ]]; then
+    echo "Not fetching secret defaults. Secret defaults already exist."
+  else
     source_env=
     case ${taito_env:?} in
       prod)
@@ -39,6 +41,8 @@ function default-secrets::fetch_default_secrets () {
         echo "Maybe you should authenticate with 'taito auth:${source_env}'."
       fi
       rm -f "${taito_secrets_path}" &> /dev/null || :
+    else
+      echo "Not fetching secret defaults for ${taito_env} environment"
     fi
   fi
 }

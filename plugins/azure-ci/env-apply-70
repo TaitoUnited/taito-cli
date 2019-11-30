@@ -3,8 +3,16 @@
 : "${taito_provider_region:?}"
 : "${taito_vc_repository:?}"
 : "${taito_project:?}"
+: "${taito_env:?}"
 
-taito::confirm "Create Azure DevOps project for ${taito_project} in ${taito_zone}" || \
+default=
+if [[ ${taito_env} != "dev" ]]; then
+  echo "NOTE: You most likely already have created the Azure DevOps project."
+  default=no
+fi
+
+taito::confirm \
+  "Create Azure DevOps project for ${taito_project} in ${taito_zone}" "${default}" || \
   taito::skip_to_next "${@}"
 
 # TODO: Use Terraform to create the project (requires version control auth?)

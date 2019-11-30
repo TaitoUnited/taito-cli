@@ -1,11 +1,19 @@
 #!/bin/bash -e
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_env:?}"
+
+default=
+if [[ ${kubernetes_name} ]] &&
+   [[ ${taito_env} != "dev" ]] &&
+   [[ ${taito_ci_provider:-} != "aws" ]]; then
+  echo "NOTE: You most likely already have configured the AWS credentials."
+  default=no
+fi
 
 ( [[ ${kubernetes_name} ]] && \
     [[ ${taito_ci_provider:-} != "aws" ]] && \
-    echo "NOTE: You can skip this step, if you have configured CI/CD credentials globally for all build triggers." && \
-    taito::confirm "Configure AWS credentials for CI/CD pipeline"
+    taito::confirm "Configure AWS credentials for CI/CD pipeline" "${default}"
 ) || taito::skip_to_next "${@}"
 
 echo

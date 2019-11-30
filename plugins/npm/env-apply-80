@@ -2,7 +2,9 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-[[ ${taito_env:-} == "local" ]] || taito::skip_to_next "${@}"
-
-npm::install "${@}"
+if [[ ${taito_env:-} == "local" ]]; then
+  npm::install "${@}"
+else
+  echo "Not installing npm libraries for ${taito_env} environment"
+fi
 taito::call_next "${@}"
