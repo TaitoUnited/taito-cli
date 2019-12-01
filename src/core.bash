@@ -6,7 +6,7 @@ function taito::core::ci_enabled () {
   local phase=$2
   local default_value=$3
   if [[ ${enabled_phases} ]] &&
-     [[ ${enabled_phases,,} != *"phases"* ]] &&  # Workaround for Azure pipelines
+     [[ ${enabled_phases,,} != *"phases"* ]] &&  # Azure DevOps workaround
      [[ " ${enabled_phases} " != *"${phase}"* ]]
   then
     echo "false"

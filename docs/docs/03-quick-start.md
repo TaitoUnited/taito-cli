@@ -49,7 +49,7 @@ You can create a new zone with the following steps:
     cd acme-myproject
     ```
 
-2. Clean start the local development environment with the following command. This typically initializes your local secrets (default values copied from dev if available), installs some libraries on host, builds and starts containers, and initializes your database with tables and some data.
+2. Clean start the local development environment with the following command. This typically initializes your local secrets, installs some libraries, builds and starts containers, and initializes your database with tables and some data. Secret default values are typically copied from dev environment, if available.
 
     ```shell
     taito kaboom
@@ -61,6 +61,12 @@ You can create a new zone with the following steps:
 
     ```shell
     taito open client
+    ```
+
+4. Connect to the database:
+
+    ```shell
+    taito db connect
     ```
 
 #### Apply project wide settings
@@ -181,7 +187,7 @@ You can create a new zone with the following steps:
     taito open releases
     ```
 
-    > Release notes will be generated only if you configured GitHub token during the zone creation, or you configured GH_TOKEN for your CI/CD pipeline. TODO: Some CI/CD pipelines have git push permission by default (in such case separate token should not be required).
+    > Semantic-release library requires version control personal access token (GitHub/GitLab/BitBucket) for accessing the version control API. Release notes will be generated only if you configured the token during the zone creation, or you configured VC_TOKEN environment variable for your CI/CD pipeline.
 
 ### Taito command reference
 

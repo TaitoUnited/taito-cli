@@ -2,22 +2,23 @@
 # shellcheck source=../kubectl/lib/context.bash
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-echo "NOTE: GitHub token is completely optional and should be set on production"
-echo "clusters only. It is used by semantic-release plugin to tag releases."
+echo "NOTE: Version control token should be set on production clusters only and it"
+echo "is completely optional. It is used by semantic-release plugin to publish release"
+echo "notes."
 taito::confirm \
-  "OPTIONAL: Set GitHub token on production cluster for tagging releases" no || \
+  "OPTIONAL: Set version control personal access token on production cluster for tagging releases" no || \
   taito::skip_to_next "${@}"
 
-# TODO: GitHub token handling should be implemented somewhere else, but might be
+# TODO: version control token handling should be implemented somewhere else, but might be
 # needed on Kubernetes for some setups.
 kubectl::use_context
 echo
-echo "Enter GitHub token for tagging releases:"
+echo "Enter version control personal access token for tagging releases:"
 read -r -s github_token_secret_value
 if [[ ${github_token_secret_value} ]]; then
   mkdir -p ./tmp
   echo "${github_token_secret_value}" > ./tmp/github
-  kubectl create secret generic "github-buildbot" --namespace=devops \
+  kubectl create secret generic "version-control-buildbot" --namespace=devops \
     --from-file=token=tmp/github
   rm -rf ./tmp/github
 fi

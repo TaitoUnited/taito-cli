@@ -52,7 +52,7 @@ kubectl::use_context
 #   echo "It will be used for tagging git releases. You can delete the file afterwards."
 #   echo "Press enter after you have saved the file."
 #   read -r
-#   kubectl create secret generic "github-buildbot" --namespace=devops \
+#   kubectl create secret generic "version-control-buildbot" --namespace=devops \
 #     --from-file=token=tmp/github
 # fi
 

@@ -265,7 +265,7 @@ Secret naming convention is **name.property[/namespace]:method**. You should avo
 - _silicon_valley_prod-db-app.password:random_: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be used by application.
 - _silicon_valley_prod-db-mgr.password/devops:random_: A randomly generated database password for silicon valley production database (named silicon_valley_prod) to be in managing the database (for CI/CD, etc). It is saved to devops namespace as it is not required by the application.
 - _cloudsql-gserviceaccount.key:copy/devops_: A token for external google-cloudsql service that acts as a database proxy. Token is copied from devops namespace to this one.
-- _github-buildbot.token:read/devops_: A token to access GitHub when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
+- _version-control-buildbot.token:read/devops_: A token to access version control (e.g. GitHub) when making a release. Token is read from devops namespace, but need not be saved as it is only needed by CI/CD during build.
 
 You can use the following methods in your secret definition:
 

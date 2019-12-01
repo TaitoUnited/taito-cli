@@ -23,8 +23,9 @@ QUICK EXAMPLES
     workspace clean                    # Remove all unused build artifacts (e.g. images)
 
   LINKS
-    open git                           # Open git repository on browser
     open project                       # Open project management on browser
+    open git                           # Open git repository on browser
+    open releases                      # Open release notes on browser
     open ux                            # Open UX guides
     open docs                          # Open project documentation on browser
     open apidocs:dev                   # Open generated API documentation on browser
@@ -559,13 +560,14 @@ PROJECT: LINKS
   > open docs - Built docs
   > open project - Project management
   > open git - Git repository (e.g. GitHub)
-  > open - Version control repository (e.g. GitHub)
+  > open releases - Release notes
   > open builds - List of builds (e.g. Jenkins, Google container builder)
   > open artifacts - Build artifacts
   > open reports - CI/CD reports (e.g. testing and code analysis)
   > open errors:ENV - Error Tracking (e.g. Sentry)
   > open logs:ENV - Logs (e.g. Stackdriver)
   > open uptime - Uptime monitoring (e.g. Stackdriver)
+  > open alerts - Monitoring alerts
   > open tracing - Open distributed tracing
   > open performance - Performace monitoring (e.g. New Relic)
   > open feedback - User feedback management

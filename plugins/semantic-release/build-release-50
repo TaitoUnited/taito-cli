@@ -1,47 +1,39 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_target_env:?}"
 : "${taito_project_path:?}"
 
-# REFACTOR: duplicate code with build-prepare-50
-
-if [[ ${taito_vc_provider:-} != "github" ]]; then
-  echo "Currently only GitHub is supported. Skipping semantic release."
-  taito::skip_to_next "${@}"
-fi
-
+# Check ci_exec_release flag
 if [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_release:-} != "true" ]]; then
   echo "ci_exec_release setting is disabled. Skipping semantic release."
-  taito::skip_to_next "${@}"
+  taito::skip_to_next "$@"
 fi
 
-if [[ $secret_value_github_buildbot_token == "secret_file:"* ]]; then
-  secret_value_github_buildbot_token="$(cat ${secret_value_github_buildbot_token#secret_file:})"
+# Check token exists
+if [[ ! "$(semantic-release::get_token)" ]]; then
+  echo "WARN: Skipping semantic release. Neither 'version-control-buildbot.token'"
+  echo "secret nor VC_TOKEN environment variable has been set."
+  taito::skip_to_next "$@"
 fi
 
-if [[ ! ${secret_value_github_buildbot_token} ]]; then
-  secret_value_github_buildbot_token="${GH_TOKEN}"
-fi
-
-if [[ ! ${secret_value_github_buildbot_token} ]]; then
-  echo "WARN: Skipping semantic release. Neither 'github-buildbot.token:read/devops'"
-  echo "secret nor GH_TOKEN environment variable has been set."
-  taito::skip_to_next "${@}"
-fi
-
-# Determine npm command based on environment
-command=release-post:${taito_target_env}
-
-# Run the command only if it exists in package.json
+# Check package.json command exists
+command="release-post:${taito_target_env}"
 commands=$(npm run | grep '^  [^ ]*$' | sed -e 's/ //g')
-if [[ $(echo "${commands}" | grep "^${command}$") != "" ]]; then
-  (
-    echo "Finalizing release"
-    cd "${taito_project_path}/release" || exit 1
-    taito::executing_start
-    NPM_TOKEN=none GH_TOKEN=${secret_value_github_buildbot_token} \
-      npm run "${command}"
-    rm -f .npmrc
-  )
+if [[ ! $(echo "${commands}" | grep "^${command}$") ]]; then
+  taito::skip_to_next "$@"
 fi
 
-taito::call_next "${@}"
+# Execute
+(
+  echo "Finalizing release"
+  cd "${taito_project_path}/release" || exit 1
+  (
+    semantic-release::export_tokens
+    taito::executing_start
+    npm run "${command}"
+  )
+  rm -f .npmrc
+)
+
+taito::call_next "$@"
