@@ -21,6 +21,8 @@ You can create a new zone with the following steps:
     taito zone apply
     ```
 
+    > TIP: If you encounter an error while running Terrafom, just try to run `taito zone apply` again.
+
 3. View the created resources on your cloud provider dashboard:
 
     ```shell
