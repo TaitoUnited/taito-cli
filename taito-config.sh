@@ -2,7 +2,7 @@
 # shellcheck disable=SC2034
 : "${taito_target_env:?}"
 
-# Taito-cli
+# Taito CLI
 taito_version=1
 taito_plugins="
   docker docker-compose:local

@@ -122,7 +122,7 @@ do
 done
 
 if [[ ${continue} == false ]] && [[ ${quiet} == false ]] && [[ ${taito_mode:-} != "ci" ]]; then
-  echo "Taito-cli Copyright (C) 2017 Taito United"
+  echo "Taito CLI Copyright (C) 2017 Taito United"
   echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
 fi
 

@@ -15,7 +15,7 @@ In order to get started and familiarize yourself with Taito CLI you should read 
 - [9. Custom commands](09-custom-commands.md)
 - [10. Custom plugins](10-custom-plugins.md)
 - [11. Custom project templates](11-custom-project-templates.md)
-- [12. Taito-cli development](12-taito-cli-development.md)
+- [12. Taito CLI development](12-taito-cli-development.md)
 
 ---
 

@@ -50,7 +50,7 @@ You can install additional tools to your local Taito CLI image:
 taito -r shell                             # Start shell as root user
 apt-get update                             # Retrieve new lists of packages
 apt-get install PACKAGE [PACKAGE ...]      # Install some packages
-taito util-commit                          # Commit changes to the Taito CLI image
+taito util commit                          # Commit changes to the Taito CLI image
 exit                                       # Exit Taito CLI shell
 ```
 

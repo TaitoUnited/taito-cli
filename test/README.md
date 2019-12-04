@@ -1,3 +1,3 @@
 # Test
 
-Integration tests for taito-cli plugins.
+Integration tests for Taito CLI plugins.

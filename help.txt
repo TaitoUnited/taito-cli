@@ -982,7 +982,7 @@ UTILS
   util commit
     Commits current changes to the Taito CLI container. For example, you
     can start a shell running 'taito shell', make some changes and then
-    commit all changes by running 'taito util-commit' inside the container.
+    commit all changes by running 'taito util commit' inside the container.
 
   util random string: LENGTH
     Generate a random string.
