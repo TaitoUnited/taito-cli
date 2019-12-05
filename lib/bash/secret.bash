@@ -389,10 +389,11 @@ function taito::save_proxy_secret_to_disk () {
       "${namespace}" \
       "${taito_proxy_secret_name}.${taito_proxy_secret_key}" \
       "${taito_proxy_secret_method}" \
-        | ${decode} > "$taito_proxy_credentials_local_file"
+          | ${decode} > "$taito_proxy_credentials_local_file" ||
+        echo "WARNING: Failed to get the proxy secret from Kubernetes"
 
     if [[ ! -s "$taito_proxy_credentials_local_file" ]]; then
-      echo "WARNING: Failed to get the proxy secret from Kubernetes"
+      echo "WARNING: Proxy secret not set"
     fi
   fi
 }
