@@ -1,0 +1,16 @@
+FROM taitounited/taito-cli-deps:cli
+MAINTAINER Taito United <support@taitounited.fi>
+LABEL fi.taitounited.taito-cli="true"
+
+USER root
+
+COPY . /taito-cli
+WORKDIR /taito-cli
+RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
+# RUN npm run verify
+
+RUN sed -i "s|./get_helm.sh \&\&|./get_helm.sh -v v3.0.1 \&\&|" \
+  /taito-cli-deps/tools/install-helm.sh
+RUN /taito-cli-deps/tools/install-helm.sh
+
+ENTRYPOINT ["taito"]
