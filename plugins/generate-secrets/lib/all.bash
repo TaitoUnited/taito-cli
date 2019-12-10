@@ -25,7 +25,7 @@ function generate-secrets::create_and_export () {
       if [[ ${skip_confirm} == "true" ]]; then
         taito::print_title "${secret_name/$prefix/}"
       fi
-      generate-secrets::generate_by_type ${secret_index}
+      generate-secrets::generate_by_type "${secret_index}" "${secret_name/$prefix/}"
     fi
     secret_index=$((${secret_index}+1))
   done
@@ -56,6 +56,8 @@ function generate-secrets::delete_temporary_files () {
 
 function generate-secrets::generate_by_type () {
   taito::expose_secret_by_index "${1}"
+  local title=$2
+
   # local secret_value=""
   # local secret_value2=""
   #
@@ -86,6 +88,7 @@ function generate-secrets::generate_by_type () {
           echo "https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/${taito_resource_namespace_id}/providers/Microsoft.Storage/storageAccounts/${taito_project//-/}${taito_env//-/}/keys"
           echo ------------------------------------------------------------------------------
           echo
+          echo "[${title}]"
         fi
         if [[ ${taito_provider:-} == "aws" ]] && \
            [[ ${secret_name} == *"storage"* ]]; then
@@ -96,6 +99,7 @@ function generate-secrets::generate_by_type () {
           echo "https://console.aws.amazon.com/iam/home?region=${taito_provider_region:-}#/users"
           echo ------------------------------------------------------------------------------
           echo
+          echo "[${title}]"
         fi
         while [[ ${#secret_value} -lt 8 ]] || [[ ${secret_value} != "${secret_value2}" ]]; do
           echo "New secret value (min 8 characters):"
@@ -105,12 +109,12 @@ function generate-secrets::generate_by_type () {
         done
         ;;
       file)
+        opts=""
+        if [[ ${google_authuser:-} ]]; then
+          opts="authuser=${google_authuser}&"
+        fi
         if [[ ${taito_provider:-} == "gcp" ]] && \
            [[ ${secret_name} == *"serviceaccount"* ]]; then
-          opts=""
-          if [[ ${google_authuser:-} ]]; then
-            opts="authuser=${google_authuser}&"
-          fi
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the service account key as json file from"
           echo "the following web page by pressing the 'create credentials' button."
@@ -118,6 +122,20 @@ function generate-secrets::generate_by_type () {
           echo "https://console.cloud.google.com/apis/credentials?${opts}project=${taito_resource_namespace_id:-}"
           echo ------------------------------------------------------------------------------
           echo
+          echo "[${title}]"
+        fi
+        if [[ ${taito_provider:-} == "gcp" ]] &&
+           [[ ${taito_type:-} == "zone" ]] &&
+           [[ ${secret_name} == *"-ssl"* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "You most likely can download the database SSL certificates from"
+          echo "the following web page by selecting connections tab of the correct"
+          echo "database and then downloading server CA, client cert, and client key."
+          echo
+          echo "https://console.cloud.google.com/sql/instances?${opts}project=${taito_zone:?}"
+          echo ------------------------------------------------------------------------------
+          echo
+          echo "[${title}]"
         fi
         while [[ ! -f ${secret_value} ]]; do
           echo "File path relative to project root folder (for example './secret.json'):"

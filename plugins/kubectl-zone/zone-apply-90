@@ -18,6 +18,7 @@ read -r -s github_token_secret_value
 if [[ ${github_token_secret_value} ]]; then
   mkdir -p ./tmp
   echo "${github_token_secret_value}" > ./tmp/github
+  kubectl::ensure_namespace devops
   kubectl create secret generic "version-control-buildbot" --namespace=devops \
     --from-file=token=tmp/github
   rm -rf ./tmp/github

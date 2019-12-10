@@ -4,6 +4,37 @@ taito::confirm \
   "Replace placeholders with real values in taito_config.sh and terraform/*" || \
   taito::skip_to_next "${@}"
 
+function replace_with_terraform_variable () {
+  local placeholder=$1
+  local variable=$2
+  local type=$3
+  local value
+
+  if grep "${placeholder}" ../taito-config.sh; then
+    echo "Determining ${variable}"
+    if [[ ${type} == "array" ]]; then
+      value=$(
+        terraform output -json "${variable}" |
+        jq -r 'map(.) |
+        join(" ")' ||
+        :
+      )
+    else
+      value=$(terraform output "${variable}" || :)
+    fi
+    value=$(
+      terraform output "${variable}" |
+        grep -v "^\[\|^\]" |
+        sed 's/  "\(.*\)",*/\1/g' |
+        tr '\n' ' ' || :
+    )
+    if [[ ${value} ]]; then
+      echo "${placeholder}"
+      sed -i "s/$placeholder/$value/g" ../taito-config.sh
+    fi
+  fi
+}
+
 (
   cd terraform || exit 1
 
@@ -61,14 +92,9 @@ taito::confirm \
   echo TAITO_ZONE
   sed -i "s/TAITO_ZONE/$taito_zone/g" ./*.tf
 
-  if grep TAITO_BASTION_PUBLIC_IP ../taito-config.sh; then
-    echo "Determining bastion public IP"
-    taito_bastion_public_ip=$(terraform output bastion_public_ip || :)
-    if [[ ${taito_bastion_public_ip} ]]; then
-      echo TAITO_BASTION_PUBLIC_IP
-      sed -i "s/TAITO_BASTION_PUBLIC_IP/$taito_bastion_public_ip/g" ../taito-config.sh
-    fi
-  fi
+  replace_with_terraform_variable TAITO_BASTION_PUBLIC_IP bastion_public_ip
+  replace_with_terraform_variable POSTGRES_HOSTS postgres_hosts
+  replace_with_terraform_variable MYSQL_HOSTS mysql_hosts
 
   echo
 )

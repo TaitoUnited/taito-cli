@@ -50,8 +50,7 @@ Use one of the **Kubernetes as a service** infrastructure templates, but do not 
 
 ### Kubernetes distributions for cloud and on-premises
 
-* [kontena](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/kontena): Kontena Pharos (TODO)
-* [openshift](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/openshift): OpenShift (TODO)
+* [kubespray](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/kubespray): Kubespray (TODO)
 
 [kubernetes.io: pick-right-solution](https://kubernetes.io/docs/setup/pick-right-solution/)
 
@@ -63,13 +62,14 @@ Infrastructure based on Linux virtual machines or dedicated servers.
 
 ### Additional security steps
 
-For critical security needs you should consider some additional security steps, for example:
+For critical security needs you should consider some additional security steps that might not be provided out-of-the-box by the infrastructure template you selected. For example:
 
 - Backup all data to another cloud provider.
-- Setup a secure bastion host for accessing critical resources and leave audit trail for all connections.
+- Setup a secure bastion host or virtual network interconnectivity for accessing critical resources, and leave audit trail for all connections.
 - Limit egress traffic in addition to ingress traffic, and monitor suspicious outbound connection attempts.
 - Limit Kubernetes network traffic with Kubernetes networking rules.
 - Limit Kubernetes namespace access with RBAC.
+- Require container images to by signed by trusted authorities.
 - Use personal accounts for accessing databases to leave audit trail.
 - Reserve a separate IP address and load balancer for each domain or subdomain.
 - Prepare for high usage spikes with autoscaling and CDN.
@@ -77,4 +77,4 @@ For critical security needs you should consider some additional security steps, 
 - Use scanners to detect vulnerabilities.
 - Use intrusion detection systems, anomaly detection tools, and honeypots for detecting and blocking hacking attempts.
 
-TODO: Improve examples with additional security features.
+TODO: Improve infrastructure templates with additional security features.
