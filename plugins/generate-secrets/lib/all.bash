@@ -113,7 +113,8 @@ function generate-secrets::generate_by_type () {
         if [[ ${google_authuser:-} ]]; then
           opts="authuser=${google_authuser}&"
         fi
-        if [[ ${taito_provider:-} == "gcp" ]] && \
+        if [[ ${taito_provider:-} == "gcp" ]] &&
+           [[ ${taito_type:-} != "zone" ]] &&
            [[ ${secret_name} == *"serviceaccount"* ]]; then
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the service account key as json file from"
@@ -137,8 +138,22 @@ function generate-secrets::generate_by_type () {
           echo
           echo "[${title}]"
         fi
+        if [[ ${taito_provider:-} == "gcp" ]] &&
+           [[ ${taito_type:-} == "zone" ]] &&
+           [[ ${secret_name} == *"database-proxy"* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "You most likely can download the service account key as json file from"
+          echo "the following web page by pressing the 'create credentials' button."
+          echo "Create a new service account if necessary, and add Cloud SQL Client role"
+          echo "for it."
+          echo
+          echo "CREDENTIALS: https://console.cloud.google.com/apis/credentials?${opts}project=${taito_zone:-}"
+          echo ------------------------------------------------------------------------------
+          echo
+          echo "[${title}]"
+        fi
         while [[ ! -f ${secret_value} ]]; do
-          echo "File path relative to project root folder (for example './secret.json'):"
+          echo "File path relative to project root folder (for example 'secret.json'):"
           read -r secret_value
         done
         secret_value="secret_file:${secret_value}"

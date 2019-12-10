@@ -1,0 +1,12 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::confirm "Save newly created secrets to AWS SSM Parameter Store" ||
+  taito::skip_to_next "${@}"
+
+taito::save_secrets \
+  aws-secrets::get_secret_value \
+  aws-secrets::put_secret_value
+
+taito::call_next "${@}"

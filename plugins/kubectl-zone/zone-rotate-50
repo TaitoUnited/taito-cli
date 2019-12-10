@@ -1,0 +1,15 @@
+#!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+# shellcheck source=../kubectl/lib/secret.bash
+. "${taito_plugin_path:?}/../kubectl/lib/secret.bash"
+
+taito::confirm "Save newly created secrets to Kubernetes" || \
+  taito::skip_to_next "${@}"
+
+kubectl::use_context
+taito::save_secrets \
+  kubectl::get_secret_value \
+  kubectl::put_secret_value
+
+taito::call_next "${@}"
