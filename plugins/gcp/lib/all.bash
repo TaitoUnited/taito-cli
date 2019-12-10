@@ -59,7 +59,8 @@ function gcp::authenticate_on_kubernetes () {
     gcloud container clusters get-credentials \
       "${kubernetes_name}" \
       --project "${taito_zone:?}" \
-      --zone "${taito_provider_zone:?}"
+      --region "${taito_provider_region:?}"
+      # --zone "${taito_provider_zone:?}"
   )
 }
 
