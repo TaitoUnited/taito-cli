@@ -55,12 +55,17 @@ function gcp::authenticate () {
 
 function gcp::authenticate_on_kubernetes () {
   (
+    # TODO: remove support for old cluster
+    local gopts="--region ${taito_provider_region:?}"
+    if [[ ${taito_zone} == "gcloud-temp1" ]]; then
+      gopts="--zone ${taito_provider_zone:?}"
+    fi
+
     taito::executing_start
     gcloud container clusters get-credentials \
       "${kubernetes_name}" \
       --project "${taito_zone:?}" \
-      --region "${taito_provider_region:?}"
-      # --zone "${taito_provider_zone:?}"
+      ${gopts}
   )
 }
 
