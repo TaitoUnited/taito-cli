@@ -75,7 +75,7 @@ if [[ ${lb_ips} ]]; then
   echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to "
   echo "make sure that a static IP has been reserved for the hostname. Then resolve"
   echo "the IP addresses by running 'taito -- host HOSTNAME' and add a DNS entry"
-  echo "for those IP addresses. TODO: IP addresses not necessarily static?"
+  echo "for those IP addresses. TODO: IP addresses not necessarily static, use NS."
   echo
   echo "Press enter once you have configured DNS."
   read -r
@@ -86,9 +86,6 @@ else
   echo "nginx-ingress (or some other ingress controller) to your Kubernetes"
   echo "cluster. You can install it by setting 'helm_enabled=true' in"
   echo "zone taito-config.sh and running 'taito zone apply' again."
-  echo
-  echo "TIP: Also enable Terraform remote backend in terraform/main.tf before"
-  echo "running the 'taito zone apply' command again, if you didn't do that already."
   echo
   echo "( If you already installed the ingress controller a moment ago, wait for a"
   echo "couple of minutes and then run 'taito zone status' to see if your Kubernetes"

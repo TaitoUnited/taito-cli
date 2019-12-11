@@ -144,10 +144,8 @@ function generate-secrets::generate_by_type () {
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the service account key as json file from"
           echo "the following web page by pressing the 'create credentials' button."
-          echo "Create a new service account if necessary, and add Cloud SQL Client role"
-          echo "for it."
           echo
-          echo "CREDENTIALS: https://console.cloud.google.com/apis/credentials?${opts}project=${taito_zone:-}"
+          echo "https://console.cloud.google.com/apis/credentials?${opts}project=${taito_zone:-}"
           echo ------------------------------------------------------------------------------
           echo
           echo "[${title}]"

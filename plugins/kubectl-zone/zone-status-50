@@ -38,7 +38,7 @@ echo
 echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to "
 echo "make sure that a static IP has been reserved for the hostname. Then resolve"
 echo "the IP addresses by running 'taito -- host HOSTNAME' and add a DNS entry"
-echo "for those IP addresses. TODO: IP addresses not necessarily static?"
+echo "for those IP addresses. TODO: IP addresses not necessarily static, use NS."
 echo
 
 taito::call_next "${@}"
