@@ -4,7 +4,7 @@
 
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   dump_file="${1:?}"
-  username=""
+  username=$2
 
   echo "Dumping database ${database_name:?} to ${dump_file}. Please wait."
   postgres::connect "${username}" "-f ${dump_file}" "pg_dump"

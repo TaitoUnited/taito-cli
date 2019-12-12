@@ -754,11 +754,11 @@ PROJECT: DATABASE OPERATIONS
     handled automatically. NOTE: If you want to access database using a GUI
     tool, use the db proxy:ENV command instead.
 
-  db dump[:TARGET][:ENV] FILE
+  db dump[:TARGET][:ENV] FILE [USERNAME]
     Take a database dump. DB proxy connection and secrets are handled
     automatically.
 
-  db import[:TARGET][:ENV] FILE
+  db import[:TARGET][:ENV] FILE [USERNAME]
     Import a file to database. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
     Example: taito db import:dev ./database/my-file.sql
