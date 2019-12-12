@@ -15,7 +15,7 @@ if [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
   #   gcp::ensure_project_exists "${taito_zone}" "${taito_provider_org_id}"
   # fi
   if [[ ${taito_provider:?} == "gcp" ]] && \
-     [[ ${taito_provider_org_id:?} ]] && \
+     [[ ${taito_provider_org_id:-} ]] && \
      [[ ${taito_resource_namespace_id:-} ]]; then
     gcp::ensure_project_exists "${taito_resource_namespace_id:?}" \
       "${taito_provider_org_id}"

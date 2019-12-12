@@ -144,7 +144,7 @@ function gcp::ensure_project_exists () {
       echo
       echo "Creating project ${project_id}"
       gcloud projects create "${project_id:?}" \
-        "--organization=${organization_id:?}"
+        "--organization=${organization_id:-}"
 
       echo
       echo "Enabling billing for project ${project_id}"
