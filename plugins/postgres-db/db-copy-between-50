@@ -24,7 +24,7 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   rm -f "${dump_file}" &> /dev/null
   echo "TODO implement: set user/password/database/host/port for source database"
   exit 1
-  postgres::connect "" "-f ${dump_file}" "pg_dump"
+  postgres::connect "" " --no-owner --no-privileges -f ${dump_file}" "pg_dump"
 
   echo "- 2. Rename the old database"
   database_username=${database_master_username:-postgres}

@@ -7,7 +7,7 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   username=$2
 
   echo "Dumping database ${database_name:?} to ${dump_file}. Please wait."
-  postgres::connect "${username}" "-f ${dump_file}" "pg_dump"
+  postgres::connect "${username}" " --no-owner --no-privileges -f ${dump_file}" "pg_dump"
 fi
 
 taito::call_next "${@}"
