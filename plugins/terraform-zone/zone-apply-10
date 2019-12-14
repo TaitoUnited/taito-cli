@@ -5,34 +5,31 @@
 taito::confirm "Apply changes by running terraform scripts" || \
   taito::skip_to_next "${@}"
 
-(
-  set -e
-  terraform::run_zone apply || (
-    sed -i 's/"true" # first_run/"false"/' ./terraform/variables.tf || :
-    exit 1
-  )
+(set -e; terraform::run_zone apply) || (
   sed -i 's/"true" # first_run/"false"/' ./terraform/variables.tf || :
-
-  echo
-  if taito::confirm "Change database master password"; then
-    taito::print_title "CHANGE DATABASE MASTER PASSWORD"
-    echo
-    echo "Your database admin password was saved to Terraform state in plain text"
-    echo "on the first run, and you may want to change it, if you have not already."
-    echo "You most likely can change the password on cloud provider web console."
-    echo "Look for 'reset password', 'modify', or 'users' in the database section."
-    echo
-    dashboard_link="$(taito -q ${taito_options:-} link-dashboard | grep -v '^\s*$' || :)"
-    databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$' || :)"
-    if [[ ${databases_link} ]] || [[ ${dashboard_link} ]]; then
-      echo "Press enter to open the web console at:"
-      echo "${databases_link:-$dashboard_link}"
-      read -r
-      taito::open_browser "${databases_link:-$dashboard_link}"
-    fi
-    echo "Press enter once the password has been changed"
-    read -r
-  fi
+  exit 1
 )
+sed -i 's/"true" # first_run/"false"/' ./terraform/variables.tf || :
+
+echo
+if taito::confirm "Change database master password"; then
+  taito::print_title "CHANGE DATABASE MASTER PASSWORD"
+  echo
+  echo "Your database admin password was saved to Terraform state in plain text"
+  echo "on the first run, and you may want to change it, if you have not already."
+  echo "You most likely can change the password on cloud provider web console."
+  echo "Look for 'reset password', 'modify', or 'users' in the database section."
+  echo
+  dashboard_link="$(taito -q ${taito_options:-} link-dashboard | grep -v '^\s*$' || :)"
+  databases_link="$(taito -q ${taito_options:-} link-databases | grep -v '^\s*$' || :)"
+  if [[ ${databases_link} ]] || [[ ${dashboard_link} ]]; then
+    echo "Press enter to open the web console at:"
+    echo "${databases_link:-$dashboard_link}"
+    read -r
+    taito::open_browser "${databases_link:-$dashboard_link}"
+  fi
+  echo "Press enter once the password has been changed"
+  read -r
+fi
 
 taito::call_next "${@}"
