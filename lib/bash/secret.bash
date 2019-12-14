@@ -358,6 +358,7 @@ function taito::delete_secrets () {
 }
 export -f taito::delete_secrets
 
+# TODO: rename to cicd-tester
 function taito::save_proxy_secret_to_disk () {
   : "${taito_project_path:?}"
   local get_secret_func=$1
@@ -366,10 +367,12 @@ function taito::save_proxy_secret_to_disk () {
   export taito_proxy_credentials_local_file="$taito_project_path/tmp/secrets/proxy_credentials.json"
 
   local namespace=devops
-  local taito_proxy_secret_name=
-  local taito_proxy_secret_key=
-  local taito_proxy_secret_method=
-  if [[ ${taito_ci_provider:-} == "gcp" ]]; then
+  taito_proxy_secret_name=cicd-tester-serviceaccount
+  taito_proxy_secret_key=key
+  taito_proxy_secret_method="file"
+
+  # TODO: remove
+  if [[ ${taito_zone} == "gcloud-temp1" ]]; then
     taito_proxy_secret_name=gcp-proxy-gserviceaccount
     taito_proxy_secret_key=key
     taito_proxy_secret_method="file"
@@ -393,7 +396,7 @@ function taito::save_proxy_secret_to_disk () {
         echo "WARNING: Failed to get the proxy secret from Kubernetes"
 
     if [[ ! -s "$taito_proxy_credentials_local_file" ]]; then
-      echo "WARNING: Proxy secret not set"
+      echo "WARNING: Proxy secret not set (${namespace}/${taito_proxy_secret_name})"
     fi
   fi
 }
