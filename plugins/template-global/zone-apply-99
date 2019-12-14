@@ -1,15 +1,7 @@
 #!/bin/bash -e
 
-if ! grep helm_enabled=.false taito-config.sh &> /dev/null; then
-  echo "TIP: Perhaps now you should:"
-  echo
-  echo "1) Copy zone settings to your ~/.taito/taito-config.sh with:"
-  echo "   taito -q project settings >> ~/.taito/taito-config.sh"
-  echo
-  echo "2) Create a new project with:"
-  echo "   taito project create: full-stack-template"
-  echo
-elif grep helm_enabled taito-config.sh &> /dev/null; then
+if grep helm_enabled.false taito-config.sh &> /dev/null; then
+  # TODO: For backwards compatibility. Remote it.
   echo "TIP: Perhaps now you should:"
   echo
   echo "1) Enable Helm by configuring 'helm_enabled=true' in taito-config.sh"
@@ -21,7 +13,17 @@ elif grep helm_enabled taito-config.sh &> /dev/null; then
   echo "executed successfully, but you need to run Terraform again after enabling"
   echo "Helm. And if Terraform execution fails, try to retry once again."
 else
-  echo "No tips to show"
+  echo "Perhaps now you should:"
+  echo
+  echo "1) Copy zone settings to your ~/.taito/taito-config.sh with:"
+  echo "   taito -q project settings >> ~/.taito/taito-config.sh"
+  echo
+  echo "2) Create a new project with:"
+  echo "   taito project create: full-stack-template"
+  echo
+  echo "TIP: If you are working with multiple zones, you can save the configs"
+  echo "to a zone specific taito-config-ZONE.sh file, and create the project with"
+  echo "with the -o option: 'taito -o ZONE project create: full-stack-template'"
   echo
 fi
 

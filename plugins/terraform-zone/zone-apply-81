@@ -1,0 +1,18 @@
+#!/bin/bash -e
+# shellcheck source=../terraform/lib/all.bash
+. "${taito_plugin_path:?}/../terraform/lib/all.bash"
+
+if [[ -f ./terraform/main.tf ]] &&
+   grep "TODO: ENABLE TERRAFORM BACKEND HERE" ./terraform/main.tf &> /dev/null &&
+   taito::confirm "Enable remote state by running terraform scripts again"
+then
+  sed -i "/TODO: ENABLE TERRAFORM BACKEND HERE/d" ./terraform/main.tf
+  sed -i 's/"true" # first_run/"false"/' ./terraform/variables.tf || :
+  (set -e; terraform::run_zone apply)
+  rm -rf ./terraform/terraform.tfstate
+  rm -rf ./terraform/terraform.tfstate.backup
+else
+  echo "Nothing to do. Remote state already enabled."
+fi
+
+taito::call_next "${@}"
