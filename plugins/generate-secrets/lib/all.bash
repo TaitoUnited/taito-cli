@@ -127,6 +127,18 @@ function generate-secrets::generate_by_type () {
         fi
         if [[ ${taito_provider:-} == "gcp" ]] &&
            [[ ${taito_type:-} == "zone" ]] &&
+           [[ ${secret_name} == *"serviceaccount"* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "You most likely can download the service account key as json file from"
+          echo "the following web page by pressing the 'create credentials' button."
+          echo
+          echo "https://console.cloud.google.com/apis/credentials?${opts}project=${taito_zone:-}"
+          echo ------------------------------------------------------------------------------
+          echo
+          echo "[${title}]"
+        fi
+        if [[ ${taito_provider:-} == "gcp" ]] &&
+           [[ ${taito_type:-} == "zone" ]] &&
            [[ ${secret_name} == *"-ssl"* ]]; then
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the database SSL certificates from"
@@ -134,18 +146,6 @@ function generate-secrets::generate_by_type () {
           echo "database and then downloading server CA, client cert, and client key."
           echo
           echo "https://console.cloud.google.com/sql/instances?${opts}project=${taito_zone:?}"
-          echo ------------------------------------------------------------------------------
-          echo
-          echo "[${title}]"
-        fi
-        if [[ ${taito_provider:-} == "gcp" ]] &&
-           [[ ${taito_type:-} == "zone" ]] &&
-           [[ ${secret_name} == *"database-proxy"* ]]; then
-          echo ------------------------------------------------------------------------------
-          echo "You most likely can download the service account key as json file from"
-          echo "the following web page by pressing the 'create credentials' button."
-          echo
-          echo "https://console.cloud.google.com/apis/credentials?${opts}project=${taito_zone:-}"
           echo ------------------------------------------------------------------------------
           echo
           echo "[${title}]"
