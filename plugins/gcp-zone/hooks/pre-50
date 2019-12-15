@@ -1,0 +1,10 @@
+#!/bin/bash -e
+# shellcheck source=../../gcp/lib/all.bash
+. "${taito_cli_path:?}/plugins/gcp/lib/all.bash"
+
+if [[ ${taito_command:?} == "zone-"* ]]; then
+  taito::print_plugin_title
+  gcp::authenticate
+fi
+
+taito::call_next "${@}"
