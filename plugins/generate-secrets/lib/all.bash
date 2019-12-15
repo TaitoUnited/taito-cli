@@ -69,8 +69,9 @@ function generate-secrets::generate_by_type () {
   # local htpasswd_options
 
   secret_value=
-  if [[ ${secret_default_value:-} ]] && \
-     [[ ${secret_method} != "random" ]] && \
+  if [[ ${secret_default_value:-} ]] &&
+     [[ ${secret_method} != "random" ]] &&
+     [[ ${secret_name} != *"serviceaccount"* ]] &&
      taito::confirm \
        "Default value exists. Use the default value for ${taito_env} environment?"
   then
