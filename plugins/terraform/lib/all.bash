@@ -116,13 +116,22 @@ function terraform::run_zone () {
     options="${options} -target=${terraform_target}"
   fi
 
-  export TF_LOG_PATH="./terraform.log"
-  terraform::export_env "${scripts_path}"
-  cd "${scripts_path}" || exit 1
-  taito::executing_start
-  terraform init ${options}
-  if [[ -f import_state ]]; then
-    ./import_state
-  fi
-  terraform "${command}" ${options}
+  (
+    export TF_LOG_PATH="./terraform.log"
+    terraform::export_env "${scripts_path}"
+    cd "${scripts_path}" || exit 1
+    taito::executing_start
+    terraform init ${options}
+    if [[ -f import_state ]]; then
+      ./import_state
+    fi
+    again="true"
+    while [[ ${again} == "true" ]]; do
+      terraform "${command}" ${options} && break
+      echo
+      echo "Terraform execution failed. Sometimes you can resolve the issues just"
+      echo "by running the Terraform scripts again a few times."
+      taito::confirm "Try again" || again="false"
+    done
+  )
 }
