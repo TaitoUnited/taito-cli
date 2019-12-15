@@ -40,6 +40,10 @@ TAITO CLI TROUBLESHOOTING
     can also try to enlarge the docker virtual disk in your docker preferences.
     Also check that you have free disk space available on your computer.
 
+  'Error: UPGRADE FAILED: "my-project-ENV" has no deployed releases'
+    Helm release is probably corrupted. Try to fix it by running
+    'taito stop:ENV' or 'taito down:ENV'.
+
   502 Bad Gateway
     Check application status with `taito status:ENV` and
     `taito logs:CONTAINER:ENV` commands, and fix the problem. If everything
