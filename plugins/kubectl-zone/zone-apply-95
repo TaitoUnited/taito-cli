@@ -59,23 +59,21 @@ kubectl::use_context
 taito::confirm "Configure DNS" || \
   taito::skip_to_next "${@}"
 
-taito::print_title "LOAD BALANCER IP ADDRESSES"
-echo
+taito::print_title "LOAD BALANCER ADDRESSES"
 lb_ips="$(kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.status.loadBalancer.ingress[0].ip,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
   --no-headers --all-namespaces 2> /dev/null | grep -v "<none>.*<none>" | sed s/\\s*\<none\>\\s*//g)"
 if [[ ${lb_ips} ]]; then
   echo "${lb_ips}"
   echo
-  echo "Your load balancer IP addresses are presented above. You should configure"
+  echo "Your load balancer addresses are presented above. You should configure"
   echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"
   echo "if you have not done so already. Example DNS entry:"
   echo
-  echo "          A  *.${taito_default_domain:-mydomain.com}  ->  123.123.123.123"
-  echo
-  echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to "
-  echo "make sure that a static IP has been reserved for the hostname. Then resolve"
-  echo "the IP addresses by running 'taito -- host HOSTNAME' and add a DNS entry"
-  echo "for those IP addresses. TODO: IP addresses not necessarily static, use NS."
+  if [[ ${#lb_ips} -ge 20 ]]; then
+    echo "  CNAME  *.${taito_default_domain:-mydomain.com}  ->  ${lb_ips}"
+  else
+    echo "      A  *.${taito_default_domain:-mydomain.com}  ->  ${lb_ips}"
+  fi
   echo
   echo "Press enter once you have configured DNS."
   read -r

@@ -13,7 +13,7 @@ kubectl describe nodes
 taito::print_title "Top nodes"
 kubectl top nodes 2> /dev/null
 
-taito::print_title "Ingresses$"
+taito::print_title "Ingresses"
 kubectl get ingress --all-namespaces
 
 taito::print_title "Services"
@@ -25,20 +25,26 @@ kubectl get pods --all-namespaces
 taito::print_title "Top pods"
 kubectl top pods --all-namespaces 2> /dev/null
 
-taito::print_title "Load Balancer IPs"
-kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.status.loadBalancer.ingress[0].ip,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
-  --no-headers --all-namespaces 2> /dev/null | grep -v "<none>.*<none>" | sed s/\\s*\<none\>\\s*//g
-echo
-echo "Your load balancer IP addresses are presented above. You should configure"
-echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"
-echo "if you have not done so already. Example DNS entry:"
-echo
-echo "          A  *.${taito_default_domain:-mydomain.com}  ->  123.123.123.123"
-echo
-echo "NOTE: If a hostname is shown instead of an IP, wait for a few minutes to "
-echo "make sure that a static IP has been reserved for the hostname. Then resolve"
-echo "the IP addresses by running 'taito -- host HOSTNAME' and add a DNS entry"
-echo "for those IP addresses. TODO: IP addresses not necessarily static, use NS."
-echo
+taito::print_title "Load balancer addresses"
+lb_ips="$(kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.status.loadBalancer.ingress[0].ip,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
+  --no-headers --all-namespaces 2> /dev/null | grep -v "<none>.*<none>" | sed s/\\s*\<none\>\\s*//g)"
+if [[ ${lb_ips} ]]; then
+  echo "${lb_ips}"
+  echo
+  echo "Your load balancer addresses are presented above. You should configure"
+  echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"
+  echo "if you have not done so already. Example DNS entry:"
+  echo
+  if [[ ${#lb_ips} -ge 20 ]]; then
+    echo "  CNAME  *.${taito_default_domain:-mydomain.com}  ->  ${lb_ips}"
+  else
+    echo "      A  *.${taito_default_domain:-mydomain.com}  ->  ${lb_ips}"
+  fi
+  echo
+else
+  echo "WARNING: Your Kubernetes cluster does not seem to contain any load balancer"
+  echo "IP addresses. How you installed nginx-ingress?"
+  echo
+fi
 
 taito::call_next "${@}"
