@@ -40,17 +40,17 @@ Use one of the **Kubernetes as a service** infrastructure templates, but do not 
 
 ### Kubernetes, database, and object storage as a service
 
-* [alibaba](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/alibaba): Alibaba Cloud (TODO)
-* [aws](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/aws): Amazon Web Services
-* [azure](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/azure): Microsoft Azure
-* [do](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/do): Digital Ocean
-* [gcp](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/gcp): Google Cloud Platform
-* [scaleway](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/scaleway): Scaleway (TODO)
-* [vmware](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/vmware): VMWare Cloud (TODO)
+* [alibaba](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/alibaba): Alibaba Cloud (TODO)
+* [aws](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/aws): Amazon Web Services
+* [azure](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/azure): Microsoft Azure
+* [do](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/do): Digital Ocean
+* [gcp](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/gcp): Google Cloud Platform
+* [scaleway](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/scaleway): Scaleway (TODO)
+* [vmware](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/vmware): VMWare Cloud (TODO)
 
 ### Kubernetes distributions for cloud and on-premises
 
-* [kubespray](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/kubespray): Kubespray (TODO)
+* [kubespray](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/kubespray): Kubespray (TODO)
 
 [kubernetes.io: pick-right-solution](https://kubernetes.io/docs/setup/pick-right-solution/)
 
@@ -58,7 +58,7 @@ Use one of the **Kubernetes as a service** infrastructure templates, but do not 
 
 Infrastructure based on Linux virtual machines or dedicated servers.
 
-* [linux](https://github.com/TaitoUnited/taito-infrastructure/tree/master/templates/linux): Any Linux servers
+* [linux](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/linux): Any Linux servers
 
 ### Additional security steps
 
