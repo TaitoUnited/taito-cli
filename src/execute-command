@@ -264,6 +264,9 @@ fi
 taito::core::export_user_config "${taito_env}"
 taito::core::export_project_config "${taito_env}"
 
+# For Azure
+export taito_zone_short=${taito_zone//-/}
+
 if [[ ${taito_command} == "check" ]]; then
   if [[ $(whoami) == "taito" ]] || [[ $(whoami) == "root" ]]; then
     echo
