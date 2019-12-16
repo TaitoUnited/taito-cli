@@ -1,5 +1,6 @@
 #!/bin/bash -e
-: "${template_default_zone_source_git:?}"
+
+template_default_zone_source_git=${template_default_zone_source_git:-git@github.com:TaitoUnited/taito-templates//infrastructure}
 
 export template="${1:?Template not given}"
 
