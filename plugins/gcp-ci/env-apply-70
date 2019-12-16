@@ -10,6 +10,10 @@ taito::confirm "Add a build trigger for ${taito_project} in ${taito_zone}" || \
 # TODO: Support for Google Cloud Build GitHub App (currently in beta)
 # --> Does not provide original source repository information in build history
 echo
+echo "--------------------------------"
+echo "Basic configuration"
+echo "--------------------------------"
+echo
 echo "Create a new build trigger with these settings if one does not exist already:"
 echo "- Source: ${taito_vc_provider:-GitHub} (mirrored)"
 if [[ "${taito_vc_provider:-github}" == "github" ]]; then
@@ -26,7 +30,7 @@ echo "- Build configuration: Cloud Build configuration file (yaml or json)"
 echo "- Cloud Build configuration file location: /cloudbuild.yaml"
 echo
 echo "--------------------------------"
-echo "Additional configuration options"
+echo "OPTIONAL: Advanced configuration"
 echo "--------------------------------"
 echo
 echo "a) Protect staging, canary, and production branches"

@@ -20,6 +20,10 @@ echo
 echo "Create a new Azure DevOps project with the following settings"
 echo "if one does not exist already."
 echo
+echo "--------------------------------"
+echo "Basic configuration"
+echo "--------------------------------"
+echo
 echo "Project"
 echo "- Project name: ${taito_project}"
 echo "- Visibility: Private"
@@ -29,7 +33,7 @@ echo "- Source code location: ${taito_vc_provider:-GitHub}"
 echo "- Repository: ${taito_vc_repository}"
 echo
 echo "--------------------------------"
-echo "Additional configuration options"
+echo "OPTIONAL: Advanced configuration"
 echo "--------------------------------"
 echo
 echo "a) Protect staging, canary, and production branches"
