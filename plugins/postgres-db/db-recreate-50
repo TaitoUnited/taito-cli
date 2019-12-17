@@ -22,7 +22,7 @@ else
             export database_username=${database_master_username:-postgres}
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
-            postgres::ask_and_expose_password
+            #postgres::ask_and_expose_password
             postgres::drop_database
             postgres::create_database
           )

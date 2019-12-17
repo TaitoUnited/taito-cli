@@ -22,7 +22,7 @@ else
             export database_username=${database_master_username:-root}
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
-            mysql::ask_and_expose_password
+            #mysql::ask_and_expose_password
             mysql::create_users
             mysql::create_database
             echo "Created database ${database_name:-}"

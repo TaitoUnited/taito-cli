@@ -20,10 +20,7 @@ else
             export database_username=${database_master_username:-postgres}
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
-            postgres::ask_and_expose_password
-            echo "Creating users"
             postgres::create_users
-            echo "Creating database"
             postgres::create_database
             echo "Created database ${database_name:-}"
           )
