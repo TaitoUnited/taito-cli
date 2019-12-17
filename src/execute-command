@@ -788,6 +788,12 @@ if [[ ${command} == "shell" ]] && \
    [[ ${taito_env} == "local" ]]; then
   # Start interactive shell
   (
+    # Start tillerless helm plugin
+    # TODO: remove once upgraded to Helm 3
+    export HELM_TILLER_HISTORY_MAX=10
+    helm tiller start-ci > /dev/null
+    export HELM_HOST=127.0.0.1:44134
+
     taito::export_terraform_env
     /bin/bash
   )
