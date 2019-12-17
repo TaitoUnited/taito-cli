@@ -86,10 +86,9 @@ function terraform::run_zone () {
       terraform "${command}" ${apply_options} && break
       echo
       echo "Terraform execution failed. Sometimes you can resolve the issues just"
-      echo "by running the Terraform scripts again a few times. Especially if it"
-      echo "is helm_release that is failing, you might need to retry execution once"
-      echo "for each helm release (tillerless helm issue). This issue will probably"
-      echo "be solved once helm_release provider supports Helm 3."
+      echo "by running the Terraform scripts again. Especially if it is helm_release"
+      echo "that is failing, you might need to retry execution once for each helm"
+      echo "release (tillerless helm issue). That's a lot of retries."
       taito::confirm "Try again" || again="false"
     done
   )
