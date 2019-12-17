@@ -68,13 +68,12 @@ function terraform::run () {
   local env=${3}
   local scripts_path=${4:-scripts/terraform/$name}
 
-  local options=""
-  if [[ ${taito_mode:-} == "ci" ]] && [[ ${command} == "apply" ]]; then
-    options="${options} -auto-approve"
-  fi
+  local init_options="${terraform_init_options:-}"
+  local apply_options="${terraform_apply_options:-}"
 
-  if [[ ${terraform_target:-} ]]; then
-    options="${options} -target=${terraform_target}"
+  if [[ ${taito_mode:-} == "ci" ]] && [[ ${command} == "apply" ]]; then
+    init_options="${init_options} -auto-approve"
+    apply_options="${apply_options} -auto-approve"
   fi
 
   if [[ -d "${scripts_path}" ]] && \
@@ -105,11 +104,11 @@ function terraform::run () {
       fi
 
       taito::executing_start
-      terraform init -reconfigure ${options} ${backend_opts}
+      terraform init -reconfigure ${init_options} ${backend_opts}
       if [[ -f import_state ]]; then
         ./import_state
       fi
-      terraform "${command}" ${options} -state=${env}/terraform.tfstate
+      terraform "${command}" ${apply_options} -state=${env}/terraform.tfstate
     )
 
     # Remove *.tmp files
@@ -121,25 +120,20 @@ function terraform::run_zone () {
   local command=${1}
   local scripts_path=${2:-terraform}
 
-  local options=""
-  if [[ ${terraform_target:-} ]]; then
-    options="${options} -target=${terraform_target}"
-  fi
-
+  local init_options="${terraform_init_options:-}"
+  local apply_options="${terraform_apply_options:-}"
   (
     export TF_LOG_PATH="./terraform.log"
     terraform::export_env "${scripts_path}"
     cd "${scripts_path}" || exit 1
     taito::executing_start
-    if [[ ! -d .terraform ]]; then
-      terraform init ${options}
-    fi
+    terraform init ${init_options}
     if [[ -f import_state ]]; then
       ./import_state
     fi
     again="true"
     while [[ ${again} == "true" ]]; do
-      terraform "${command}" ${options} && break
+      terraform "${command}" ${apply_options} && break
       echo
       echo "Terraform execution failed. Sometimes you can resolve the issues just"
       echo "by running the Terraform scripts again a few times."
