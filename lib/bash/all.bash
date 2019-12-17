@@ -3,6 +3,8 @@
 
 # shellcheck source=docker.bash
 . "${taito_lib_path}/bash/docker.bash"
+# shellcheck source=env.bash
+. "${taito_lib_path}/bash/env.bash"
 # shellcheck source=exec.bash
 . "${taito_lib_path}/bash/exec.bash"
 # shellcheck source=host.bash

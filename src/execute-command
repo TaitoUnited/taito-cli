@@ -787,12 +787,18 @@ if [[ ${command} == "shell" ]] && \
    [[ -z ${taito_target} ]] && \
    [[ ${taito_env} == "local" ]]; then
   # Start interactive shell
-  /bin/bash
+  (
+    taito::export_terraform_env
+    /bin/bash
+  )
   exit_code=${?}
 elif [[ ${command} == "__" ]]; then
   # Execute shell command given as argument
   echo
-  eval "${params[@]}"
+  (
+    taito::export_terraform_env
+    eval "${params[@]}"
+  )
   exit_code=${?}
 else
   # Print some additional info in debug mode
