@@ -35,11 +35,9 @@ taito::execute_on_host_fg "
   echo
   echo \"1) Go to the new directory: cd $zone\"
   echo \"2) Edit taito-config.sh and change at least all settings marked with '# CHANGE'\"
-  echo \"3) Run 'taito auth' and follow instructions\"
-  echo \"4) Run 'taito zone apply' and follow instructions\"
-  echo
-  echo \"TIP: If you encounter an error while running Terrafom, just try to run\"
-  echo \"'taito zone apply' again, or try to reauthenticate with 'taito auth'.\"
+  echo \"3) Run 'taito upgrade' to make sure your installation is up-to-date and clean\"
+  echo \"4) Authenticate with 'taito auth' and follow instructions\"
+  echo \"5) Apply configuration with 'taito zone apply' and follow instructions\"
   echo
 "
 
