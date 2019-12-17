@@ -96,19 +96,20 @@ function terraform::run () {
       mkdir -p "./${env}"
 
       backend_opts=
-      if [[ -f templates/backend.tf ]]; then
-        backend_opts="-backend-config=${env}/backend.tf"
-        envsubst < templates/backend.tf > "${env}/backend.tf"
+      if [[ -f templates/backend.tfvars ]]; then
+        backend_opts="-backend-config=${env}/backend.tfvars"
+        envsubst < templates/backend.tfvars > "${env}/backend.tfvars"
       elif [[ -f ../common/backend.tf ]]; then
+        # TODO: Remove (for backward compatibility)
         backend_opts="-backend-config=../common/backend.tf"
       fi
 
       taito::executing_start
-      terraform init ${options} ${backend_opts}
+      terraform init -reconfigure ${options} ${backend_opts}
       if [[ -f import_state ]]; then
         ./import_state
       fi
-      terraform "${command}" ${options} -state="${env}/terraform.tfstate"
+      terraform "${command}" ${options} -state=${env}/terraform.tfstate
     )
 
     # Remove *.tmp files
@@ -130,7 +131,9 @@ function terraform::run_zone () {
     terraform::export_env "${scripts_path}"
     cd "${scripts_path}" || exit 1
     taito::executing_start
-    terraform init ${options}
+    if [[ ! -d .terraform ]]; then
+      terraform init ${options}
+    fi
     if [[ -f import_state ]]; then
       ./import_state
     fi
