@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+echo "Now run:"
+echo "taito zone apply continue"
+echo
+
+taito::call_next "${@}"
