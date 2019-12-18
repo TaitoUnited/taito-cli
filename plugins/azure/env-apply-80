@@ -21,8 +21,9 @@ echo "CI/CD, you can ignore this step. You should use the same CI/CD access key"
 echo "for all of your projects on this ${taito_zone} zone."
 echo
 echo "Make sure to take note of the app id and password."
-echo "Press enter when ready."
-read -r
+echo
+taito::confirm "Do you really want to generate a new CI/CD access key" "${default}" ||
+  taito::skip_to_next
 
 scope="/subscriptions/${taito_provider_billing_account_id:?}/resourceGroups/${taito_zone:?}"
 

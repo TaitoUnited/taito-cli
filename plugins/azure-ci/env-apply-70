@@ -31,6 +31,7 @@ echo
 echo "Pipeline"
 echo "- Source code location: ${taito_vc_provider:-GitHub}"
 echo "- Repository: ${taito_vc_repository}"
+echo "- Configuration: Existing Azure Pipelines YAML file (/azure-pipelines.yaml)"
 echo
 echo "--------------------------------"
 echo "OPTIONAL: Advanced configuration"
