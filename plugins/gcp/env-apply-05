@@ -2,10 +2,6 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-# Authenticate
-echo "Authenticating"
-gcp::authenticate
-
 # Ensure Google project exists (not created with terraform)
 if [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
   echo "Ensuring required GCP projects exist"

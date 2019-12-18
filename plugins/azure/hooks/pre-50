@@ -2,6 +2,13 @@
 # shellcheck source=../lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+# Authentication
+if [[ ${taito_command:?} == "env-apply" ]] && [[ ${taito_mode:-} != "ci" ]]; then
+  taito::print_plugin_title
+  echo "Authenticating"
+  azure::authenticate
+fi
+
 # Authentication for CI
 if [[ ${taito_mode:-} == "ci" ]]; then
   # Ensure that AWS credentials exist

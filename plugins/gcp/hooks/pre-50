@@ -2,6 +2,13 @@
 # shellcheck source=../lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+# Authentication
+if [[ ${taito_command:?} == "env-apply" ]] && [[ ${taito_mode:-} != "ci" ]]; then
+  taito::print_plugin_title
+  echo "Authenticating"
+  gcp::authenticate
+fi
+
 # Authenticate automatically if $GOOGLE_APPLICATION_CREDENTIALS has been set
 if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   account=$(gcloud config get-value account 2> /dev/null)
