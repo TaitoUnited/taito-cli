@@ -1,5 +1,14 @@
 #!/bin/bash
 
+function sql_file_path () {
+  local name=$1
+  if [[ -f "./${taito_target:?}/${name}" ]]; then
+    echo "./${taito_target:?}/${name}"
+  elif [[ -f "${taito_plugin_path:?}/resources/${name}" ]]; then
+    echo "${taito_plugin_path:?}/resources/${name}"
+  fi
+}
+
 function postgres::create_database () {
   (
     echo "Creating database"
@@ -10,7 +19,7 @@ function postgres::create_database () {
         -p "${database_port}" \
         -d postgres \
         -U "${database_username}" \
-        -f "${taito_plugin_path}/resources/create.sql" \
+        -f "$(sql_file_path create.sql)" \
         -v "database=${database_name}" \
         -v "dbusermaster=${database_master_username_internal:-postgres}" \
         -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
@@ -18,7 +27,8 @@ function postgres::create_database () {
       :
     done
 
-    if [[ -f "./${taito_target:-database}/db.sql" ]]; then
+    db_file_path="$(sql_file_path db.sql)"
+    if [[ ${db_file_path} ]]; then
       echo "Initializing database"
       until (
         taito::executing_start
@@ -26,7 +36,7 @@ function postgres::create_database () {
           -p "${database_port}" \
           -d "${database_name}" \
           -U "${database_username}" \
-          < "./${taito_target:-database}/db.sql" > "${taito_vout}"
+          < "${db_file_path}" > "${taito_vout}"
       ) do
         :
       done
@@ -45,7 +55,7 @@ function postgres::create_database () {
       -p "${database_port}" \
       -d "${database_name}" \
       -U "${database_build_username}" \
-      -f "${taito_plugin_path}/resources/grant.sql" \
+      -f "$(sql_file_path grant-users.sql)" \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
       -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
@@ -62,7 +72,7 @@ function postgres::drop_database () {
       -p "${database_port}" \
       -d postgres \
       -U "${database_username}" \
-      -f "${taito_plugin_path}/resources/drop.sql" \
+      -f "$(sql_file_path drop.sql)" \
       -v "database=${database_name}" \
       -v "databaseold=${database_name}_old" > "${taito_vout}" 2>&1
   ) do
@@ -93,7 +103,7 @@ function postgres::create_users () {
     psql -h "${database_host}" -p "${database_port}" \
       -d postgres \
       -U "${database_username}" \
-      -f "${taito_plugin_path}/resources/users.sql" \
+      -f "$(sql_file_path create-users.sql)" \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
       -v "dbuserapp=${database_app_username_internal}" \
@@ -114,7 +124,7 @@ function postgres::drop_users () {
       -p "${database_port}" \
       -d postgres \
       -U "${database_username}" \
-      -f "${taito_plugin_path}/resources/drop-users.sql" \
+      -f "$(sql_file_path drop-users.sql)" \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
       -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
