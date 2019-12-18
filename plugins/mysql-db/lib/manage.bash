@@ -1,5 +1,14 @@
 #!/bin/bash
 
+function sql_file_path () {
+  local name=$1
+  if [[ -f "./${taito_target:?}/${name}" ]]; then
+    echo "./${taito_target:?}/${name}"
+  elif [[ -f "${taito_plugin_path:?}/resources/${name}" ]]; then
+    echo "${taito_plugin_path:?}/resources/${name}"
+  fi
+}
+
 function mysql::create_database () {
   (
     echo "Creating database"
@@ -11,13 +20,14 @@ function mysql::create_database () {
         -P "${database_port}" \
         -D mysql \
         -u "${database_username}" \
-        -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source ${taito_plugin_path}/resources/create.sql ;" \
+        -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source $(sql_file_path create.sql) ;" \
         > "${taito_vout}"
     ) do
       :
     done
 
-    if [[ -f "./${taito_target:-database}/db.sql" ]]; then
+    db_file_path="$(sql_file_path db.sql)"
+    if [[ ${db_file_path} ]]; then
       echo "Initializing database"
       until (
         taito::executing_start
@@ -25,12 +35,12 @@ function mysql::create_database () {
         -P "${database_port}" \
         -D "${database_name}" \
         -u "${database_username}" \
-        -e "source ./${taito_target:-database}/db.sql ;" > "${taito_vout}"
+        -e "source ${db_file_path} ;" > "${taito_vout}"
       ) do
         :
       done
     else
-      echo "WARNING: File ./${taito_target:-database}/db.sql does not exist"
+      echo "WARNING: File ./${taito_target}/db.sql does not exist"
     fi
   )
 }
@@ -43,7 +53,7 @@ function mysql::drop_database () {
       -P "${database_port}" \
       -D mysql \
       -u "${database_username}" \
-      -e "set @database='${database_name}'; set @databaseold='${database_name}old'; source ${taito_plugin_path}/resources/drop.sql ;" \
+      -e "set @database='${database_name}'; set @databaseold='${database_name}old'; source $(sql_file_path drop.sql) ;" \
       > "${taito_vout}"
   ) do
     :
@@ -75,7 +85,7 @@ function mysql::create_users () {
       -P "${database_port}" \
       -D mysql \
       -u "${database_username}" \
-      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; set @passwordapp='${database_app_password}'; set @passwordmgr='${database_build_password}'; source ${taito_plugin_path}/resources/users.sql ;" \
+      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; set @passwordapp='${database_app_password}'; set @passwordmgr='${database_build_password}'; source $(sql_file_path create-users.sql) ;" \
       > "${taito_vout}" 2>&1
   ) do
     :
@@ -90,7 +100,7 @@ function mysql::drop_users () {
       -P "${database_port}" \
       -D mysql \
       -u "${database_username}" \
-      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source ${taito_plugin_path}/resources/drop-users.sql ;" \
+      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source $(sql_file_path drop-users.sql) ;" \
       > "${taito_vout}"
   ) do
     :

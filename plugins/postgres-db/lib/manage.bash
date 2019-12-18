@@ -41,7 +41,7 @@ function postgres::create_database () {
         :
       done
     else
-      echo "WARNING: File ./${taito_target:-database}/db.sql does not exist"
+      echo "WARNING: File ./${taito_target}/db.sql does not exist"
     fi
 
     taito::expose_db_user_credentials
