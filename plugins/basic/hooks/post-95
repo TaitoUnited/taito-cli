@@ -35,7 +35,25 @@ elif [[ ${taito_command} == "env-apply" ]]; then
       export taito_command_context='init'
       taito ${taito_options:-} init:${taito_env}"
   fi
+elif [[ ${taito_command} == "db-copy-between" ]]; then
+  mkdir -p ./tmp
+  tmpfile="./tmp/dump-$(date +%s).sql"
+  exec_after="
+    echo
+    export taito_command_context='db dump'
+    echo -e '${H1Ps}db dump${H1Pe} Dumping database'
+    taito ${taito_options:-} db-dump:${taito_target_env:?} ${tmpfile} $1
+    echo
+    export taito_command_context='db recreate'
+    echo -e '${H1Ps}db recreate${H1Pe} Recreating database'
+    taito ${taito_options:-} db-recreate:${taito_dest_env:?} $1
+    echo
+    export taito_command_context='db import'
+    echo -e '${H1Ps}db import${H1Pe} Importing database'
+    taito ${taito_options:-} db-import:${taito_dest_env:?} ${tmpfile} $1
+  "
 fi
+
 if [[ $exec_after ]] && [[ ${options} == *" --clean "* ]]; then
   # taito xxx --clean
   exec_after="${exec_after} --clean"
