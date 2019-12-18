@@ -2,10 +2,19 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-( [[ ${kubernetes_name:-} ]] && \
-  taito::confirm "Configure gcp build notifications"
-) || taito::skip_to_next "${@}"
+# TODO: move to Terraform module
+if [[ ${kubernetes_name:-} ]] &&
+   taito::confirm "Configure gcp build notifications"; then
 
-gcp-zone::setup_cloud_build_slack_notifications
+  if [[ ${taito_messaging_app:-} == "slack" ]] &&
+     [[ ${taito_messaging_webhook:-} ]]; then
+    gcp-zone::setup_cloud_build_slack_notifications
+  else
+    echo "Skipping because of incomplete or unsupported configuration:"
+    echo "taito_messaging_app=${taito_messaging_app}"
+    echo "taito_messaging_builds_channel=${taito_messaging_builds_channel}"
+    echo "taito_messaging_webhook=${taito_messaging_webhook}"
+  fi
+fi
 
 taito::call_next "${@}"
