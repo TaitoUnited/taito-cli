@@ -267,6 +267,16 @@ taito::core::export_project_config "${taito_env}"
 # For Azure
 export taito_zone_short=${taito_zone//-/}
 
+# Set output formatting
+export H1s="${taito_style_h1_s:-\\x1B[92m\\x1B[1m[}"  # Heading 1 start: Light green, bold
+export H1e="${taito_style_h1_e:-]\\x1B[0m}"           # Heading 1 end
+export H1Ps="${taito_style_h1_s:-\\x1B[95m\\x1B[1m}"  # Heading 1 prefix start: Light green, bold
+export H1Pe="${taito_style_h1_e:-\\x1B[0m}"           # Heading 1 prefix end
+export H2s="${taito_style_h2_s:-\\x1B[95m[}"          # Heading 2 start: Light magenta
+export H2e="${taito_style_h2_e:-]\\x1B[0m}"           # Heading 2 end
+export NOTEs="${taito_style_note_s:-\\x1B[95m}"       # Note start: Ligth blue background
+export NOTEe="${taito_style_note_e:-\\x1B[0m}"        # Note end
+
 if [[ ${taito_command} == "check" ]]; then
   if [[ $(whoami) == "taito" ]] || [[ $(whoami) == "root" ]]; then
     echo
@@ -308,15 +318,13 @@ if [[ ${taito_command} == "build-prepare" ]]; then
   echo
 fi
 
-# Set output formatting
-export H1s="${taito_style_h1_s:-\\x1B[92m\\x1B[1m[}"  # Heading 1 start: Light green, bold
-export H1e="${taito_style_h1_e:-]\\x1B[0m}"           # Heading 1 end
-export H1Ps="${taito_style_h1_s:-\\x1B[95m\\x1B[1m}"  # Heading 1 prefix start: Light green, bold
-export H1Pe="${taito_style_h1_e:-\\x1B[0m}"           # Heading 1 prefix end
-export H2s="${taito_style_h2_s:-\\x1B[95m[}"          # Heading 2 start: Light magenta
-export H2e="${taito_style_h2_e:-]\\x1B[0m}"           # Heading 2 end
-export NOTEs="${taito_style_note_s:-\\x1B[95m}"       # Note start: Ligth blue background
-export NOTEe="${taito_style_note_e:-\\x1B[0m}"        # Note end
+if [[ ${taito_command} == "db-recreate" ]] &&
+   [[ ${taito_target_env} != "local" ]]; then
+  taito::print_note_start
+  echo "NOTE: You may need to stop the application first with 'taito stop:${taito_target_env}'"
+  echo "to end all database connections."
+  taito::print_note_end
+fi
 
 export taito_command_context_prefix=
 if [[ ${taito_command_context:-} ]]; then
@@ -351,11 +359,10 @@ if (( RANDOM % 4 == 0 ))
    [[ ${taito_command} != "env-apply" ]]; then
   if [[ ${taito_project:-} != *"-template" ]] && \
      [[ $(grep "\\* \\[ \\] All done" CONFIGURATION.md 2> /dev/null || :) != "" ]]; then
-    echo
-    echo "--------------------------------------------------------"
+    taito::print_note_start
     echo "NOTE: This project has not yet been fully configured."
     echo "See the '[ ] All done' checkboxes in CONFIGURATION.md."
-    echo "--------------------------------------------------------"
+    taito::print_note_end
   fi
 fi
 
