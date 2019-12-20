@@ -6,7 +6,22 @@ export template="${1:?Template not given}"
 branch=${2:-master}
 
 export template_source_git="${template_default_source_git:?}"
-export template_dest_git="${template_default_dest_git:?}"
+export template_dest_git="${template_default_dest_git}"
+
+if [[ ! ${template_dest_git} ]] ||
+   [[ ${template_dest_git} == *"myorganization"* ]]; then
+  echo "ERROR: template_default_dest_git has not been configured."
+  echo "Configure template_default_dest_git in your ~/.taito/taito-config.sh."
+  echo
+  echo "Examples:"
+  echo
+  echo "template_default_dest_git=https://github.com/myorganization"
+  echo "template_default_dest_git=git@github.com:myorganization"
+  echo "template_default_dest_git=https://github.com/myusername"
+  echo "template_default_dest_git=git@github.com:myusername"
+  echo
+  exit 1
+fi
 
 # TODO read template_source_git from template_name if it has been given as prefix
 
