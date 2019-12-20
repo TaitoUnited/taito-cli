@@ -142,8 +142,10 @@ function taito::validate_secret_values () {
 export -f taito::validate_secret_values
 
 function taito::print_secret_values () {
-  local save_to_disk=${1}
+  local save_to_disk=$1
+  local show_files=$2
   local taito_secrets_path="${taito_project_path:?}/tmp/secrets/taito-secrets"
+
   if [[ ${save_to_disk} == "true" ]]; then
     rm -f "${taito_secrets_path}" &> /dev/null || :
     mkdir -p "${taito_project_path}/tmp/secrets"
@@ -159,11 +161,14 @@ function taito::print_secret_values () {
       if [[ ${secret_value} ]]; then
         echo "export ${secret_value_var}=\"${secret_value}\"; " >> "${taito_secrets_path}"
       fi
-    else
+    elif [[ ${secret_value} ]]; then
       echo "Secret ${secret_name}:"
       if [[ ${secret_method} == "htpasswd-plain"* ]]; then
         # Show base64 decoded value
         echo "${secret_value}" | base64 --decode | sed 's/{PLAIN}/ /'
+      elif [[ ${secret_value_format} == "file" ]] && [[ ${show_files} == "true" ]]; then
+        # Show base64 decoded value
+        echo "${secret_value}" | base64 --decode
       elif [[ ${secret_value_format} == "file" ]] && [[ ${secret_value} ]]; then
         echo "FILE"
       else

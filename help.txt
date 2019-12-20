@@ -63,6 +63,7 @@ QUICK EXAMPLES
     info:dev                           # Show information required for signing in
     status:dev                         # Show application status
     secrets:dev                        # Show secrets
+    secrets:dev jwt                    # Show a specific secret
 
   APPLICATION CONTROL
     start:dev                          # Start application
@@ -456,8 +457,8 @@ PROJECT: BASIC OPERATIONS
     TIP: Enable the 'make' or 'npm' plugin and implement docs script in your
     makefile/package.json.
 
-  secrets[:ENV]
-    Retrieves all secrets that might be needed by a developer or CI/CD build.
+  secrets[:ENV] [NAME] [--show-files]
+    Retrieves secrets that might be needed by a developer or CI/CD build.
 
   status[:ENV] [--all] [--all-namespaces]
     Show status summary of environment (status of services, pods, etc.).
