@@ -183,23 +183,13 @@ export -f taito::print_secret_values
 
 function taito::print_random_string () {
   local length=$1
-  local value
-
-  # TODO better tool for this?
-  value=$(openssl rand -base64 40 | sed -e 's/[^a-zA-Z0-9]//g')
-  if [[ ${#value} -gt $length ]]; then
-    value="${value: -$length}"
-  fi
-  echo "$value"
+  pwgen -sB "${length}" 1
 }
 export -f taito::print_random_string
 
 function taito::print_random_words () {
   local num_of_words=$1
-
-  cat /usr/share/dict/words | sort -R | head -n $num_of_words | \
-    tr -dc '[:alnum:]\n\r' | tr '[:upper:]' '[:lower:]' | xargs echo | \
-    tr ' ' '-'
+  xkcdpass -n "${num_of_words}"
 }
 export -f taito::print_random_words
 
