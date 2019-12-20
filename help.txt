@@ -951,6 +951,12 @@ ZONE
 
 GLOBAL: PASSWORDS
 
+  random string: LENGTH
+    Generate a random string.
+
+  random words: NUM_OF_WORDS
+    Generate random words.
+
   passwd share
     Sets a one-time shared password that can be read only once using a
     magic link and will be removed automatically after a while if it has not
@@ -984,12 +990,6 @@ UTILS
     Commits current changes to the Taito CLI container. For example, you
     can start a shell running 'taito shell', make some changes and then
     commit all changes by running 'taito util commit' inside the container.
-
-  util random string: LENGTH
-    Generate a random string.
-
-  util random words: NUM_OF_WORDS
-    Generate random words.
 
   util test:TARGET:ENV [SUITE_FILTER] [TEST_FILTER]
     Run test suites for the given container.

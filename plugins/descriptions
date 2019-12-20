@@ -30,6 +30,10 @@ echo "project create: TEMPLATE   &focus" \
   "# Create a project based on a template"
 
 # Passwords
+echo "random string: LENGTH            " \
+  "# Generate a random string"
+echo "random words: NUM_OF_WORDS       " \
+  "# Generate random words"
 # TODO: enable only if available
 # echo "passwd share                   " \
 #   "# Share a password using a one-time magic link"

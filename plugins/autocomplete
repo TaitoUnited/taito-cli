@@ -21,6 +21,8 @@ echo "workspace kill"
 echo "project create: TEMPLATE"
 
 # Passwords
+echo "random string: LENGTH"
+echo "random words: NUM_OF_WORDS"
 # TODO enable only when available
 # echo "passwd share"
 # echo "passwd list"
