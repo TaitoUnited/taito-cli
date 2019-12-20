@@ -94,7 +94,9 @@ if [[ ${was_executed} == false ]]; then
       # Show matching commands
       taito::print_plugin_title
       echo "Unknown command: '${taito_orig_command//-/ }'. Perhaps one of the following commands is the one"
-      echo "you meant to run. Run 'taito -h' to get more help."
+      echo "you meant to run. You may get this error also if you execute the command"
+      echo "in a wrong directory, and therefore there are no plugins enabled that"
+      echo "implement the command in question. Run 'taito -h' to get more help."
       export taito_command_chain=""
       export taito_plugin_path="${taito_plugin_path}"
       help=$("${taito_plugin_path}/__help-50" "${taito_orig_command}")
