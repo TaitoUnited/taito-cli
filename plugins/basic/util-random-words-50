@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+# TODO: For backwards compatibility. Remove from here, and from common.sh.
+taito::print_random_words "$@"
+taito::call_next "${@}"
