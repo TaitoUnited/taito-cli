@@ -46,8 +46,8 @@ function taito::expose_db_user_credentials () {
 export -f taito::expose_db_user_credentials
 
 function taito::get_secret_value_format () {
-  if [[ ${secret_method} == "random" ]] ||
-     [[ ${secret_method} == "manual" ]]
+  if [[ ${secret_method} == "random"* ]] ||
+     [[ ${secret_method} == "manual"* ]]
   then
     echo "literal"
   else
@@ -189,7 +189,7 @@ export -f taito::print_random_string
 
 function taito::print_random_words () {
   local num_of_words=$1
-  xkcdpass -n "${num_of_words}"
+  xkcdpass -n "${num_of_words}" -d "-"
 }
 export -f taito::print_random_words
 

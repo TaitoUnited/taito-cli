@@ -70,7 +70,7 @@ function generate-secrets::generate_by_type () {
 
   secret_value=
   if [[ ${secret_default_value:-} ]] &&
-     [[ ${secret_method} != "random" ]] &&
+     [[ ${secret_method} != "random"* ]] &&
      [[ ${secret_name} != *"serviceaccount"* ]] &&
      taito::confirm \
        "Default value exists. Use the default value for ${taito_env} environment?"
@@ -79,8 +79,31 @@ function generate-secrets::generate_by_type () {
   fi
 
   if [[ -z "${secret_value}" ]]; then
-    case "${secret_method}" in
+    case "${secret_method%%-*}" in
+      random)
+        length=${secret_method##*-}
+        if [[ ${length} == "random" ]]; then
+          length=30
+        elif [[ ${length} == "words" ]]; then
+          length=6
+        fi
+
+        if [[ ${taito_env} == "local" ]]; then
+          echo "Using '${taito_default_password:?}' as random value for local environment"
+          secret_value="${taito_default_password}"
+        elif [[ ${secret_method} == "random-words"* ]]; then
+          secret_value=$(taito::print_random_words ${length})
+          echo "Random words generated (${length} words)"
+        elif [[ ${secret_method} == "random"* ]]; then
+          secret_value=$(taito::print_random_string ${length})
+          echo "Random string generated (${length} characters)"
+        fi
+        ;;
       manual)
+        minlength=${secret_method##*-}
+        if [[ ${minlength} == "manual" ]]; then
+          minlength=8
+        fi
         if [[ ${taito_provider:-} == "azure" ]] && \
            [[ ${secret_name} == *"storage"* ]]; then
           echo ------------------------------------------------------------------------------
@@ -102,8 +125,10 @@ function generate-secrets::generate_by_type () {
           echo
           echo "[${title}]"
         fi
-        while [[ ${#secret_value} -lt 8 ]] || [[ ${secret_value} != "${secret_value2}" ]]; do
-          echo "New secret value (min 8 characters):"
+        while [[ ${#secret_value} -lt ${minlength} ]] ||
+              [[ ${secret_value} != "${secret_value2}" ]]
+        do
+          echo "New secret value (min ${minlength} characters):"
           read -r -s secret_value
           echo "New secret value again:"
           read -r -s secret_value2
@@ -193,7 +218,7 @@ function generate-secrets::generate_by_type () {
         echo "Press enter to continue"
         echo read -r
         ;;
-      htpasswd|htpasswd-plain)
+      htpasswd)
         mkdir -p ./tmp
         file="./tmp/${secret_name}"
         rm -f "${file}"
@@ -222,15 +247,6 @@ function generate-secrets::generate_by_type () {
           sed -i -- "s/:/:{PLAIN}/" "${file}"
         fi
         secret_value="secret_file:${file}"
-        ;;
-      random)
-        if [[ ${taito_env} == "local" ]]; then
-          echo "Using '${taito_default_password:?}' as random value for local environment"
-          secret_value="${taito_default_password}"
-        else
-          secret_value=$(taito::print_random_string 30)
-          echo "Random value generated"
-        fi
         ;;
       *)
         if [[ ${secret_method} != "read/"* ]] && \
