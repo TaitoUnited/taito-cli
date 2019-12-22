@@ -144,6 +144,7 @@ export -f taito::validate_secret_values
 function taito::print_secret_values () {
   local save_to_disk=$1
   local show_files=$2
+  local secret_filter=$3
   local taito_secrets_path="${taito_project_path:?}/tmp/secrets/taito-secrets"
 
   if [[ ${save_to_disk} == "true" ]]; then
@@ -155,6 +156,10 @@ function taito::print_secret_values () {
   secret_names=(${taito_secret_names})
   for secret_name in "${secret_names[@]}"
   do
+    if [[ ${secret_filter} ]] && [[ ${secret_name} != *"${secret_filter}"* ]]; then
+      secret_index=$((${secret_index}+1))
+      continue
+    fi
     taito::expose_secret_by_index ${secret_index}
 
     if [[ ${save_to_disk} == "true" ]]; then
