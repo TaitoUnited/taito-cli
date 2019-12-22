@@ -97,8 +97,8 @@ Database plugins typically implement the following commands:
 
 - `taito db *`: Manage database with Taito CLI commands.
 - `taito env apply`: Create a database and database users (if not managed with terraform)
-- `taito env rotate`: Set new database user passwords (if not managed with terraform)
 - `taito env destroy`: Delete a database and database users (if not managed with terraform)
+- `taito secret rotate`: Set new database user passwords (if not managed with terraform)
 
 Plugins:
 
@@ -203,9 +203,9 @@ Plugins:
 
 Secret management plugins typically implement the following commands:
 
+- `taito secret show`: Load and show the secrets.
+- `taito secret rotate`: Create and store secrets on `secret rotate`.
 - `taito env apply`: Create and store secrets on `env apply`.
-- `taito env rotate`: Create and store secrets on `env rotate`.
-- `taito secrets`: Load and show the secrets.
 - Pre-hook for reading a secret on demand.
 
 Plugins:

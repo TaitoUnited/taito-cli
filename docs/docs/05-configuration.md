@@ -256,7 +256,7 @@ You can define parameters for your e2e and integration test suites by using `tes
 
 ### Secret management
 
-Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito env rotate:ENV` commands. See [taito-config.sh](https://github.com/TaitoUnited/full-stack-template/blob/master/taito-config.sh) of full-stack-template for examples.
+Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito secret rotate:ENV` commands. See [taito-config.sh](https://github.com/TaitoUnited/full-stack-template/blob/master/taito-config.sh) of full-stack-template for examples.
 
 Secret naming convention is **name.property[/namespace]:method**. You should avoid undescores in secret names as they are not valid in Kubernetes. For example:
 

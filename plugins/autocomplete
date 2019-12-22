@@ -182,8 +182,6 @@ if [[ ${taito_project:-} ]]; then
       echo "env apply${suffix} --init --start"
       echo "env apply${suffix} --init --start --clean"
     fi
-    echo "env rotate${suffix}"
-    echo "env rotate${param} FILTER"
     echo "env destroy${suffix}"
 
     echo "start${suffix}"
@@ -194,8 +192,16 @@ if [[ ${taito_project:-} ]]; then
     echo "init${suffix} --clean"
     echo "info${suffix}"
     echo "test${suffix}"
-    echo "secrets${suffix}"
     echo "status${suffix}"
+
+    # Secrets
+    echo "secret show${suffix}"
+    echo "secret show${param} NAME"
+    echo "secret rotate${suffix}"
+    echo "secret rotate${param} NAME"
+    for dest_env in ${taito_environments/$env/}; do
+      echo "secret copy between${param_not_empty}:${dest_env} NAME"
+    done
 
     if [[ ${cprefix} == "db"* ]] || [[ ${cprefix} == "*" ]]; then
       for database in $(taito::print_targets_of_type database)

@@ -9,7 +9,7 @@ taito project-destroy;\
 taito env-apply:dev;\
 taito env-update:dev;\
 taito env-destroy:dev;\
-taito env-rotate:dev;\
+taito secret-rotate:dev;\
 taito env-cert:dev;\
 "
 

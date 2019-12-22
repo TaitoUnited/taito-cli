@@ -14,7 +14,7 @@ QUICK EXAMPLES
     db connect                         # Access default database from command line
     db add: articles                   # Add a migration for default database
     db deploy                          # Deploy migrations to default database
-    env rotate: my-secret              # Set value for secret (restart all containers after)
+    secret rotate: my-secret           # Set value for secret (restart all containers after)
     install                            # Install newly added libraries (restart container after)
     restart:server                     # Restart server container
     restart                            # Restart all containers
@@ -62,8 +62,13 @@ QUICK EXAMPLES
   INFORMATION
     info:dev                           # Show information required for signing in
     status:dev                         # Show application status
-    secrets:dev                        # Show secrets
-    secrets:dev jwt                    # Show a specific secret
+
+  SECRETS
+    secret show:dev                    # Show secrets
+    secret show:dev jwt                # Show jwt secret
+    secret rotate:dev                  # Rotate secrets
+    secret rotate:dev jwt              # Rotate jwt secret
+    secret copy between:dev:test jwt   # Copy jwt secret from dev to test
 
   APPLICATION CONTROL
     start:dev                          # Start application
@@ -179,8 +184,6 @@ QUICK EXAMPLES
   PROJECT INFRASTRUCTURE MANAGEMENT
     env info:dev                       # Show environment information
     env apply:dev                      # Apply project specific changes to dev env
-    env rotate:dev                     # Rotate project specific secrets in dev env
-    env rotate:dev gcp                 # Rotate project specific gcp secrets in dev env
     env destroy:dev                    # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
@@ -226,8 +229,8 @@ QUICK EXAMPLES
   UTILS:
     taito util browser: https://hs.fi  # Launch browser
     taito util commit                  # Commit changes to Taito CLI
-    taito -q util random string: 30    # Generate a random string
-    taito -q util random words: 3      # Generate random words
+    taito -q random string: 30         # Generate a random string
+    taito -q random words: 3           # Generate random words
     taito util test:client:dev jest    # Run all tests of 'jest' test suite
 
 OPTIONS
@@ -549,6 +552,17 @@ PROJECT: BASIC OPERATIONS
   clean[:TARGET]
     Clean.
 
+PROJECT: SECRETS
+
+  secret show[:ENV] [NAME]
+    Show project specific secrets.
+
+  secret rotate[:ENV] [NAME]
+    Rotate project specific secrets.
+
+  secret copy between:dev:test NAME
+    Copy secret from dev to test.
+
 PROJECT: LINKS
 
   > You can specify project specific browser links with the links plugin.
@@ -746,9 +760,9 @@ PROJECT: DATABASE OPERATIONS
     you should use with your database GUI tool to connect the database. If
     proxy is not required, the command shows connection details nevertheless.
     If you don't have a personal account for the database, you can get a
-    working username and password by running `taito secrets:ENV`. Note that
+    working username and password by running `taito secret show:ENV`. Note that
     passwords are rotated once in a while, thus, if you get an authentication
-    error, retrieve new secrets by running `taito secrets:ENV` again.
+    error, retrieve new secrets by running `taito secret show:ENV` again.
 
   db connect[:TARGET][:ENV] [USERNAME]
     Access database from command line. DB proxy connection and secrets are
@@ -924,9 +938,6 @@ PROJECT: ENVIRONMENT SETUP
 
   env destroy:ENV [NAME]
     Destroy an environment.
-
-  env rotate:ENV [NAME_FILTER]
-    Rotate secrets for an environment.
 
 ZONE
 

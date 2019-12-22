@@ -97,10 +97,10 @@ secrets:
 Set secret value for each environment:
 
 ```shell
-taito env rotate my-secret
-taito env rotate:dev my-secret
-taito env rotate:test my-secret
-taito env rotate:prod my-secret
+taito secret rotate: my-secret
+taito secret rotate:dev my-secret
+taito secret rotate:test my-secret
+taito secret rotate:prod my-secret
 ```
 
 ### 6.5. User specific variables

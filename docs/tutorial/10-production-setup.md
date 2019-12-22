@@ -43,7 +43,7 @@ fi
 Create a private key and a certificate signing request with the following command. The private key will be stored to Kubernetes and the certificate signing request will be saved to your local disk.
 
 ```shell
-taito env rotate:prod myapp-mydomain-com-1.tls.key
+taito secret rotate:prod myapp-mydomain-com-1.tls.key
 ```
 
 Send the `.csr` file to the Certificate Authority.
@@ -80,7 +80,7 @@ fi
 Save the chained crt file to Kubernetes:
 
 ```shell
-taito env rotate:prod myapp-mydomain-com-1.tls.crt
+taito secret rotate:prod myapp-mydomain-com-1.tls.crt
 ```
 
 #### 10.4.4. Take the new certificate into use

@@ -266,10 +266,6 @@ if [[ ${taito_project:-} ]]; then
       echo "env apply${suffix} --start --init               " \
         "# Apply changes to ${env}, start and initialize"
     fi
-    echo "env rotate${suffix}                &focus" \
-      "# Rotate project specific secrets in ${env} environment"
-    echo "env rotate${param} FILTER          &focus" \
-      "# Rotate project specific secrets in ${env} environment"
     echo "env destroy${suffix}               &focus" \
       "# Destroy the ${env} environment of the current project"
 
@@ -288,10 +284,22 @@ if [[ ${taito_project:-} ]]; then
       "# Show info required for logging in to app on ${env} environment"
     echo "test${suffix}                            " \
       "# Run integration and e2e tests on ${env} environment"
-    echo "secrets${suffix}                         " \
-      "# Show secrets of ${env} environment"
     echo "status${suffix}                          " \
       "# Show application status of ${env} environment"
+
+    # Secrets
+    echo "secret show${suffix}                     " \
+      "# Show project specific secrets of ${env} environment"
+    echo "secret show${param} NAME                 " \
+      "# Show project specific secrets of ${env} environment"
+    echo "secret rotate${suffix}             &focus" \
+      "# Rotate project specific secrets of ${env} environment"
+    echo "secret rotate${param} NAME               " \
+      "# Rotate project specific secrets of ${env} environment"
+    for dest_env in ${taito_environments/$env/}; do
+      echo "secret copy between${param_not_empty}:${dest_env} NAME" \
+        "# Copy secret from ${env} environment to ${dest_env}"
+    done
 
     if [[ ${cprefix} == "db"* ]] || [[ ${cprefix} == "*" ]]; then
       for database in $(taito::print_targets_of_type database)

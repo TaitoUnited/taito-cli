@@ -162,10 +162,12 @@ function taito::print_secret_values () {
         echo "export ${secret_value_var}=\"${secret_value}\"; " >> "${taito_secrets_path}"
       fi
     elif [[ ${secret_value} ]]; then
-      echo "Secret ${secret_name}:"
+      if [[ ${taito_quiet} != "true" ]]; then
+        echo "Secret ${secret_name}:"
+      fi
       if [[ ${secret_method} == "htpasswd-plain"* ]]; then
         # Show base64 decoded value
-        echo "${secret_value}" | base64 --decode | sed 's/{PLAIN}/ /'
+        echo "${secret_value}" | base64 --decode | sed 's/{PLAIN}//'
       elif [[ ${secret_value_format} == "file" ]] && [[ ${show_files} == "true" ]]; then
         # Show base64 decoded value
         echo "${secret_value}" | base64 --decode
@@ -174,7 +176,9 @@ function taito::print_secret_values () {
       else
         echo "${secret_value}"
       fi
-      echo
+      if [[ ${taito_quiet} != "true" ]]; then
+        echo
+      fi
     fi
     secret_index=$((${secret_index}+1))
   done

@@ -461,6 +461,18 @@ if [[ ${taito_command} == "__auth" ]]; then
   exit 130
 fi
 
+if [[ ${taito_command} == "secrets" ]]; then
+  echo
+  echo "NOTE: 'taito secrets' is no longer. Run 'taito secret show:ENV'."
+  exit 130
+fi
+
+if [[ ${taito_command} == "env-rotate" ]]; then
+  echo
+  echo "NOTE: 'env rotate' is no longer. Run 'taito secret rotate:ENV'."
+  exit 130
+fi
+
 # Validate vc operations
 if [[ ${taito_command} == "vc-"* ]]; then
   echo
