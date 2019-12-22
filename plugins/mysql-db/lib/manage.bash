@@ -16,7 +16,8 @@ function mysql::create_database () {
     # MYSQL_PWD="${MYSQL_PWD}"
     until (
       taito::executing_start
-      mysql -h "${database_host}" \
+      mysql -p \
+        -h "${database_host}" \
         -P "${database_port}" \
         -D mysql \
         -u "${database_username}" \
@@ -31,7 +32,8 @@ function mysql::create_database () {
       echo "Initializing database"
       until (
         taito::executing_start
-        mysql -h "${database_host}" \
+        mysql -p \
+        -h "${database_host}" \
         -P "${database_port}" \
         -D "${database_name}" \
         -u "${database_username}" \
@@ -49,7 +51,8 @@ function mysql::drop_database () {
   echo "Dropping database"
   until (
     taito::executing_start
-    mysql -h "${database_host}" \
+    mysql -p \
+      -h "${database_host}" \
       -P "${database_port}" \
       -D mysql \
       -u "${database_username}" \
@@ -81,7 +84,8 @@ function mysql::create_users () {
 
   until (
     taito::executing_start
-    mysql -h "${database_host}" \
+    mysql -p \
+      -h "${database_host}" \
       -P "${database_port}" \
       -D mysql \
       -u "${database_username}" \
@@ -96,7 +100,8 @@ function mysql::drop_users () {
   echo "Dropping users"
   until (
     taito::executing_start
-    mysql -h "${database_host}" \
+    mysql -p \
+      -h "${database_host}" \
       -P "${database_port}" \
       -D mysql \
       -u "${database_username}" \
