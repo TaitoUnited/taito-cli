@@ -41,19 +41,6 @@ taito_project_path=$(taito::core::print_project_path)
 # Set working directory
 cd "${taito_project_path}"
 
-if [[ ${taito_mode} == "ci" ]]; then
-  echo
-  echo "--------------------------------------------------------------"
-  echo taito "$@"
-  echo "--------------------------------------------------------------"
-  echo
-  echo "USER: $(whoami)"
-  echo "HOME: ${HOME}"
-  echo "PWD: ${PWD}"
-  echo "taito_project_path: ${taito_project_path}"
-  echo
-fi
-
 # Parse options
 verbose=false # "${taito_verbose:-false}"
 debug=false # "${taito_debug:-false}"
@@ -119,6 +106,19 @@ do
     shift || :
   fi
 done
+
+if [[ ${taito_mode} == "ci" ]] && [[ ${quiet} == "false" ]]; then
+  echo
+  echo "--------------------------------------------------------------"
+  echo taito "$@"
+  echo "--------------------------------------------------------------"
+  echo
+  echo "USER: $(whoami)"
+  echo "HOME: ${HOME}"
+  echo "PWD: ${PWD}"
+  echo "taito_project_path: ${taito_project_path}"
+  echo
+fi
 
 # Convert space command syntax to internal hyphen syntax
 formatted=()
