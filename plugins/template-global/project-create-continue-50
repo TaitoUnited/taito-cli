@@ -55,12 +55,12 @@ rm -f ./_template-config.sh
 taito ${taito_options:-} project docs
 
 
-doc="README.md#configuration"
-if [[ -f "DEVELOPMENT.md" ]]; then
-  doc="DEVELOPMENT.md#configuration"
+doc="scripts/taito/README.md#configuration"
+if [[ -f "scripts/taito/DEVELOPMENT.md" ]]; then
+  doc="scripts/taito/DEVELOPMENT.md#configuration"
 fi
-if [[ -f "CONFIGURATION.md" ]]; then
-  doc="CONFIGURATION.md"
+if [[ -f "scripts/taito/CONFIGURATION.md" ]]; then
+  doc="scripts/taito/CONFIGURATION.md"
 fi
 
 read -t 1 -n 10000 || :
