@@ -350,11 +350,6 @@ touch "${log_file_fg}"
 function cleanup {
   set +e
 
-  # Remove temporary secrets (db proxy secret saved for running remote tests)
-  rm -rf "${taito_project_path}/tmp/secrets" &> /dev/null
-  find ${taito_project_path}/secrets/* -type d -not -name 'local' \
-    -print0 2> /dev/null | xargs -0 rm -rf --
-
   # Kill the background execution process
   pkill -f "${log_file}" &> /dev/null || (
     processes=$(ps | grep "${log_file}")

@@ -429,7 +429,9 @@ function taito::expose_required_secrets_filter () {
       secret_purpose="database access"
       secret_filter="db"
     elif [[ ${taito_command} == "test" ]] &&
+         [[ -f taito-testing-config.sh ]] &&
          [[ "stag canary prod" != *"${taito_env}"* ]]; then
+      # TODO: remove (for backwards compatibility)
       fetch_secrets="true"
       save_secrets_to_disk="true"
       secret_purpose="test suites"

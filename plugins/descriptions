@@ -292,6 +292,10 @@ if [[ ${taito_project:-} ]]; then
       "# Show project specific secrets of ${env} environment"
     echo "secret show${param} NAME                 " \
       "# Show project specific secrets of ${env} environment"
+    echo "secret export${suffix}                     " \
+      "# Export project specific secrets of ${env} environment to local disk"
+    echo "secret export${param} NAME                 " \
+      "# Export project specific secrets of ${env} environment to local disk"
     echo "secret rotate${suffix}             &focus" \
       "# Rotate project specific secrets of ${env} environment"
     echo "secret rotate${param} NAME               " \

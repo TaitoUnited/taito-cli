@@ -708,15 +708,19 @@ if [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
    [[ ${taito_command} == "db-proxy" ]] || \
    [[ ${taito_command} == "build-prepare" ]] || \
    [[ ${taito_command} == "build-release" ]] || \
+   # TODO: Remove (for backwards compatibility)
    ( \
      [[ ${taito_command} == "test" ]] && \
+     [[ -f taito-testing-config.sh ]] && \
      [[ "stag canary prod" != *"${taito_env}"* ]] \
    ); then
   taito_command_requires_secrets="true"
 fi
 
 export taito_tmp_secrets_dir="/tmp/secrets/${taito_project:-zone}/${taito_env:?}"
-if [[ ${taito_command} == "test" ]] || [[ ${taito_command} == "util-test" ]]; then
+if [[ ${taito_command} == "test" ]] ||
+   [[ ${taito_command} == "util-test" ]] ||
+   [[ ${taito_command} == "secret-export" ]]; then
   # Save secrets on project dir for running tests
   taito_tmp_secrets_dir="${taito_project_path:-zone}/tmp/secrets/${taito_env:?}"
 fi

@@ -64,9 +64,11 @@ QUICK EXAMPLES
     status:dev                         # Show application status
 
   SECRETS
-    secret show:dev                    # Show secrets
+    secret show:dev                    # Show all secrets
     secret show:dev jwt                # Show jwt secret
-    secret rotate:dev                  # Rotate secrets
+    secret export:dev                  # Export all secrets to local disk
+    secret export:dev jwt              # Export jwt secret to local disk
+    secret rotate:dev                  # Rotate all secrets
     secret rotate:dev jwt              # Rotate jwt secret
     secret copy between:dev:test jwt   # Copy jwt secret from dev to test
 
@@ -556,6 +558,9 @@ PROJECT: SECRETS
 
   secret show[:ENV] [NAME]
     Show project specific secrets.
+
+  secret export[:ENV] [NAMES...]
+    Export project specific secrets.
 
   secret rotate[:ENV] [NAME]
     Rotate project specific secrets.

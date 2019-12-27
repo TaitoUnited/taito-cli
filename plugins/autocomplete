@@ -197,6 +197,8 @@ if [[ ${taito_project:-} ]]; then
     # Secrets
     echo "secret show${suffix}"
     echo "secret show${param} NAME"
+    echo "secret export${suffix}"
+    echo "secret export${param} NAME"
     echo "secret rotate${suffix}"
     echo "secret rotate${param} NAME"
     for dest_env in ${taito_environments/$env/}; do
