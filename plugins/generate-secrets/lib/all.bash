@@ -248,6 +248,17 @@ function generate-secrets::generate_by_type () {
         fi
         secret_value="secret_file:${file}"
         ;;
+      template)
+        mkdir -p ./tmp
+        file="./tmp/${secret_name}"
+        rm -f "${file}"
+        touch "${file}"
+        template_name=${secret_method#*-}
+        sed "s/\$PROJECT/${taito_project//-/_}/g" "scripts/${template_name}" | \
+          sed "s/\$ENV/${taito_env//-/_}/g" | \
+          envsubst > "${file}"
+        secret_value="secret_file:${file}"
+        ;;
       *)
         if [[ ${secret_method} != "read/"* ]] && \
            [[ ${secret_method} != "copy/"* ]]; then

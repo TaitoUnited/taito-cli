@@ -65,11 +65,16 @@ taito_secrets="
 "
 ```
 
-You can use the following types in your secret definition:
+You can use the following methods in your secret definition:
 
-- `random`: Randomly generated string.
-- `manual`: Manually entered string.
+- `random`: Randomly generated string (30 characters).
+- `random-N`: Randomly generated string (N characters).
+- `random-words`: Randomly generated words (6 words).
+- `random-words-N`: Randomly generated words (N words).
+- `manual`: Manually entered string (min 8 characters).
+- `manual-N`: Manually entered string (min N characters).
 - `file`: File. The file path is entered manually.
+- `template-NAME`: File generated from a template by substituting environment variables and secrets values.
 - `htpasswd`: htpasswd file that contains 1-N user credentials. User credentials are entered manually.
 - `htpasswd-plain`: htpasswd file that contains 1-N user credentials. Passwords are stored in plain text. User credentials are entered manually.
 - `csrkey`: Secret key generated for certificate signing request (CSR).
