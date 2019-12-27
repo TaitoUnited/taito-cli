@@ -1,0 +1,22 @@
+#!/bin/bash -e
+# shellcheck source=../do/lib/all.bash
+. "${taito_cli_path:?}/plugins/do/lib/all.bash"
+
+( [[ ${kubernetes_name:-} ]] && \
+    taito::confirm "Set Digital Ocean team id"
+) || taito::skip_to_next "${@}"
+
+echo
+echo "Press enter to open the web console at:"
+echo "https://cloud.digitalocean.com/databases"
+read -r
+taito::open_browser https://cloud.digitalocean.com/databases
+echo
+echo "See connection details of one of your databases. Set taito_provider_org_id"
+echo "in taito-config.sh to the numeric value shown on the database host url"
+echo "(e.g. 123456)."
+echo
+echo "Press enter when done"
+read -r
+
+taito::call_next "${@}"

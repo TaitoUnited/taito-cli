@@ -23,6 +23,23 @@ function do::authenticate () {
     echo "You can reauthenticate with 'taito auth --reset'."
   fi
 
+  if [[ ! -f ~/.config/doctl/spaces_secret_key ]] || \
+     [[ ${options} == *" --reset "* ]]; then
+    echo
+    echo "Enter Spaces access and secret key. You can retrieve them from Digital Ocean"
+    echo "web user interface."
+    echo
+    echo "Spaces access id:"
+    read -r spaces_access_id
+    echo "${spaces_access_id}" > ~/.config/doctl/spaces_access_id
+    echo "Spaces secret key:"
+    read -r -s spaces_secret_key
+    echo "${spaces_secret_key}" > ~/.config/doctl/spaces_secret_key
+  else
+    echo "Spaces secret key already set."
+    echo "You can reset it with 'taito auth --reset'."
+  fi
+
   if [[ ${kubernetes_name:-} ]]; then
     do::authenticate_on_kubernetes ||
       echo -e "WARNING: Kubernetes authentication failed." \

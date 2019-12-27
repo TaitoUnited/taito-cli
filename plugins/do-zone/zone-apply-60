@@ -1,0 +1,25 @@
+#!/bin/bash -e
+# shellcheck source=../do/lib/all.bash
+. "${taito_cli_path:?}/plugins/do/lib/all.bash"
+
+( [[ ${kubernetes_name:-} ]] && \
+    taito::confirm "Create container registry"
+) || taito::skip_to_next "${@}"
+
+echo
+echo "Create container registry with the Digital Ocean web UI."
+echo
+echo "Press enter to open the web console at:"
+echo "https://cloud.digitalocean.com/images/container-registry"
+read -r
+taito::open_browser https://cloud.digitalocean.com/images/container-registry
+echo "Press enter when done"
+read -r
+echo
+echo "Replace CONTAINER_REGISTRY in taito-config.sh with the name of your"
+echo "container registry."
+echo
+echo "Press enter when done"
+read -r
+
+taito::call_next "${@}"

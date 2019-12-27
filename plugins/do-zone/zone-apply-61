@@ -1,0 +1,32 @@
+#!/bin/bash -e
+# shellcheck source=../do/lib/all.bash
+. "${taito_cli_path:?}/plugins/do/lib/all.bash"
+
+( [[ ${kubernetes_name:-} ]] && \
+    taito::confirm "Save container registry credentials to Kubernetes"
+) || taito::skip_to_next "${@}"
+
+echo
+echo "Download registry config for Digital Ocean web UI and save it to the zone"
+echo "directory."
+echo
+echo "Press enter to open the web console at:"
+echo "https://cloud.digitalocean.com/images/container-registry"
+read -r
+taito::open_browser https://cloud.digitalocean.com/images/container-registry
+echo
+filename=
+while [[ ! -f "${filename}" ]]; do
+  echo "Registry config filename:"
+  read -r filename
+done
+echo
+echo "Saving container registry credentials to Kubernetes"
+kubectl create secret generic do-registry \
+  "--from-file=${filename}" --type=kubernetes.io/dockerconfigjson
+echo
+echo "Setting default image pull secrets"
+kubectl patch serviceaccount default \
+  -p '{"imagePullSecrets": [{"name": "do-registry"}]}'
+
+taito::call_next "${@}"
