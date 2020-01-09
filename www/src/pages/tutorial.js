@@ -1,9 +1,11 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { MdModeEdit } from 'react-icons/md';
 
 import { flattenListData } from '../utils';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
+import Link from '../components/Link';
 
 export default ({ data }) => {
   const [pageData] = flattenListData(data, 'data');
@@ -12,6 +14,12 @@ export default ({ data }) => {
     <Page>
       <SEO />
       <div dangerouslySetInnerHTML={{ __html: pageData.html }} />
+
+      <Link
+        url={`https://github.com/TaitoUnited/taito-cli/tree/dev/docs/tutorial/README.md`}
+        text={'Edit this page on GitHub'}
+        content={<MdModeEdit />}
+      />
     </Page>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { FiBookOpen } from 'react-icons/fi';
+import { MdModeEdit } from 'react-icons/md';
 
 import { flattenListData } from '../utils';
 import { IS_BROWSER } from '../constants';
@@ -10,9 +11,15 @@ import Text from '../components/Text';
 import Gutter from '../components/Gutter';
 import Sidemenu from '../components/Sidemenu';
 import Drawer from '../components/Drawer';
+import Link from '../components/Link';
 
 export default function TutorialItemTemplate({ data }) {
   const menuItems = flattenListData(data, 'menu');
+
+  const gitHubUrl = `https://github.com/TaitoUnited/taito-cli/tree/dev/docs${window.location.pathname.replace(
+    /\/+$/,
+    ''
+  )}.md`;
 
   return (
     <Page
@@ -42,6 +49,13 @@ export default function TutorialItemTemplate({ data }) {
     >
       <SEO />
       <div dangerouslySetInnerHTML={{ __html: data.tutorial.html }} />
+
+      <Link
+        url={gitHubUrl}
+        text={'Edit this page on GitHub'}
+        content={<MdModeEdit />}
+        color={'red'}
+      />
 
       <Drawer buttonPosition="bottom-right" buttonIcon={<FiBookOpen />}>
         {menuItems.map(item => (
