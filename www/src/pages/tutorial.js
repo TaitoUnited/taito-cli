@@ -16,7 +16,7 @@ export default ({ data }) => {
       <div dangerouslySetInnerHTML={{ __html: pageData.html }} />
 
       <Spacing dir="y" amount={20} />
-      <GitHubEditLink path="/tutorial/README.md" />
+      <GitHubEditLink path="/tutorial/README" />
     </Page>
   );
 };
