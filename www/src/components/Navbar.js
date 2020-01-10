@@ -5,7 +5,7 @@ import { FaGithub } from 'react-icons/fa';
 
 import { desktopOnly } from '../utils';
 import theme from '../theme';
-import Gutter from './Gutter';
+import Spacing from './Spacing';
 import Search from './search';
 
 const Navbar = () => {
@@ -21,31 +21,31 @@ const Navbar = () => {
           <strong>Taito</strong>&nbsp;CLI
         </NavLink>
 
-        <Gutter amount={64} />
+        <Spacing amount={64} />
 
         <NavLink to="/docs" activeStyle={activeStyle} partiallyActive>
           Docs
         </NavLink>
 
-        <Gutter amount={32} />
+        <Spacing amount={32} />
 
         <NavLink to="/tutorial" activeStyle={activeStyle} partiallyActive>
           Tutorial
         </NavLink>
 
-        <Gutter amount={32} />
+        <Spacing amount={32} />
 
         <NavLink to="/plugins" activeStyle={activeStyle}>
           Plugins
         </NavLink>
 
-        <Gutter amount={32} />
+        <Spacing amount={32} />
 
         <NavLink to="/templates" activeStyle={activeStyle}>
           Templates
         </NavLink>
 
-        <Gutter amount={32} />
+        <Spacing amount={32} />
 
         <NavLink to="/extensions" activeStyle={activeStyle}>
           Extensions
@@ -55,7 +55,7 @@ const Navbar = () => {
 
         <Search />
 
-        <Gutter />
+        <Spacing />
 
         <a
           href="https://github.com/TaitoUnited/taito-cli"

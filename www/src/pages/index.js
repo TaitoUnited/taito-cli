@@ -6,7 +6,7 @@ import { Link } from 'gatsby';
 import theme from '../theme';
 import { media } from '../utils';
 import SEO from '../components/SEO';
-import Gutter from '../components/Gutter';
+import Spacing from '../components/Spacing';
 import Navigation from '../components/Navigation';
 import Terminal from '../components/Terminal';
 
@@ -22,13 +22,13 @@ export default () => (
         &nbsp;CLI
       </Title>
 
-      <Gutter dir="vertical" />
+      <Spacing dir="y" />
       <Slogan>An extensible toolkit for DevOps and NoOps.</Slogan>
-      <Gutter dir="vertical" amount={24} />
+      <Spacing dir="y" amount={24} />
 
       <Actions>
         <Button to="/docs">Get started</Button>
-        <Gutter amount={32} sm={{ amount: 16 }} />
+        <Spacing amount={32} sm={{ amount: 16 }} />
         <Button to="/tutorial" variant="light">
           See the tutorial
         </Button>
@@ -48,7 +48,7 @@ export default () => (
           </p>
         </SectionText>
 
-        <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
+        <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
 
         <Terminal
           lines={[
@@ -90,7 +90,7 @@ export default () => (
           </p>
         </SectionText>
 
-        <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
+        <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
 
         <Terminal
           lines={[
@@ -149,7 +149,7 @@ export default () => (
           </p>
         </SectionText>
 
-        <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
+        <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
 
         <Terminal
           lines={[
@@ -212,7 +212,7 @@ export default () => (
           </p>
         </SectionText>
 
-        <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
+        <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
 
         <Terminal
           lines={[
@@ -293,7 +293,7 @@ export default () => (
           </p>
         </SectionText>
 
-        <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
+        <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
 
         <Terminal
           lines={[
@@ -336,7 +336,7 @@ export default () => (
           </p>
         </SectionText>
 
-        <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
+        <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
 
         <Terminal
           lines={[
@@ -370,7 +370,7 @@ export default () => (
           </p>
         </SectionText>
 
-        <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
+        <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
 
         <Terminal
           lines={[

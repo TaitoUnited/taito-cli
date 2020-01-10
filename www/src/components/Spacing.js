@@ -5,9 +5,9 @@ const DEFAULT_PAD = 16;
 
 const getWidthOrHeight = dir => {
   switch (dir) {
-    case 'horizontal':
+    case 'x':
       return 'width';
-    case 'vertical':
+    case 'y':
       return 'height';
     default:
       return 'width';
@@ -24,7 +24,7 @@ const getMediaDim = (props, { dir, amount: mAmount }) => {
   return `${getWidthOrHeight(dir || props.dir)}: ${amount}px;`;
 };
 
-const Gutter = styled.div`
+const Spacing = styled.div`
   height: 0px;
   ${props => getDim(props)}
   ${props => props.sm && media.sm`${getMediaDim(props, props.sm)}`}
@@ -32,4 +32,4 @@ const Gutter = styled.div`
   ${props => props.lg && media.lg`${getMediaDim(props, props.lg)}`}
 `;
 
-export default Gutter;
+export default Spacing;

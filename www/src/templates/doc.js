@@ -1,28 +1,22 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { FiBookOpen } from 'react-icons/fi';
-import { MdModeEdit } from 'react-icons/md';
 
 import { flattenListData } from '../utils';
 import { IS_BROWSER } from '../constants';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
 import Text from '../components/Text';
-import Gutter from '../components/Gutter';
+import Spacing from '../components/Spacing';
 import Sidemenu from '../components/Sidemenu';
 import Drawer from '../components/Drawer';
-import Link from '../components/Link';
+import GitHubEditLink from '../components/GitHubEditLink';
 
 const isActive = slug =>
   IS_BROWSER ? window.location.pathname === slug : false;
 
 export default function DocTemplate({ data }) {
   const menuItems = flattenListData(data, 'menu');
-
-  const gitHubUrl = `https://github.com/TaitoUnited/taito-cli/tree/dev/docs${window.location.pathname.replace(
-    /\/+$/,
-    ''
-  )}.md`;
 
   return (
     <Page
@@ -32,7 +26,7 @@ export default function DocTemplate({ data }) {
             DOCUMENTATION
           </Text>
 
-          <Gutter dir="vertical" />
+          <Spacing dir="y" />
 
           {menuItems.map(item => (
             <Sidemenu.Item
@@ -51,11 +45,9 @@ export default function DocTemplate({ data }) {
       <SEO />
       <div dangerouslySetInnerHTML={{ __html: data.doc.html }} />
 
-      <Link
-        url={gitHubUrl}
-        text={'Edit this page on GitHub'}
-        content={<MdModeEdit />}
-      />
+      <Spacing dir="y" amount={20} />
+      
+      <GitHubEditLink />
 
       <Drawer buttonPosition="bottom-right" buttonIcon={<FiBookOpen />}>
         {menuItems.map(item => (
