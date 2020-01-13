@@ -140,13 +140,11 @@ export default () => (
           <p>
             Many daily tasks, such as connecting to a database, can be extremely
             tedious. Before actually connecting to the database, you have to
-            locate the correct database cluster, the correct database in it,
-            and the credentials for database access. You may also have to
-            establish a secure tunnel by using a proxy.
+            locate the correct database cluster, the correct database in it, and
+            the credentials for database access. You may also have to establish
+            a secure tunnel by using a proxy.
           </p>
-          <p>
-            With Taito CLI you achieve all this with a one simple command.
-          </p>
+          <p>With Taito CLI you achieve all this with a one simple command.</p>
         </SectionText>
 
         <Gutter amount={24} sm={{ dir: 'vertical', amount: 32 }} />
@@ -161,9 +159,7 @@ export default () => (
               <Terminal.LinePrefix color={theme.grey[500]}>
                 #
               </Terminal.LinePrefix>,
-              <Terminal.LineSuffix>
-                Without Taito CLI:
-              </Terminal.LineSuffix>,
+              <Terminal.LineSuffix>Without Taito CLI:</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
@@ -183,11 +179,9 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: Password:
+                Password:
               </Terminal.LinePrefix>,
-              <Terminal.LineSuffix>
-                ******************
-              </Terminal.LineSuffix>,
+              <Terminal.LineSuffix>******************</Terminal.LineSuffix>,
             ],
           ]}
         />
@@ -206,9 +200,9 @@ export default () => (
             under the hood based on your configuration.
           </p>
           <p>
-            However, you can use all the tools also directly without Taito
-            CLI. Therefore you can stop using Taito CLI at any time, if you
-            like. There is no lock-in with Taito CLI.
+            However, you can use all the tools also directly without Taito CLI.
+            Therefore you can stop using Taito CLI at any time, if you like.
+            There is no lock-in with Taito CLI.
           </p>
         </SectionText>
 
@@ -222,20 +216,23 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: [kubectl]
+                [kubectl]
               </Terminal.LinePrefix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: kubectl
+                kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                config set-context acme-chat-dev --cluster=gke_my-gcp_europe-west1-c_my-kube1 --user=gke_my-gcp_europe-west1-c_my-kube1 --namespace=acme-chat-dev
+                config set-context acme-chat-dev
+                --cluster=gke_my-gcp_europe-west1-c_my-kube1
+                --user=gke_my-gcp_europe-west1-c_my-kube1
+                --namespace=acme-chat-dev
               </Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: kubectl
+                kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
                 config use-context acme-chat-dev
@@ -243,30 +240,30 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: kubectl
+                kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>get cronjobs</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: kubectl
+                kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>get pods</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: kubectl
+                kubectl
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>top pod</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: [helm]
+                [helm]
               </Terminal.LinePrefix>,
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                out: helm
+                helm
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
                 list --namespace acme-chat-dev
@@ -383,13 +380,12 @@ export default () => (
               </Terminal.LineSuffix>,
             ],
             <span>
-              out: taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
+              taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
             </span>,
-            <span>out: taito_global_plugins="myorg-git-global ..."</span>,
+            <span>taito_global_plugins="myorg-git-global ..."</span>,
           ]}
         />
       </Section>
-
     </Content>
   </Wrapper>
 );
