@@ -45,7 +45,7 @@ export default function TutorialItemTemplate({ data }) {
       <div dangerouslySetInnerHTML={{ __html: data.tutorial.html }} />
 
       <Spacing dir="y" amount={20} />
-      
+
       <GitHubEditLink />
 
       <Drawer buttonPosition="bottom-right" buttonIcon={<FiBookOpen />}>

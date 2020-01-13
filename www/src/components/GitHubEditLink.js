@@ -2,10 +2,14 @@ import React from 'react';
 import { MdModeEdit } from 'react-icons/md';
 import styled from '@emotion/styled';
 
-const GitHubEditLink = ({
-  path = window.location.pathname.replace(/\/+$/, ''),
-}) => {
-  const url = `https://github.com/TaitoUnited/taito-cli/edit/dev/docs${path}.md`;
+import { IS_BROWSER } from '../constants';
+
+const GitHubEditLink = ({ path }) => {
+  const pathname = IS_BROWSER && window.location.pathname.replace(/\/+$/, '');
+
+  const filename = path ? path : pathname;
+
+  const url = `https://github.com/TaitoUnited/taito-cli/edit/dev/docs${filename}.md`;
 
   return (
     <Wrapper>
