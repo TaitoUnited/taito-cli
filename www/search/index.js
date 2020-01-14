@@ -1,5 +1,3 @@
-const striptags = require('striptags');
-
 const pageDataQuery = `{
   allMarkdownRemark(filter: {fileAbsolutePath: {regex: "/^((?!README).)*$/"}}) {
     edges {
@@ -24,61 +22,50 @@ const hash = s => {
   }, 0);
 };
 
+// This is a dublicate from ../src/utils because unlike the React files, Node.js requires CommonJS imports.
+const slugify = text =>
+  text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+
 const transformer = ({ data }) => {
   const pages = data.allMarkdownRemark.edges;
-  let indices = [];
 
-  pages.forEach(({ node }) => {
-    const splitMark = '_SPLIT_MARKER_';
+  const indices = pages.reduce((total, { node }) => {
     const nodeHeadings = node.headings || [];
     const headingValues = nodeHeadings.map(x => x.value);
 
-    // Strip html tags and cleanup chunks
-    const chunks = striptags(node.html, [], splitMark)
-      .split(splitMark)
-      .map(x => x.trim())
-      // HACK: This is a bit too custom / hacky text manipulation...
-      // TODO: Figure out a better way to parse and index the md content...
-      .map(x => (x.startsWith(': ') ? x.substr(2) : x))
-      .filter(x => !!x)
-      // Only include longer texts like paragraphs
-      .filter(x => x.length > 10);
-
-    // Get the index of each heading so we can attach chunk's parent heading
-    const headingIndexes = chunks.reduce((acc, x, index) => {
-      if (headingValues.includes(x)) {
-        acc.push({ value: x, index });
-      }
-      return acc;
+    const newIndices = headingValues.reduce((acc, pageHeading) => {
+      const index = {
+        // Create a unique ID for each page
+        objectID: `${node.id}${hash(pageHeading)}`,
+        // Construct the slug for the subcategory
+        slug: `${node.fields.slug}#${slugify(pageHeading)}`,
+        pageHeading,
+      };
+      return [...acc, index];
     }, []);
 
-    // Attach parent node info to each chunk
-    const indexableChunks = chunks.map((x, index) => {
-      // Get nearest parent heading for chunk
-      const h = headingIndexes.filter(x => x.index < index).reverse();
-      const _parentHeading = h.length > 0 ? h[0].value : null;
-
-      return {
-        content: x,
-        // Create a unique ID for chunk
-        objectID: `${node.id}${hash(x)}`,
-        slug: node.fields.slug,
-        // Page heading is always the first heading
-        pageHeading: headingValues[0] || null,
-        // If the item is a heading use itself as `parentHeading`
-        parentHeading: headingValues.includes(x) ? x : _parentHeading,
-      };
-    });
-
-    indices = [...indices, ...indexableChunks];
-  });
+    return [...total, ...newIndices];
+  }, []);
 
   return indices;
+};
+
+// Make only the headings searchable
+const settings = {
+  searchableAttributes: ['pageHeading'],
 };
 
 const queries = [
   {
     transformer,
+    settings,
     query: pageDataQuery,
     indexName: 'taitocli',
   },

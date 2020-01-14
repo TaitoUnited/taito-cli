@@ -15,16 +15,15 @@ module.exports = {
   pathPrefix: !IS_DEV ? '/taito-cli' : undefined,
 
   plugins: [
-    !IS_DEV &&
-      false && {
-        resolve: 'gatsby-plugin-algolia',
-        options: {
-          appId: process.env.GATSBY_ALGOLIA_APP_ID,
-          apiKey: process.env.ALGOLIA_ADMIN_KEY,
-          chunkSize: 10000, // default: 1000
-          queries,
-        },
+    !IS_DEV && {
+      resolve: 'gatsby-plugin-algolia',
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_KEY,
+        chunkSize: 10000, // default: 1000
+        queries,
       },
+    },
 
     {
       resolve: 'gatsby-source-filesystem',
