@@ -7,9 +7,10 @@ import { IS_BROWSER } from '../constants';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
 import Text from '../components/Text';
-import Gutter from '../components/Gutter';
+import Spacing from '../components/Spacing';
 import Sidemenu from '../components/Sidemenu';
 import Drawer from '../components/Drawer';
+import GitHubEditLink from '../components/GitHubEditLink';
 
 const isActive = slug =>
   IS_BROWSER ? window.location.pathname === slug : false;
@@ -25,7 +26,7 @@ export default function DocTemplate({ data }) {
             DOCUMENTATION
           </Text>
 
-          <Gutter dir="vertical" />
+          <Spacing dir="y" />
 
           {menuItems.map(item => (
             <Sidemenu.Item
@@ -43,6 +44,10 @@ export default function DocTemplate({ data }) {
     >
       <SEO />
       <div dangerouslySetInnerHTML={{ __html: data.doc.html }} />
+
+      <Spacing dir="y" amount={20} />
+      
+      <GitHubEditLink />
 
       <Drawer buttonPosition="bottom-right" buttonIcon={<FiBookOpen />}>
         {menuItems.map(item => (

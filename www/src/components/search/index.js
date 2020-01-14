@@ -10,7 +10,7 @@ import {
 } from 'react-instantsearch-dom';
 
 import { media } from '../../utils';
-import Gutter from '../Gutter';
+import Spacing from '../Spacing';
 import SearchInput from './SearchInput';
 import SearchHit from './SearchHit';
 
@@ -57,9 +57,9 @@ const Search = () => {
 
           <PoweredBy>
             Powered by
-            <Gutter amount={4} />
+            <Spacing amount={4} />
             <FaAlgolia size={16} />
-            <Gutter amount={4} />
+            <Spacing amount={4} />
             <a href="https://www.algolia.com">Algolia</a>
           </PoweredBy>
         </HitWrapper>

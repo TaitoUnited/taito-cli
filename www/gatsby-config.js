@@ -41,6 +41,7 @@ module.exports = {
             resolve: 'gatsby-remark-autolink-headers',
             options: {
               className: 'autolink-a',
+              offsetY: `70`,
               removeAccents: true,
             },
           },
