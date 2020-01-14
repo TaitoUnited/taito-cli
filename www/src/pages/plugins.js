@@ -4,6 +4,8 @@ import { graphql } from 'gatsby';
 import { flattenListData } from '../utils';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
+import GitHubEditLink from '../components/GitHubEditLink';
+import Spacing from '../components/Spacing';
 
 export default ({ data }) => {
   const [pageData] = flattenListData(data, 'md');
@@ -12,6 +14,10 @@ export default ({ data }) => {
     <Page>
       <SEO />
       <div dangerouslySetInnerHTML={{ __html: pageData.html }} />
+
+      <Spacing dir="y" amount={20} />
+
+      <GitHubEditLink />
     </Page>
   );
 };

@@ -7,9 +7,10 @@ import { IS_BROWSER } from '../constants';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
 import Text from '../components/Text';
-import Gutter from '../components/Gutter';
+import Spacing from '../components/Spacing';
 import Sidemenu from '../components/Sidemenu';
 import Drawer from '../components/Drawer';
+import GitHubEditLink from '../components/GitHubEditLink';
 
 export default function TutorialItemTemplate({ data }) {
   const menuItems = flattenListData(data, 'menu');
@@ -22,7 +23,7 @@ export default function TutorialItemTemplate({ data }) {
             TUTORIAL
           </Text>
 
-          <Gutter dir="vertical" />
+          <Spacing dir="y" />
 
           {menuItems.map(item => {
             const isActive = IS_BROWSER
@@ -42,6 +43,10 @@ export default function TutorialItemTemplate({ data }) {
     >
       <SEO />
       <div dangerouslySetInnerHTML={{ __html: data.tutorial.html }} />
+
+      <Spacing dir="y" amount={20} />
+
+      <GitHubEditLink />
 
       <Drawer buttonPosition="bottom-right" buttonIcon={<FiBookOpen />}>
         {menuItems.map(item => (
