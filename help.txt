@@ -152,8 +152,8 @@ QUICK EXAMPLES
     commit revert                      # Revert the latest commit by creating a new commit
     commit undo                        # Undo latest commit from local and remote branch
     commit erase                       # Erase latest commit from loc/rem branch and files
-    tag 1.2.3                          # Create tag
-    untag 1.2.3                        # Delete tag
+    tag: 1.2.3                         # Create tag
+    untag: 1.2.3                       # Delete tag
 
   DEPLOYMENT OPERATIONS
     deployment start:dev               # Start ci build for dev environment manually
@@ -747,10 +747,10 @@ PROJECT: VERSION CONTROL OPERATIONS
     changes also from local files. The command will fail if your local branch
     is not up-to-date with the remote repository.
 
-  tag TAG [COMMENT]
+  tag: TAG [COMMENT]
     Create tag
 
-  untag TAG
+  untag: TAG
     Remove tag
 
 PROJECT: DATABASE OPERATIONS
