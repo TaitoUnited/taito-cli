@@ -45,7 +45,7 @@ function helm::deploy () {
     echo > "${taito_vout:-}"
     echo "Helm does not support environment variables" > "${taito_vout}"
     echo "-> Substituting all environment variables in scripts/helm.yaml" > "${taito_vout}"
-    envsubst < scripts/helm.yaml > scripts/helm.yaml.tmp || :
+    sed 's/\$\$/%%-_-%%/g' scripts/helm.yaml | envsubst | sed 's/%%-_-%%/$/g' > scripts/helm.yaml.tmp || :
     echo "Substitution DONE" > "${taito_vout}"
     echo > "${taito_vout}"
 
@@ -60,7 +60,7 @@ function helm::deploy () {
       echo > "${taito_vout}"
       echo "Helm does not support environment variables" > "${taito_vout}"
       echo "-> Substituting all environment variables in ${override_file}" > "${taito_vout}"
-      envsubst < "${override_file}" > "${override_file}.tmp" || :
+      sed 's/\$\$/%%-_-%%/g' "${override_file}" | envsubst | sed 's/%%-_-%%/$/g' > "${override_file}.tmp" || :
       helm_deploy_options="${helm_deploy_options} -f ${override_file}.tmp"
       echo "Substitution DONE" > "${taito_vout}"
       echo > "${taito_vout}"
