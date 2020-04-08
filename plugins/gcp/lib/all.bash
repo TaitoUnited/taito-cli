@@ -25,7 +25,9 @@ function gcp::authenticate () {
     echo "---------------------------------------------------------------"
     taito::print_note_end
     echo
-    echo "Press enter to continue to authentication"
+    echo "Press enter to continue once you have read the message above."
+    read -r
+    echo "Did you really read the message? Press enter once you have read it."
     read -r
     # TODO run 'gcloud auth revoke ${account}' ?
     (taito::executing_start; gcloud init --console-only)

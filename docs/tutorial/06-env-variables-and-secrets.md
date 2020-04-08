@@ -89,6 +89,7 @@ Add secret reference for Kubernetes in `helm.yaml`:
 Add secret reference for Docker Compose in `docker-compose.yaml`:
 
 ```shell
+  my-app-server:
     secrets:
       - MY_SECRET_KEY
 ...
