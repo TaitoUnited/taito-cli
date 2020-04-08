@@ -69,7 +69,7 @@ taito auth:test
 Create the test environment:
 
 ```shell
-EDIT taito-project-config.sh       # Add 'test' to 'taito_environments'
+EDIT scripts/taito/project.sh      # Add 'test' to 'taito_environments'
 taito env apply:test               # Create the test environment
 taito env merge:dev test           # Merge changes from dev to test
 ```
@@ -86,7 +86,7 @@ CI/CD deploys database migrations automatically, but not any data. You can manua
 
 ### 5.4. Create production environment
 
-Configure domain name for prod environment in `taito-env-prod-config.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
+Configure domain name for prod environment in `scripts/taito/prod-env.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
 
 ```shell
 # Production domain name (e.g. mydomain.com)
@@ -98,7 +98,7 @@ taito_default_domain=$taito_project-$taito_target_env.mydomain.com
 
 OPTIONAL: Configure DNS for your non-default domain name. You can display the default IP address with `taito env info:prod`.
 
-OPTIONAL: Disable basic authentication for production environment in `taito-env-prod-config.sh`:
+OPTIONAL: Disable basic authentication for production environment in `scripts/taito/prod-env.sh`:
 
 ```shell
 # Disable production environment basic auth by setting this to false
@@ -139,7 +139,7 @@ NOTE: Since canary environment uses production resources, you don't need to run 
 Create the canary environment:
 
 ```shell
-EDIT taito-project-config.sh       # Add 'canary' to 'taito_environments'
+EDIT scripts/taito/project.sh       # Add 'canary' to 'taito_environments'
 taito env merge:test canary        # Merge changes from test to canary
 ```
 
