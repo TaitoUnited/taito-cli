@@ -58,7 +58,7 @@ function kubectl::put_secret_value () {
     --namespace="${namespace}" \
     --from-${secret_source}=${secret_property}="${filename:-$value}" \
     --from-literal=${secret_property}.METHOD="${method}" \
-    --dry-run -o json)
+    --dry-run=client -o json)
 
   if kubectl get secret "${secret_name}" --namespace="${namespace}" &> /dev/null
   then
