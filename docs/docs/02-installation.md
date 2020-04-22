@@ -12,9 +12,9 @@ The following software needs to be installed on your computer before you can ins
 
 **Linux:** See [Docker Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/).
 
-**Docker Desktop for Windows:** Install [Git for Windows](https://gitforwindows.org/). It provides both Git and Bash. Use Git Bash as your shell. However, issue [docker-for-win#1588](https://github.com/docker/for-win/issues/1588) may cause you some trouble with MinTTY terminal emulation. Select *Windows default console window* as your Git Bash terminal emulation to see if it works (not tested yet). Or just use Docker Toolbox instead (see below).
+**Docker Desktop for Windows:** Install [Git for Windows](https://gitforwindows.org/). It provides both Git and Bash. Use Git Bash as your shell. However, issue [docker-for-win#1588](https://github.com/docker/for-win/issues/1588) may cause you some trouble with MinTTY terminal emulation. You can try some of the workarounds mentioned in the issue comment section. Especially [this comment](https://github.com/docker/for-win/issues/1588#issuecomment-594938988) seems promising (not tested yet).
 
-**Docker Toolbox for Windows:** Install [Git for Windows](https://gitforwindows.org/). Use Docker Toolbox as your shell instead of Git Bash. Note that Docker Compose secret mounts do not currently work on Docker Toolbox (issue [docker-compose#6585](https://github.com/docker/compose/issues/6585)).
+**Docker Toolbox for Windows:** Install [Git for Windows](https://gitforwindows.org/). Use Docker Toolbox as your shell instead of Git Bash. Note that Docker Compose secret mounts might not work properly on Docker Toolbox (issue [docker-compose#6585](https://github.com/docker/compose/issues/6585)). If this is a problem, you can ditch the Docker Toolbox and run a Linux virtual machine with VirtualBox as you normally would.
 
 ### Automatic installation
 
