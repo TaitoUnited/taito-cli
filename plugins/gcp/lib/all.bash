@@ -22,6 +22,10 @@ function gcp::authenticate () {
     echo "Taito CLI will always use the values defined in taito config"
     echo "files instead of the default GCP settings you have selected"
     echo "during authentication."
+    echo
+    echo "On auth reset, you should always re-initialize the default"
+    echo "configuration:"
+    echo "[1] Re-initialize this configuration [default] with new settings"
     echo "---------------------------------------------------------------"
     taito::print_note_end
     echo
