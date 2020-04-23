@@ -29,6 +29,11 @@ TAITO CLI TROUBLESHOOTING
     just clean it by running 'taito workspace clean'. Adjust your Docker
     resource limits (on macOS: preferences -> disk, preferences -> advanced).
 
+  'No configuration has been provided'
+    The command probably requires authentication and you either have not
+    authenticated or your authentication has expired. In such case, run
+    'taito auth:ENV' or 'taito auth:ENV reset' to authenticate.
+
   Connection or authorization error
     If you run into a connection or authorization error during Taito CLI
     command execution, the command probably requires authentication and you
