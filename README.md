@@ -16,9 +16,10 @@ Stable images optimized for CI/CD:
 
 * `ci`: CI/CD image without any cloud provider specific tools.
 * `ci-aws`: CI/CD image for **Amazon Web Services**.
-* `ci-azure`: CI/CD image for **Microsoft Azure** (TODO).
+* `ci-azure`: CI/CD image for **Microsoft Azure**.
 * `ci-gcp`: CI/CD image for **Google Cloud Platform**.
-* `ci-do`: CI/CD image for **Digital Ocean** (TODO).
+* `ci-do`: CI/CD image for **Digital Ocean**.
+* `ci-openshift`: CI/CD image for **OpenShift**.
 * `ci-all`: CI/CD image that includes tools for all cloud providers.
 
 > TIP: If your CI/CD pulls the whole Docker image on each build, optimize the image pull by setting up caching on your CI/CD, or by using your own Docker registry as a mirror. You can also create a custom Docker image that includes only the tools you actually need.
