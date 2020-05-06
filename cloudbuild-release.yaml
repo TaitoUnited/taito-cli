@@ -8,7 +8,7 @@ substitutions:
 
 steps:
 - id: install
-  name: 'gcr.io/cloud-builders/npm'
+  name: 'gcr.io/cloud-builders/npm:current'
   args: ['install']
 - id: secrets
   waitFor: ['-']
@@ -27,7 +27,7 @@ steps:
 
 - id: release-pre
   waitFor: ['secrets']
-  name: 'gcr.io/cloud-builders/npm'
+  name: 'gcr.io/cloud-builders/npm:current'
   entrypoint: 'bash'
   args:
   - '-c'
@@ -68,11 +68,11 @@ steps:
       -f docker/${_DOCKERFILE} .
 
 - id: test
-  name: 'gcr.io/cloud-builders/npm'
+  name: 'gcr.io/cloud-builders/npm:current'
   args: ['run', 'test']
 
 - id: release-post
-  name: 'gcr.io/cloud-builders/npm'
+  name: 'gcr.io/cloud-builders/npm:current'
   entrypoint: 'bash'
   args:
   - '-c'

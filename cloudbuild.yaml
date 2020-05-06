@@ -8,7 +8,7 @@ substitutions:
 
 steps:
 - id: install
-  name: 'gcr.io/cloud-builders/npm'
+  name: 'gcr.io/cloud-builders/npm:current'
   args: ['install']
 
 - id: build
@@ -24,7 +24,7 @@ steps:
       -f docker/${_DOCKERFILE} .
 
 - id: test
-  name: 'gcr.io/cloud-builders/npm'
+  name: 'gcr.io/cloud-builders/npm:current'
   args: ['run', 'test']
 
 # TODO: remove once all image references have been updated
