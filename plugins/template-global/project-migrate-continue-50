@@ -5,6 +5,7 @@
 . _template-config.sh
 rm -f _template-config.sh
 rm -f taito-config.sh
+rm -rf scripts/taito
 
 : "${template_default_source_git:?}"
 : "${template_project_path:?}"

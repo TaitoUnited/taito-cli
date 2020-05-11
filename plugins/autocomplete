@@ -18,7 +18,8 @@ echo "workspace clean"
 echo "workspace kill"
 
 # New project from template
-echo "project create: TEMPLATE"
+echo "project create: TEMPLATE BRANCH"
+echo "project migrate: TEMPLATE BRANCH"
 
 # Passwords
 echo "random string: LENGTH"

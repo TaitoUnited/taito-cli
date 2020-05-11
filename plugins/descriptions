@@ -28,6 +28,8 @@ echo "workspace kill                   " \
 # New project from template
 echo "project create: TEMPLATE   &focus" \
   "# Create a project based on a template"
+echo "project migrate: TEMPLATE  &focus" \
+  "# Migrate a project based on a template"
 
 # Passwords
 echo "random string: LENGTH            " \

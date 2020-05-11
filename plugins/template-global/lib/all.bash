@@ -47,7 +47,7 @@ function template-global::ask_and_export_details () {
   echo "3) Application name (e.g. 'chat')?"
   read -r taito_application
   if ! [[ ${taito_application} =~ ^[a-z][a-z1-9]+$ ]] || \
-     [[ ${#taito_application} -gt 14 ]]; then
+     [[ ${#taito_application} -gt 20 ]]; then
     echo "ERROR: invalid value or too long"
     exit 1
   fi
