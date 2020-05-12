@@ -1,6 +1,6 @@
 #!/bin/bash -e
 : "${taito_zone:?}"
-: "${taito_project:?}"
+: "${taito_vc_repository:?}"
 : "${taito_branch:?}"
 
 if [[ -z $1 ]]; then
@@ -14,7 +14,7 @@ if [[ -z $1 ]]; then
       --format="value(sourceProvenance.resolvedRepoSource.commitSha)" \
       --filter=" \
         status:SUCCESS AND \
-        source.repoSource.repoName~.*${taito_project} AND \
+        source.repoSource.repoName~.*${taito_vc_repository} AND \
         source.repoSource.branchName:${taito_branch}" | \
       head -1
   )

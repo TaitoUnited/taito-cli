@@ -9,7 +9,7 @@ builds also"
 check=$(
   gcloud -q --project "${taito_zone:?}" builds list \
   --filter="status:SUCCESS AND \
-            source.repoSource.repoName~.*${taito_project:?} AND \
+            source.repoSource.repoName~.*${taito_vc_repository:?} AND \
             sourceProvenance.resolvedRepoSource.commitSha:${image_tag}"
 )
 
