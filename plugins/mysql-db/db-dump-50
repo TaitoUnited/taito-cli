@@ -4,6 +4,9 @@
 
 if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
   dump_file="${1:?}"
+  # TODO: tool_options
+  # tool_options="${*}"
+  # tool_options="${*##* -- }"
 
   echo "Dumping database ${database_name:?} to file ${dump_file}. Please wait."
   mysql::dump > "${dump_file}"

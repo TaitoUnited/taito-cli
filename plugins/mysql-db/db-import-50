@@ -4,6 +4,10 @@
 
 if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
   echo "Importing ${1}"
+  # TODO: tool_options
+  # tool_options="${*}"
+  # tool_options="${*##* -- }"
+
   mysql::connect < "${1}"
 fi
 

@@ -5,12 +5,14 @@
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   filename="${1:?Filename not given}"
   username="${2}"
-  echo "Importing ${1}"
+  tool_options="${*}"
+  tool_options="${*##* -- }"
 
+  echo "Importing ${1}"
   (
     # TODO: change to current path (subdir where user was located on host)
     # cd "${taito_current_path:?}"
-    flags="-f ${filename}"
+    flags="-f ${filename} ${tool_options}"
     postgres::connect "${username}" "${flags}"
   )
 fi
