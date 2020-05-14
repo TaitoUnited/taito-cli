@@ -7,7 +7,7 @@ if git rev-parse --is-inside-work-tree &> /dev/null; then
   echo 'Environment branches:'
   echo '- Branch naming: dev, test, uat, stag, canary, master.'
   echo '- Environment branches should be merged to one another in the following'
-  echo '  order: dev -> test -> uat -> stag -> canary -> master.'
+  echo '  order: dev -> test -> uat/qa -> stag -> canary -> master.'
   echo '- Environment branches should be merged using fast-forward only.'
   echo '- dev is the only environment branch that you should commit changes to.'
   echo
