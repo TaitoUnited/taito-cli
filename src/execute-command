@@ -813,9 +813,11 @@ if [[ ${command} == "shell" ]] && \
   (
     # Start tillerless helm plugin
     # TODO: remove once upgraded to Helm 3
-    export HELM_TILLER_HISTORY_MAX=10
-    helm tiller start-ci
-    export HELM_HOST=127.0.0.1:44134
+    if helm version | grep "Version:\"v2." > /dev/null; then
+      export HELM_TILLER_HISTORY_MAX=10
+      helm tiller start-ci
+      export HELM_HOST=127.0.0.1:44134
+    fi
 
     taito::export_terraform_env
     /bin/bash

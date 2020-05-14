@@ -30,8 +30,10 @@ function helm::deploy () {
 
   function cleanup {
     rm -f scripts/*.tmp || :
-    if [[ ${taito_zone} != "gcloud-temp1" ]]; then
-      helm tiller stop > /dev/null || :
+    if helm version | grep "Version:\"v2." > /dev/null; then
+      if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+        helm tiller stop > /dev/null || :
+      fi
     fi
   }
 
@@ -79,12 +81,14 @@ function helm::deploy () {
     (
       export taito_provider=${taito_orig_provider:-$taito_provider}
       taito::executing_start
-      if [[ ${taito_zone} != "gcloud-temp1" ]]; then
-        export HELM_TILLER_HISTORY_MAX=10
-        helm tiller start-ci
-        export HELM_HOST=127.0.0.1:44134
+      if helm version | grep "Version:\"v2." > /dev/null; then
+        if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+          export HELM_TILLER_HISTORY_MAX=10
+          helm tiller start-ci
+          export HELM_HOST=127.0.0.1:44134
+        fi
+        helm init --client-only --history-max 10
       fi
-      helm init --client-only --history-max 10
       helm repo update
       helm dependency update "./scripts/helm"
       # TODO remove non-globals
@@ -179,17 +183,21 @@ function helm::deploy () {
 
 function helm::run () {
   function finish {
-    if [[ ${taito_zone} != "gcloud-temp1" ]]; then
-      helm tiller stop > /dev/null
+    if helm version | grep "Version:\"v2." > /dev/null; then
+      if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+        helm tiller stop > /dev/null
+      fi
     fi
   }
   trap finish EXIT
 
   taito::executing_start
-  if [[ ${taito_zone} != "gcloud-temp1" ]]; then
-    export HELM_TILLER_HISTORY_MAX=10
-    helm tiller start-ci
-    export HELM_HOST=127.0.0.1:44134
+  if helm version | grep "Version:\"v2." > /dev/null; then
+    if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+      export HELM_TILLER_HISTORY_MAX=10
+      helm tiller start-ci
+      export HELM_HOST=127.0.0.1:44134
+    fi
   fi
   helm "${@}"
 }
