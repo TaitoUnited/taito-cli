@@ -137,7 +137,12 @@ function helm::deploy () {
           --namespace "${taito_namespace}"
         kubectl delete configmap "${taito_project}-${taito_target_env}-common" \
           --namespace "${taito_namespace}"
-        helm delete --purge "${taito_project}-${taito_target_env}"
+
+        if helm version | grep "Version:\"v2." > /dev/null; then
+          helm2opts="--purge"
+        fi
+
+        helm delete ${helm2opts} "${taito_project}-${taito_target_env}"
         sleep 15
         helm upgrade "${options[@]}" --debug --install \
           --namespace "${taito_namespace}" \

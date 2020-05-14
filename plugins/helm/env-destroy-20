@@ -8,10 +8,14 @@ taito::confirm \
   "Delete and purge helm release ${taito_project}-${taito_target_env}" || \
   taito::skip_to_next "${@}"
 
+if helm version | grep "Version:\"v2." > /dev/null; then
+  helm2opts="--purge"
+fi
+
 kubectl::use_context
 (
   taito::executing_start
-  helm::run delete --purge "${taito_project}-${taito_target_env}"
+  helm::run delete ${helm2opts} "${taito_project}-${taito_target_env}"
 ) || echo "WARNING: Deleting helm release failed. Have you ever deployed?"
 
 taito::call_next "${@}"
