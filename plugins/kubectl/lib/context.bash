@@ -14,7 +14,6 @@ function kubectl::ensure_namespace () {
 }
 
 function kubectl::use_context () {
-  : "${taito_zone:?}"
   : "${kubernetes_cluster:?}"
   : "${taito_dout:?}"
 

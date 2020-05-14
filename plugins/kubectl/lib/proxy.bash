@@ -6,7 +6,7 @@ function kubectl::db_proxy_start () {
     proxy_instance="${database_instance:?}"
 
     # tcp-proxy still in use in old test zones (TODO: REMOVE)
-    if [[ " gcloud-temp1 azure-test-256814 do-test-zone " == "${taito_zone:?}" ]]; then
+    if [[ " gcloud-temp1 azure-test-256814 do-test-zone " == "${taito_zone:-}" ]]; then
       proxy_namespace="tcp-proxy"
       proxy_instance="tcp-proxy"
     fi

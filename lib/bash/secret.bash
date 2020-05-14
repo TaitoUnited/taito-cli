@@ -203,7 +203,6 @@ function taito::print_random_words () {
 export -f taito::print_random_words
 
 function taito::save_secrets () {
-  : "${taito_zone:?}"
   local get_secret_func="${1}"
   local put_secret_func="${2}"
 
@@ -237,7 +236,7 @@ function taito::save_secrets () {
         echo "Read secret ${secret_name} for copy" > "${taito_vout:-}"
         secret_value=$(
           "${get_secret_func}" \
-            "${taito_zone}" \
+            "${taito_zone:-}" \
             "${secret_source_namespace}" \
             "${secret_name}" \
             "${secret_method}"
@@ -253,7 +252,7 @@ function taito::save_secrets () {
       if [[ ${secret_method} != "read/"* ]]; then
         echo "Save secret ${secret_name}" > "${taito_vout:-}"
         "${put_secret_func}" \
-          "${taito_zone}" \
+          "${taito_zone:-}" \
           "${secret_namespace}" \
           "${secret_name}" \
           "${secret_method}" \
@@ -296,7 +295,7 @@ function taito::export_secrets () {
     local secret_value
     secret_value=$(
       "${get_secret_func}" \
-        "${taito_zone}" \
+        "${taito_zone:-}" \
         "${secret_source_namespace}" \
         "${secret_name}" \
         "${secret_method}"
@@ -339,7 +338,6 @@ function taito::export_secrets () {
 export -f taito::export_secrets
 
 function taito::delete_secrets () {
-  : "${taito_zone:?}"
   : "${taito_secret_names:?}"
   local delete_secret_func=$1
 
@@ -351,7 +349,7 @@ function taito::delete_secrets () {
     taito::expose_secret_by_index ${secret_index}
     if [[ ${secret_method:?} != "read/"* ]]; then
       "${delete_secret_func}" \
-        "${taito_zone}" \
+        "${taito_zone:-}" \
         "${secret_namespace}" \
         "${secret_name}"
     fi
@@ -376,7 +374,7 @@ function taito::save_proxy_secret_to_disk () {
   taito_proxy_secret_method="file"
 
   # TODO: remove
-  if [[ ${taito_zone} == "gcloud-temp1" ]]; then
+  if [[ ${taito_zone:-} == "gcloud-temp1" ]]; then
     taito_proxy_secret_name=gcp-proxy-gserviceaccount
     taito_proxy_secret_key=key
     taito_proxy_secret_method="file"
@@ -392,7 +390,7 @@ function taito::save_proxy_secret_to_disk () {
     mkdir -p "$taito_project_path/tmp/secrets"
 
     "${get_secret_func}" \
-      "${taito_zone}" \
+      "${taito_zone:-}" \
       "${namespace}" \
       "${taito_proxy_secret_name}.${taito_proxy_secret_key}" \
       "${taito_proxy_secret_method}" \

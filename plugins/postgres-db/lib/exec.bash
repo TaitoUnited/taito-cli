@@ -16,7 +16,7 @@ function postgres::export_pgsslmode () {
   fi
 
   # TODO: remove
-  if [[ ${taito_zone:?} == "gcloud-temp1" ]]; then
+  if [[ ${taito_zone:-} == "gcloud-temp1" ]]; then
     PGSSLMODE="prefer"
   fi
 }

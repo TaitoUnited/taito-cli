@@ -1,5 +1,4 @@
 #!/bin/bash -e
-: "${taito_zone:?}"
 
 ( [[ -f terraform/id_rsa ]] &&
   [[ -f terraform/id_rsa.pub ]] &&
@@ -10,7 +9,7 @@
   cd terraform || exit 1
   bastion_public_ip=$(terraform output bastion_public_ip || :)
 
-  echo "Moving bastion host key: ${taito_zone}_rsa"
+  echo "Moving bastion host key: ${taito_zone:?}_rsa"
   mv id_rsa "${HOME}/.ssh/${taito_zone}_rsa"
   mv id_rsa.pub "${HOME}/.ssh/${taito_zone}_rsa.pub"
   chmod 600 "${HOME}/.ssh/${taito_zone}_rsa"
