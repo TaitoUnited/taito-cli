@@ -30,7 +30,7 @@ function helm::deploy () {
 
   function cleanup {
     rm -f scripts/*.tmp || :
-    if helm version | grep "Version:\"v2." > /dev/null; then
+    if helm version | grep "SemVer:\"v2." > /dev/null; then
       if [[ ${taito_zone} != "gcloud-temp1" ]]; then
         helm tiller stop > /dev/null || :
       fi
@@ -81,7 +81,7 @@ function helm::deploy () {
     (
       export taito_provider=${taito_orig_provider:-$taito_provider}
       taito::executing_start
-      if helm version | grep "Version:\"v2." > /dev/null; then
+      if helm version | grep "SemVer:\"v2." > /dev/null; then
         if [[ ${taito_zone} != "gcloud-temp1" ]]; then
           export HELM_TILLER_HISTORY_MAX=10
           helm tiller start-ci
@@ -138,7 +138,7 @@ function helm::deploy () {
         kubectl delete configmap "${taito_project}-${taito_target_env}-common" \
           --namespace "${taito_namespace}"
 
-        if helm version | grep "Version:\"v2." > /dev/null; then
+        if helm version | grep "SemVer:\"v2." > /dev/null; then
           helm2opts="--purge"
         fi
 
@@ -188,7 +188,7 @@ function helm::deploy () {
 
 function helm::run () {
   function finish {
-    if helm version | grep "Version:\"v2." > /dev/null; then
+    if helm version | grep "SemVer:\"v2." > /dev/null; then
       if [[ ${taito_zone} != "gcloud-temp1" ]]; then
         helm tiller stop > /dev/null
       fi
@@ -197,7 +197,7 @@ function helm::run () {
   trap finish EXIT
 
   taito::executing_start
-  if helm version | grep "Version:\"v2." > /dev/null; then
+  if helm version | grep "SemVer:\"v2." > /dev/null; then
     if [[ ${taito_zone} != "gcloud-temp1" ]]; then
       export HELM_TILLER_HISTORY_MAX=10
       helm tiller start-ci

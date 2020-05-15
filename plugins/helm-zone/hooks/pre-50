@@ -3,7 +3,7 @@
 
 if [[ ${taito_command} == "zone-"* ]]; then
   # Run tillerless Helm
-  if helm version | grep "Version:\"v2." > /dev/null; then
+  if helm version | grep "SemVer:\"v2." > /dev/null; then
     export HELM_TILLER_HISTORY_MAX=10
     (taito::executing_start; helm tiller start-ci)
     export HELM_HOST=127.0.0.1:44134

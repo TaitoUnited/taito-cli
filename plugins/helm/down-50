@@ -11,7 +11,7 @@ echo -e "Deleting ${taito_project}-${taito_target_env} helm app." \
 taito::confirm "Do you really want to delete the helm app?" no || \
   taito::skip_to_next "${@}"
 
-if helm version | grep "Version:\"v2." > /dev/null; then
+if helm version | grep "SemVer:\"v2." > /dev/null; then
   helm2opts="--purge"
 fi
 

@@ -11,7 +11,7 @@ if [[ -d "./helm" ]]; then
   for chart in ${charts[@]}; do
     if taito::confirm "Delete helm chart ${chart} from Kubernetes"; then
       echo "- Deleting chart ${chart} using Helm"
-      if helm version | grep "Version:\"v2." > /dev/null; then
+      if helm version | grep "SemVer:\"v2." > /dev/null; then
         helm2opts="--purge"
       fi
       (
