@@ -11,6 +11,4 @@ RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
 
 RUN az extension add --name azure-devops
 
-RUN /taito-cli/docker/helm-quickfix.sh
-
 ENTRYPOINT []
