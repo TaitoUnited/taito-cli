@@ -7,7 +7,7 @@
 options=" ${*} "
 if [[ ${options} == *" --all "* ]]; then
   kubectl::use_context
-  helm::run list --namespace "${taito_namespace}"
+  helm::run list --namespace "${taito_namespace}" || :
 else
   echo "See helm releases with '--all'"
 fi

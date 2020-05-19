@@ -23,36 +23,36 @@ kubectl::use_context
 
 if [ $all = true ]; then
   taito::print_title "Node details"
-  (taito::executing_start; kubectl describe nodes)
+  (taito::executing_start; kubectl describe nodes) || :
 
   taito::print_title "Nodes"
-  (taito::executing_start; kubectl top nodes 2> /dev/null)
+  (taito::executing_start; kubectl top nodes 2> /dev/null) || :
 
   taito::print_title "Ingress"
-  (taito::executing_start; kubectl get ingress $kubernetes_params)
+  (taito::executing_start; kubectl get ingress $kubernetes_params) || :
 
   taito::print_title "Jobs"
-  (taito::executing_start; kubectl get jobs $kubernetes_params)
+  (taito::executing_start; kubectl get jobs $kubernetes_params) || :
 fi
 
 taito::print_title "Cron jobs"
-(taito::executing_start; kubectl get cronjobs $kubernetes_params)
+(taito::executing_start; kubectl get cronjobs $kubernetes_params) || :
 
 if [ "${taito_version:-}" -ge "1" ]; then
   taito::print_title "Pods"
   (
     taito::executing_start
     kubectl get pods $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
-  )
+  ) || :
 
   taito::print_title "Resource usage"
-  (taito::executing_start; kubectl top pod $kubernetes_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME")
+  (taito::executing_start; kubectl top pod $kubernetes_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME") || :
 else
   taito::print_title "Pods"
-  (taito::executing_start; kubectl get pods $kubernetes_params)
+  (taito::executing_start; kubectl get pods $kubernetes_params) || :
 
   taito::print_title "Resource usage"
-  (taito::executing_start; kubectl top pod $kubernetes_params 2> /dev/null)
+  (taito::executing_start; kubectl top pod $kubernetes_params 2> /dev/null) || :
 fi
 
 if [ $all = false ] || [ ! $kubernetes_params ]; then
