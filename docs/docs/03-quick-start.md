@@ -4,7 +4,7 @@
 
 > You can skip this step, if you want to run your projects only locally for now. IMPORTANT: Skip this step if your organization is already using Taito CLI. In such case you should use the existing infrastructure instead of creating a new zone. Ask for taito configuration settings from your colleagues and copy-paste the settings to your `~/.taito/taito-config.sh` file.
 
-You can create a new zone with the following steps:
+You can create a new zone with the following steps. If you already have an existing infrastructure, but no Taito CLI configurations for it, skip the step 2.
 
 1. Create a new zone configuration based on one of the [infrastructure templates](https://taitounited.github.io/taito-cli/templates#infrastructure-templates). For example:
 
