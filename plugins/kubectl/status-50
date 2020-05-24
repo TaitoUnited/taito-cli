@@ -4,12 +4,14 @@
 
 all=false
 kubernetes_params=""
+pod_params=""
 args=( "$@"  )
 while [ $# -gt 0 ]
 do
   case $1 in
     --all)
       all=true
+      pod_params="-o=wide"
       shift || :
       ;;
     --all-namespaces)
@@ -42,14 +44,14 @@ if [ "${taito_version:-}" -ge "1" ]; then
   taito::print_title "Pods"
   (
     taito::executing_start
-    kubectl get pods $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
+    kubectl get pods $kubernetes_params $pod_params | grep -e "${taito_target_env}\\|NAME"
   ) || :
 
   taito::print_title "Resource usage"
   (taito::executing_start; kubectl top pod $kubernetes_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME") || :
 else
   taito::print_title "Pods"
-  (taito::executing_start; kubectl get pods $kubernetes_params) || :
+  (taito::executing_start; kubectl get pods $kubernetes_params $pod_params) || :
 
   taito::print_title "Resource usage"
   (taito::executing_start; kubectl top pod $kubernetes_params 2> /dev/null) || :
