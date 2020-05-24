@@ -1,0 +1,22 @@
+#!/bin/bash -e
+
+name=$1
+
+if [[ ${taito_provider:?} != "gcp" ]]; then
+  echo "Provider $taito_provider not supported"
+  exit 1
+fi
+
+if taito::confirm "Make pool ${name} unschedulable?"; then
+  for node in $(kubectl get nodes -l "cloud.google.com/gke-nodepool=$name" -o=name); do
+    kubectl cordon "$node";
+  done
+fi
+
+if taito::confirm "Drain pool ${name}?"; then
+  for node in $(kubectl get nodes -l "cloud.google.com/gke-nodepool=$name" -o=name); do
+    kubectl drain --force --ignore-daemonsets --delete-local-data --grace-period=10 "$node";
+  done
+fi
+
+taito::call_next "${@}"
