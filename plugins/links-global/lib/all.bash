@@ -23,6 +23,13 @@ function links-global::generate_docs () {
       export taito_env="${env}"
       set -a
       . "${taito_project_path}/taito-config.sh"
+
+      # TODO: remove (for backwards compatibility)
+      if [[ ${link_urls} == *"project=gcloud-temp1"* ]]; then
+        # export link_urls
+        link_urls=$(echo "${link_urls}" | sed "s|container%2Fcluster_name%2F$kubernetes_name%2Fnamespace_id%2F$taito_namespace|k8s_container%2Fcluster_name%2F$kubernetes_name%2Fnamespace_name%2F$taito_namespace|g")
+      fi
+
       set +a
       while IFS='*' read -ra items; do
         for item in "${items[@]}"; do
