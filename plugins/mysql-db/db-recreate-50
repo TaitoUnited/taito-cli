@@ -16,13 +16,15 @@ else
       taito::export_database_config "${database}"
 
       if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
-        if taito::confirm "Create mysql database ${database_name}"; then
+        if taito::confirm "Recreate mysql database ${database_name}"; then
           # Create a subshell to contain password
           (
             export database_username=${database_master_username:-root}
             echo "HINT: You can get the ${database_username} user password from:"
             echo "${database_master_password_hint:-}"
             #mysql::ask_and_expose_password
+            mysql::drop_users
+            mysql::drop_database
             mysql::create_users
             mysql::create_database
             echo "Created database ${database_name:-}"
