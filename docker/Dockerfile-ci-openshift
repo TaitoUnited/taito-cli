@@ -10,7 +10,7 @@ RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
 # RUN npm run verify
 
 # Use helm 3
-RUN sed -i "s|./get_helm.sh \&\&|./get_helm.sh -v v3.0.1 \&\&|" \
+RUN sed -i "s|./get_helm.sh \&\&|./get_helm.sh -v v3.2.1 \&\&|" \
   /taito-cli-deps/tools/install-helm.sh
 RUN /taito-cli-deps/tools/install-helm.sh
 RUN /taito-cli-deps/tools/user-init.sh root
