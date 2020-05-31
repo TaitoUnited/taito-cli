@@ -16,6 +16,15 @@ if [[ ${taito_mode:-} == "ci" ]]; then
   echo "Authenticating"
   # shellcheck disable=SC2119
   openshift::authenticate
+
+  # Container registry authentication
+  if [[ ${taito_command_requires_container_registry:?} == "true" ]] &&
+     [[ ${taito_container_registry_provider:-} == "openshift" ]]
+  then
+    taito::print_plugin_title
+    echo "Getting credentials for Elastic Container Registry"
+    openshift::authenticate_on_container_registry
+  fi
 fi
 
 taito::call_next "${@}"

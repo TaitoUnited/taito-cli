@@ -15,4 +15,5 @@ RUN sed -i "s|./get_helm.sh \&\&|./get_helm.sh -v v3.2.1 \&\&|" \
 RUN /taito-cli-deps/tools/install-helm.sh
 RUN /taito-cli-deps/tools/user-init.sh root
 
-ENTRYPOINT ["/taito-cli/docker/build.sh"]
+# ENTRYPOINT ["/taito-cli/docker/build.sh"]
+ENTRYPOINT ["taito"]
