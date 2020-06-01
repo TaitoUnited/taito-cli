@@ -157,7 +157,8 @@ function taito::export_database_config () {
     export database_build_username_internal="${!env_var_name:-$database_build_username}"
     echo "- database_build_username_internal: ${database_build_username_internal}" > "${ttaito_dout:-/dev/null}"
 
-    if [[ ${taito_command_requires_db_proxy:-} == "false" ]]; then
+    if [[ ${taito_command_requires_database:-} == "true" ]] && \
+       [[ ${taito_command_requires_db_proxy:-} == "false" ]]; then
       echo "db proxy disabled -> use real host and port" > "${taito_dout:-/dev/null}"
       export database_host="${database_real_host:-$database_host}"
       export database_port="${database_real_port:-$database_port}"
