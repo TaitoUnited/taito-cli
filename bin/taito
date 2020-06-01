@@ -9,9 +9,13 @@ fi
 
 # Host environment
 export taito_host_user
+export taito_host_user_uid
+export taito_host_user_gid
 export taito_host_uname
 export taito_host_os
 taito_host_user="$(id -u):$(id -g)"
+taito_host_user_uid="$(id -u)"
+taito_host_user_gid="$(id -g)"
 taito_host_uname="$(uname)"
 winpty=
 winptyprefix=
