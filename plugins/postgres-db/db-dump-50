@@ -5,8 +5,17 @@
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   dump_file="${1:?}"
   username=$2
+
+  # REFACTOR: args handling
+  if [[ ${username} == "--" ]]; then
+    username=
+  fi
   tool_options="${*}"
-  tool_options="${*##* -- }"
+  if [[ ${tool_options} == *" -- "* ]]; then
+    tool_options="${tool_options##* -- }"
+  else
+    tool_options=""
+  fi
 
   echo "Dumping database ${database_name:?} to ${dump_file}. Please wait."
   postgres::connect \
