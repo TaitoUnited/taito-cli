@@ -83,6 +83,7 @@ QUICK EXAMPLES
     logs:server:dev 0                  # Tail logs of a specific server instance
     kill:server:dev                    # Kill a container named 'server'
     kill:server:dev 0                  # Kill specific server instance
+    scale:server:dev 0                 # Scale server deployment to 0 replicas
     restart:server:dev                 # Restart container named 'server'
     restart:server:dev 0               # Restart specific server instance
     shell:server:dev                   # Start a shell on a container named 'server'
@@ -547,6 +548,13 @@ PROJECT: BASIC OPERATIONS
     $ taito kill:my-app-client-3034393823-2f5jf:dev
     .
     INDEX: Kill a specific instance (0-N)
+
+  scale:TARGET[:ENV] [REPLICAS]
+    Scale deployment. Examples:
+    $ taito scale:server:dev 0
+    $ taito scale:server:dev 2
+    .
+    REPLICAS: Number of replicas
 
   save:TARGET
     Save changes to a container

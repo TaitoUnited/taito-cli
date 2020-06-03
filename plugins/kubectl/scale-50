@@ -1,0 +1,18 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::skip_if_not "container storage" "${@}"
+
+replicas=$1
+
+kubectl::use_context
+if [[ ${taito_target:?} != *"-"* ]]; then
+  deployment=${taito_project:?}-${taito_target_env:?}-${taito_target}
+else
+  deployment="${taito_target}"
+fi
+
+(taito::executing_start; kubectl scale --replicas="$replicas" "deployment/${deployment}")
+
+taito::call_next "${@}"

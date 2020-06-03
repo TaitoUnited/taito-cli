@@ -487,6 +487,8 @@ if [[ ${taito_project:-} ]]; then
         "# Copy a file to the ${stack} container running on ${env} environment"
       echo "kill:${stack}${suffix}                                  " \
         "# Kill the ${stack} container running on ${env} environment"
+      echo "scale:${stack}${suffix}                                  " \
+        "# Scale the ${stack} deployment of ${env} environment"
       echo "deployment build:${stack}${suffix}                      " \
         "# Build and deploy the ${stack} artifact to ${env} environment"
       echo "artifact prepare:${stack}${suffix}                      " \
