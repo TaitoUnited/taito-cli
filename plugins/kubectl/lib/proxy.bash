@@ -2,9 +2,9 @@
 
 function kubectl::db_proxy_start () {
   if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]]; then
-    export taito_target=${taito_target:-database}
-    if taito::is_current_target_of_type container; then
+    if taito::is_target_of_type "container" "${taito_target:-database}"; then
       (
+        export taito_target="${taito_target:-database}"
         kubectl::expose_pod_and_container false &> "${taito_vout:-}"
         echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
         taito::executing_start
