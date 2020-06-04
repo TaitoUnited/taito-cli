@@ -5,19 +5,23 @@ function kubectl::db_proxy_start () {
     export taito_target=${taito_target:-database}
     if taito::is_current_target_of_type container; then
       (
-        kubectl::expose_pod_and_container false
+        kubectl::expose_pod_and_container false &> "${taito_vout:-}"
         echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
         taito::executing_start
-        kubectl port-forward \
-          "${pod:?}" \
-          "${database_port:?}:${database_real_port:-5432}" \
-          --address "${taito_db_proxy_bind_address}" \
-          --namespace "${taito_namespace:?}" > /dev/null &
-        sleep 1
-        if [[ $1 != "true" ]]; then
-          wait
+        if [[ -z ${pod:-} ]]; then
+          echo "WARNING: Database proxy was not started. Database container not found."
         else
-          sleep 3
+          kubectl port-forward \
+            "${pod:?}" \
+            "${database_port:?}:${database_real_port:-5432}" \
+            --address "${taito_db_proxy_bind_address}" \
+            --namespace "${taito_namespace:?}" > /dev/null &
+          sleep 1
+          if [[ $1 != "true" ]]; then
+            wait
+          else
+            sleep 3
+          fi
         fi
       )
     else
@@ -57,6 +61,10 @@ function kubectl::db_proxy_start () {
 function kubectl::db_proxy_stop () {
   if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]]; then
     # TODO: kill only the kubectl port-forward execution
-    (taito::executing_start; pgrep kubectl | xargs kill)
+    (
+      taito::executing_start
+      pgrep kubectl | xargs kill &> "${taito_vout:-}" || \
+        echo "WARNING: Database proxy was not stopped. Database proxy is not running?"
+    )
   fi
 }
