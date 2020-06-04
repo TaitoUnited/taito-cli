@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+if [[ ${taito_mode:?} == "ci" ]] && \
+   [[ ${taito_command:?} == "build-prepare" ]] && \
+   [[ ${HOME:?} != "/root" ]] && \
+   [[ ${HOME} != "/home/$(whoami)" ]]; then
+  taito::print_plugin_title
+  /taito-cli-deps/tools/user-init.sh
+fi
+
+taito::call_next "${@}"
