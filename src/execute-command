@@ -260,6 +260,10 @@ if [[ ${TAITO_CONFIG_OVERRIDE} == *"://"* ]]; then
   export TAITO_CONFIG_OVERRIDE=${taito_project_path}/tmp/taito-config-override
 fi
 
+# Set timestamp
+export taito_timestamp
+taito_timestamp=$(date --rfc-3339=seconds | sed 's/ /T/')
+
 # Read taito-config.sh files from all locations
 taito::core::export_user_config "${taito_env}"
 taito::core::export_project_config "${taito_env}"
