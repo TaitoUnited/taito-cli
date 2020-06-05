@@ -85,6 +85,24 @@ function template-global::init () {
   if [[ -d "${template_project_path:-.}/scripts/taito-template" ]]; then
     rm -rf "${template_project_path:-.}/scripts/taito-template"
   fi
+
+  # TODO: Move these to project template settings
+  if [[ ${template_default_zone:-} == "gcloud-temp1" ]]; then
+    # Enable old rewrite
+    sed -i "s/oldRewritePolicy: false/oldRewritePolicy: true/" \
+      scripts/helm.yaml > /dev/null
+    # Enable gcp db proxy
+    sed -i "s/kubernetes_db_proxy_enabled=true/kubernetes_db_proxy_enabled=false/" \
+      scripts/taito/config/main.sh > /dev/null
+
+    # Remove SSL cert
+    sed -i '/instance-ssl/d' scripts/helm.yaml > /dev/null
+    sed -i '/instance-ssl/d' scripts/taito/project.sh > /dev/null
+
+    # Change Kubernetes cluster name
+    sed -i 's/gke_${taito_zone}_${taito_provider_region}_${kubernetes_name}/gke_${taito_zone}_${taito_provider_zone}_${kubernetes_name}/' \
+      scripts/taito/config/provider.sh > /dev/null
+  fi
 }
 
 function template-global::hack_windows_symlinks () {
