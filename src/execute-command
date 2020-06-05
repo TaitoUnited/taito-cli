@@ -272,6 +272,7 @@ taito::core::export_project_config "${taito_env}"
 if [[ ${link_urls} == *"project=gcloud-temp1"* ]]; then
   export link_urls
   link_urls=$(echo "${link_urls}" | sed "s|container%2Fcluster_name%2F$kubernetes_name%2Fnamespace_id%2F$taito_namespace|k8s_container%2Fcluster_name%2F$kubernetes_name%2Fnamespace_name%2F$taito_namespace|g")
+  link_urls=$(echo "${link_urls}" | sed "s|app.google.stackdriver.com/uptime?project=$taito_zone&f.search=$taito_project|console.cloud.google.com/monitoring/uptime?project=$taito_zone|g")
 fi
 
 # For Azure
