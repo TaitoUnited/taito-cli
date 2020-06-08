@@ -91,12 +91,17 @@ function template-global::init () {
     # Enable old rewrite
     sed -i "s/oldRewritePolicy: false/oldRewritePolicy: true/" \
       scripts/helm.yaml > /dev/null
+    # Disable network policy
+    sed -i "s/networkPolicyEnabled: true/networkPolicyEnabled: false/" \
+      scripts/helm.yaml > /dev/null
+
     # Enable gcp db proxy
     sed -i "s/kubernetes_db_proxy_enabled=true/kubernetes_db_proxy_enabled=false/" \
       scripts/taito/config/main.sh > /dev/null
 
     # Remove SSL cert
-    sed -i '/instance-ssl/d' scripts/helm.yaml > /dev/null
+    sed -i '/db_database_ssl_.*_secret/d' scripts/helm.yaml > /dev/null
+    sed -i '/instance-ssl/d' scripts/taito/project.sh > /dev/null
     sed -i '/instance-ssl/d' scripts/taito/project.sh > /dev/null
 
     # Change Kubernetes cluster name
