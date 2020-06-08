@@ -14,24 +14,29 @@ echo "--------------------------------"
 echo "Basic configuration"
 echo "--------------------------------"
 echo
-echo "Create a new build trigger with these settings if one does not exist already:"
+echo "Connect to repository with these settings if not already connected:"
 echo "- Source: ${taito_vc_provider:-GitHub} (mirrored)"
 if [[ "${taito_vc_provider:-github}" == "github" ]]; then
   echo "    WARNING: Do NOT select GitHub Cloud Build GitHub App (Beta) !!!"
 fi
 echo "- Repository: ${taito_vc_repository}"
+echo
+echo "Create a new build trigger for the repository with these settings if one"
+echo "does not exist already:"
 echo "- Name: ${taito_project}"
-echo "- Description: ${taito_project}"
-echo "- Trigger type: Branch"
-echo "- Branch (regex) - Most likely one of these depending on zone:"
+echo "- Event: Push to branch"
+echo "- Source repository: ${taito_vc_repository}"
+echo "- Source branch - Most likely one of these depending on zone:"
 echo "    ^(dev|test|uat)\$"
 echo "    ^(stag|canary|master)\$"
-echo "- Build configuration: Cloud Build configuration file (yaml or json)"
+echo "- File type: Cloud Build configuration file (YAML or JSON)"
 echo "- Cloud Build configuration file location: /cloudbuild.yaml"
 echo
 echo "--------------------------------"
 echo "OPTIONAL: Advanced configuration"
 echo "--------------------------------"
+echo
+echo "Note that these steps are optional!"
 echo
 echo "a) Protect staging, canary, and production branches"
 echo
