@@ -5,8 +5,17 @@
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   filename="${1:?Filename not given}"
   username="${2}"
+
+  # REFACTOR: args handling
+  if [[ ${username} == "--" ]]; then
+    username=
+  fi
   tool_options="${*}"
-  tool_options="${*##* -- }"
+  if [[ ${tool_options} == *" -- "* ]]; then
+    tool_options="${tool_options##* -- }"
+  else
+    tool_options=""
+  fi
 
   echo "Importing ${1}"
   (
