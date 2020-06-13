@@ -2,6 +2,9 @@
 
 export taito_mode="${taito_mode:-normal}"
 
+# Replace ; with space
+export taito_enabled_extensions="${taito_enabled_extensions//;/ }"
+
 if [[ ${taito_host_os:-} == "windows" ]]; then
   # Remove winptyprefix
   export taito_run="${taito_run//\/\//\/}"

@@ -264,7 +264,7 @@ do
       )
     fi
     extension_local_paths="${extension_local_paths} ${repo_local_path}"
-    extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}${repo_dir}"
+    extension_paths="${extension_paths};${taito_container_home}/.taito/${repo_name}${repo_dir}"
   elif [[ ${extension} == *"gz" ]]; then
     # Archive link e.g.
     # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
@@ -277,7 +277,7 @@ do
       ( curl -sL "${url}" | tar zxv -C ${taito_home_path}/.taito/extensions )
     fi
     extension_local_paths="${extension_local_paths} ${repo_local_path}"
-    extension_paths="${extension_paths} ${taito_container_home}/.taito/${repo_name}"
+    extension_paths="${extension_paths};${taito_container_home}/.taito/${repo_name}"
   else
     # Local url
     # First replace ~ with an absolute home path.
@@ -295,7 +295,7 @@ do
     docker_path="${local_path}"
     docker_path="${docker_path/$taito_home_path/$taito_container_home}"
     extension_local_paths="${extension_local_paths} ${local_path}"
-    extension_paths="${extension_paths} ${docker_path}"
+    extension_paths="${extension_paths};${docker_path}"
     extension_mount_flags="${extension_mount_flags} \
       -v ${local_path}:${docker_path}"
   fi
