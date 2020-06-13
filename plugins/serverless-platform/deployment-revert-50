@@ -1,7 +1,0 @@
-#!/bin/bash -e
-
-revision="${1:-0}"
-
-echo "TODO revert aws/azure/gcp function using serverless.com"
-
-taito::call_next "${@}"

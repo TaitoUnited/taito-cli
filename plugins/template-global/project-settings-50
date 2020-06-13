@@ -38,8 +38,8 @@ if [[ ${taito_type:-} == "zone" ]]; then
     echo "Once you have configured the zone, you can create a new project on"
     echo "this zone like this:"
     echo
-    echo "1) Configure your personal config file (~/.taito/taito-config.sh) or"
-    echo "   organizational config file (~/.taito/taito-config-${taito_organization_abbr:-myorg}.sh)"
+    echo "1) Configure your default config file (~/.taito/taito-config.sh) or"
+    echo "   additional config file (~/.taito/taito-config-${taito_organization_abbr:-myorg}.sh)"
     echo "   according to the example settings displayed below."
     echo
     echo "Press enter to display the example settings"

@@ -25,9 +25,9 @@ When adding commands to your _package.json_ or _Makefile_, you are encouraged to
 
 You can also override an existing Taito CLI command in your file by using `taito-` as script name prefix. For example the following npm script shows the init.txt file before running initialization implemented by Taito CLI plugins. The `-z` flag means that override is skipped when the npm script calls Taito CLI. You can use the optional _taito_ prefix also for avoiding conflicts with existing script names.
 
-    "taito-init": "less init.txt; taito -z init"
+    "taito-init": "less init.txt && taito -z init"
 
-All npm commands are run inside Taito CLI by default. Use `taito-host-` prefix to run command on host instead:
+All npm commands are run inside the Taito CLI docker container by default. Use `taito-host-` prefix to run the command directly on host instead:
 
     "taito-host-example": "echo 'taito example' command is run on host"
 

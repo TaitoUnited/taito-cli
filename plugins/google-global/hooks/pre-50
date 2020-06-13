@@ -2,7 +2,7 @@
 : "${taito_command:?}"
 
 # Add authuser parameter to all google.com links if google_authuser
-# has been defined in personal taito-config.sh
+# has been defined in default taito-config.sh
 if [[ ${google_authuser:-} ]] && \
    ([[ ${taito_command} == "open-"* ]] || [[ ${taito_command} == "link-"* ]])
 then

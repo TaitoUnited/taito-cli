@@ -1,15 +1,18 @@
 #!/bin/bash -e
 # shellcheck disable=SC2034
 : "${taito_target_env:?}"
+taito_env=$taito_target_env
 
 taito_extensions="./extension"
 taito_plugins="npm db-proxy db1 db2 example"
 
 taito_project="example-project"
 taito_environments="dev prod"
-taito_env=$taito_target_env
-taito_targets="client server"
-taito_storages="example-project-${taito_env}"
+taito_targets="client server database reportdb storage"
+
+taito_target_type_database=database
+taito_target_type_reportdb=database
+taito_target_type_storage=storage
 
 # default database
 db_database_instance="common-postgres"

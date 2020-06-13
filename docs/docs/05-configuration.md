@@ -2,7 +2,7 @@
 
 > TODO: separate chapters for project template settings, and tips for setting up proxies and version control commands.
 
-By default only the _basic_ plugin is enabled. You can configure your personal settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. See the [installation and upgrade](02-installation.md) chapter for an example of a personal configuration file.
+By default only the _basic_ plugin is enabled. You can configure your default settings in `~/.taito/taito-config.sh` file and organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file.
 
 Project specific settings are defined in `taito-config.sh` file placed at your project root folder. See [taito-config.sh](https://github.com/TaitoUnited/full-stack-template/blob/master/taito-config.sh) of full-stack-template as an example.
 
@@ -12,7 +12,7 @@ Settings are defined as environment variables. If an environment variable contai
 taito_environments="dev test canary prod"
 ```
 
-TIP: You can easily use `taito-config.sh` settings in your own custom scripts. For example [post-build.sh](https://github.com/TaitoUnited/react-native-template/blob/dev/scripts/appcenter/post-build.sh#L9) script of react-native-template uses taito-config.sh settings to send Slack notification after App Center build has ended:
+TIP: You can easily use project specific `taito-config.sh` settings in your own custom scripts even without Taito CLI. For example [post-build.sh](https://github.com/TaitoUnited/react-native-template/blob/dev/scripts/appcenter/post-build.sh#L9) script of react-native-template uses taito-config.sh settings to send Slack notification after App Center build has ended:
 
 ```shell
 # Read settings from taito-config.sh
@@ -24,9 +24,9 @@ export taito_target_env=${APPCENTER_BRANCH/master/prod}
 
 User specific overrides may be defined in `taito-user-config.sh` file located at project root folder. In this file you can define additional variables or override any variables set in `taito-config.sh` The user specific file should not be committed to version control.
 
-You may define path to an additional configuration overrides file with a `TAITO_CONFIG_OVERRIDE` environment variable. These overrides will be included in the `taito-config.sh` just before provider specific settings. The file may be either local file (e.g. `./my-overrides.sh`) or reside remotely (e.g. `https://mydomain.com/configs/my-overrides.sh`).
+The [full-stack-template](https://github.com/TaitoUnited/full-stack-template) also supports `TAITO_CONFIG_OVERRIDE` environment variable. With the `TAITO_CONFIG_OVERRIDE` environment variable you may define path to an additional configuration overrides file. These overrides will be included to the configurations just before provider specific settings. The file may be either local file (e.g. `./my-overrides.sh`) or reside remotely (e.g. `https://mydomain.com/configs/my-overrides.sh`). The `TAITO_CONFIG_OVERRIDE` setting is useful in some CI/CD scenarios (e.g. the same git branch is automatically deployed to multiple environments).
 
-### Common settings in personal or organizational configuration file
+### Common settings in default or additional configuration file
 
 The following settings are shared among plugins. All of them are optional.
 
@@ -35,9 +35,9 @@ The following settings are shared among plugins. All of them are optional.
 - **taito_global_extensions:** Globally enabled Taito CLI extensions. You can reference an extension by using a local file path, git repository path or an url to a **tar.gz** archive. TODO example values.
 - **taito_global_plugins:** Globally enabled Taito CLI plugins.
 
-[Plugins](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins) named with a `-global` suffix are designed to be used globally. That is, you configure them in your personal or organizational configuration file.
+[Plugins](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins) named with a `-global` suffix are designed to be used globally. That is, you configure them in your default or additional configuration file.
 
-### Template settings in personal or organizational configuration file
+### Template settings in default or additional configuration file
 
 TODO: In template plugin README.md (template_default_ci_exec_deploy false for security critical environments, etc.)
 
@@ -252,11 +252,13 @@ esac
 
 ### Test suite parameters
 
-You can define parameters for your e2e and integration test suites by using `test_TARGET_` as prefix. See the end of [taito-config.sh](https://github.com/TaitoUnited/full-stack-template/blob/master/taito-config.sh) file of full-stack-template as an example.
+You can define parameters for your e2e and integration test suites by using `test_TARGET_` as prefix. See the [taito-config.sh](https://github.com/TaitoUnited/full-stack-template/blob/master/taito-config.sh) file of full-stack-template as an example.
 
 ### Secret management
 
 Plugins require secrets to perform some of the operations. Secrets are configured in `taito-config.sh` using the `taito_secrets` variable and secret values can be managed with the `taito env apply:ENV` and `taito secret rotate:ENV` commands. See [taito-config.sh](https://github.com/TaitoUnited/full-stack-template/blob/master/taito-config.sh) of full-stack-template for examples.
+
+> TIP: You can also use `taito_remote_secrets` and `taito_local_secrets` in addition to `taito_secrets` if some of the secrets should be defined for remote or local environments only.
 
 Secret naming convention is **name.property[/namespace]:method**. You should avoid undescores in secret names as they are not valid in Kubernetes. For example:
 
@@ -281,7 +283,7 @@ You can use the following methods in your secret definition:
 - `htpasswd-plain`: htpasswd file that contains 1-N user credentials. Passwords are stored in plain text. User credentials are entered manually.
 - `csrkey`: Secret key generated for certificate signing request (CSR).
 
-See the [secret management](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md#secret-management) section of the plugins page for more information.
+See the [secret management](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md#secret-management) section of the plugins page for more information. [6.4. Define a secret](https://taitounited.github.io/taito-cli/tutorial/06-env-variables-and-secrets#64-define-a-secret) chapter of Taito CLI tutorial may also be useful.
 
 ---
 

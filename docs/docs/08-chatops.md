@@ -1,6 +1,6 @@
 ## 8. ChatOps
 
-TODO ChatOps: Mattermost/Slack integrations, some additional intelligence with Google services.
+TODO ChatOps: Mattermost/Slack/Teams integrations, some additional intelligence with Google services.
 
 ---
 

@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-echo "- target: ${taito_target}"
+echo "- target: ${taito_target:-database}"
 echo "- env: ${taito_env}"
 echo "- instance: ${database_instance}"
 echo "- name: ${database_name}"

@@ -29,7 +29,7 @@ echo
 if [[ ${taito_organization_param:-} ]]; then
   echo "Creating project with '${taito_organization_param:-}' settings"
 else
-  echo "Creating project with personal default settings"
+  echo "Creating project with default settings"
 fi
 template-global::ask_and_export_details
 

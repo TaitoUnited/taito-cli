@@ -33,7 +33,7 @@ You can create a new zone with the following steps:
     taito open dashboard
     ```
 
-    > RECOMMENDATION: Use the dashboard for viewing only. Make all infrastructure changes to the zone configuration files, and run `taito zone apply` to apply the changes.
+    > RECOMMENDATION: Use the dashboard for viewing only. If you need to make changes to the infrastructure, make changes to the zone configuration files, and run `taito zone apply` to apply the changes. This way you can keep all your infrastructure configurations in version history (infrastructure as code).
 
 4. Commit your zone configuration files to some git repository.
 
@@ -45,6 +45,8 @@ You can create a new zone with the following steps:
     taito -q project settings >> ~/.taito/taito-config.sh
     ```
 
+    > TIP: Your default configuration is located in `~/.taito/taito-config.sh`. You can also have additional configurations, e.g. `~/.taito/taito-config-company-x.sh`.
+
 ### Setting up a new project
 
 #### Local development environment (local)
@@ -55,6 +57,8 @@ You can create a new zone with the following steps:
     taito project create: full-stack-template
     cd acme-myproject
     ```
+
+    > TIP: You can choose some other than default configuration with `-o`, for example: `taito -o company-x project create: full-stack-template`.
 
 2. Clean start the local development environment with the following command. This typically initializes your local secrets, installs some libraries, builds and starts containers, and initializes your database with tables and some data. Secret default values are typically copied from dev environment, if available.
 

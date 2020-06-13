@@ -8,7 +8,7 @@ Officially recommended project templates are listed below. All of them include t
 
 * [full-stack-template](https://github.com/TaitoUnited/full-stack-template): Template for cloud-native applications and microservices running on Kubernetes, Docker Compose, serverless (FaaS), or virtual machine. You can choose the stack during project creation.
 
-* [website-template](https://github.com/TaitoUnited/website-template): Template for websites generated with a static site generator (e.g. Gatsby, Hugo or Jekyll), and running on CDN, Kubernetes, Docker Compose, or virtual machine. Supports an automated multistage publishing process. Netlify CMS support also coming soon. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic functionality for your website.
+* [website-template](https://github.com/TaitoUnited/website-template): Template for websites generated with a static site generator (e.g. Gatsby, Hugo or Jekyll), and running on CDN, Kubernetes, Docker Compose, or virtual machine. Supports an automated multistage publishing process. Netlify CMS support also coming soon. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic functionality for your website. TODO: Combine full-stack-template and website-template
 
 * [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Template for WordPress sites running on Kubernetes, Docker Compose, or virtual machine. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic non-PHP functionality for your website.
 
@@ -18,15 +18,7 @@ Officially recommended project templates are listed below. All of them include t
 
 * [npm-template](https://github.com/TaitoUnited/npm-template): Template for npm libraries. Includes monorepo support.
 
-* TODO flutter
-
-* TODO machine learning, kubeflow
-
-* TODO data warehouse, analytics
-
-* TODO desktop: electron, javafx, ...
-
-* TODO tool-template
+* TODO: Data warehouse, analytics, machine learning
 
 ## Infrastructure templates
 
@@ -45,6 +37,7 @@ Use one of the **Kubernetes as a service** infrastructure templates, but do not 
 * [azure](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/azure): Microsoft Azure
 * [do](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/do): Digital Ocean
 * [gcp](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/gcp): Google Cloud Platform
+* [openshift](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/openshift): OpenShift (TODO)
 * [scaleway](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/scaleway): Scaleway (TODO)
 * [vmware](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/vmware): VMWare Cloud (TODO)
 
@@ -69,7 +62,7 @@ For critical security needs you should consider some additional security steps t
 - Limit egress traffic in addition to ingress traffic, and monitor suspicious outbound connection attempts.
 - Limit Kubernetes network traffic with Kubernetes networking rules.
 - Limit Kubernetes namespace access with RBAC.
-- Require container images to by signed by trusted authorities.
+- Require container images to be signed by trusted authorities.
 - Use personal accounts for accessing databases to leave audit trail.
 - Reserve a separate IP address and load balancer for each domain or subdomain.
 - Prepare for high usage spikes with autoscaling and CDN.

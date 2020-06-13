@@ -8,9 +8,9 @@ Run `taito -h` to show a list of all predefined commands of Taito CLI and additi
 
 Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito auth:dev`). Note that your credentials are saved on the Taito CLI container image, as you don't need them lying on your host file system anymore.
 
-[Taito CLI tutorial](https://github.com/TaitoUnited/taito-cli/tree/master/docs/tutorial/README.md) guides you through common software development scenarios in a chronological order. You may consider it as a chronological Taito CLI manual.
+[Taito CLI tutorial](https://taitounited.github.io/taito-cli/tutorial/) guides you through common software development scenarios in a chronological order. You may consider it as a chronological Taito CLI manual.
 
-See the [DEVELOPMENT.md](https://github.com/TaitoUnited/full-stack-template/blob/master/DEVELOPMENT.md) of the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) as an example on how to use Taito CLI with your project.
+See the [DEVELOPMENT.md](https://github.com/TaitoUnited/full-stack-template/blob/master/scripts/taito/DEVELOPMENT.md) of the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) as an example on how to use Taito CLI with your project.
 
 ### Troubleshooting
 
@@ -26,7 +26,9 @@ If you work for multiple organizations, you may define organization specific ove
 
 #### Project references
 
-You can execute project specific commands also outside the project directory with the `-p` option, for example `taito -p my-project open logs:prod`. The command reads the `taito-config.sh` file directly from remote git repository, and therefore the git repository need not be cloned to your local disk. The `-p` options works only if you have configured `vc_organization` setting in you personal or organizational `taito-config.sh` file.
+You can execute project specific commands also outside the project directory with the `-p` option, for example `taito -p my-project open logs:prod`. The command reads the `taito-config.sh` file directly from remote git repository, and therefore the git repository need not be cloned to your local disk. The `-p` options works only if you have configured `vc_organization` setting in you default or additional `taito-config.sh` file.
+
+> TODO: The current implementation clones the whole repository on the first run. Therefore the command may execute slowly on the first run.
 
 #### Running shell commands
 
@@ -54,11 +56,11 @@ taito util commit                          # Commit changes to the Taito CLI ima
 exit                                       # Exit Taito CLI shell
 ```
 
-These changes are in effect until the next time you run `taito upgrade`. If you want to make permanent changes, put your installation scripts in `~/.taito/install` executable. It will be run as root user during `taito upgrade`. Note that `/install` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install` script.
+These changes are in effect until the next time you run `taito upgrade`. If you want to make permanent changes, put your installation scripts in `~/.taito/install` executable. It will be run as root user during `taito upgrade`. Note that `/taito-cli-deps/tools` directory of Taito CLI image contains some reusable install scripts that you can also use in your `install` script.
 
 #### Building and distributing a customized Taito CLI image
 
-You can use Docker Hub or some other container registry to build and distribute a custom Taito CLI image. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline.
+You can use Docker Hub or some other container registry to build and distribute a custom Taito CLI image. This way you can make a customized Taito CLI image for your organization, or for your CI/CD pipeline. The default Taito CLI image is configured in `~/.taito/taito-config.sh` with the `taito_image` setting.
 
 #### Admin credentials
 
@@ -66,7 +68,7 @@ Many tools require you to authenticate only once and then you can run any comman
 
 With the `-a, --admin` option you specify that you would like to run the given command as admin. For example, you can authenticate as admin by running `taito -a auth:prod` and then execute a command as admin by running `taito -a status:prod`. Your admin credentials are stored in Taito CLI container image using `aes-256-cbc` encryption and you need to enter the decryption key every time you execute a command as admin. Keep the decryption key in a safe place.
 
-TODO support for U2F/YubiKey?
+> TODO: support for U2F/YubiKey?
 
 ---
 

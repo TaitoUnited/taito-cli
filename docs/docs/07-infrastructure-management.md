@@ -16,18 +16,12 @@ Do not confuse taito zones with cloud provider regions and zones. Each taito zon
 
 ## Creating a zone
 
-You can use one of the templates located in [taito-templates](https://github.com/TaitoUnited/taito-templates/README.md) as a starting point for your infrastructure, and customize it according to your own requirements:
+You can create a new zone configuration based on one of the [infrastructure templates](https://taitounited.github.io/taito-cli/templates#infrastructure-templates) as explained in the [3. Quick start](03-quick-start.md) chapter.
 
-Set infrastructure template default path in `~/.taito/taito-config.sh` (or `~/.taito/taito-config-ORG.sh`):
+You can also use your own infrastructure templates. Just change the infrastructure templates location in your `~/.taito/taito-config.sh` file:
 
-```shell
-template_default_zone_source_git=git@github.com:TaitoUnited/taito-templates//infrastructure
 ```
-
-Create a new zone:
-
-```shell
-taito [-o ORG] zone create: TEMPLATE
+template_default_zone_source_git=git@github.com:MyOrg/taito-templates//infrastructure
 ```
 
 ---

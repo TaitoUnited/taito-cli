@@ -182,7 +182,7 @@ if [[ -z "${params[*]}" ]]; then
   params=("--help")
 fi
 
-# Read personal taito-config settings
+# Read default taito-config settings
 export taito_image="taitounited/taito-cli:cli"
 taito::core::export_user_config "${taito_target_env}"
 

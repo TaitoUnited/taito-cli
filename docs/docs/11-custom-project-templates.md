@@ -2,7 +2,7 @@
 
 TODO
 
-If you want to make your own, use **taito-template** as a label.
+> If you make your own project template, it is recommended to use **taito-template** as a label for the GitHub repository.
 
 ---
 

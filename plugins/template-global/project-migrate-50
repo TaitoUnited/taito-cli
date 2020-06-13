@@ -18,7 +18,7 @@ echo
 if [[ ${taito_organization_param:-} ]]; then
   echo "Migrating project with '${taito_organization_param:-}' settings"
 else
-  echo "Migrating project with personal default settings"
+  echo "Migrating project with default settings"
 fi
 template-global::ask_and_export_details
 

@@ -53,7 +53,7 @@ function taito::core::export_user_config () {
   export taito_env="${1:-$taito_env}"
   export taito_target_env="${taito_target_env:-$taito_env}"
 
-  # Personal default configuration
+  # Default configuration
   if [[ -f "${taito_home_path}/.taito/taito-config.sh" ]]; then
     set -a
     # shellcheck disable=SC1090
@@ -61,7 +61,7 @@ function taito::core::export_user_config () {
     set +a
   fi
 
-  # Personal organization specific configuration
+  # Organization specific configuration
   org_config_file=""
   if [[ ${taito_organization_param:-} ]]; then
     org_config_file="${taito_home_path}/.taito/taito-config-${taito_organization_param}.sh"
@@ -209,7 +209,7 @@ function taito::core::upgrade () {
   echo "DONE! Your taito-cli has been upgraded."
   echo
   echo "NOTE: It is recommended that once in while you also check that your"
-  echo "organizational settings are up-to-date. They are located at '~/.taito'"
+  echo "taito settings are up-to-date. They are located at '~/.taito'"
   echo "directory. You may find the recommended settings by running"
   echo "'taito open conventions' or 'taito -o ORGANIZATION open conventions'."
   echo
