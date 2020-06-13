@@ -92,12 +92,12 @@ Note that you can also add a project specific extension to your project subdirec
 
 All settings defined in `taito-config.sh` are visible for plugins. See [configuration](05-configuration.md) chapter for more info. Additionally some environment variables are defined by Taito CLI. The following are the most important:
 
-- **taito_project_path**: Path to project root directory.
-- **taito_plugin_path**: Path to root directory of the current plugin.
-- **taito_cli_path**: Path to Taito CLI root directory.
-- **taito_target**: Command target (e.g. admin, client, server, database, storage, ...)
-- **taito_target_env**: The target environment (e.g. local, dev, test, uat, stag, canary, prod)
-- **taito_env**: The resource environment. Usually the same as **taito_target_env**, but may differ in some scenarios (e.g. `taito_target_env=canary` but `taito_env=prod`).
+- **taito\_project\_path**: Path to project root directory.
+- **taito\_plugin\_path**: Path to root directory of the current plugin.
+- **taito\_cli\_path**: Path to Taito CLI root directory.
+- **taito\_target**: Command target (e.g. admin, client, server, database, storage, ...)
+- **taito\_target\_env**: The target environment (e.g. local, dev, test, uat, stag, canary, prod)
+- **taito\_env**: The resource environment. Usually the same as **taito\_target\_env**, but may differ in some scenarios (e.g. `taito_target_env=canary` but `taito_env=prod`).
 
 TODO: update the list of environment variables
 
@@ -105,13 +105,13 @@ TODO: update the list of environment variables
 
 Values of the following environment variables are set depending on debug mode:
 
-- **taito_debug**: `true` or `false`
-- **taito_dout**: `/dev/stdout` or `/dev/null`
+- **taito\_debug**: `true` or `false`
+- **taito\_dout**: `/dev/stdout` or `/dev/null`
 
 Values of the following environment variables are set depending on verbose mode:
 
-- **taito_verbose**: `true` or `false`
-- **taito_vout**: `/dev/stdout` or `/dev/null`
+- **taito\_verbose**: `true` or `false`
+- **taito\_vout**: `/dev/stdout` or `/dev/null`
 
 You can use these environment variables to provide additional output in verbose or debug mode. For example:
 

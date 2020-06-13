@@ -30,16 +30,16 @@ The [full-stack-template](https://github.com/TaitoUnited/full-stack-template) al
 
 The following settings are shared among plugins. All of them are optional.
 
-- **taito_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `taitounited/taito-cli:cli`.
-- **taito_zone:** The default taito zone. You can usually leave this empty.
-- **taito_global_extensions:** Globally enabled Taito CLI extensions. You can reference an extension by using a local file path, git repository path or an url to a **tar.gz** archive. TODO example values.
-- **taito_global_plugins:** Globally enabled Taito CLI plugins.
+- **taito\_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `taitounited/taito-cli:cli`.
+- **taito\_zone:** The default taito zone. You can usually leave this empty.
+- **taito\_global\_extensions:** Globally enabled Taito CLI extensions. You can reference an extension by using a local file path, git repository path or an url to a **tar.gz** archive. TODO example values.
+- **taito\_global\_plugins:** Globally enabled Taito CLI plugins.
 
 [Plugins](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins) named with a `-global` suffix are designed to be used globally. That is, you configure them in your default or additional configuration file.
 
 ### Template settings in default or additional configuration file
 
-TODO: In template plugin README.md (template_default_ci_exec_deploy false for security critical environments, etc.)
+TODO: In template plugin README.md (template\_default\_ci\_exec\_deploy false for security critical environments, etc.)
 
 ### Common settings in project specific configuration file
 
@@ -47,57 +47,57 @@ The following settings are shared among plugins. All of them are optional.
 
 Basic settings:
 
-- **taito_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `taitounited/taito-cli:cli`.
-- **taito_version:** Version of the taito configuration file syntax. It is used to provide backwards compatibility in case Taito CLI implementation is changed. The current version is `1`.
-- **taito_extensions:** Enabled Taito CLI extensions. You can reference an extension using a local file path (relative to the project root directory), git repository path or an url to a **tar.gz** archive. TODO example values.
-- **taito_plugins:** Enabled Taito CLI plugins.
+- **taito\_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `taitounited/taito-cli:cli`.
+- **taito\_version:** Version of the taito configuration file syntax. It is used to provide backwards compatibility in case Taito CLI implementation is changed. The current version is `1`.
+- **taito\_extensions:** Enabled Taito CLI extensions. You can reference an extension using a local file path (relative to the project root directory), git repository path or an url to a **tar.gz** archive. TODO example values.
+- **taito\_plugins:** Enabled Taito CLI plugins.
 
 Project labeling:
 
-- **taito_organization:** Name of the organization that is hosting the project.
-- **taito_organization_abbr:** Organization name abbreviation.
-- **taito_project:** Name of the project.
-- **taito_random_name:** Random name for the project. Use this when real project name cannot be used.
-- **taito_company:** Company of the project (customer company).
-- **taito_family:** Product family name of the project (you can usually leave this empty)
-- **taito_application:** Application name.
-- **taito_suffix:** Additional suffix, for example `api` (you can usually leave this empty)
+- **taito\_organization:** Name of the organization that is hosting the project.
+- **taito\_organization\_abbr:** Organization name abbreviation.
+- **taito\_project:** Name of the project.
+- **taito\_random\_name:** Random name for the project. Use this when real project name cannot be used.
+- **taito\_company:** Company of the project (customer company).
+- **taito\_family:** Product family name of the project (you can usually leave this empty)
+- **taito\_application:** Application name.
+- **taito\_suffix:** Additional suffix, for example `api` (you can usually leave this empty)
 
 Assets:
 
-- **taito_project_icon:** Icon URL that can be used for example in Slack notifications sent by CI/CD.
+- **taito\_project\_icon:** Icon URL that can be used for example in Slack notifications sent by CI/CD.
 
 Environments:
 
-- **taito_environments:** Environments (e.g `dev`, `test`, `uat`, `stag`, `canary`, `prod`). You can also define feature environments using `f-` as prefix (e.g. `f-create-user`).
+- **taito\_environments:** Environments (e.g `dev`, `test`, `uat`, `stag`, `canary`, `prod`). You can also define feature environments using `f-` as prefix (e.g. `f-create-user`).
 
 URLs:
 
-- **taito_domain:** Domain name for your application. For example `my-project-dev.mydomain.com`.
-- **taito_app_url:** URL of the application web user interface. For example `https://my-project-dev.mydomain.com`.
-- **taito_admin_url:** URL of the administration web user interface. For example `https://my-project-dev.mydomain.com/admin/`.
-- **taito_static_url:** Public base URL for static assets, if static assets are published to another location than the application domain. For example `https://cdn-dev.mydomain.com/my-project-dev/`.
+- **taito\_domain:** Domain name for your application. For example `my-project-dev.mydomain.com`.
+- **taito\_app\_url:** URL of the application web user interface. For example `https://my-project-dev.mydomain.com`.
+- **taito\_admin\_url:** URL of the administration web user interface. For example `https://my-project-dev.mydomain.com/admin/`.
+- **taito\_static\_url:** Public base URL for static assets, if static assets are published to another location than the application domain. For example `https://cdn-dev.mydomain.com/my-project-dev/`.
 
 Provider and namespaces:
 
-- **taito_provider:** Provider (e.g. `aws`, `azure`, `gcp`, `onpremise`).
-- **taito_provider_region:** Region of the provider.
-- **taito_provider_zone:** Zone of the provider.
-- **taito_zone:** Taito zone that contains the clusters/services that your application is deployed on. TODO explain taito zone.
-- **taito_namespace:** Namespace for the project (For example a Kubernetes namespace).
-- **taito_resource_namespace:** Namespace for additional project specific resources (e.g. AWS, Azure or Google Cloud project name).
+- **taito\_provider:** Provider (e.g. `aws`, `azure`, `gcp`, `onpremise`).
+- **taito\_provider\_region:** Region of the provider.
+- **taito\_provider\_zone:** Zone of the provider.
+- **taito\_zone:** Taito zone that contains the clusters/services that your application is deployed on. TODO explain taito zone.
+- **taito\_namespace:** Namespace for the project (For example a Kubernetes namespace).
+- **taito\_resource\_namespace:** Namespace for additional project specific resources (e.g. AWS, Azure or Google Cloud project name).
 
 Repositories:
 
-- **taito_vc_repository:** Version control repository name (e.g. git repository name).
-- **taito_container_registry:** Docker container image registry.
+- **taito\_vc\_repository:** Version control repository name (e.g. git repository name).
+- **taito\_container\_registry:** Docker container image registry.
 
 Stack:
 
-- **taito_targets:** For example `"client server database storage"`.
-- **taito_build_targets:** Targets for the `taito build[:BUILD_TARGET]` command. By default **taito_targets** are used as **taito_build_targets**.
-- **taito_storages:** For example `"my-project-dev"`.
-- **taito_networks:** Networks defined in your `docker-compose.yaml`. Usually just `"default"`.
+- **taito\_targets:** For example `"client server database storage"`.
+- **taito\_build\_targets:** Targets for the `taito build[:BUILD_TARGET]` command. By default **taito\_targets** are used as **taito\_build\_targets**.
+- **taito\_storages:** For example `"my-project-dev"`.
+- **taito\_networks:** Networks defined in your `docker-compose.yaml`. Usually just `"default"`.
 
 Stack types:
 
@@ -105,39 +105,39 @@ TODO
 
 Database settings:
 
-- **db_NAME_instance:** Database instance (e.g. database cluster name).
-- **db_NAME_type:** Database type (e.g. `pg`, `mysql`).
-- **db_NAME_host:** Database host
-- **db_NAME_port:** Database port
-- **db_NAME_proxy_port:** Database proxy port
-- **db_NAME_user:** Database user
-- **db_NAME_password:** Database password
+- **db\_NAME\_instance:** Database instance (e.g. database cluster name).
+- **db\_NAME\_type:** Database type (e.g. `pg`, `mysql`).
+- **db\_NAME\_host:** Database host
+- **db\_NAME\_port:** Database port
+- **db\_NAME\_proxy\_port:** Database proxy port
+- **db\_NAME\_user:** Database user
+- **db\_NAME\_password:** Database password
 
 Messaging:
 
-- **taito_messaging_provider:** Messaging app used for notifications (e.g. `slack`).
-- **taito_messaging_webhook:** Webhook for sending messaging notifications.
-- **taito_messaging_channel:** Messaging channel used for project discussion.
-- **taito_messaging_builds_channel:** Messaging channel used for monitoring builds. Default value: '#builds'.
-- **taito_messaging_critical_channel:** Messaging channel used for critical alerts. Default value: '#critical'.
-- **taito_messaging_monitoring_channel:** Messaging channel used for monitoring apps. Default value: '#monitoring'.
+- **taito\_messaging\_provider:** Messaging app used for notifications (e.g. `slack`).
+- **taito\_messaging\_webhook:** Webhook for sending messaging notifications.
+- **taito\_messaging\_channel:** Messaging channel used for project discussion.
+- **taito\_messaging\_builds\_channel:** Messaging channel used for monitoring builds. Default value: '#builds'.
+- **taito\_messaging\_critical\_channel:** Messaging channel used for critical alerts. Default value: '#critical'.
+- **taito\_messaging\_monitoring\_channel:** Messaging channel used for monitoring apps. Default value: '#monitoring'.
 
 Uptime monitoring:
 
-- **taito_uptime_provider:**
-- **taito_uptime_targets:** Targets to be monitored, for example `admin client server`.
-- **taito_uptime_paths:** Public paths to be monitored, for example `/admin/uptimez /uptimez /api/uptimez`.
-- **taito_uptime_timeouts:** Monitoring timeouts, for example `2s 2s 5s`.
-- **taito_uptime_channels:** Monitoring channels, for example `projects/myproject/notificationChannels/1234567890`.
+- **taito\_uptime\_provider:**
+- **taito\_uptime\_targets:** Targets to be monitored, for example `admin client server`.
+- **taito\_uptime\_paths:** Public paths to be monitored, for example `/admin/uptimez /uptimez /api/uptimez`.
+- **taito\_uptime\_timeouts:** Monitoring timeouts, for example `2s 2s 5s`.
+- **taito\_uptime\_channels:** Monitoring channels, for example `projects/myproject/notificationChannels/1234567890`.
 
 Continuos integration settings:
 
-- **ci_exec_build:** Build a container if it does not exist already (true/false).
-- **ci_exec_deploy:** Deploy automatically (true/false).
-- **ci_exec_test:** Execute test suites after deploy (true/false).
-- **ci_exec_test_init:** Run 'init --clean' before each test suite (true/false).
-- **ci_exec_revert:** Revert deploy automatically on fail (true/false).
-- **ci_static_assets_location:** Location where the static assets should be published (e.g. storage bucket).
+- **ci\_exec\_build:** Build a container if it does not exist already (true/false).
+- **ci\_exec\_deploy:** Deploy automatically (true/false).
+- **ci\_exec\_test:** Execute test suites after deploy (true/false).
+- **ci\_exec\_test\_init:** Run 'init --clean' before each test suite (true/false).
+- **ci\_exec\_revert:** Revert deploy automatically on fail (true/false).
+- **ci\_static\_assets\_location:** Location where the static assets should be published (e.g. storage bucket).
 
 ### Plugin specific settings
 
