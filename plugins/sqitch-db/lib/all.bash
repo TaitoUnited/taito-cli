@@ -22,7 +22,7 @@ function sqitch::run () {
 
     # TODO: Remove? -\
     if [[ ${sqitch_engine} == "mysql" ]]; then
-      database_user="${database_name}ap"
+      database_user="root"
     else
       database_user="${database_name}_app"
     fi
