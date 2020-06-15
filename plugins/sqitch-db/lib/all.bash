@@ -49,6 +49,12 @@ function sqitch::run () {
     if [[ ${command} != "add" ]]; then
       sqitch_options="-h ${database_host} -p ${database_port} \
         -d ${database_name} -u ${database_user}"
+
+      # TODO: use table prefix or create a separate database?
+      # see https://github.com/sqitchers/sqitch/pull/247
+      if [[ ${sqitch_engine} == "mysql" ]]; then
+        sqitch_options="${sqitch_options} --registry ${database_name}"
+      fi
     fi
 
     export SQITCH_PASSWORD
