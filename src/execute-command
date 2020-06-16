@@ -442,8 +442,11 @@ if [[ ${taito_command} == "auth" ]] && \
 fi
 
 # Validate env operations
-if [[ ${taito_command} == "env-apply" ]] && [[ -z "${taito_domain:-}" ]] && \
-   grep -q taito_domain taito-config.sh; then
+if [[ ${taito_command} == "env-apply" ]] &&
+   [[ -z "${taito_domain:-}" ]] && (
+     grep -q taito_domain taito-config.sh &> /dev/null ||
+     grep -q taito_domain scripts/taito/*.sh &> /dev/null
+   ); then
   echo
   echo "ERROR: taito_domain has not been set for ${taito_target_env} environment."
   echo "Configure DNS and set taito_domain for ${taito_target_env} environment in"
