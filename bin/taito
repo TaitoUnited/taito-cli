@@ -454,7 +454,9 @@ fi
 proxy_flags=""
 if [[ ${command} == "db-proxy"* ]] && [[ ${taito_target_env} != "local" ]]; then
   taito::export_database_config
-  port="${params[1]}"
+  if [[ ${params[1]} != "-"* ]]; then
+    port="${params[1]}"
+  fi
   proxy_port=${port:-$database_proxy_port}
   echo "Exposing database proxy port: ${proxy_port:-$database_port}"
   proxy_flags="\

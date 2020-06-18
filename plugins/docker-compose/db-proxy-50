@@ -1,8 +1,14 @@
 #!/bin/bash -e
 
+options=" ${*} "
+creds=false
+if [[ ${options} == *" --credentials "* ]]; then
+  creds=true
+fi
+
 if [[ ${taito_target_env:-} == "local" ]]; then
   echo "No database proxy required. Just connect with the following details:"
-  taito::show_db_proxy_details
+  taito::show_db_proxy_details "${creds}"
   echo
 fi
 

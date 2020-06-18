@@ -100,13 +100,13 @@ function taito::select_item () {
 export -f taito::select_item
 
 function taito::show_db_proxy_details () {
-  taito::expose_db_user_credentials
 
   echo "- host: 127.0.0.1"
   echo "- port: ${db_database_external_port:-$database_port}"
   echo "- database: ${database_name:-}"
 
-  if [[ ${taito_mode:-} != "ci" ]]; then
+  if [[ ${1:-} == "true" ]]; then
+    taito::expose_db_user_credentials
     echo "- username and password:"
     echo "  * Your personal database username and password (if you have one)"
     if [[ ${database_mgr_username:-} ]]; then
@@ -115,6 +115,10 @@ function taito::show_db_proxy_details () {
     if [[ ${database_app_username:-} ]]; then
       echo "  * ${database_app_username} / ${database_app_password:-}"
     fi
+  else
+    echo
+    echo "TIP: You can see database credentials with --credentials, for example:"
+    echo "taito db proxy:${taito_env:-dev} --credentials"
   fi
 }
 export -f taito::show_db_proxy_details

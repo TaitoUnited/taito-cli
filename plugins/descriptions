@@ -316,6 +316,10 @@ if [[ ${taito_project:-} ]]; then
         fi
         echo "db proxy${db}${suffix}                     " \
           "# Show db conn details for ${env} environment and start a proxy if required"
+        echo "db proxy${db}${suffix} --credentials  " \
+          "# Show db conn details and credentials for ${env} environment and start a proxy if required"
+        echo "db proxy${db}${suffix} PORT --credentials  " \
+          "# Show db conn details and credentials for ${env} environment and start a proxy if required"
         echo "db connect${db}${suffix}             &focus" \
           "# Open database client for ${env} environment from command line"
         echo "db import${db}${param} FILE                " \

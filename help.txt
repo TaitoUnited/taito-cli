@@ -768,7 +768,7 @@ PROJECT: DATABASE OPERATIONS
     help. You can run the change to local database by running `taito db:deploy`.
     Example: 'taito db add order.table -r user.table -n 'Table for orders.'
 
-  db proxy[:TARGET][:ENV] [PROXY_PORT]
+  db proxy[:TARGET][:ENV] [PROXY_PORT] [--credentials]
     Starts a proxy for accessing a database and shows connections details that
     you should use with your database GUI tool to connect the database. If
     proxy is not required, the command shows connection details nevertheless.
