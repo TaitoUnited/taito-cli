@@ -199,6 +199,22 @@ function taito::export_storage_config () {
     export storage_days="${!env_var_name}"
     echo "- storage_days: ${storage_days}" > "${taito_dout:-/dev/null}"
 
+    env_var_name="st_${target}_cors"
+    export storage_cors="${!env_var_name}"
+    echo "- storage_cors: ${storage_cors}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="st_${target}_admins"
+    export storage_admins="${!env_var_name}"
+    echo "- storage_admins: ${storage_admins}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="st_${target}_object_admins"
+    export storage_object_admins="${!env_var_name}"
+    echo "- storage_object_admins: ${storage_object_admins}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="st_${target}_object_viewers"
+    export storage_object_viewers="${!env_var_name}"
+    echo "- storage_object_viewers: ${storage_object_viewers}" > "${taito_dout:-/dev/null}"
+
     env_var_name="st_${target}_backup_location"
     export storage_backup_location="${!env_var_name}"
     echo "- storage_backup_location: ${storage_backup_location}" > "${taito_dout:-/dev/null}"
@@ -220,6 +236,11 @@ function taito::export_storage_attributes () {
   export taito_storage_classes=
   export taito_storage_locations=
   export taito_storage_days=
+  export taito_storage_cors=
+  export taito_storage_admins=
+  export taito_storage_object_admins=
+  export taito_storage_object_viewers=
+  export taito_storage_cors=
   export taito_backup_locations=
   export taito_backup_days=
 
@@ -234,6 +255,14 @@ function taito::export_storage_attributes () {
     taito_storage_locations="${taito_storage_locations} ${!env_var_name}"
     env_var_name="st_${target}_days"
     taito_storage_days="${taito_storage_days} ${!env_var_name}"
+    env_var_name="st_${target}_cors"
+    taito_storage_cors="${taito_storage_cors} ${!env_var_name}"
+    env_var_name="st_${target}_admins"
+    taito_storage_admins="${taito_storage_admins} ${!env_var_name}"
+    env_var_name="st_${target}_object_admins"
+    taito_storage_object_admins="${taito_storage_object_admins} ${!env_var_name}"
+    env_var_name="st_${target}_object_viewers"
+    taito_storage_object_viewers="${taito_storage_object_viewers} ${!env_var_name}"
     env_var_name="st_${target}_backup_location"
     taito_backup_locations="${taito_backup_locations} ${!env_var_name}"
     env_var_name="st_${target}_backup_days"
