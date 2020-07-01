@@ -40,7 +40,7 @@ function taito::export_database_config () {
   # TODO: add support for print
   # local print_config=${1:-false}
 
-  all_databases=$(taito::print_targets_of_type database)
+  all_databases="${taito_databases:-}"
   target="${1}"
   if [[ -z ${1} ]] && [[ ${taito_target:-} ]] && \
      [[ ${all_databases:-} == *"${taito_target}"* ]]; then
@@ -172,7 +172,7 @@ function taito::export_storage_config () {
   # TODO: add support for print
   # local print_config=${1:-false}
 
-  all_storages=$(taito::print_targets_of_type storage)
+  all_storages="${taito_buckets:-}"
   target="${1}"
   if [[ -z ${1} ]] && [[ ${taito_target:-} ]] && \
      [[ ${all_storages:-} == *"${taito_target}"* ]]; then
@@ -244,7 +244,7 @@ function taito::export_storage_attributes () {
   export taito_backup_locations=
   export taito_backup_days=
 
-  all_storages=$(taito::print_targets_of_type storage)
+  all_storages="${taito_buckets:-}"
   for target in ${all_storages}
   do
     env_var_name="st_${target}_name"
@@ -278,7 +278,7 @@ function taito::export_storage_attributes () {
   taito_backup_days=$(echo "${taito_backup_days}" | xargs)
 }
 
-function taito::print_targets_of_type () {
+function taito::print_targets_of_type_deprecated () {
   local target_type=$1
   local targets
   local type_variable_name

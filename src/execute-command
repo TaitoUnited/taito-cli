@@ -395,15 +395,18 @@ if [[ " local ${taito_environments:-} " != *" ${taito_env} "* ]]; then
 fi
 if [[ ${taito_target} ]] && \
    [[ ${taito_mode:-} != "ci" ]] && \
-   [[ "${taito_targets:-} root" != *"${taito_target}"* ]] && \
-   [[ ${taito_build_targets:-} != *"${taito_target}"* ]]; then
+   [[ "${taito_containers:-} root" != *"${taito_target}"* ]] && \
+   [[ ${taito_functions:-} != *"${taito_target}"* ]] && \
+   [[ ${taito_databases:-} != *"${taito_target}"* ]] && \
+   [[ ${taito_buckets:-} != *"${taito_target}"* ]]; then
   echo
   echo "ERROR: Unknown target '${taito_target}'"
   echo
-  echo "Valid environments: local ${taito_environments}"
-  echo "Valid targets: ${taito_targets}"
-  echo "Valid build targets: ${taito_build_targets}"
-  echo "Valid databases: $(taito::print_targets_of_type database)"
+  echo "Environments: local ${taito_environments}"
+  echo "Containers: ${taito_containers}"
+  echo "Functions: ${taito_functions}"
+  echo "Databases: ${taito_databases}"
+  echo "Buckets: ${taito_buckets}"
   exit 1
 fi
 

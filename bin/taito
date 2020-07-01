@@ -418,8 +418,7 @@ if [[ ${taito_target_env} == "local" ]] && \
 
   # TODO remove links and use networks only
   if [[ ${link_flags} == "" ]]; then
-    all=$(taito::print_targets_of_type database)
-    databases=("${taito_target:-$all}")
+    databases=("${taito_target:-$taito_databases}")
     for database in ${databases[@]}
     do
       echo "# Linking local db: \

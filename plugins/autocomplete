@@ -133,11 +133,7 @@ if [[ ${taito_project:-} ]]; then
 
   # Build target commands
   echo "build"
-  for stack in ${taito_build_targets:-}; do
-    type_variable_name="taito_target_type_${stack}"
-    if [[ ${!type_variable_name:-container} != "container" ]]; then
-      continue;
-    fi
+  for stack in ${taito_containers:-}; do
     echo "build:${stack}"
     echo "save:${stack}"
   done
@@ -207,7 +203,7 @@ if [[ ${taito_project:-} ]]; then
     done
 
     if [[ ${cprefix} == "db"* ]] || [[ ${cprefix} == "*" ]]; then
-      for database in $(taito::print_targets_of_type database)
+      for database in ${taito_databases:-}
       do
         db=""
         if [[ ${database} != "database" ]]; then
@@ -301,12 +297,7 @@ if [[ ${taito_project:-} ]]; then
     fi
 
     # Stack component commands
-    for stack in ${taito_targets}; do
-      type_variable_name="taito_target_type_${stack}"
-      if [[ ${!type_variable_name:-container} != "container" ]]; then
-        continue;
-      fi
-
+    for stack in ${taito_containers}; do
       if [[ ${env} == "local" ]]; then
         echo "unit:${stack}${suffix}"
         echo "unit:${stack}${suffix} TEST"

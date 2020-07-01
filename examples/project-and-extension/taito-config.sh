@@ -8,11 +8,9 @@ taito_plugins="npm db-proxy db1 db2 example"
 
 taito_project="example-project"
 taito_environments="dev prod"
-taito_targets="client server database reportdb storage"
-
-taito_target_type_database=database
-taito_target_type_reportdb=database
-taito_target_type_storage=storage
+taito_containers="client server storage"
+taito_databases="database reportdb"
+taito_buckets="bucket"
 
 # default database
 db_database_instance="common-postgres"

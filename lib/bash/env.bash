@@ -9,12 +9,14 @@ function taito::export_terraform_env () {
   taito::export_storage_attributes
 
   # Export taito_container_targets
+  # TODO: just use taito_containers directly in terraform module
   export taito_container_targets
-  taito_container_targets=$(taito::print_targets_of_type container)
+  taito_container_targets="${taito_containers:-}"
 
   # Export taito_function_targets
+  # TODO: just use taito_functions directly in terraform module
   export taito_function_targets
-  taito_function_targets=$(taito::print_targets_of_type function)
+  taito_function_targets="${taito_functions:-}"
 
   # Export environment variables as TF_VAR terraform variables.
   # In addition, format the value to list(string) if the name ends with 's'.

@@ -3,8 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 (
-  all=$(taito::print_targets_of_type database)
-  databases=("${taito_target:-$all}")
+  databases=("${taito_target:-$taito_databases}")
   for database in ${databases[@]}
   do
     export taito_target="${database}"

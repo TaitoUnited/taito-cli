@@ -189,8 +189,7 @@ Skip execution if current target is not a **container** or **storage**:
 
 Execute for all targets of type **database**:
 
-    databases=$(taito::print_targets_of_type database)
-    for db in ${databases[@]}; do
+    for db in ${taito_databases[@]}; do
       taito::export_database_config "${db}"
       if [[ ${database_type:-} == "pg" ]]; then
         taito::expose_db_user_credentials "${db}" # TODO: add support for param

@@ -11,8 +11,7 @@ if [[ ${taito_env} != "local" ]]; then
 else
   echo "Recreating database(s) by cleaning database container(s)"
   (
-    all=$(taito::print_targets_of_type database)
-    databases=("${taito_target:-$all}")
+    databases=("${taito_target:-$taito_databases}")
     for database in ${databases[@]}
     do
       # TODO: duplicate code with clean

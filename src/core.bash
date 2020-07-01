@@ -35,8 +35,31 @@ function taito::core::export_project_config () {
     set +a
   fi
 
+  # For backwards compatibility
+  # TODO: remove these
+  if [[ ${taito_targets} ]]; then
+    if [[ -z ${taito_containers+x} ]]; then
+      export taito_containers
+      taito_containers=$(taito::print_targets_of_type_deprecated container)
+    fi
+    if [[ -z ${taito_functions+x} ]]; then
+      export taito_functions
+      taito_functions=$(taito::print_targets_of_type_deprecated "function")
+    fi
+    if [[ -z ${taito_databases+x} ]]; then
+      export taito_databases
+      taito_databases=$(taito::print_targets_of_type_deprecated database)
+    fi
+    if [[ -z ${taito_buckets+x} ]]; then
+      export taito_buckets
+      taito_buckets=$(taito::print_targets_of_type_deprecated storage)
+    fi
+  fi
+
   # Set defaults
-  export taito_build_targets=${taito_build_targets:-$taito_targets}
+  if [[ -z ${taito_targets} ]]; then
+    export taito_targets="${taito_containers:-} ${taito_functions:-}"
+  fi
 
   # Set ci flags depending on phase
   export ci_exec_build
