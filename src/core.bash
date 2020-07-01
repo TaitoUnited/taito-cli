@@ -57,6 +57,20 @@ function taito::core::export_project_config () {
   fi
 
   # Set defaults
+  local export_defaults=
+  for bucket in ${taito_buckets[@]}; do
+    export_defaults="
+      ${export_defaults}
+      export st_${bucket}_class=\${st_${bucket}_class:-\$taito_default_storage_class}
+      export st_${bucket}_location=\${st_${bucket}_location:-\$taito_default_storage_location}
+      export st_${bucket}_days=\${st_${bucket}_days:-\$taito_default_storage_days}
+      export st_${bucket}_backup_location=\${st_${bucket}_days:-\$taito_default_storage_backup_location}
+      export st_${bucket}_backup_days=\${st_${bucket}_days:-\$taito_default_storage_backup_days}
+    "
+  done
+  eval "${export_defaults}"
+
+  # TODO: use taito_containers instead of taito_targets everywhere
   if [[ -z ${taito_targets} ]]; then
     export taito_targets="${taito_containers:-} ${taito_functions:-}"
   fi

@@ -244,8 +244,7 @@ function taito::export_storage_attributes () {
   export taito_backup_locations=
   export taito_backup_days=
 
-  all_storages="${taito_buckets:-}"
-  for target in ${all_storages}
+  for target in ${taito_buckets:-}
   do
     env_var_name="st_${target}_name"
     taito_storages="${taito_storages} ${!env_var_name:--}"
