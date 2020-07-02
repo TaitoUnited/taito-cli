@@ -10,6 +10,7 @@ const failStatus = ['FAILURE', 'INTERNAL_ERROR', 'TIMEOUT'];
 const finishStatus = successStatus.concat(failStatus);
 
 const shoudSendToProjectChannel = (build) => {
+  // TODO: check also substitutions.BRANCH_NAME?
   const branch = build.source.repoSource.branchName;
   return failStatus.indexOf(build.status) !== -1 ||
     (
@@ -20,11 +21,13 @@ const shoudSendToProjectChannel = (build) => {
 };
 
 const shoudSendToBuildsChannel = (build) => {
+  // TODO: check also substitutions.BRANCH_NAME?
   const branch = build.source.repoSource.branchName;
   return failStatus.indexOf(build.status) !== -1;
 };
 
 const shouldSendToPerson = (build) => {
+  // TODO: check also substitutions.BRANCH_NAME?
   const branch = build.source.repoSource.branchName;
   return failStatus.indexOf(build.status) !== -1;
 };
@@ -111,6 +114,7 @@ const createSlackMessage = (build, channel, project) => {
     channel,
     icon_emoji,
     icon_url,
+    // TODO: check also substitutions.BRANCH_NAME?
     text: shortName(build.source.repoSource.repoName)
       + ': *' + build.source.repoSource.branchName + '*',
     mrkdwn: true,

@@ -14,8 +14,10 @@ if [[ -z $1 ]]; then
       --format="value(sourceProvenance.resolvedRepoSource.commitSha)" \
       --filter=" \
         status:SUCCESS AND \
-        source.repoSource.repoName~.*${taito_vc_repository} AND \
-        source.repoSource.branchName:${taito_branch}" | \
+        source.repoSource.repoName~.*${taito_vc_repository} AND ( \
+          source.repoSource.branchName:${taito_branch} OR \
+          substitutions.BRANCH_NAME:${taito_branch} \
+        )" | \
       head -1
   )
   echo "Using tag: ${taito_target_image}"
