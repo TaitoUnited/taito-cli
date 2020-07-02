@@ -418,8 +418,8 @@ function taito::expose_required_secrets_filter () {
        [[ ${taito_command} == "build-release" ]]; then
       fetch_secrets="true"
       save_secrets_to_disk="true"
-      secret_purpose="git release"
-      secret_filter="git"
+      secret_purpose="version control release"
+      secret_filter="version-control"
     elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
          [[ ${taito_command} == "db-proxy" ]]; then
       fetch_secrets="true"
