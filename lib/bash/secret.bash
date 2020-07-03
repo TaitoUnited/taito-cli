@@ -419,7 +419,14 @@ function taito::expose_required_secrets_filter () {
       fetch_secrets="true"
       save_secrets_to_disk="true"
       secret_purpose="version control release"
-      secret_filter="version-control"
+      # TODO: remove git.github.build and github-buildbot (backwards compatibility)
+      if [[ ${taito_secret_names:-} == *"git.github.build"* ]]; then
+        secret_filter="git.github.build"
+      elif [[ ${taito_secret_names} == *"github-buildbot"* ]]; then
+        secret_filter="github-buildbot"
+      else
+        secret_filter="version-control"
+      fi
     elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
          [[ ${taito_command} == "db-proxy" ]]; then
       fetch_secrets="true"
