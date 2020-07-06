@@ -4,7 +4,7 @@
 : "${taito_target:?}"
 
 # Containers, functions and static assets are built with Docker
-taito::skip_if_not "container function static" "${@}"
+taito::skip_if_not "container function static_content" "${@}"
 
 export taito_docker_new_params=true
 docker::build "${@}"

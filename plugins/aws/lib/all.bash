@@ -87,13 +87,16 @@ function aws::publish_current_target_assets () {
   if taito::is_current_target_of_type "function"; then
     # Publish function zip package to projects bucket
     source="./tmp/${taito_target:?}.zip"
-    dest="s3://${taito_functions_bucket:?}/${taito_functions_path:?}/${taito_target}/${image_tag}.zip"
+    dest="s3://${taito_functions_bucket:?}/${taito_functions_path:?}/${image_tag}/${taito_target}.zip"
     options=""
-  else
+  elif taito::is_current_target_of_type "static_content"; then
     # Publish static assets to assets bucket
     source="./tmp/${taito_target}/service"
-    dest="s3://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${taito_target}/${image_tag}"
+    dest="s3://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${image_tag}/${taito_target}"
     options="--recursive"
+  else
+    echo "ERROR: Static assets cannot be published for ${taito_target}"
+    exit 1
   fi
 
   echo "Copying ${taito_target} assets to ${dest}"

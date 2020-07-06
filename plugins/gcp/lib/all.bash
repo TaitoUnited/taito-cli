@@ -180,3 +180,36 @@ function gcp::ensure_project_exists () {
     fi
   fi
 }
+
+function gcp::publish_current_target_assets () {
+  if [[ -f ./taitoflag_images_exist ]] || ( \
+     [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "false" ]] \
+    ); then
+    return
+  fi
+
+  # TODO: make assets and project buckets + path prefix configurable
+  image_tag="${1}"
+  if taito::is_current_target_of_type "function"; then
+    # Publish function zip package to projects bucket
+    # TODO: not tested at all
+    source="./tmp/${taito_target:?}.zip"
+    dest="gs://${taito_functions_bucket:?}/${taito_functions_path:?}/${image_tag}/${taito_target}.zip"
+    options=""
+  elif taito::is_current_target_of_type "static_content" &&
+       [[ ${taito_cdn_project_path:-} ]] &&
+       [[ ${taito_cdn_project_path} != "-" ]]
+  then
+    # Publish static assets to assets bucket
+    source="./tmp/${taito_target}/service"
+    dest="gs://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${image_tag}/${taito_target}"
+    options="-r"
+  else
+    echo "ERROR: Static assets cannot be published for ${taito_target}"
+    exit 1
+  fi
+
+  echo "Copying ${taito_target} assets to ${dest}"
+  taito::executing_start
+  gsutil cp ${options} "${source}" "${dest}"
+}
