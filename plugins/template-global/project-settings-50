@@ -67,6 +67,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Domains and hosts"
   echo "template_default_domain=$taito_default_domain"
+  echo "template_default_cdn_domain=$taito_default_cdn_domain"
   if [[ $taito_provider == "linux" ]]; then
     echo "template_default_host=x.$taito_default_domain"
   else
@@ -154,6 +155,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# configure alternative prod zone settings here."
   echo "template_default_zone_prod=$taito_zone"
   echo "template_default_domain_prod=${taito_default_domain_prod:-$taito_default_domain}"
+  echo "template_default_cdn_domain_prod=${taito_default_cdn_domain_prod:-$taito_default_cdn_domain}"
   if [[ $taito_provider == "linux" ]]; then
     echo "template_default_host_prod=x.${taito_default_domain_prod:-$taito_default_domain}"
   else
