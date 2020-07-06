@@ -1,0 +1,14 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ${taito_provider_secrets_location:-} ]] &&
+   [[ ${taito_provider_secrets_mode:-} != "backup" ]]; then
+  taito::confirm "Delete secrets of namespace ${taito_namespace:?} from AWS" ||
+    taito::skip_to_next "${@}"
+
+  taito::delete_secrets \
+    aws-secrets::delete_secret_value
+fi
+
+taito::call_next "${@}"

@@ -1,0 +1,14 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ${taito_provider_secrets_location:-} ]]; then
+  taito::confirm "Save secrets to AWS" ||
+    taito::skip_to_next "${@}"
+
+  taito::save_secrets \
+    aws-secrets::get_secret_value \
+    aws-secrets::put_secret_value
+fi
+
+taito::call_next "${@}"
