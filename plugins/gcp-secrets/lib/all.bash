@@ -40,6 +40,12 @@ function gcp-secrets::put_secret_value () {
   local value=$5
   local filename=$6
 
+  if [[ ${method} == "random"* ]] &&
+     [[ ${taito_provider_secrets_mode:-} == "backup" ]]; then
+    # Random secrets are not saved in backup mode
+    return
+  fi
+
   local secret_name
   local secret_property
   secret_name=$(taito::get_secret_name "${name}")

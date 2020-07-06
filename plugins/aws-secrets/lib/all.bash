@@ -44,9 +44,15 @@ function aws-secrets::put_secret_value () {
   local method=$4
   local value=$5
   local filename=$6
+
+  if [[ ${method} == "random"* ]] &&
+     [[ ${taito_provider_secrets_mode:-} == "backup" ]]; then
+    # Random secrets are not saved in backup mode
+    return
+  fi
+
   local format
   local key
-
   if [[ ${filename} ]]; then
     format=$(taito::get_secret_value_format "${method}")
     if [[ ${format} == "file" ]]; then
