@@ -14,6 +14,7 @@ function mysql::create_database () {
     echo "Creating database"
     # export MYSQL_PWD
     # MYSQL_PWD="${MYSQL_PWD}"
+    # TODO: use database_username_xxx instead of hardcoded names
     until (
       taito::executing_start
       mysql -p \
@@ -21,7 +22,7 @@ function mysql::create_database () {
         -P "${database_port}" \
         -D mysql \
         -u "${database_username}" \
-        -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source $(sql_file_path create.sql) ;" \
+        -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a; set @dbuserviewer='${database_name}v'; source $(sql_file_path create.sql) ;" \
         > "${taito_vout}"
     ) do
       :
@@ -80,6 +81,11 @@ function mysql::create_users () {
     exit 1
   fi
 
+  if [[ ${#database_viewer_password} -lt 20 ]]; then
+    echo "ERROR: database_viewer_password too short or not set"
+    exit 1
+  fi
+
   # Execute
 
   until (
@@ -89,7 +95,7 @@ function mysql::create_users () {
       -P "${database_port}" \
       -D mysql \
       -u "${database_username}" \
-      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; set @passwordapp='${database_app_password}'; set @passwordmgr='${database_build_password}'; source $(sql_file_path create-users.sql) ;" \
+      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; set @dbuserviewer='${database_name}v'; set @passwordapp='${database_app_password}'; set @passwordviewer='${database_viewer_password}'; set @passwordmgr='${database_build_password}'; source $(sql_file_path create-users.sql) ;" \
       > "${taito_vout}" 2>&1
   ) do
     :
@@ -105,7 +111,7 @@ function mysql::drop_users () {
       -P "${database_port}" \
       -D mysql \
       -u "${database_username}" \
-      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; source $(sql_file_path drop-users.sql) ;" \
+      -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; set @dbuserviewer='${database_name}v'; source $(sql_file_path drop-users.sql) ;" \
       > "${taito_vout}"
   ) do
     :

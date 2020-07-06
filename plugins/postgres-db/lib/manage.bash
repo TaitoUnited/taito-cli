@@ -22,7 +22,8 @@ function postgres::create_database () {
         -f "$(sql_file_path create.sql)" \
         -v "database=${database_name}" \
         -v "dbusermaster=${database_master_username_internal:-postgres}" \
-        -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
+        -v "dbuserapp=${database_app_username_internal}" \
+        -v "dbuserviewer=${database_viewer_username_internal}" \ > "${taito_vout}"
     ) do
       :
     done
@@ -58,7 +59,8 @@ function postgres::create_database () {
       -f "$(sql_file_path grant-users.sql)" \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
-      -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
+      -v "dbuserapp=${database_app_username_internal}" \
+      -v "dbuserviewer=${database_viewer_username_internal}" > "${taito_vout}"
     )
   )
 }
@@ -92,7 +94,12 @@ function postgres::create_users () {
   fi
 
   if [[ ${#database_app_password} -lt 20 ]]; then
-    echo "ERROR: database_build_password too short or not set"
+    echo "ERROR: database_app_password too short or not set"
+    exit 1
+  fi
+
+  if [[ ${#database_viewer_password} -lt 20 ]]; then
+    echo "ERROR: database_viewer_password too short or not set"
     exit 1
   fi
 
@@ -107,8 +114,10 @@ function postgres::create_users () {
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
       -v "dbuserapp=${database_app_username_internal}" \
-      -v "passwordapp=${database_app_password}" \
-      -v "passwordbuild=${database_build_password}" \
+      -v "dbuserviewer=${database_viewer_username_internal}" \
+      -v "passwordapp=${database_app_password:?}" \
+      -v "passwordbuild=${database_build_password:?}" \
+      -v "passwordviewer=${database_viewer_password:?}" \
       > "${taito_vout}" 2>&1
   ) do
     :
@@ -127,7 +136,8 @@ function postgres::drop_users () {
       -f "$(sql_file_path drop-users.sql)" \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
-      -v "dbuserapp=${database_app_username_internal}" > "${taito_vout}"
+      -v "dbuserapp=${database_app_username_internal}" \
+      -v "dbuserviewer=${database_viewer_username_internal}" > "${taito_vout}"
   ) do
     :
   done

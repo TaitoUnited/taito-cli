@@ -109,6 +109,9 @@ function taito::show_db_proxy_details () {
     taito::expose_db_user_credentials
     echo "- username and password:"
     echo "  * Your personal database username and password (if you have one)"
+    if [[ ${database_viewer_username:-} ]]; then
+      echo "  * ${database_viewer_username} / ${database_viewer_password:-}"
+    fi
     if [[ ${database_mgr_username:-} ]]; then
       echo "  * ${database_mgr_username} / ${database_build_password:-}"
     fi

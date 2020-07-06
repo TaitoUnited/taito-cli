@@ -61,7 +61,11 @@ function postgres::connect () {
     psql_password=""
   elif [[ ${taito_env} != "local" ]]; then
     taito::expose_db_user_credentials
-    if [[ ${database_build_username} ]] && \
+    if [[ ${database_default_username} ]] &&
+       [[ ${database_default_password} ]]; then
+      psql_username="${database_default_username}"
+      psql_password="${database_default_password}"
+    elif [[ ${database_build_username} ]] &&
        [[ ${database_build_password} ]]; then
       psql_username="${database_build_username}"
       psql_password="${database_build_password}"

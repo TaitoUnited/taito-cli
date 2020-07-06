@@ -128,9 +128,27 @@ function taito::export_database_config () {
     export database_mgr_secret="${!env_var_name}"
     echo "- database_mgr_secret: ${database_mgr_secret}" > "${taito_dout:-/dev/null}"
 
+    env_var_name="db_${target}_viewer_username"
+    export database_viewer_username="${!env_var_name}"
+    echo "- database_viewer_username: ${database_viewer_username}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="db_${target}_viewer_secret"
+    export database_viewer_secret="${!env_var_name}"
+    echo "- database_viewer_secret: ${database_viewer_secret}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="db_${target}_default_username"
+    export database_default_username="${!env_var_name}"
+    echo "- database_default_username: ${database_default_username}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="db_${target}_default_secret"
+    export database_default_secret="${!env_var_name}"
+    echo "- database_default_secret: ${database_default_secret}" > "${taito_dout:-/dev/null}"
+
     export database_master_username_internal="${database_master_username%@*}"
     export database_app_username_internal="${database_app_username%@*}"
     export database_mgr_username_internal="${database_mgr_username%@*}"
+    export database_viewer_username_internal="${database_viewer_username%@*}"
+    export database_default_username_internal="${database_default_username%@*}"
 
     # TODO: remove?
     env_var_name="db_${target}_username"

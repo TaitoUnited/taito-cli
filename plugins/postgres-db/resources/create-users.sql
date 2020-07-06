@@ -1,6 +1,7 @@
 -- used by: create
 
 \set qpasswordapp '\'' :passwordapp '\''
+\set qpasswordviewer '\'' :passwordviewer '\''
 \set qpasswordbuild '\'' :passwordbuild '\''
 
 -- make sure common roles exist
@@ -9,6 +10,11 @@ CREATE ROLE admin;
 CREATE ROLE developer;
 CREATE ROLE mgr;
 CREATE ROLE app;
+CREATE ROLE viewer;
+
+CREATE USER :dbuserviewer WITH ROLE viewer PASSWORD :qpasswordviewer
+  NOSUPERUSER NOCREATEDB NOCREATEROLE CONNECTION LIMIT 20;
+ALTER USER :dbuserviewer WITH PASSWORD :qpasswordviewer;
 
 CREATE USER :dbuserapp WITH ROLE app PASSWORD :qpasswordapp
   NOSUPERUSER NOCREATEDB NOCREATEROLE CONNECTION LIMIT 20;
