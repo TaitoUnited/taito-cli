@@ -3,7 +3,7 @@
 . "${taito_plugin_path:?}/../aws/lib/all.bash"
 
 function get_key () {
-  local zone=$1
+  local location=$1
   local namespace=$2
   local name=$3
 
@@ -12,7 +12,7 @@ function get_key () {
   secret_name=$(taito::get_secret_name "${name}")
   secret_property=$(taito::get_secret_property "${name}")
 
-  echo "/${zone}/${namespace}/${secret_name}.${secret_property}"
+  echo "/${location}/${namespace}/${secret_name}.${secret_property}"
 }
 
 function get_parameter () {
@@ -28,17 +28,17 @@ function get_parameter () {
 }
 
 function aws-secrets::get_secret_value () {
-  local zone=$1
+  local zone=$1 # NOTE: intentionally not used
   local namespace=$2
   local name=$3
   local key
 
-  key=$(get_key "${zone}" "${namespace}" "${name}")
+  key=$(get_key "${taito_provider_secrets_location:?}" "${namespace}" "${name}")
   get_parameter "${key}"
 }
 
 function aws-secrets::put_secret_value () {
-  local zone=$1
+  local zone=$1 # NOTE: intentionally not used
   local namespace=$2
   local name=$3
   local method=$4
@@ -64,7 +64,7 @@ function aws-secrets::put_secret_value () {
   fi
 
   aws::expose_aws_options
-  key=$(get_key "${zone}" "${namespace}" "${name}")
+  key=$(get_key "${taito_provider_secrets_location:?}" "${namespace}" "${name}")
   aws ${aws_options} ssm put-parameter \
     --name "${key}" \
     --value "${value}" \
@@ -78,13 +78,13 @@ function aws-secrets::put_secret_value () {
 }
 
 function aws-secrets::delete_secret_value () {
-  local zone=$1
+  local zone=$1 # NOTE: intentionally not used
   local namespace=$2
   local name=$3
   local key
 
   aws::expose_aws_options
-  key=$(get_key "${zone}" "${namespace}" "${name}")
+  key=$(get_key "${taito_provider_secrets_location:?}" "${namespace}" "${name}")
   aws ${aws_options} ssm delete-parameter --name "${key}"
   aws ${aws_options} ssm delete-parameter --name "${key}.METHOD"
 }
