@@ -74,7 +74,7 @@ function docker-compose::start () {
       docker-compose -f $compose_file stop
     "
   fi
-  if [[ ${options} == *" --init "* ]] && [[ " ${taito_targets:-} " == *" database "* ]]; then
+  if [[ ${options} == *" --init "* ]] && [[ " ${taito_containers:-} " == *" database "* ]]; then
     # Run 'taito init' automatically after database container has started
     local init_flags=
     # if [[ ${options} == *" --clean "* ]]; then

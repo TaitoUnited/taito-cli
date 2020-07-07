@@ -70,9 +70,9 @@ function taito::core::export_project_config () {
   done
   eval "${export_defaults}"
 
-  # TODO: use taito_containers instead of taito_targets everywhere
   if [[ -z ${taito_targets} ]]; then
-    export taito_targets="${taito_containers:-} ${taito_functions:-}"
+    export taito_targets=
+    taito_targets=$(echo "${taito_containers:-} ${taito_functions:-} ${taito_static_contents:-} ${taito_databases:-}" | tr ' ' '\n' | sort | uniq | xargs)
   fi
 
   # Set ci flags depending on phase

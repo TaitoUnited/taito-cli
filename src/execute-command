@@ -397,6 +397,7 @@ if [[ ${taito_target} ]] && \
    [[ ${taito_mode:-} != "ci" ]] && \
    [[ "${taito_containers:-} root" != *"${taito_target}"* ]] && \
    [[ ${taito_functions:-} != *"${taito_target}"* ]] && \
+   [[ ${taito_static_contents:-} != *"${taito_target}"* ]] && \
    [[ ${taito_databases:-} != *"${taito_target}"* ]] && \
    [[ ${taito_buckets:-} != *"${taito_target}"* ]]; then
   echo
