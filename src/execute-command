@@ -757,6 +757,7 @@ if [[ ${taito_commands_only_chain:-} == *"kubectl/"* ]] || \
    ) || \
    ( \
      [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
+     [[ ${taito_command_chain:-} == *"kubectl/"* ]] && \
      [[ ${taito_command_requires_database:-} == "true" ]] \
    ); then
   export taito_command_requires_kubernetes="true"
