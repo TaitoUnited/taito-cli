@@ -22,7 +22,6 @@ function terraform::run () {
   local apply_options="${terraform_apply_options:-}"
 
   if [[ ${taito_mode:-} == "ci" ]] && [[ ${command} == "apply" ]]; then
-    init_options="${init_options} -auto-approve"
     apply_options="${apply_options} -auto-approve"
   fi
 

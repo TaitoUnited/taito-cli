@@ -5,7 +5,7 @@
 # Cloud provider
 if [[ ! ${taito_deployment_platforms:-} ]] || \
    [[ ${taito_deployment_platforms} == *"terraform"* ]]; then
-  taito_build_image_tag="${1}" \
+  taito_build_image_tag="${1:-taito_target_image}" \
     terraform::run apply "${taito_provider:-}-deploy" "${taito_env:?}"
 fi
 
