@@ -12,7 +12,9 @@ docker::build "${@}"
 if taito::is_current_target_of_type container; then
   # Push docker image
   docker::push "${@}"
-else
+fi
+
+if taito::is_current_target_of_type "function static_content"; then
   # Copy files on host and create a package
   docker::package "${@}"
 fi

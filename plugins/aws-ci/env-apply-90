@@ -57,12 +57,15 @@ echo "  * Event type: PUSH"
 echo "  * HEAD_REF: refs/heads/master"
 echo
 echo "Environment"
-echo "- Environment image: Linux, ${taito_ci_image:-taitounited/taito-cli:ci-aws}"
+echo "- Environment image:"
+echo "  * Custom image"
+echo "  * Environment type: Linux"
+echo "  * Other registry"
+echo "  * External registry URL: ${taito_ci_image:-taitounited/taito-cli:ci-aws}"
 echo "- PRIVILEGED: TRUE  (we want to build, push, and pull Docker images)"
 echo "- Service role: Existing service role"
 echo "- Role ARN: Role ARN of ${taito_zone}-cicd role"
 echo "  (see https://console.aws.amazon.com/iam/home?#/roles)"
-echo "- Environment variables: taito_image=${taito_ci_image:-taitounited/taito-cli:ci-aws}"
 if [[ ! ${kubernetes_name:-} ]]; then
   echo "- VPC: Use virtual private cloud of ${taito_zone}, for example"
   echo "  * VPC: ${taito_zone}-vpc"
@@ -70,6 +73,7 @@ if [[ ! ${kubernetes_name:-} ]]; then
   echo "  * Subnets: ${taito_zone}-vpc-private-${taito_provider_region}a"
   echo "  * Security groups: default"
 fi
+echo "- Environment variables: taito_image=${taito_ci_image:-taitounited/taito-cli:ci-aws}"
 echo
 echo "--------------------------------"
 echo "OPTIONAL: Advanced configuration"
