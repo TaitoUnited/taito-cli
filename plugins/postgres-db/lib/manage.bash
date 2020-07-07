@@ -23,7 +23,7 @@ function postgres::create_database () {
         -v "database=${database_name}" \
         -v "dbusermaster=${database_master_username_internal:-postgres}" \
         -v "dbuserapp=${database_app_username_internal}" \
-        -v "dbuserviewer=${database_viewer_username_internal}" \ > "${taito_vout}"
+        -v "dbuserviewer=${database_viewer_username_internal}" > "${taito_vout}"
     ) do
       :
     done
