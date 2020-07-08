@@ -33,6 +33,7 @@ function terraform::run () {
     terraform::yaml2json ./scripts/terraform.yaml
     terraform::yaml2json "./scripts/terraform-${taito_target_env:-}.yaml"
 
+    trap "rm -f ./scripts/terraform*.tmp" RETURN
     echo "Merging yaml files to terraform-merged.json.tmp" > "${taito_vout}"
     jq -s '.[0] * .[1]' ./scripts/terraform.json.tmp \
       "./scripts/terraform-${taito_target_env:-}.json.tmp" \
@@ -59,9 +60,6 @@ function terraform::run () {
       fi
       terraform "${command}" ${apply_options} -state=${env}/terraform.tfstate
     )
-
-    # Remove *.tmp files
-    rm -f ./scripts/*.tmp
   fi
 }
 

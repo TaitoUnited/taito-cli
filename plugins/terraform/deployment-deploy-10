@@ -6,7 +6,19 @@
 if [[ ! ${taito_deployment_platforms:-} ]] || \
    [[ ${taito_deployment_platforms} == *"terraform"* ]]; then
   taito_build_image_tag="${1:-taito_target_image}" \
-    terraform::run apply "${taito_provider:-}-deploy" "${taito_env:?}"
+    terraform::run apply "${taito_provider:-}-deploy" "${taito_env:?}" || (
+      if [[ ${taito_mode:-} == "ci" ]]; then
+        taito::print_note_start
+        echo "Your CI/CD might not have necessary rights to execute all the changes that"
+        echo "were required this time. Try to execute the changes manually by running the"
+        echo "following command, and then retry the CI/CD build."
+        echo
+        echo "taito deployment deploy:${taito_target_env} ${1:-taito_target_image}"
+        echo
+        taito::print_note_end
+      fi
+      exit 1
+    )
 fi
 
 taito::call_next "${@}"
