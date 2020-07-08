@@ -1,0 +1,19 @@
+#!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+if [[ ${taito_command_chain:-} != *"kubectl/"* ]] && [[ ${taito_default_domain:-} ]]; then
+  echo "You need to configure DNS settings for you ${taito_default_domain} domain."
+  echo "Check the hosted zones NS records from AWS console and configure them to"
+  echo "your DNS."
+  echo
+  echo "Press enter to open hosted zones on AWS console"
+  read -r
+  taito::open_browser \
+    "https://console.aws.amazon.com/route53/home?region=${taito_provider_region:?}#hosted-zones:"
+  echo
+  echo "Press enter once you have configured DNS"
+  read -r
+fi
+
+taito::call_next "${@}"
