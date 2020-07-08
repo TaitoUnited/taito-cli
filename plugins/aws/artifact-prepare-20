@@ -3,7 +3,7 @@
 
 # TODO: remove kubernetes_name check
 if [[ ${taito_static_assets_bucket:-} ]] && [[ ! ${kubernetes_name:-} ]]; then
-  export taito_static_assets_location="https://${taito_static_assets_bucket:-}.s3.amazonaws.com${taito_static_assets_path:-}"
+  export taito_static_assets_location="https://${taito_static_assets_bucket:-}.s3.amazonaws.com/${taito_static_assets_path:-}"
   echo "Setting public assets location: ${taito_static_assets_location}"
 fi
 
