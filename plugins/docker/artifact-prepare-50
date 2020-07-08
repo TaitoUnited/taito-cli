@@ -9,7 +9,8 @@ taito::skip_if_not "container function static_content" "${@}"
 export taito_docker_new_params=true
 docker::build "${@}"
 
-if taito::is_current_target_of_type container; then
+if taito::is_current_target_of_type container ||
+   [[ ${taito_ci_cache_all_targets_with_docker:-} == "true" ]]; then
   # Push docker image
   docker::push "${@}"
 fi
