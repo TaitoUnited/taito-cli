@@ -5,7 +5,8 @@
 : "${taito_mode:?}"
 : "${taito_env:?}"
 
-if [[ ${taito_provider_secrets_mode:-} != "backup" ]]; then
+if [[ ${taito_provider_secrets_location:-} ]] &&
+   [[ ${taito_provider_secrets_mode:-} != "backup" ]]; then
   # Fetch required secrets from GCP
   taito::expose_required_secrets_filter
   if [[ ${fetch_secrets:?} == "true" ]]; then
