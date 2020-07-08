@@ -90,12 +90,13 @@ function aws::publish_current_target_assets () {
     dest="s3://${taito_functions_bucket:?}/${taito_functions_path:?}/${image_tag}/${taito_target}.zip"
     options=""
   elif taito::is_current_target_of_type "static_content"; then
-    # Publish static assets to assets bucket
+    # Create separate stage.html for AWS Api Gateway stage (use /stage/* as base href)
     if [[ -f ./tmp/${taito_target}/service/index.html ]] &&
        [[ ! -f ./tmp/${taito_target}/service/stage.html ]]; then
       sed 's|<base href="/|<base href="/stage/|' \
         ./tmp/${taito_target}/service/index.html > ./tmp/${taito_target}/service/stage.html
     fi
+    # Publish static assets to assets bucket
     source="./tmp/${taito_target}/service"
     dest="s3://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${image_tag}/${taito_target}"
     options="--recursive"

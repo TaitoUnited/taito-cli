@@ -138,6 +138,14 @@ function docker::package () {
         "${image_untested}" \
         -c "cp -r /service /tmp/${taito_target}"
       cd "./tmp/${taito_target}/service"
+
+      # Replace CDN_PROJECT_PATH in all html files
+      if [[ ${taito_cdn_project_path:-} ]]; then
+        find . -name '*.html' -exec sed -i -e \
+          "s/CDN_PROJECT_PATH/${taito_cdn_project_path//\//\\/}\\/${image_tag//\//\\/}/g" {} \;
+      fi
+
+      # Create zip package
       zip -rq "../../${taito_target}.zip" .* *
     )
   fi
