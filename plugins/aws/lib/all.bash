@@ -91,6 +91,11 @@ function aws::publish_current_target_assets () {
     options=""
   elif taito::is_current_target_of_type "static_content"; then
     # Publish static assets to assets bucket
+    if [[ -f ./tmp/${taito_target}/service/index.html ]] &&
+       [[ ! -f ./tmp/${taito_target}/service/stage.html ]]; then
+      sed 's|<base href="/|<base href="/stage/|' \
+        ./tmp/${taito_target}/service/index.html > ./tmp/${taito_target}/service/stage.html
+    fi
     source="./tmp/${taito_target}/service"
     dest="s3://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${image_tag}/${taito_target}"
     options="--recursive"
