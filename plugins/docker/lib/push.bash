@@ -131,6 +131,7 @@ function docker::package () {
      [[ ${taito_cdn_project_path} != "-"* ]]; then
     assetsPath="${taito_cdn_project_path}/${image_tag}/${taito_target}"
   fi
+  local assetsDomain="${taito_cdn_domain:-}"
 
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "ERROR: ${name} not included in taito_targets"
@@ -149,9 +150,11 @@ function docker::package () {
         -c "cp -r /service /tmp/${taito_target}"
       cd "./tmp/${taito_target}/service"
 
-      # Replace BASE_PATH and ASSETS_PATH in all html and runtime.*.js files
+      # Replace BASE_PATH, ASSETS_DOMAIN, and ASSETS_PATH in source files
       find . -name '*.html' -exec sed -i -e \
         "s/BASE_PATH/${basePath//\//\\/}/g" {} \;
+      find . -name '*.html' -exec sed -i -e \
+        "s/ASSETS_DOMAIN/${assetsDomain//\//\\/}/g" {} \;
       find . -name '*.html' -exec sed -i -e \
         "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
       find . -name 'runtime.*.js' -exec sed -i -e \
@@ -159,7 +162,7 @@ function docker::package () {
       find . -name 'manifest.json' -exec sed -i -e \
         "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
       find . -name 'manifest.json' -exec sed -i -e \
-        "/${2}/d" {} \;
+        "/start_url/d" {} \;
 
       # Create zip package
       zip -rq "../../${taito_target}.zip" .* *
