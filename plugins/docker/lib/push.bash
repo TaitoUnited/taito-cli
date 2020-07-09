@@ -122,14 +122,14 @@ function docker::package () {
 
   # TODO: how to avoid hard coded base href? Perhaps does not matter, since you
   # can hard code base href in container implementation if it becomes a problem.
-  local baseHref="/${taito_target}/"
+  local basePath="/${taito_target}"
   if [[ ${taito_target} == "client" ]]; then
-    baseHref="/"
+    basePath=""
   fi
-  local assetsPath="${baseHref}"
+  local assetsPath="${basePath}"
   if [[ ${taito_cdn_project_path:-} ]] &&
      [[ ${taito_cdn_project_path} != "-"* ]]; then
-    assetsPath="${taito_cdn_project_path}/${image_tag}/${taito_target}/"
+    assetsPath="${taito_cdn_project_path}/${image_tag}/${taito_target}"
   fi
 
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
@@ -149,10 +149,12 @@ function docker::package () {
         -c "cp -r /service /tmp/${taito_target}"
       cd "./tmp/${taito_target}/service"
 
-      # Replace BASE_HREF and ASSETS_PATH in all html files
+      # Replace BASE_PATH and ASSETS_PATH in all html and runtime.*.js files
       find . -name '*.html' -exec sed -i -e \
-        "s/BASE_HREF/${baseHref//\//\\/}/g" {} \;
+        "s/BASE_PATH/${basePath//\//\\/}/g" {} \;
       find . -name '*.html' -exec sed -i -e \
+        "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
+      find . -name 'runtime.*.js' -exec sed -i -e \
         "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
 
       # Create zip package
