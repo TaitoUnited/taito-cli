@@ -120,13 +120,23 @@ function docker::package () {
   local image="${prefix}:${image_tag}"
   local image_untested="${image}-untested"
 
+  # TODO: how to avoid hard coded base href? Perhaps does not matter, since you
+  # can hard code base href in container implementation if it becomes a problem.
+  local baseHref="/${taito_target}/"
+  if [[ ${taito_target} == "client" ]]; then
+    baseHref="/"
+  fi
+  local assetsPath="${baseHref}"
+  if [[ ${taito_cdn_project_path:-} ]] &&
+     [[ ${taito_cdn_project_path} != "-"* ]]; then
+    assetsPath="${taito_cdn_project_path}/${image_tag}/${taito_target}/"
+  fi
+
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "ERROR: ${name} not included in taito_targets"
     exit 1
   else
     # Copy and package files
-    # TODO: copy static files also in case index.html is served from container
-    # and rest of the static assets are served from CDN
     (
       echo "Packaging ./tmp/${taito_target}.zip for deployment"
       taito::executing_start
@@ -139,11 +149,11 @@ function docker::package () {
         -c "cp -r /service /tmp/${taito_target}"
       cd "./tmp/${taito_target}/service"
 
-      # Replace CDN_PROJECT_PATH in all html files
-      if [[ ${taito_cdn_project_path:-} ]]; then
-        find . -name '*.html' -exec sed -i -e \
-          "s/CDN_PROJECT_PATH/${taito_cdn_project_path//\//\\/}\\/${image_tag//\//\\/}/g" {} \;
-      fi
+      # Replace BASE_HREF and ASSETS_PATH in all html files
+      find . -name '*.html' -exec sed -i -e \
+        "s/BASE_HREF/${baseHref//\//\\/}/g" {} \;
+      find . -name '*.html' -exec sed -i -e \
+        "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
 
       # Create zip package
       zip -rq "../../${taito_target}.zip" .* *
