@@ -156,6 +156,10 @@ function docker::package () {
         "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
       find . -name 'runtime.*.js' -exec sed -i -e \
         "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
+      find . -name 'manifest.json' -exec sed -i -e \
+        "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
+      find . -name 'manifest.json' -exec sed -i -e \
+        "/${2}/d" {} \;
 
       # Create zip package
       zip -rq "../../${taito_target}.zip" .* *
