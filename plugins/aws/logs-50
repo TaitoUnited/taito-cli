@@ -1,0 +1,10 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+taito::skip_if_not "function" "${@}"
+
+taito::open_browser \
+  "https://${taito_provider_region}.console.aws.amazon.com/cloudwatch/home?region=${taito_provider_region}#logsV2:log-groups\$3FlogGroupNameFilter\$3D${taito_project:?}-${taito_target}-${taito_target_env:?}"
+
+taito::call_next "${@}"
