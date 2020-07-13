@@ -2,7 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-taito::confirm "Save secrets to Kubernetes" || \
+taito::confirm "Save changed secrets to Kubernetes" || \
   taito::skip_to_next "${@}"
 
 kubectl::use_context

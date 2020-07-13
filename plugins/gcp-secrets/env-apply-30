@@ -3,7 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 if [[ ${taito_provider_secrets_location:-} ]]; then
-  taito::confirm "Save secrets to Google Cloud Platform" || \
+  taito::confirm "Save changed secrets to Google Cloud Platform" || \
     taito::skip_to_next "${@}"
 
   taito::save_secrets \
