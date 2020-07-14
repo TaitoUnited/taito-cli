@@ -42,10 +42,16 @@ function replace_with_terraform_variable () {
   if [[ ${taito_provider:-} == "aws" ]]; then
     database=
     instance=
-    if [[ ${postgres_instances:-} ]]; then
+    if [[ ${postgres_default_instance:-} ]]; then
+      database=postgres
+      instance=${postgres_default_instance:-}
+    elif [[ ${mysql_default_instance:-} ]]; then
+      database=mysql
+      instance=${mysql_default_instance:-}
+    elif [[ ${postgres_instances:-} ]]; then # TODO: remove
       database=postgres
       instance=${postgres_instances:-}
-    elif [[ ${mysql_instances:-} ]]; then
+    elif [[ ${mysql_instances:-} ]]; then # TODO: remove
       database=mysql
       instance=${mysql_instances:-}
     fi

@@ -69,6 +69,9 @@ function terraform::run_zone () {
 
   local init_options="${terraform_init_options:-}"
   local apply_options="${terraform_apply_options:-}"
+
+  local dir="$(pwd)"
+
   (
     export TF_LOG_PATH="./terraform.log"
     taito::export_terraform_env "${scripts_path}"
@@ -80,6 +83,8 @@ function terraform::run_zone () {
     fi
     again="true"
     while [[ ${again} == "true" ]]; do
+      echo "Substituting variables in terraform.yaml" > "${taito_vout}"
+      terraform::yaml2json "${dir}/terraform.yaml"
       terraform "${command}" ${apply_options} && break
       echo
       echo "Terraform execution failed. Sometimes you can resolve the issues just"
