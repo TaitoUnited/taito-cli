@@ -34,7 +34,13 @@ function aws-secrets::get_secret_value () {
   local key
 
   key=$(get_key "${taito_provider_secrets_location:?}" "${namespace}" "${name}")
-  get_parameter "${key}"
+  value=$(get_parameter "${key}")
+  if [[ ! ${value} ]] && [[ ${taito_mode} == "ci" ]]; then
+    # Try devops namespace instead
+    key=$(get_key "${taito_provider_secrets_location:?}" "devops" "${name}")
+    value=$(get_parameter "${key}")
+  fi
+  echo "${value}"
 }
 
 function aws-secrets::put_secret_value () {
