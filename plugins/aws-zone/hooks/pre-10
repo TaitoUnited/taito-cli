@@ -2,6 +2,9 @@
 # shellcheck source=../../aws/lib/all.bash
 . "${taito_cli_path:?}/plugins/aws/lib/all.bash"
 
+# Set default region just in case
+export AWS_DEFAULT_REGION="${taito_provider_region:?}"
+
 if [[ ${taito_command:?} == "zone-"* ]]; then
   taito::print_plugin_title
   aws::authenticate

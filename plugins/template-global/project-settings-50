@@ -49,6 +49,11 @@ if [[ ${taito_type:-} == "zone" ]]; then
     mysql_username_suffix=$(echo "${mysql_username_suffixes:-}" | awk '{print $1;}')
   fi
 
+  storage_class=
+  if [[ ${taito_provider:?} == "gcp" ]]; then
+    storage_class=REGIONAL
+  fi
+
   if [[ ${taito_quiet:-} != "true" ]]; then
     echo
     echo "Once you have configured the zone, you can create a new project on"
@@ -84,6 +89,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: Domains and hosts"
   echo "template_default_domain=$taito_default_domain"
   echo "template_default_cdn_domain=$taito_default_cdn_domain"
+  echo "template_default_bastion_public_ip=$taito_bastion_public_ip"
   if [[ $taito_provider == "linux" ]]; then
     echo "template_default_host=x.$taito_default_domain"
   else
@@ -107,6 +113,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_region=$taito_provider_region"
   echo "template_default_provider_zone=$taito_provider_zone"
   echo "template_default_provider_secrets_location=$taito_provider_secrets_location"
+  echo "template_default_cicd_secrets_path=$taito_cicd_secrets_path"
   echo
   echo "# Template: Version control provider"
   echo "template_default_vc_provider=$taito_vc_provider"
@@ -160,7 +167,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_mysql_proxy_ssl_enabled=${mysql_proxy_ssl_enabled:-true}"
   echo
   echo "# Template: Storage"
-  echo "template_default_storage_class=REGIONAL"
+  echo "template_default_storage_class=$storage_class"
   echo "template_default_storage_location=$taito_provider_region"
   echo "template_default_storage_days=60"
   echo
@@ -175,6 +182,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_zone_prod=$taito_zone"
   echo "template_default_domain_prod=${taito_default_domain_prod:-$taito_default_domain}"
   echo "template_default_cdn_domain_prod=${taito_default_cdn_domain_prod:-$taito_default_cdn_domain}"
+  echo "template_default_bastion_public_ip_prod=${taito_bastion_public_ip_prod:-taito_bastion_public_ip}"
   if [[ $taito_provider == "linux" ]]; then
     echo "template_default_host_prod=x.${taito_default_domain_prod:-$taito_default_domain}"
   else
@@ -189,6 +197,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_region_prod=$taito_provider_region"
   echo "template_default_provider_zone_prod=$taito_provider_zone"
   echo "template_default_provider_secrets_location_prod=$taito_provider_secrets_location"
+  echo "template_default_cicd_secrets_path_prod=$taito_cicd_secrets_path"
   echo "template_default_ci_provider_prod=$taito_ci_provider"
   echo "template_default_ci_organization_prod=${taito_ci_organization:-$taito_organization}"
   echo "template_default_ci_exec_deploy_prod=true # Set to 'false' for security critical environments"
@@ -214,7 +223,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_mysql_ssl_client_cert_enabled_prod=${mysql_ssl_client_cert_enabled:-false}"
   echo "template_default_mysql_ssl_server_cert_enabled_prod=${mysql_ssl_server_cert_enabled:-false}"
   echo "template_default_mysql_proxy_ssl_enabled_prod=${mysql_ssl_enabled:-true}"
-  echo "template_default_storage_class_prod=REGIONAL"
+  echo "template_default_storage_class_prod=$storage_class"
   echo "template_default_storage_location_prod=$taito_provider_region"
   echo "template_default_storage_days_prod=60"
   echo "template_default_backup_location_prod=$taito_provider_region"
