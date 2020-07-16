@@ -6,7 +6,8 @@
 : "${taito_target_env:?}"
 : "${taito_vc_repository:?}"
 
-taito::skip_if_not container "${@}"
+# Containers, functions and static assets are built with Docker
+taito::skip_if_not "container function static_content" "${@}"
 
 dir="${taito_target:?Target not given}"
 suite_filter="${1}"

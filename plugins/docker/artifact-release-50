@@ -3,7 +3,8 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_container_registry:?}"
 
-taito::skip_if_not container "${@}"
+# Containers, functions and static assets are built with Docker
+taito::skip_if_not "container function static_content" "${@}"
 
 name=${taito_target:?Target not given}
 image_tag=${1:?Image tag not given}

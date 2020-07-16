@@ -2,7 +2,8 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-taito::skip_if_not container "${@}"
+# Containers, functions and static assets are built with Docker
+taito::skip_if_not "container function static_content" "${@}"
 
 docker::build "${@}"
 taito::call_next "${@}"

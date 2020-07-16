@@ -1,7 +1,8 @@
 #!/bin/bash -e
 : "${taito_project:?}"
 
-taito::skip_if_not container "${@}"
+# Containers, functions and static assets are built with Docker
+taito::skip_if_not "container function static_content" "${@}"
 
 type=$1
 if [[ $type == "tester" ]]; then
