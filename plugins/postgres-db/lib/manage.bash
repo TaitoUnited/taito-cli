@@ -49,7 +49,7 @@ function postgres::create_database () {
 
     echo "Granting user access"
     export PGPASSWORD
-    PGPASSWORD="${secret_value}"
+    PGPASSWORD="${database_build_password}"
     (
       taito::executing_start
       psql -h "${database_host}" \
