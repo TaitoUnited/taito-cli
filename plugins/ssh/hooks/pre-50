@@ -18,7 +18,7 @@ for plugin_suffix in ${plugin_suffices[@]}; do
     forward_value=$(echo "$forward_value" | envsubst)
     (
       taito::executing_start
-      sh -c "ssh ${ssh_opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 2000"
+      sh -c "ssh ${ssh_opts} -4 -f -o ExitOnForwardFailure=yes ${forward_value} sleep 5000"
     ) || (
       # TODO: Currently error is shown if proxy is already running
       echo "WARN: SSH connection failed with options ${ssh_opts} ${forward_value}."

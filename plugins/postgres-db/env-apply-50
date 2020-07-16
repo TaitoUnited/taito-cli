@@ -6,6 +6,9 @@ if [[ ${taito_env:?} == "local" ]]; then
   echo "Skipping database create for local environment"
 else
   echo "Creating database(s)"
+  echo "TIP: If connection fails, your db proxy connection might have dropped. In such"
+  echo "case, run 'taito env apply:${taito_env}' again, and skip the steps already executed"
+  echo "previously."
   (
     databases=("${taito_target:-$taito_databases}")
     for database in ${databases[@]}; do

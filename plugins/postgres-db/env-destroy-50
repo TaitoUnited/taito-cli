@@ -4,6 +4,9 @@
 
 if [[ ${taito_env:?} != "local" ]]; then
   (
+    echo "TIP: If connection fails, your db proxy connection might have dropped. In such"
+    echo "case, run 'taito env destroy:${taito_env}' again, and skip the steps already executed"
+    echo "previously."
     databases=("${taito_target:-$taito_databases}")
     for database in ${databases[@]}; do
       export taito_target="${database}"
