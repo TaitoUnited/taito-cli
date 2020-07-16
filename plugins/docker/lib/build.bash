@@ -64,28 +64,12 @@ function docker::build () {
     echo "ERROR: ${name} not included in taito_targets"
     exit 1
   else
-    if [[ ${ci_exec_build:-} == "false" ]] && \
-       [[ ${ci_exec_test:-false} == "false" ]] && \
-       (
-         [[ -f ./taitoflag_images_exist ]] || \
-         ! taito::is_current_target_of_type container
-       ) && (
-         # On GCP cloud build we must always pull the images if they have been
-         # defined as build artifacts (images) for the build
-         [[ ${taito_ci_provider:-} != "gcp" ]] || \
-         ! grep "^images:" cloudbuild.yaml &> /dev/null
-       )
-    then
-      echo "Not pulling Docker images from registry as both ci_exec_build and" \
-        "ci_exec_test are 'false'."
-    elif [[ -f ./taitoflag_images_exist ]] || \
+    if [[ -f ./taitoflag_images_exist ]] || \
        ([[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "false" ]])
     then
       # Image should exist.
-      # We pull the builder image for integration tests
-      # On Google Cloud Build we always have to pull the existing image so that
-      # it exists at the end (images: [ ... ])
-      # TODO: optimize so that images are pulled only if required
+      # We pull the builder image for assets/function
+      # publish and integration tests
       local count=0
       local pulled="false"
       while true
