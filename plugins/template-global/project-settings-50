@@ -2,11 +2,13 @@
 
 if [[ ${taito_type:-} == "zone" ]]; then
   # Postgres
-  postgres_instance="${postgres_default_instance:-}"
+  postgres_instance="${postgres_default_name:-$postgres_default_instance}"
   postgres_host="${postgres_default_host:-}"
   postgres_host_prod="${postgres_default_host_prod:-}"
   postgres_admin="${postgres_default_admin:-}"
   postgres_username_suffix="${postgres_default_username_suffix:-}"
+  postgres_port="${postgres_default_port:-5432}"
+  postgres_port_prod="${postgres_default_port:-$postgres_port}"
 
   # TODO: remove these
   if [[ ! $postgres_instance ]]; then
@@ -26,11 +28,13 @@ if [[ ${taito_type:-} == "zone" ]]; then
   fi
 
   # MySQL
+  mysql_instance="${mysql_default_name:-$mysql_default_instance}"
   mysql_host=${mysql_default_host:-}
   mysql_host_prod=${mysql_default_host_prod:-}
   mysql_admin=${mysql_default_admin:-}
-  mysql_admin="${mysql_default_admin:-}"
   mysql_username_suffix="${mysql_default_username_suffix:-}"
+  mysql_port="${mysql_default_port:-3306}"
+  mysql_port_prod="${mysql_default_port:-$mysql_port}"
 
   # TODO: remove these
   if [[ ! $mysql_instance ]]; then
@@ -147,6 +151,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: Postgres"
   echo "template_default_postgres=${postgres_instance}"
   echo "template_default_postgres_host=\"${postgres_host}\""
+  echo "template_default_postgres_port=\"${postgres_port}\""
   echo "template_default_postgres_master_username=${postgres_admin}"
   echo "template_default_postgres_master_password_hint=\"Hint where to get the password\""
   echo "template_default_postgres_username_suffix=${postgres_username_suffix}"
@@ -158,6 +163,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: MySQL"
   echo "template_default_mysql=${mysql_instance}"
   echo "template_default_mysql_host=\"${mysql_host}\""
+  echo "template_default_mysql_port=\"${mysql_port}\""
   echo "template_default_mysql_master_username=${mysql_admin}"
   echo "template_default_mysql_master_password_hint=\"Hint where to get the password\""
   echo "template_default_mysql_username_suffix=${mysql_username_suffix}"
@@ -182,7 +188,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_zone_prod=$taito_zone"
   echo "template_default_domain_prod=${taito_default_domain_prod:-$taito_default_domain}"
   echo "template_default_cdn_domain_prod=${taito_default_cdn_domain_prod:-$taito_default_cdn_domain}"
-  echo "template_default_bastion_public_ip_prod=${taito_bastion_public_ip_prod:-taito_bastion_public_ip}"
+  echo "template_default_bastion_public_ip_prod=${taito_bastion_public_ip_prod:-$taito_bastion_public_ip}"
   if [[ $taito_provider == "linux" ]]; then
     echo "template_default_host_prod=x.${taito_default_domain_prod:-$taito_default_domain}"
   else
@@ -212,12 +218,14 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_uptime_channels_prod=$taito_messaging_uptime_channels"
   echo "template_default_kubernetes_prod=${kubernetes_name:-}"
   echo "template_default_postgres_host_prod=\"${postgres_host_prod:-$postgres_host}\""
+  echo "template_default_postgres_port_prod=\"${postgres_port_prod:-$postgres_port}\""
   echo "template_default_postgres_username_suffix_prod=${postgres_username_suffix}"
   echo "template_default_postgres_ssl_enabled_prod=${postgres_ssl_enabled:-true}"
   echo "template_default_postgres_ssl_client_cert_enabled_prod=${postgres_ssl_client_cert_enabled:-false}"
   echo "template_default_postgres_ssl_server_cert_enabled_prod=${postgres_ssl_server_cert_enabled:-false}"
   echo "template_default_postgres_proxy_ssl_enabled_prod=${postgres_ssl_enabled:-true}"
   echo "template_default_mysql_host_prod=\"${mysql_host_prod:-$mysql_host}\""
+  echo "template_default_mysql_port_prod=\"${mysql_port_prod:-$mysql_port}\""
   echo "template_default_mysql_username_suffix_prod=${mysql_username_suffix}"
   echo "template_default_mysql_ssl_enabled_prod=${mysql_ssl_enabled:-true}"
   echo "template_default_mysql_ssl_client_cert_enabled_prod=${mysql_ssl_client_cert_enabled:-false}"
