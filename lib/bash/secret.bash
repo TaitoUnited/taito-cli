@@ -70,8 +70,12 @@ function taito::expose_db_user_credentials () {
 export -f taito::expose_db_user_credentials
 
 function taito::get_secret_value_format () {
+  # TODO: Remove version-control-buildbot hack. Method should be read from
+  # secret.METHOD if it is copy/ or read/
+  # TODO: Why version-control-buildbot hack required only for aws?
   if [[ ${secret_method} == "random"* ]] ||
-     [[ ${secret_method} == "manual"* ]]
+     [[ ${secret_method} == "manual"* ]] ||
+     [[ ${secret_name} == *"version-control-buildbot"* ]]
   then
     echo "literal"
   else
