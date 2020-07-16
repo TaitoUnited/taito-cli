@@ -275,6 +275,11 @@ function taito::save_secrets () {
 
       if [[ ${secret_method} != "read/"* ]]; then
         echo "Save secret ${secret_name}" > "${taito_vout:-}"
+        if [[ ! ${secret_value} ]] || (
+           [[ ${secret_value_format} == "file" ]] && [[ ! -f ${secret_value} ]]
+          ) ; then
+          echo "WARNING! ${secret_name} value is empty" 1>&2
+        fi
         "${put_secret_func}" \
           "${taito_zone:-}" \
           "${secret_namespace}" \

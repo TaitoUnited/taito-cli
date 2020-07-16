@@ -456,7 +456,7 @@ if [[ ${taito_command} == "env-apply" ]] &&
   echo
   echo "ERROR: taito_domain has not been set for ${taito_target_env} environment."
   echo "Configure DNS and set taito_domain for ${taito_target_env} environment in"
-  echo "taito-env-prod-config.sh. Some DNS entry examples are shown below:"
+  echo "scripts/taito/env-prod.sh. Some DNS entry examples are shown below:"
   echo
   ip=$(getent hosts "${taito_default_domain:-}" | awk '{ print $1 }')
   echo "a) CNAME appdomain.com  -->  ${taito_default_domain#*.}"

@@ -125,6 +125,16 @@ function generate-secrets::generate_by_type () {
           echo
           echo "[${title}]"
         fi
+        if [[ ${secret_name} == *"version-control-buildbot"* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "This is most likely a secret token used for tagging git repository and"
+          echo "publishing release notes during production release. You can find it from"
+          echo "your version control provider (${taito_vc_provider}) web user interface."
+          echo "Note that the secret token is optional (you can enter anything)."
+          echo ------------------------------------------------------------------------------
+          echo
+          echo "[${title}]"
+        fi
         while [[ ${#secret_value} -lt ${minlength} ]] ||
               [[ ${secret_value} != "${secret_value2}" ]]
         do
@@ -165,9 +175,10 @@ function generate-secrets::generate_by_type () {
           echo
           echo "[${title}]"
         fi
+
         if [[ ${taito_provider:-} == "gcp" ]] &&
            [[ ${taito_type:-} == "zone" ]] &&
-           [[ ${secret_name} == *"-ssl"* ]]; then
+           [[ ${secret_name} == *"-ssl."* ]]; then
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the database SSL certificates from"
           echo "the following web page by selecting connections tab of the correct"
@@ -177,7 +188,25 @@ function generate-secrets::generate_by_type () {
           echo ------------------------------------------------------------------------------
           echo
           echo "[${title}]"
+        elif [[ ${taito_provider:-} == "aws" ]] &&
+             [[ ${taito_type:-} == "zone" ]] &&
+             [[ ${secret_name} == *"-ssl.ca"* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "This is probably a root certificate for your database. You can most"
+          echo "likely download it from here:"
+          echo
+          echo "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html"
+          echo ------------------------------------------------------------------------------
+          echo
+          echo "[${title}]"
+        elif [[ ${taito_type:-} == "zone" ]] &&
+             [[ ${secret_name} == *"-ssl."* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "This is most likely a client certificate for your database. You can probably"
+          echo "download it from your cloud provider database settings."
+          echo ------------------------------------------------------------------------------
         fi
+
         while [[ ! -f ${secret_value} ]]; do
           echo "File path relative to project root folder (for example 'secret.json'):"
           read -r secret_value
