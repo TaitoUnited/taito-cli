@@ -31,17 +31,23 @@ function taito::export_terraform_env () {
     # TODO: remove (here temporarily for backwards compatibility)
     value_formatted="${value}"
     if [[ ${name: -1} == "s" ]] &&
+       [[ ${value} != "{"* ]] &&
+       [[ ${value} != "["* ]] &&
        [[ -f "${scripts_path}/variables.tf" ]] &&
        grep "list(string)" "${scripts_path}/variables.tf" &> /dev/null; then
-      # Format to terraform list
-      value_formatted="["
-      words=("${value}")
-      for word in ${words[@]}
-      do
-        value_formatted="${value_formatted}\"${word}\","
-      done
-      # Remove last , and add ]
-      value_formatted="${value_formatted%?}]"
+      if [[ ! $(echo "${value}" | xargs) ]]; then
+        value_formatted="[]"
+      else
+        # Format to terraform list
+        value_formatted="["
+        words=("${value}")
+        for word in ${words[@]}
+        do
+          value_formatted="${value_formatted}\"${word}\","
+        done
+        # Remove last , and add ]
+        value_formatted="${value_formatted%?}]"
+      fi
     fi
 
     local tf_name="TF_VAR_${name}"
