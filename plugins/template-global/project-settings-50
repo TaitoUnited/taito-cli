@@ -116,6 +116,20 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_billing_account_id=$taito_provider_billing_account_id"
   echo "template_default_provider_region=$taito_provider_region"
   echo "template_default_provider_zone=$taito_provider_zone"
+  if [[ ${taito_provider} == "aws" ]]; then
+    echo "# Template: Network"
+    echo "template_default_network_tags='${taito_network_tags}'"
+    echo "template_default_function_subnet_tags='${taito_function_subnet_tags}'"
+    echo "template_default_function_security_group_tags='${taito_function_security_group_tags}'"
+    echo "template_default_cache_subnet_tags='${taito_cache_subnet_tags}'"
+    echo "template_default_cache_security_group_tags='${taito_cache_security_group_tags}'"
+    echo
+    echo "# Template: Policies"
+    echo "template_default_gateway_policies='${taito_gateway_policies}'"
+    echo "template_default_cicd_policies='${taito_cicd_policies}'"
+    echo
+  fi
+  echo "# Template: Secrets"
   echo "template_default_provider_secrets_location=$taito_provider_secrets_location"
   echo "template_default_cicd_secrets_path=$taito_cicd_secrets_path"
   echo
@@ -202,6 +216,17 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_billing_account_id_prod=$taito_provider_billing_account_id"
   echo "template_default_provider_region_prod=$taito_provider_region"
   echo "template_default_provider_zone_prod=$taito_provider_zone"
+
+  if [[ ${taito_provider} == "aws" ]]; then
+    echo "template_default_network_tags='${taito_network_tags}'"
+    echo "template_default_function_subnet_tags='${taito_function_subnet_tags}'"
+    echo "template_default_function_security_group_tags='${taito_function_security_group_tags}'"
+    echo "template_default_cache_subnet_tags='${taito_cache_subnet_tags}'"
+    echo "template_default_cache_security_group_tags='${taito_cache_security_group_tags}'"
+    echo "template_default_gateway_policies='${taito_gateway_policies}'"
+    echo "template_default_cicd_policies='${taito_cicd_policies}'"
+  fi
+
   echo "template_default_provider_secrets_location_prod=$taito_provider_secrets_location"
   echo "template_default_cicd_secrets_path_prod=$taito_cicd_secrets_path"
   echo "template_default_ci_provider_prod=$taito_ci_provider"
