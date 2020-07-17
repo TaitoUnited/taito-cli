@@ -70,12 +70,8 @@ function taito::expose_db_user_credentials () {
 export -f taito::expose_db_user_credentials
 
 function taito::get_secret_value_format () {
-  # TODO: Remove version-control-buildbot hack. Method should be read from
-  # secret.METHOD if it is copy/ or read/
-  # TODO: Why version-control-buildbot hack required only for aws?
   if [[ ${secret_method} == "random"* ]] ||
-     [[ ${secret_method} == "manual"* ]] ||
-     [[ ${secret_name} == *"version-control-buildbot"* ]]
+     [[ ${secret_method} == "manual"* ]]
   then
     echo "literal"
   else
@@ -105,6 +101,7 @@ function taito::expose_secret_by_index () {
 
   secret_method_var="secret_method_${secret_index}"
   secret_method=${!secret_method_var}
+  secret_method_var2="secret_method_${secret_name//[-.]/_}"
 
   secret_value_format=$(taito::get_secret_value_format "${secret_method}")
   if [[ ${secret_value_format} == "file" ]]; then
@@ -335,6 +332,19 @@ function taito::export_secrets () {
     )
 
     if [[ ${secret_value} ]]; then
+      local real_method="${secret_method}"
+      if [[ ${secret_method} == "copy/"* ]] || [[ ${secret_method} == "read/"* ]]; then
+        real_method=$(
+          "${get_secret_func}" \
+            "${taito_zone:-}" \
+            "${secret_source_namespace}" \
+            "${secret_name}.METHOD" \
+            "manual"
+        )
+      fi
+      local secret_value_format
+      secret_value_format=$(taito::get_secret_value_format "${real_method}")
+
       if [[ ${save_to_disk} == "true" ]]; then
         file="${taito_tmp_secrets_dir}/${secret_name}"
 
@@ -361,6 +371,8 @@ function taito::export_secrets () {
       fi
       exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
       exports="${exports}export ${secret_value_var2}=\"${secret_value}\"; "
+      exports="${exports}export ${secret_method_var}=\"${real_method}\"; "
+      exports="${exports}export ${secret_method_var2}=\"${real_method}\"; "
     fi
 
     secret_index=$((${secret_index}+1))
