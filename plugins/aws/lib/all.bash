@@ -89,7 +89,10 @@ function aws::publish_current_target_assets () {
     source="./tmp/${taito_target:?}.zip"
     dest="s3://${taito_functions_bucket:?}/${taito_functions_path:?}/${image_tag}/${taito_target}.zip"
     options=""
-  elif taito::is_current_target_of_type "static_content"; then
+  elif taito::is_current_target_of_type "static_content" &&
+       [[ ${taito_cdn_project_path:-} ]] &&
+       [[ ${taito_cdn_project_path} != "-" ]]
+  then
     # Create separate stage.html for AWS Api Gateway stage (use /stage/* as base href)
     if [[ -f ./tmp/${taito_target}/service/index.html ]] &&
        [[ ! -f ./tmp/${taito_target}/service/stage.html ]]; then
@@ -101,14 +104,15 @@ function aws::publish_current_target_assets () {
     dest="s3://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${image_tag}/${taito_target}"
     options="--recursive"
   else
-    echo "ERROR: Static assets cannot be published for ${taito_target}"
-    exit 1
+    echo "No need for copying assets to storage bucket"
   fi
 
-  echo "Copying ${taito_target} assets to ${dest}"
-  aws::expose_aws_options
-  taito::executing_start
-  aws $aws_options s3 cp "${source}" "${dest}" ${options}
+  if [[ ${source} ]]; then
+    echo "Copying ${taito_target} assets to ${dest}"
+    aws::expose_aws_options
+    taito::executing_start
+    aws $aws_options s3 cp "${source}" "${dest}" ${options}
+  fi
 }
 
 function aws::restart_all_functions () {

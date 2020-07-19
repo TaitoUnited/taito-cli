@@ -205,11 +205,12 @@ function gcp::publish_current_target_assets () {
     dest="gs://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${image_tag}/${taito_target}"
     options="-r"
   else
-    echo "ERROR: Static assets cannot be published for ${taito_target}"
-    exit 1
+    echo "No need for copying assets to storage bucket"
   fi
 
-  echo "Copying ${taito_target} assets to ${dest}"
-  taito::executing_start
-  gsutil cp ${options} "${source}" "${dest}"
+  if [[ ${source} ]]; then
+    echo "Copying ${taito_target} assets to ${dest}"
+    taito::executing_start
+    gsutil cp ${options} "${source}" "${dest}"
+  fi
 }
