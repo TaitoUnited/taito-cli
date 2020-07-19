@@ -214,7 +214,7 @@ if [[ ${project} ]]; then
     git checkout dev -- * *.json &> /dev/null
   else
     cd "${project_local_path}"
-    git pull &> /dev/null
+    git pull > /dev/null
   fi
 fi
 
@@ -250,7 +250,7 @@ do
         echo "Pulling taito-cli extension from git: ${repo_local_path}"
         (
           cd "${repo_local_path}"
-          git pull &> /dev/null
+          git pull > /dev/null
         )
       fi
     else
@@ -287,7 +287,7 @@ do
       echo "Pulling taito-cli extension from git: ${extension}"
       (
         cd "${extension}"
-        git pull &> /dev/null
+        git pull > /dev/null
       )
     fi
     local_path="${extension/\~/${taito_home_path}}"
