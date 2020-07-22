@@ -230,7 +230,7 @@ fi
 if [[ ${verbose} == true ]]; then
   # Helper environment variables to be used in verbose mode
   taito_verbose=true
-  taito_vout="/dev/stdout"
+  taito_vout="/dev/tty"
   taito_options="${taito_options} -v"
 fi
 

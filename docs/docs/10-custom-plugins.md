@@ -106,12 +106,12 @@ TODO: update the list of environment variables
 Values of the following environment variables are set depending on debug mode:
 
 - **taito\_debug**: `true` or `false`
-- **taito\_dout**: `/dev/stdout` or `/dev/null`
+- **taito\_dout**: `/dev/tty` or `/dev/null`
 
 Values of the following environment variables are set depending on verbose mode:
 
 - **taito\_verbose**: `true` or `false`
-- **taito\_vout**: `/dev/stdout` or `/dev/null`
+- **taito\_vout**: `/dev/tty` or `/dev/null`
 
 You can use these environment variables to provide additional output in verbose or debug mode. For example:
 
