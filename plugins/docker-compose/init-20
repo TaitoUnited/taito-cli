@@ -32,7 +32,7 @@ else
         docker-compose -f $compose_file start ${pod:?}
       "
     done
-    if [[ ${all} ]]; then
+    if [[ ${databases} ]]; then
       sleep 15
       echo "Waiting for databases to start..."
       sleep 25
