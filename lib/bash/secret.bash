@@ -70,8 +70,9 @@ function taito::expose_db_user_credentials () {
 export -f taito::expose_db_user_credentials
 
 function taito::get_secret_value_format () {
-  if [[ ${secret_method} == "random"* ]] ||
-     [[ ${secret_method} == "manual"* ]]
+  if [[ $1 == "random"* ]] ||
+     [[ $1 == "manual"* ]] ||
+     [[ ! $1 ]]
   then
     echo "literal"
   else
