@@ -12,9 +12,9 @@ The following software needs to be installed on your computer before you can ins
 
 **Linux:** See [Docker Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/).
 
-**Docker Desktop for Windows:** Install [Git for Windows](https://gitforwindows.org/). It provides both Git and Bash. Use Git Bash as your shell. However, issue [docker-for-win#1588](https://github.com/docker/for-win/issues/1588) may cause you some trouble with MinTTY terminal emulation. You can try some of the workarounds mentioned in the issue comment section. Especially [this comment](https://github.com/docker/for-win/issues/1588#issuecomment-594938988) seems promising (not tested yet).
+**Windows:** It is recommended to use [Docker Desktop WSL 2 backend](https://docs.docker.com/docker-for-windows/wsl/). Make sure you follow the best practices mentioned in the docker installation instructions. That is, source code should be located on Linux disk. You can use [Visual Studio Code Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) to modify the source code remotely from Windows.
 
-**Docker Toolbox for Windows:** Install [Git for Windows](https://gitforwindows.org/). Use Docker Toolbox as your shell instead of Git Bash. Note that Docker Compose secret mounts might not work properly on Docker Toolbox (issue [docker-compose#6585](https://github.com/docker/compose/issues/6585)). If this is a problem, you can ditch the Docker Toolbox and run a Linux virtual machine with VirtualBox as you normally would.
+> If you cannot use [Docker Desktop WSL 2 backend](https://docs.docker.com/docker-for-windows/wsl/) on Windows, you can try some bash emulation instead (e.g. Git Bash). However, [docker-for-win#1588](https://github.com/docker/for-win/issues/1588) may cause you some trouble. You can also try to run Docker inside a Linux virtual machine.
 
 ### Automatic installation
 
