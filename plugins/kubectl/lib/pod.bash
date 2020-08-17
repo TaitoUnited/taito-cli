@@ -50,7 +50,7 @@ function kubectl::expose_pod_and_container () {
     # No container name was given. Determine container name.
     container=$(echo "${pod}" | \
       sed -e 's/\([^0-9]*\)*/\1/;s/-[a-z0-9]*-[a-z0-9]*$//' | \
-      sed -e "s/-${taito_target_env}//")
+      sed -e "s/\\(.*\\)-${taito_target_env}\\(.*\\)/\\1\\2/")
   fi
 }
 
