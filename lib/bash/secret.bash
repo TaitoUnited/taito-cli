@@ -343,6 +343,16 @@ function taito::export_secrets () {
             "manual"
         )
       fi
+
+      if [[ ! ${real_method} ]]; then
+        real_method="manual"
+        if [[ ${secret_name} == *".key" ]]; then
+          real_method="file"
+        fi
+        echo "WARNING: Secret method not set for ${secret_name}. Using '${real_method}' as method." 1>&2
+        echo 1>&2
+      fi
+
       local secret_value_format
       secret_value_format=$(taito::get_secret_value_format "${real_method}")
 
