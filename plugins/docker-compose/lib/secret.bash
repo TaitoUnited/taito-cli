@@ -6,14 +6,14 @@ function docker-compose::get_secret_value () {
   local zone=$1
   local namespace=$2
   local name=$3
-  local method=$4 # TODO
+  local real_method=$4
 
   local secret_name
   local secret_property
   local format
   secret_name=$(taito::get_secret_name "${name}")
   secret_property=$(taito::get_secret_property "${name}")
-  format=$(taito::get_secret_value_format "${method}")
+  format=$(taito::get_secret_value_format "${real_method}")
 
   local file
   local remote_file

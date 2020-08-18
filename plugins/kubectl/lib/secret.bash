@@ -14,16 +14,19 @@ function kubectl::get_secret_value () {
   local zone=$1
   local namespace=$2
   local name=$3
+  local real_method=$4
   local secret_name
   local secret_property
 
   secret_name=$(taito::get_secret_name "${name}")
   secret_property=$(taito::get_secret_property "${name}")
 
-  method=$(get_secret_value "${namespace}" "${secret_name}" "${secret_property}.METHOD")
-  format=$(
-    taito::get_secret_value_format "${method}"
-  )
+  # Secret real method was not given -> read method from secrets
+  if [[ ! ${real_method} ]]; then
+    real_method=$(get_secret_value "${namespace}" "${secret_name}" "${secret_property}.METHOD")
+  fi
+
+  format=$(taito::get_secret_value_format "${real_method}")
 
   if [[ ${format} != "file" ]]; then
     get_secret_value "${namespace}" "${secret_name}" "${secret_property}" |

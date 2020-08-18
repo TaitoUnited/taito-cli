@@ -264,8 +264,7 @@ function taito::save_secrets () {
           "${get_secret_func}" \
             "${taito_zone:-}" \
             "${secret_source_namespace}" \
-            "${secret_name}" \
-            "${secret_method}"
+            "${secret_name}"
         )
         if [[ ${secret_value_format} == "file" ]]; then
           mkdir -p "${taito_tmp_secrets_dir}"
@@ -323,36 +322,36 @@ function taito::export_secrets () {
       continue
     fi
 
+    local real_method="${secret_method}"
+    if [[ ${secret_method} == "copy/"* ]] || [[ ${secret_method} == "read/"* ]]; then
+      real_method=$(
+        "${get_secret_func}" \
+          "${taito_zone:-}" \
+          "${secret_source_namespace}" \
+          "${secret_name}.METHOD" \
+          "manual"
+      )
+    fi
+
+    if [[ ! ${real_method} ]]; then
+      real_method="manual"
+      if [[ ${secret_name} == *".key" ]]; then
+        real_method="file"
+      fi
+      echo "WARNING: Secret method not set for ${secret_name}. Using '${real_method}' as method." 1>&2
+      echo 1>&2
+    fi
+
     local secret_value
     secret_value=$(
       "${get_secret_func}" \
         "${taito_zone:-}" \
         "${secret_source_namespace}" \
         "${secret_name}" \
-        "${secret_method}"
+        "${real_method}"
     )
 
     if [[ ${secret_value} ]]; then
-      local real_method="${secret_method}"
-      if [[ ${secret_method} == "copy/"* ]] || [[ ${secret_method} == "read/"* ]]; then
-        real_method=$(
-          "${get_secret_func}" \
-            "${taito_zone:-}" \
-            "${secret_source_namespace}" \
-            "${secret_name}.METHOD" \
-            "manual"
-        )
-      fi
-
-      if [[ ! ${real_method} ]]; then
-        real_method="manual"
-        if [[ ${secret_name} == *".key" ]]; then
-          real_method="file"
-        fi
-        echo "WARNING: Secret method not set for ${secret_name}. Using '${real_method}' as method." 1>&2
-        echo 1>&2
-      fi
-
       local secret_value_format
       secret_value_format=$(taito::get_secret_value_format "${real_method}")
 
