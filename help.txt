@@ -550,6 +550,7 @@ PROJECT: BASIC OPERATIONS
     INDEX: Kill a specific instance (0-N)
 
   scale:TARGET[:ENV] [REPLICAS]
+  scale:TARGET[:ENV] REPLICAS
     Scale deployment. Examples:
     $ taito scale:server:dev 0
     $ taito scale:server:dev 2
