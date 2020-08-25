@@ -44,7 +44,8 @@ taito::execute_on_host_fg "
     ${template_source_git}/${template}.git ./template-tmp/${template}
   rm -rf ./template-tmp/${template}/.git
   yes | cp ./template-tmp/${template}/taito*config.sh .
-  yes | cp -r ./template-tmp/${template}/scripts/taito ./scripts
+  mkdir -p ./scripts/taito
+  yes | cp -r ./template-tmp/${template}/scripts/taito/* ./scripts/taito
   echo 'export template=${template}' >> _template-config.sh
   echo 'export template_name=${template}' >> _template-config.sh
   echo 'export template_source_git=${template_source_git}' >> _template-config.sh
