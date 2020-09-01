@@ -230,8 +230,12 @@ fi
 if [[ ${verbose} == true ]]; then
   # Helper environment variables to be used in verbose mode
   taito_verbose=true
-  taito_vout="/dev/tty"
   taito_options="${taito_options} -v"
+  if tty -s; then
+    taito_vout="/dev/tty"
+  else
+    taito_vout="/dev/stdout"
+  fi
 fi
 
 # TODO: rename taito_docker to something better (e.g. external host)
