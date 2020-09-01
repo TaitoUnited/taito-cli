@@ -3,7 +3,7 @@
 -- app user
 SET @s = CONCAT("CREATE USER IF NOT EXISTS '", @dbuserapp,
   "'@'%' IDENTIFIED BY '", @passwordapp,
-  "' WITH MAX_USER_CONNECTIONS 20");
+  "' WITH MAX_USER_CONNECTIONS 40");
 PREPARE stmt FROM @s;
 EXECUTE stmt;
 SET @s = CONCAT("ALTER USER '", @dbuserapp, "'@'%' IDENTIFIED BY '",
@@ -14,7 +14,7 @@ EXECUTE stmt;
 -- viewer user
 SET @s = CONCAT("CREATE USER IF NOT EXISTS '", @dbuserviewer,
   "'@'%' IDENTIFIED BY '", @passwordviewer,
-  "' WITH MAX_USER_CONNECTIONS 20");
+  "' WITH MAX_USER_CONNECTIONS 40");
 PREPARE stmt FROM @s;
 EXECUTE stmt;
 SET @s = CONCAT("ALTER USER '", @dbuserviewer, "'@'%' IDENTIFIED BY '",
@@ -25,7 +25,7 @@ EXECUTE stmt;
 -- mgr user
 SET @s = CONCAT("CREATE USER IF NOT EXISTS '", @dbusermgr,
   "'@'%' IDENTIFIED BY '", @passwordmgr,
-  "' WITH MAX_USER_CONNECTIONS 10");
+  "' WITH MAX_USER_CONNECTIONS 40");
 PREPARE stmt FROM @s;
 EXECUTE stmt;
 SET @s = CONCAT("ALTER USER '", @dbusermgr, "'@'%' IDENTIFIED BY '",
