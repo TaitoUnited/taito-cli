@@ -54,13 +54,15 @@ Send the `.csr` file to the Certificate Authority.
 
 #### 10.4.2. Create a chained certificate file
 
-You get a bunch of certificate files from the Certificate Authority. You should combine them in a correct order to get a chained certificate file that contains all of them. Some examples:
+You get a bunch of certificate files from the Certificate Authority. You should combine them in the correct order to get a chained certificate file that contains all of them. Some examples:
 
 ```shell
+cat ServerCertificate.crt Intermediate.crt Root.crt > app_mydomain_com-chained.crt
+
+cat app_mydomain_com.crt COMODORSADomainValidationSecureServerCA.crt COMODORSAAddTrustCA.crt AddTrustExternalCARoot.crt > app_mydomain_com-chained.crt
+
 cat app_mydomain_com.crt TrustedSecureCertificateAuthority5.crt USERTrustRSAAddTrustCA.crt AddTrustExternalCARoot.crt > app_mydomain_com-chained.crt
 ```
-
-https://medium.com/two-cents/certificate-chain-example-e37d68c3a3f0
 
 #### 10.4.3. Save the chained certificate file to Kubernetes
 
@@ -103,7 +105,20 @@ taito deployment deploy:prod
 
 #### 10.4.5. Renew the certificate
 
-TODO
+Repeat the same steps as before. Just increase the counter at the end of the secret name:
+
+```shell
+# OV certificate for production only
+if [[ "${taito_env}" == "prod" ]]; then
+  taito_secrets="
+    ${taito_secrets}
+    myapp-mydomain-com-1.tls.key:csrkey
+    myapp-mydomain-com-1.tls.crt:file
+    myapp-mydomain-com-2.tls.key:csrkey
+    myapp-mydomain-com-2.tls.crt:file
+  "
+fi
+```
 
 #### 10.4.6. Revert back to the default DV certificate
 
