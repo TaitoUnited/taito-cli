@@ -1,0 +1,18 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# TODO: move to Terraform module
+taito::confirm "Destroy Cloud Build worker pools" || taito::skip_to_next "${@}"
+
+echo "Worker pools:"
+echo
+gcloud beta builds worker-pools list \
+  --region="${taito_provider_region:?}" \
+  --project="${taito_zone:?}"
+echo
+echo "Delete each worker pools with 'gcloud beta builds worker-pools delete POOL'."
+echo "Press enter when done."
+read -r
+
+taito::call_next "${@}"

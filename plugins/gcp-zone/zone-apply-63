@@ -1,0 +1,16 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# TODO: move to Terraform module
+if taito::confirm "Create Cloud Build worker pool (optional)" no; then
+
+  network_name=$(terraform output -json network_name | jq '.value[0]')
+  echo "Using network name: ${network_name}"
+
+  gcloud beta builds worker-pools create \
+    --peered-network="${network_name}" \
+    --region="${taito_provider_region:?}"
+fi
+
+taito::call_next "${@}"
