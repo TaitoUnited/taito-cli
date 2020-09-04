@@ -23,7 +23,7 @@ function gcp-zone::setup_cloud_build_slack_notifications () {
   gcloud --project "${taito_zone:?}" \
     functions deploy cloudBuildSlackNotifications \
     --source "/tmp/gcp-zone-slack" \
-    --runtime nodejs10 \
+    --runtime nodejs12 \
     --stage-bucket "${taito_projects_bucket:?}" \
     --trigger-topic cloud-builds \
     --entry-point subscribe \
