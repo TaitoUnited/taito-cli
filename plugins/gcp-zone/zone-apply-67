@@ -1,0 +1,20 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ${taito_uptime_provider:-} == "gcp" ]] &&
+   taito::confirm "Enable suggested uptime check alerts?"; then
+
+  echo "Enable suggested uptime alerts on Google Cloud web console."
+  echo "You can see the suggested alerts on the top right corner of the"
+  echo "uptime checks page."
+  echo
+  echo "Press enter to open Google Cloud uptime checks page in web browser"
+  read -r
+  taito::open_browser "https://console.cloud.google.com/monitoring/uptime?project=${taito_zone:?}"
+  echo "Press enter once done"
+  read -r
+
+fi
+
+taito::call_next "${@}"

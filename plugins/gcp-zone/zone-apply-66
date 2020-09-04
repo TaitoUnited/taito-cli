@@ -4,27 +4,27 @@
 
 if [[ ${taito_uptime_provider:-} == "gcp" ]] &&
    [[ ! ${taito_uptime_channels:-} ]] &&
-   taito::confirm "Configure uptime monitoring channels for Google StackDriver"; then
+   taito::confirm "Configure uptime monitoring channels for Google Cloud"; then
 
+  # TODO: Move to Terraform module
   # See: https://stackoverflow.com/questions/54884815/obtain-slack-auth-token-for-terraform-google-monitoring-notification-channel-res
   echo
   echo "Monitoring notification channels are currently configured manually instead of"
   echo "using Terraform, because of Slack auth token handling."
   echo
-  echo "Add the following ${taito_messaging_app:-} channels with StackDriver web gui"
-  echo "(Alerting -> Edit notification channels):"
+  echo "Add the following ${taito_messaging_app:-} channels with the Google Cloud web console:"
   echo
   echo "- ${taito_messaging_builds_channel:-}"
   echo "- ${taito_messaging_critical_channel:-}"
   echo "- ${taito_messaging_monitoring_channel:-}"
   echo
-  echo "Press enter to open StackDriver workspace settings in browser"
+  echo "Press enter to open Google Cloud notification channel settings in web browser"
   read -r
-  taito::open_browser "https://app.google.stackdriver.com/settings/accounts/notifications/slack?project=${taito_zone:?}"
+  taito::open_browser "https://console.cloud.google.com/monitoring/alerting/notifications?project=${taito_zone:?}"
   echo "Press enter once done"
   read -r
   echo
-  gcloud -q --project "${taito_zone}" alpha monitoring channels list ||
+  gcloud -q --project "${taito_zone}" beta monitoring channels list ||
     echo "ERROR: Listing channels failed."
   echo
   echo "Channels are shown above. Configure taito_uptime_channels setting in"

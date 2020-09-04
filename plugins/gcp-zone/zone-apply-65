@@ -8,6 +8,7 @@ if [[ ${kubernetes_name:-} ]] &&
 
   if [[ ${taito_messaging_app:-} == "slack" ]] &&
      [[ ${taito_messaging_webhook:-} ]]; then
+    # TODO: Move to terraform module. Use Cloud Run instead of functions?
     gcp-zone::setup_cloud_build_slack_notifications
   else
     echo "Skipping because of incomplete or unsupported configuration:"
