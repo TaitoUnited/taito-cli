@@ -8,7 +8,7 @@ substitutions:
 
 steps:
 - id: install
-  name: 'node:lts-alpine'
+  name: 'node:lts'
   entrypoint: 'npm'
   args: ['install']
 - id: secrets
@@ -28,7 +28,7 @@ steps:
 
 - id: release-pre
   waitFor: ['secrets']
-  name: 'node:lts-alpine'
+  name: 'node:lts'
   entrypoint: 'bash'
   args:
   - '-c'
@@ -69,12 +69,12 @@ steps:
       -f docker/${_DOCKERFILE} .
 
 - id: test
-  name: 'node:lts-alpine'
+  name: 'node:lts'
   entrypoint: 'npm'
   args: ['run', 'test']
 
 - id: release-post
-  name: 'node:lts-alpine'
+  name: 'node:lts'
   entrypoint: 'bash'
   args:
   - '-c'
