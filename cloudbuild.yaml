@@ -8,7 +8,7 @@ substitutions:
 
 steps:
 - id: install
-  name: 'gcr.io/cloud-builders/npm:current'
+  name: 'node:lts-alpine'
   args: ['install']
 
 - id: build
@@ -24,7 +24,7 @@ steps:
       -f docker/${_DOCKERFILE} .
 
 - id: test
-  name: 'gcr.io/cloud-builders/npm:current'
+  name: 'node:lts-alpine'
   args: ['run', 'test']
 
 # TODO: remove once all image references have been updated
