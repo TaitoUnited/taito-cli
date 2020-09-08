@@ -9,6 +9,7 @@ substitutions:
 steps:
 - id: install
   name: 'node:lts-alpine'
+  entrypoint: 'npm'
   args: ['install']
 
 - id: build
@@ -25,6 +26,7 @@ steps:
 
 - id: test
   name: 'node:lts-alpine'
+  entrypoint: 'npm'
   args: ['run', 'test']
 
 # TODO: remove once all image references have been updated

@@ -9,6 +9,7 @@ substitutions:
 steps:
 - id: install
   name: 'node:lts-alpine'
+  entrypoint: 'npm'
   args: ['install']
 - id: secrets
   waitFor: ['-']
@@ -69,6 +70,7 @@ steps:
 
 - id: test
   name: 'node:lts-alpine'
+  entrypoint: 'npm'
   args: ['run', 'test']
 
 - id: release-post
