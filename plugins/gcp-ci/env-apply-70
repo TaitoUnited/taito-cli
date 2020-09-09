@@ -15,23 +15,24 @@ echo "Basic configuration"
 echo "--------------------------------"
 echo
 echo "Connect to repository with these settings if not already connected:"
-echo "- Source: ${taito_vc_provider:-GitHub} (mirrored)"
-if [[ "${taito_vc_provider:-github}" == "github" ]]; then
-  echo "    WARNING: Do NOT select GitHub Cloud Build GitHub App (Beta) !!!"
-fi
+echo "- Source: ${taito_vc_provider:-GitHub}"
 echo "- Repository: ${taito_vc_repository}"
 echo
-echo "Create a new build trigger for the repository with these settings if one"
-echo "does not exist already:"
-echo "- Name: ${taito_project}"
-echo "- Event: Push to branch"
-echo "- Source repository: ${taito_vc_repository}"
-echo "- Source branch - Most likely one of these depending on zone:"
-echo "    ^(dev|test|uat)\$"
-echo "    ^(stag|canary|master)\$"
-echo "- File type: Cloud Build configuration file (YAML or JSON)"
-echo "- Cloud Build configuration file location: /cloudbuild.yaml"
-echo
+if [[ -f scripts/terraform.yaml ]]; then
+  echo "Do not create trigger. It will be created automatically by Terraform."
+else
+  echo "Create a new build trigger for the repository with these settings if one"
+  echo "does not exist already:"
+  echo "- Name: ${taito_project}"
+  echo "- Event: Push to branch"
+  echo "- Source repository: ${taito_vc_repository}"
+  echo "- Source branch - Most likely one of these depending on zone:"
+  echo "    ^(dev|test|uat)\$"
+  echo "    ^(stag|canary|master)\$"
+  echo "- File type: Cloud Build configuration file (YAML or JSON)"
+  echo "- Cloud Build configuration file location: /cloudbuild.yaml"
+  echo
+fi
 echo "--------------------------------"
 echo "OPTIONAL: Advanced configuration"
 echo "--------------------------------"
