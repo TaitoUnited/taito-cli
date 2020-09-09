@@ -1,0 +1,23 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+kubectl::use_context
+
+echo -e "Deleting ${taito_project}-${taito_target_env} helm app." \
+  "This may also delete data that\\nhas been stored on a persistent volume."
+taito::confirm "Do you really want to delete the helm app?" no || \
+  taito::skip_to_next "${@}"
+
+if helm version | grep "SemVer:\"v2." > /dev/null; then
+  helm2opts="--purge"
+fi
+
+(
+  taito::executing_start
+  helm::run delete ${helm2opts} "${taito_project}-${taito_target_env}" || :
+)
+
+taito::call_next "${@}"

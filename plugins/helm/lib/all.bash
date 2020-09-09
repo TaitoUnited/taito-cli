@@ -181,6 +181,22 @@ function helm::deploy () {
           "${taito_project}-${taito_target_env}" "./scripts/helm"
         exit_code=$?
       fi
+
+      if [[ $exit_code != 0 ]]; then
+        echo "------------------------------------------------------------------------"
+        echo "TIP: Taito CLI is now using Helm v3. You can convert an old Helm v2"
+        echo "deployment to Helm v3 with 'taito helm2 convert:ENV'."
+        echo "Alternatively you can delete the old Helm v2 deployment with"
+        echo "'taito helm2 down:ENV'. If you are using a persistent volume claim,"
+        echo "you should backup your volume data before the operation."
+        echo
+        echo "TIP: Once you have converted ALL deployments in Kubernetes cluster,"
+        echo "you can remove ALL Helm v2 data from Kubernetes cluster with"
+        echo "'taito helm2 cleanup everything:ENV'."
+        echo "WARNING: This operation cannot be reverted."
+        echo "------------------------------------------------------------------------"
+      fi
+
       exit $exit_code
     )
   fi
@@ -205,4 +221,22 @@ function helm::run () {
     fi
   fi
   helm "${@}"
+}
+
+# Temporary Helm v2 support (TODO: remove once no longer needed)
+function helm2::run () {
+  function finish {
+    if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+      helm2 tiller stop > /dev/null
+    fi
+  }
+  trap finish EXIT
+
+  taito::executing_start
+  if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+    export HELM_TILLER_HISTORY_MAX=10
+    helm2 tiller start-ci
+    export HELM_HOST=127.0.0.1:44134
+  fi
+  helm2 "${@}"
 }

@@ -1,0 +1,24 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+kubectl::use_context
+
+echo -e "Converting ${taito_project}-${taito_target_env} from Helm v2 to Helm v3. " \
+  "This may also delete data that\\nhas been stored on a persistent volume."
+taito::confirm "Do you really want to convert the helm app?" no || \
+  taito::skip_to_next "${@}"
+
+helm3opts=
+if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+  helm3opts="--tiller-out-cluster"
+fi
+
+(
+  taito::executing_start
+  helm::run 2to3 convert ${helm3opts} "${taito_project}-${taito_target_env}" || :
+)
+
+taito::call_next "${@}"

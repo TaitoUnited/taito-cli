@@ -1,0 +1,24 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+kubectl::use_context
+
+echo -e "Cleaning up ALL Helm v2 data from Kubernetes cluster. " \
+  "You should execute this only once all deployments have been converted to Helm v3."
+taito::confirm "Do you really want delete ALL Helm v2 data?" no || \
+  taito::skip_to_next "${@}"
+
+helm3opts=
+if [[ ${taito_zone} != "gcloud-temp1" ]]; then
+  helm3opts="--tiller-out-cluster"
+fi
+
+(
+  taito::executing_start
+  helm::run 2to3 cleanup ${helm3opts} || :
+)
+
+taito::call_next "${@}"
