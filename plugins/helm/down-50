@@ -15,6 +15,7 @@ if helm version | grep "SemVer:\"v2." > /dev/null; then
   helm2opts="--purge"
 fi
 
+echo "Deleting... This may take a while..."
 (
   taito::executing_start
   helm::run delete ${helm2opts} "${taito_project}-${taito_target_env}" || :
