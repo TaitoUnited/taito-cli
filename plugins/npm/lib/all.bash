@@ -1,6 +1,14 @@
 #!/bin/bash
 
 function npm::clean () {
+  if npm run | grep 'install-clean$' &> /dev/null; then
+    taito::execute_on_host_fg "
+      set -e
+      echo \"Running 'npm run install-clean'\"
+      npm run install-clean
+    "
+  fi
+
   # NOTE: Changed clean to run on host because of linux permission issues.
   # We are installing libs locally anyway so perhaps it is better this way.
   taito::execute_on_host_fg "\
@@ -8,8 +16,6 @@ function npm::clean () {
     find . -name \"package-lock.json\" -type f -prune -exec rm -rf '{}' + || :
     echo \"Deleting all node_modules directories\"
     find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' + || :"
-
-  # TODO remove all flow-typed/npm directories also?
 }
 
 function npm::install () {
