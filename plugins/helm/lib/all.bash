@@ -92,6 +92,8 @@ function helm::deploy () {
       helm repo update
       helm dependency update "./scripts/helm"
       # TODO remove non-globals
+
+      set +e
       helm upgrade "${options[@]}" --debug --install \
         --namespace "${taito_namespace}" \
         --set global.env="${taito_target_env}" \
@@ -127,73 +129,21 @@ function helm::deploy () {
         -f scripts/helm.yaml.tmp \
         ${helm_deploy_options:-} \
         "${taito_project}-${taito_target_env}" "./scripts/helm"
-
-      # NOTE: temp fix for Kubernetes upgrade. TODO: remove this!
       exit_code=$?
-      if [[ $exit_code != 0 ]] && [[ ${taito_zone} == "gcloud-temp1" ]] && \
-         helm ls --namespace "${taito_namespace}" | grep "2017\|2018\|Jan\|Feb\|Mar\|Apr\|May"; then
-        echo "Fix Helm chart after Kubernetes upgrade: delete chart and redeploy"
-        kubectl delete configmap "${taito_project}-common" \
-          --namespace "${taito_namespace}"
-        kubectl delete configmap "${taito_project}-${taito_target_env}-common" \
-          --namespace "${taito_namespace}"
 
-        if helm version | grep "SemVer:\"v2." > /dev/null; then
-          helm2opts="--purge"
-        fi
-
-        helm delete ${helm2opts} "${taito_project}-${taito_target_env}"
-        sleep 15
-        helm upgrade "${options[@]}" --debug --install \
-          --namespace "${taito_namespace}" \
-          --set global.env="${taito_target_env}" \
-          --set global.zone.name="${taito_zone}" \
-          --set global.zone.provider="${taito_provider:-}" \
-          --set global.zone.providerRegion="${taito_provider_region:-}" \
-          --set global.zone.providerZone="${taito_provider_zone:-}" \
-          --set global.zone.namespace="${taito_namespace}" \
-          --set global.zone.resourceNamespace="${taito_resource_namespace:-}" \
-          --set global.project.name="${taito_project}" \
-          --set global.project.company="${taito_company:-}" \
-          --set global.project.family="${taito_family:-}" \
-          --set global.project.application="${taito_application:-}" \
-          --set global.project.suffix="${taito_suffix:-}" \
-          --set global.build.imageTag="${image}" \
-          --set global.build.version="${version}" \
-          --set global.build.commit="TODO" \
-          --set env="${taito_target_env}" \
-          --set zone.name="${taito_zone}" \
-          --set zone.provider="${taito_provider:-}" \
-          --set zone.providerRegion="${taito_provider_region:-}" \
-          --set zone.providerZone="${taito_provider_zone:-}" \
-          --set zone.namespace="${taito_namespace}" \
-          --set zone.resourceNamespace="${taito_resource_namespace:-}" \
-          --set project.name="${taito_project}" \
-          --set project.company="${taito_company:-}" \
-          --set project.family="${taito_family:-}" \
-          --set project.application="${taito_application:-}" \
-          --set project.suffix="${taito_suffix:-}" \
-          --set build.imageTag="${image}" \
-          --set build.version="${version}" \
-          --set build.commit="TODO" \
-          -f scripts/helm.yaml.tmp \
-          ${helm_deploy_options:-} \
-          "${taito_project}-${taito_target_env}" "./scripts/helm"
-        exit_code=$?
-      fi
-
+      # NOTE: temp message for Helm v2 upgrade. TODO: remove this!
       if [[ $exit_code != 0 ]]; then
         echo "------------------------------------------------------------------------"
-        echo "TIP: Taito CLI is now using Helm v3. You can convert an old Helm v2"
-        echo "deployment to Helm v3 with 'taito helm2 convert:ENV'."
-        echo "Alternatively you can delete the old Helm v2 deployment with"
-        echo "'taito helm2 down:ENV'. If you are using a persistent volume claim,"
-        echo "you should backup your volume data before the operation."
+        echo "NOTE: Taito CLI is now using Helm v3. If the application was previously"
+        echo "deployed with Helm v2, you can convert it to Helm v3 by running"
+        echo "'taito helm2 convert:${taito_target_env}'. Alternatively you can delete the old Helm v2"
+        echo "deployment with 'taito helm2 down:${taito_target_env}'. If you are using a persistent volume"
+        echo "claim, you should backup your volume data before the operation."
         echo
         echo "TIP: Once you have converted ALL deployments in Kubernetes cluster,"
         echo "you can remove ALL Helm v2 data from Kubernetes cluster with"
-        echo "'taito helm2 cleanup everything:ENV'."
-        echo "WARNING: This operation cannot be reverted."
+        echo "'taito helm2 cleanup everything:${taito_target_env}'. WARNING: This operation cannot"
+        echo "be reverted."
         echo "------------------------------------------------------------------------"
       fi
 
