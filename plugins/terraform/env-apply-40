@@ -2,10 +2,6 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-# Cloud provider
-[[ ${taito_provider:-} ]] && \
-  terraform::run apply "${taito_provider:-}" "${taito_env:?}"
-
 # Uptime provider
 [[ ${taito_uptime_provider:-} ]] && \
   terraform::run apply "${taito_uptime_provider}-uptime" "${taito_env}"
