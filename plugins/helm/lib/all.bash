@@ -140,10 +140,19 @@ function helm::deploy () {
         echo "deployment with 'taito helm2 down:${taito_target_env}'. If you are using a persistent volume"
         echo "claim, you should backup your volume data before the operation."
         echo
-        echo "TIP: Once you have converted ALL deployments in Kubernetes cluster,"
-        echo "you can remove ALL Helm v2 data from Kubernetes cluster with"
-        echo "'taito helm2 cleanup everything:${taito_target_env}'. WARNING: This operation cannot"
-        echo "be reverted."
+        echo "TIP: If you get permissions errors on your CI/CD build after you have"
+        echo "upgraded to Helm v3, either try to give your CI/CD user the appropriate"
+        echo "user rights or disable the following settings from your helm chart:"
+        echo
+        echo "  rbacCreate: false"
+        echo "  serviceAccountCreate: false"
+        echo "  networkPolicyEnabled: false"
+        echo "  podSecurityPolicyEnabled: false"
+        echo
+        echo "TIP: Once you have converted ALL deployments in your Kubernetes cluster,"
+        echo "to Helm v3, you can remove ALL Helm v2 data from Kubernetes cluster with"
+        echo "'taito helm2 cleanup everything:${taito_target_env}'. WARNING: This"
+        echo "operation cannot be reverted."
         echo "------------------------------------------------------------------------"
       fi
 
