@@ -2,7 +2,9 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ ${taito_env:?} != "local" ]]; then
+if [[ ${postgres_db_create:-} == "false" ]]; then
+  echo "Skipping database destroy: postgres_db_create is false"
+elif [[ ${taito_env:?} != "local" ]]; then
   (
     echo "TIP: If connection fails, your db proxy connection might have dropped. In such"
     echo "case, run 'taito env destroy:${taito_env}' again, and skip the steps already executed"
