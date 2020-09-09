@@ -149,10 +149,10 @@ function helm::deploy () {
         echo "  networkPolicyEnabled: false"
         echo "  podSecurityPolicyEnabled: false"
         echo
-        echo "TIP: Once you have converted ALL deployments in your Kubernetes cluster,"
-        echo "to Helm v3, you can remove ALL Helm v2 data from Kubernetes cluster with"
-        echo "'taito helm2 cleanup everything:${taito_target_env}'. WARNING: This"
-        echo "operation cannot be reverted."
+        echo "TIP: Once you have converted ALL deployments in your Kubernetes cluster"
+        echo "to Helm v3 (including NGINX ingress), you may remove ALL Helm v2 data from"
+        echo "Kubernetes cluster with 'taito helm2 dangerous cleanup everything:${taito_target_env}'."
+        echo "WARNING: This operation cannot be reverted!"
         echo "------------------------------------------------------------------------"
       fi
 
