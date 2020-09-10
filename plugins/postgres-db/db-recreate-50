@@ -9,8 +9,8 @@ if [[ ${taito_env} == "local" ]]; then
 elif [[ ${postgres_db_create:-} == "false" ]]; then
   echo "Skipping database create: postgres_db_create is false"
   echo
-  echo "TIP: You can most likely recreate the database by removing it from"
-  echo "terraform configuration and putting it back."
+  echo "TODO: Just drop all tables, functions, etc."
+  echo
 else
   echo "Creating database(s)"
   (
