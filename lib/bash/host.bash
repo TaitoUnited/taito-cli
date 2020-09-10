@@ -51,6 +51,10 @@ function taito::export_database_config () {
 
   env_var_name="db_${target}_name"
   if [[ ${target} ]] && [[ ${!env_var_name} ]]; then
+    env_var_name="db_${target}_create"
+    export database_create="${!env_var_name}"
+    echo "- database_create: ${database_create}" > "${taito_dout:-/dev/null}"
+
     env_var_name="db_${target}_instance"
     export database_instance="${!env_var_name}"
     echo "- database_instance: ${database_instance}" > "${taito_dout:-/dev/null}"

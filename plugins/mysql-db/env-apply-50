@@ -2,9 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ ${mysql_db_create:-} == "false" ]]; then
-  echo "Skipping database create: mysql_db_create is false"
-elif [[ ${taito_env:?} == "local" ]]; then
+if [[ ${taito_env:?} == "local" ]]; then
   echo "Skipping database create for local environment"
 else
   echo "Creating database(s)"
@@ -17,7 +15,9 @@ else
       export taito_target="${database}"
       taito::export_database_config "${database}"
 
-      if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
+      if [[ ${database_create:-} != "false" ]] && (
+           [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]
+         ); then
         if taito::confirm "Create mysql database ${database_name:?}"; then
           # Create a subshell to contain password
           (

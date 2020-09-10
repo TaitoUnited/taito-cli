@@ -6,11 +6,6 @@
 
 if [[ ${taito_env} == "local" ]]; then
   echo "Skipping database recreate for local environment"
-elif [[ ${postgres_db_create:-} == "false" ]]; then
-  echo "Skipping database create: postgres_db_create is false"
-  echo
-  echo "TODO: Just drop all tables, functions, etc."
-  echo
 else
   echo "Creating database(s)"
   (
@@ -19,7 +14,9 @@ else
       export taito_target="${database}"
       taito::export_database_config "${database}"
 
-      if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
+      if [[ ${database_create:-} != "false" ]] && (
+           [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]
+         ); then
         if taito::confirm "Recreate postgres database ${database_name}"; then
           # Create a subshell to contain password
           (
