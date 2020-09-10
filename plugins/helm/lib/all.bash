@@ -131,8 +131,8 @@ function helm::deploy () {
         "${taito_project}-${taito_target_env}" "./scripts/helm"
       exit_code=$?
 
-      # NOTE: temp message for Helm v2 upgrade. TODO: remove this!
-      if [[ $exit_code != 0 ]]; then
+      if [[ $exit_code != 0 ]] &&
+         ! helm version | grep "SemVer:\"v2." > /dev/null; then
         echo "------------------------------------------------------------------------"
         echo "NOTE: Taito CLI is now using Helm v3. If the application was previously"
         echo "deployed with Helm v2, you can convert it to Helm v3 by running"
