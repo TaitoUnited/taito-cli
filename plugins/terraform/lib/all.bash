@@ -48,6 +48,10 @@ function terraform::run () {
       if [[ -f templates/backend.tfvars ]]; then
         backend_opts="-backend-config=${env}/backend.tfvars"
         envsubst < templates/backend.tfvars > "${env}/backend.tfvars"
+      elif [[ -f ../${taito_provider:-.}/templates/backend.tfvars ]]; then
+        backend_opts="-backend-config=${env}/backend.tfvars"
+        envsubst < "../${taito_provider}/templates/backend.tfvars" | \
+          sed "s/${taito_provider}/${name}/" > "${env}/backend.tfvars"
       elif [[ -f ../common/backend.tf ]]; then
         # TODO: Remove (for backward compatibility)
         backend_opts="-backend-config=../common/backend.tf"
@@ -61,6 +65,21 @@ function terraform::run () {
       terraform "${command}" ${apply_options} -state=${env}/terraform.tfstate
     )
   fi
+}
+
+function terraform::run_all_by_prefix () {
+  local prefix=$1
+  local command=$2
+  local env=$3
+  local modules
+  modules=$(
+    ls -d scripts/terraform/* | \
+      grep "scripts/terraform/$prefix-" | \
+      sed 's|scripts/terraform/||'
+  )
+  for module in ${modules}; do
+    terraform::run "${command}" "${module}" "${env}"
+  done
 }
 
 function terraform::run_zone () {

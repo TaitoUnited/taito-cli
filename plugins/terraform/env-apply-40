@@ -2,15 +2,8 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-# Misc modules
-misc_modules=$(
-  ls -d scripts/terraform/* | \
-    grep "scripts/terraform/misc-" | \
-    sed 's|scripts/terraform/||'
-)
-for misc in ${misc_modules}; do
-  terraform::run apply "${misc}" "${taito_env:?}"
-done
+# Modules with env prefix
+terraform::run_all_by_prefix env apply "${taito_env:?}"
 
 # Targets (databases, etc)
 for target in ${taito_targets:-}; do

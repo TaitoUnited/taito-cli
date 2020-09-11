@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# Modules with project prefix
+terraform::run_all_by_prefix project destroy "${taito_env:?}"
+
+taito::call_next "${@}"
