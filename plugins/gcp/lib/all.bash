@@ -160,11 +160,31 @@ function gcp::ensure_project_exists () {
       echo
       echo "Setting user rights for project ${project_id}"
       gcp::grant_role "${project_id}" roles/owner \
-        "$(taito::print_variable template_default_project_owners true)"
+        "$(taito::print_variable taito_resource_namespace_owners true)"
       gcp::grant_role "${project_id}" roles/editor \
-        "$(taito::print_variable template_default_project_editors true)"
+        "$(taito::print_variable taito_resource_namespace_editors true)"
       gcp::grant_role "${project_id}" roles/viewer \
-        "$(taito::print_variable template_default_project_viewers true)"
+        "$(taito::print_variable taito_resource_namespace_viewers true)"
+
+      if [[ ${taito_state_bucket:-} == "taito_resource_namespace_prefix_sha1sum" ]]; then
+        echo
+        echo "Creating storage bucket for storing state"
+        gsutil mb \
+          -p "${taito_resource_namespace_id:?}" \
+          -l "${taito_provider_region:?}" \
+          "gs://${taito_resource_namespace_prefix_sha1sum:?}"
+
+        # local storage_devs
+        # storage_devs=$(
+        #   taito::print_variable template_default_project_developers true | \
+        #   sed 's/\>/:objectAdmin/g'
+        # )
+        # if [[ $storage_devs ]]; then
+        #   echo
+        #   echo "Granting user rights for the storage bucket"
+        #   gsutil iam ch ${storage_devs} gs://ex-bucket
+        # fi
+      fi
 
       # NOTE: hack for https://github.com/terraform-providers/terraform-provider-google/issues/2605
       if [[ $project_id == "${taito_uptime_namespace_id:-}" ]]; then
