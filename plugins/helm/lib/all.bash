@@ -133,6 +133,15 @@ function helm::deploy () {
 
       if [[ $exit_code != 0 ]] &&
          ! helm version | grep "SemVer:\"v2." > /dev/null; then
+        if [[ ${taito_mode:-} == "ci" ]]; then
+          echo "------------------------------------------------------------------------"
+          echo "NOTE: If you got 'User cannot create resource' error on your CI/CD build,"
+          echo "your CI/CD might not have enough privileges to deploy all the changes."
+          echo "Try to deploy the changes manually with 'taito deployment deploy:${taito_target_env}',"
+          echo "and then trigger the CI/CD build again."
+          echo "------------------------------------------------------------------------"
+          echo
+        fi
         echo "------------------------------------------------------------------------"
         echo "NOTE: Taito CLI is now using Helm v3. If the application was previously"
         echo "deployed with Helm v2, you can convert it to Helm v3 by running"
