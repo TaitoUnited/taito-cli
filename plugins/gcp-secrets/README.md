@@ -1,1 +1,1 @@
-# GCP Storage Bucket secrets plugin
+# GCP Secret Manager secrets plugin

@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+taito::confirm "Delete Sentry project" no || \
+  taito::skip_to_next "${@}"
+
+echo "Delete the Sentry project manually"
+echo
+
+read -r -t 1 -n 1000 || : # Flush input buffer
+echo "Press enter to open Sentry"
+read -r
+taito::open_browser \
+  "https://sentry.io/organizations/${sentry_organization:?}/projects/"
+
+read -r -t 1 -n 1000 || : # Flush input buffer
+echo "Press enter once you have deleted the Sentry project"
+read -r
+
+taito::call_next "${@}"
