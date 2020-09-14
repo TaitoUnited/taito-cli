@@ -25,13 +25,13 @@ Create a new project based on the [full-stack-template](https://github.com/Taito
 **a) Create the project using your default settings**
 
 ```shell
-taito project create: full-stack-template
+taito project create full-stack-template
 ```
 
 **b) Create the project using default settings of an organization**
 
 ```shell
-taito -o ORGANIZATION project create: full-stack-template
+taito -o ORGANIZATION project create full-stack-template
 ```
 
 Follow the instructions provided by the command. Use **acme** as company name to differentiate it from real companies. You can choose the application name however you like, but if you are using a shared infrastucture, try to avoid naming conflicts with your colleagues. The example application should consist of a **web user interface**, **API**, **relational database** and a **object storage bucket**. The full-stack-template supports multiple technologies, but during these exercises it is recommended for you to use the default **React** + **Node.js** stack.

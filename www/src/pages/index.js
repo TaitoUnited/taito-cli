@@ -96,16 +96,16 @@ export default () => (
           lines={[
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>zone create: gcp</Terminal.LineSuffix>,
+              <Terminal.LineSuffix>zone create gcp</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>zone create: vmware</Terminal.LineSuffix>,
+              <Terminal.LineSuffix>zone create vmware</Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                project create: full-stack-template
+                project create full-stack-template
               </Terminal.LineSuffix>,
             ],
             [
@@ -340,7 +340,7 @@ export default () => (
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                order pizza: quattro stagioni
+                order pizza quattro stagioni
               </Terminal.LineSuffix>,
             ],
             [

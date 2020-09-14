@@ -22,7 +22,7 @@ With the `-v` or `--verbose` flag (e.g. `taito -v db connect:dev`) you can see t
 
 #### Multiple organizations
 
-If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `project create` command as it will tell Taito CLI to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION project create: full-stack-template`.
+If you work for multiple organizations, you may define organization specific overrides in `~/.taito/taito-config-ORGANIZATION.sh` file. You can use these setting with the `-o` option when you execute a command outside a project directory, for example `taito -o ORGANIZATION open intra`. The `-o` option is most useful combined with the `project create` command as it will tell Taito CLI to initialize the new project using the organization specific default settings, for example: `taito -o ORGANIZATION project create full-stack-template`.
 
 #### Project references
 

@@ -4,7 +4,7 @@
 
 Officially recommended project templates are listed below. All of them include taito configurations for Taito CLI, Terraform scripts for multiple platforms, and build scripts for multiple CI/CD tools. You may also find more project templates preconfigured for Taito CLI on [GitHub](https://github.com/search?q=topic%3Ataito-template&type=Repositories).
 
-> Run `taito [-o ORG] project create: TEMPLATE` to create a project (e.g `taito project create: full-stack-template`).
+> Run `taito [-o ORG] project create TEMPLATE` to create a project (e.g `taito project create full-stack-template`).
 
 * [full-stack-template](https://github.com/TaitoUnited/full-stack-template): Template for cloud-native applications and microservices running on Kubernetes, Docker Compose, serverless (FaaS), or virtual machine. You can choose the stack during project creation.
 
@@ -24,7 +24,7 @@ Officially recommended project templates are listed below. All of them include t
 
 You can use these infrastructure templates as a starting point for your infrastructure. You may also find more infrastructure templates on [GitHub](TODO).
 
-> Run `taito [-o ORG] zone create: TEMPLATE` to create a zone (e.g `taito zone create: gcp`).
+> Run `taito [-o ORG] zone create TEMPLATE` to create a zone (e.g `taito zone create gcp`).
 
 ### Serverless (FaaS) on any platform
 

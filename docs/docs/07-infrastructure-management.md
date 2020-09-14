@@ -4,7 +4,7 @@ Taito CLI provides a lightweight abstraction on top of infrastructure and config
 
 You can manage your zone using the following commands:
 
-    taito zone create: TEMPLATE   # Create a new zone based on a infrastructure template.
+    taito zone create TEMPLATE   # Create a new zone based on a infrastructure template.
     taito zone apply              # Apply infrastructure changes to the zone.
     taito zone status             # Show status summary of the zone.
     taito zone doctor             # Analyze and repair the zone.

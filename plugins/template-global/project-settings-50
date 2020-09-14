@@ -274,7 +274,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   if [[ ${taito_quiet:-} != "true" ]]; then
     echo "2) Create a new project based on full-stack-template by running"
-    echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create: full-stack-template'"
+    echo "   'taito [-o ${taito_organization_abbr:-myorg}] project create full-stack-template'"
     echo
   fi
 fi

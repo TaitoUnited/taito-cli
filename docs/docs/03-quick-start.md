@@ -13,7 +13,7 @@ You can create a new zone with the following steps:
 1. Create a new zone configuration based on one of the [infrastructure templates](https://taitounited.github.io/taito-cli/templates#infrastructure-templates). For example:
 
     ```shell
-    taito zone create: gcp
+    taito zone create gcp
     cd my-zone
     EDIT taito-config.sh
     ```
@@ -54,11 +54,11 @@ You can create a new zone with the following steps:
 1. Create a new project based on one of the [project templates](https://taitounited.github.io/taito-cli/templates#project-templates). For example:
 
     ```shell
-    taito project create: full-stack-template
+    taito project create full-stack-template
     cd acme-myproject
     ```
 
-    > TIP: You can choose some other than default configuration with `-o`, for example: `taito -o company-x project create: full-stack-template`.
+    > TIP: You can choose some other than default configuration with `-o`, for example: `taito -o company-x project create full-stack-template`.
 
 2. Clean start the local development environment with the following command. This typically initializes your local secrets, installs some libraries, builds and starts containers, and initializes your database with tables and some data. Secret default values are typically copied from dev environment, if available.
 

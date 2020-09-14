@@ -8,7 +8,7 @@
 
 2. Register a domain name, and get a DNS service for configuring IP addresses for the domain. If you don't have these already, you can buy an affordable domain name from [namecheap](https://www.namecheap.com/). Namecheap provides also [DNS](https://www.namecheap.com/domains/freedns/), but since you already have a Google Cloud account, you can also use the [Google Cloud DNS](https://cloud.google.com/dns/docs/) with your domain name.
 
-3. Create a taito zone based on the Google Cloud example with the following commands. Replace `EDIT` with your favorite editor. (TODO: zone create: TEMPLATE)
+3. Create a taito zone based on the Google Cloud example with the following commands. Replace `EDIT` with your favorite editor. (TODO: zone create TEMPLATE)
 
    ```shell
    cp -r taito-cli/examples/zones/gcp my-zone
