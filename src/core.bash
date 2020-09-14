@@ -126,7 +126,8 @@ function taito::core::print_command_with_internal_syntax () {
     mark_found="false"
     for arg in "${args[@]}"
     do
-      if [[ ${arg} == "-"* ]] || [[ ${mark_found} == "true" ]]; then
+      if [[ ! ${arg} =~ ^[a-zA-Z][0-9a-zA-Z:]+$ ]] ||
+         [[ ${mark_found} == "true" ]]; then
         mark_found="true"
         space_args+=("${arg}")
       elif [[ ${arg} == *":"* ]] && [[ ${mark_found} == "false" ]]; then
