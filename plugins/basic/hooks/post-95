@@ -93,10 +93,17 @@ if [[ ${was_executed} == false ]]; then
     if [[ ${taito_orig_command} != " " ]]; then
       # Show matching commands
       taito::print_plugin_title
-      echo "Unknown command: '${taito_orig_command//-/ }'. Perhaps one of the following commands is the one"
-      echo "you meant to run. You may get this error also if you execute the command"
-      echo "in a wrong directory, and therefore there are no plugins enabled that"
-      echo "implement the command in question. Run 'taito -h' to get more help."
+      if [[ ${taito_target_env} == "local" ]] && [[ ! ${taito_target:-} ]]; then
+        echo "Unknown command: '${taito_orig_command//-/ }'. If the command includes arguments,"
+        echo "try to add colon before the arguments e.g. 'taito db add: articles'".
+      else
+        echo "Unknown command: '${taito_orig_command//-/ }'."
+      fi
+      echo
+      echo "Perhaps one of the following commands is the one you meant to run. You"
+      echo "may get this error also if you execute the command in a wrong directory,"
+      echo "and therefore there are no plugins enabled that implement the command in"
+      echo "question. Run 'taito -h' to get more help."
       export taito_command_chain=""
       export taito_plugin_path="${taito_plugin_path}"
       help=$("${taito_plugin_path}/__help-50" "${taito_orig_command}")

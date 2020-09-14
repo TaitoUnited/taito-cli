@@ -120,6 +120,7 @@ function taito::core::print_command_with_internal_syntax () {
   args=("$@")
 
   # Convert space syntax to internal hyphen syntax
+  local end_words=" add apply clean comment connect create destroy dump from get install import kill list ls merge migrate mount open publish rebase revert rotate set status subscribe summary tag to untag upgrade "
   if [[ ${args[0]} != *"-"* ]]; then
     space_cmd=()
     space_args=()
@@ -130,7 +131,8 @@ function taito::core::print_command_with_internal_syntax () {
          [[ ${mark_found} == "true" ]]; then
         mark_found="true"
         space_args+=("${arg}")
-      elif [[ ${arg} == *":"* ]] && [[ ${mark_found} == "false" ]]; then
+      elif ( [[ ${arg} == *":"* ]] || [[ ${end_words} == *" ${arg} "* ]]) &&
+           [[ ${mark_found} == "false" ]]; then
         mark_found="true"
         space_cmd+=("${arg}")
       elif [[ ${mark_found} == "false" ]]; then
