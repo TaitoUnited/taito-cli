@@ -120,7 +120,7 @@ function taito::core::print_command_with_internal_syntax () {
   args=("$@")
 
   # Convert space syntax to internal hyphen syntax
-  local end_words=" add apply clean comment connect create destroy dump from get install import kill list ls merge migrate mount open publish rebase revert rotate set status subscribe summary tag to untag upgrade "
+  local end_words=" add apply clean comment connect create destroy dump from get install import kill list ls merge migrate mount open publish rebase revert rotate set status stop subscribe summary tag to untag upgrade "
   if [[ ${args[0]} != *"-"* ]]; then
     space_cmd=()
     space_args=()
