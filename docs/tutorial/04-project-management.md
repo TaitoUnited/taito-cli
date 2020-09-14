@@ -19,23 +19,23 @@ taito issue auth
 
 # Add a new issue with labels 'feature' and 'posts'.
 # You'll be asked to enter issue description once you run the command.
-taito issue add: delete post - feature posts
+taito issue add delete post - feature posts
 
 # List all issues on todo lane
-taito issue list: todo
+taito issue list todo
 
-# Change issue status to: in progress, assigned to me.
+# Change issue state to: in progress, assigned to me.
 # You'll be asked for a comment, but you can leave it empty.
-taito issue status: delete post - in progress - me
+taito issue state delete post - in progress - me
 
 # Add comment on issue.
-taito issue comment: delete post
+taito issue comment add delete post
 
-# Change issue status to: testing, assigned to John Doe
-taito issue status: delete post - testing - john doe
+# Change issue state to: testing, assigned to John Doe
+taito issue state change delete post - testing - john doe
 
 # Open issue on browser
-taito issue open: delete post
+taito issue open delete post
 ```
 
 TODO autocomplete at least for status, labels and personnel?
@@ -51,13 +51,13 @@ taito hours auth                         # Authenticate
 taito hours start                        # Start/continue the timer
 taito hours pause                        # Pause the timer
 taito hours stop                         # Stop the timer and create an hour entry
-taito hours add: 6.5                     # Add an hour entry for today
-taito hours add: 6.5 yesterday           # Add an hour entry for yesterday
-taito hours add: 6.5 tue Did some work   # Add an hour entry for last tuesday
+taito hours add 6.5                      # Add an hour entry for today
+taito hours add 6.5 yesterday            # Add an hour entry for yesterday
+taito hours add 6.5 tue Did some work    # Add an hour entry for last tuesday
 taito hours list                         # Hour entries of this month
-taito hours list: all                    # Hour entries of this month for all projects
-taito hours summary                      # Hour summary for this month
-taito hours summary: this-week           # Hour summary for this week
+taito hours list all                     # Hour entries of this month for all projects
+taito hours show                         # Hour summary for this month
+taito hours show this-week               # Hour summary for this week
 taito open hours                         # Open hour reporting on browser
 
 TODO bulk adds (e.g. three weeks on vacation)

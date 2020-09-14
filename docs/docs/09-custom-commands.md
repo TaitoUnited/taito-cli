@@ -8,8 +8,8 @@ When adding commands to your _package.json_ or _Makefile_, you are encouraged to
     "start": "java -cp . com.domain.app.MyServer",
     "init": "host=localhost npm run _db -- < dev-data.sql",
     "init:clean": "npm run clean && npm run init",
-    "open-app": "taito util browser: http://localhost:8080",
-    "open-app:dev": "taito util browser: http://mydomain-dev:8080",
+    "open-app": "taito util browser http://localhost:8080",
+    "open-app:dev": "taito util browser http://mydomain-dev:8080",
     "info": "echo admin/password, user/password",
     "info:dev": "echo admin/password, user/password",
     "status:client": "url=localhost/client npm run _status",
@@ -32,6 +32,8 @@ All npm commands are run inside the Taito CLI docker container by default. Use `
     "taito-host-example": "echo 'taito example' command is run on host"
 
 Instead of implementing custom commands in _package.json_ or _Makefile_, you can also implement a set of Taito CLI plugins for the infrastructure in question (see the next chapter).
+
+TODO: command name conventions.
 
 ---
 

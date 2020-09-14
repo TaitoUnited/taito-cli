@@ -35,7 +35,7 @@ This is how you implement your own custom plugin:
    taito_plugins="npm"
    ```
 
-3. Add some executable commands to one of the plugins as executable files. Include execution priority **(00-99)** at the end of each command filename. The execution priority defines the execution order of a command implementation between enabled plugins. The plugin directory may also contain additional libraries and resources in additional subdirectories as in the example (`lib/`, `resources/`). Optionally you can add also plugin documentation in help.txt, trouble.txt and README.md files.
+3. Add some executable commands to one of the plugins as executable files. Include execution priority **(00-99)** at the end of each command filename. The execution priority defines the execution order of a command implementation between enabled plugins. The plugin directory may also contain additional libraries and resources in additional subdirectories as in the example (`lib/`, `resources/`). Optionally you can add also plugin documentation in help.txt, trouble.txt and README.md files. TODO: command name conventions.
 
    ```shell
    my-plugin/

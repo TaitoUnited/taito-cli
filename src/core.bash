@@ -116,11 +116,21 @@ function taito::core::export_user_config () {
   fi
 }
 
+# Convert space syntax to internal hyphen syntax
 function taito::core::print_command_with_internal_syntax () {
   args=("$@")
 
-  # Convert space syntax to internal hyphen syntax
-  local end_words=" add apply clean comment connect create destroy dump from get install import kill list ls merge migrate mount open publish rebase revert rotate set status stop subscribe summary tag to untag upgrade "
+  # Verbs that typically end a taito command
+  # TODO: The following should also be added, but requires command name refactoring:
+  # build, check, commit, copy, sync, synchronize, copyquick/quickcopy
+  local end_verbs=" add apply auth authenticate cancel change clean connect create deploy destroy dump export forward get install import kill link lint list ls merge migrate mount open pause prepare publish rebase recreate release revert rotate run save scan set start stop subscribe tag untag upgrade verify wait "
+
+  # Non-verbs
+  # TODO: Refactor commands so that most of them end with a verb. Refactor also:
+  # 'feat: FEAT', 'env:ENV', 'taito util browser', 'taito random string', 'taito random words'
+  # TODO: taito kaboom --> taito develop
+  local end_words="${end_verbs} autocomplete between code contact conventions deps descriptions docs doctor diff down from info kaboom log logs maintenance pr proxy readme revisions shell size status trouble to unit version "
+
   if [[ ${args[0]} != *"-"* ]]; then
     space_cmd=()
     space_args=()

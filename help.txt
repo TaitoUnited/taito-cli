@@ -99,7 +99,7 @@ QUICK EXAMPLES
     copy to:server:dev 0 file.f /dir   # Copy a file/folder to server container
     copy from:server:dev /dir/file .   # Copy a file/folder from server containr
     copy from:server:dev 0 /dir/file . # Copy a file/folder from server containr
-    sync to:server:dev dir /dir      # Sync folder to server container
+    sync to:server:dev dir /dir        # Sync folder to server container
     sync from:server:dev /dir .        # Sync folder from server container
 
   DATABASES
@@ -208,9 +208,9 @@ QUICK EXAMPLES
 
   PROJECT MANAGEMENT:
     issue auth                         # Authenticate
-    issue add delete post - feature posts         # Add a new issue 'delete post'
-    issue status delete post - in progress - me   # Change status of issue 'delete post'
-    issue comment delete post          # Add a comment
+    issue add delete post - feature posts              # Add a new issue 'delete post'
+    issue state change delete post - in progress - me # Change status of issue 'delete post'
+    issue comment add delete post                      # Add a comment
     issue open delete post             # Open issue on browser
     issue list todo                    # List todo issues
     open project                       # Open project management
@@ -225,8 +225,8 @@ QUICK EXAMPLES
     hours add 6.5 tue Did some work    # Add an hour entry for last tuesday
     hours list                         # Hour entries of this month
     hours list all                     # Hour entries for all projects
-    hours summary                      # Hour summary for this month
-    hours summary this-week            # Hour summary for this week
+    hours show                         # Hour summary for this month
+    hours show this-week               # Hour summary for this week
     open hours                         # Open hour reporting on browser
 
     TODO bulk adds (e.g. three weeks on vacation)
@@ -619,12 +619,12 @@ PROJECT: PROJECT MANAGEMENT
   issue open TITLE|ID
     Open issue on browser.
 
-  issue status TITLE|ID - STATUS [- PERSON]
-    Change issue status. Optionally assign the issue to another person.
+  issue state change TITLE|ID - STATE [- PERSON]
+    Change issue state. Optionally assign the issue to another person.
     You'll be asked for a comment once you run the command, but you can leave
     it empty.
 
-  issue comment TITLE|ID
+  issue comment add TITLE|ID
     Comment on issue. You'll be asked to enter the comment once you run the
     command.
 
@@ -661,7 +661,7 @@ PROJECT: HOUR REPORTING
     List all hour entries for this month. By default lists only for current
     project, but you can list also hour entries for all projects.
 
-  hours summary [this-month|last-month|this-week|last-week]
+  hours show [this-month|last-month|this-week|last-week]
     Show hour summary for all projects. Shows summary for this month by default.
 
   TODO bulk adds (e.g. three weeks on vacation)

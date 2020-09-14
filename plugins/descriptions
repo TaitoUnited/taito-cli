@@ -57,9 +57,9 @@ echo "issue auth                       " \
   "# Authenticate to the issue management system"
 echo "issue add TITLE - LABELS        " \
   "# Add new issue"
-echo "issue status TITLE - STATUS - PERSON " \
+echo "issue state change TITLE - STATE - PERSON " \
   "# Change issues status and optionally assign it another person"
-echo "issue comment TITLE             " \
+echo "issue comment add TITLE             " \
   "# Comment on issue"
 echo "issue open TITLE                " \
   "# Open issue on browser"
@@ -93,12 +93,12 @@ echo "hours list                       " \
   "# List all hour entries of current project for this month"
 echo "hours list all                  " \
   "# List all hour entries of all projects for this month"
-echo "hours summary                    " \
+echo "hours show                    " \
   "# Show hour summary for this month"
 time_intervals="this-month last-month this-week last-week"
 for time_interval in ${time_intervals}
 do
-  echo "hours summary ${time_interval}        " \
+  echo "hours show ${time_interval}        " \
     "# Show hour summary for ${time-interval}"
 done
 

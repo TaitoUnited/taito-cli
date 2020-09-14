@@ -91,7 +91,7 @@ For now, you should commit all your changes to the dev branch that is checked ou
 Your implementation needs to store some data permanently. For this, you create 1-N database tables to PostgreSQL database. You add a new database table by adding a new database migration. You can do this with the following commands:
 
 ```shell
-taito db add: articles -n 'add articles table'  # Add migration
+taito db add articles -n 'add articles table'  # Add migration
 EDIT database/deploy/articles.sql               # Edit deploy script
 EDIT database/revert/articles.sql               # Edit revert script
 EDIT database/verify/articles.sql               # Edit verify script
@@ -146,7 +146,7 @@ Normally all database changes must be made using database migrations (option a).
 Add a new column to your newly created database table as a new database migration. You do this just like you added the database table, but this time you use `ALTER TABLE` clause instead of `CREATE TABLE`:
 
 ```shell
-taito db add: articles-foobar -n 'add foobar column to articles table'  # Add migration
+taito db add articles-foobar -n 'add foobar column to articles table'  # Add migration
 EDIT database/deploy/articles-foobar.sql                                # Edit deploy script
 EDIT database/revert/articles-foobar.sql                                # Edit revert script
 EDIT database/verify/articles-foobar.sql                                # Edit verify script

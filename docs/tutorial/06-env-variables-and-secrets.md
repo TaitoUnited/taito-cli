@@ -106,7 +106,7 @@ secrets:
 Set secret value for each environment:
 
 ```shell
-taito secret rotate: my-secret
+taito secret rotate my-secret
 taito secret rotate:dev my-secret
 taito secret rotate:test my-secret
 taito secret rotate:prod my-secret

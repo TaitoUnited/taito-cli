@@ -36,8 +36,8 @@ echo "random words NUM_OF_WORDS"
 # Project management
 echo "issue auth"
 echo "issue add TITLE - LABELS"
-echo "issue status TITLE - STATUS - PERSON"
-echo "issue comment TITLE"
+echo "issue state change TITLE - STATE - PERSON"
+echo "issue comment add TITLE"
 echo "issue open TITLE"
 echo "issue list LANE"
 echo "issue list LABEL"
@@ -57,11 +57,11 @@ do
 done
 echo "hours list"
 echo "hours list all"
-echo "hours summary"
+echo "hours show"
 time_intervals="this-month last-month this-week last-week"
 for time_interval in ${time_intervals}
 do
-  echo "hours summary ${time_interval}"
+  echo "hours show ${time_interval}"
 done
 
 # Zone management

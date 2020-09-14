@@ -340,12 +340,12 @@ export default () => (
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                order pizza quattro stagioni
+                basket add pizza margherita
               </Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
-              <Terminal.LineSuffix>hours add: 6.5</Terminal.LineSuffix>,
+              <Terminal.LineSuffix>hours add 6.5</Terminal.LineSuffix>,
             ],
           ]}
         />
