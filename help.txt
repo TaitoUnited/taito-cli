@@ -12,9 +12,10 @@ QUICK EXAMPLES
     open client                        # Open application GUI on browser
     open admin                         # Open admin GUI on browser
     db connect                         # Access default database from command line
-    db add: articles                   # Add a migration for default database
+    db add articles                    # Add a migration for default database
     db deploy                          # Deploy migrations to default database
-    secret rotate: my-secret           # Set value for secret (restart all containers after)
+    db import file.sql                 # Import a file to default database
+    secret rotate my-secret            # Set value for secret (restart all containers after)
     install                            # Install newly added libraries (restart container after)
     restart:server                     # Restart server container
     restart                            # Restart all containers
@@ -94,22 +95,22 @@ QUICK EXAMPLES
     forward:redis:dev 6000 6379        # Forward local port 6000 to container port 6379
     save:client                        # Save changes to client container image
     clean:server                       # Clean server container by deleting it
-    copy to:server:dev ./file /dir     # Copy a file/folder to server container
-    copy to:server:dev 0 ./file /dir   # Copy a file/folder to server container
+    copy to:server:dev file.f /dir     # Copy a file/folder to server container
+    copy to:server:dev 0 file.f /dir   # Copy a file/folder to server container
     copy from:server:dev /dir/file .   # Copy a file/folder from server containr
     copy from:server:dev 0 /dir/file . # Copy a file/folder from server containr
-    sync to:server:dev ./dir /dir      # Sync folder to server container
+    sync to:server:dev dir /dir      # Sync folder to server container
     sync from:server:dev /dir .        # Sync folder from server container
 
   DATABASES
     db connect:dev                     # Access default database on command line
     db connect:reportdb:dev            # Access report database on command line
     db proxy:dev                       # Start a database proxy for a GUI tool access
-    db import:dev ./file.sql           # Import a file to default database
-    db dump:dev ./dump.sql             # Dump default database to a file
+    db import:dev file.sql             # Import a file to default database
+    db dump:dev dump.sql               # Dump default database to a file
     db log:dev                         # View change log of default database
     db recreate:dev                    # Recreate the default database
-    db add: articles                   # Add a migration for default database
+    db add articles                    # Add a migration for default database
     db deploy:dev                      # Deploy changes to default database
     db rebase:dev                      # Rebase a database (db revert + db deploy)
     db rebase:dev b91b7b2              # Rebase a database (db revert + db deploy)
@@ -121,11 +122,11 @@ QUICK EXAMPLES
   STORAGES
     storage ls:dev /my-dir             # List storage files
     storage mount:dev                  # Mount dev storage bucket to ./mnt/BUCKT
-    storage mount:dev ./mymount        # Mount dev storage bucket to ./mymount
-    storage copy from:dev /sour ./dest # Copy files from dev bucket
-    storage copy to:dev ./sour /dest   # Copy files to dev bucket
-    storage sync from:dev /sour ./dest # Sync files from dev bucket
-    storage sync to:dev ./sour /dest   # Sync files to dev bucket
+    storage mount:dev mymount          # Mount dev storage bucket to ./mymount
+    storage copy from:dev /sour dest   # Copy files from dev bucket
+    storage copy to:dev sour /dest     # Copy files to dev bucket
+    storage sync from:dev /sour dest   # Sync files from dev bucket
+    storage sync to:dev sour /dest     # Sync files to dev bucket
 
   MESSAGE QUEUES
     topic list:dev                     # List all topics in dev environment
@@ -154,8 +155,8 @@ QUICK EXAMPLES
     commit revert                      # Revert the latest commit by creating a new commit
     commit undo                        # Undo latest commit from local and remote branch
     commit erase                       # Erase latest commit from loc/rem branch and files
-    tag: 1.2.3                         # Create tag
-    untag: 1.2.3                       # Delete tag
+    tag 1.2.3                          # Create tag
+    untag 1.2.3                        # Delete tag
 
   DEPLOYMENT OPERATIONS
     deployment start:dev               # Start ci build for dev environment manually
@@ -176,7 +177,7 @@ QUICK EXAMPLES
     build release:prod                 # Release build for prod environment
 
   PROJECT TEMPLATES
-    project create: my-template        # Create a project based on template
+    project create my-template         # Create a project based on template
     project upgrade                    # Upgrade project using template
 
   PROJECT CONFIGURATION
@@ -191,7 +192,7 @@ QUICK EXAMPLES
     env destroy:dev                    # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
-    zone create: gcp                   # Create a new zone based on the gcp template
+    zone create gcp                    # Create a new zone based on the gcp template
     zone apply                         # Apply infrastructure changes to the zone
     zone status                        # Show status summary of the zone
     zone doctor                        # Analyze and repair the zone
@@ -200,18 +201,18 @@ QUICK EXAMPLES
 
   PASSWORD SHARING
     passwd share                       # Share a password using a one-time magic link
-    passwd list: movie                 # List all movie passwords
-    passwd get: movie-key              # Get movie-key passwd
-    passwd set: movie-key              # Set movie-key passwd
-    passwd rotate: movie               # Rotate all movie passwords
+    passwd list movie                  # List all movie passwords
+    passwd get movie-key               # Get movie-key passwd
+    passwd set movie-key               # Set movie-key passwd
+    passwd rotate movie                # Rotate all movie passwords
 
   PROJECT MANAGEMENT:
     issue auth                         # Authenticate
-    issue add: delete post - feature posts         # Add a new issue 'delete post'
-    issue status: delete post - in progress - me   # Change status of issue 'delete post'
-    issue comment: delete post         # Add a comment
-    issue open: delete post            # Open issue on browser
-    issue list: todo                   # List todo issues
+    issue add delete post - feature posts         # Add a new issue 'delete post'
+    issue status delete post - in progress - me   # Change status of issue 'delete post'
+    issue comment delete post          # Add a comment
+    issue open delete post             # Open issue on browser
+    issue list todo                    # List todo issues
     open project                       # Open project management
 
   HOUR REPORTING:
@@ -219,22 +220,22 @@ QUICK EXAMPLES
     hours start                        # Start/continue the timer
     hours pause                        # Pause the timer
     hours stop                         # Stop the timer and create an entry
-    hours add: 6.5                     # Add an hour entry for today
-    hours add: 6.5 yesterday           # Add an hour entry for yesterday
-    hours add: 6.5 tue Did some work   # Add an hour entry for last tuesday
+    hours add 6.5                      # Add an hour entry for today
+    hours add 6.5 yesterday            # Add an hour entry for yesterday
+    hours add 6.5 tue Did some work    # Add an hour entry for last tuesday
     hours list                         # Hour entries of this month
-    hours list: all                    # Hour entries for all projects
+    hours list all                     # Hour entries for all projects
     hours summary                      # Hour summary for this month
-    hours summary: this-week           # Hour summary for this week
+    hours summary this-week            # Hour summary for this week
     open hours                         # Open hour reporting on browser
 
     TODO bulk adds (e.g. three weeks on vacation)
 
   UTILS:
-    taito util browser: https://hs.fi  # Launch browser
+    taito util browser https://hs.fi   # Launch browser
     taito util commit                  # Commit changes to Taito CLI
-    taito -q random string: 30         # Generate a random string
-    taito -q random words: 3           # Generate random words
+    taito -q random string 30          # Generate a random string
+    taito -q random words 3            # Generate random words
     taito util test:client:dev jest    # Run all tests of 'jest' test suite
 
 OPTIONS
@@ -309,7 +310,7 @@ ARGUMENTS
   All other arguments are given after the command. For example:
     $ taito exec:worker:dev echo jee
     $ taito db import:dev file.sql
-    $ taito hours add: 6.5
+    $ taito hours add 6.5
 
   ENV
     Environment: For example 'local', 'feat-orders', 'dev', 'test', 'uat',
@@ -361,7 +362,7 @@ PROJECT: BASIC OPERATIONS
     The command executes a full clean startup by executing 'env apply', 'start',
     and 'init' commands consecutively with the '--clean' option.
 
-  env apply: [NAME]
+  env apply [NAME]
     Configure the local environment.
 
   install [--clean] [--lock]
@@ -482,10 +483,10 @@ PROJECT: BASIC OPERATIONS
 
   shell[:TARGET][:ENV]
     Start a shell on a container. Examples:
-    $ taito shell: client
-    $ taito shell:dev client
-    $ taito shell:dev client 1
-    $ taito shell:dev my-app-client-3034393823-2f5jf
+    $ taito shell:client
+    $ taito shell:client:dev
+    $ taito shell:client:dev 1
+    $ taito shell:client:dev my-app-client-3034393823-2f5jf
     .
     INDEX: Start shell on a specific instance (0-N)
 
@@ -525,18 +526,18 @@ PROJECT: BASIC OPERATIONS
 
   sync to:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
     Sync a folder. Examples:
-    $ taito sync to:client ./foo /foo
-    $ taito sync to:client:dev ./foo /foo
-    $ taito sync to:client:dev 1 ./foo /foo
+    $ taito sync to:client foo /foo
+    $ taito sync to:client:dev foo /foo
+    $ taito sync to:client:dev 1 foo /foo
     TODO IMPLEMENT
     .
     INDEX: Sync to a specific instance (0-N)
 
   sync from:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
     Sync a folder. Examples:
-    $ taito sync from:client /foo ./foo
-    $ taito sync from:client:dev /foo ./foo
-    $ taito sync from:client:dev 1 /foo ./foo
+    $ taito sync from:client /foo foo
+    $ taito sync from:client:dev /foo foo
+    $ taito sync from:client:dev 1 /foo foo
     TODO IMPLEMENT
     .
     INDEX: Sync from a specific instance (0-N)
@@ -611,23 +612,23 @@ PROJECT: PROJECT MANAGEMENT
   issue auth [SYSTEM]
     Authenticate to the issue management system.
 
-  issue add: TITLE [- LABELS...]
+  issue add TITLE [- LABELS...]
     Add a new issue. You'll be asked to enter issue description once you run
     the command.
 
-  issue open: TITLE|ID
+  issue open TITLE|ID
     Open issue on browser.
 
-  issue status: TITLE|ID - STATUS [- PERSON]
+  issue status TITLE|ID - STATUS [- PERSON]
     Change issue status. Optionally assign the issue to another person.
     You'll be asked for a comment once you run the command, but you can leave
     it empty.
 
-  issue comment: TITLE|ID
+  issue comment TITLE|ID
     Comment on issue. You'll be asked to enter the comment once you run the
     command.
 
-  issue list: [LANES|LABELS]
+  issue list [LANES|LABELS]
     List open issues.
 
 PROJECT: HOUR REPORTING
@@ -647,20 +648,20 @@ PROJECT: HOUR REPORTING
     configured for the project in question, you also need to choose one of the
     tasks.
 
-  hours add: hours [WEEKDAY|today|yesterday]
+  hours add hours [WEEKDAY|today|yesterday]
     Add an hour entry. You'll be asked for a description once you run the
     command. If hour reporting system has multiple tasks configured for the
     project in question, you also need to choose one of the tasks.
     For example:
-    $ taito hours add: 6.5
-    $ taito hours add: 5,5 yesterday
-    $ taito hours add: 4,5 tue
+    $ taito hours add 6.5
+    $ taito hours add 5,5 yesterday
+    $ taito hours add 4,5 tue
 
-  hours list: [all]
+  hours list [all]
     List all hour entries for this month. By default lists only for current
     project, but you can list also hour entries for all projects.
 
-  hours summary: [this-month|last-month|this-week|last-week]
+  hours summary [this-month|last-month|this-week|last-week]
     Show hour summary for all projects. Shows summary for this month by default.
 
   TODO bulk adds (e.g. three weeks on vacation)
@@ -760,10 +761,10 @@ PROJECT: VERSION CONTROL OPERATIONS
     changes also from local files. The command will fail if your local branch
     is not up-to-date with the remote repository.
 
-  tag: TAG [COMMENT]
+  tag TAG [COMMENT]
     Create tag
 
-  untag: TAG
+  untag TAG
     Remove tag
 
 PROJECT: DATABASE OPERATIONS
@@ -798,7 +799,7 @@ PROJECT: DATABASE OPERATIONS
   db import[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Import a file to database. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
-    Example: taito db import:dev ./database/my-file.sql
+    Example: taito db import:dev database/my-file.sql
 
   db deploy[:TARGET][:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled
@@ -849,7 +850,7 @@ PROJECT: STORAGE OPERATIONS
     List files of storage bucket.
 
   storage mount[:TARGET]:ENV [MOUNT_PATH]
-    Mount storage bucket to MOUNT_PATH or ./mnt/BUCKET
+    Mount storage bucket to MOUNT_PATH or mnt/BUCKET
 
   storage copy between[:TARGET]:ENV:DEST_ENV [SOURCE] [LOCAL_DEST]
     Copy files between storage buckets
@@ -925,13 +926,13 @@ PROJECT: BUILDS (mainly for CI/CD)
 
 PROJECT: TEMPLATES
 
-  project create: TEMPLATE [BRANCH]
+  project create TEMPLATE [BRANCH]
     Create a new project using a template.
 
-  project migrate: TEMPLATE [BRANCH]
+  project migrate TEMPLATE [BRANCH]
     Migrate an old project to use the given template.
 
-  project upgrade: [BRANCH]
+  project upgrade [BRANCH]
     Upgrade current project to the latest version of the project template.
 
 PROJECT: BASIC SETUP
@@ -963,7 +964,7 @@ PROJECT: ENVIRONMENT SETUP
 
 ZONE
 
-  zone create: TEMPLATE
+  zone create TEMPLATE
     Create a new zone based on a template.
 
   zone apply [NAME]
@@ -984,10 +985,10 @@ ZONE
 
 GLOBAL: PASSWORDS
 
-  random string: LENGTH
+  random string LENGTH
     Generate a random string.
 
-  random words: NUM_OF_WORDS
+  random words NUM_OF_WORDS
     Generate random words.
 
   passwd share
@@ -1015,7 +1016,7 @@ GLOBAL: PASSWORDS
 
 UTILS
 
-  util browser: URL
+  util browser URL
     Opens the given url in default web browser. You can use this command in
     your build scripts.
 
