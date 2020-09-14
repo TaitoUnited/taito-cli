@@ -137,8 +137,11 @@ function helm::deploy () {
           echo "------------------------------------------------------------------------"
           echo "NOTE: If you got 'User cannot create resource' error on your CI/CD build,"
           echo "your CI/CD might not have enough privileges to deploy all the changes."
-          echo "Try to deploy the changes manually with 'taito deployment deploy:${taito_target_env}',"
-          echo "and then trigger the CI/CD build again."
+          echo "Try to deploy the changes manually with:"
+          echo
+          echo "   taito deployment deploy:${taito_target_env} ${image}"
+          echo
+          echo "...and trigger the CI/CD build again."
           echo "------------------------------------------------------------------------"
           echo
         fi
