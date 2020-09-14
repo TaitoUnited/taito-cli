@@ -18,54 +18,54 @@ echo "workspace clean"
 echo "workspace kill"
 
 # New project from template
-echo "project create: TEMPLATE BRANCH"
-echo "project migrate: TEMPLATE BRANCH"
+echo "project create TEMPLATE BRANCH"
+echo "project migrate TEMPLATE BRANCH"
 
 # Passwords
-echo "random string: LENGTH"
-echo "random words: NUM_OF_WORDS"
+echo "random string LENGTH"
+echo "random words NUM_OF_WORDS"
 # TODO enable only when available
 # echo "passwd share"
 # echo "passwd list"
-# echo "passwd list: FILTER"
-# echo "passwd get: NAME"
-# echo "passwd set: NAME"
+# echo "passwd list FILTER"
+# echo "passwd get NAME"
+# echo "passwd set NAME"
 # echo "passwd rotate"
-# echo "passwd rotate: FILTER"
+# echo "passwd rotate FILTER"
 
 # Project management
 echo "issue auth"
-echo "issue add: TITLE - LABELS"
-echo "issue status: TITLE - STATUS - PERSON"
-echo "issue comment: TITLE"
-echo "issue open: TITLE"
-echo "issue list: LANE"
-echo "issue list: LABEL"
+echo "issue add TITLE - LABELS"
+echo "issue status TITLE - STATUS - PERSON"
+echo "issue comment TITLE"
+echo "issue open TITLE"
+echo "issue list LANE"
+echo "issue list LABEL"
 
 # Hours
 echo "hours auth"
 echo "hours start"
 echo "hours pause"
 echo "hours stop"
-echo "hours stop: DESCRIPTION"
-echo "hours add: HOURS"
+echo "hours stop DESCRIPTION"
+echo "hours add HOURS"
 weekdays="today yesterday mon tue wed thu fri sat sun"
 for weekday in ${weekdays}
 do
-  echo "hours add: HOURS ${weekday}"
-  echo "hours add: HOURS ${weekday} DESCRIPTION"
+  echo "hours add HOURS ${weekday}"
+  echo "hours add HOURS ${weekday} DESCRIPTION"
 done
 echo "hours list"
-echo "hours list: all"
+echo "hours list all"
 echo "hours summary"
 time_intervals="this-month last-month this-week last-week"
 for time_interval in ${time_intervals}
 do
-  echo "hours summary: ${time_interval}"
+  echo "hours summary ${time_interval}"
 done
 
 # Zone management
-echo "zone create: TEMPLATE"
+echo "zone create TEMPLATE"
 if [[ ${taito_type:-} == "zone" ]]; then
   echo "zone apply"
   echo "zone status"
@@ -99,7 +99,7 @@ fi
 # Project
 if [[ ${taito_project:-} ]]; then
   echo "env"
-  echo "db add: NAME"
+  echo "db add NAME"
   echo "project upgrade"
 
   # Version control commands
@@ -120,8 +120,8 @@ if [[ ${taito_project:-} ]]; then
   echo "commit revert"
   echo "commit undo"
   echo "commit erase"
-  echo "tag: TAG"
-  echo "untag: TAG"
+  echo "tag TAG"
+  echo "untag TAG"
   if [[ ${cprefix} == "feat"* ]]; then
     features=$(git branch -a 2> /dev/null | \
       grep " feature/" | sed -e 's|feature/||')
