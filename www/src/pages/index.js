@@ -258,6 +258,12 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
+                kubectl
+              </Terminal.LinePrefix>,
+              <Terminal.LineSuffix>{`get pods -o jsonpath="{.items[*].spec.containers[*].image}" | tr -s '[[:space:]]' '\n' | sort | uniq`}</Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix color={theme.info}>
                 [helm]
               </Terminal.LinePrefix>,
             ],
