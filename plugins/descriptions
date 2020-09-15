@@ -55,9 +55,9 @@ echo "random words NUM_OF_WORDS       " \
 # Project management
 echo "issue auth                       " \
   "# Authenticate to the issue management system"
-echo "issue add TITLE - LABELS        " \
+echo "issue add TITLE LABELS        " \
   "# Add new issue"
-echo "issue state change TITLE - STATE - PERSON " \
+echo "issue state change TITLE STATE PERSON " \
   "# Change issues status and optionally assign it another person"
 echo "issue comment add TITLE             " \
   "# Comment on issue"

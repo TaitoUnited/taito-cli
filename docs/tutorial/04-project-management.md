@@ -19,23 +19,23 @@ taito issue auth
 
 # Add a new issue with labels 'feature' and 'posts'.
 # You'll be asked to enter issue description once you run the command.
-taito issue add delete post - feature posts
+taito issue add "Delete post" feature posts
 
 # List all issues on todo lane
 taito issue list todo
 
 # Change issue state to: in progress, assigned to me.
 # You'll be asked for a comment, but you can leave it empty.
-taito issue state delete post - in progress - me
+taito issue state "Delete post" in-progress me
 
 # Add comment on issue.
-taito issue comment add delete post
+taito issue comment add "Delete post"
 
 # Change issue state to: testing, assigned to John Doe
-taito issue state change delete post - testing - john doe
+taito issue state change "Delete post" testing johndoe
 
 # Open issue on browser
-taito issue open delete post
+taito issue open "Delete post"
 ```
 
 TODO autocomplete at least for status, labels and personnel?

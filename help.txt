@@ -200,7 +200,7 @@ QUICK EXAMPLES
     zone destroy                       # Destroy the zone
 
   PASSWORD SHARING
-    passwd share                       # Share a password using a one-time magic link
+    passwd share                       # Share with a one-time magic link
     passwd list movie                  # List all movie passwords
     passwd get movie-key               # Get movie-key passwd
     passwd set movie-key               # Set movie-key passwd
@@ -208,10 +208,10 @@ QUICK EXAMPLES
 
   PROJECT MANAGEMENT:
     issue auth                         # Authenticate
-    issue add delete post - feature posts              # Add a new issue 'delete post'
-    issue state change delete post - in progress - me # Change status of issue 'delete post'
-    issue comment add delete post                      # Add a comment
-    issue open delete post             # Open issue on browser
+    issue add "Delete post" feature posts              # Add a new issue
+    issue state change "Delete post" in-progress me    # Change status of issue
+    issue comment add "Delete post"                    # Add a comment
+    issue open "Delete post"           # Open issue on browser
     issue list todo                    # List todo issues
     open project                       # Open project management
 
@@ -612,14 +612,14 @@ PROJECT: PROJECT MANAGEMENT
   issue auth [SYSTEM]
     Authenticate to the issue management system.
 
-  issue add TITLE [- LABELS...]
+  issue add TITLE [LABELS...]
     Add a new issue. You'll be asked to enter issue description once you run
     the command.
 
   issue open TITLE|ID
     Open issue on browser.
 
-  issue state change TITLE|ID - STATE [- PERSON]
+  issue state change TITLE|ID STATE [PERSON]
     Change issue state. Optionally assign the issue to another person.
     You'll be asked for a comment once you run the command, but you can leave
     it empty.

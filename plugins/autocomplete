@@ -35,8 +35,8 @@ echo "random words NUM_OF_WORDS"
 
 # Project management
 echo "issue auth"
-echo "issue add TITLE - LABELS"
-echo "issue state change TITLE - STATE - PERSON"
+echo "issue add TITLE LABELS"
+echo "issue state change TITLE STATE PERSON"
 echo "issue comment add TITLE"
 echo "issue open TITLE"
 echo "issue list LANE"
