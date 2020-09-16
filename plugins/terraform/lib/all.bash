@@ -89,8 +89,6 @@ function terraform::run_zone () {
   local init_options="${terraform_init_options:-}"
   local apply_options="${terraform_apply_options:-}"
 
-  local dir="$(pwd)"
-
   (
     export TF_LOG_PATH="./terraform.log"
     taito::export_terraform_env "${scripts_path}"
@@ -101,9 +99,12 @@ function terraform::run_zone () {
       ./import_state
     fi
     again="true"
+    trap "rm -f ./*.json.tmp" RETURN
     while [[ ${again} == "true" ]]; do
-      echo "Substituting variables in terraform.yaml" > "${taito_vout}"
-      terraform::yaml2json "${dir}/terraform.yaml"
+      echo "Substituting variables in *.yaml" > "${taito_vout}"
+      for yaml_file in $(ls *.yaml); do
+        terraform::yaml2json "${yaml_file}"
+      done
       terraform "${command}" ${apply_options} && break
       echo
       echo "Terraform execution failed. Sometimes you can resolve the issues just"
