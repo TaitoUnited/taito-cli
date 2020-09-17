@@ -8,6 +8,7 @@ taito::confirm "Apply changes by running terraform scripts" || \
 (set -e; terraform::run_zone apply)
 sed -i 's/"true" # first_run/"false"/' ./terraform/variables.tf || :
 
+# TODO: move this elsewhere
 echo
 if taito::confirm "Change database master password"; then
   taito::print_title "CHANGE DATABASE MASTER PASSWORD"

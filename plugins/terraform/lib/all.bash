@@ -85,9 +85,10 @@ function terraform::run_all_by_prefix () {
 function terraform::run_zone () {
   local command=${1}
   local scripts_path=${2:-terraform}
+  local command_options="${*:3}"
 
   local init_options="${terraform_init_options:-}"
-  local apply_options="${terraform_apply_options:-}"
+  local apply_options="${terraform_apply_options:-} ${command_options}"
 
   (
     export TF_LOG_PATH="./terraform.log"

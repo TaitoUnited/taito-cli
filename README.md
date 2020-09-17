@@ -64,4 +64,4 @@ For detailed instructions, see plugin development instructions on the [docs](htt
 
 ## License
 
-Taito CLI is licensed under the [MIT license](https://github.com/TaitoUnited/taito-cli/blob/master/LICENSE), and supported by [Taito United](https://www.taitounited.fi/).
+Taito CLI is licensed under the [MIT license](https://github.com/TaitoUnited/taito-cli/blob/master/LICENSE) and maintained by [Taito United](https://www.taitounited.fi/).
