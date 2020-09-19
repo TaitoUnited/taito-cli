@@ -51,20 +51,23 @@ function gcp::authenticate () {
        [[ ${type} == "cluster" ]] || \
        [[ ${type} == "reset" ]]
     then
-      gcp::authenticate_on_kubernetes || \
-        echo -e "WARNING: Kubernetes authentication failed." \
-          "\\nNOTE: Authentication failure is OK if the Kubernetes cluster" \
-          "does not exist yet."
+      gcp::authenticate_on_kubernetes || (
+        echo
+        echo "--------------------------------------------------------------------"
+        echo "WARNING: Kubernetes authentication failed. Note that Kubernetes"
+        echo "authentication failure is OK if the Kubernetes cluster does"
+        echo "not exist yet."
+        echo "--------------------------------------------------------------------"
+      )
     fi
   fi
 }
 
 function gcp::authenticate_on_kubernetes () {
   (
-    # TODO: remove support for old cluster
-    local gopts="--region ${taito_provider_region:?}"
-    if [[ ${taito_zone} == "gcloud-temp1" ]]; then
-      gopts="--zone ${taito_provider_zone:?}"
+    local gopts="--zone ${taito_provider_zone:?}"
+    if [[ ${kubernetes_regional:-} == "true" ]]; then
+      gopts="--region ${taito_provider_region:?}"
     fi
 
     taito::executing_start
