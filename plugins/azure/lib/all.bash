@@ -21,10 +21,14 @@ function azure::authenticate () {
   fi
 
   if [[ ${kubernetes_name:-} ]]; then
-    azure::authenticate_on_kubernetes ||
-      echo -e "WARNING: Kubernetes authentication failed." \
-        "\\nNOTE: Authentication failure is OK if the Kubernetes cluster does" \
-        "not exist yet."
+    azure::authenticate_on_kubernetes || (
+      echo
+      echo "--------------------------------------------------------------------"
+      echo "WARNING: Kubernetes authentication failed. Note that Kubernetes"
+      echo "authentication failure is OK if the Kubernetes cluster does"
+      echo "not exist yet."
+      echo "--------------------------------------------------------------------"
+    )
   fi
 }
 
