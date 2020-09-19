@@ -90,6 +90,11 @@ function terraform::run_zone () {
   local init_options="${terraform_init_options:-}"
   local apply_options="${terraform_apply_options:-} ${command_options}"
 
+  echo "Substituting variables in *.yaml" > "${taito_vout}"
+  for yaml_file in $(ls *.yaml); do
+    terraform::yaml2json "${yaml_file}"
+  done
+
   (
     export TF_LOG_PATH="./terraform.log"
     taito::export_terraform_env "${scripts_path}"
@@ -99,20 +104,13 @@ function terraform::run_zone () {
     if [[ -f import_state ]]; then
       ./import_state
     fi
-    again="true"
     trap "rm -f ./*.json.tmp" RETURN
-    while [[ ${again} == "true" ]]; do
-      echo "Substituting variables in *.yaml" > "${taito_vout}"
-      for yaml_file in $(ls *.yaml); do
-        terraform::yaml2json "${yaml_file}"
-      done
-      terraform "${command}" ${apply_options} && break
+    while true; do
+      terraform "${command}" ${apply_options} && exit $?
       echo
       echo "Terraform execution failed. Sometimes you can resolve the issues just"
-      echo "by running the Terraform scripts again. Especially if it is helm_release"
-      echo "that is failing, you might need to retry execution once for each helm"
-      echo "release (tillerless helm issue). That's a lot of retries."
-      taito::confirm "Try again" || again="false"
+      echo "by running the Terraform scripts again."
+      taito::confirm "Try again" || exit 1
     done
   )
 }

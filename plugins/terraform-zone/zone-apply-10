@@ -5,8 +5,11 @@
 taito::confirm "Apply changes by running terraform scripts" || \
   taito::skip_to_next "${@}"
 
-(set -e; terraform::run_zone apply)
-sed -i 's/"true" # first_run/"false"/' ./terraform/variables.tf || :
+(
+  set -e
+  terraform::run_zone apply
+  sed -i 's/"true" # first_run/"false"/' ./terraform/variables.tf || :
+)
 
 # TODO: move this elsewhere
 echo
