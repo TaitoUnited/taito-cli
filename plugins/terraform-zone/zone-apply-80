@@ -72,8 +72,8 @@ function replace_with_terraform_variable () {
   fi
 
   echo "Replacing hardcoded example values in taito_config and terraform/*"
-  echo TAITO_ZONE_ID
-  sed -i "s/TAITO_ZONE_ID/$(terraform output taito_zone_id || :)/g" taito-config.sh
+  echo TAITO_PROVIDER_TAITO_ZONE_ID
+  sed -i "s/TAITO_PROVIDER_TAITO_ZONE_ID/$(terraform output taito_provider_taito_zone_id || :)/g" taito-config.sh
   echo TAITO_ORGANIZATION
   sed -i "s/TAITO_ORGANIZATION/${taito_organization:?}/g" ./*.tf
   if [[ ${taito_provider_region_hexchars:-} ]]; then

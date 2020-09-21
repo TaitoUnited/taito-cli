@@ -1,0 +1,14 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ${binauthz_attestor:-} ]]; then
+  echo "TODO: Create binauthz attestation with the following parameters:"
+  echo "- binauthz_attestor: ${binauthz_attestor:-}"
+  echo "- binauthz_secret_name: ${binauthz_secret_name:-}"
+  echo "- binauthz_public_key_id: ${binauthz_public_key_id:-}"
+else
+  echo "Skipping binary authorization (binauthz_attestor not set)"
+fi
+
+taito::call_next "${@}"

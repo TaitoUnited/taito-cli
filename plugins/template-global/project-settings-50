@@ -86,9 +86,12 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_taito_image_email="
   echo
   echo "# Template: Labeling"
-  echo "template_default_zone=$taito_zone"
   echo "template_default_organization=$taito_organization"
   echo "template_default_organization_abbr=${taito_organization_abbr:-$taito_organization}"
+  echo
+  echo "# Template: Zone"
+  echo "template_default_zone=$taito_zone"
+  echo "template_default_zone_multi_tenant=$taito_zone_multi_tenant"
   echo
   echo "# Template: Domains and hosts"
   echo "template_default_domain=$taito_default_domain"
@@ -104,11 +107,6 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_environments=\"dev prod\""
   echo "template_default_alternatives=\"\""
   echo "template_default_engine="
-  echo
-  echo "# Template: Project rights"
-  echo "template_default_resource_namespace_owners=\"$taito_resource_namespace_owners\""
-  echo "template_default_resource_namespace_editors=\"$taito_resource_namespace_editors\""
-  echo "template_default_resource_namespace_viewers=\"$taito_resource_namespace_viewers\""
   echo
   echo "# Template: Cloud provider"
   echo "template_default_provider=$taito_provider"
@@ -173,6 +171,12 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo
   echo "# Template: Kubernetes"
   echo "template_default_kubernetes=${kubernetes_name:-}"
+  echo "template_default_kubernetes_regional=${kubernetes_regional:-false}"
+  echo
+  echo "# Template: Binary Authorization"
+  echo "template_default_binauthz_attestor=${binauthz_attestor:-}"
+  echo "template_default_binauthz_secret_name=${binauthz_secret_name:-}"
+  echo "template_default_binauthz_public_key_id=${binauthz_public_key_id:-}"
   echo
   echo "# Template: Postgres"
   echo "template_default_postgres=${postgres_instance}"
@@ -215,6 +219,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# to a different zone than feature, development, and testing environments,"
   echo "# configure alternative prod zone settings here."
   echo "template_default_zone_prod=$taito_zone"
+  echo "template_default_zone_multi_tenant_prod=$taito_zone_multi_tenant"
   echo "template_default_domain_prod=${taito_default_domain_prod:-$taito_default_domain}"
   echo "template_default_cdn_domain_prod=${taito_default_cdn_domain_prod:-$taito_default_cdn_domain}"
   echo "template_default_bastion_public_ip_prod=${taito_bastion_public_ip_prod:-$taito_bastion_public_ip}"
@@ -268,6 +273,11 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_tracing_organization_prod=$taito_tracing_organization"
 
   echo "template_default_kubernetes_prod=${kubernetes_name:-}"
+  echo "template_default_kubernetes_regional_prod=${kubernetes_regional:-false}"
+  echo "template_default_binauthz_attestor_prod=${binauthz_attestor:-}"
+  echo "template_default_binauthz_secret_name_prod=${binauthz_secret_name:-}"
+  echo "template_default_binauthz_public_key_id_prod=${binauthz_public_key_id:-}"
+
   echo "template_default_postgres_host_prod=\"${postgres_host_prod:-$postgres_host}\""
   echo "template_default_postgres_port_prod=\"${postgres_port_prod:-$postgres_port}\""
   echo "template_default_postgres_username_suffix_prod=${postgres_username_suffix}"
