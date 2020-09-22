@@ -136,6 +136,24 @@ function gcp::ensure_project_exists () {
   if [[ ${project_id} ]] && \
      ! gcloud projects describe "${project_id}" &> /dev/null
   then
+    state_bucket_name="${taito_state_bucket:-}"
+    if [[ ${state_bucket_name:-} == "taito_resource_namespace_prefix_sha1sum" ]]; then
+      state_bucket_name="${taito_resource_namespace_prefix_sha1sum:-}"
+    fi
+
+    echo
+    echo "ERROR: Google Cloud project '${project_id}' does not exist."
+    echo "DevOps personnel should create the project, including:"
+    echo
+    echo "- Billing account link"
+    echo "- User rights"
+    echo "- Storage bucket for Terraform state: ${state_bucket_name}"
+    echo
+    exit 1
+
+    # TODO: Remove project creation (or implement env variable that allows
+    # proejct creation)
+
     local billing_var="gcp_billing_account_${taito_organization:-}"
     local billing_id=${!billing_var:-$taito_provider_billing_account_id}
     if [[ ! ${billing_id} ]]; then
