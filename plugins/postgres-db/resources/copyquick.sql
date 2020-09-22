@@ -21,42 +21,42 @@ CREATE DATABASE :dest TEMPLATE :source;
 
 -- Grants rights to new db
 GRANT ALL PRIVILEGES ON DATABASE :dest TO
-  admin, :dbusermaster, :dest;
-GRANT CONNECT, TEMPORARY ON DATABASE :dest TO developer,
+  :dbusermaster, :dest;
+GRANT CONNECT, TEMPORARY ON DATABASE :dest TO
   :dest_app;
 
 -- Tables
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO
-  admin, :dbusermaster, :dest;
+  :dbusermaster, :dest;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON TABLES TO
-    admin, :dbusermaster, :dest;
+    :dbusermaster, :dest;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO
-  developer, :dest_app;
+  :dest_app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO
-    developer, :dest_app;
+    :dest_app;
 
 -- Sequences
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO
-  admin, :dbusermaster, :dest;
+  :dbusermaster, :dest;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON SEQUENCES TO
-    admin, :dbusermaster, :dest;
+    :dbusermaster, :dest;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO
-  developer, :dest_app;
+  :dest_app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT USAGE, SELECT ON SEQUENCES TO
-    developer, :dest_app;
+    :dest_app;
 
 -- Functions
 GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO
-  admin, :dbusermaster, :dest;
+  :dbusermaster, :dest;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON FUNCTIONS TO
-    admin, :dbusermaster, :dest;
+    :dbusermaster, :dest;
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO
-  developer, :dest_app;
+  :dest_app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT EXECUTE ON FUNCTIONS TO
-    developer, :dest_app;
+    :dest_app;
