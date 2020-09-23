@@ -3,6 +3,17 @@
 function taito::expose_db_user_credentials () {
   local print_creds=${1:-false}
 
+  # SSL
+
+  taito::expose_secret_by_name "${database_instance}-db-ssl.ca"
+  database_ssl_ca_path="${secret_value#secret_file:}"
+  taito::expose_secret_by_name "${database_instance}-db-ssl.cert"
+  database_ssl_cert_path="${secret_value#secret_file:}"
+  taito::expose_secret_by_name "${database_instance}-db-ssl.key"
+  database_ssl_key_path="${secret_value#secret_file:}"
+
+  # Users
+
   database_app_username="${database_app_username:-${database_name}_app}"
   find_secret_name="db.${database_name}.app"
   # TODO remove if
@@ -377,6 +388,7 @@ function taito::export_secrets () {
         else
           echo -n "${secret_value}" > "${file}"
         fi
+        chmod 0600 "${file}"
       fi
 
       set +x

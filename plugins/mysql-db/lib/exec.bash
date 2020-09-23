@@ -1,5 +1,22 @@
 #!/bin/bash
 
+function mysql::print_ssl_options () {
+  if (
+       [[ ${taito_command_requires_db_proxy:-} == "false" ]] &&
+       [[ ${database_ssl_enabled:-} == "false" ]]
+     ) || (
+       [[ ${taito_command_requires_db_proxy:-} == "true" ]] &&
+       [[ ${database_proxy_ssl_enabled:-} == "false" ]]
+     ); then
+    echo ""
+  else
+    echo -n "--ssl-mode=REQUIRED "
+    echo -n "--ssl-ca=${database_ssl_ca_path} "
+    echo -n "--ssl-cert=${database_ssl_cert_path} "
+    echo -n "--ssl-key=${database_ssl_key_path}"
+  fi
+}
+
 function mysql::ask_and_expose_password () {
   local passwd_var="${database_username}_password"
   local passwd="${!passwd_var}"
@@ -25,6 +42,9 @@ function mysql::connect () {
 
   local mysql_username
   local mysql_password
+
+  local mysql_opts=""
+  mysql_opts="$(mysql::print_ssl_options)"
 
   mysql_username="${database_name}a"
   if [[ ${database_username:-} ]]; then
@@ -52,12 +72,14 @@ function mysql::connect () {
     (
       export MYSQL_PWD="${mysql_password}"
       taito::executing_start
-      mysql -h "${database_host}" -P "${database_port}" -D "${database_name}" \
-        -u "${mysql_username}"
+      mysql ${mysql_opts} -h "${database_host}" -P "${database_port}" \
+        -D "${database_name}" \
+        -u "${mysql_username}" "${mysql_opts}"
     )
   else
     taito::executing_start
-    mysql -p -h "${database_host}" -P "${database_port}" -D "${database_name}" \
+    mysql ${mysql_opts} -p -h "${database_host}" -P "${database_port}" \
+      -D "${database_name}" \
       -u "${mysql_username}"
   fi
 }
@@ -69,6 +91,9 @@ function mysql::dump () {
 
   local mysql_username
   local mysql_password
+
+  local mysql_opts=""
+  mysql_opts="$(mysql::print_ssl_options)"
 
   mysql_username="${database_name}a"
   if [[ ${database_username:-} ]]; then
@@ -96,12 +121,12 @@ function mysql::dump () {
     (
       export MYSQL_PWD="${mysql_password}"
       taito::executing_start
-      mysqldump -h "${database_host}" -P "${database_port}" \
+      mysqldump ${mysql_opts} -h "${database_host}" -P "${database_port}" \
         -u "${mysql_username}" "${database_name}"
     )
   else
     taito::executing_start
-    mysqldump -p -h "${database_host}" -P "${database_port}" \
+    mysqldump ${mysql_opts} -p -h "${database_host}" -P "${database_port}" \
       -u "${mysql_username}" "${database_name}"
   fi
 }

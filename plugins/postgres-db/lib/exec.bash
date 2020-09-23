@@ -10,14 +10,17 @@ function postgres::export_pgsslmode () {
        [[ ${taito_command_requires_db_proxy:-} == "true" ]] &&
        [[ ${database_proxy_ssl_enabled:-} == "false" ]]
      ); then
-    PGSSLMODE="prefer"
+    export PGSSLMODE="prefer"
   else
-    PGSSLMODE="require"
+    export PGSSLMODE="require"
+    export PGSSLROOTCERT="${database_ssl_ca_path}"
+    export PGSSLCERT="${database_ssl_cert_path}"
+    export PGSSLKEY="${database_ssl_key_path}"
   fi
 
   # TODO: remove
   if [[ ${taito_zone:-} == "gcloud-temp1" ]]; then
-    PGSSLMODE="prefer"
+    export PGSSLMODE="prefer"
   fi
 }
 

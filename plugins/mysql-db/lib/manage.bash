@@ -12,12 +12,17 @@ function sql_file_path () {
 function mysql::create_database () {
   (
     echo "Creating database"
+
+    local mysql_opts=""
+    mysql_opts="$(mysql::print_ssl_options)"
+
     # export MYSQL_PWD
     # MYSQL_PWD="${MYSQL_PWD}"
     # TODO: use database_username_xxx instead of hardcoded names
     until (
       taito::executing_start
       mysql -p \
+        ${mysql_opts} \
         -h "${database_host}" \
         -P "${database_port}" \
         -D mysql \
@@ -34,6 +39,7 @@ function mysql::create_database () {
       until (
         taito::executing_start
         mysql -p \
+        ${mysql_opts} \
         -h "${database_host}" \
         -P "${database_port}" \
         -D "${database_name}" \
@@ -50,9 +56,14 @@ function mysql::create_database () {
 
 function mysql::drop_database () {
   echo "Dropping database"
+
+  local mysql_opts=""
+  mysql_opts="$(mysql::print_ssl_options)"
+
   until (
     taito::executing_start
     mysql -p \
+      ${mysql_opts} \
       -h "${database_host}" \
       -P "${database_port}" \
       -D mysql \
@@ -88,9 +99,13 @@ function mysql::create_users () {
 
   # Execute
 
+  local mysql_opts=""
+  mysql_opts="$(mysql::print_ssl_options)"
+
   until (
     taito::executing_start
     mysql -p \
+      ${mysql_opts} \
       -h "${database_host}" \
       -P "${database_port}" \
       -D mysql \
@@ -104,9 +119,14 @@ function mysql::create_users () {
 
 function mysql::drop_users () {
   echo "Dropping users"
+
+  local mysql_opts=""
+  mysql_opts="$(mysql::print_ssl_options)"
+
   until (
     taito::executing_start
     mysql -p \
+      ${mysql_opts} \
       -h "${database_host}" \
       -P "${database_port}" \
       -D mysql \
