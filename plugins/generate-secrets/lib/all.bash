@@ -11,14 +11,14 @@ function generate-secrets::create_and_export () {
 
   for secret_name in ${secret_names[@]}; do
     taito::expose_secret_by_index ${secret_index}
-    if [[ ${secret_method} != "read/"* ]] && (
+    if [[ ${secret_orig_method} != "read/"* ]] && (
          [[ -z "${name_filter}" ]] ||
          [[ ${secret_name} == *"${name_filter}"* ]]
        ) && (
          [[ ${skip_confirm} == "true" ]] || (
            taito::print_title "${secret_name/$prefix/}"
            taito::confirm \
-             "Create new value for '${secret_name/$prefix/}' with method ${secret_method:-}"
+             "Create new value for '${secret_name/$prefix/}' with method ${secret_orig_method:-$secret_method:-}"
          )
        )
     then
@@ -79,7 +79,7 @@ function generate-secrets::generate_by_type () {
   fi
 
   if [[ -z "${secret_value}" ]]; then
-    case "${secret_method%%-*}" in
+    case "${secret_orig_method%%-*}" in
       random)
         length=${secret_method##*-}
         if [[ ${length} == "random" ]]; then
@@ -178,7 +178,7 @@ function generate-secrets::generate_by_type () {
 
         if [[ ${taito_provider:-} == "gcp" ]] &&
            [[ ${taito_type:-} == "zone" ]] &&
-           [[ ${secret_name} == *"-ssl."* ]]; then
+           [[ ${secret_name} == *"-db-ssl."* ]]; then
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the database SSL certificates from"
           echo "the following web page by selecting connections tab of the correct"
@@ -291,9 +291,9 @@ function generate-secrets::generate_by_type () {
         secret_value="secret_file:${file}"
         ;;
       *)
-        if [[ ${secret_method} != "read/"* ]] && \
-           [[ ${secret_method} != "copy/"* ]]; then
-          echo "ERROR: Unknown secret method: ${secret_method}"
+        if [[ ${secret_orig_method} != "read/"* ]] && \
+           [[ ${secret_orig_method} != "copy/"* ]]; then
+          echo "ERROR: Unknown secret method: ${secret_orig_method}"
           exit 1
         fi
         ;;

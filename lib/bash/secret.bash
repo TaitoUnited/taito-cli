@@ -115,6 +115,10 @@ function taito::expose_secret_by_index () {
   secret_method=${!secret_method_var}
   secret_method_var2="secret_method_${secret_name//[-.]/_}"
 
+  secret_orig_method_var="secret_orig_method_${secret_index}"
+  secret_orig_method=${!secret_orig_method_var}
+  secret_orig_method_var2="secret_orig_method_${secret_name//[-.]/_}"
+
   secret_value_format=$(taito::get_secret_value_format "${secret_method}")
   if [[ ${secret_value_format} == "file" ]]; then
     # if [[ ${secret_value} == "secret_file:"* ]]; then
@@ -169,7 +173,7 @@ function taito::validate_secret_values () {
   do
     taito::expose_secret_by_index ${secret_index}
     if [[ ${secret_value:-} ]] && [[ ${#secret_value} -lt 8 ]] && \
-       [[ ${secret_method} != "copy/"* ]] && [[ ${secret_method} != "read/"* ]]; then
+       [[ ${secret_orig_method} != "copy/"* ]] && [[ ${secret_orig_method} != "read/"* ]]; then
       echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
       exit 1
     fi
@@ -259,7 +263,7 @@ function taito::save_secrets () {
 
     if [[ ${secret_changed:-} ]] && (
           [[ ${secret_value:-} ]] || (
-            [[ ${secret_method} == "copy/"* ]] &&
+            [[ ${secret_orig_method} == "copy/"* ]] &&
             [[ ${backup_mode} == "false" ]]
           )
        ); then
@@ -272,7 +276,7 @@ function taito::save_secrets () {
         taito::print_note_end
       fi
 
-      if [[ ${secret_method} == "copy/"* ]]; then
+      if [[ ${secret_orig_method} == "copy/"* ]]; then
         echo "Read secret ${secret_name} for copy" > "${taito_vout:-}"
         secret_value=$(
           "${get_secret_func}" \
@@ -288,7 +292,7 @@ function taito::save_secrets () {
         fi
       fi
 
-      if [[ ${secret_method} != "read/"* ]]; then
+      if [[ ${secret_orig_method} != "read/"* ]]; then
         echo "Save secret ${secret_name}" > "${taito_vout:-}"
         if [[ ! ${secret_value} ]] || (
            [[ ${secret_value_format} == "file" ]] && [[ ! -f ${secret_filename} ]]
@@ -336,8 +340,8 @@ function taito::export_secrets () {
       continue
     fi
 
-    local real_method="${secret_method}"
-    if [[ ${secret_method} == "copy/"* ]] || [[ ${secret_method} == "read/"* ]]; then
+    local real_method="${secret_orig_method:-$secret_method}"
+    if [[ ${real_method} == "copy/"* ]] || [[ ${real_method} == "read/"* ]]; then
       real_method=$(
         "${get_secret_func}" \
           "${taito_zone:-}" \
@@ -400,6 +404,8 @@ function taito::export_secrets () {
       exports="${exports}export ${secret_value_var2}=\"${secret_value}\"; "
       exports="${exports}export ${secret_method_var}=\"${real_method}\"; "
       exports="${exports}export ${secret_method_var2}=\"${real_method}\"; "
+      exports="${exports}export ${secret_orig_method_var}=\"${secret_method}\"; "
+      exports="${exports}export ${secret_orig_method_var2}=\"${secret_method}\"; "
     fi
 
     secret_index=$((${secret_index}+1))
@@ -419,7 +425,7 @@ function taito::delete_secrets () {
   for secret_name in "${secret_names[@]}"
   do
     taito::expose_secret_by_index ${secret_index}
-    if [[ ${secret_method:?} != "read/"* ]]; then
+    if [[ ${secret_orig_method:?} != "read/"* ]]; then
       "${delete_secret_func}" \
         "${taito_zone:-}" \
         "${secret_namespace}" \
