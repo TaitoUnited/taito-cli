@@ -4,6 +4,8 @@
 # shellcheck source=../kubectl/lib/context.bash
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
+# TODO: obsolete? remove this?
+
 # Deploy Helm charts
 if [[ -d "./helm" ]]; then
   kubectl::use_context
@@ -33,6 +35,8 @@ if [[ -d "./helm" ]]; then
       rm -f "${values_tmp_file}" &> /dev/null
     fi
   done
+else
+  echo "Nothing to install. No custom Helm charts located in './helm'."
 fi
 
 taito::call_next "${@}"

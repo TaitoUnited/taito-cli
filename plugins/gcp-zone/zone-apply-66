@@ -2,10 +2,11 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-if [[ ${taito_uptime_provider:-} == "gcp" ]] &&
-   [[ ! ${taito_uptime_channels:-} ]] &&
-   taito::confirm "Configure uptime monitoring channels for Google Cloud"; then
-
+if [[ ${taito_uptime_provider:-} != "gcp" ]]; then
+  echo "Not using GCP for uptime monitoring"
+elif [[ ${taito_uptime_channels:-} ]]; then
+  echo "Uptime channels already configured"
+elif taito::confirm "Configure uptime monitoring channels for Google Cloud"; then
   # TODO: Move to Terraform module
   # See: https://stackoverflow.com/questions/54884815/obtain-slack-auth-token-for-terraform-google-monitoring-notification-channel-res
   echo
