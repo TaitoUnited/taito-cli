@@ -4,10 +4,12 @@
 
 if [[ ${taito_uptime_provider:-} == "gcp" ]] &&
    taito::confirm "Enable suggested uptime check alerts?"; then
-
+  echo
+  echo "------------------------------------------------------------------"
   echo "Enable suggested uptime alerts on Google Cloud web console."
   echo "You can see the suggested alerts on the top right corner of the"
   echo "uptime checks page."
+  echo "------------------------------------------------------------------"
   echo
   echo "Press enter to open Google Cloud uptime checks page in web browser"
   read -r

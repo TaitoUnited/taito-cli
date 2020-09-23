@@ -5,12 +5,14 @@
 # TODO: move to Terraform module
 if taito::confirm "Create Cloud Build worker pool (optional)" no; then
 
-  network_name=$(terraform output -json network_name | jq '.value[0]')
+  network_id=$(cd terraform > /dev/null && terraform output network_id 2> /dev/null)
   echo "Using network name: ${network_name}"
 
-  gcloud beta builds worker-pools create \
-    --peered-network="${network_name}" \
-    --region="${taito_provider_region:?}"
+  gcloud --project "${taito_zone:?}" beta builds worker-pools create \
+    "${taito_zone:?}" \
+    --peered-network="${network_id}" \
+    --region="us-central1"
+    # TODO: "${taito_provider_region:?}" (Other regions not yet supported)
 fi
 
 taito::call_next "${@}"

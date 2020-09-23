@@ -27,11 +27,12 @@ if [[ ${taito_uptime_provider:-} == "gcp" ]] &&
   gcloud -q --project "${taito_zone}" beta monitoring channels list ||
     echo "ERROR: Listing channels failed."
   echo
+  echo "----------------------------------------------------------------------------"
   echo "Channels are shown above. Configure taito_uptime_channels setting in"
-  echo "taito-config.sh using the ${taito_messaging_critical_channel} channel name"
-  echo "For example:"
+  echo "taito-config.sh using the ${taito_messaging_critical_channel} channel name. For example:"
   echo
   echo "taito_uptime_channels=\"projects/${taito_zone}/notificationChannels/1234567890\""
+  echo "----------------------------------------------------------------------------"
   echo
   echo "Press enter once done"
   read -r
