@@ -28,14 +28,14 @@ You can use these infrastructure templates as a starting point for your infrastr
 
 ### Serverless (FaaS) on any platform
 
-Use one of the **Kubernetes as a service** infrastructure templates, but do not install Kubernetes if you don't need one. You can create new projects based on the [full-stack-template](https://github.com/TaitoUnited/full-stack-template/) which supports both containers and functions.
+Use one of the **Managed Kubernetes** infrastructure templates, but do not install Kubernetes if you don't need one. You can create new projects based on the [full-stack-template](https://github.com/TaitoUnited/full-stack-template/) which supports both containers and functions.
 
-### Kubernetes, database, and object storage as a service
+### Managed Kubernetes
 
 * [alibaba](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/alibaba): Alibaba Cloud (TODO)
-* [aws](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/aws): Amazon Web Services
-* [azure](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/azure): Microsoft Azure
-* [do](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/do): Digital Ocean
+* [aws](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/aws): Amazon Web Services (Work in progress)
+* [azure](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/azure): Microsoft Azure (Work in progress)
+* [do](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/do): Digital Ocean (Work in progress)
 * [gcp](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/gcp): Google Cloud Platform
 * [openshift](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/openshift): OpenShift (TODO)
 * [scaleway](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/scaleway): Scaleway (TODO)
@@ -51,7 +51,7 @@ Use one of the **Kubernetes as a service** infrastructure templates, but do not 
 
 Infrastructure based on Linux virtual machines or dedicated servers.
 
-* [linux](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/linux): Any Linux servers
+* [linux](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/linux): Any Linux servers (Work in progress)
 
 ### Additional security steps
 
@@ -64,7 +64,7 @@ For critical security needs you should consider some additional security steps t
 - Limit Kubernetes namespace access with RBAC.
 - Require container images to be signed by trusted authorities.
 - Use personal accounts for accessing databases to leave audit trail.
-- Reserve a separate IP address and load balancer for each domain or subdomain.
+- Use Web Application Firewall.
 - Prepare for high usage spikes with autoscaling and CDN.
 - Prepare for DDoS attacks with services like Cloudflare.
 - Use scanners to detect vulnerabilities.
