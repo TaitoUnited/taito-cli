@@ -231,6 +231,7 @@ export -f taito::print_random_words
 function taito::save_secrets () {
   local get_secret_func="${1}"
   local put_secret_func="${2}"
+  local backup_mode="${3:-false}"
 
   local secret_value
   local secret_filename
@@ -246,8 +247,10 @@ function taito::save_secrets () {
     taito::expose_secret_by_index ${secret_index}
 
     if [[ ${secret_changed:-} ]] && (
-          [[ ${secret_value:-} ]] || \
-          [[ ${secret_method} == "copy/"* ]]
+          [[ ${secret_value:-} ]] || (
+            [[ ${secret_method} == "copy/"* ]] &&
+            [[ ${backup_mode} == "false" ]]
+          )
        ); then
 
       # REFACTOR: move elsewhere?
@@ -335,7 +338,9 @@ function taito::export_secrets () {
 
     if [[ ! ${real_method} ]]; then
       real_method="manual"
-      if [[ ${secret_name} == *".key" ]]; then
+      if [[ ${secret_name} == *".key" ]] ||
+         [[ ${secret_name} == *".cert" ]] ||
+         [[ ${secret_name} == *".ca" ]]; then
         real_method="file"
       fi
       echo "WARNING: Secret method not set for ${secret_name}. Using '${real_method}' as method." 1>&2

@@ -3,7 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 if [[ ${taito_secrets:-} ]] && taito::confirm "Generate secrets"; then
-  generate-secrets::create_and_export true
+  generate-secrets::create_and_export
 fi
 
 taito::call_next "${@}"

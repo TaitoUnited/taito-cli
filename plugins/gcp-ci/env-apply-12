@@ -3,18 +3,15 @@
 : "${taito_vc_repository:?}"
 : "${taito_project:?}"
 
-taito::confirm "Add a build trigger for ${taito_project} in ${taito_zone}" || \
+taito::confirm "Setup CI/CD for ${taito_project} in ${taito_zone}" || \
   taito::skip_to_next "${@}"
 
 # TODO: Use Terraform to create the trigger (requires version control auth)
 # TODO: Support for Google Cloud Build GitHub App (currently in beta)
 # --> Does not provide original source repository information in build history
 echo
-echo "--------------------------------"
-echo "Basic configuration"
-echo "--------------------------------"
-echo
 echo "Connect to repository with these settings if not already connected:"
+echo
 echo "- Source: ${taito_vc_provider:-GitHub}"
 echo "- Repository: ${taito_vc_repository}"
 echo
@@ -31,8 +28,25 @@ else
   echo "    ^(stag|canary|master)\$"
   echo "- File type: Cloud Build configuration file (YAML or JSON)"
   echo "- Cloud Build configuration file location: /cloudbuild.yaml"
-  echo
 fi
+echo
+echo "Press enter to open build trigger management"
+read -r
+
+opts=""
+if [[ ${google_authuser:-} ]]; then
+  opts="authuser=${google_authuser}&"
+fi
+
+taito::open_browser \
+  "https://console.cloud.google.com/cloud-build/triggers?${opts}project=${taito_zone}"
+
+echo "Press enter when ready"
+read -r
+
+taito::confirm "Show advanced CI/CD configuration tips" no || \
+  taito::skip_to_next "${@}"
+echo
 echo "--------------------------------"
 echo "OPTIONAL: Advanced configuration"
 echo "--------------------------------"
@@ -66,16 +80,6 @@ echo "d) Execute CI/CD steps without Taito CLI"
 echo
 echo "   If you cannot use Taito CLI image on your CI/CD, see: https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
 echo
-echo "Press enter to open build trigger management"
-read -r
-
-opts=""
-if [[ ${google_authuser:-} ]]; then
-  opts="authuser=${google_authuser}&"
-fi
-
-taito::open_browser \
-  "https://console.cloud.google.com/cloud-build/triggers?${opts}project=${taito_zone}"
 
 echo "Press enter when ready"
 read -r

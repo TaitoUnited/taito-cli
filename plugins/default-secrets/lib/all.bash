@@ -37,8 +37,10 @@ function default-secrets::fetch_default_secrets () {
       if [[ -f "${taito_secrets_path}" ]]; then
         echo "Default values were read successfully"
       else
+        echo "----------------------------------------------------------------"
         echo "Warning: No default values found from ${source_env} environment."
         echo "Maybe you should authenticate with 'taito auth:${source_env}'."
+        echo "----------------------------------------------------------------"
       fi
       rm -f "${taito_secrets_path}" &> /dev/null || :
     else

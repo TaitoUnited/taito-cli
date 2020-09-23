@@ -6,7 +6,7 @@ function get_secret_value () {
   local secret_property=$3
 
   gcloud --project "${taito_provider_secrets_location:?}" secrets versions access latest \
-    --secret="${namespace}/${secret_name}.${secret_property}"
+    --secret="${namespace}_${secret_name}_${secret_property}" 2> /dev/null
 }
 
 function gcp-secrets::get_secret_value () {
@@ -60,19 +60,19 @@ function gcp-secrets::put_secret_value () {
   trap "rm -f ${tmpfile}" RETURN
 
   if ! gcloud --project "${taito_provider_secrets_location:?}" secrets describe \
-    "${namespace}/${secret_name}.${secret_property}" &> /dev/null; then
+    "${namespace}_${secret_name}_${secret_property}" &> /dev/null; then
     # Create new secret
     if [[ ${filename} ]]; then
       taito::executing_start
       gcloud --project "${taito_provider_secrets_location:?}" secrets create \
-          "${namespace}/${secret_name}.${secret_property}" \
+          "${namespace}_${secret_name}_${secret_property}" \
           --replication-policy="automatic" \
           --data-file="${filename}"
     else
       taito::executing_start
       echo -n "${value}" | \
         gcloud --project "${taito_provider_secrets_location:?}" secrets create \
-          "${namespace}/${secret_name}.${secret_property}" \
+          "${namespace}_${secret_name}_${secret_property}" \
           --replication-policy="automatic" \
           --data-file=-
     fi
@@ -81,13 +81,13 @@ function gcp-secrets::put_secret_value () {
     if [[ ${filename} ]]; then
       taito::executing_start
       gcloud --project "${taito_provider_secrets_location:?}" secrets versions add \
-          "${namespace}/${secret_name}.${secret_property}" \
+          "${namespace}_${secret_name}_${secret_property}" \
           --data-file="${filename}"
     else
       taito::executing_start
       echo -n "${value}" | \
         gcloud --project "${taito_provider_secrets_location:?}" secrets versions add \
-          "${namespace}/${secret_name}.${secret_property}" \
+          "${namespace}_${secret_name}_${secret_property}" \
           --data-file=-
     fi
   fi
@@ -105,5 +105,5 @@ function gcp-secrets::delete_secret_value () {
 
   taito::executing_start
   gcloud --project "${taito_provider_secrets_location:?}" secrets delete \
-    "${namespace}/${secret_name}.${secret_property}"
+    "${namespace}_${secret_name}_${secret_property}"
 }
