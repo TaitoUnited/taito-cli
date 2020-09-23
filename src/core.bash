@@ -122,26 +122,36 @@ function taito::core::print_command_with_internal_syntax () {
 
   # Verbs that typically end a taito command
   # TODO: The following should also be added, but requires command name refactoring:
-  # apply, build, check, commit, copy, copyquick/quickcopy, link, open, sync, synchronize
-  local end_verbs=" add auth authenticate cancel change clean connect create deploy destroy dump export forward get install import kill lint list ls merge migrate mount pause prepare publish rebase recreate release revert rotate run save scan set start stop subscribe tag untag upgrade verify wait "
+  # build, check, commit, link, open
+  local end_verbs=" add apply auth authenticate cancel change clean connect continue copy copyquick quickcopy create deploy destroy dump export forward get install import kill lint list ls merge migrate mount pause prepare publish rebase recreate release revert rotate run save scan set start stop subscribe sync synchronize tag untag upgrade verify wait "
+
+  local end_prepositions=" continue between to from "
 
   # Non-verbs
   # TODO: Refactor commands so that most of them end with a verb. Refactor also:
   # 'feat: FEAT', 'env:ENV', 'taito util browser', 'taito random string', 'taito random words'
   # TODO: taito kaboom --> taito develop
-  local end_words="${end_verbs} autocomplete between code contact conventions deps descriptions docs doctor diff down from info kaboom log logs maintenance pr proxy readme revisions shell size status trouble to unit version "
+  local end_words="${end_verbs} ${end_prepositions} autocomplete code contact conventions deps descriptions docs doctor diff down info kaboom log logs maintenance pr proxy readme revisions shell size status trouble unit version "
 
   if [[ ${args[0]} != *"-"* ]]; then
     space_cmd=()
     space_args=()
     mark_found="false"
-    for arg in "${args[@]}"
-    do
+
+    for (( i=1; i<=${#args[@]}; i++)); do
+      j=$((i+1))
+      arg="${!i}"
+      next_arg="${!j}"
+
       if [[ ! ${arg} =~ ^[a-zA-Z][0-9a-zA-Z:]+$ ]] ||
          [[ ${mark_found} == "true" ]]; then
         mark_found="true"
         space_args+=("${arg}")
-      elif ( [[ ${arg} == *":"* ]] || [[ ${end_words} == *" ${arg} "* ]]) &&
+      elif [[ ${arg} == *":"* ]] && [[ ${mark_found} == "false" ]]; then
+        mark_found="true"
+        space_cmd+=("${arg}")
+      elif [[ ${end_words} == *" ${arg} "* ]] &&
+           [[ ${end_prepositions} != *" ${next_arg} "* ]] &&
            [[ ${mark_found} == "false" ]]; then
         mark_found="true"
         space_cmd+=("${arg}")
