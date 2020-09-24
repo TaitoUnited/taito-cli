@@ -118,6 +118,7 @@ function taito::expose_secret_by_index () {
   secret_orig_method_var="secret_orig_method_${secret_index}"
   secret_orig_method=${!secret_orig_method_var}
   secret_orig_method_var2="secret_orig_method_${secret_name//[-.]/_}"
+  secret_orig_method=${secret_orig_method:-$secret_method}
 
   secret_value_format=$(taito::get_secret_value_format "${secret_method}")
   if [[ ${secret_value_format} == "file" ]]; then
@@ -130,8 +131,8 @@ function taito::expose_secret_by_index () {
   secret_changed_var="secret_changed_${secret_index}"
   secret_changed=${!secret_changed_var}
 
-  if [[ ${secret_method} == *"/"* ]]; then
-    secret_source_namespace="${secret_method##*/}"
+  if [[ ${secret_orig_method} == *"/"* ]]; then
+    secret_source_namespace="${secret_orig_method##*/}"
   else
     secret_source_namespace="${secret_namespace}"
   fi
@@ -278,6 +279,8 @@ function taito::save_secrets () {
 
       if [[ ${secret_orig_method} == "copy/"* ]]; then
         echo "Read secret ${secret_name} for copy" > "${taito_vout:-}"
+        echo "-> ${get_secret_func} ${taito_zone:-} ${secret_source_namespace}" \
+          "${secret_name}" > "${taito_vout:-}"
         secret_value=$(
           "${get_secret_func}" \
             "${taito_zone:-}" \
@@ -287,6 +290,7 @@ function taito::save_secrets () {
         if [[ ${secret_value_format} == "file" ]]; then
           mkdir -p "${taito_tmp_secrets_dir}"
           secret_filename="${taito_tmp_secrets_dir}/${secret_name}"
+          echo "Save secret value to file ${secret_filename}" > "${taito_vout:-}"
           echo "${secret_value}" | base64 --decode > "${secret_filename}"
           secret_value="secret_file:${secret_filename}"
         fi
