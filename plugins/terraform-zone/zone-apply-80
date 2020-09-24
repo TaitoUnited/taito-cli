@@ -7,27 +7,27 @@ taito::confirm \
 function replace_with_terraform_variable () {
   local placeholder=$1
   local variable=$2
-  local type=$3
+  local trim=${3:-true}
   local value
 
   if grep "${placeholder}" ../taito-config.sh; then
     echo "Determining ${variable}"
-    if [[ ${type} == "array" ]]; then
-      value=$(
-        terraform output -json "${variable}" |
-        jq -r 'map(.) |
-        join(" ")' ||
-        :
-      )
-    else
+    # Parse array
+    value=$(
+      terraform output -json "${variable}" |
+      jq -r 'map(.) |
+      join(" ")' ||
+      :
+    )
+    # Parse string
+    if [[ ! ${value} ]]; then
       value=$(terraform output "${variable}" || :)
     fi
-    value=$(
-      terraform output "${variable}" |
-        grep -v "^\[\|^\]" |
-        sed 's/  "\(.*\)",*/\1/g' |
-        tr '\n' ' ' || :
-    )
+    # Trim value
+    if [[ ${trim} == true ]]; then
+      value=$(echo "${value}" | xargs)
+    fi
+    # Replace
     if [[ ${value} ]]; then
       echo "${placeholder}"
       sed -i "s/$placeholder/$value/g" ../taito-config.sh
@@ -101,6 +101,8 @@ function replace_with_terraform_variable () {
   sed -i "s/TAITO_ZONE/$taito_zone/g" ./*.tf
 
   replace_with_terraform_variable TAITO_BASTION_PUBLIC_IP bastion_public_ip
+  replace_with_terraform_variable POSTGRES_HOST postgres_hosts
+  replace_with_terraform_variable MYSQL_HOST mysql_hosts
   replace_with_terraform_variable POSTGRES_HOSTS postgres_hosts
   replace_with_terraform_variable MYSQL_HOSTS mysql_hosts
 

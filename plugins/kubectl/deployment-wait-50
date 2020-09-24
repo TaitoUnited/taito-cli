@@ -2,6 +2,7 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+echo "Checking application status"
 kubectl::use_context
 
 # Wait until all containers have been deployed
