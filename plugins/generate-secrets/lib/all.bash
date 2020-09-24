@@ -57,6 +57,7 @@ function generate-secrets::delete_temporary_files () {
 function generate-secrets::generate_by_type () {
   taito::expose_secret_by_index "${1}"
   local title=$2
+  local method="${secret_orig_method:-$secret_method}"
 
   # local secret_value=""
   # local secret_value2=""
@@ -79,7 +80,7 @@ function generate-secrets::generate_by_type () {
   fi
 
   if [[ -z "${secret_value}" ]]; then
-    case "${secret_orig_method%%-*}" in
+    case "${method%%-*}" in
       random)
         length=${secret_method##*-}
         if [[ ${length} == "random" ]]; then
@@ -291,9 +292,9 @@ function generate-secrets::generate_by_type () {
         secret_value="secret_file:${file}"
         ;;
       *)
-        if [[ ${secret_orig_method} != "read/"* ]] && \
-           [[ ${secret_orig_method} != "copy/"* ]]; then
-          echo "ERROR: Unknown secret method: ${secret_orig_method}"
+        if [[ ${method} != "read/"* ]] && \
+           [[ ${method} != "copy/"* ]]; then
+          echo "ERROR: Unknown secret method: ${method}"
           exit 1
         fi
         ;;
