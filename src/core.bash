@@ -151,7 +151,7 @@ function taito::core::print_command_with_internal_syntax () {
         mark_found="true"
         space_cmd+=("${arg}")
       elif [[ ${end_words} == *" ${arg} "* ]] &&
-           [[ ${end_prepositions} != *" ${next_arg} "* ]] &&
+           [[ ${end_prepositions} != *" ${next_arg%%:*} "* ]] &&
            [[ ${mark_found} == "false" ]]; then
         mark_found="true"
         space_cmd+=("${arg}")

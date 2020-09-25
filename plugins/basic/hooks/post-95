@@ -66,9 +66,28 @@ if [[ $exec_after ]]; then
   "
 fi
 
+# Handle continue commands
+if [[ ${taito_command} == "env-apply" ]] && [[ ${taito_env:?} != "local" ]]; then
+  taito::print_plugin_title
+  echo "------------------------------------------------------------------------"
+  echo "Run 'taito env apply continue:${taito_target_env}' to continue with database setup"
+  echo "------------------------------------------------------------------------"
+elif [[ ${taito_command} == "zone-apply" ]]; then
+  taito::print_plugin_title
+  echo "------------------------------------------------------------------------"
+  echo "Run 'taito zone apply continue' to continue with zone setup"
+  echo "------------------------------------------------------------------------"
+fi
+
 # Default handling for commands that were not implemented by any plugin
 if [[ ${was_executed} == false ]]; then
-  if [[ ${taito_command} == "build-prepare" ]]; then
+  if [[ ${taito_command} == "env-apply-continue" ]]; then
+    taito::print_plugin_title
+    echo "Nothing to execute"
+  elif [[ ${taito_command} == "zone-apply-continue" ]]; then
+    taito::print_plugin_title
+    echo "Nothing to execute"
+  elif [[ ${taito_command} == "build-prepare" ]]; then
     # None of the enabled plugins has implemented build prepare
     taito::print_plugin_title
     echo "Nothing to prepare"
