@@ -72,6 +72,8 @@ function generate-secrets::generate_by_type () {
   secret_value=
   if [[ ${secret_default_value:-} ]] &&
      [[ ${secret_method} != "random"* ]] &&
+     [[ ${secret_orig_method} != "copy/"* ]] &&
+     [[ ${secret_orig_method} != "read/"* ]] &&
      [[ ${secret_name} != *"serviceaccount"* ]] &&
      taito::confirm \
        "Default value exists. Use the default value for ${taito_env} environment?"
