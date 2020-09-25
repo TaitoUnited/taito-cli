@@ -11,13 +11,11 @@ if [[ -z $1 ]]; then
   taito_target_image=$(
     gcloud -q --project "${taito_zone}" builds list \
       --sort-by="~createTime" \
-      --format="value(sourceProvenance.resolvedRepoSource.commitSha)" \
+      --format="value(substitutions.COMMIT_SHA)" \
       --filter=" \
         status:SUCCESS AND \
-        source.repoSource.repoName~.*${taito_vc_repository} AND ( \
-          source.repoSource.branchName:${taito_branch} OR \
-          substitutions.BRANCH_NAME:${taito_branch} \
-        )" | \
+        substitutions._REPO_NAME='${taito_vc_repository}' AND \
+        substitutions.BRANCH_NAME='${taito_branch}'" | \
       head -1
   )
   echo "Using tag: ${taito_target_image}"

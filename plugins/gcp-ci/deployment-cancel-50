@@ -14,10 +14,8 @@ echo
     --format="table[no-heading](id)" \
     --ongoing \
     --filter=" \
-      source.repoSource.repoName~.*${taito_vc_repository} AND ( \
-        source.repoSource.branchName:${taito_branch} OR \
-        substitutions.BRANCH_NAME:${taito_branch} \
-      )" | \
+      substitutions._REPO_NAME='${taito_vc_repository}' AND \
+      substitutions.BRANCH_NAME='${taito_branch}'" | \
   grep -v "${ignore_build_id:-OR_DO_NOT_IGNORE}" | \
   xargs gcloud --project "${taito_zone}" builds cancel &> /dev/null
   echo CANCELLED
