@@ -11,6 +11,7 @@ function sql_file_path () {
 
 function mysql::create_database () {
   (
+    echo
     echo "Creating database"
 
     local mysql_opts=""
@@ -35,6 +36,7 @@ function mysql::create_database () {
 
     db_file_path="$(sql_file_path db.sql)"
     if [[ ${db_file_path} ]]; then
+      echo
       echo "Initializing database"
       until (
         taito::executing_start
@@ -55,6 +57,7 @@ function mysql::create_database () {
 }
 
 function mysql::drop_database () {
+  echo
   echo "Dropping database"
 
   local mysql_opts=""
@@ -76,6 +79,7 @@ function mysql::drop_database () {
 }
 
 function mysql::create_users () {
+  echo
   echo "Creating users"
   taito::expose_db_user_credentials
 
@@ -118,6 +122,7 @@ function mysql::create_users () {
 }
 
 function mysql::drop_users () {
+  echo
   echo "Dropping users"
 
   local mysql_opts=""

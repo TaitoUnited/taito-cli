@@ -12,6 +12,7 @@ function postgres::export_pgsslmode () {
      ); then
     export PGSSLMODE="prefer"
   else
+    taito::expose_db_ssl_credentials
     export PGSSLMODE="require"
     export PGSSLROOTCERT="${database_ssl_ca_path}"
     export PGSSLCERT="${database_ssl_cert_path}"

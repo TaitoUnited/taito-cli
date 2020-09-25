@@ -11,6 +11,7 @@ function sql_file_path () {
 
 function postgres::create_database () {
   (
+    echo
     echo "Creating database"
     postgres::export_pgsslmode
     until (
@@ -30,6 +31,7 @@ function postgres::create_database () {
 
     db_file_path="$(sql_file_path db.sql)"
     if [[ ${db_file_path} ]]; then
+      echo
       echo "Initializing database"
       until (
         taito::executing_start
@@ -47,6 +49,7 @@ function postgres::create_database () {
 
     taito::expose_db_user_credentials
 
+    echo
     echo "Granting user access"
     export PGPASSWORD
     PGPASSWORD="${database_build_password}"
@@ -66,6 +69,7 @@ function postgres::create_database () {
 }
 
 function postgres::drop_database () {
+  echo
   echo "Dropping database"
   postgres::export_pgsslmode
   until (
@@ -83,6 +87,7 @@ function postgres::drop_database () {
 }
 
 function postgres::create_users () {
+  echo
   echo "Creating users"
   taito::expose_db_user_credentials
 
@@ -125,6 +130,7 @@ function postgres::create_users () {
 }
 
 function postgres::drop_users () {
+  echo
   echo "Dropping users"
   postgres::export_pgsslmode
   until (

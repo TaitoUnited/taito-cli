@@ -1,18 +1,17 @@
 #!/bin/bash
 
-function taito::expose_db_user_credentials () {
-  local print_creds=${1:-false}
-
-  # SSL
-
+function taito::expose_db_ssl_credentials () {
   taito::expose_secret_by_name "${database_instance}-db-ssl.ca"
   database_ssl_ca_path="${secret_value#secret_file:}"
   taito::expose_secret_by_name "${database_instance}-db-ssl.cert"
   database_ssl_cert_path="${secret_value#secret_file:}"
   taito::expose_secret_by_name "${database_instance}-db-ssl.key"
   database_ssl_key_path="${secret_value#secret_file:}"
+}
+export -f taito::expose_db_ssl_credentials
 
-  # Users
+function taito::expose_db_user_credentials () {
+  local print_creds=${1:-false}
 
   database_app_username="${database_app_username:-${database_name}_app}"
   find_secret_name="db.${database_name}.app"
