@@ -441,7 +441,7 @@ function taito::delete_secrets () {
 }
 export -f taito::delete_secrets
 
-# TODO: rename to cicd-tester
+# TODO: remove taito_proxy_credentials_file (not used in latest full-stack-template)
 function taito::save_proxy_secret_to_disk () {
   : "${taito_project_path:?}"
   local get_secret_func=$1

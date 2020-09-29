@@ -75,7 +75,7 @@ function mysql::connect () {
       taito::executing_start
       mysql ${mysql_opts} -h "${database_host}" -P "${database_port}" \
         -D "${database_name}" \
-        -u "${mysql_username}" "${mysql_opts}"
+        -u "${mysql_username}"
     )
   else
     taito::executing_start
