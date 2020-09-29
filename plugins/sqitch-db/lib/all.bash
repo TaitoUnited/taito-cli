@@ -56,7 +56,7 @@ function sqitch::run () {
       # TODO: use table prefix or create a separate database?
       # see https://github.com/sqitchers/sqitch/pull/247
       if [[ ${sqitch_engine} == "mysql" ]]; then
-        sqitch_options="${sqitch_options} $(mysql::print_ssl_options) --registry ${database_name}"
+        sqitch_options="${sqitch_options} --registry ${database_name} $(mysql::print_ssl_options | sed 's/--/--set /g')"
       fi
     fi
 
