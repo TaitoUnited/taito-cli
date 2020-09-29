@@ -11,7 +11,9 @@ function mysql::print_ssl_options () {
     echo ""
   else
     taito::expose_db_ssl_credentials
-    echo -n "--ssl-mode=REQUIRED "
+    # NOTE: ssl-mode not supported by current version of MariaDB client:
+    # https://github.com/volatiletech/sqlboiler/issues/273
+    # echo -n "--ssl-mode=REQUIRED "
     echo -n "--ssl-ca=${database_ssl_ca_path} "
     echo -n "--ssl-cert=${database_ssl_cert_path} "
     echo -n "--ssl-key=${database_ssl_key_path}"
