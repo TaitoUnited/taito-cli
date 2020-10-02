@@ -124,7 +124,7 @@ if [[ ${taito_project:-} ]]; then
   echo "untag TAG"
   if [[ ${cprefix} == "feat"* ]]; then
     features=$(git branch -a 2> /dev/null | \
-      grep " feature/" | sed -e 's|feature/||')
+      grep " feat/" | sed -e 's|feat/||')
     for feature in ${features}
     do
       echo "feat: ${feature}"

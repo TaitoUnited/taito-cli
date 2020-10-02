@@ -7,7 +7,7 @@ taito::execute_on_host_fg "\
 if git rev-parse --is-inside-work-tree &> /dev/null; then
   set -e
   if [[ \"${1}\" ]]; then
-    feature=\"feature/${1}\"
+    feature=\"feat/${1}\"
   else
     feature=\$(git symbolic-ref --short HEAD)
   fi

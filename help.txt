@@ -141,7 +141,7 @@ QUICK EXAMPLES
     env merge                          # Merge current env branch to the next env branch
     env merge:dev stag                 # Merge changes between envs: dev -> ... -> stag
     feat list                          # List all feature branches
-    feat: pricing                      # Switch to feature/pricing (create if not exists)
+    feat: pricing                      # Switch to feat/pricing (create if not exists)
     feat rebase                        # Rebase current feature branch with the original
     feat merge                         # Merge current feature branch to the original
     feat pr                            # Create a pull-req for the current feature branch

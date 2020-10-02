@@ -74,7 +74,7 @@ Environment branches:
 - 'dev' is the only environment branch that you should commit changes to.
 
 Feature branches:
-- Branch naming with 'feature/' prefix, for example: feature/delete-user.
+- Branch naming with 'feat/' prefix, for example: feat/delete-user.
 - Feature branches are created from 'dev' branch and merged back to it
   using `non-fast-forward` to keep a clear feature branch history.
 - You should rebase your feature branch with the `dev` branch before

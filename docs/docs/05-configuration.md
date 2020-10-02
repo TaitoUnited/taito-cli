@@ -174,7 +174,7 @@ esac
 
 > TODO: feature environment support is still work-in-progress
 
-You can also create an environment for your your feature branch. See the example below for `feature/orders`.
+You can also create an environment for your your feature branch. See the example below for `feat/orders`.
 
 1. Configure `f-orders` environment in `taito-config.sh`:
 
@@ -189,7 +189,7 @@ You can also create an environment for your your feature branch. See the example
      ...
      ...
      dev|f-orders)
-       # settings for dev and feature/orders
+       # settings for dev and feat/orders
        ;;
      ...
      ...
@@ -198,7 +198,7 @@ You can also create an environment for your your feature branch. See the example
 
 2. Create the environment by running `taito env apply:f-orders`.
 
-3. Push some changes to `feature/orders` branch and your application should be deployed automatically.
+3. Push some changes to `feat/orders` branch and your application should be deployed automatically.
 
 ### Canary environment
 
@@ -227,7 +227,7 @@ esac
 
 ### Alternative environments
 
-You can make an alternative environment for A/B testing the same way that you do with canary. In the following example the `feature/orders-b` uses resources of production environment. Thus, you can do A/B testing in production by routing some of the users to the `feature/orders-b` release that is running side-by-side with the production version.
+You can make an alternative environment for A/B testing the same way that you do with canary. In the following example the `feat/orders-b` uses resources of production environment. Thus, you can do A/B testing in production by routing some of the users to the `feat/orders-b` release that is running side-by-side with the production version.
 
 ```shell
 # Environments
@@ -241,7 +241,7 @@ case $taito_env in
     # settings for production
 
     if [[ $taito_target_env == "f-orders-b" ]]; then
-      # settings for feature/orders-b
+      # settings for feat/orders-b
     fi
     ;;
   stag)

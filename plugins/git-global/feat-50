@@ -4,9 +4,9 @@ source="${taito_branch:-dev}"
 
 taito::execute_on_host_fg "
 if git rev-parse --is-inside-work-tree &> /dev/null
-   ! git checkout feature/${1} 2> /dev/null
+   ! git checkout feat/${1} 2> /dev/null
    [[ \"${1}\" ]]; then
-  dest=\"feature/${1}\"
+  dest=\"feat/${1}\"
   echo \"Creating a new branch: \${dest}\"
   read -t 1 -n 1000 discard || :
   read -p \"Do you want to continue? [Y/n] \" -n 1 -r confirm

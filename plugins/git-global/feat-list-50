@@ -2,7 +2,7 @@
 
 taito::execute_on_host_fg "
 if git rev-parse --is-inside-work-tree &> /dev/null; then
-  git branch -a 2> /dev/null | grep \" feature/\" | sed -e 's|feature/||'
+  git branch -a 2> /dev/null | grep \" feat/\" | sed -e 's|feat/||'
 fi
 "
 
