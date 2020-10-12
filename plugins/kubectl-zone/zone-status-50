@@ -22,6 +22,9 @@ kubectl get services --all-namespaces
 taito::print_title "Pods"
 kubectl get pods --all-namespaces
 
+taito::print_title "Pods not ready"
+kubectl get pods --all-namespaces -o go-template='{{ range  $item := .items }}{{ range .status.conditions }}{{ if (or (and (eq .type "PodScheduled") (eq .status "False")) (and (eq .type "Ready") (eq .status "False") (ne (or .reason "") "PodCompleted"))) }}{{ $item.metadata.name}} {{ end }}{{ end }}{{ end }}' | tr ' ' '\n'
+
 taito::print_title "Top pods"
 kubectl top pods --all-namespaces 2> /dev/null
 
