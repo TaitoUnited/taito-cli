@@ -58,7 +58,7 @@ if [ "${taito_version:-}" -ge "1" ]; then
 
   unready_pods=$(
     kubectl get pods $kubernetes_params -o go-template='{{ range  $item := .items }}{{ range .status.conditions }}{{ if (or (and (eq .type "PodScheduled") (eq .status "False")) (and (eq .type "Ready") (eq .status "False") (ne (or .reason "") "PodCompleted"))) }}{{ $item.metadata.name}} {{ end }}{{ end }}{{ end }}' | tr ' ' '\n' | grep -e "${taito_target_env}\\|NAME"
-  )
+  ) || :
   if [[ ${unready_pods} ]]; then
     taito::print_title "Pods not ready"
     echo "${unready_pods}"
