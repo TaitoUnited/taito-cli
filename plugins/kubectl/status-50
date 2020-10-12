@@ -31,14 +31,23 @@ if [ $all = true ]; then
   (taito::executing_start; kubectl top nodes 2> /dev/null) || :
 
   taito::print_title "Ingress"
-  (taito::executing_start; kubectl get ingress $kubernetes_params) || :
+  (
+    taito::executing_start
+    kubectl get ingress $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
+  ) || :
 
   taito::print_title "Jobs"
-  (taito::executing_start; kubectl get jobs $kubernetes_params) || :
+  (
+    taito::executing_start
+    kubectl get jobs $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
+  ) || :
 fi
 
 taito::print_title "Cron jobs"
-(taito::executing_start; kubectl get cronjobs $kubernetes_params) || :
+(
+  taito::executing_start
+  kubectl get cronjobs $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
+) || :
 
 if [ "${taito_version:-}" -ge "1" ]; then
   taito::print_title "Pods"
@@ -48,11 +57,11 @@ if [ "${taito_version:-}" -ge "1" ]; then
   ) || :
 
   unready_pods=$(
-    kubectl get pods $kubernetes_params -o go-template='{{ range  $item := .items }}{{ range .status.conditions }}{{ if (or (and (eq .type "PodScheduled") (eq .status "False")) (and (eq .type "Ready") (eq .status "False") (ne (or .reason "") "PodCompleted"))) }}{{ $item.metadata.name}} {{ end }}{{ end }}{{ end }}'
+    kubectl get pods $kubernetes_params -o go-template='{{ range  $item := .items }}{{ range .status.conditions }}{{ if (or (and (eq .type "PodScheduled") (eq .status "False")) (and (eq .type "Ready") (eq .status "False") (ne (or .reason "") "PodCompleted"))) }}{{ $item.metadata.name}} {{ end }}{{ end }}{{ end }}' | tr ' ' '\n' | grep -e "${taito_target_env}\\|NAME"
   )
   if [[ ${unready_pods} ]]; then
     taito::print_title "Pods not ready"
-    echo -n "${unready_pods}" | tr ' ' '\n'
+    echo "${unready_pods}"
     echo
     echo "------------------------------------------------------------------"
     echo "WARNING! Some of the pods are not ready!"
