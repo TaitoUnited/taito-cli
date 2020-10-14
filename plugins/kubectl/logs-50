@@ -23,7 +23,7 @@ else
   (taito::executing_start; kubectl describe pod "${pod}")
   echo
   taito::print_title "Logs"
-  if ! (taito::executing_start; kubectl logs -f --tail=400 "${pod}" "${container}")
+  if ! (taito::executing_start; kubectl logs -f --tail=100 "${pod}" "${container}")
   then
     exit 1
   fi
