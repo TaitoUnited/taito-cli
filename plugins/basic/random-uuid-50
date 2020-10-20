@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+taito::print_random_uuid "$@"
+taito::call_next "${@}"

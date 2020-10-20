@@ -36,6 +36,8 @@ echo "random string LENGTH            " \
   "# Generate a random string"
 echo "random words NUM_OF_WORDS       " \
   "# Generate random words"
+echo "random uuid                     " \
+  "# Generate random UUID"
 # TODO: enable only if available
 # echo "passwd share                   " \
 #   "# Share a password using a one-time magic link"

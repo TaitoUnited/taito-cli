@@ -97,6 +97,9 @@ function generate-secrets::generate_by_type () {
         elif [[ ${secret_method} == "random-words"* ]]; then
           secret_value=$(taito::print_random_words ${length})
           echo "Random words generated (${length} words)"
+        elif [[ ${secret_method} == "random-uuid"* ]]; then
+          secret_value=$(taito::print_random_uuid)
+          echo "Random UUID generated"
         elif [[ ${secret_method} == "random"* ]]; then
           secret_value=$(taito::print_random_string ${length})
           echo "Random string generated (${length} characters)"

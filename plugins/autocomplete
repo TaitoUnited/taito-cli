@@ -24,6 +24,7 @@ echo "project migrate TEMPLATE BRANCH"
 # Passwords
 echo "random string LENGTH"
 echo "random words NUM_OF_WORDS"
+echo "random uuid"
 # TODO enable only when available
 # echo "passwd share"
 # echo "passwd list"

@@ -236,6 +236,7 @@ QUICK EXAMPLES
     taito util commit                  # Commit changes to Taito CLI
     taito -q random string 30          # Generate a random string
     taito -q random words 3            # Generate random words
+    taito -q random uuid               # Generate random UUID
     taito util test:client:dev jest    # Run all tests of 'jest' test suite
 
 OPTIONS
@@ -990,6 +991,9 @@ GLOBAL: PASSWORDS
 
   random words NUM_OF_WORDS
     Generate random words.
+
+  random uuid
+    Generate random UUID.
 
   passwd share
     Sets a one-time shared password that can be read only once using a

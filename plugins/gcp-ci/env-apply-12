@@ -16,7 +16,8 @@ echo "- Source: ${taito_vc_provider:-GitHub}"
 echo "- Repository: ${taito_vc_repository}"
 echo
 if [[ -f scripts/terraform.yaml ]]; then
-  echo "Do not create trigger. It will be created automatically by Terraform."
+  echo "NOTE: Connect only to repository. Do not create trigger, as it will be created"
+  echo " automatically by Terraform."
 else
   echo "Create a new build trigger for the repository with these settings if one"
   echo "does not exist already:"

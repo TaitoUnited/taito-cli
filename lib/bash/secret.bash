@@ -243,6 +243,11 @@ function taito::print_random_words () {
 }
 export -f taito::print_random_words
 
+function taito::print_random_uuid () {
+  uuidgen
+}
+export -f taito::print_random_uuid
+
 function taito::save_secrets () {
   local get_secret_func="${1}"
   local put_secret_func="${2}"

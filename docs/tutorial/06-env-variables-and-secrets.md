@@ -71,6 +71,7 @@ You can use the following methods in your secret definition:
 - `random-N`: Randomly generated string (N characters).
 - `random-words`: Randomly generated words (6 words).
 - `random-words-N`: Randomly generated words (N words).
+- `random-uuid`: Randomly generated UUID.
 - `manual`: Manually entered string (min 8 characters).
 - `manual-N`: Manually entered string (min N characters).
 - `file`: File. The file path is entered manually.
