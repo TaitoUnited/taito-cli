@@ -2,6 +2,11 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+opts=""
+if [[ ${google_authuser:-} ]]; then
+  opts="authuser=${google_authuser}&"
+fi
+
 if [[ ${taito_uptime_provider:-} != "gcp" ]]; then
   echo "Not using GCP for uptime monitoring"
 elif [[ ${taito_uptime_channels:-} ]]; then
@@ -21,7 +26,7 @@ elif taito::confirm "Configure uptime monitoring channels for Google Cloud"; the
   echo
   echo "Press enter to open Google Cloud notification channel settings in web browser"
   read -r
-  taito::open_browser "https://console.cloud.google.com/monitoring/alerting/notifications?project=${taito_zone:?}"
+  taito::open_browser "https://console.cloud.google.com/monitoring/alerting/notifications?${opts}project=${taito_zone:?}"
   echo "Press enter once done"
   read -r
   echo
