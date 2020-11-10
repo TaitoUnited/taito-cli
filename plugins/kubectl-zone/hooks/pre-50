@@ -1,0 +1,28 @@
+#!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+# shellcheck source=../kubectl/lib/secret.bash
+. "${taito_plugin_path:?}/../kubectl/lib/proxy.bash"
+: "${taito_command:?}"
+
+if [[ ${taito_command} == "zone-apply" ]] &&
+   [[ ${kubernetes_database_proxies:-} ]]; then
+  taito::print_plugin_title
+  echo "Starting database proxies"
+  kubectl::use_context
+  for details in ${kubernetes_database_proxies[@]}; do
+    (
+      db="${details%:*}"
+      export database_instance="${db%:*}"
+      export database_real_port="${db##*:}"
+      export database_port="${details##*:}"
+      export kubernetes_db_proxy_enabled=true
+      echo "db instance: ${database_instance}" > ${taito_vout}
+      echo "db port: ${database_real_port}" > ${taito_vout}
+      echo "db proxy port: ${database_port}" > ${taito_vout}
+      kubectl::db_proxy_start true
+    )
+  done
+fi
+
+taito::call_next "${@}"
