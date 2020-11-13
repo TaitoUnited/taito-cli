@@ -1,28 +1,55 @@
 #!/bin/bash -e
-# shellcheck source=../kubectl/lib/context.bash
-. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
-# shellcheck source=../kubectl/lib/secret.bash
-. "${taito_plugin_path:?}/../kubectl/lib/proxy.bash"
+# shellcheck source=../../kubectl/context.bash
+. "${taito_plugin_path}/../kubectl/lib/context.bash"
+# shellcheck source=../../kubectl/proxy.bash
+. "${taito_plugin_path}/../kubectl/lib/proxy.bash"
+# shellcheck source=../../kubectl/secret.bash
+. "${taito_plugin_path}/../kubectl/lib/secret.bash"
 : "${taito_command:?}"
 
+# Start database proxy
+if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
+   [[ ${taito_command_requires_db_proxy:-} == "true" ]]; then
+  proxy_running=$(pgrep "kubectl") || :
+  taito::print_plugin_title
+  if [[ ${proxy_running} == "" ]]; then
+    echo "Starting db proxy"
+    kubectl::use_context
+    kubectl::db_proxy_start true
+  else
+    echo "Not Starting db proxy. It is already running."
+  fi
+fi
+
+# Start all database proxies
 if [[ ${taito_command} == "zone-apply" ]] &&
-   [[ ${kubernetes_database_proxies:-} ]]; then
+   [[ ${kubernetes_db_proxy_enabled:-} == "true" ]]; then
   taito::print_plugin_title
   echo "Starting database proxies"
   kubectl::use_context
-  for details in ${kubernetes_database_proxies[@]}; do
+
+  for database in ${taito_databases[@]}; do
     (
-      db="${details%:*}"
-      export database_instance="${db%:*}"
-      export database_real_port="${db##*:}"
-      export database_port="${details##*:}"
-      export kubernetes_db_proxy_enabled=true
-      echo "db instance: ${database_instance}" > ${taito_vout}
-      echo "db port: ${database_real_port}" > ${taito_vout}
-      echo "db proxy port: ${database_port}" > ${taito_vout}
+      export taito_target="${database}"
+      taito::export_database_config "${database}"
       kubectl::db_proxy_start true
     )
   done
+fi
+
+# Fetch required secrets from Kubernetes
+taito::expose_required_secrets_filter
+if [[ ${fetch_secrets:?} == "true" ]]; then
+  taito::print_plugin_title
+  echo "Getting secrets from Kubernetes (${taito_env}) for ${secret_purpose:?}"
+
+  kubectl::use_context
+  taito::export_secrets \
+    kubectl::get_secret_value \
+    "${save_secrets_to_disk:-}" \
+    "${secret_filter}"
+
+  export taito_secrets_retrieved=true
 fi
 
 taito::call_next "${@}"

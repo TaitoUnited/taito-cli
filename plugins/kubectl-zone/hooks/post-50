@@ -1,12 +1,22 @@
 #!/bin/bash -e
-# shellcheck source=../kubectl/lib/context.bash
-. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
-# shellcheck source=../kubectl/lib/secret.bash
-. "${taito_plugin_path:?}/../kubectl/lib/proxy.bash"
+# shellcheck source=../../kubectl/context.bash
+. "${taito_plugin_path}/../kubectl/lib/context.bash"
+# shellcheck source=../../kubectl/proxy.bash
+. "${taito_plugin_path}/../kubectl/lib/proxy.bash"
+# shellcheck source=../../kubectl/secret.bash
+. "${taito_plugin_path}/../kubectl/lib/secret.bash"
 
 # Stop database proxy
+if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
+   [[ ${taito_command_requires_database:-} == "true" ]]; then
+  taito::print_plugin_title
+  echo "Stopping all db proxies"
+  kubectl::db_proxy_stop
+fi
+
+# Stop all database proxies
 if [[ ${taito_command} == "zone-apply" ]] &&
-   [[ ${kubernetes_database_proxies:-} ]]; then
+   [[ ${kubernetes_db_proxy_enabled:-} == "true" ]]; then
   taito::print_plugin_title
   echo "Stopping all db proxies"
   (
