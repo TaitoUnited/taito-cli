@@ -203,7 +203,7 @@ if [[ ${command} == "--"* ]]; then
 fi
 
 # Export some variables to be used in configs and command execution
-export taito_default_password="${taito_default_password:-secret}"
+export taito_default_password="${taito_default_password}"
 export taito_continue="true"
 export taito_skip_override="${skip_override}"
 export taito_command="${command}"
