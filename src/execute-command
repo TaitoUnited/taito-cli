@@ -144,11 +144,11 @@ if [[ ${env_command} == *":"* ]]; then
     # TODO: Remove hardcoded envs. They are currently required because
     # taito-config.sh has not been read yet at this point of execution
     elif [[ -z "${env}" ]] && ( \
-         [[ " local dev test uat qa stag staging cana canary prod master " == *" ${sect} "* ]] || \
+         [[ " zone local dev test uat qa stag staging cana canary prod master " == *" ${sect} "* ]] || \
          [[ ${sect} == "feat-"* ]] ); then
       env="${sect}"
     elif [[ -z "${dest_env}" ]] && ( \
-         [[ " local dev test uat qa stag staging cana canary prod master " == *" ${sect} "* ]] || \
+         [[ " zone local dev test uat qa stag staging cana canary prod master " == *" ${sect} "* ]] || \
          [[ ${sect} == "feat-"* ]] ); then
       dest_env="${sect}"
     else
@@ -277,6 +277,11 @@ taito_timestamp=$(date --rfc-3339=seconds | sed 's/ /T/')
 taito::core::export_user_config "${taito_env}"
 taito::core::export_project_config "${taito_env}"
 
+if [[ ${taito_target_env} == "local" ]] && [[ ${taito_type} ]]; then
+  taito_target_env="${taito_type}"
+  taito_env="${taito_type}"
+fi
+
 # TODO: remove (for backwards compatibility)
 if [[ ${link_urls} == *"project=gcloud-temp1"* ]]; then
   export link_urls
@@ -387,13 +392,13 @@ if (( RANDOM % 4 == 0 ))
 fi
 
 # Validate args
-if [[ " local ${taito_environments:-} " != *" ${taito_target_env} "* ]]; then
+if [[ " zone local ${taito_environments:-} " != *" ${taito_target_env} "* ]]; then
   echo
   echo "ERROR: Unknown environment '${taito_target_env}'"
   echo "Valid environments: local ${taito_environments}"
   exit 1
 fi
-if [[ " local ${taito_environments:-} " != *" ${taito_env} "* ]]; then
+if [[ " zone local ${taito_environments:-} " != *" ${taito_env} "* ]]; then
   echo
   echo "ERROR: Unknown environment '${taito_env}'"
   echo "Valid environments: local ${taito_environments}"
@@ -434,7 +439,8 @@ fi
 
 
 # Validate env
-if [[ ${taito_env} != "local" ]] && \
+if [[ ${taito_env} != "local" ]] &&
+   [[ ${taito_env} != "zone" ]] && \
    [[ " ${taito_environments:-} " != *" ${taito_env} "* ]]; then
   echo
   echo "ERROR: '${taito_env}' not included in taito_environments: ${taito_environments:-}"
