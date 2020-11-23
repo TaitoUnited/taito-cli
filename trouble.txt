@@ -1,15 +1,23 @@
 TAITO CLI TROUBLESHOOTING
 
+  Taito CLI and many project templates use Docker extensively. Therefore many
+  of the problems that may you encounter are most likely Docker related, if you
+  are running on a non-Linux system (macOS or Windows).
+
   Any problem
     - Try to upgrade Taito CLI by running 'taito upgrade'.
-    - Run the taito command with the verbose (-v) flag to see the commands that
-      plugins run during command execution. If you want to see even more output,
-      use the `--debug` flag.
+    - Run the problematic taito command with the verbose (-v) flag to see the
+      commands that plugins run during command execution. If you want to see
+      even more output, use the `--debug` flag.
 
-  'shell-init: error retrieving current directory: ...'
-    KNOWN ISSUE: On macOS Taito CLI commands may sometimes fail if you run them
-    in your home root directory. This is related to Docker volume mounts, and
-    it may be a bug in Docker for Mac. Run Taito CLI commands elsewhere for now.
+  On macOS: 'shell-init: error retrieving current directory: ...'
+    This seems to be related to Docker volume mounts, and is resolved by
+    resetting docker to factory defaults. This error is most likely seen when
+    user is located in a directory with lots of content (e.g. user home dir).
+
+  On macOS: 'darwin-x64' binaries cannot be used on the 'linux-x64' platform
+    This seems to be related to Docker volume mounts, and is resolved by
+    resetting docker to factory defaults.
 
   Read timeout on 'taito kaboom' or 'taito start --clean':
     If the kaboom command fails with Docker Compose read timeout error, stop it
@@ -34,6 +42,18 @@ TAITO CLI TROUBLESHOOTING
     just clean it by running 'taito workspace clean'. Adjust your Docker
     resource limits (on macOS: preferences -> disk, preferences -> advanced).
 
+  'No space left on device'
+    Try cleaning your local workspace by running 'taito workspace clean'. You
+    can also try to enlarge the docker virtual disk in your docker preferences.
+    Also check that you have free disk space available on your computer.
+
+  Some library directories are owned by root (e.g. node_modules)
+    You probably have run `taito start` before installing libraries with
+    'taito env apply', and library directory Docker mounts have failed because
+    of a missing directory. This problem seems to occur only on Linux.
+    Delete the directories using sudo and try again in the correct order:
+    'taito env apply', 'taito start'.
+
   'No configuration has been provided'
     The command probably requires authentication and you either have not
     authenticated or your authentication has expired. In such case, run
@@ -44,32 +64,6 @@ TAITO CLI TROUBLESHOOTING
     command execution, the command probably requires authentication and you
     either have not authenticated or your authentication has expired. In such
     case, run 'taito auth:ENV' or 'taito auth:ENV reset' to authenticate.
-
-  'No space left on device'
-    Try cleaning your local workspace by running 'taito workspace clean'. You
-    can also try to enlarge the docker virtual disk in your docker preferences.
-    Also check that you have free disk space available on your computer.
-
-  'Error: UPGRADE FAILED: "my-project-ENV" has no deployed releases'
-    Helm release is probably corrupted. Try to fix it by running
-    'taito stop:ENV' or 'taito down:ENV'.
-
-  502 Bad Gateway
-    Check application status with `taito status:ENV` and
-    `taito logs:CONTAINER:ENV` commands, and fix the problem. If everything
-    seems fine, check ingress logs. Perhaps you have not set basic auth secrets
-    required by ingress.
-
-  Invalid SSL certificate (NET::ERR_CERT_AUTHORITY_INVALID)
-    Check ingress logs. Perhaps SSL certificate processing has failed for some
-    reason.
-
-  Some library directories are owned by root (e.g. node_modules)
-    You probably have run `taito start` before installing libraries with
-    'taito env apply', and library directory Docker mounts have failed because
-    of a missing directory. This problem seems to occur only on Linux.
-    Delete the directories using sudo and try again in the correct order:
-    'taito env apply', 'taito start'.
 
   'Unknown command'
     - Did you execute the command in a project directory that contains
@@ -82,6 +76,21 @@ TAITO CLI TROUBLESHOOTING
       TODO...
     - Try upgrading Taito CLI with 'taito upgrade'
     - Try upgrading Docker and Docker Compose
+
+  'Error: UPGRADE FAILED: "..." has no deployed releases'
+    Helm release has been corrupted somehow. Try deleting Helm release with
+    'taito down:ENV', wait for a while, and then deploy the Helm release with
+    'taito deployment deploy:ENV' or 'taito deployment start:ENV'.
+
+  502 Bad Gateway
+    Check application status with `taito status:ENV` and
+    `taito logs:CONTAINER:ENV` commands, and fix the problem. If everything
+    seems fine, check ingress logs. Perhaps you have not set basic auth secrets
+    required by ingress.
+
+  Invalid SSL certificate (NET::ERR_CERT_AUTHORITY_INVALID)
+    Check ingress logs. Perhaps SSL certificate processing has failed for some
+    reason.
 
   My application continuously crashes or restarts
     Liveness probe is probably failing. Check logs with `taito logs:TARGET:ENV`
@@ -100,11 +109,6 @@ TAITO CLI TROUBLESHOOTING
     is no apparent reason why the build failed, just try to retry the CI/CD
     build. If it fails again, try to build production build locally by running
     'taito start --clean --prod' and then try to fix the build problem.
-
-  'Error: UPGRADE FAILED: "..." has no deployed releases'
-    Helm release has been corrupted somehow. Try deleting Helm release with
-    'taito down:ENV', wait for a while, and then deploy the Helm release with
-    'taito deployment deploy:ENV' or 'taito deployment start:ENV'.
 
   Tutorial
     Taito CLI tutorial guides you through some common software development

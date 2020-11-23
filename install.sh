@@ -121,8 +121,5 @@ echo "taito upgrade                      # Upgrade"
 echo "taito check                        # Check installation"
 echo "taito -h                           # Show help"
 echo
-echo "Known issue: On macOS Taito CLI commands may sometimes fail if you run them"
-echo "in your home root directory."
-echo
 echo "TIP: If you have problems, try to run 'taito upgrade' or 'taito trouble'."
 echo
