@@ -6,6 +6,11 @@ TAITO CLI TROUBLESHOOTING
       plugins run during command execution. If you want to see even more output,
       use the `--debug` flag.
 
+  'shell-init: error retrieving current directory: ...'
+    KNOWN ISSUE: On macOS Taito CLI commands may sometimes fail if you run them
+    in your home root directory. This is related to Docker volume mounts, and
+    it may be a bug in Docker for Mac. Run Taito CLI commands elsewhere for now.
+
   Read timeout on 'taito kaboom' or 'taito start --clean':
     If the kaboom command fails with Docker Compose read timeout error, stop it
     with ctrl+c, start it again with 'taito start', and then run 'taito init'.
