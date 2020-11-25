@@ -10,14 +10,14 @@ TAITO CLI TROUBLESHOOTING
       commands that plugins run during command execution. If you want to see
       even more output, use the `--debug` flag.
 
-  On macOS: 'shell-init: error retrieving current directory: ...'
-    This seems to be related to Docker volume mounts, and is resolved by
-    resetting docker to factory defaults. This error is most likely seen when
-    user is located in a directory with lots of content (e.g. user home dir).
-
-  On macOS: 'darwin-x64' binaries cannot be used on the 'linux-x64' platform
-    This seems to be related to Docker volume mounts, and is resolved by
-    resetting docker to factory defaults.
+  'getcwd error'
+  'shell-init: error retrieving current directory: ...'
+  'darwin-x64' binaries cannot be used on the 'linux-x64' platform
+    These seem to be Docker for Mac bugs. The errors are most likely seen when
+    you are located in a directory with lots of content (e.g. user home dir).
+    You can try to resolve the issue by restarting Docker or by resetting
+    Docker to factory defaults. More info:
+    https://github.com/docker/for-mac/issues/1509
 
   Read timeout on 'taito kaboom' or 'taito start --clean':
     If the kaboom command fails with Docker Compose read timeout error, stop it
