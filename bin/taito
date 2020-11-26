@@ -574,6 +574,8 @@ if [[ ${exit_code} != "0" ]] && \
    [[ ${continue} == false ]]; then
   echo
   echo "HINT: Run 'taito trouble' to see troubleshoothing"
+  echo "You can read troubleshooting also at GitHub:"
+  echo "https://github.com/TaitoUnited/taito-cli/blob/master/trouble.txt"
   echo
 fi
 

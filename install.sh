@@ -121,5 +121,7 @@ echo "taito upgrade                      # Upgrade"
 echo "taito check                        # Check installation"
 echo "taito -h                           # Show help"
 echo
-echo "TIP: If you have problems, try to run 'taito upgrade' or 'taito trouble'."
+echo "If you have problems, run 'taito trouble' to display troubleshooting."
+echo "You can read troubleshooting also at GitHub:"
+echo "https://github.com/TaitoUnited/taito-cli/blob/master/trouble.txt"
 echo
