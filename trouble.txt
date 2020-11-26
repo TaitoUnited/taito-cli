@@ -14,27 +14,21 @@ TAITO CLI TROUBLESHOOTING
     - Resetting Docker for Mac to factory defaults
     - More info: https://github.com/docker/for-mac/issues/1509
 
+  Taito CLI hangs after displaying the copyright notice or application
+  hangs on "taito kaboom" or "taito start"
+    Your Docker daemon is probably stuck. First try restarting your Docker
+    daemon. If the problem persists after Docker restart, try to run
+    "Clean / Purge data" or "Reset to factory default" from Docker preferences.
+    Rebooting your computer might also help.
+
   Read timeout on "taito kaboom" or "taito start --clean":
     If the kaboom command fails with Docker Compose read timeout error, stop it
     with ctrl+c, start it again with "taito start", and then run "taito init".
     For more info, see https://github.com/docker/compose/issues/3927
 
-  Application hangs on "taito kaboom" or "taito start":
-    There is probably something wrong with your docker. You can try some of the
-    following alternatives:
-    - Restart Docker daemon
-    - Clean up Docker with "taito workspace clean"
-    - Reset Docker to factory defaults
-
-  Taito CLI hangs after displaying the copyright notice
-    First try restarting your Docker daemon. If the problem persists after
-    Docker restart, try Docker reset as your Docker virtual disk might have
-    been corrupted. Rebooting your computer might also help.
-
   Strange Docker problems
-    Try to reset docker to factory defaults (on macOS: preferences -> reset) or
-    just clean it by running "taito workspace clean". Adjust your Docker
-    resource limits (on macOS: preferences -> disk, preferences -> advanced).
+    Try to reset docker to factory defaults or just clean it by running
+    "taito workspace clean". Adjust your Docker resource limits.
 
   "No space left on device"
     Try cleaning your local workspace by running "taito workspace clean". You
@@ -59,6 +53,7 @@ TAITO CLI TROUBLESHOOTING
     - Run the problematic taito command with the verbose (-v) flag to see the
       commands that plugins run during command execution. If you want to see
       even more output, use the "--debug" flag.
+    - Use taito help ("taito -h", "taito db -h", etc.)
 
   "Unknown command"
     - Did you execute the command in a project directory that contains
@@ -91,21 +86,31 @@ TAITO CLI TROUBLESHOOTING
     build. If it fails again, try to build production build locally by running
     "taito start --clean --prod" and then try to fix the build problem.
 
-  Remote environment
-  ------------------
+  "Error: UPGRADE FAILED: ... has no deployed releases"
+    Helm release has been corrupted somehow. Try deleting Helm release with
+    "taito down:ENV", wait for a while, and then deploy the Helm release with
+    "taito deployment deploy:ENV" or "taito deployment start:ENV".
 
-  My application does not work on remote environment
-  My application continuously crashes or restarts
+  Remote environments
+  -------------------
+
+  My application does not work on remote environment or my application
+  continuously crashes or restarts
     Liveness probe is probably failing, or perhaps you implementation crashes
     on start. You can investigate the problem with commands "taito status:ENV",
     "taito logs:TARGET:ENV" and "taito open logs:ENV". If you
     cannot figure out a reason, try to kill the container with
     "taito kill:TARGET:ENV" to see if it helps.
 
-  "No configuration has been provided"
-    The command probably requires authentication and you either have not
-    authenticated or your authentication has expired. In such case, run
-    "taito auth:ENV" or "taito auth:ENV reset" to authenticate.
+  "502 Bad Gateway"
+    Check application status with "taito status:ENV" and
+    "taito logs:TARGET:ENV" commands, and fix the problem. If everything
+    seems fine, check ingress logs. Perhaps you have not set basic auth secrets
+    required by ingress.
+
+  "Invalid SSL certificate (NET::ERR_CERT_AUTHORITY_INVALID)"
+    Check ingress logs. Perhaps SSL certificate processing has failed for some
+    reason.
 
   Connection or authorization error
     If you run into a connection or authorization error during Taito CLI
@@ -113,17 +118,7 @@ TAITO CLI TROUBLESHOOTING
     either have not authenticated or your authentication has expired. In such
     case, run "taito auth:ENV" or "taito auth:ENV reset" to authenticate.
 
-  "Error: UPGRADE FAILED: ... has no deployed releases"
-    Helm release has been corrupted somehow. Try deleting Helm release with
-    "taito down:ENV", wait for a while, and then deploy the Helm release with
-    "taito deployment deploy:ENV" or "taito deployment start:ENV".
-
-  "502 Bad Gateway"
-    Check application status with "taito status:ENV" and
-    "taito logs:CONTAINER:ENV" commands, and fix the problem. If everything
-    seems fine, check ingress logs. Perhaps you have not set basic auth secrets
-    required by ingress.
-
-  "Invalid SSL certificate (NET::ERR_CERT_AUTHORITY_INVALID)"
-    Check ingress logs. Perhaps SSL certificate processing has failed for some
-    reason.
+  "No configuration has been provided"
+    The command probably requires authentication and you either have not
+    authenticated or your authentication has expired. In such case, run
+    "taito auth:ENV" or "taito auth:ENV reset" to authenticate.
