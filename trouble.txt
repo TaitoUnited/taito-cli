@@ -1,6 +1,6 @@
 TAITO CLI TROUBLESHOOTING
 
-  DOCKER ISSUES for non-Linux systems (macOS, Windows)
+  DOCKER ISSUES on non-Linux systems (macOS, Windows)
   ----------------------------------------------------
 
   KNOWN ISSUE for Mac:
@@ -14,7 +14,7 @@ TAITO CLI TROUBLESHOOTING
     - Resetting Docker for Mac to factory defaults
     - More info: https://github.com/docker/for-mac/issues/1509
 
-  Taito CLI hangs after displaying the copyright notice or application
+  Taito CLI hangs after displaying the copyright notice or your application
   hangs on "taito kaboom" or "taito start"
     Your Docker daemon is probably stuck. First try restarting your Docker
     daemon. If the problem persists after Docker restart, try to run
@@ -35,7 +35,7 @@ TAITO CLI TROUBLESHOOTING
     can also try to enlarge the docker virtual disk in your docker preferences.
     Also check that you have free disk space available on your computer.
 
-  DOCKER ISSUES for Linux systems
+  DOCKER ISSUES on Linux systems
   -------------------------------
 
   Some local library directories are owned by root (e.g. node_modules)
