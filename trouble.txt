@@ -94,13 +94,13 @@ TAITO CLI TROUBLESHOOTING
   Remote environments
   -------------------
 
-  My application does not work on remote environment or my application
-  continuously crashes or restarts
-    Liveness probe is probably failing, or perhaps you implementation crashes
-    on start. You can investigate the problem with commands "taito status:ENV",
-    "taito logs:TARGET:ENV" and "taito open logs:ENV". If you
-    cannot figure out a reason, try to kill the container with
-    "taito kill:TARGET:ENV" to see if it helps.
+  My application does not work on a remote environment or it continuously
+  crashes/restarts
+    Health check (liveness probe) is probably failing, or perhaps your
+    implementation crashes on start. You can investigate the problem with
+    commands "taito status:ENV", "taito logs:TARGET:ENV" and
+    "taito open logs:ENV". If you cannot figure out a reason, try to kill the
+    container with "taito kill:TARGET:ENV" to see if it helps.
 
   "502 Bad Gateway"
     Check application status with "taito status:ENV" and
