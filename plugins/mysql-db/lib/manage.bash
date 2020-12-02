@@ -28,7 +28,7 @@ function mysql::create_database () {
         -P "${database_port}" \
         -D mysql \
         -u "${database_username}" \
-        -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a; set @dbuserviewer='${database_name}v'; source $(sql_file_path create.sql) ;" \
+        -e "set @database='${database_name}'; set @dbusermaster='${database_master_username:-root}'; set @dbusermgr='${database_name}'; set @dbuserapp='${database_name}a'; set @dbuserviewer='${database_name}v'; source $(sql_file_path create.sql) ;" \
         > "${taito_vout}"
     ) do
       :
