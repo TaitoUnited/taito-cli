@@ -1,5 +1,35 @@
 TAITO CLI TROUBLESHOOTING
 
+  General
+  -------
+
+  Common tips for any problem
+    Try to upgrade Taito CLI by running "taito upgrade". Use taito trouble or
+    taito help to solve the problem: "taito trouble", "taito -h", "taito db -h",
+    etc. Run the problematic taito command with the verbose (-v) flag to see
+    the commands that plugins run during command execution. If you want to see
+    even more output, use the "--debug" flag.
+
+  "Unknown command"
+    Did you execute the command in a project directory that contains
+    taito-config.sh? Did you give the correct environment as argument? Commands
+    always use the local environment by default. Check your plugin configuration
+    in your taito-config.sh files. Perhaps some plugins are not enabled.
+
+  Local development
+  -----------------
+
+  "bind source path does not exist: /my-project/secrets/local/..."
+    You are missing a secret. Create the secret with "taito secret rotate NAME"
+    or just clean everything with "taito kaboom".
+
+  Application does not work locally
+    - Try clean start by running "taito kaboom". If the kaboom command fails
+      with Docker Compose read timeout error, stop it with ctrl+c, start it
+      again with "taito start", and then run "taito init"
+    - Try cleaning your local workspace by running "taito workspace kill" and
+      "taito workspace clean"
+
   DOCKER ISSUES on non-Linux systems (macOS, Windows)
   ----------------------------------------------------
 
@@ -45,38 +75,6 @@ TAITO CLI TROUBLESHOOTING
     Delete the directories using sudo and try again in the correct order:
     "taito env apply", "taito start".
 
-  General
-  -------
-
-  Any problem
-    - Try to upgrade Taito CLI by running "taito upgrade".
-    - Run the problematic taito command with the verbose (-v) flag to see the
-      commands that plugins run during command execution. If you want to see
-      even more output, use the "--debug" flag.
-    - Use taito help ("taito -h", "taito db -h", etc.)
-
-  "Unknown command"
-    - Did you execute the command in a project directory that contains
-      taito-config.sh?
-    - Did you give the correct environment as argument? Commands always use the
-      local environment by default.
-    - Check your plugin configuration in your taito-config.sh files. Perhaps
-      some plugins are not enabled.
-    - Make sure that you have set all the environment variables correctly:
-      TODO...
-    - Try upgrading Taito CLI with "taito upgrade"
-    - Try upgrading Docker and Docker Compose
-
-  Local development
-  -----------------
-
-  Application does not work locally
-    - Try clean start by running "taito kaboom". If the kaboom command fails
-      with Docker Compose read timeout error, stop it with ctrl+c, start it
-      again with "taito start", and then run "taito init"
-    - Try cleaning your local workspace by running "workspace-kill" and
-      "workspace-clean"
-
   CI/CD
   -----
 
@@ -85,11 +83,6 @@ TAITO CLI TROUBLESHOOTING
     is no apparent reason why the build failed, just try to retry the CI/CD
     build. If it fails again, try to build production build locally by running
     "taito start --clean --prod" and then try to fix the build problem.
-
-  "Error: UPGRADE FAILED: ... has no deployed releases"
-    Helm release has been corrupted somehow. Try deleting Helm release with
-    "taito down:ENV", wait for a while, and then deploy the Helm release with
-    "taito deployment deploy:ENV" or "taito deployment start:ENV".
 
   Remote environments
   -------------------

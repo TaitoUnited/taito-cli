@@ -161,7 +161,7 @@ function generate-secrets::generate_by_type () {
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the service account key as json file from"
           echo "the following web page by selecting the correct service account and then"
-          echo "pressing the 'create key' button."
+          echo "pressing the 'add key' button."
           echo
           echo "https://console.cloud.google.com/apis/credentials?${opts}project=${taito_resource_namespace_id:-}"
           echo ------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ function generate-secrets::generate_by_type () {
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the service account key as json file from"
           echo "the following web page by selecting the correct service account and then"
-          echo "pressing the 'create key' button."
+          echo "pressing the 'add key' button."
           echo
           echo "https://console.cloud.google.com/apis/credentials?${opts}project=${taito_zone:-}"
           echo ------------------------------------------------------------------------------
