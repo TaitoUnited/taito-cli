@@ -21,7 +21,7 @@ The following software needs to be installed on your computer before you can ins
 1. Install Taito CLI by running the following commands on your unix-like shell (e.g. bash):
 
     ```shell
-    export TAITO_INSTALL_DIR=~/taito-cli
+    export TAITO_INSTALL_DIR=~/.taito-cli
     export TAITO_GIT_CLONE_METHOD=https  # https or ssh
     curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash
     ```
