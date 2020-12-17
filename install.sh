@@ -86,16 +86,25 @@ mkdir -p ~/.terraform.d
 echo
 echo "[6. Add autocomplete support for bash]"
 if ! grep "$TAITO_INSTALL_DIR/support" ~/.bashrc &> /dev/null; then
+  echo "" >> ~/.bashrc
+  echo "# Taito CLI" >> ~/.bashrc
   echo "source $TAITO_INSTALL_DIR/support/bash/complete" >> ~/.bashrc
+  echo "" >> ~/.bashrc
   echo "modified ~/.bashrc"
 fi
 if ! grep "$TAITO_INSTALL_DIR/support" ~/.bash_profile &> /dev/null
    ! grep ".bashrc" ~/.bash_profile &> /dev/null; then
+  echo "" >> ~/.bash_profile
+  echo "# Taito CLI" >> ~/.bash_profile
   echo "source $TAITO_INSTALL_DIR/support/bash/complete" >> ~/.bash_profile
+  echo "" >> ~/.bash_profile
   echo "modified ~/.bash_profile"
 fi
 if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
+  echo "" >> ~/.inputrc
+  echo "# Taito CLI" >> ~/.inputrc
   echo 'set show-all-if-ambiguous on' >> ~/.inputrc
+  echo "" >> ~/.inputrc
   echo "modified ~/.inputrc"
 fi
 
