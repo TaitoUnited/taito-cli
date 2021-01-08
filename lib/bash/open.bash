@@ -13,7 +13,7 @@ export -f taito::convert_link
 function taito::print_browser_command () {
   local url=$(taito::convert_link "${1:?}")
 
-  if [[ $url == "https://"* ]] || [[ $url == "http://"* ]]; then
+  if [[ $url == "https://"* ]] || [[ $url == "http://"* ]]; then
     if [[ ${taito_host_os:-} == "windows" ]]; then
       echo "start '${taito_default_browser:-chrome}' '${url}'"
     elif [[ ${taito_host_os} == "macos" ]]; then
