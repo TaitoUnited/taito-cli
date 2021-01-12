@@ -8,4 +8,13 @@ if [[ ${taito_mode:?} == "ci" ]] && \
   /taito-cli-deps/tools/user-init.sh
 fi
 
+if [[ ${taito_command} == "test" ]]; then
+  for secret in ${taito_testing_secrets[@]}; do
+    (
+      export taito_command_context='test'
+      taito ${taito_options:-} secret export:$taito_env ${secret%:*}
+    )
+  done
+fi
+
 taito::call_next "${@}"
