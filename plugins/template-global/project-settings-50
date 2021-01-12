@@ -219,6 +219,14 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# TIP: If you want to deploy staging, canary, and production environments"
   echo "# to a different zone than feature, development, and testing environments,"
   echo "# configure alternative prod zone settings here."
+  if [[ $taito_provider != "linux" ]]; then
+    echo "template_default_taito_image_prod=taitounited/taito-cli:ci-$taito_provider"
+  else
+    echo "template_default_taito_image_prod=taitounited/taito-cli:ci"
+  fi
+  echo "template_default_taito_image_username_prod="
+  echo "template_default_taito_image_password_prod="
+  echo "template_default_taito_image_email_prod="
   echo "template_default_organization_prod=$taito_organization"
   echo "template_default_organization_abbr_prod=${taito_organization_abbr:-$taito_organization}"
   echo "template_default_zone_prod=$taito_zone"
