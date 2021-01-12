@@ -290,6 +290,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_binauthz_secret_name_prod=${binauthz_secret_name:-}"
   echo "template_default_binauthz_public_key_id_prod=${binauthz_public_key_id:-}"
 
+  echo "template_default_postgres_prod=${postgres_instance}"
   echo "template_default_postgres_host_prod=\"${postgres_host_prod:-$postgres_host}\""
   echo "template_default_postgres_port_prod=\"${postgres_port_prod:-$postgres_port}\""
   echo "template_default_postgres_username_suffix_prod=${postgres_username_suffix}"
@@ -297,6 +298,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_postgres_ssl_client_cert_enabled_prod=${postgres_ssl_client_cert_enabled:-false}"
   echo "template_default_postgres_ssl_server_cert_enabled_prod=${postgres_ssl_server_cert_enabled:-false}"
   echo "template_default_postgres_proxy_ssl_enabled_prod=${postgres_ssl_enabled:-true}"
+  echo "template_default_mysql_prod=${mysql_instance}"
   echo "template_default_mysql_host_prod=\"${mysql_host_prod:-$mysql_host}\""
   echo "template_default_mysql_port_prod=\"${mysql_port_prod:-$mysql_port}\""
   echo "template_default_mysql_username_suffix_prod=${mysql_username_suffix}"
