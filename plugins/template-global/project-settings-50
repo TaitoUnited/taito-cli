@@ -172,6 +172,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: Kubernetes"
   echo "template_default_kubernetes=${kubernetes_name:-}"
   echo "template_default_kubernetes_regional=${kubernetes_regional:-false}"
+  echo "template_default_kubernetes_network_policy_provider=${kubernetes_network_policy_provider:-CALICO}"
   echo
   echo "# Template: Binary Authorization"
   echo "template_default_binauthz_attestor=${binauthz_attestor:-}"
@@ -274,6 +275,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
 
   echo "template_default_kubernetes_prod=${kubernetes_name:-}"
   echo "template_default_kubernetes_regional_prod=${kubernetes_regional:-false}"
+  echo "template_default_kubernetes_network_policy_provider_prod=${kubernetes_network_policy_provider:-CALICO}"
   echo "template_default_binauthz_attestor_prod=${binauthz_attestor:-}"
   echo "template_default_binauthz_secret_name_prod=${binauthz_secret_name:-}"
   echo "template_default_binauthz_public_key_id_prod=${binauthz_public_key_id:-}"
