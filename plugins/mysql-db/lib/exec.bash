@@ -68,6 +68,11 @@ function mysql::connect () {
          [[ ${database_build_password} ]]; then
       mysql_username="${database_build_username}"
       mysql_password="${database_build_password}"
+    elif [[ ${database_app_username} ]] &&
+       [[ ${database_app_password} ]] &&
+       [[ ${mysql_password} == ${taito_default_password} ]]; then
+      mysql_username="${database_app_username}"
+      mysql_password="${database_app_password}"
     fi
   fi
 
@@ -117,6 +122,11 @@ function mysql::dump () {
        [[ ${database_build_password} ]]; then
       mysql_username="${database_build_username}"
       mysql_password="${database_build_password}"
+    elif [[ ${database_app_username} ]] &&
+       [[ ${database_app_password} ]] &&
+       [[ ${mysql_password} == ${taito_default_password} ]]; then
+      mysql_username="${database_app_username}"
+      mysql_password="${database_app_password}"
     fi
   fi
 
