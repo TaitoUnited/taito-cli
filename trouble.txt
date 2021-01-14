@@ -47,9 +47,10 @@ TAITO CLI TROUBLESHOOTING
   Taito CLI hangs after displaying the copyright notice or your application
   hangs on "taito kaboom" or "taito start"
     Your Docker daemon is probably stuck. First try restarting your Docker
-    daemon. If the problem persists after Docker restart, try to run
-    "Clean / Purge data" or "Reset to factory default" from Docker preferences.
-    Rebooting your computer might also help.
+    daemon. Rebooting your computer might also help. If the problem persists,
+    try to run "Clean / Purge data" or "Reset to factory default" from Docker
+    preferences. Remember to adjust your Docker resource limits (cpu/memory)
+    after the factory reset.
 
   Read timeout on "taito kaboom" or "taito start --clean":
     If the kaboom command fails with Docker Compose read timeout error, stop it
