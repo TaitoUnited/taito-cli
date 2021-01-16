@@ -183,6 +183,77 @@ function taito::core::sort_commands_by_priority () {
   tr ' ' '\n' | sed 's/^\(.*\)\(..\)$/\2\1\2/' | sort | sed 's/^..\(.*\)$/\1/'
 }
 
+function taito::core::parse_git_repo_url () {
+  # $1: git@github.com:xxx/webapp-template.git/folder
+  # -> git@github.com:xxx/webapp-template.git
+  echo "${1%.git*}.git"
+}
+
+function taito::core::parse_git_repo_name () {
+  # $1: git@github.com:xxx/webapp-template.git/folder
+  # -> webapp-template
+  local temp=${1#*\/}
+  echo "${temp%.git*}"
+}
+
+function taito::core::parse_git_repo_folder () {
+  # $1: git@github.com:xxx/webapp-template.git/folder
+  # -> folder
+  local temp=${1#*\/}
+  echo "${temp#*.git}"
+}
+
+function taito::core::download () {
+  # Type e.g. 'resources' or 'extensions'
+  local type=$1
+  # Resource url
+  local url=$2
+
+  if [[ ${url} == "git@"* ]]; then
+    # Git url e.g. git@github.com:TaitoUnited/webapp-template.git/my-extension
+    temp=${url#*\/}
+    repo_url=$(taito::core::parse_git_repo_url "${url}")
+    repo_name=$(taito::core::parse_git_repo_name "${url}")
+    repo_dir=$(taito::core::parse_git_repo_folder "${url}")
+    repo_local_path="${taito_home_path}/.taito/${type}/${repo_name}"
+    if [[ -d "${repo_local_path}" ]]; then
+      # Pull the latest version
+      echo "Pulling from git: ${repo_local_path}"
+      (
+        cd "${repo_local_path}"
+        git pull > /dev/null
+      )
+    else
+      (
+        echo "Checking out ${repo_url} from git"
+        mkdir -p ${repo_local_path}
+        cd ${repo_local_path}
+        git clone "${repo_url}" . &> /dev/null
+        git checkout &> /dev/null
+      )
+    fi
+  elif [[ ${url} == *"gz" ]]; then
+    # Archive link e.g.
+    # my-ext-0.5.0=https://github.com/MyOrg/my-ext/archive/v0.5.0.tar.gz
+    folder_name=${extension%=*}
+    url=${extension##*=}
+    repo_local_path="${taito_home_path}/.taito/${type}/${folder_name}"
+    if [[ ! -d "${taito_home_path}/.taito/${folder_name}" ]]; then
+      echo "Downloading ${folder_name} from ${url}"
+      ( curl -sL "${url}" | tar zxv -C ${taito_home_path}/.taito/${type} )
+    fi
+  else
+    # Local url
+    if [[ -d "${url}/.git" ]]; then
+      echo "Pulling from git: ${url}"
+      (
+        cd "${url}"
+        git pull > /dev/null
+      )
+    fi
+  fi
+}
+
 function taito::core::upgrade () {
   set +e
   # Make sure that mounted directories exist
@@ -206,6 +277,18 @@ function taito::core::upgrade () {
     fi
     git pull
   )
+
+  # Download resources
+  echo "Downloading resources..."
+  for resource in ${taito_global_resources[@]}; do
+    taito::core::download resources "${resource}"
+  done
+
+  # Download extensions
+  echo "Downloading extensions..."
+  for extension in ${taito_global_extensions[@]}; do
+    taito::core::download extensions "${extension}"
+  done
 
   # Pull taito-cli docker image
   echo "Pulling taito-cli docker image from registry: ${taito_image}"
