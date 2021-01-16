@@ -3,8 +3,8 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 opts=""
-if [[ ${google_authuser:-} ]]; then
-  opts="authuser=${google_authuser}&"
+if [[ ${taito_google_authuser:-} ]]; then
+  opts="authuser=${taito_google_authuser}&"
 fi
 
 if [[ ${taito_uptime_provider:-} == "gcp" ]] &&

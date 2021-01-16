@@ -35,8 +35,8 @@ echo "Press enter to open build trigger management"
 read -r
 
 opts=""
-if [[ ${google_authuser:-} ]]; then
-  opts="authuser=${google_authuser}&"
+if [[ ${taito_google_authuser:-} ]]; then
+  opts="authuser=${taito_google_authuser}&"
 fi
 
 taito::open_browser \

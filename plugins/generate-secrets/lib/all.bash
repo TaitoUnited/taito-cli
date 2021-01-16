@@ -152,8 +152,8 @@ function generate-secrets::generate_by_type () {
         ;;
       file)
         opts=""
-        if [[ ${google_authuser:-} ]]; then
-          opts="authuser=${google_authuser}&"
+        if [[ ${taito_google_authuser:-} ]]; then
+          opts="authuser=${taito_google_authuser}&"
         fi
         if [[ ${taito_provider:-} == "gcp" ]] &&
            [[ ${taito_type:-} != "zone" ]] &&

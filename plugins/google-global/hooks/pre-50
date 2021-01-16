@@ -1,15 +1,15 @@
 #!/bin/bash -e
 : "${taito_command:?}"
 
-# Add authuser parameter to all google.com links if google_authuser
+# Add authuser parameter to all google.com links if taito_google_authuser
 # has been defined in default taito-config.sh
-if [[ ${google_authuser:-} ]] && \
+if [[ ${taito_google_authuser:-} ]] && \
    ([[ ${taito_command} == "open-"* ]] || [[ ${taito_command} == "link-"* ]])
 then
   export link_global_urls
-  link_global_urls=$(echo "${link_global_urls}" | sed -re "s|(google\\.com[^ ]*\\?)|\1authuser=${google_authuser}\\&|g")
+  link_global_urls=$(echo "${link_global_urls}" | sed -re "s|(google\\.com[^ ]*\\?)|\1authuser=${taito_google_authuser}\\&|g")
   export link_urls
-  link_urls=$(echo "${link_urls}" | sed -re "s|(google\\.com[^ ]*\\?)|\1authuser=${google_authuser}\\&|g")
+  link_urls=$(echo "${link_urls}" | sed -re "s|(google\\.com[^ ]*\\?)|\1authuser=${taito_google_authuser}\\&|g")
 fi
 
 taito::call_next "${@}"

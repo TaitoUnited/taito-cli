@@ -12,8 +12,8 @@ else
   read -r
 
   opts=""
-  if [[ ${google_authuser:-} ]]; then
-    opts="authuser=${google_authuser}&"
+  if [[ ${taito_google_authuser:-} ]]; then
+    opts="authuser=${taito_google_authuser}&"
   fi
   taito::open_browser \
     "https://console.cloud.google.com/cloud-build/triggers?${opts}project=${taito_zone}"
