@@ -7,11 +7,17 @@ kubectl::use_context
 
 # Wait until all containers have been deployed
 sleep 5
-while [[ $(kubectl get pods | grep ContainerCreating) ]]
-do
+while kubectl get pods | grep "ContainerCreating" &> /dev/null; do
   echo "Waiting until all containers have been deployed"
   sleep 5
 done
 sleep 15
+
+if kubectl get pods | grep "BackOff\|Error\|Init" &> /dev/null; do
+  echo "ERROR: Some of the containers failed to start"
+  echo
+  kubectl get pods
+  exit 1
+fi
 
 taito::call_next "${@}"
