@@ -183,7 +183,7 @@ QUICK EXAMPLES
   PROJECT CONFIGURATION
     project apply                      # Migrate project to the latest configuration
     project generate                   # Generate project documentation or other resources
-    project contact                    # List project contacts
+    project show                       # Show some important project details
     project destroy                    # Destroy project
 
   PROJECT INFRASTRUCTURE MANAGEMENT
@@ -947,9 +947,9 @@ PROJECT: BASIC SETUP
   project generate
     Generate project documentation or other resources.
 
-  project contacts
-    List of project contacts.
-    TIP: Enable the 'make' or 'npm' plugin and implement project-contacts
+  project show
+    Show some important project details.
+    TIP: Enable the 'make' or 'npm' plugin and implement project-show
     script in your makefile/package.json.
 
 PROJECT: ENVIRONMENT SETUP

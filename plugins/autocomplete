@@ -150,7 +150,7 @@ if [[ ${taito_project:-} ]]; then
   echo "project apply"
   echo "project destroy"
   echo "project generate"
-  echo "project contacts"
+  echo "project show"
 
   # Environment specific commands
   envs="loc ${taito_environments:-}"

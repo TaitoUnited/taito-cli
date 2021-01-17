@@ -225,10 +225,10 @@ if [[ ${taito_project:-} ]]; then
     "# Migrate project to the latest configuration"
   echo "project destroy                  " \
     "# Destroy project"
-  echo "project generate                     " \
+  echo "project generate                 " \
     "# Populate taito settings to project documentation"
-  echo "project contacts                 " \
-    "# List project contacts"
+  echo "project show                     " \
+    "# Show some important project details"
 
   # Environment specific commands
   envs="loc local ${taito_environments:-}"

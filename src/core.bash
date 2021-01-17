@@ -130,7 +130,7 @@ function taito::core::print_command_with_internal_syntax () {
   # Non-verbs
   # TODO: Refactor commands so that most of them end with a verb. Refactor also:
   # 'feat: FEAT', 'env:ENV', 'taito util browser', 'taito random string', 'taito random words'
-  local end_words="${end_verbs} ${end_prepositions} autocomplete contact conventions descriptions doctor diff down info log logs maintenance pr proxy readme revisions shell status trouble unit version "
+  local end_words="${end_verbs} ${end_prepositions} autocomplete conventions descriptions doctor diff down info log logs maintenance pr proxy readme revisions shell status trouble unit version "
 
   if [[ ${args[0]} != *"-"* ]]; then
     space_cmd=()
