@@ -52,7 +52,7 @@ template-global::init create
 
 rm -f ./_template-config.sh
 
-taito ${taito_options:-} project docs
+taito ${taito_options:-} project generate
 
 
 doc="scripts/taito/README.md#configuration"

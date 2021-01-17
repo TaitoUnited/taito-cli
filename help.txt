@@ -182,7 +182,7 @@ QUICK EXAMPLES
 
   PROJECT CONFIGURATION
     project apply                      # Migrate project to the latest configuration
-    project docs                       # Populate taito settings to project documentation
+    project generate                   # Generate project documentation or other resources
     project contact                    # List project contacts
     project destroy                    # Destroy project
 
@@ -944,8 +944,8 @@ PROJECT: BASIC SETUP
   project destroy
     Destroy project.
 
-  project docs
-    Populate taito settings to project documentation (e.g. links)
+  project generate
+    Generate project documentation or other resources.
 
   project contacts
     List of project contacts.

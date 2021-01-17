@@ -149,7 +149,7 @@ if [[ ${taito_project:-} ]]; then
   # NOTE: Advanced
   echo "project apply"
   echo "project destroy"
-  echo "project docs"
+  echo "project generate"
   echo "project contacts"
 
   # Environment specific commands
