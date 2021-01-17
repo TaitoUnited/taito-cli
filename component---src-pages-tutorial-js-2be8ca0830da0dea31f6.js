@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[8],{598:function(t,a,n){"use strict";n.r(a),n.d(a,"query",(function(){return i}));var e=n(2),d=(n(1),n(15)),r=n(588),u=n(587),c=n(589),o=n(50);a.default=function(t){var a=t.data,n=Object(d.c)(a,"data")[0];return Object(e.d)(r.a,null,Object(e.d)(u.a,null),Object(e.d)("div",{dangerouslySetInnerHTML:{__html:n.html}}),Object(e.d)(o.a,{dir:"y",amount:20}),Object(e.d)(c.a,{path:"/tutorial/README"}))};var i="2324460314"}}]);
-//# sourceMappingURL=component---src-pages-tutorial-js-2be8ca0830da0dea31f6.js.map
