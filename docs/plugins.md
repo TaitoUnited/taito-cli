@@ -52,8 +52,9 @@ You typically need to implement the following Taito CLI commands in _package.jso
 - `taito info`: Show info required for logging in to the application.
 - `taito unit`: Run unit tests.
 - `taito test`: Run integration and e2e tests. Taito CLI provides `taito util-test` command that may be useful for implementing these.
-- `taito check deps`: Check project dependencies (available upgrades, known vulnerabilities, etc.).
-- `taito check size`: Check application size (webpack bundle size, for example).
+- `taito code check`: Check code quality.
+- `taito dep check`: Check project dependencies (available upgrades, known vulnerabilities, etc.).
+- `taito size check`: Check application size (webpack bundle size, for example).
 - `release-pre:prod` and `release-post:prod`: Execute pre- and post-tasks for a production release (execute semantic-release, for example).
 
 ## Cloud providers

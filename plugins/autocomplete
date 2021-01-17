@@ -243,9 +243,9 @@ if [[ ${taito_project:-} ]]; then
       echo "lint${suffix}"
       echo "unit${suffix}"
       echo "unit${suffix}: TEST"
-      echo "check deps${suffix}"
-      echo "check code${suffix}"
-      echo "check size${suffix}"
+      echo "dep check${suffix}"
+      echo "code check${suffix}"
+      echo "size check${suffix}"
       echo "docs${suffix}"
     fi
 

@@ -53,12 +53,12 @@ QUICK EXAMPLES
     test:server                        # Run all integration and e2e tests of server
     test:server trip car               # Run the 'car' test of 'trip' test suite
     test:dev                           # Run integration/e2e tests against dev env
-    check deps                         # Check dependencies
-    check deps:server                  # Check dependencies of the server
-    check code                         # Check code quality
-    check code:client                  # Check code quality of the client
-    check size                         # Check size
-    check size:client                  # Check size of the client
+    code check                         # Check code quality
+    code check:client                  # Check code quality of the client
+    dep check                          # Check dependencies
+    dep check:server                   # Check dependencies of the server
+    size check                         # Check size
+    size check:client                  # Check size of the client
 
   INFORMATION
     info:dev                           # Show information required for signing in
@@ -451,13 +451,13 @@ PROJECT: BASIC OPERATIONS
     TIP: Enable the 'make' or 'npm' plugin and implement lint script in your
     makefile/package.json.
 
-  check deps[:TARGET]
-    Check dependencies
-
-  check code[:TARGET]
+  code check[:TARGET]
     Check code quality
 
-  check size[:TARGET]
+  dep check[:TARGET]
+    Check dependencies
+
+  size check[:TARGET]
     Check size
 
   docs

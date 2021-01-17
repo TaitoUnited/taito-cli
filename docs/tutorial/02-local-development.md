@@ -328,9 +328,9 @@ taito open docs                # Open project documentation on browser
 taito open apidocs             # Open generated api documentation on browser
 taito open ux                  # Open UX guides and layouts on browser
 
-taito check size:client        # Analyze size of the client
-taito check deps:server        # Check dependencies of the server
-taito check code:server        # Check code quality ot the server
+taito size check:client        # Analyze size of the client
+taito dep check:server        # Check dependencies of the server
+taito code check:server        # code check quality ot the server
 
 taito trouble                  # Display troubleshooting
 taito workspace kill           # Kill all running processes (e.g. containers)
