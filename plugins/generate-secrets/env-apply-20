@@ -2,7 +2,21 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-taito::confirm "Generate secrets" || \
+text1="Secrets are confidential values that must be kept secret. For example a \
+database password is a secret."
+
+text2="During secret generation the dev environment secrets are used as \
+default values for local secrets, if you have authenticated in dev \
+environment."
+
+echo "${text1}"
+echo
+if [[ ${taito_env} == "local" ]]; then
+  echo "${text2}"
+  echo
+fi
+
+taito::confirm "Generate secrets for ${taito_env} environment" || \
   taito::skip_to_next "${@}"
 
 generate-secrets::create_and_export true

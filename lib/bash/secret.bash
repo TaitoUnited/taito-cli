@@ -91,6 +91,21 @@ function taito::get_secret_value_format () {
 }
 export -f taito::get_secret_value_format
 
+function taito::get_secret_hint () {
+  local secret_name=$1
+
+  # Filter taito_secret_hints the ones that match with secret name
+  while IFS='*' read -ra items; do
+    local trimmed=$(echo "${items[@]}" | awk '{$1=$1;print}')
+    local name="${trimmed%=*}"
+    local text="${trimmed##*=}"
+    if [[ -n ${name} ]] && [[ ${secret_name} == *"${name}"* ]]; then
+      echo "${text}"
+    fi
+  done <<< "${taito_global_secret_hints:-} ${taito_secret_hints:-}"
+}
+export -f taito::get_secret_hint
+
 # Reads secret info to environment variables. The secret in question is
 # determined by the given ${secret_index}"
 function taito::expose_secret_by_index () {

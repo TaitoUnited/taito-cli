@@ -6,6 +6,7 @@ function generate-secrets::create_and_export () {
   local exports=""
   local secret_index=0
   local secret_names=(${taito_secret_names})
+  local secret_hint
 
   local prefix="${taito_project:-}-${taito_env:-}-"
 
@@ -17,6 +18,10 @@ function generate-secrets::create_and_export () {
        ) && (
          [[ ${skip_confirm} == "true" ]] || (
            taito::print_title "${secret_name/$prefix/}"
+           secret_hint=$(taito::get_secret_hint $secret_name)
+           if [[ -n "${secret_hint}" ]]; then
+             echo "${secret_hint}"
+           fi
            taito::confirm \
              "Create new value for '${secret_name/$prefix/}' with method ${secret_orig_method:-$secret_method:-}"
          )
