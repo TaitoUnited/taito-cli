@@ -63,10 +63,10 @@ You can create a new zone with the following steps:
 2. Clean start the local development environment with the following command. This typically initializes your local secrets, installs some libraries, builds and starts containers, and initializes your database with tables and some data. Secret default values are typically copied from dev environment, if available.
 
     ```shell
-    taito kaboom
+    taito develop
     ```
 
-    > In case of trouble, run `taito trouble`. Sometimes `taito kaboom` might fail and hopefully `taito trouble` helps.
+    > In case of trouble, run `taito trouble`. Sometimes `taito develop` might fail and hopefully `taito trouble` helps.
 
 3. Open application web UI on your browser:
 

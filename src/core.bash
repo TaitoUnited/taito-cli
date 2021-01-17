@@ -123,15 +123,14 @@ function taito::core::print_command_with_internal_syntax () {
   # Verbs that typically end a taito command
   # TODO: The following should also be added, but requires command name refactoring:
   # build, check, commit, link, open
-  local end_verbs=" add apply auth authenticate cancel change clean connect continue copy copyquick quickcopy create deploy destroy dump export forward get install import kill lint list ls merge migrate mount pause prepare publish rebase recreate release revert rotate run save scan set start stop subscribe sync synchronize tag untag upgrade verify wait "
+  local end_verbs=" add apply auth authenticate cancel change clean connect continue copy copyquick quickcopy create deploy develop destroy dump export forward get install import kill lint list ls merge migrate mount pause prepare publish rebase recreate release revert rotate run save scan set start stop subscribe sync synchronize tag untag upgrade verify wait "
 
   local end_prepositions=" continue between to from "
 
   # Non-verbs
   # TODO: Refactor commands so that most of them end with a verb. Refactor also:
   # 'feat: FEAT', 'env:ENV', 'taito util browser', 'taito random string', 'taito random words'
-  # TODO: taito kaboom --> taito develop
-  local end_words="${end_verbs} ${end_prepositions} autocomplete code contact conventions deps descriptions docs doctor diff down info kaboom log logs maintenance pr proxy readme revisions shell size status trouble unit version "
+  local end_words="${end_verbs} ${end_prepositions} autocomplete code contact conventions deps descriptions docs doctor diff down info log logs maintenance pr proxy readme revisions shell size status trouble unit version "
 
   if [[ ${args[0]} != *"-"* ]]; then
     space_cmd=()

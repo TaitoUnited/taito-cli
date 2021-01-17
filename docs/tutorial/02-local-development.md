@@ -7,7 +7,7 @@ The template uses Docker Compose to run your application. All parts of the appli
 Start the application with the following commands:
 
 ```shell
-taito kaboom        # Clean start local development environment
+taito develop        # Clean start local development environment
                     # (Runs 'taito env apply --clean', 'taito start --clean', 'taito init')
 taito open client   # Open application web user interface
 taito info          # Show info required for signing in to the application

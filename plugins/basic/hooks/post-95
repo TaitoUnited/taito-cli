@@ -13,10 +13,10 @@ if [[ ${taito_hook_command_executed:-} == true ]] || \
 fi
 
 # Handle aliases by executing additional commands after this command:
-# - taito kaboom -> taito env apply --clean --start --init
+# - taito develop -> taito env apply --clean --start --init
 # - taito env apply [--clean] [--start] [--init]
 exec_after=""
-if [[ ${taito_command} == "kaboom" ]]; then
+if [[ ${taito_command} == "develop" ]]; then
   exec_after="
     export taito_command_context='env apply'
     taito ${taito_options:-} env-apply:${taito_env} --clean --start --init"

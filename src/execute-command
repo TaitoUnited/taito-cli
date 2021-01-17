@@ -480,6 +480,13 @@ if [[ ${taito_command} == "env" ]] && [[ ${taito_env} == "local" ]]; then
   exit 1
 fi
 
+# Validate old "kaboom"
+if [[ ${taito_command} == "kaboom" ]]; then
+  echo
+  echo "'taito kaboom' has been removed. Run 'taito develop' instead."
+  exit 130
+fi
+
 # Validate old --upgrade
 if [[ ${taito_command} == "__upgrade" ]]; then
   echo
