@@ -487,6 +487,13 @@ if [[ ${taito_command} == "kaboom" ]]; then
   exit 130
 fi
 
+# Validate old "project docs"
+if [[ ${taito_command} == "project-docs" ]]; then
+  echo
+  echo "'taito project docs' has been removed. Run 'taito project generate' instead."
+  exit 130
+fi
+
 # Validate old --upgrade
 if [[ ${taito_command} == "__upgrade" ]]; then
   echo
