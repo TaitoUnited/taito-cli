@@ -304,11 +304,6 @@ if [[ ${admin} == true ]]; then
   fi
 fi
 
-# TODO: exit with error if docker has not been installed
-if [[ "$(docker images -q ${taito_image:?} 2> /dev/null || echo "NOT RUNNING")" == "" ]]; then
-  taito::core::upgrade
-fi
-
 # Prepare execution log files
 mkdir -p "${taito_home_path}/.taito/tmp" &> /dev/null
 log_file=$(mktemp "${taito_home_path}/.taito/tmp/taito-cli.XXXXXX")
