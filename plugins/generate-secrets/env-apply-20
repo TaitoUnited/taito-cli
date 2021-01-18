@@ -5,9 +5,8 @@
 text1="Secrets are confidential values that must be kept secret. For example a \
 database password is a secret."
 
-text2="During secret generation the dev environment secrets are used as \
-default values for local secrets, if you have authenticated in dev \
-environment."
+text2="Dev environment secrets are used as default values for local secrets \
+during secret generation, if you have authenticated in dev environment."
 
 echo "${text1}"
 echo
