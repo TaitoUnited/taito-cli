@@ -13,7 +13,7 @@ while kubectl get pods | grep "ContainerCreating" &> /dev/null; do
 done
 sleep 15
 
-if kubectl get pods | grep "BackOff\|Error\|Init" &> /dev/null; do
+if kubectl get pods | grep "BackOff\|Error\|Init" &> /dev/null; then
   echo "ERROR: Some of the containers failed to start"
   echo
   kubectl get pods
