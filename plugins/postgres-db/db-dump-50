@@ -18,9 +18,11 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   fi
 
   echo "Dumping database ${database_name:?} to ${dump_file}. Please wait."
+  # NOTE: Dumping data as inserts because sometimes COPY doesn't seem to not
+  # work correctly with empty columns
   postgres::connect \
     "${username}" \
-    " ${tool_options} --no-owner --no-privileges --blobs -f ${dump_file}" \
+    " ${tool_options} --no-owner --no-privileges --blobs --inserts -f ${dump_file}" \
     "pg_dump"
 fi
 
