@@ -24,6 +24,7 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
     flags="-f ${filename} ${tool_options}"
     postgres::connect "${username}" "${flags}"
   )
+  echo "Done"
 fi
 
 taito::call_next "${@}"

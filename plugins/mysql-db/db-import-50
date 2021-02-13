@@ -9,6 +9,7 @@ if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
   # tool_options="${*##* -- }"
 
   mysql::connect < "${1}"
+  echo "Done"
 fi
 
 taito::call_next "${@}"
