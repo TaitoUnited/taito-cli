@@ -73,9 +73,14 @@ export_env_vars="\
 # Determine pod
 docker-compose::expose_pod_and_container
 
-docker_compose_test_file=docker-compose-test.yaml
-if [[ -f "./docker-compose-test-${taito_ci_provider:-}.yaml" ]]; then
-  docker_compose_test_file="docker-compose-test-${taito_ci_provider}.yaml"
+docker_compose_test_file=docker-compose-cicd.yaml
+docker_compose_test_suffix="-cicd"
+if [[ -f "./docker-compose-test.yaml" ]]; then
+  docker_compose_test_file=docker-compose-test.yaml
+  docker_compose_test_suffix="-test"
+fi
+if [[ -f "./docker-compose-cicd-${taito_ci_provider:-}.yaml" ]]; then
+  docker_compose_test_file="docker-compose-cicd-${taito_ci_provider}.yaml"
 fi
 
 # Determine command to be run on test phase
@@ -84,9 +89,10 @@ compose_pre_cmd=""
 compose_cmd="docker exec ${docker_env_vars} -it ${pod} ${test_executable} SUITE ${test_filter}"
 if [[ ${taito_env} != "local" ]]; then
   # Running against a remote service
-  container_test="${taito_project}-${dir}-test"
+  container_test="${taito_project}-${dir}-${docker_compose_test_suffix}"
   image_test="${container_test}:latest"
-  image_src="${container_test}er:latest"
+  # REFACTOR: rename -tester image to -cicd
+  image_src="${taito_project}-${dir}-tester:latest"
   if [[ ${taito_mode:-} != "ci" ]]; then
     # Use development image for testing
     # NOTE: does not exist if project dir is not named after taito_vc_repository
