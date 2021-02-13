@@ -8,10 +8,13 @@ if [[ ${taito_mode:?} == "ci" ]] && \
   /taito-cli-deps/tools/user-init.sh
 fi
 
-if [[ ${taito_command} == "test" ]]; then
-  for secret in ${taito_testing_secrets[@]}; do
+if [[ ${taito_command} == "db-deploy" ]] ||
+   [[ ${taito_command} == "test" ]]; then
+  # NOTE: taito_testing_secrets for backwards compatibility
+  cicd_secrets=("${taito_cicd_secrets} ${taito_testing_secrets}")
+  for secret in ${cicd_secrets[@]}; do
     (
-      export taito_command_context='test'
+      export taito_command_context="${taito_command}"
       taito ${taito_options:-} secret export:$taito_env ${secret%:*}
     )
   done
