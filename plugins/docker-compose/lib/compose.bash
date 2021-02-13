@@ -12,7 +12,13 @@ function docker-compose::exec () {
     taito::execute_on_host_fg \
       "docker-compose -f $compose_file run --no-deps --entrypoint ${commands} ${pod}"
   else
-    taito::execute_on_host_fg "docker exec -it ${pod} ${commands}"
+    taito::execute_on_host_fg "\
+      exec_opts=
+      if [ -t 1 ]; then
+        exec_opts="-it"
+      fi
+      docker exec \${exec_opts} ${pod} ${commands}
+    "
   fi
 }
 
