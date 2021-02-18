@@ -23,9 +23,22 @@ function docker::image_push () {
     echo "Pushing image $1 to registry. This may take some time. Please be patient."
     (
       taito::executing_start
-      # TODO add users to docker group to avoid sudo?
-      docker save "$1" | \
-        ssh ${ssh_opts} -C "${taito_ssh_user:?}@${taito_host:?}" sudo docker load
+      # TODO: remove hardcoded -untested prefix hack
+      image_tag="$1"
+      if [[ ${image_tag} == *"-untested" ]]; then
+        echo 1 $image_tag
+        docker save "${image_tag}" | \
+          ssh ${ssh_opts} -C "${taito_ssh_user:?}@${taito_host:?}" ${LINUX_SUDO} docker load
+      else
+        echo 2 $image_tag
+        ssh ${ssh_opts} "${taito_ssh_user}@${taito_host}" "
+          ${LINUX_SUDO} bash -c '
+            set -e
+            ${taito_setv:-}
+            docker tag ${image_tag}-untested ${image_tag}
+          '
+        "
+      fi
     )
   fi
 }

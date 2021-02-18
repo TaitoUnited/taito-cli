@@ -25,7 +25,11 @@ function docker-compose::exec () {
 function docker-compose::expose_pod_and_container () {
   pod="${taito_target:?}"
   if [[ ${pod} != "${taito_project}-"* ]]; then
-    pod="${taito_project}-${pod}"
+    if [[ ${taito_env} != "local" ]]; then
+      pod="${taito_project}-${pod}-${taito_env}"
+    else
+      pod="${taito_project}-${pod}"
+    fi
   fi
 }
 

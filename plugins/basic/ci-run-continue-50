@@ -13,7 +13,7 @@ function cleanup {
   cp -r secrets "tmp/ci/${taito_target_env}" &> /dev/null || :
   cd "tmp/ci/${taito_target_env}"
   echo "Image tag: ${image_tag}"
-  taito::execute_with_ssh_agent "./local-ci ${taito_target_env} ${image_tag}"
+  taito::execute_with_ssh_agent "./local-ci.sh ${taito_target_env} ${image_tag}"
 )
 
 taito::call_next "${@}"
