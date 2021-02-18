@@ -8,8 +8,8 @@ if [[ ${taito_container_registry_provider:-} == "local" ]]; then
 
   images=$(
     ssh ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" "
-      sudo bash -c '
-        sudo docker images | grep ${taito_container_registry} | grep [[:space:]]${image_tag}[[:space:]]
+      bash -c '
+        docker images | grep ${taito_container_registry} | grep [[:space:]]${image_tag}[[:space:]]
       '
     "
   )
