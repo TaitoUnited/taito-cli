@@ -15,7 +15,7 @@ if [[ ${taito_command} == "db-deploy" ]] ||
   for secret in ${cicd_secrets[@]}; do
     (
       export taito_command_context="${taito_command}"
-      taito ${taito_options:-} secret export:$taito_env ${secret%:*}
+      taito -c ${taito_options:-} secret export:$taito_env ${secret%:*}
     )
   done
 fi

@@ -556,6 +556,7 @@ if ( [[ ${taito_env} == "prod" ]] || [[ ${taito_dest_env} == "prod" ]] ) && \
    [[ ${taito_command} != "logs" ]] && \
    [[ ${taito_command} != "open-"* ]] && \
    [[ ${taito_mode:-} != "ci" ]] && \
+   [[ ${continue:-} != "true" ]] && \
    [[ ${quiet} != "true" ]]; then
   echo
   echo "The operation is targetting prod environment of ${taito_project:-}."
