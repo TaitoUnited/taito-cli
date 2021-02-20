@@ -13,6 +13,16 @@ while kubectl get pods | grep "ContainerCreating" &> /dev/null; do
 done
 sleep 15
 
+# Wait even longer in case of a temporary error
+if kubectl get pods | grep "BackOff\|Error\|Init" &> /dev/null; then
+  echo "Some errors during deployment:"
+  echo
+  kubectl get pods
+  echo
+  echo "Waiting errors to resolve..."
+  sleep 20
+fi
+
 if kubectl get pods | grep "BackOff\|Error\|Init" &> /dev/null; then
   echo "ERROR: Some of the containers failed to start"
   echo
