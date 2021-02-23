@@ -26,7 +26,7 @@ function docker-compose::expose_pod_and_container () {
   pod="${taito_target:?}"
   if [[ ${pod} != "${taito_project}-"* ]]; then
     if [[ ${taito_env} != "local" ]]; then
-      pod="${taito_project}-${pod}-${taito_env}"
+      pod="${taito_project}-${taito_env}-${pod}"
     else
       pod="${taito_project}-${pod}"
     fi
