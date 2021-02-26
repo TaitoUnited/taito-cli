@@ -33,17 +33,17 @@ function taito::expose_db_user_credentials () {
   database_build_password="${secret_value}"
   database_build_password_changed="${secret_changed}"
 
-  if [[ ${database_viewer_username} ]]; then
+  if [[ ${database_viewer_username} ]] && [[ ${database_viewer_secret:-} ]]; then
     database_viewer_username="${database_viewer_username}"
-    find_secret_name="${database_viewer_secret:?}"
+    find_secret_name="${database_viewer_secret}"
     taito::expose_secret_by_name "${find_secret_name}"
     database_viewer_password="${secret_value}"
     database_viewer_password_changed="${secret_changed}"
   fi
 
-  if [[ ${database_default_username} ]]; then
+  if [[ ${database_default_username} ]] && [[ ${database_default_secret:-} ]]; then
     database_default_username="${database_default_username}"
-    find_secret_name="${database_default_secret:?}"
+    find_secret_name="${database_default_secret}"
     taito::expose_secret_by_name "${find_secret_name}"
     database_default_password="${secret_value}"
     # database_default_password_changed="${secret_changed}"
