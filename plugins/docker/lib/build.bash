@@ -57,6 +57,7 @@ function docker::build () {
   local image_untested="${image}-untested"
   local image_latest="${prefix}:latest"
   local image_builder="${prefix}-builder:latest"
+  local image_builder_local="${taito_project}-${name}-builder:latest"
   local image_tester="${taito_project}-${name}-tester:latest"
 
   # REFACTOR: clean up this mess
@@ -80,6 +81,7 @@ function docker::build () {
           taito::executing_start;
           docker::image_pull "${image}" && \
           docker::image_pull "${image_builder}" && \
+          docker image tag "${image_builder}" "${image_builder_local}"
           docker image tag "${image_builder}" "${image_tester}"
         ) && pulled="true"
         if [[ $pulled == "true" ]]; then
@@ -127,6 +129,7 @@ function docker::build () {
           --build-arg BUILD_STATIC_ASSETS_LOCATION="${taito_static_assets_location:-}" \
           --cache-from "${image_builder}" \
           --tag "${image_builder}" \
+          --tag "${image_builder_local}" \
           --tag "${image_tester}" \
           "${build_context}"
         # Build the production runtime
@@ -148,6 +151,7 @@ function docker::build () {
     if [[ ${save_image} == "true" ]]; then
       (
         taito::executing_start
+        # TODO: rename tester -> builder everywhere (also bitbucket cicd scripts)
         docker save --output "${name}-tester.docker" "${image_tester}"
         docker save --output "${name}.docker" "${image}"
         pwd
