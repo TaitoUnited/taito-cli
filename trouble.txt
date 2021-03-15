@@ -124,10 +124,12 @@ TAITO CLI TROUBLESHOOTING
   Automatic certificate renewal does not work
     First initialize Taito CLI context by running "taito auth:ENV" and then
     start shell with "taito shell". Check if you have cert-manager acme solver
-    running with "kubectl get all | grep cm-acme-http-solver". One of the
+    running with "kubectl get all | grep cm-acme-http-solver". The
     following steps might resolve the problem:
-    - Delete the acme solver pod with "kubectl delete pod cm-acme-http-solver-X"
-    - Delete also other acme solver resources with "kubectl delete TYPE NAME"
-    - First make backup of the ssl secret with
-      "kubectl get secret my-project-ENV-ssl" -o yaml > ssl-secret.bak".
-      Then delete the secret with "kubectl delete secret my-project-ENV-ssl"
+    1) Make backup of the ssl secret with
+       "kubectl get secret my-project-ENV-ssl -o yaml > ssl-secret.bak".
+    2) Delete the secret with "kubectl delete secret my-project-ENV-ssl".
+    3) Wait for couple of minutes for cert-manager to renew the certificate.
+       If renewal fails, continue to steps 4 and 5.
+    4) Delete the acme solver pod with "kubectl delete pod cm-acme-http-solver-X"
+    5) Delete also other acme solver resources with "kubectl delete TYPE NAME"
