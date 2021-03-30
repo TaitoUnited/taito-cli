@@ -17,21 +17,28 @@ taito::confirm \
 
 # TODO: Use Terraform to create the project (requires version control auth?)
 echo
-echo "Create a new Azure DevOps project with the following settings"
-echo "if one does not exist already."
+echo "Create a new Azure DevOps project with the following settings if one does not exist already."
 echo
-echo "--------------------------------"
-echo "Basic configuration"
-echo "--------------------------------"
-echo
-echo "Project"
 echo "- Project name: ${taito_project}"
 echo "- Visibility: Private"
 echo
-echo "Pipeline"
+echo "Then create a new pipeline for the project with the following settings if one does not exist already. Save it but do not run it yet."
+echo
 echo "- Source code location: ${taito_vc_provider:-GitHub}"
 echo "- Repository: ${taito_vc_repository}"
 echo "- Configuration: Existing Azure Pipelines YAML file (/azure-pipelines.yaml)"
+echo
+echo "Press enter to open Azure DevOps management"
+read -r
+
+taito::open_browser \
+  "https://dev.azure.com/${taito_ci_organization:-$taito_organization}/"
+
+echo "Press enter when ready"
+read -r
+
+taito::confirm "Show advanced CI/CD configuration tips" no || \
+  taito::skip_to_next "${@}"
 echo
 echo "--------------------------------"
 echo "OPTIONAL: Advanced configuration"
@@ -64,11 +71,6 @@ echo "d) Execute CI/CD steps without Taito CLI"
 echo
 echo "   If you cannot use Taito CLI image on your CI/CD, see: https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli"
 echo
-echo "Press enter to open Azure DevOps management"
-read -r
-
-taito::open_browser \
-  "https://dev.azure.com/${taito_ci_organization:-$taito_organization}/"
 
 echo "Press enter when ready"
 read -r
