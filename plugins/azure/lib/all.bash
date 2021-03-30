@@ -21,6 +21,7 @@ function azure::authenticate () {
   fi
 
   if [[ ${kubernetes_name:-} ]]; then
+    echo "NOTE: You can ignore the errors if Kubernetes does not yet exist."
     azure::authenticate_on_kubernetes || (
       echo
       echo "--------------------------------------------------------------------"
