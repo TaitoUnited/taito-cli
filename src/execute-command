@@ -857,7 +857,7 @@ fi
 exit_code=0
 if [[ ${command} == "shell" ]] && \
    [[ -z ${taito_target} ]] && \
-   [[ ${taito_env} == "local" ]]; then
+   ( [[ ${taito_env} == "local" ]] || [[ ${taito_env} == "zone" ]] ); then
   # Start interactive shell
   (
     # Start tillerless helm plugin
