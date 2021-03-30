@@ -51,43 +51,43 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
   if [[ ${taito_skip_override} == false ]] && \
      [[ $(echo "${commands}" | grep "^taito-${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
     # Use overriding command from package.json
-    npm_command="taito-${taito_command}${target}:${taito_env}${options}"
+    taitonpm_command="taito-${taito_command}${target}:${taito_env}${options}"
     skip_remaining_commands=true
   elif [[ ${taito_skip_override} == false ]] && \
      [[ $(echo "${commands}" | grep "^taito-${taito_command}${target}${options}$") != "" ]]; then
     # Use overriding command from package.json without enviroment target
-    npm_command="taito-${taito_command}${target}${options}"
+    taitonpm_command="taito-${taito_command}${target}${options}"
     skip_remaining_commands=true
   elif [[ ${taito_skip_override} == false ]] && \
      [[ $(echo "${commands}" | grep "^taito-host-${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
     # Use overriding command from package.json
-    npm_command="taito-host-${taito_command}${target}:${taito_env}${options}"
+    taitonpm_command="taito-host-${taito_command}${target}:${taito_env}${options}"
     skip_remaining_commands=true
     run_on_host=true
   elif [[ ${taito_skip_override} == false ]] && \
      [[ $(echo "${commands}" | grep "^taito-host-${taito_command}${target}${options}$") != "" ]]; then
     # Use overriding command from package.json without enviroment target
-    npm_command="taito-host-${taito_command}${target}${options}"
+    taitonpm_command="taito-host-${taito_command}${target}${options}"
     skip_remaining_commands=true
     run_on_host=true
   elif [[ $(echo "${commands}" | grep "^${taito_command}${target}:${taito_env}${options}$") != "" ]]; then
     # Use normal command from package.json
-    npm_command="${taito_command}${target}:${taito_env}${options}"
+    taitonpm_command="${taito_command}${target}:${taito_env}${options}"
   elif [[ $(echo "${commands}" | grep "^${taito_command}${target}${options}$") != "" ]]; then
     # Use normal command from package.json without enviroment target
-    npm_command="${taito_command}${target}${options}"
+    taitonpm_command="${taito_command}${target}${options}"
   fi
 
   # taito test prehandling
 
-  # TODO: 'npm_command == test' and 'npm_command == taito-test' can be removed?
+  # TODO: 'taitonpm_command == test' and 'taitonpm_command == taito-test' can be removed?
   running_ci_test="false"
   if [[ ${taito_mode:-} == "ci" ]] && \
      ( \
        [[ ${taito_command} == "test" ]] || \
-       [[ ${npm_command} == "test" ]] || \
-       [[ ${npm_command%%:*} == "test" ]] || \
-       [[ ${npm_command%%:*} == "taito-test" ]] \
+       [[ ${taitonpm_command} == "test" ]] || \
+       [[ ${taitonpm_command%%:*} == "test" ]] || \
+       [[ ${taitonpm_command%%:*} == "taito-test" ]] \
      ); then
      running_ci_test="true"
   fi
@@ -95,7 +95,7 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
   # TODO: should be in taito-cli core only?
   if [[ ${running_ci_test} == "true" ]] && [[ ${ci_exec_test:-} != "true" ]]; then
     echo "Skipping test because ci_exec_test != true"
-    npm_command=""
+    taitonpm_command=""
     running_ci_test=false
     taito_hook_command_executed=true
   fi
@@ -103,7 +103,7 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
   if [[ ${taito_command} == "build-release"* ]] || \
      [[ ${taito_command} == "artifact-release"* ]]; then
     # TODO: remove this artifact-release skip hack
-    npm_command=""
+    taitonpm_command=""
   fi
 
   # run npm command
@@ -111,13 +111,13 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
   if [[ ${taito_debug:-} == "true" ]]; then
     echo "taito_mode: ${taito_mode:-}"
     echo "taito_command: ${taito_command}"
-    echo "npm_command: ${taito_command}"
+    echo "taitonpm_command: ${taito_command}"
   fi
 
-  if [[ ${npm_command} != "" ]]; then
+  if [[ ${taitonpm_command} != "" ]]; then
     # Run it
     taito::print_plugin_title
-    echo "Running script '${npm_command}${params}'"
+    echo "Running script '${taitonpm_command}${params}'"
     # NOTE: Intentionally removed parameter support: -- "${@}"
     # NOTE: All libs are installed using 'npm install' run on directly on host.
     #       Perhaps some npm scripts should also be run on host to avoid
@@ -125,15 +125,15 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
     taito_hook_command_executed=true
     if [[ ${run_on_host} == "true" ]]; then
       taito::execute_on_host_fg "
-        export taito_command_context='npm ${npm_command}'
-        npm run -s ${npm_command}${params}
+        export taito_command_context='npm ${taitonpm_command}'
+        npm run -s ${taitonpm_command}${params}
       "
       exit_code=0
     else
       (
-        export taito_command_context="npm ${npm_command}"
+        export taito_command_context="npm ${taitonpm_command}"
         taito::executing_start
-        npm run -s ${npm_command}${params}
+        npm run -s ${taitonpm_command}${params}
       )
       exit_code=$?
     fi
