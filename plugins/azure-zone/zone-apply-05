@@ -1,0 +1,23 @@
+#!/bin/bash -e
+# shellcheck source=../azure/lib/all.bash
+. "${taito_cli_path:?}/plugins/azure/lib/all.bash"
+
+( [[ ${kubernetes_name:-} ]] && \
+    taito::confirm "Enable auto upgrades for Kubernetes (feature currently in preview)"
+) || taito::skip_to_next "${@}"
+
+az feature register --namespace Microsoft.ContainerService -n AutoUpgradePreview
+
+echo
+echo "Waiting for AutoUpgradePreview to be registered. This can take 10-20 minutes. Please wait..."
+while : ; do
+  az_autoupgrade_output=$(az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService/AutoUpgradePreview')].{Name:name,State:properties.state}" | grep AutoUpgradePreview)
+  echo "${az_autoupgrade_output}"
+  ! (echo "${az_autoupgrade_output}" | grep Registered > /dev/null) || break
+  sleep 60
+done
+
+echo
+az provider register --namespace Microsoft.ContainerService
+
+taito::call_next "${@}"
