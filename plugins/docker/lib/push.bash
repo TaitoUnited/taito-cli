@@ -154,7 +154,7 @@ function docker::package () {
     (
       echo "Packaging ./tmp/${taito_target}.zip for deployment"
       taito::executing_start
-      mkdir -p "./tmp/${taito_target}"
+      mkdir -p "./tmp/${taito_target}/service"
       docker run \
         --user 0:0 \
         -v "${PWD}/tmp/${taito_target}:/tmp/${taito_target}" \
