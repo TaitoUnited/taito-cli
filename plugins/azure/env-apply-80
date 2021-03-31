@@ -51,12 +51,14 @@ echo "Assigned the following roles for the ${taito_zone}-ci service principal:"
 echo "- Kubernetes: Azure Kubernetes Service Cluster User Role"
 echo "- Container Registry: AcrPush, AcrPull"
 echo
-echo "Now add the app ID (AZURE_CLIENT_ID) and password (AZURE_CLIENT_SECRET) to your"
+echo "CI/CD Configuration"
+echo "-------------------"
+echo
+echo "Add the app ID (AZURE_CLIENT_ID) and password (AZURE_CLIENT_SECRET) to your"
 echo "CI/CD pipeline according to your CI/CD provider instructions. You usually"
-echo "add them as variables named AZURE_CLIENT_ID and AZURE_CLIENT_SECRET. If you"
-echo "configure them on organization/account level, you don't have to configure"
-echo "them for each git repository separately. You should hide/mask/encrypt the"
-echo "AZURE_CLIENT_SECRET value if your CI/CD provides such an option."
+echo "add them as variables or secrets named AZURE_CLIENT_ID and AZURE_CLIENT_SECRET."
+echo "You should hide/mask/encrypt the AZURE_CLIENT_SECRET value if your CI/CD"
+echo "provides such an option."
 echo
 echo "Press enter when done."
 read -r
