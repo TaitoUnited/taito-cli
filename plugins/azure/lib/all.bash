@@ -39,7 +39,12 @@ function azure::authenticate_on_acr () {
 
 function azure::authenticate_on_kubernetes () {
   taito::executing_start
+  local opts=
+  if [[ ${kubernetes_admin} ]]; then
+    opts="--admin"
+  fi
   az aks get-credentials \
+    ${opts} \
     --name "${kubernetes_name}" \
     --resource-group "${azure_resource_group:-$taito_zone}" \
     --overwrite-existing > "${taito_vout:-}"
