@@ -110,7 +110,7 @@ function terraform::run_zone () {
       echo
       echo "Terraform execution failed. Sometimes you can resolve problems just"
       echo "by running Terraform scripts again."
-      taito::confirm "Try again" || exit 1
+      taito::confirm "Try again with the same configuration values" || exit 1
     done
   )
 }

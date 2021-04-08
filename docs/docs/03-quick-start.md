@@ -16,6 +16,7 @@ You can create a new zone with the following steps:
     taito zone create gcp
     cd my-zone
     EDIT taito-config.sh
+    EDIT *.yaml
     ```
 
 2. Apply infrastructure configuration by running the following command, and follow instructions. This creates you a zone; typically consisting of a Kubernetes cluster, database clusters, object storage buckets, container registry, virtual private network, and some settings related to logging, monitoring, and IAM.

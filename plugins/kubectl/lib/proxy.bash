@@ -35,25 +35,30 @@ function kubectl::db_proxy_start () {
       fi
 
       local proxy_pod
-      proxy_pod=$(kubectl get pods --no-headers \
+      proxy_pod=$(yes | kubectl get pods --no-headers \
         --output=custom-columns=NAME:.metadata.name \
         --namespace "${proxy_namespace}" | grep "${proxy_instance}" | head -n 1
       )
-      (
-        echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
-        taito::executing_start
-        kubectl port-forward \
-          "${proxy_pod}" \
-          "${database_port:?}:${database_real_port:-5432}" \
-          --address "${taito_db_proxy_bind_address}" \
-          --namespace "${proxy_namespace}" > /dev/null &
-        sleep 1
-        if [[ $1 != "true" ]]; then
-          wait
-        else
-          sleep 3
-        fi
-      )
+
+      if [[ -z ${proxy_pod:-} ]]; then
+        echo "WARNING: Database proxy was not started. Database pod not found."
+      else
+        (
+          echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
+          taito::executing_start
+          kubectl port-forward \
+            "${proxy_pod}" \
+            "${database_port:?}:${database_real_port:-5432}" \
+            --address "${taito_db_proxy_bind_address}" \
+            --namespace "${proxy_namespace}" > /dev/null &
+          sleep 1
+          if [[ $1 != "true" ]]; then
+            wait
+          else
+            sleep 3
+          fi
+        )
+      fi
     fi
   fi
 }
