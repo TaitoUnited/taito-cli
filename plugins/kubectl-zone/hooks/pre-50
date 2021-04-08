@@ -7,6 +7,15 @@
 . "${taito_plugin_path}/../kubectl/lib/secret.bash"
 : "${taito_command:?}"
 
+# Reset Kubernetes settings
+if [[ ${taito_command} == "auth" ]] && (
+     [[ " ${*} " == *" --reset "* ]] || [[ " ${*} " == *" reset "* ]]
+   ); then
+  taito::print_plugin_title
+  rm -rf ~/.kube &> /dev/null
+  echo "Removed Kubernetes settings from ~/.kube"
+fi
+
 # Start database proxy
 if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
    [[ ${taito_command_requires_db_proxy:-} == "true" ]]; then
