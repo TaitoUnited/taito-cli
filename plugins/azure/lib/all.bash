@@ -21,6 +21,7 @@ function azure::authenticate () {
   fi
 
   if [[ ${kubernetes_name:-} ]]; then
+    echo "Authenticating to Kubernetes"
     azure::authenticate_on_kubernetes || (
       echo
       echo "--------------------------------------------------------------------"
@@ -48,6 +49,9 @@ function azure::authenticate_on_kubernetes () {
     --name "${kubernetes_name}" \
     --resource-group "${azure_resource_group:-$taito_zone}" \
     --overwrite-existing > "${taito_vout:-}"
+
+  # Trigger authentication prompt
+  kubectl version
 }
 
 function azure::ensure_resource_group_exists () {
