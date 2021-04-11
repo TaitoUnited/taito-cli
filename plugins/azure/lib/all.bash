@@ -2,9 +2,13 @@
 
 function azure::authenticate () {
   local options=" ${*} "
+  local do_reset=false
 
-  if ! az account show &> /dev/null || \
-     [[ ${options} == *" --reset "* ]]; then
+  if [[ ${options} == *" --reset "* ]]; then
+    do_reset=true
+  fi
+
+  if ! az account show &> /dev/null || ${do_reset}; then
     echo "Provide access to your Azure account."
     echo
     echo "Press enter to start the login process."
@@ -22,7 +26,7 @@ function azure::authenticate () {
 
   if [[ ${kubernetes_name:-} ]]; then
     echo "Authenticating to Kubernetes"
-    azure::authenticate_on_kubernetes || (
+    azure::authenticate_on_kubernetes ${do_reset} || (
       echo
       echo "--------------------------------------------------------------------"
       echo "WARNING: Kubernetes authentication failed. Note that Kubernetes"
@@ -40,15 +44,20 @@ function azure::authenticate_on_acr () {
 
 function azure::authenticate_on_kubernetes () {
   taito::executing_start
+  local do_reset=$1
+
   local opts=
-  if [[ ${kubernetes_admin} ]]; then
-    opts="--admin"
+  if [[ ${do_reset} == true ]]; then
+    opts="${opts} --overwrite-existing"
   fi
-  az aks get-credentials \
+  if [[ ${kubernetes_admin} ]]; then
+    opts="${opts} --admin"
+  fi
+
+  yes n | az aks get-credentials \
     ${opts} \
     --name "${kubernetes_name}" \
-    --resource-group "${azure_resource_group:-$taito_zone}" \
-    --overwrite-existing > "${taito_vout:-}"
+    --resource-group "${azure_resource_group:-$taito_zone}" &> "${taito_vout:-}"
 
   # Trigger authentication prompt
   kubectl version
