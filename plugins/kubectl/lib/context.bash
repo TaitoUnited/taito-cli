@@ -24,7 +24,7 @@ function kubectl::use_context () {
   # between runs.
   (
     local user=${kubernetes_user:-$kubernetes_cluster}
-    user=${kubernetes_admin:-user}
+    user=${kubernetes_admin:-$user}
     taito::executing_start
     kubectl config set-context "${context}" \
       --namespace="${namespace}" \
