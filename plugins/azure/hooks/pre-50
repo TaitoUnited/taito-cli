@@ -20,6 +20,9 @@ if [[ ${taito_mode:-} == "ci" ]]; then
     exit 1
   fi
 
+  export AAD_SERVICE_PRINCIPAL_CLIENT_ID="${AZURE_CLIENT_ID}"
+  export AAD_SERVICE_PRINCIPAL_CLIENT_SECRET="${AZURE_CLIENT_SECRET}"
+
   az login --service-principal -u "${AZURE_CLIENT_ID}" -p "${AZURE_CLIENT_SECRET}" --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
   az account set --subscription "${taito_provider_billing_account_id}"
 

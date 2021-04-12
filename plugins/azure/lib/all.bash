@@ -59,6 +59,11 @@ function azure::authenticate_on_kubernetes () {
     --name "${kubernetes_name}" \
     --resource-group "${azure_resource_group:-$taito_zone}" &> "${taito_vout:-}"
 
+  if [[ ${taito_mode:-} == "ci" ]]; then
+    # Convert ~/.kube/config to use a non-interactive service principal login
+    kubelogin convert-kubeconfig -l spn
+  fi
+
   # Trigger authentication prompt
   kubectl version
 }
