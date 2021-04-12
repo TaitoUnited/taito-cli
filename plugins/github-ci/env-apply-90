@@ -1,0 +1,19 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+: "${taito_env:?}"
+
+taito::confirm "Configure secrets for GitHub Actions" || taito::skip_to_next "${@}"
+
+echo
+echo "GitHub actions most likely requires some credentials for deploying the application."
+echo
+echo "Press enter to open GitHub Actions secrets on your web browser."
+read -r
+
+taito::open_browser \
+  "https://$taito_vc_repository_url/settings/secrets/actions"
+
+echo "Press enter when done."
+read -r
+
+taito::call_next "${@}"
