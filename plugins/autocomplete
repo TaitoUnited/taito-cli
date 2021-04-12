@@ -252,6 +252,7 @@ if [[ ${taito_project:-} ]]; then
     # Remote-only commands
     if [[ ${env} != "local" ]]; then
       echo "auth${suffix}"
+      echo "auth${suffix} --reset"
       echo "env:${env}"
 
       # echo "alt apply${suffix}"
