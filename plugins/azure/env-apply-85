@@ -1,0 +1,89 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_env:?}"
+
+taito::confirm "Configure Azure credentials for CI/CD pipeline" || taito::skip_to_next "${@}"
+
+echo
+echo "Your CI/CD requires credentials for deploying the application to Azure."
+echo
+echo "Configure AZURE_CLIENT_ID and AZURE_CLIENT_SECRET secret variables for your"
+echo "CI/CD pipeline according to your CI/CD provider instructions. You can most"
+echo "likely retrieve them from Azure Portal like this:"
+echo
+echo "AZURE_CLIENT_ID:"
+echo "- Azure Active Directory"
+echo "- App registrations"
+echo "- All applications"
+echo "- Search with '${taito_project}-${taito_env}-cicd'"
+echo "- Copy the 'Application (client) ID' value and use it as AZURE_CLIENT_ID"
+echo
+echo "AZURE_CLIENT_SECRET:"
+echo "- Certificates & secrets"
+echo "- Client secrets"
+echo "- New client secret"
+echo "- Copy the generated value and use it as AZURE_CLIENT_SECRET"
+echo
+echo "Press enter to open Azure Active Directory app registrations"
+read -r
+
+taito::open_browser \
+  "https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps"
+
+# TODO: the old implementation might still be required on some old environments?
+#
+# echo
+# echo "Your CI/CD requires Azure service principal access keys."
+# echo
+# echo "NOTE: If you have already configured service principal access keys for your"
+# echo "CI/CD, you can ignore this step. You should use the same CI/CD access key"
+# echo "for all of your projects on this ${taito_zone} zone."
+# echo
+# echo "Make sure to take note of the app id and password."
+# echo
+# taito::confirm "Do you really want to generate a new CI/CD access key" "${default}" ||
+#   taito::skip_to_next
+#
+# scope="/subscriptions/${taito_provider_billing_account_id:?}/resourceGroups/${taito_zone:?}"
+#
+# az ad sp create-for-rbac \
+#   --name "${taito_zone}-ci" \
+#   --role "Azure Kubernetes Service Cluster User Role" \
+#   --scopes "${scope}"
+#
+# echo "Assigning more roles. Please wait..."
+#
+# az role assignment create \
+#   --assignee "http://${taito_zone}-ci" \
+#   --role "AcrPush" \
+#   --scope "${scope}" \
+#   --subscription "${taito_provider_billing_account_id}" > /dev/null
+#
+# az role assignment create \
+#   --assignee "http://${taito_zone}-ci" \
+#   --role "AcrPull" \
+#   --scope "${scope}" \
+#   --subscription "${taito_provider_billing_account_id}" > /dev/null
+#
+# echo
+# echo "Assigned the following roles for the ${taito_zone}-ci service principal:"
+# echo "- Kubernetes: Azure Kubernetes Service Cluster User Role"
+# echo "- Container Registry: AcrPush, AcrPull"
+# echo
+# echo "CI/CD Configuration"
+# echo "-------------------"
+# echo
+# echo "Add the app ID (AZURE_CLIENT_ID) and password (AZURE_CLIENT_SECRET) to your"
+# echo "CI/CD pipeline according to your CI/CD provider instructions. You usually"
+# echo "add them as variables or secrets named AZURE_CLIENT_ID and AZURE_CLIENT_SECRET."
+# echo "You should hide/mask/encrypt the AZURE_CLIENT_SECRET value if your CI/CD"
+# echo "provides such an option."
+# echo
+# echo "Press enter when done."
+# read -r
+
+echo "Press enter when done."
+read -r
+
+taito::call_next "${@}"
