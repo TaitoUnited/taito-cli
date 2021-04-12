@@ -47,21 +47,25 @@ function azure::authenticate_on_kubernetes () {
   local do_reset=$1
 
   local opts=
+  local user="${kubernetes_user}"
   if [[ ${do_reset} == true ]]; then
     opts="${opts} --overwrite-existing"
   fi
   if [[ ${kubernetes_admin} ]]; then
     opts="${opts} --admin"
+    local user="${kubernetes_admin}"
   fi
 
-  yes n | az aks get-credentials \
-    ${opts} \
-    --name "${kubernetes_name}" \
-    --resource-group "${azure_resource_group:-$taito_zone}" &> "${taito_vout:-}"
+  if [[ ${do_reset} == true ]] || ! grep -i "^- name: ${user}$" ~/.kube/config > /dev/null; then
+    yes n | az aks get-credentials \
+      ${opts} \
+      --name "${kubernetes_name}" \
+      --resource-group "${azure_resource_group:-$taito_zone}" &> "${taito_vout:-}"
 
-  if [[ ${taito_mode:-} == "ci" ]]; then
-    # Convert ~/.kube/config to use a non-interactive service principal login
-    kubelogin convert-kubeconfig -l spn
+    if [[ ${taito_mode:-} == "ci" ]]; then
+      # Convert ~/.kube/config to use a non-interactive service principal login
+      kubelogin convert-kubeconfig -l spn
+    fi
   fi
 
   # Trigger authentication prompt
