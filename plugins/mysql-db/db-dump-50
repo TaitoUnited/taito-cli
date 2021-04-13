@@ -9,6 +9,7 @@ if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
   # tool_options="${*##* -- }"
 
   echo "Dumping database ${database_name:?} to file ${dump_file}. Please wait."
+  echo "You can ignore the 'Access denied' error message related to tablespaces."
   mysql::dump > "${dump_file}"
 fi
 
