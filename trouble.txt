@@ -4,11 +4,13 @@ TAITO CLI TROUBLESHOOTING
   -------
 
   Common tips for any problem
-    Try to upgrade Taito CLI by running "taito upgrade". Use taito trouble or
-    taito help to solve the problem: "taito trouble", "taito -h", "taito db -h",
-    etc. Run the problematic taito command with the verbose (-v) flag to see
-    the commands that plugins run during command execution. If you want to see
-    even more output, use the "--debug" flag.
+    Restarting Docker often resolves many problems - at least on non-Linux
+    systems. You should also try to upgrade Taito CLI to the latest version
+    with "taito upgrade". You can use taito trouble or taito help to solve many
+    problems: "taito trouble", "taito -h", "taito db -h", etc. You can also run
+    a problematic taito command with the verbose "-v" flag to see the commands
+    that plugins run during command execution. If you want to see even more
+    output, use the "--debug" flag. For example: "taito --debug db connect:dev".
 
   "Unknown command"
     Did you execute the command in a project directory that contains
@@ -30,19 +32,8 @@ TAITO CLI TROUBLESHOOTING
     - Try cleaning your local workspace by running "taito workspace kill" and
       "taito workspace clean"
 
-  DOCKER ISSUES on non-Linux systems (macOS, Windows)
-  ----------------------------------------------------
-
-  KNOWN ISSUE for Mac:
-    "getcwd error", "shell-init: error retrieving current directory" or
-    "darwin-x64 binaries cannot be used on the linux-x64 platform":
-    This seems to be a Docker for Mac bug related to volume mounts. The error
-    most likely occurs when you are located in a directory with lots of
-    content (e.g. user home dir). You can try to resolve the issue by:
-    - Enabling or disabling Docker for Mac file sharing experimental features
-    - Deleting problematic containers and images from Docker dashboard
-    - Resetting Docker for Mac to factory defaults
-    - More info: https://github.com/docker/for-mac/issues/1509
+  Docker issues on non-Linux systems (macOS, Windows)
+  ---------------------------------------------------
 
   Taito CLI immediately freezes before displaying anything or your application
   hangs on "taito develop" or "taito start"
@@ -66,15 +57,15 @@ TAITO CLI TROUBLESHOOTING
     can also try to enlarge the docker virtual disk in your docker preferences.
     Also check that you have free disk space available on your computer.
 
-  DOCKER ISSUES on Linux systems
+  Docker issues on Linux systems
   -------------------------------
 
   Some local library directories are owned by root (e.g. node_modules)
     You probably have run "taito start" before installing libraries with
     "taito env apply", and library directory Docker mounts have failed because
     of a missing directory. This problem seems to occur only on Linux.
-    Delete the directories using sudo and try again in the correct order:
-    "taito env apply", "taito start".
+    Delete the root-owned directories with sudo and then start development with
+    "taito develop".
 
   CI/CD
   -----
