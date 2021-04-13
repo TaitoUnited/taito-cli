@@ -384,6 +384,12 @@ if [[ ${taito_target_env} == "local" ]] && \
   fi
 fi
 
+# Show troubleshooting directly on host in case of docker problems
+if [[ ${command} == "trouble" ]]; then
+  less "${taito_cli_path}/trouble.txt"
+  exit 0
+fi
+
 # Pipe taito docker container output to 'less' in case the command is `help`,
 # `trouble` or `readme`.
 if [[ " ${params[@]} " == *" -h "* ]] || \
