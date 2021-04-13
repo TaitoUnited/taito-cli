@@ -44,7 +44,7 @@ TAITO CLI TROUBLESHOOTING
     - Resetting Docker for Mac to factory defaults
     - More info: https://github.com/docker/for-mac/issues/1509
 
-  Taito CLI hangs after displaying the copyright notice or your application
+  Taito CLI immediately freezes before displaying anything or your application
   hangs on "taito develop" or "taito start"
     Your Docker daemon is probably stuck. First try restarting your Docker
     daemon. Rebooting your computer might also help. If the problem persists,
@@ -84,6 +84,11 @@ TAITO CLI TROUBLESHOOTING
     is no apparent reason why the build failed, just try to retry the CI/CD
     build. If it fails again, try to build production build locally by running
     "taito start --clean --prod" and then try to fix the build problem.
+
+  Cloud provider authentication fails on CI/CD
+    The cloud provider secret keys might be expired. Try to renew them in your
+    CI/CD settings. Running 'taito env apply:ENV' might help you in the renewal
+    process.
 
   Remote environments
   -------------------
