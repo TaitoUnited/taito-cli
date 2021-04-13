@@ -121,15 +121,13 @@ if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
 fi
 
 echo
-echo "[8. Success]"
+echo "[8. Almost finished]"
 echo
-echo "Taito CLI was installed successfully! Start a new shell by opening a new"
-echo "terminal window or by running 'bash' in the current terminal. Then try taito"
-echo "by running the following commands:"
+echo "Finalize the installation with the following steps:"
 echo
-echo "taito upgrade                      # Upgrade"
-echo "taito check                        # Check installation"
-echo "taito -h                           # Show help"
+echo "  1. Download the latest Taito CLI container image by running 'taito upgrade'"
+echo "  2. Check the installation by running 'taito check'"
+echo "  3. Show taito commands with 'taito -h'"
 echo
 echo "If you have problems, run 'taito trouble' to display troubleshooting."
 echo "You can read troubleshooting also at GitHub:"
