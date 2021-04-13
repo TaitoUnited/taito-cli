@@ -125,11 +125,6 @@ do
   fi
 done
 
-if [[ ${continue} == false ]] && [[ ${quiet} == false ]] && [[ ${taito_mode:-} != "ci" ]]; then
-  echo "Taito CLI Copyright (C) 2017-2021 Taito United"
-  echo "This program comes with ABSOLUTELY NO WARRANTY; for details see the LICENSE."
-fi
-
 # Resolve taito-cli paths
 # NOTE: duplicate with ./taito_impl (taito_cli_path must be resolved before
 # other scripts can be called)
