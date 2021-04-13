@@ -23,23 +23,25 @@ if [[ ${taito_mode:-} == "ci" ]]; then
   export AAD_SERVICE_PRINCIPAL_CLIENT_ID="${AZURE_CLIENT_ID}"
   export AAD_SERVICE_PRINCIPAL_CLIENT_SECRET="${AZURE_CLIENT_SECRET}"
 
-  az login --service-principal -u "${AZURE_CLIENT_ID}" -p "${AZURE_CLIENT_SECRET}" --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
-  az account set --subscription "${taito_provider_billing_account_id}"
+  if ! az account show &> /dev/null; then
+    az login --service-principal -u "${AZURE_CLIENT_ID}" -p "${AZURE_CLIENT_SECRET}" --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
+    az account set --subscription "${taito_provider_billing_account_id}"
 
-  # Container registry (ACR) authentication
-  if [[ ${taito_command_requires_container_registry:?} == "true" ]] &&
-     [[ ${taito_container_registry_provider:-} == "azure" ]]
-  then
-    taito::print_plugin_title
-    echo "Getting credentials for Azure Container Registry"
-    azure::authenticate_on_acr
-  fi
+    # Container registry (ACR) authentication
+    if [[ ${taito_command_requires_container_registry:?} == "true" ]] &&
+       [[ ${taito_container_registry_provider:-} == "azure" ]]
+    then
+      taito::print_plugin_title
+      echo "Getting credentials for Azure Container Registry"
+      azure::authenticate_on_acr
+    fi
 
-  # Kubernetes (EKS) authentication
-  if [[ ${taito_command_requires_kubernetes:?} == "true" ]]; then
-    taito::print_plugin_title
-    echo "Getting credentials for Kubernetes"
-    azure::authenticate_on_kubernetes
+    # Kubernetes (EKS) authentication
+    if [[ ${taito_command_requires_kubernetes:?} == "true" ]]; then
+      taito::print_plugin_title
+      echo "Getting credentials for Kubernetes"
+      azure::authenticate_on_kubernetes
+    fi
   fi
 fi
 

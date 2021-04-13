@@ -66,10 +66,10 @@ function azure::authenticate_on_kubernetes () {
       # Convert ~/.kube/config to use a non-interactive service principal login
       kubelogin convert-kubeconfig -l spn
     fi
-  fi
 
-  # Trigger authentication prompt
-  kubectl version
+    # Trigger authentication prompt
+    kubectl version
+  fi
 }
 
 function azure::ensure_resource_group_exists () {
