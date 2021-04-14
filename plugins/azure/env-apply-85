@@ -8,18 +8,18 @@ taito::confirm "Configure Azure credentials for CI/CD pipeline" || taito::skip_t
 echo
 echo "Your CI/CD requires credentials for deploying the application to Azure."
 echo
-echo "Configure AZURE_CLIENT_ID and AZURE_CLIENT_SECRET secret variables for your"
-echo "CI/CD pipeline according to your CI/CD provider instructions. You can most"
-echo "likely retrieve them from Azure Portal like this:"
+echo "Configure ${taito_branch^^}_AZURE_CLIENT_ID and ${taito_branch^^}_AZURE_CLIENT_SECRET secret variables"
+echo "for your CI/CD pipeline according to your CI/CD provider instructions."
+echo "You can most likely retrieve them from Azure Portal like this:"
 echo
-echo "AZURE_CLIENT_ID:"
+echo "${taito_branch^^}_AZURE_CLIENT_ID:"
 echo "- Azure Active Directory"
 echo "- App registrations"
 echo "- All applications"
 echo "- Search with '${taito_project}-${taito_env}-cicd'"
 echo "- Copy the 'Application (client) ID' value and use it as AZURE_CLIENT_ID"
 echo
-echo "AZURE_CLIENT_SECRET:"
+echo "${taito_branch^^}_AZURE_CLIENT_SECRET:"
 echo "- Certificates & secrets"
 echo "- Client secrets"
 echo "- New client secret"
