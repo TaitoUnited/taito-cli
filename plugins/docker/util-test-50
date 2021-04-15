@@ -89,7 +89,7 @@ compose_pre_cmd=""
 compose_cmd="docker exec ${docker_env_vars} -it ${pod} ${test_executable} SUITE ${test_filter}"
 if [[ ${taito_env} != "local" ]]; then
   # Running against a remote service
-  container_test="${taito_project}-${dir}-${docker_compose_test_suffix}"
+  container_test="${taito_project}-${dir}${docker_compose_test_suffix}"
   image_test="${container_test}:latest"
   # REFACTOR: rename -tester image to -cicd
   image_src="${taito_project}-${dir}-tester:latest"
