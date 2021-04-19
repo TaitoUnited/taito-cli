@@ -13,7 +13,7 @@ if [[ ${taito_command:?} == "env-apply" ]] && [[ ${taito_mode:-} != "ci" ]]; the
 fi
 
 # Authentication for CI
-if [[ ${taito_mode:-} == "ci" ]]; then
+if [[ ${taito_mode:-} == "ci" ]] || [[ "${AWS_ACCESS_KEY_ID}" ]]; then
   # Ensure that AWS credentials exist
   if [[ ! "${AWS_ACCESS_KEY_ID}" ]] && [[ ${taito_ci_provider:-} != "aws" ]]; then
     taito::print_plugin_title
