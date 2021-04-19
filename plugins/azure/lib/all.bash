@@ -56,7 +56,7 @@ function azure::authenticate_on_kubernetes () {
     local user="${kubernetes_admin}"
   fi
 
-  if [[ ${do_reset} == true ]] || ! grep -i "^- name: ${user}$" ~/.kube/config > /dev/null; then
+  if [[ ${do_reset} == true ]] || ! grep -i "^- name: ${user}$" ~/.kube/config &> /dev/null; then
     yes n | az aks get-credentials \
       ${opts} \
       --name "${kubernetes_name}" \
