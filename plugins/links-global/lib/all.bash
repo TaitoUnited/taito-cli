@@ -46,7 +46,7 @@ function links-global::generate_docs () {
               description=${description/:ENV/:${env}}
             fi
             if [[ ${url} ]] && [[ ${url} != "https:///"* ]]; then
-              echo "* [${description}](${url})"
+              echo "- [${description}](${url})"
             fi
           fi
         done
