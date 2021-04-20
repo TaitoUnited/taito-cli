@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+echo "Setting default context for Kubernetes: ${taito_namespace:-kube-system}"
+kubectl::use_context
+
+taito::call_next "${@}"
