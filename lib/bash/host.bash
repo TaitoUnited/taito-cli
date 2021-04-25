@@ -52,100 +52,100 @@ function taito::export_database_config () {
   env_var_name="db_${target}_name"
   if [[ ${target} ]] && [[ ${!env_var_name} ]]; then
     env_var_name="db_${target}_create"
-    export database_create="${!env_var_name}"
+    export database_create="${!env_var_name:-$db_database_create}"
     echo "- database_create: ${database_create}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_instance"
-    export database_instance="${!env_var_name}"
+    export database_instance="${!env_var_name:-$db_database_instance}"
     echo "- database_instance: ${database_instance}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_type"
-    export database_type="${!env_var_name}"
+    export database_type="${!env_var_name:-$db_database_type}"
     echo "- database_type: ${database_type}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_name"
-    export database_name="${!env_var_name}"
+    export database_name="${!env_var_name:-$db_database_name}"
     echo "- database_name: ${database_name}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_username_suffix"
-    export database_username_suffix="${!env_var_name}"
+    export database_username_suffix="${!env_var_name:-$db_database_username_suffix}"
     echo "- database_username_suffix: ${database_username_suffix}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_host"
-    export database_host="${!env_var_name}"
+    export database_host="${!env_var_name:-$db_database_host}"
     echo "- database_host: ${database_host}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_real_host"
-    export database_real_host="${!env_var_name}"
+    export database_real_host="${!env_var_name:-$db_database_real_host}"
     echo "- database_real_host: ${database_real_host}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_real_port"
-    export database_real_port="${!env_var_name}"
+    export database_real_port="${!env_var_name:-$db_database_real_port}"
     echo "- database_real_port: ${database_real_port}" > "${taito_dout:-/dev/null}"
 
     # TODO: is database_proxy_host used anywhere?
     env_var_name="db_${target}_proxy_host"
-    export database_proxy_host="${!env_var_name}"
+    export database_proxy_host="${!env_var_name:-$db_database_proxy_host}"
     echo "- database_proxy_host: ${database_proxy_host}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_proxy_port"
-    export database_proxy_port="${!env_var_name}"
+    export database_proxy_port="${!env_var_name:-$db_database_proxy_port}"
     echo "- database_proxy_port: ${database_proxy_port}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_port"
-    export database_port="${!env_var_name}"
+    export database_port="${!env_var_name:-$db_database_port}"
     echo "- database_port: ${database_port}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_external_port"
-    export database_external_port="${!env_var_name}"
+    export database_external_port="${!env_var_name:-$db_database_external_port}"
     echo "- database_external_port: ${database_external_port}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_ssl_enabled"
-    export database_ssl_enabled="${!env_var_name:-true}"
+    export database_ssl_enabled="${!env_var_name:-$db_database_ssl_enabled}"
     echo "- database_ssl_enabled: ${database_ssl_enabled}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_proxy_ssl_enabled"
-    export database_proxy_ssl_enabled="${!env_var_name:-true}"
+    export database_proxy_ssl_enabled="${!env_var_name:-$db_database_proxy_ssl_enabled}"
     echo "- database_proxy_ssl_enabled: ${database_proxy_ssl_enabled}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_master_username"
-    export database_master_username="${!env_var_name}"
+    export database_master_username="${!env_var_name:-$db_database_master_username}"
     echo "- database_master_username: ${database_master_username}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_master_password_hint"
-    export database_master_password_hint="${!env_var_name}"
+    export database_master_password_hint="${!env_var_name:-$db_database_master_password_hint}"
     echo "- database_master_password_hint: ${database_master_password_hint}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_app_username"
-    export database_app_username="${!env_var_name}"
+    export database_app_username="${!env_var_name:-$db_database_app_username}"
     echo "- database_app_username: ${database_app_username}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_app_secret"
-    export database_app_secret="${!env_var_name}"
+    export database_app_secret="${!env_var_name:-$db_database_app_secret}"
     echo "- database_app_secret: ${database_app_secret}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_mgr_username"
-    export database_mgr_username="${!env_var_name}"
+    export database_mgr_username="${!env_var_name:-$db_database_mgr_username}"
     echo "- database_mgr_username: ${database_mgr_username}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_mgr_secret"
-    export database_mgr_secret="${!env_var_name}"
+    export database_mgr_secret="${!env_var_name:-$db_database_mgr_secret}"
     echo "- database_mgr_secret: ${database_mgr_secret}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_viewer_username"
-    export database_viewer_username="${!env_var_name}"
+    export database_viewer_username="${!env_var_name:-$db_database_viewer_username}"
     echo "- database_viewer_username: ${database_viewer_username}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_viewer_secret"
-    export database_viewer_secret="${!env_var_name}"
+    export database_viewer_secret="${!env_var_name:-$db_database_viewer_secret}"
     echo "- database_viewer_secret: ${database_viewer_secret}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_default_username"
-    export database_default_username="${!env_var_name}"
+    export database_default_username="${!env_var_name:-$db_database_default_username}"
     echo "- database_default_username: ${database_default_username}" > "${taito_dout:-/dev/null}"
 
     env_var_name="db_${target}_default_secret"
-    export database_default_secret="${!env_var_name}"
+    export database_default_secret="${!env_var_name:-$db_database_default_secret}"
     echo "- database_default_secret: ${database_default_secret}" > "${taito_dout:-/dev/null}"
 
     export database_master_username_internal="${database_master_username%@*}"
@@ -156,27 +156,33 @@ function taito::export_database_config () {
 
     # TODO: remove?
     env_var_name="db_${target}_username"
-    export database_username="${!env_var_name}"
+    export database_username="${!env_var_name:-$db_database_username}"
     echo "- database_username: ${database_username}" > "${taito_dout:-/dev/null}"
 
     # TODO: remove?
     env_var_name="db_${target}_username_internal"
-    export database_username_internal="${!env_var_name:-$database_username}"
+    export database_username_internal="${!env_var_name:-$db_database_username_internal}"
+    if [[ ! "${database_username_internal}" ]]; then
+      export database_username_internal="${database_username}"
+    fi
     echo "- database_username_internal: ${database_username_internal}" > "${taito_dout:-/dev/null}"
 
     # TODO: remove?
     env_var_name="db_${target}_password"
-    export database_password="${!env_var_name}"
+    export database_password="${!env_var_name:-$db_database_password}"
     echo "- database_password: ${database_password}" > "${taito_dout:-/dev/null}"
 
     # TODO: remove?
     env_var_name="db_${target}_build_username"
-    export database_build_username="${!env_var_name}"
+    export database_build_username="${!env_var_name:-$db_database_build_username}"
     echo "- database_build_username: ${database_build_username}" > "${taito_dout:-/dev/null}"
 
     # TODO: remove?
     env_var_name="db_${target}_build_username_internal"
-    export database_build_username_internal="${!env_var_name:-$database_build_username}"
+    export database_build_username_internal="${!env_var_name:-$db_database_build_username_internal}"
+    if [[ ! "${database_build_username_internal}" ]]; then
+      export database_build_username_internal="${database_build_username}"
+    fi
     echo "- database_build_username_internal: ${database_build_username_internal}" > "${ttaito_dout:-/dev/null}"
 
     if [[ ${taito_command_requires_database:-} == "true" ]] && \
