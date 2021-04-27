@@ -2,43 +2,47 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-# TODO: duplicate code with env-apply
+(
+  options=" ${*} "
+  database_hosts=$(taito::get_database_hosts $taito_target)
 
-options=" ${*} "
+  if [[ ${database_hosts} ]] && [[ ${taito_env:?} == "local" ]]; then
+    if [[ ${options} == *" --clean "* ]]; then
+      echo "Cleaning database container(s)"
 
-if [[ ${taito_env:?} != "local" ]] || [[ ${options} != *" --clean "* ]]; then
-  echo "Not cleaning database containers"
-else
-  echo "Cleaning database container(s)"
-  (
-    databases=("${taito_target:-$taito_databases}")
-    for database in ${databases[@]}
-    do
-      # TODO: duplicate code with clean
+      for host in ${database_hosts[@]}; do
+        # TODO: duplicate code with clean
+        taito_target=$host
+        docker-compose::expose_pod_and_container
 
-      taito_target=$database
-      docker-compose::expose_pod_and_container
+        # Docker-compose uses directory name as image prefix by default
+        dir_name="${taito_host_project_path:-/taito-cli}"
+        # Leave only directory name
+        dir_name="${dir_name##*/}"
 
-      # Docker-compose uses directory name as image prefix by default
-      dir_name="${taito_host_project_path:-/taito-cli}"
-      # Leave only directory name
-      dir_name="${dir_name##*/}"
+        compose_file=$(docker-compose::prepare_docker_compose_yaml false)
+        taito::execute_on_host "
+          docker-compose -f $compose_file stop ${pod:?}
+          docker-compose -f $compose_file rm --force ${pod:?}
+          docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
+          docker-compose -f $compose_file start ${pod:?}
+        "
+      done
 
-      compose_file=$(docker-compose::prepare_docker_compose_yaml false)
-      taito::execute_on_host "
-        docker-compose -f $compose_file stop ${pod:?}
-        docker-compose -f $compose_file rm --force ${pod:?}
-        docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
-        docker-compose -f $compose_file start ${pod:?}
-      "
-    done
-    if [[ ${databases} ]]; then
       sleep 15
       echo "Waiting for databases to start..."
       sleep 25
       echo "Done waiting"
+
+    elif [[ ${taito_command_root_context} != "init" ]]; then
+      # Running init during another command execution (e.g. start) -> add some sleep
+      echo "Waiting for databases to start..."
+      sleep 15
+      echo "Done waiting"
+    else
+      echo "Not cleaning database containers"
     fi
-  )
-fi
+  fi
+)
 
 taito::call_next "${@}"

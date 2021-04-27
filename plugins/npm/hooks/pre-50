@@ -125,12 +125,14 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
     taito_hook_command_executed=true
     if [[ ${run_on_host} == "true" ]]; then
       taito::execute_on_host_fg "
+        export taito_command_root_context='${taito_command_root_context}'
         export taito_command_context='npm ${taitonpm_command}'
         npm run -s ${taitonpm_command}${params}
       "
       exit_code=0
     else
       (
+        export taito_command_root_context="${taito_command_root_context}"
         export taito_command_context="npm ${taitonpm_command}"
         taito::executing_start
         npm run -s ${taitonpm_command}${params}

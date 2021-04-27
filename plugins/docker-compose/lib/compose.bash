@@ -105,6 +105,7 @@ function docker-compose::start () {
           count=\$((\${count}+1))
         done
         sleep 10
+        export taito_command_root_context='${taito_command_root_context}'
         export taito_command_context='init'
         taito -q ${taito_options:-} init ${init_flags} | cat
       }

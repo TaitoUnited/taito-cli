@@ -196,6 +196,22 @@ function taito::export_database_config () {
   fi
 }
 
+function taito::get_database_hosts () {
+  target_database=$1
+
+  hosts=
+  for database in ${taito_databases[@]}; do
+    if [[ ! ${target_database} ]] || [[ ${database} == "${target_database}" ]]; then
+      taito::export_database_config "${database}"
+      if [[ ${hosts} != *" ${database_host} "* ]]; then
+        hosts="${hosts} ${database_host} "
+      fi
+    fi
+  done
+
+  echo "${hosts}"
+}
+
 function taito::export_storage_config () {
   # TODO: add support for print
   # local print_config=${1:-false}
