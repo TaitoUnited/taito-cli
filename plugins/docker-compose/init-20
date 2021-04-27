@@ -5,9 +5,13 @@
 (
   options=" ${*} "
   database_hosts=$(taito::get_database_hosts $taito_target)
+  num_databases=$(wc -w <<< "$taito_databases")
+
+  echo num_databases $num_databases
 
   if [[ ${database_hosts} ]] && [[ ${taito_env:?} == "local" ]]; then
-    if [[ ${options} == *" --clean "* ]]; then
+    # Delete containers only if there is max one database
+    if [[ ${options} == *" --clean "* ]] && [[ $num_databases -eq 1 ]]; then
       echo "Cleaning database container(s)"
 
       for host in ${database_hosts[@]}; do
