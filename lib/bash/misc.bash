@@ -99,6 +99,45 @@ function taito::select_item () {
 }
 export -f taito::select_item
 
+function taito::show_db_credentials () {
+  taito::expose_db_user_credentials
+  echo "- Choose username and password from the following:"
+  if [[ ${database_viewer_username:-} ]] && [[ ${database_viewer_password:-} ]]; then
+    echo "  - Viewer: ${database_viewer_username} / ${database_viewer_password}"
+  fi
+  if [[ ${database_app_username:-} ]] && [[ ${database_app_password:-} ]]; then
+    echo "  - Application: ${database_app_username} / ${database_app_password}"
+  fi
+  if [[ ${database_mgr_username:-} ]] && [[ ${database_build_password:-} ]]; then
+    echo "  - Manager: ${database_mgr_username} / ${database_build_password}"
+  fi
+  if [[ $taito_env != "local" ]]; then
+    echo "  - Your personal database username and password (if you have one)"
+  fi
+}
+export -f taito::show_db_credentials
+
+function taito::show_db_details () {
+  echo "Database details:"
+  if [[ $taito_env == "local" ]]; then
+    echo "- host: ${database_host}"
+    echo "- port: ${database_port}"
+  else
+    echo "- host: ${database_real_host:-$database_host}"
+    echo "- port: ${database_real_port:-$database_port}"
+  fi
+  echo "- name: ${database_name:-}"
+
+  if [[ " ${*} " == *" --credentials "* ]]; then
+    taito::show_db_credentials
+  else
+    echo
+    echo "TIP: You can see database credentials with --credentials, for example:"
+    echo "taito db proxy:${taito_env:-dev} --credentials"
+  fi
+}
+export -f taito::show_db_details
+
 function taito::show_db_proxy_details () {
 
   echo "- host: 127.0.0.1"
@@ -106,18 +145,7 @@ function taito::show_db_proxy_details () {
   echo "- database: ${database_name:-}"
 
   if [[ ${1:-} == "true" ]]; then
-    taito::expose_db_user_credentials
-    echo "- username and password:"
-    echo "  * Your personal database username and password (if you have one)"
-    if [[ ${database_viewer_username:-} ]]; then
-      echo "  * ${database_viewer_username} / ${database_viewer_password:-}"
-    fi
-    if [[ ${database_mgr_username:-} ]]; then
-      echo "  * ${database_mgr_username} / ${database_build_password:-}"
-    fi
-    if [[ ${database_app_username:-} ]]; then
-      echo "  * ${database_app_username} / ${database_app_password:-}"
-    fi
+    taito::show_db_credentials
   else
     echo
     echo "TIP: You can see database credentials with --credentials, for example:"

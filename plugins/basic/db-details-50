@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+taito::show_db_details "$@"
+taito::call_next "${@}"

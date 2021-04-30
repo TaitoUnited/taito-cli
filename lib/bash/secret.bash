@@ -529,7 +529,8 @@ function taito::expose_required_secrets_filter () {
         secret_filter="version-control"
       fi
     elif [[ ${taito_commands_only_chain:-} == *"-db/"* ]] || \
-         [[ ${taito_command} == "db-proxy" ]]; then
+         [[ ${taito_command} == "db-proxy" ]] || \
+         [[ ${taito_command} == "db-details" ]]; then
       fetch_secrets="true"
       save_secrets_to_disk="true"
       secret_purpose="database access"

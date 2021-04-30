@@ -784,6 +784,10 @@ PROJECT: DATABASE OPERATIONS
     passwords are rotated once in a while, thus, if you get an authentication
     error, retrieve new secrets by running `taito secret show:ENV` again.
 
+  db details[:TARGET][:ENV] [--credentials]
+    Shows connections details that an application should use to connect
+    database.
+
   db connect[:TARGET][:ENV] [USERNAME]
     Access database from command line. DB proxy connection and secrets are
     handled automatically. NOTE: If you want to access database using a GUI
