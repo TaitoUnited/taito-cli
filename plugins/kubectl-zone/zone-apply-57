@@ -4,10 +4,10 @@
 # shellcheck source=../kubectl/lib/secret.bash
 . "${taito_plugin_path:?}/../kubectl/lib/secret.bash"
 
-taito::confirm "Add Argo Workflows custom resource definitions" ||
+taito::confirm "Add labels for kube-system namespace" ||
   taito::skip_to_next "${@}"
 
 kubectl::use_context
-kubectl apply -k /tools/argo/crds
+kubectl label namespace kube-system networking/namespace=kube-system
 
 taito::call_next "${@}"
