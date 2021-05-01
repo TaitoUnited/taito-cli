@@ -95,6 +95,7 @@ function helm::deploy () {
 
       set +e
       helm upgrade "${options[@]}" --debug --install \
+        --skip-crds \
         --namespace "${taito_namespace}" \
         --set global.env="${taito_target_env}" \
         --set global.zone.name="${taito_zone}" \
