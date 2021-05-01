@@ -4,10 +4,14 @@
 # shellcheck source=../kubectl/lib/secret.bash
 . "${taito_plugin_path:?}/../kubectl/lib/secret.bash"
 
-taito::confirm "Add Argo Workflows custom resource definitions" ||
-  taito::skip_to_next "${@}"
+if taito::confirm "Add Argo Events custom resource definitions" no; then
+  kubectl::use_context
+  kubectl apply -k /tools/argo-events/crds
+fi
 
-kubectl::use_context
-kubectl apply -k /tools/argo/crds
+if taito::confirm "Add Argo Workflows custom resource definitions" no; then
+  kubectl::use_context
+  kubectl apply -k /tools/argo-workflows/crds
+fi
 
 taito::call_next "${@}"
