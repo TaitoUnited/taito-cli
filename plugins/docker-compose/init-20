@@ -7,7 +7,7 @@
   database_hosts=$(taito::get_database_hosts $taito_target)
   num_databases=$(wc -w <<< "$taito_databases")
 
-  echo num_databases $num_databases
+  echo "Number of databases: $num_databases" > "${taito_vout}"
 
   if [[ ${database_hosts} ]] && [[ ${taito_env:?} == "local" ]]; then
     # Delete containers only if there is max one database
