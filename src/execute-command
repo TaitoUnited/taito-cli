@@ -876,7 +876,6 @@ if [[ ${command} == "shell" ]] && \
   exit_code=${?}
 elif [[ ${command} == "__" ]]; then
   # Execute shell command given as argument
-  echo
   (
     taito::export_terraform_env
     eval "${params[@]}"
