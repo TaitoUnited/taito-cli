@@ -73,6 +73,9 @@ function mysql::connect () {
        [[ ${mysql_password} == ${taito_default_password} ]]; then
       mysql_username="${database_app_username}"
       mysql_password="${database_app_password}"
+    elif [[ ${database_build_username} ]]; then
+      mysql_username="${database_build_username}"
+      mysql_password="${database_build_password}"
     fi
   fi
 

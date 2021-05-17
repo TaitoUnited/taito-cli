@@ -78,6 +78,9 @@ function postgres::connect () {
        [[ ${psql_password} == ${taito_default_password} ]]; then
       psql_username="${database_app_username}"
       psql_password="${database_app_password}"
+    elif [[ ${database_build_username} ]]; then
+      psql_username="${database_build_username}"
+      psql_password="${database_build_password}"
     fi
   fi
 
