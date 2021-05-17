@@ -11,6 +11,7 @@ if [[ ${database_type:-} == "mysql" ]] || [[ -z "${database_type}" ]]; then
   echo "Dumping database ${database_name:?} to file ${dump_file}. Please wait."
   echo "You can ignore the 'Access denied' error message related to tablespaces."
   mysql::dump > "${dump_file}"
+  echo "Done"
 fi
 
 taito::call_next "${@}"

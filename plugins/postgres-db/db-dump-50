@@ -24,6 +24,7 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
     "${username}" \
     " ${tool_options} --no-owner --no-privileges --blobs --inserts -f ${dump_file}" \
     "pg_dump"
+  echo "Done"
 fi
 
 taito::call_next "${@}"
