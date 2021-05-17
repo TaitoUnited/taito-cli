@@ -57,6 +57,11 @@ TAITO CLI TROUBLESHOOTING
     can also try to enlarge the docker virtual disk in your docker preferences.
     Also check that you have free disk space available on your computer.
 
+  "docker: invalid reference format"
+    You are probably executing Taito CLI command in a folder that docker is not
+    allowed to read. Note that by default docker does not have permissions to
+    ~/Documents and ~/Downloads.
+
   Docker issues on Linux systems
   -------------------------------
 
