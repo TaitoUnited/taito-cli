@@ -29,6 +29,10 @@ function generate-secrets::create_and_export () {
     then
       if [[ ${skip_confirm} == "true" ]]; then
         taito::print_title "${secret_name/$prefix/}"
+        secret_hint=$(taito::get_secret_hint $secret_name)
+        if [[ -n "${secret_hint}" ]]; then
+          echo "${secret_hint}"
+        fi
       fi
       generate-secrets::generate_by_type "${secret_index}" "${secret_name/$prefix/}"
     fi
