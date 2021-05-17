@@ -208,11 +208,17 @@ if [[ ${project} ]]; then
   if [[ ! -d "${project_local_path}" ]]; then
     mkdir -p "${project_local_path}"
     cd "${project_local_path}"
+    if [[ ${quiet} == "false" ]]; then
+      echo "Cloning ${vc_organization:?}/${project}.git into ${PWD}"
+    fi
     git clone --no-checkout --depth 1 -b dev --single-branch --filter=blob:none \
       "${vc_organization:?}/${project}.git" . &> /dev/null
     git checkout dev -- * *.json &> /dev/null
   else
     cd "${project_local_path}"
+    if [[ ${quiet} == "false" ]]; then
+      echo "Using configurations in ${PWD}"
+    fi
     git pull > /dev/null
   fi
 fi
