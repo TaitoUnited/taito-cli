@@ -386,7 +386,7 @@ export default () => (
               </Terminal.LineSuffix>,
             ],
             <span>
-              taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"
+              taito_global_extensions="https://github.com/MyOrg/myorg-extension.git"
             </span>,
             <span>taito_global_plugins="myorg-git-global ..."</span>,
           ]}
