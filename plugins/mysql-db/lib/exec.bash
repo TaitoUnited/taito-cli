@@ -58,7 +58,7 @@ function mysql::connect () {
   if [[ ${username} != "" ]]; then
     mysql_username="${username}"
     mysql_password=""
-  elif [[ ${taito_env} != "local" ]]; then
+  elif [[ ${taito_env} != "local" ]] || [[ ${database_name} != *"local" ]]; then
     taito::expose_db_user_credentials
     if [[ ${database_default_username} ]] &&
        [[ ${database_default_password} ]]; then
