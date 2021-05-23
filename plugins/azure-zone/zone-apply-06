@@ -1,0 +1,11 @@
+#!/bin/bash -e
+# shellcheck source=../azure/lib/all.bash
+. "${taito_cli_path:?}/plugins/azure/lib/all.bash"
+
+taito::confirm "Enable Azure Event Grid (required for listening Azure events)" || taito::skip_to_next "${@}"
+
+echo "Registering..."
+az provider register --namespace Microsoft.EventGrid
+echo "Done"
+
+taito::call_next "${@}"
