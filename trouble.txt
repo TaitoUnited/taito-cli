@@ -86,8 +86,16 @@ TAITO CLI TROUBLESHOOTING
     CI/CD settings. Running 'taito env apply:ENV' might help you in the renewal
     process.
 
-  Remote environments
-  -------------------
+  Remote environments (Kubernetes / Cloud)
+  ----------------------------------------
+
+  Startup stuck on "ContainerCreating"
+    Most likely cause is a volume mount fail because of a missing secret
+    value. Run "taito logs:TARGET:ENV" for more information. Make sure you have
+    set values for all of the secrets you have defined for your container
+    (usually in scripts/helm.yaml). You can see all secrets values with
+    "taito secret show:ENV" and you can set secret value with
+    "taito secret rotate:ENV NAME".
 
   My application does not work on a remote environment or it continuously
   crashes/restarts
