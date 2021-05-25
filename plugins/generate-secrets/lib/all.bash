@@ -123,6 +123,11 @@ function generate-secrets::generate_by_type () {
            [[ ${secret_name} == *"storage"* ]]; then
           echo ------------------------------------------------------------------------------
           echo "You most likely can find the security credentials from the following webpage."
+          if [[ ${secret_name} == *"accessKey"* ]]; then
+            echo "Use the storage account name as the secret value. Most likely it is '${taito_project//-/}${taito_env//-/}'".
+          elif [[ ${secret_name} == *"secretKey"* ]]; then
+            echo "There are at least two secret keys on that page. You can use any of them as the secret value."
+          fi
           echo
           echo "https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/${taito_resource_namespace_id}/providers/Microsoft.Storage/storageAccounts/${taito_project//-/}${taito_env//-/}/keys"
           echo ------------------------------------------------------------------------------
