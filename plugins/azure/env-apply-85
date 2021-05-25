@@ -12,18 +12,18 @@ echo "Configure ${taito_branch^^}_AZURE_CLIENT_ID and ${taito_branch^^}_AZURE_CL
 echo "for your CI/CD pipeline according to your CI/CD provider instructions."
 echo "You can most likely retrieve them from Azure Portal like this:"
 echo
-echo "${taito_branch^^}_AZURE_CLIENT_ID:"
-echo "- Azure Active Directory"
-echo "- App registrations"
+echo "Value for ${taito_branch^^}_AZURE_CLIENT_ID:"
+echo "- App registrations (in Azure Active Directory)"
 echo "- All applications"
-echo "- Search with '${taito_project}-${taito_env}-cicd'"
-echo "- Copy the 'Application (client) ID' value and use it as ${taito_branch^^}_AZURE_CLIENT_ID"
+echo "- Search with '${taito_project}-${taito_env}-cicd' and select it"
+echo "- Copy the 'Application (client) ID' value and use it as value for ${taito_branch^^}_AZURE_CLIENT_ID"
 echo
-echo "${taito_branch^^}_AZURE_CLIENT_SECRET:"
+echo "Value for ${taito_branch^^}_AZURE_CLIENT_SECRET:"
 echo "- Certificates & secrets"
 echo "- Client secrets"
 echo "- New client secret"
-echo "- Copy the generated value and use it as ${taito_branch^^}_AZURE_CLIENT_SECRET"
+echo "- Enter some descriptive name for the secret (for example '${taito_vc_provider}')"
+echo "- Copy the randomly generated secret value and use it as value for ${taito_branch^^}_AZURE_CLIENT_SECRET"
 echo
 echo "Press enter to open Azure Active Directory app registrations"
 read -r
