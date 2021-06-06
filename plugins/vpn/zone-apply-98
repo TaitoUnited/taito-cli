@@ -1,0 +1,21 @@
+#!/bin/bash -e
+
+taito::confirm "Configure VPN connection for your CI/CD" || \
+  taito::skip_to_next "${@}"
+
+echo
+echo "If you haven't already, add one of the vpn/*.ovpn files to you CI/CD"
+echo "as secret named OVPN_FILE. Add also secret OVPN_PASSWORD that contains"
+echo "the password required to decrypt the private key contained in the ovpn"
+echo "file".
+
+if [[ ${taito_vc_provider} == "github" ]]; then
+  echo
+  echo "Configure the aforementioned secrets as organization level secrets on GitHub."
+  echo
+fi
+
+echo "Press enter when ready."
+read -r
+
+taito::call_next "${@}"

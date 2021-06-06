@@ -1,0 +1,60 @@
+#!/bin/bash -e
+
+taito::confirm "Generate VPN public key infrastructure (PKI)" || \
+  taito::skip_to_next "${@}"
+
+if [[ -d vpn ]]; then
+  echo "Looks like the 'vpn' folder already exists. Thus we generate only the missing files."
+fi
+mkdir -p vpn
+
+(
+  cd vpn
+  if [[ ! -d pki ]]; then
+    echo
+    echo "Initializing PKI..."
+    /usr/share/easy-rsa/easyrsa init-pki
+    echo "Initized PKI"
+  fi
+  if [[ ! -f pki/ca.crt ]]; then
+    echo
+    echo "Building CA..."
+    echo "NOTE: Save the CA passphrase in a safe location. You'll need it later."
+    echo "TIP: You can use 'taito random string' to generate a random password."
+    echo "NOTE: You can enter anything as Common Name."
+    /usr/share/easy-rsa/easyrsa build-ca
+    echo "Built CA"
+  fi
+  if [[ ! -f pki/dh.pem ]]; then
+    echo
+    echo "Generating DH..."
+    /usr/share/easy-rsa/easyrsa gen-dh
+    echo "Generated DH"
+  fi
+  if [[ ! -f pki/private/server.key ]]; then
+    echo
+    echo "Generating server keys..."
+    echo "NOTE: Save the server PEM passphrase in a safe location. You'll need it later."
+    echo "TIP: You can use 'taito random string' to generate a random password."
+    /usr/share/easy-rsa/easyrsa build-server-full server
+    echo "Generated server keys"
+  fi
+  if [[ ! -f pki/private/client-cicd1.key ]]; then
+    echo
+    echo "Generating client-cicd1 keys..."
+    echo "NOTE: Save the client-cicd1 PEM passphrase in a safe location. You'll need it later."
+    echo "TIP: You can use 'taito random words' to generate a random password."
+    /usr/share/easy-rsa/easyrsa build-client-full client-cicd1
+    echo "Generated client-cicd1 keys"
+  fi
+  if [[ ! -f pki/private/client-user1.key ]]; then
+    echo
+    echo "Generating client-user1 keys..."
+    echo "NOTE: Save the client-user1 PEM passphrase in a safe location. You'll need it later."
+    echo "TIP: You can use 'taito random words' to generate a random password."
+    /usr/share/easy-rsa/easyrsa build-client-full client-user1
+    echo "Generated client-user1 keys"
+  fi
+)
+
+taito::call_next "${@}"

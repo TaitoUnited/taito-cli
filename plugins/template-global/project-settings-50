@@ -115,6 +115,9 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_region=$taito_provider_region"
   echo "template_default_provider_zone=$taito_provider_zone"
   echo
+  echo "# Network"
+  echo "template_default_vpn_enabled=$taito_vpn_enabled"
+  echo
   if [[ ${taito_provider} == "aws" ]]; then
     echo "# Template: Network"
     echo "template_default_network_tags='${taito_network_tags}'"
@@ -248,6 +251,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_provider_billing_account_id_prod=$taito_provider_billing_account_id"
   echo "template_default_provider_region_prod=$taito_provider_region"
   echo "template_default_provider_zone_prod=$taito_provider_zone"
+  echo "template_default_vpn_enabled_prod=$taito_vpn_enabled"
 
   if [[ ${taito_provider} == "aws" ]]; then
     echo "template_default_network_tags_prod='${taito_network_tags}'"

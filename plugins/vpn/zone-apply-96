@@ -1,0 +1,46 @@
+#!/bin/bash -e
+
+taito::confirm "Generate OVPN files for clients" || \
+  taito::skip_to_next "${@}"
+
+echo
+if [[ -f vpn/_template.ovpn ]]; then
+  echo "Looks like _template.ovpn already exists. Thus we generate only missing files."
+else
+  echo "Save the template OVPN file as 'vpn/_template.ovpn'. You should be able to download"
+  echo "it from your VPN provider."
+  echo
+  if [[ ${taito_provider} == "azure" ]]; then
+    echo "Press enter to open Point-to-Site configuration of Azure network gateway."
+    read -r
+    taito::open_browser \
+      "https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/${taito_zone}/providers/Microsoft.Network/virtualNetworkGateways/${taito_zone}-vpn/pointtositeconfiguration"
+  fi
+  echo "Press enter when ready"
+  read -r
+fi
+
+while [[ ! -f vpn/_template.ovpn ]]; do
+  echo "File 'vpn/_template.ovpn' does not exist. Please add it and press enter when ready."
+  read -r
+done
+
+echo
+echo "Removing log setting from vpn/_template.ovpn"
+sed -i "/^log /d" vpn/_template.ovpn
+
+if [[ -f vpn/pki/issued/client-cicd1.crt ]]; then
+  echo
+  echo "Creating client-cicd1.ovpn"
+  awk '/CLIENTCERTIFICATE/{system("cat vpn/pki/issued/client-cicd1.crt");next}1' vpn/_template.ovpn | \
+    awk '/PRIVATEKEY/{system("cat vpn/pki/private/client-cicd1.key");next}1' - > vpn/client-cicd1.ovpn
+fi
+
+if [[ -f vpn/pki/issued/client-user1.crt ]]; then
+  echo
+  echo "Creating client-cicd1.ovpn"
+  awk '/CLIENTCERTIFICATE/{system("cat vpn/pki/issued/client-user1.crt");next}1' vpn/_template.ovpn | \
+    awk '/PRIVATEKEY/{system("cat vpn/pki/private/client-user1.key");next}1' - > vpn/client-user1.ovpn
+fi
+
+taito::call_next "${@}"

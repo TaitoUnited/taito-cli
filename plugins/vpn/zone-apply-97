@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+taito::confirm "Start VPN" || \
+  taito::skip_to_next "${@}"
+
+echo
+echo "If you haven't already, add one of the vpn/*.ovpn files to you OpenVPN"
+echo "compatible VPN client, and start the VPN connection."
+
+echo
+echo "Press enter when ready."
+read -r
+
+taito::call_next "${@}"
