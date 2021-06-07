@@ -248,13 +248,13 @@ export -f taito::print_secret_values
 
 function taito::print_random_string () {
   local length=$1
-  pwgen -sB "${length}" 1
+  pwgen -sB "${length:-40}" 1
 }
 export -f taito::print_random_string
 
 function taito::print_random_words () {
   local num_of_words=$1
-  xkcdpass -n "${num_of_words}" -d "-"
+  xkcdpass -n "${num_of_words:-6}" -d "-"
 }
 export -f taito::print_random_words
 
