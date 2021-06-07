@@ -1,6 +1,8 @@
 #!/bin/bash -e
 # shellcheck source=../kubectl/lib/context.bash
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+# shellcheck source=../kubectl/lib/secret.bash
+. "${taito_plugin_path:?}/../kubectl/lib/secret.bash"
 
 if [[ ${taito_secrets:-} ]] && taito::confirm "Save secrets to Kubernetes"; then
   kubectl::use_context
