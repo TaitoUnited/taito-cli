@@ -21,7 +21,7 @@ You can create a new zone configuration based on one of the [infrastructure temp
 You can also use your own infrastructure templates. Just change the infrastructure templates location in your `~/.taito/taito-config.sh` file:
 
 ```
-template_default_zone_source_git=https://github.com/MyOrg/taito-templates//infrastructure
+template_default_zone_source_git=git@github.com:MyOrg/taito-templates//infrastructure
 ```
 
 ---

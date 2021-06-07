@@ -67,7 +67,7 @@ This is how you implement your own custom plugin:
 5. Add the extension directory to your _taito_global_extensions_ or _taito_extensions_ definition and the plugin to your _taito_global_plugins_ or _taito_plugins_ definition. You can reference extension either by file path or git url.
 
    ```shell
-   taito_extensions="https://github.com/JohnDoe/my-extension.git"
+   taito_extensions="git@github.com:JohnDoe/my-extension.git"
    taito_plugins="my-plugin"
    ```
 
