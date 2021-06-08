@@ -5,9 +5,13 @@ taito::confirm "Configure VPN connection for your CI/CD" || \
 
 echo
 echo "If you haven't already, add one of the vpn/*.ovpn files to you CI/CD"
-echo "as secret named OVPN_FILE. Add also secret OVPN_PASSWORD that contains"
-echo "the password required to decrypt the private key contained in the ovpn"
-echo "file".
+echo "as organizational level secret named OVPN_FILE. Add also secret"
+echo "OVPN_PASSWORD that contains the password required to decrypt the private"
+echo "key contained in the ovpn file".
+echo
+echo "NOTE: If you have multiple zones, you may also want to define environment"
+echo "specific secret overrides, for example:"
+echo "STAG_OVPN_FILE, CANARY_OVPN_FILE, PROD_OVPN_FILE"
 
 if [[ ${taito_vc_provider} == "github" ]]; then
   echo
