@@ -32,16 +32,18 @@ sed -i "/^log /d" vpn/_template.ovpn
 
 if [[ -f vpn/pki/issued/client-cicd1.crt ]]; then
   echo
-  echo "Creating client-cicd1.ovpn"
+  echo "Creating ${taito_zone}-cicd1.ovpn"
   awk '/CLIENTCERTIFICATE/{system("cat vpn/pki/issued/client-cicd1.crt");next}1' vpn/_template.ovpn | \
     awk '/PRIVATEKEY/{system("cat vpn/pki/private/client-cicd1.key");next}1' - > vpn/client-cicd1.ovpn
+  mv vpn/client-cicd1.ovpn vpn/${taito_zone}-cicd1.ovpn
 fi
 
 if [[ -f vpn/pki/issued/client-user1.crt ]]; then
   echo
-  echo "Creating client-cicd1.ovpn"
+  echo "Creating ${taito_zone}-user1.ovpn"
   awk '/CLIENTCERTIFICATE/{system("cat vpn/pki/issued/client-user1.crt");next}1' vpn/_template.ovpn | \
     awk '/PRIVATEKEY/{system("cat vpn/pki/private/client-user1.key");next}1' - > vpn/client-user1.ovpn
+  mv vpn/client-user1.ovpn vpn/${taito_zone}-user1.ovpn
 fi
 
 taito::call_next "${@}"
