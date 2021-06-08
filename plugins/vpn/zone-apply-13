@@ -8,10 +8,22 @@ echo "If you haven't already, add one of the vpn/*.ovpn files to you CI/CD"
 echo "as organizational level secret named OVPN_FILE. Add also secret"
 echo "OVPN_PASSWORD that contains the password required to decrypt the private"
 echo "key contained in the ovpn file".
+if [[ ${kubernetes_name:-} ]]; then
+  echo
+  echo "If you haven't configured DNS for VPN connections, you might also want to"
+  echo "define Kubernetes API host and IP address as organizational level CI/CD"
+  echo "secrets named KUBE_API_HOST and KUBE_API_IP."
+fi
 echo
 echo "NOTE: If you have multiple zones, you may also want to define environment"
 echo "specific secret overrides, for example:"
-echo "STAG_OVPN_FILE, CANARY_OVPN_FILE, PROD_OVPN_FILE"
+echo
+echo "  STAG_OVPN_FILE, CANARY_OVPN_FILE, PROD_OVPN_FILE"
+echo "  STAG_OVPN_PASSWORD, CANARY_OVPN_PASSWORD, PROD_OVPN_PASSWORD"
+if [[ ${kubernetes_name:-} ]]; then
+  echo "  STAG_KUBE_API_HOST, CANARY_KUBE_API_HOST, PROD_KUBE_API_HOST"
+  echo "  STAG_KUBE_API_IP, CANARY_KUBE_API_IP, PROD_KUBE_API_IP"
+fi
 
 if [[ ${taito_vc_provider} == "github" ]]; then
   echo
