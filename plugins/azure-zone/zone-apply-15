@@ -1,0 +1,19 @@
+#!/bin/bash -e
+# shellcheck source=../azure/lib/all.bash
+. "${taito_cli_path:?}/plugins/azure/lib/all.bash"
+
+( [[ ${kubernetes_name:-} ]] && [[ ${taito_vpn_enabled:-} == "true" ]] && \
+    taito::confirm "Add Kubernetes API server IP to your private DNS"
+) || taito::skip_to_next "${@}"
+
+echo
+echo "Add the following DNS entry to your private DNS service or to /etc/hosts file:"
+echo
+az network nic list --resource-group "${taito_zone}-${kubernetes_name}" | jq -r .[0].ipConfigurations[0].privateIpAddress | tr -d '\n'
+echo " " | tr -d '\n'
+az aks show --resource-group "${taito_zone}" --name "${kubernetes_name}" | jq -r .privateFqdn
+echo
+echo "Press enter when done."
+read -r
+
+taito::call_next "${@}"
