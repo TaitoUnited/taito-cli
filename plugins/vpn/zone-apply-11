@@ -11,10 +11,11 @@ else
   echo "it from your VPN provider."
   echo
   if [[ ${taito_provider} == "azure" ]]; then
-    echo "Press enter to open Point-to-Site configuration of Azure network gateway."
+    azure_vpn_url="https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/${taito_zone}/providers/Microsoft.Network/virtualNetworkGateways/${taito_zone}-vpn/pointtositeconfiguration"
+    echo "Press enter to open Point-to-Site configuration of Azure network gateway at:"
+    echo "${azure_vpn_url}"
     read -r
-    taito::open_browser \
-      "https://portal.azure.com/#@${taito_provider_org_id}/resource/subscriptions/${taito_provider_billing_account_id}/resourceGroups/${taito_zone}/providers/Microsoft.Network/virtualNetworkGateways/${taito_zone}-vpn/pointtositeconfiguration"
+    taito::open_browser "${azure_vpn_url}"
   fi
   echo "Press enter when ready"
   read -r
