@@ -25,7 +25,14 @@ function taito::print_browser_command () {
         echo "open '${url}'"
       fi
     else
-      echo "${taito_default_browser:-xdg-open} '${url}'"
+      echo "
+        ${taito_default_browser:-xdg-open} '${url}' || \
+          if [ -z ${taito_default_browser} ]; then
+            echo
+            echo TIP: You should probably install 'xdg-utils'.
+            echo
+          fi
+      "
     fi
   fi
 }
