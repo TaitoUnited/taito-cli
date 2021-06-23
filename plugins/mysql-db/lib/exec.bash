@@ -104,7 +104,7 @@ function mysql::dump () {
   local mysql_password
 
   local mysql_opts=""
-  mysql_opts="$(mysql::print_ssl_options)"
+  mysql_opts="$(mysql::print_ssl_options) --single-transaction --quick --lock-tables=false"
 
   mysql_username="${database_name}a"
   if [[ ${database_username:-} ]]; then
