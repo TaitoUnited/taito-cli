@@ -120,7 +120,7 @@ if [[ ${was_executed} == false ]]; then
       taito::print_plugin_title
       if [[ ${taito_target_env} == "local" ]] && [[ ! ${taito_target:-} ]]; then
         echo "Unknown command: '${taito_orig_command//-/ }'. If the command includes arguments,"
-        echo "try to add colon before the arguments e.g. 'taito db add: articles'".
+        echo "try to add colon before the arguments e.g. 'taito db add: article'".
       else
         echo "Unknown command: '${taito_orig_command//-/ }'."
       fi

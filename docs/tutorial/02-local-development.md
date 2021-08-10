@@ -20,9 +20,10 @@ Installation and starting up takes some time the first time you run the commands
 The template comes with some strict linting and formatting rules. You should make sure that your editor is configured to show compile and lint error messages so that you don't need to look at the console output all the time. Your editor should also be able to automatically format code according to predefined rules. You most likely have to install some TypeScript, ESLint and Prettier plugins for your editor to achieve this.
 
 Some links:
-* [ESLint](https://eslint.org/docs/user-guide/integrations#editors)
-* [Prettier](https://prettier.io/docs/en/editors.html)
-* [using-eslint-with-typescript-and-react-hooks-and-vscode](https://medium.com/@oliver.grack/using-eslint-with-typescript-and-react-hooks-and-vscode-c583a18f0c75)
+
+- [ESLint](https://eslint.org/docs/user-guide/integrations#editors)
+- [Prettier](https://prettier.io/docs/en/editors.html)
+- [using-eslint-with-typescript-and-react-hooks-and-vscode](https://medium.com/@oliver.grack/using-eslint-with-typescript-and-react-hooks-and-vscode-c583a18f0c75)
 
 ### 2.3. TypeScript vs JavaScript
 
@@ -39,7 +40,7 @@ If you would like write TypeScript that closely resembles JavaScript, you can di
 }
 ```
 
-Alternatively, if you would like to write plain JavaScript (*.js), you can enable JavaScript in `tsconfig.json` files (TODO does allowJs support ES6/7?):
+Alternatively, if you would like to write plain JavaScript (\*.js), you can enable JavaScript in `tsconfig.json` files (TODO does allowJs support ES6/7?):
 
 ```
 {
@@ -91,7 +92,7 @@ For now, you should commit all your changes to the dev branch that is checked ou
 Your implementation needs to store some data permanently. For this, you create 1-N database tables to PostgreSQL database. You add a new database table by adding a new database migration. You can do this with the following commands:
 
 ```shell
-taito db add articles -n 'add articles table'  # Add migration
+taito db add article -n 'add article table'     # Add migration
 EDIT database/deploy/articles.sql               # Edit deploy script
 EDIT database/revert/articles.sql               # Edit revert script
 EDIT database/verify/articles.sql               # Edit verify script
@@ -146,7 +147,7 @@ Normally all database changes must be made using database migrations (option a).
 Add a new column to your newly created database table as a new database migration. You do this just like you added the database table, but this time you use `ALTER TABLE` clause instead of `CREATE TABLE`:
 
 ```shell
-taito db add articles-foobar -n 'add foobar column to articles table'  # Add migration
+taito db add article-foobar -n 'add foobar column to article table'     # Add migration
 EDIT database/deploy/articles-foobar.sql                                # Edit deploy script
 EDIT database/revert/articles-foobar.sql                                # Edit revert script
 EDIT database/verify/articles-foobar.sql                                # Edit verify script

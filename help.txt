@@ -12,7 +12,7 @@ QUICK EXAMPLES
     open client                        # Open application GUI on browser
     open admin                         # Open admin GUI on browser
     db connect                         # Access default database from command line
-    db add articles                    # Add a migration for default database
+    db add article                     # Add a new migration for default database
     db deploy                          # Deploy migrations to default database
     db import file.sql                 # Import a file to default database
     secret rotate my-secret            # Set value for secret (restart all containers after)
@@ -110,7 +110,7 @@ QUICK EXAMPLES
     db dump:dev dump.sql               # Dump default database to a file
     db log:dev                         # View change log of default database
     db recreate:dev                    # Recreate the default database
-    db add articles                    # Add a migration for default database
+    db add article                     # Add a new migration for default database
     db deploy:dev                      # Deploy changes to default database
     db rebase:dev                      # Rebase a database (db revert + db deploy)
     db rebase:dev b91b7b2              # Rebase a database (db revert + db deploy)
@@ -773,7 +773,7 @@ PROJECT: DATABASE OPERATIONS
   db add:[TARGET] NAME [-r REQUIRES] [-n DESCRIPTION]
     Add a new change to migration plan. Run 'db add' without arguments to get
     help. You can run the change to local database by running `taito db:deploy`.
-    Example: 'taito db add order.table -r user.table -n 'Table for orders.'
+    Example: 'taito db add order -r user -n 'Table for orders.'
 
   db proxy[:TARGET][:ENV] [PROXY_PORT] [--credentials]
     Starts a proxy for accessing a database and shows connections details that
