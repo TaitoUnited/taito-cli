@@ -314,9 +314,9 @@ ARGUMENTS
     $ taito hours add 6.5
 
   ENV
-    Environment: For example 'local', 'feat-orders', 'dev', 'test', 'uat',
-    'stag', 'canary' or 'prod'. Environment is 'local' by default. For mobile
-    projects ENV can also be 'ios' or 'android'.
+    Environment: For example 'local', 'feat-orders', 'demo', 'dev', 'test',
+    'uat', 'stag', 'canary' or 'prod'. Environment is 'local' by default.
+    For mobile projects ENV can also be 'ios' or 'android'.
 
   TARGET
     Depending on the environment, TARGET may reference to a Kubernetes pod,

@@ -25,7 +25,7 @@ else
   echo "- Event: Push to branch"
   echo "- Source repository: ${taito_vc_repository}"
   echo "- Source branch - Most likely one of these depending on zone:"
-  echo "    ^(dev|test|uat)\$"
+  echo "    ^(demo|dev|test|uat)\$"
   echo "    ^(stag|canary|master)\$"
   echo "- File type: Cloud Build configuration file (YAML or JSON)"
   echo "- Cloud Build configuration file location: /cloudbuild.yaml"
