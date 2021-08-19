@@ -7,6 +7,8 @@ on:
       - dev
       - canary
       - master
+    tags:
+      - v*
 
 jobs:
   build:
@@ -15,10 +17,17 @@ jobs:
     steps:
       - name: Set environment
         run: |
-          SUFFIX="-${GITHUB_REF##*/}"
-          if [ "$SUFFIX" = "master" ]; then
+          BRANCH=${GITHUB_REF#refs/heads/}
+          TAG=${GITHUB_REF#refs/tags/}
+
+          SUFFIX="-${BRANCH}"
+          if [ ${GITHUB_REF} != ${TAG} ]; then
+            SUFFIX="-${TAG#v}"
+          fi
+          if [ ${BRANCH} = "master" ]; then
             SUFFIX=
           fi
+
           echo "SUFFIX=${SUFFIX}" >> $GITHUB_ENV
 
       - name: Checkout
