@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Set environment
         run: |
           BRANCH=${GITHUB_REF#refs/heads/}
@@ -30,8 +33,12 @@ jobs:
 
           echo "SUFFIX=${SUFFIX}" >> $GITHUB_ENV
 
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Create a new tag
+        if: ${{ env.BRANCH == 'master' }}
+        run: |
+          VERSION="v$(sed -n '/## [0-9]\./p' CHANGELOG.md | cut -c 4-)"
+          git tag -a "${VERSION}" -m "${VERSION}"
+          git push origin "${VERSION}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
