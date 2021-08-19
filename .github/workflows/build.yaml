@@ -34,12 +34,13 @@ jobs:
           echo "BRANCH=${BRANCH}" >> $GITHUB_ENV
           echo "SUFFIX=${SUFFIX}" >> $GITHUB_ENV
 
-      - name: Create a new tag
-        if: ${{ env.BRANCH == 'master' }}
-        run: |
-          VERSION="v$(sed -n '/## [0-9]\./p' CHANGELOG.md | cut -c 4-)"
-          git tag -a "${VERSION}" -m "${VERSION}"
-          git push origin "${VERSION}"
+      # TODO
+      # - name: Create a new tag
+      #   if: ${{ env.BRANCH == 'master' }}
+      #   run: |
+      #     VERSION="v$(sed -n '/## [0-9]\./p' CHANGELOG.md | cut -c 4-)"
+      #     git tag -a "${VERSION}" -m "${VERSION}"
+      #     git push origin "${VERSION}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master

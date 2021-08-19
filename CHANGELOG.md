@@ -5,5 +5,5 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.292.0
 
+- Moved Taito CLI docker images to GitHub container registry (ghcr.io)
 - Added 'taito version' command.
-- Taito CLI docker images have been moved to GitHub container registry (ghcr.io)
