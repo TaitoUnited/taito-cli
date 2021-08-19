@@ -9,7 +9,6 @@ WORKDIR /taito-cli
 RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
 # RUN npm run verify
 
-# TODO: still required?
-# RUN az extension add --name azure-devops
+RUN az extension add --name azure-devops
 
 ENTRYPOINT []
