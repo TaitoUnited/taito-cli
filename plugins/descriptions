@@ -10,12 +10,16 @@ echo "--help                     &focus" \
   "# Show help.txt of current project and a list of all taito-cli commands"
 echo "readme                     &focus" \
   "# Show README.md of current project and taito-cli"
+echo "check                     &focus" \
+  "# Check Taito CLI installation"
 echo "shell                      &focus" \
   "# Start interactive shell on the taito-cli container"
 echo "trouble                    &focus" \
   "# Show trouble.txt of current project and taito-cli"
 echo "upgrade                          " \
   "# Upgrade taito-cli and its extensions to the latest version"
+echo "version                          " \
+  "# Show Taito CLI version"
 echo "-- COMMANDS                      " \
   "# Run commands inside the taito-cli container"
 

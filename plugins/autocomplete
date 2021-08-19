@@ -8,9 +8,11 @@ cprefix="${1:-*}"
 # Basic commands
 echo "--help"
 echo "readme"
+echo "check"
 echo "shell"
 echo "trouble"
 echo "upgrade"
+echo "version"
 echo "-- COMMANDS"
 
 # Workspace

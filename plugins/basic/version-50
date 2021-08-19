@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+sed -n '/## [0-9]\./p' /taito-cli/CHANGELOG.md | cut -c 4-

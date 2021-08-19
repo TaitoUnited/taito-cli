@@ -31,6 +31,7 @@ jobs:
             SUFFIX=
           fi
 
+          echo "BRANCH=${BRANCH}" >> $GITHUB_ENV
           echo "SUFFIX=${SUFFIX}" >> $GITHUB_ENV
 
       - name: Create a new tag
