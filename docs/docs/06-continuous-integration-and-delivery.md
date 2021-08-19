@@ -36,15 +36,15 @@ If you want your CI/CD to do more that it currently does, try not to add more CI
 
 ### CI/CD optimized Docker images
 
-Taito CLI [docker repository](https://hub.docker.com/r/taitounited/taito-cli/) provides the following stable Docker images optimized for CI/CD:
+Taito CLI [container repository](https://github.com/TaitoUnited/taito-cli/pkgs/container/taito-cli) provides the following stable Docker images optimized for CI/CD:
 
-* `ci`: CI/CD image without any cloud provider specific tools.
-* `ci-aws`: CI/CD image for **Amazon Web Services**.
-* `ci-azure`: CI/CD image for **Microsoft Azure**.
-* `ci-gcp`: CI/CD image for **Google Cloud Platform**.
-* `ci-do`: CI/CD image for **Digital Ocean**.
-* `ci-openshift`: CI/CD image for **OpenShift**.
-* `ci-all`: CI/CD image that includes tools for all cloud providers.
+- `ci`: CI/CD image without any cloud provider specific tools.
+- `ci-aws`: CI/CD image for **Amazon Web Services**.
+- `ci-azure`: CI/CD image for **Microsoft Azure**.
+- `ci-gcp`: CI/CD image for **Google Cloud Platform**.
+- `ci-do`: CI/CD image for **Digital Ocean**.
+- `ci-openshift`: CI/CD image for **OpenShift**.
+- `ci-all`: CI/CD image that includes tools for all cloud providers.
 
 If your CI/CD pulls the whole Docker image on each build, optimize the image pull by setting up caching on your CI/CD, or by using your own Docker registry as a mirror. You can also create a custom Docker image, that includes only the tools that you actually need.
 

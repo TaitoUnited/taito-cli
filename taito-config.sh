@@ -32,7 +32,7 @@ taito_networks="default"
 link_urls="
   * www=http://localhost:9417
   * project=https://github.com/${taito_organization}/${taito_vc_repository}/projects
-  * builds=https://hub.docker.com/r/taitounited/taito-cli/builds/
-  * artifacts=https://hub.docker.com/r/taitounited/taito-cli/tags/
+  * builds=https://github.com/TaitoUnited/taito-cli/actions
+  * artifacts=https://github.com/TaitoUnited/taito-cli/pkgs/container/taito-cli
   * git=https://github.com/TaitoUnited/taito-cli GitHub repository
 "

@@ -77,9 +77,9 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# Template: Taito CLI image"
   echo "# TIP: Pull taito image from private registry to keep CI/CD fast."
   if [[ $taito_provider != "linux" ]]; then
-    echo "template_default_taito_image=taitounited/taito-cli:ci-$taito_provider"
+    echo "template_default_taito_image=ghcr.io/taitounited/taito-cli:ci-$taito_provider"
   else
-    echo "template_default_taito_image=taitounited/taito-cli:ci"
+    echo "template_default_taito_image=ghcr.io/taitounited/taito-cli:ci"
   fi
   echo "template_default_taito_image_username="
   echo "template_default_taito_image_password="
@@ -223,9 +223,9 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "# to a different zone than feature, development, and testing environments,"
   echo "# configure alternative prod zone settings here."
   if [[ $taito_provider != "linux" ]]; then
-    echo "template_default_taito_image_prod=taitounited/taito-cli:ci-$taito_provider"
+    echo "template_default_taito_image_prod=ghcr.io/taitounited/taito-cli:ci-$taito_provider"
   else
-    echo "template_default_taito_image_prod=taitounited/taito-cli:ci"
+    echo "template_default_taito_image_prod=ghcr.io/taitounited/taito-cli:ci"
   fi
   echo "template_default_taito_image_username_prod="
   echo "template_default_taito_image_password_prod="

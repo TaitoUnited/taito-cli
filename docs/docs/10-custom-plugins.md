@@ -31,7 +31,7 @@ This is how you implement your own custom plugin:
    ```shell
    #!/bin/bash -e
    # shellcheck disable=SC2034
-   taito_image="taitounited/taito-cli:cli"
+   taito_image="ghcr.io/taitounited/taito-cli:cli"
    taito_plugins="npm"
    ```
 

@@ -30,7 +30,7 @@ The [full-stack-template](https://github.com/TaitoUnited/full-stack-template) al
 
 The following settings are shared among plugins. All of them are optional.
 
-- **taito_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `taitounited/taito-cli:cli`.
+- **taito_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `ghcr.io/taitounited/taito-cli:cli`.
 - **taito_zone:** The default taito zone. You can usually leave this empty.
 - **taito_global_extensions:** Globally enabled Taito CLI extensions. You can reference an extension by using a local file path, git repository path or an url to a **tar.gz** archive. TODO example values.
 - **taito_global_plugins:** Globally enabled Taito CLI plugins.
@@ -47,7 +47,7 @@ The following settings are shared among plugins. All of them are optional.
 
 Basic settings:
 
-- **taito_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `taitounited/taito-cli:cli`.
+- **taito_image:** Taito CLI Docker image that is used for running the taito commands. The default value is `ghcr.io/taitounited/taito-cli:cli`.
 - **taito_version:** Version of the taito configuration file syntax. It is used to provide backwards compatibility in case Taito CLI implementation is changed. The current version is `1`.
 - **taito_extensions:** Enabled Taito CLI extensions. You can reference an extension using a local file path (relative to the project root directory), git repository path or an url to a **tar.gz** archive. TODO example values.
 - **taito_plugins:** Enabled Taito CLI plugins.

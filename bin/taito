@@ -178,7 +178,7 @@ if [[ -z "${params[*]}" ]]; then
 fi
 
 # Read default taito-config settings
-export taito_image="taitounited/taito-cli:cli"
+export taito_image="ghcr.io/taitounited/taito-cli:cli"
 taito::core::export_user_config "${taito_target_env}"
 
 # Determine environment

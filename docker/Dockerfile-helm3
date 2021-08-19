@@ -1,4 +1,4 @@
-FROM taitounited/taito-cli-deps:all
+FROM ghcr.io/taitounited/taito-cli-deps:all
 MAINTAINER Taito United <support@taitounited.fi>
 LABEL fi.taitounited.taito-cli="true"
 
