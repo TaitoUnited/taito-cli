@@ -6,13 +6,13 @@ function taito::commit_changes () {
   fi
 
   if [[ -z "${taito_admin_key:-}" ]] || [[ ${taito_is_admin:-} == true ]]; then
-    sleep 1
+    echo "Please wait..."
+    sleep 5
     taito::execute_on_host \
       "docker commit ${HOSTNAME} ${taito_image_name}save > /dev/null"
+    sleep 5
     taito::execute_on_host_fg \
-      "docker image tag ${taito_image_name}save ${taito_image_name} > /dev/null"
-    sleep 4
-    echo OK
+      "sleep 5 && docker image tag ${taito_image_name}save ${taito_image_name} && echo OK"
   else
     echo "ERROR: Docker commit is not allowed when executing as admin!"
     exit 1
