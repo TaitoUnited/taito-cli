@@ -25,6 +25,10 @@ TAITO CLI TROUBLESHOOTING
     You are missing a secret. Create the secret with "taito secret rotate NAME"
     or just clean everything with "taito develop".
 
+  "rm: cannot remove ...: Permission denied"
+    The file or directory has been created by docker and therefore is owned
+    by root. Remove the file/directory from disk using sudo.
+
   Application does not work locally
     - Try clean start by running "taito develop". If the develop command fails
       with Docker Compose read timeout error, stop it with ctrl+c, start it
@@ -42,6 +46,10 @@ TAITO CLI TROUBLESHOOTING
     try to run "Clean / Purge data" or "Reset to factory default" from Docker
     preferences. Remember to adjust your Docker resource limits (cpu/memory)
     after the factory reset.
+
+  "Cannot create container for service ...: not a directory "
+    This error occurs sometimes on WSL. Rebooting your computer usually
+    resolves the issue.
 
   Read timeout on "taito develop" or "taito start --clean":
     If the develop command fails with Docker Compose read timeout error, stop it
