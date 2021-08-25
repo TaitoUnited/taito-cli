@@ -449,6 +449,27 @@ basic_mount_options="
   -v $(pwd):/project
 "
 
+# Temporary fix for WSL+docker: Docker commit doesn't seem to work.
+# Therefore we use host ~/.aws ~/.azure and ~/.kube if they exist.
+if [[ -d ${taito_home_path}/.aws ]]; then
+  basic_mount_options="
+    ${basic_mount_options}
+    -v ${taito_home_path}/.aws:${taito_container_home}/.aws
+  "
+fi
+if [[ -d ${taito_home_path}/.azure ]]; then
+  basic_mount_options="
+    ${basic_mount_options}
+    -v ${taito_home_path}/.azure:${taito_container_home}/.azure
+  "
+fi
+if [[ -d ${taito_home_path}/.kube ]]; then
+  basic_mount_options="
+    ${basic_mount_options}
+    -v ${taito_home_path}/.kube:${taito_container_home}/.kube
+  "
+fi
+
 # Use winpty only with the -it switch
 if [[ ${docker_it} ]]; then
   docker_winpty="${winpty}"
