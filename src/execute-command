@@ -301,7 +301,12 @@ export NOTEe="${taito_style_note_e:-\\x1B[0m}"        # Note end
 
 if [[ ${taito_command} == "check" ]]; then
   if [[ $(whoami) == "taito" ]] || [[ $(whoami) == "root" ]]; then
-    taito::execute_on_host "echo Checking Taito CLI..."
+    echo "Checking Taito CLI"
+    cat "$taito_run" > /dev/null ||
+      echo "ERROR: log file $taito_run does not exist"
+    cat "$taito_run_fg" > /dev/null ||
+      echo "ERROR: fg log file $taito_run_fg does not exist"
+    taito::execute_on_host "echo && echo Looks like..."
     taito::execute_on_host_fg "echo && echo Taito CLI is OK!"
     exit
   else
