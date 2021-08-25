@@ -67,8 +67,8 @@ TAITO CLI TROUBLESHOOTING
 
   "docker: invalid reference format"
     You are probably executing Taito CLI command in a folder that docker is not
-    allowed to read. Note that by default docker does not have permissions to
-    ~/Documents and ~/Downloads.
+    allowed to read. Note that docker does not have permissions to ~/Documents
+    and ~/Downloads by default on macOS.
 
   Docker issues on Linux systems
   -------------------------------
