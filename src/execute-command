@@ -301,8 +301,8 @@ export NOTEe="${taito_style_note_e:-\\x1B[0m}"        # Note end
 
 if [[ ${taito_command} == "check" ]]; then
   if [[ $(whoami) == "taito" ]] || [[ $(whoami) == "root" ]]; then
-    echo
-    echo "Taito CLI is OK!"
+    taito::execute_on_host "echo Checking Taito CLI..."
+    taito::execute_on_host_fg "echo && echo Taito CLI is OK!"
     exit
   else
     echo
