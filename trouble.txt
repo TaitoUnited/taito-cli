@@ -130,6 +130,12 @@ TAITO CLI TROUBLESHOOTING
     authenticated or your authentication has expired. In such case, run
     "taito auth:ENV" or "taito auth:ENV reset" to authenticate.
 
+  Authentication credentials get lost after "taito auth:ENV"
+    By default your credentials are stored on the Taito CLI docker image, but
+    this might not work on some WSL setups. Alternatively you can store the
+    credentials on host by creating directories for them:
+    "mkdir -p ~/.aws ~/.azure ~/.config/gcloud" ~/.kube"
+
   SSL certificates (cert-manager)
   -------------------------------
 

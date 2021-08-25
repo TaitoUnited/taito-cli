@@ -463,6 +463,12 @@ if [[ -d ${taito_home_path}/.azure ]]; then
     -v ${taito_home_path}/.azure:${taito_container_home}/.azure
   "
 fi
+if [[ -d ${taito_home_path}/.config/gcloud ]]; then
+  basic_mount_options="
+    ${basic_mount_options}
+    -v ${taito_home_path}/.config/gcloud:${taito_container_home}/.config/gcloud
+  "
+fi
 if [[ -d ${taito_home_path}/.kube ]]; then
   basic_mount_options="
     ${basic_mount_options}
