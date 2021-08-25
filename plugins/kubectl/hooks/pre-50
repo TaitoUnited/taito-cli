@@ -10,7 +10,7 @@ if [[ ${taito_command} == "auth" ]] && (
      [[ " ${*} " == *" --reset "* ]] || [[ " ${*} " == *" reset "* ]]
    ); then
   taito::print_plugin_title
-  rm -rf ~/.kube &> /dev/null
+  rm -rf ~/.kube/* &> /dev/null
   echo "Removed Kubernetes settings from ~/.kube"
 fi
 
