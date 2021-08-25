@@ -9,10 +9,12 @@ function taito::commit_changes () {
     echo "Please wait..."
     sleep 5
     taito::execute_on_host \
-      "docker commit ${HOSTNAME} ${taito_image_name}save > /dev/null"
+      "docker commit ${HOSTNAME} ${taito_image_name}save"
     sleep 5
     taito::execute_on_host_fg \
-      "sleep 5 && docker image tag ${taito_image_name}save ${taito_image_name} && echo OK"
+      "sleep 5 && docker image tag ${taito_image_name}save ${taito_image_name} && echo && echo Taito CLI changes tagged OK"
+    echo
+    echo "Taito CLI changes committed OK"
   else
     echo "ERROR: Docker commit is not allowed when executing as admin!"
     exit 1
