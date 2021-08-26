@@ -4,7 +4,7 @@
 
 Taito command line interface is an extensible toolkit for developers and DevOps personnel. It defines a standard set of commands that can be used in any project no matter the technology or infrastructure. Thus, developers and DevOps personnel may always run the same familiar set of commands from project to project without thinking about the underlying infrastructure. This is made possible by shipping all required tools as a Docker container image, implementing the commands with plugins, and defining project specific settings in a configuration file. Continuous integration scripts also become more reusable and maintainable as they are based on the same set of commands and settings.
 
-To get started see the [website](https://taitounited.github.io/taito-cli/). For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) or run `taito -h`.
+To get started see the [website](https://taitounited.github.io/taito-cli/). For a command reference, see [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt) or run `taito -h`. For troubleshooting, see [trouble.txt](https://github.com/TaitoUnited/taito-cli/blob/master/trouble.txt) or run `taito trouble`.
 
 ## Container images
 
@@ -14,17 +14,19 @@ Taito CLI [container repository](https://github.com/TaitoUnited/taito-cli/pkgs/c
 
 Stable images optimized for CI/CD:
 
-- `ci`: CI/CD image without any cloud provider specific tools.
-- `ci-aws`: CI/CD image for **Amazon Web Services**.
-- `ci-azure`: CI/CD image for **Microsoft Azure**.
-- `ci-gcp`: CI/CD image for **Google Cloud Platform**.
-- `ci-do`: CI/CD image for **Digital Ocean**.
-- `ci-openshift`: CI/CD image for **OpenShift**.
+- `ci`: CI/CD image for building and testing.
+- `ci-dockerd`: CI/CD image for building and testing. Includes also dockerd that is required in some CI/CD environments.
+- `ci-deploy`: CI/CD image for deployment without any cloud provider specific tools.
+- `ci-aws`: CI/CD image for deployment on **Amazon Web Services**.
+- `ci-azure`: CI/CD image for deployment on **Microsoft Azure**.
+- `ci-gcp`: CI/CD image for deployment on **Google Cloud Platform**.
+- `ci-do`: CI/CD image for deployment on **Digital Ocean**.
+- `ci-openshift`: CI/CD image for deployment on **OpenShift**.
 - `ci-all`: CI/CD image that includes tools for all cloud providers.
 
 > TIP: If your CI/CD pulls the whole Docker image on each build, optimize the image pull by setting up caching on your CI/CD, or by using your own Docker registry as a mirror. You can also create a custom Docker image that includes only the tools you actually need.
 
-> TIP: Read [this](https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli) if you cannot use Taito CLI on your CI/CD.
+> TIP: Read [this](https://taitounited.github.io/taito-cli/docs/06-continuous-integration-and-delivery#cicd-without-taito-cli) if you cannot use Taito CLI on your CI/CD or you want to avoid pulling a Taito CLI docker container image on each build.
 
 Special purpose Docker images:
 
@@ -52,7 +54,7 @@ Install Taito CLI normally using the [installation instructions](https://taitoun
 
 How to implement a command:
 
-1. Fork taito-cli repository (or create a new feature branch if you have write permissions to taito-cli repository).
+1. Fork taito-cli repository.
 2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. Try to implement one of the Taito CLI prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
 3. Add unit tests for your command. You can execute a single unit test by executing the corresponding bats file. All unit tests are run automatically on git push and during CI build, but you can also run them manually with the `taito unit` command.
 4. Make sure that the plugin description written in plugin README.md is up-to-date.

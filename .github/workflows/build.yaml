@@ -78,6 +78,26 @@ jobs:
           push: true
           tags: ghcr.io/taitounited/taito-cli:ci${{ env.SUFFIX }}
 
+      - name: Build ci-deploy
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          file: ./docker/Dockerfile-ci-deploy
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/taitounited/taito-cli:ci-deploy${{ env.SUFFIX }}
+
+      - name: Build ci-dockerd
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          file: ./docker/Dockerfile-ci-dockerd
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/taitounited/taito-cli:ci-dockerd${{ env.SUFFIX }}
+
       - name: Build ci-all
         uses: docker/build-push-action@v2
         with:
