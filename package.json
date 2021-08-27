@@ -119,10 +119,10 @@
     "url": "https://github.com/TaitoUnited/taito-cli/issues"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "git-branch-is": "^4.0.0",
-    "husky": "^4.3.6",
-    "semantic-release": "^17.3.0"
+    "husky": "^7.0.2",
+    "semantic-release": "^17.4.7"
   }
 }
