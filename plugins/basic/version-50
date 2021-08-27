@@ -1,3 +1,10 @@
 #!/bin/bash -e
 
-sed -n '/## [0-9]\./p' /taito-cli/CHANGELOG.md | cut -c 4-
+options=" ${*} "
+
+if [[ ${options} == *" --notes "* ]]; then
+  cat /taito-cli/CHANGELOG.md
+  echo
+else
+  sed -n '/## [0-9]\./p' /taito-cli/CHANGELOG.md | cut -c 4- | head -n1
+fi

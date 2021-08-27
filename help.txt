@@ -354,8 +354,8 @@ TAITO: BASIC OPERATIONS
   upgrade
     Upgrade Taito CLI and its extensions to the latest version.
 
-  version
-    Print version
+  version [--notes]
+    Print version and optionally also release notes.
 
 PROJECT: BASIC OPERATIONS
 

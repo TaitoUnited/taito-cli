@@ -20,6 +20,8 @@ echo "upgrade                          " \
   "# Upgrade taito-cli and its extensions to the latest version"
 echo "version                          " \
   "# Show Taito CLI version"
+echo "version --notes                  " \
+  "# Show Taito CLI version and release notes"
 echo "-- COMMANDS                      " \
   "# Run commands inside the taito-cli container"
 

@@ -13,6 +13,7 @@ echo "shell"
 echo "trouble"
 echo "upgrade"
 echo "version"
+echo "version --notes"
 echo "-- COMMANDS"
 
 # Workspace
