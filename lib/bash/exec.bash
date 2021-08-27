@@ -105,7 +105,7 @@ function taito::execute_with_ssh_agent () {
   fi
 
   runner="bash -c"
-  if [[ ${use_agent} == true ]]; then
+  if [[ ${use_agent} == true ]] && which ssh-agent > /dev/null; then
     runner="ssh-agent bash -c"
   fi
 
