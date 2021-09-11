@@ -134,6 +134,10 @@ function helm::deploy () {
 
       if [[ $exit_code != 0 ]] &&
          ! helm version | grep "SemVer:\"v2." > /dev/null; then
+        echo "------------------------------------------------------------------------"
+        echo "scripts/helm.yaml.tmp contents:"
+        echo
+        cat -n scripts/helm.yaml.tmp
         if [[ ${taito_mode:-} == "ci" ]]; then
           echo "------------------------------------------------------------------------"
           echo "NOTE: If you got 'User cannot create resource' error on your CI/CD build,"
