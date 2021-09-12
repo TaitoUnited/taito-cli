@@ -36,6 +36,11 @@ TAITO CLI TROUBLESHOOTING
     - Try cleaning your local workspace by running "taito workspace kill" and
       "taito workspace clean"
 
+  "revert/FILE.sql: No such file or directory"
+    You have removed an existing database migration. The migration cannot be
+    reverted from you database without revert/FILE.sql that instructs Sqitch
+    how to revert it. Put the revert/FILE.sql file back and try again.
+
   Docker issues on non-Linux systems (macOS, Windows)
   ---------------------------------------------------
 
