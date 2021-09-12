@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.294.0
 
+- Added taito_save_credentials_on_host setting for saving Kubernetes and cloud
+  provider credentials on host.
 - Added 'taito env init' and 'taito zone init' commands for updating Terraform
   lock files.
 

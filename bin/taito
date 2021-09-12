@@ -449,31 +449,31 @@ basic_mount_options="
   -v $(pwd):/project
 "
 
-# Temporary fix for WSL+docker: Docker commit doesn't seem to work.
-# Therefore we use host ~/.aws ~/.azure and ~/.kube if they exist.
-if [[ -d ${taito_home_path}/.aws ]]; then
-  basic_mount_options="
-    ${basic_mount_options}
-    -v ${taito_home_path}/.aws:${taito_container_home}/.aws
-  "
-fi
-if [[ -d ${taito_home_path}/.azure ]]; then
-  basic_mount_options="
-    ${basic_mount_options}
-    -v ${taito_home_path}/.azure:${taito_container_home}/.azure
-  "
-fi
-if [[ -d ${taito_home_path}/.config/gcloud ]]; then
-  basic_mount_options="
-    ${basic_mount_options}
-    -v ${taito_home_path}/.config/gcloud:${taito_container_home}/.config/gcloud
-  "
-fi
-if [[ -d ${taito_home_path}/.kube ]]; then
-  basic_mount_options="
-    ${basic_mount_options}
-    -v ${taito_home_path}/.kube:${taito_container_home}/.kube
-  "
+if [[ ${taito_save_credentials_on_host} == "true" ]]; then
+  if [[ -d ${taito_home_path}/.aws ]]; then
+    basic_mount_options="
+      ${basic_mount_options}
+      -v ${taito_home_path}/.aws:${taito_container_home}/.aws
+    "
+  fi
+  if [[ -d ${taito_home_path}/.azure ]]; then
+    basic_mount_options="
+      ${basic_mount_options}
+      -v ${taito_home_path}/.azure:${taito_container_home}/.azure
+    "
+  fi
+  if [[ -d ${taito_home_path}/.config/gcloud ]]; then
+    basic_mount_options="
+      ${basic_mount_options}
+      -v ${taito_home_path}/.config/gcloud:${taito_container_home}/.config/gcloud
+    "
+  fi
+  if [[ -d ${taito_home_path}/.kube ]]; then
+    basic_mount_options="
+      ${basic_mount_options}
+      -v ${taito_home_path}/.kube:${taito_container_home}/.kube
+    "
+  fi
 fi
 
 # Use winpty only with the -it switch
