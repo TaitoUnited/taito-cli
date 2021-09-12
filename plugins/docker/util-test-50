@@ -106,10 +106,9 @@ if [[ ${taito_env} != "local" ]]; then
     docker_compose="true"
     compose_cmd="COMPOSE_HTTP_TIMEOUT=90 DOCKER_HOST_PATH=${DOCKER_HOST_PATH:-.} docker-compose -f ./${docker_compose_test_file} run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ${test_executable} SUITE ${test_filter}'"
 
-    # On CI mode we use root user
-    # TODO: add taito user to image -> local install should replace uid/gid only
-    if [[ ${taito_mode:-} == "ci" ]]; then
-      sed -i '/^    user: taito/d' "${docker_compose_test_file}"
+    # On CI mode we might use root user
+    if [[ ${taito_mode:-} == "ci" ]] && [[ $(whoami) != "taito" ]]; then
+      sed -i 's/^    user: taito/^    user: $(whoami)/' "${docker_compose_test_file}"
     fi
   else
     compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ${test_executable} SUITE ${test_filter}"

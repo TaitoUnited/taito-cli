@@ -9,4 +9,5 @@ WORKDIR /taito-cli
 RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
 # RUN npm run verify
 
-ENTRYPOINT []
+USER taito
+ENTRYPOINT [] # TODO: why not "taito" ?
