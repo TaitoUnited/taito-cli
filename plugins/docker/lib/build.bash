@@ -83,7 +83,7 @@ function docker::build () {
         pulled="true"
       fi
 
-      while true
+      while [[ $pulled == "false" ]]
       do
         echo "- Pulling the existing image ${image_tag}."
         (
