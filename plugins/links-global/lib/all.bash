@@ -114,7 +114,11 @@ function links-global::open_link () {
   echo_command=${4:-echo}
 
   found=$(echo "${link_global_urls:-}${link_urls:-}" | grep "${link_name}[\[\:\=\#]")
-  if [[ ${found} != "" ]]; then
+  if [[ ${found} == "" ]]; then
+    ${echo_command}
+    ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
+    ${echo_command} "Your configuration does not contain such link as '${link_name}'"
+  else
     while IFS='*' read -ra items; do
       for item in "${items[@]}"; do
         words=(${item})
