@@ -365,6 +365,10 @@ PROJECT: BASIC OPERATIONS
     The command executes a full clean startup by executing 'env apply', 'start',
     and 'init' commands consecutively with the '--clean' option.
 
+  env init [NAME]
+    Initialize configuration with new dependencies. This will refresh your
+    Terraform lock files, etc.
+
   env apply [NAME]
     Configure the local environment.
 
@@ -973,6 +977,10 @@ ZONE
 
   zone create TEMPLATE
     Create a new zone based on a template.
+
+  zone init [NAME]
+    Initialize configuration with new dependencies. This will refresh your
+    Terraform lock files, etc.
 
   zone apply [NAME]
     Apply infrastructure changes to a zone.
