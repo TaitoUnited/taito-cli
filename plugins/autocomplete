@@ -71,6 +71,7 @@ done
 # Zone management
 echo "zone create TEMPLATE"
 if [[ ${taito_type:-} == "zone" ]]; then
+  echo "zone init"
   echo "zone apply"
   echo "zone status"
   echo "zone doctor"
@@ -174,6 +175,7 @@ if [[ ${taito_project:-} ]]; then
 
     echo "env merge${suffix} DESTINATION_BRANCH"
 
+    echo "env init${suffix}"
     echo "env apply${suffix}"
     if [[ ${env} == "local" ]]; then
       # TOOD: Handle all option permutations nicely

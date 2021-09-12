@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.294.0
+
+- Added 'taito env init' and 'taito zone init' commands for updating Terraform
+  lock files.
+
 ## 0.293.1
 
 Fixes:

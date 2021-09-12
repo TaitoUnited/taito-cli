@@ -1,0 +1,14 @@
+#!/bin/bash -e
+# shellcheck source=../terraform/lib/all.bash
+. "${taito_plugin_path:?}/../terraform/lib/all.bash"
+
+taito::confirm "Initialize terraform" || \
+  taito::skip_to_next "${@}"
+
+(
+  set -e
+  export terraform_init_options="${terraform_init_options:-} -upgrade"
+  terraform::run_zone
+)
+
+taito::call_next "${@}"

@@ -188,11 +188,13 @@ QUICK EXAMPLES
 
   PROJECT INFRASTRUCTURE MANAGEMENT
     env info:dev                       # Show environment information
+    env init:dev                       # Initialize configuration with new dependencies
     env apply:dev                      # Apply project specific changes to dev env
     env destroy:dev                    # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
     zone create gcp                    # Create a new zone based on the gcp template
+    zone init                          # Initialize configuration with new dependencies
     zone apply                         # Apply infrastructure changes to the zone
     zone status                        # Show status summary of the zone
     zone doctor                        # Analyze and repair the zone

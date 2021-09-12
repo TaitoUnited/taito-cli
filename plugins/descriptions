@@ -114,6 +114,8 @@ done
 echo "zone create TEMPLATE            " \
   "# Create a new zone based in an infrastructure template"
 if [[ ${taito_type:-} == "zone" ]]; then
+  echo "zone init                       " \
+    "# Initialize configuration with new dependencies, etc."
   echo "zone apply                       " \
     "# Apply infrastructure changes to the zone"
   echo "zone status                      " \
@@ -257,6 +259,8 @@ if [[ ${taito_project:-} ]]; then
     echo "env merge${suffix} DESTINATION_BRANCH    " \
       "# Merge source env branch to the destination env branch"
 
+    echo "env init${suffix}          &focus        " \
+      "# Initialize configuration with new dependencies, etc."
     echo "env apply${suffix}         &focus        " \
       "# Apply project specific changes to ${env} environment"
     if [[ ${env} == "local" ]]; then

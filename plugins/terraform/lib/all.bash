@@ -62,7 +62,9 @@ function terraform::run () {
       if [[ -f import_state ]]; then
         ./import_state
       fi
-      terraform "${command}" ${apply_options} -state=${env}/terraform.tfstate
+      if [[ "${command}" != "" ]]; then
+        terraform "${command}" ${apply_options} -state=${env}/terraform.tfstate
+      fi
     )
   fi
 }
@@ -105,12 +107,14 @@ function terraform::run_zone () {
       ./import_state
     fi
     trap "rm -f ./*.json.tmp" RETURN
-    while true; do
-      terraform "${command}" ${apply_options} && exit $?
-      echo
-      echo "Terraform execution failed. Sometimes you can resolve problems just"
-      echo "by running Terraform scripts again."
-      taito::confirm "Try again with the same configuration values" || exit 1
-    done
+    if [[ "${command}" != "" ]]; then
+      while true; do
+        terraform "${command}" ${apply_options} && exit $?
+        echo
+        echo "Terraform execution failed. Sometimes you can resolve problems just"
+        echo "by running Terraform scripts again."
+        taito::confirm "Try again with the same configuration values" || exit 1
+      done
+    fi
   )
 }

@@ -1,0 +1,13 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+(
+  set -e
+  export terraform_init_options="${terraform_init_options:-} -upgrade"
+  # Cloud provider
+  [[ ${taito_provider:-} ]] && \
+    terraform::run "" "${taito_provider:-}" "${taito_env:?}"
+)
+
+taito::call_next "${@}"
