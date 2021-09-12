@@ -60,7 +60,7 @@ function docker::build () {
   local image_builder_local="${taito_project}-${name}-builder:latest"
   local image_tester="${taito_project}-${name}-tester:latest"
 
-  # REFACTOR: clean up this mess
+  # REFACTOR: clean up this mess !!
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "ERROR: ${name} not included in taito_targets"
     exit 1
@@ -73,6 +73,16 @@ function docker::build () {
       # publish and integration tests
       local count=0
       local pulled="false"
+
+      # Skip pulling if there is no need to pull the image and
+      # `docker manifest inspect` works ok with this container registry
+      if [[ ${taito_mode:-} == "ci" ]] && \
+         [[ ${ci_exec_build:-} == "false" ]] && \
+         [[ ${ci_exec_test:-} == "false" ]] && \
+         docker manifest inspect "${image}" &> /dev/null; then
+        pulled="true"
+      fi
+
       while true
       do
         echo "- Pulling the existing image ${image_tag}."
