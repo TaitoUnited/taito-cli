@@ -108,7 +108,7 @@ if [[ ${taito_env} != "local" ]]; then
 
     # On CI mode we might use root user
     if [[ ${taito_mode:-} == "ci" ]] && [[ $(whoami) != "taito" ]]; then
-      sed -i 's/^    user: taito/^    user: $(whoami)/' "${docker_compose_test_file}"
+      sed -i "s/^    user: taito/    user: $(whoami)/" "${docker_compose_test_file}"
     fi
   else
     compose_cmd="docker run ${docker_env_vars} --network=host -v \"\$(pwd)/${dir}:/${dir}\" --entrypoint sh ${image_test} ${test_executable} SUITE ${test_filter}"
