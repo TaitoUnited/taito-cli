@@ -9,5 +9,5 @@ WORKDIR /taito-cli
 RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
 # RUN npm run verify
 
-USER taito
+# NOTE: Using root user as docker.sock access is often required on CI/CD
 ENTRYPOINT ["taito"]
