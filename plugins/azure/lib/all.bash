@@ -33,6 +33,9 @@ function azure::authenticate () {
       echo "--------------------------------------------------------------------"
     )
   fi
+
+  # TODO: docker-commit is called twice on 'taito auth'
+  taito::commit_changes  
 }
 
 function azure::authenticate_on_acr () {
