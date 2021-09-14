@@ -138,8 +138,9 @@ TAITO CLI TROUBLESHOOTING
   Authentication credentials get lost after "taito auth:ENV"
     By default your credentials are stored on the Taito CLI docker image, but
     this might not work on some WSL setups. Alternatively you can store the
-    credentials on host by creating directories for them:
-    "mkdir -p ~/.aws ~/.azure ~/.config/gcloud ~/.kube"
+    credentials on host by settings taito_save_credentials_on_host=true in
+    your `~/.taito/taito-config.sh` and creating directories for them on your
+    host: mkdir -p ~/.aws ~/.azure ~/.config/gcloud ~/.kube
 
   SSL certificates (cert-manager)
   -------------------------------
