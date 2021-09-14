@@ -7,11 +7,12 @@ function taito::commit_changes () {
 
   if [[ -z "${taito_admin_key:-}" ]] || [[ ${taito_is_admin:-} == true ]]; then
     echo "Please wait..."
-    sleep 1
+    # Some delay is required before committing changes with docker commit?
+    sleep 5
     taito::execute_on_host \
       "docker commit ${HOSTNAME} ${taito_image_name}save"
     taito::execute_on_host_fg \
-      "sleep 5 && docker image tag ${taito_image_name}save ${taito_image_name} && echo && echo Taito CLI changes tagged OK"
+      "sleep 8 && docker image tag ${taito_image_name}save ${taito_image_name} && echo && echo Taito CLI changes tagged OK"
     sleep 5
     echo
     echo "Taito CLI changes committed OK"
