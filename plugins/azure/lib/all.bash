@@ -17,6 +17,8 @@ function azure::authenticate () {
     taito::open_browser "https://microsoft.com/devicelogin"
     az login --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
     az account set --subscription "${taito_provider_billing_account_id:?}"
+    # TODO: docker-commit is called twice on 'taito auth'
+    taito::commit_changes
   else
     echo "Already authenticated."
     echo "You can reauthenticate with 'taito auth --reset'."
@@ -33,9 +35,6 @@ function azure::authenticate () {
       echo "--------------------------------------------------------------------"
     )
   fi
-
-  # TODO: docker-commit is called twice on 'taito auth'
-  taito::commit_changes  
 }
 
 function azure::authenticate_on_acr () {
