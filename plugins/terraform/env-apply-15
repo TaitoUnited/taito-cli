@@ -6,4 +6,8 @@
 [[ ${taito_provider:-} ]] && \
   terraform::run apply "${taito_provider:-}" "${taito_env:?}"
 
+# Auth provider
+[[ ${taito_auth_provider:-} ]] && \
+  terraform::run apply "${taito_auth_provider}-auth" "${taito_env}"
+
 taito::call_next "${@}"

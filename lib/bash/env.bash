@@ -1,6 +1,8 @@
 #!/bin/bash
 
 function taito::export_terraform_env () {
+  local name
+  
   # Set terraform basic settings
   export TF_LOG="INFO"
   export TF_PLUGIN_CACHE_DIR="${HOME}/.terraform.d/plugin-cache"

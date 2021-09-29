@@ -21,6 +21,10 @@ done
 # Modules with env prefix
 terraform::run_all_by_prefix env destroy "${taito_env:?}"
 
+# Auth provider
+[[ ${taito_auth_provider:-} ]] && \
+  terraform::run destroy "${taito_auth_provider}-auth" "${taito_env}"
+
 # Cloud provider
 terraform::run destroy "${taito_provider:-}" "${taito_env:?}"
 
