@@ -9,6 +9,10 @@ kubectl::use_context
 sleep 5
 while kubectl get pods | grep "ContainerCreating" &> /dev/null; do
   echo "Waiting until all containers have been deployed"
+  echo
+  echo "TIP: If this takes a long time, perhaps you have forgotten to set value of some"
+  echo "newly added secret? You can investigate more with 'taito status:${taito_target_env}'"
+  echo "and 'taito logs:TARGET:${taito_target_env}' commands."
   sleep 5
 done
 sleep 15
