@@ -7,7 +7,7 @@ QUICK EXAMPLES
     develop                            # Quick start (runs: env apply, start --clean --init)
     env apply                          # Configure local environment and install some libs
     start                              # Start the application. Add --clean for clean start.
-    init                               # Initialize DB and storages. Add --clean for clean init.
+    init                               # Initialize DB, storages, etc. Add --clean for clean init.
     info                               # Show info required for signing in to the application
     open client                        # Open application GUI on browser
     open admin                         # Open admin GUI on browser
@@ -78,6 +78,7 @@ QUICK EXAMPLES
     restart:dev                        # Restart application
     stop:dev                           # Stop application
     down:dev                           # Remove application
+    init:dev                           # Initialize DB, storages, etc. Add --clean for clean init.
 
   CONTAINERS
     logs:server:dev                    # Tail logs of a container named 'server'
