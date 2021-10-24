@@ -2,8 +2,8 @@
 # shellcheck source=../kubectl/lib/context.bash
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-if [[ ${taito_command_chain:-} != *"kubectl/"* ]] && [[ ${taito_default_domain:-} ]]; then
-  echo "You need to configure DNS settings for you ${taito_default_domain} domain."
+if [[ -z "${kubernetes_name:-}" ]] && [[ ${taito_default_domain:-} ]]; then
+  echo "You need to configure DNS settings for your ${taito_default_domain} domain."
   echo "Check the hosted zones NS records from AWS console and configure them to"
   echo "your DNS."
   echo
