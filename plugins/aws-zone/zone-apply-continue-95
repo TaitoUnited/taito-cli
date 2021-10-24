@@ -2,10 +2,10 @@
 # shellcheck source=../kubectl/lib/context.bash
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
-if [[ -z "${kubernetes_name:-}" ]] && [[ ${taito_default_domain:-} ]]; then
-  echo "You need to configure DNS settings for your ${taito_default_domain} domain."
-  echo "Check the hosted zones NS records from AWS console and configure them to"
-  echo "your DNS."
+if [[ ${taito_default_domain:-} ]]; then
+  echo "If you want to manage your ${taito_default_domain} DNS settings in AWS,"
+  echo "you may need to add NS records for the main domain. You can check"
+  echo "${taito_default_domain} hosted zone NS records from AWS console."
   echo
   echo "Press enter to open hosted zones on AWS console"
   read -r
