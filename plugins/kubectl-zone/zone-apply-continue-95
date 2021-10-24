@@ -56,7 +56,7 @@ kubectl::use_context
 #     --from-file=token=tmp/github
 # fi
 
-taito::confirm "Configure DNS" || \
+taito::confirm "Configure DNS for Kubernetes" || \
   taito::skip_to_next "${@}"
 
 taito::print_title "LOAD BALANCER ADDRESSES"
