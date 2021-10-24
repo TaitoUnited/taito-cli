@@ -76,7 +76,19 @@ function aws::authenticate_on_kubernetes () {
   aws $aws_options eks \
     --region "${taito_provider_region}" update-kubeconfig \
     --name "${kubernetes_name}" \
-    --alias "${kubernetes_name}" > "${taito_vout:-}"
+    --alias "${kubernetes_name}" > "${taito_vout:-}" || (
+    echo
+    echo "TIP: If you got 'NoneType object is not iterable' error, try deleting ~/.kube/config"
+    echo "from Taito CLI container:"
+    echo
+    echo "taito shell"
+    echo "> rm ~/.kube/config"
+    echo "> taito util commit"
+    echo "> exit"
+    echo
+    echo "More info: https://github.com/aws/aws-cli/issues/4843"
+    exit 1
+  )
 }
 
 function aws::publish_current_target_assets () {
