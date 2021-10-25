@@ -16,7 +16,7 @@ function replace_with_terraform_variable () {
     value=$(
       terraform output -json "${variable}" |
       jq -r 'map(.) |
-      join(" ")' ||
+      join(" ")' 2>/dev/null ||
       :
     )
     # Parse string
