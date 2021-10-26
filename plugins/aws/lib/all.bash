@@ -105,10 +105,12 @@ function aws::publish_current_target_assets () {
     source="./tmp/${taito_target:?}.zip"
     dest="s3://${taito_functions_bucket:?}/${taito_functions_path:?}/${image_tag}/${taito_target}.zip"
     options=""
-  elif taito::is_current_target_of_type "static_content" &&
-       [[ ${taito_cdn_project_path:-} ]] &&
-       [[ ${taito_cdn_project_path} != "-" ]]
-  then
+  elif taito::is_current_target_of_type "static_content" && (
+         ! taito::is_current_target_of_type "container" || (
+           [[ ${taito_cdn_project_path:-} ]] &&
+           [[ ${taito_cdn_project_path} != "-" ]]
+         )
+  ); then
     # Create separate stage.html for AWS Api Gateway stage (use /stage/* as base href)
     if [[ -f ./tmp/${taito_target}/service/index.html ]] &&
        [[ ! -f ./tmp/${taito_target}/service/stage.html ]]; then
