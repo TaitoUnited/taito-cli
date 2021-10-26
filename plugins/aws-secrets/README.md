@@ -1,1 +1,1 @@
-# AWS Systems Manager Parameter Store secrets plugin
+# AWS Secrets Manager plugin

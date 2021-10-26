@@ -15,48 +15,35 @@ function get_key () {
   echo "/${location}/${namespace}/${secret_name}.${secret_property}"
 }
 
-function get_secret_value () {
-  local key=$1
+function get_parameter () {
   aws::expose_aws_options
-
-  if [[ ${key} == ".METHOD" ]]; then
-    # Try to read METHOD from tags
-    value=$(
-      aws ${aws_options} secretsmanager describe-secret \
-        --secret-id "${key}" 2> /dev/null | \
-          jq -r -e ".Tags[] | first(select(.Key == \"METHOD\")) | .Value"
-    ) || value=""
-  fi
-
-  if [[ ! ${value} ]]; then
-    # Read the secret value
-    value=$(
-      aws ${aws_options} secretsmanager get-secret-value \
-        --secret-id "${key}" 2> /dev/null | \
-          jq -r -e '.SecretString'
-    ) || value=""
-  fi
-
+  value=$(
+    aws ${aws_options} ssm get-parameter \
+      --name "${1}" \
+      --output json \
+      --with-decryption 2> /dev/null |
+        jq -r -e '.Parameter.Value'
+  ) || value=""
   echo "${value}"
 }
 
-function aws-secrets::get_secret_value () {
+function aws-secrets-ssm::get_secret_value () {
   local zone=$1 # NOTE: intentionally not used
   local namespace=$2
   local name=$3
   local key
 
   key=$(get_key "${taito_provider_secrets_location:?}" "${namespace}" "${name}")
-  value=$(get_secret_value "${key}")
+  value=$(get_parameter "${key}")
   if [[ ! ${value} ]] && [[ ${taito_mode} == "ci" ]]; then
     # Try devops namespace instead (TODO: what is this hack? remove!)
     key=$(get_key "${taito_provider_secrets_location:?}" "devops" "${name}")
-    value=$(get_secret_value "${key}")
+    value=$(get_parameter "${key}")
   fi
   echo "${value}"
 }
 
-function aws-secrets::put_secret_value () {
+function aws-secrets-ssm::put_secret_value () {
   local zone=$1 # NOTE: intentionally not used
   local namespace=$2
   local name=$3
@@ -75,7 +62,7 @@ function aws-secrets::put_secret_value () {
   if [[ ${filename} ]]; then
     format=$(taito::get_secret_value_format "${method}")
     if [[ ${format} == "file" ]]; then
-      # Files are stored in AWS Secrets Manager as base64 encoded strings
+      # Files are stored in AWS SSM as base64 encoded strings
       value=$(base64 -i "${filename}")
     else
       value=$(cat "${filename}")
@@ -84,25 +71,19 @@ function aws-secrets::put_secret_value () {
 
   aws::expose_aws_options
   key=$(get_key "${taito_provider_secrets_location:?}" "${namespace}" "${name}")
-
-  if aws ${aws_options} secretsmanager describe-secret --secret-id "${key}" &> /dev/null; then
-    # Update existing secret
-    aws ${aws_options} secretsmanager put-secret-value \
-      --secret-id "${key}" \
-      --secret-string "${value}"
-    aws ${aws_options} secretsmanager tag-resource \
-      --secret-id "${key}" \
-      --tags "[ { \"Key\": \"METHOD\", \"Value\": \"${method}\" } ]"
-  else
-    # Create new secret
-    aws ${aws_options} secretsmanager create-secret \
-      --name "${key}" \
-      --tags "[ { \"Key\": \"METHOD\", \"Value\": \"${method}\" } ]" \
-      --secret-string "${value}"
-  fi
+  aws ${aws_options} ssm put-parameter \
+    --name "${key}" \
+    --value "${value}" \
+    --type "SecureString" \
+    --overwrite > /dev/null
+  aws ${aws_options} ssm put-parameter \
+    --name "${key}.METHOD" \
+    --value "${method}" \
+    --type "SecureString" \
+    --overwrite > /dev/null
 }
 
-function aws-secrets::delete_secret_value () {
+function aws-secrets-ssm::delete_secret_value () {
   local zone=$1 # NOTE: intentionally not used
   local namespace=$2
   local name=$3
@@ -110,5 +91,6 @@ function aws-secrets::delete_secret_value () {
 
   aws::expose_aws_options
   key=$(get_key "${taito_provider_secrets_location:?}" "${namespace}" "${name}")
-  aws ${aws_options} secretsmanager delete-parameter --secret-id "${key}"
+  aws ${aws_options} ssm delete-parameter --name "${key}"
+  aws ${aws_options} ssm delete-parameter --name "${key}.METHOD"
 }

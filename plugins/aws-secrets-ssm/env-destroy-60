@@ -5,11 +5,11 @@
 if [[ ${taito_provider_secrets_location:-} ]] &&
    [[ ${taito_provider_secrets_mode:-} != "backup" ]]; then
   taito::confirm \
-    "Delete secrets of zone ${taito_zone:?} from AWS Secrets Manager" ||
+    "Delete secrets of namespace ${taito_namespace:?} from AWS SSM Parameter Store" ||
     taito::skip_to_next "${@}"
 
   taito::delete_secrets \
-    aws-secrets::delete_secret_value
+    aws-secrets-ssm::delete_secret_value
 fi
 
 taito::call_next "${@}"

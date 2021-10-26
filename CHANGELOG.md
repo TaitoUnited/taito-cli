@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.295.0
+
+- Now aws-secrets plugin uses AWS Secrets Manager to store secrets. Use
+  the aws-secrets-ssm plugin if you would like to save secrets to SSM parameter
+  store.
+
 ## 0.294.0
 
 - Use taito user by default on CI/CD images.

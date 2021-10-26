@@ -3,7 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 if [[ ${taito_provider_secrets_location:-} ]]; then
-  taito::confirm "Save changed secrets to AWS SSM Parameter Store" ||
+  taito::confirm "Save changed secrets to AWS Secrets Manager" ||
     taito::skip_to_next "${@}"
 
   taito::save_secrets \
