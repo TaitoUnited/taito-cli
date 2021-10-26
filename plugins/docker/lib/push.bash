@@ -153,6 +153,16 @@ function docker::package () {
     # Copy and package files
     (
       echo "Packaging ./tmp/${taito_target}.zip for deployment"
+
+      if [[ ${taito_verbose:?} == "true" ]]; then
+        echo "Docker image /service contents"
+        docker run \
+          --user 0:0 \
+          --entrypoint /bin/sh \
+          "${image_untested}" \
+          -c "ls -laF /service"
+      fi
+
       taito::executing_start
       mkdir -p "./tmp/${taito_target}/service"
       docker run \
@@ -162,6 +172,10 @@ function docker::package () {
         "${image_untested}" \
         -c "cp -r /service /tmp/${taito_target}"
       cd "./tmp/${taito_target}/service"
+
+      echo > "${taito_vout}"
+      echo "Directory contents" > "${taito_vout}"
+      ls -laF > "${taito_vout}"
 
       # Replace BASE_PATH, ASSETS_DOMAIN, and ASSETS_PATH in source files
       find . -name '*.html' -exec sed -i -e \
@@ -178,7 +192,13 @@ function docker::package () {
         "/start_url/d" {} \;
 
       # Create zip package
-      zip -rq "../../${taito_target}.zip" .* *
+      zipopts="-rq"
+      if [[ ${taito_verbose:?} == "true" ]]; then
+        zipopts="-r"
+      fi
+      echo > "${taito_vout}"
+      echo "Creating ${taito_target}.zip" > "${taito_vout}"
+      zip ${zipopts} "../../${taito_target}.zip" .* *
     )
   fi
 }
