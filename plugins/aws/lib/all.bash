@@ -1,16 +1,16 @@
 #!/bin/bash
 
 function aws::expose_aws_options () {
+  aws_options="--region $taito_provider_region"
+  
   if [[ $AWS_ACCESS_KEY_ID ]]; then
     profile="env var key"
-    aws_options=""
   elif [[ ${taito_mode:-} == "ci" ]] && [[ ${taito_ci_provider:-} == "aws" ]]; then
     profile="default"
-    aws_options=""
   else
     profile=${taito_provider_user_profile:-$taito_organization}
     profile=${profile:-default}
-    aws_options="--profile $profile"
+    aws_options="${aws_options} --profile $profile"
   fi
 }
 
