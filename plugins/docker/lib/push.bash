@@ -167,7 +167,7 @@ function docker::package () {
       mkdir -p "./tmp/${taito_target}/service"
       docker run \
         --user 0:0 \
-        -v "${PWD}/tmp/${taito_target}:/tmp/${taito_target}" \
+        -v "${DOCKER_HOST_PATH:-$PWD}/tmp/${taito_target}:/tmp/${taito_target}" \
         --entrypoint /bin/sh \
         "${image_untested}" \
         -c "cp -r /service /tmp/${taito_target}"
