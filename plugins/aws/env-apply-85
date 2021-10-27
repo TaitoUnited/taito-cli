@@ -23,8 +23,8 @@ read -r
 taito::open_browser "https://console.aws.amazon.com/iam/home?#users"
 
 echo
-echo "Now add AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY) to your"
-echo "CI/CD pipeline according to your CI/CD provider instructions. If you"
+echo "Now add AWS credentials (${taito_branch^^}_AWS_ACCESS_KEY_ID, ${taito_branch^^}_AWS_SECRET_ACCESS_KEY)"
+echo "to your CI/CD pipeline according to your CI/CD provider instructions. If you"
 echo "configure them on organization/account level, you don't have to configure"
 echo "them for each project separately. You should mask and encrypt the"
 echo "AWS_SECRET_ACCESS_KEY value if your CI/CD provides such an option."
