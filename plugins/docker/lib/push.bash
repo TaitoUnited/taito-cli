@@ -60,6 +60,12 @@ function docker::push () {
     local image_path=${2}
   fi
 
+  # For non-containers we push only the builder image
+  local push_only_builder=false
+  if ! taito::is_current_target_of_type container; then
+    push_only_builder=true
+  fi
+
   local path_suffix=""
   if [[ ${name} != "." ]]; then
     path_suffix="/${name}"
@@ -85,15 +91,19 @@ function docker::push () {
        ([[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_build:-} == "true" ]])
     then
       echo "- Pushing images"
-      docker::image_push "${image_untested}"
+      if [[ ${push_only_builder} == false ]]; then
+        docker::image_push "${image_untested}"
+      fi
       if [[ ${taito_container_registry_provider:-} != "local" ]]; then
-        docker::image_push "${image_latest}"
+        if [[ ${push_only_builder} == false ]]; then
+          docker::image_push "${image_latest}"
+        fi
         docker::image_push "${image_builder}"
       fi
     else
       echo "- Image ${image_tag} already exists. Skipping push."
     fi
-    if [[ ${version} ]]; then
+    if [[ ${version} ]] && [[ ${push_only_builder} == false ]]; then
       echo "- Tagging an existing image with semantic version ${version}"
       (
         (taito::executing_start; docker image tag "${image}" "${prefix}:${version}")

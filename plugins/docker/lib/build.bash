@@ -52,6 +52,13 @@ function docker::build () {
     return
   fi
 
+  if ! taito::is_current_target_of_type container && \
+     [[ ${ci_exec_build:-} == "false" ]]; then
+    echo "Skipping build. Target is not a container and should already be built."
+    echo "TODO: We should check that the package exists in storage bucket!"
+    return
+  fi
+
   local prefix="${image_path}${path_suffix}"
   local image="${prefix}:${image_tag}"
   local image_untested="${image}-untested"
