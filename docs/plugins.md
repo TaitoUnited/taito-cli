@@ -21,11 +21,11 @@ Application control plugins typically implement the following commands:
 
 Plugins:
 
-- [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README.md): Manage containers running on docker-compose using Taito CLI commands.
+- [docker-compose](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/docker-compose/README.md): Manage containers running on Docker Compose using Taito CLI commands.
 - [kubectl](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/kubectl/README.md): Manage containers running on Kubernetes using Taito CLI commands.
 - [knative](https://github.com/TaitoUnited/taito-cli/blob/master/plugins/knative/README.md): Manage functions running on Knative using Taito CLI commands (TODO).
 
-> TIP: It is quite common to run docker-compose in local development and Kubernetes on server environments. You can do this by enabling the docker-compose plugin for local environment and the kubectl plugin for all other environments.
+> TIP: It is quite common to run Docker Compose in local development and Kubernetes on server environments. You can do this by enabling the docker-compose plugin for local environment and the kubectl plugin for all other environments.
 
 > NOTE: If your application is based on technologies that are not supported by existing Taito CLI plugins, you can implement the aforementioned application control Taito CLI commands in _package.json_, _Makefile_ or _Pipfile_ of your project. See the [Build Tools](#build-tools) section for npm, make and pipenv plugin descriptions.
 

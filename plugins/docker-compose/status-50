@@ -4,6 +4,6 @@
 
 compose_file=$(docker-compose::prepare_docker_compose_yaml false)
 taito::execute_on_host_fg \
-  "docker-compose -f $compose_file ps"
+  "docker compose -f $compose_file ps"
 
 taito::call_next "${@}"

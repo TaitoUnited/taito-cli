@@ -15,9 +15,9 @@ taito::call_next "${@}"
 #   compose_file=$(docker-compose::prepare_docker_compose_yaml false)
 #   if [[ ${counter} -gt 50 ]]; then
 #     echo "Waiting for docker to start ${counter}."
-#     docker-compose -f $compose_file ps
+#     docker compose -f $compose_file ps
 #   fi
-#   up=$(docker-compose -f $compose_file ps | grep " Up " | grep -E "\-server|\-client")
+#   up=$(docker compose -f $compose_file ps | grep " Up " | grep -E "\-server|\-client")
 #   sleep "${ci_wait_test_sleep:-5}"
 #   ((counter++))
 # done

@@ -17,10 +17,10 @@ elif [[ ${taito_target:-} ]]; then
   # echo "NOTE: You must run 'taito stop' first or else clean fails"
   compose_file=$(docker-compose::prepare_docker_compose_yaml false)
   taito::execute_on_host_fg "
-    docker-compose -f $compose_file stop ${pod:?}
-    docker-compose -f $compose_file rm --force ${pod:?}
-    docker-compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
-    docker-compose -f $compose_file start ${pod:?}
+    docker compose -f $compose_file stop ${pod:?}
+    docker compose -f $compose_file rm --force ${pod:?}
+    docker compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
+    docker compose -f $compose_file start ${pod:?}
   "
 else
   # TODO [data | build] as arguments
@@ -28,7 +28,7 @@ else
 
   compose_file=$(docker-compose::prepare_docker_compose_yaml false)
   taito::execute_on_host_fg \
-    "docker-compose -f $compose_file down --rmi 'local' --volumes --remove-orphans"
+    "docker compose -f $compose_file down --rmi 'local' --volumes --remove-orphans"
 fi
 
 taito::call_next "${@}"

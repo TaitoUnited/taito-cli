@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-echo "executed: docker-compose ${*} :"
+echo "executed: docker compose ${*} :"
 echo "dockerfile: ${dockerfile}"
 
 echo " Up acme-chat-client"

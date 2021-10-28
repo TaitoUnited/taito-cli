@@ -8,7 +8,7 @@ if [[ ${taito_target:-} ]]; then
   docker-compose::expose_pod_and_container
   compose_file=$(docker-compose::prepare_docker_compose_yaml)
   taito::execute_on_host_fg \
-    "docker-compose -f $compose_file restart ${pod:?}"
+    "docker compose -f $compose_file restart ${pod:?}"
 else
   # Restart all containers
   docker-compose::start "${@}" --restart

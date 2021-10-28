@@ -10,7 +10,7 @@ function docker-compose::exec () {
     # TODO take --no-deps as param
     compose_file=$(docker-compose::prepare_docker_compose_yaml)
     taito::execute_on_host_fg \
-      "docker-compose -f $compose_file run --no-deps --entrypoint ${commands} ${pod}"
+      "docker compose -f $compose_file run --no-deps --entrypoint ${commands} ${pod}"
   else
     taito::execute_on_host_fg "\
       exec_opts=
@@ -78,10 +78,10 @@ function docker-compose::start () {
     "
   fi
   if [[ ${options} == *" --restart "* ]]; then
-    # Run 'docker-compose stop' before start
+    # Run 'docker compose stop' before start
     conditional_commands="
       ${conditional_commands}
-      docker-compose -f $compose_file stop
+      docker compose -f $compose_file stop
     "
   fi
   if [[ ${options} == *" --init "* ]] && [[ " ${taito_containers:-} " == *" database "* ]]; then
@@ -115,7 +115,7 @@ function docker-compose::start () {
 
   taito::execute_on_host_fg "
     ${conditional_commands}
-    ${setenv}docker-compose -f $compose_file ${compose_cmd} ${flags}
+    ${setenv}docker compose -f $compose_file ${compose_cmd} ${flags}
   "
 }
 
