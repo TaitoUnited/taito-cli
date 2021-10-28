@@ -78,6 +78,8 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
     taitonpm_command="${taito_command}${target}${options}"
   fi
 
+  npmopts="-s"
+
   # taito test prehandling
 
   # TODO: 'taitonpm_command == test' and 'taitonpm_command == taito-test' can be removed?
@@ -89,7 +91,12 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
        [[ ${taitonpm_command%%:*} == "test" ]] || \
        [[ ${taitonpm_command%%:*} == "taito-test" ]] \
      ); then
-     running_ci_test="true"
+    running_ci_test="true"
+
+    # TODO: can we avoid using --unsafe-perm?
+    if [[ $(whoami) == "root" ]]; then
+      npmopts="${npmopts} --unsafe-perm"
+    fi
   fi
 
   # TODO: should be in taito-cli core only?
@@ -127,7 +134,7 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
       taito::execute_on_host_fg "
         export taito_command_root_context='${taito_command_root_context}'
         export taito_command_context='npm ${taitonpm_command}'
-        npm run -s ${taitonpm_command}${params}
+        npm run ${npmopts} ${taitonpm_command}${params}
       "
       exit_code=0
     else
@@ -135,7 +142,7 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
         export taito_command_root_context="${taito_command_root_context}"
         export taito_command_context="npm ${taitonpm_command}"
         taito::executing_start
-        npm run -s ${taitonpm_command}${params}
+        npm run ${npmopts} ${taitonpm_command}${params}
       )
       exit_code=$?
     fi

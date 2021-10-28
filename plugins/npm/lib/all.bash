@@ -70,12 +70,18 @@ function npm::install () {
   "
 
   if [[ ${task_postinstall} ]]; then
+    npmopts="-s"
+    # TODO: can we avoid using --unsafe-perm?
+    if [[ ${taito_mode:-} == "ci" ]] && [[ $(whoami) == "root" ]]; then
+      npmopts="${npmopts} --unsafe-perm"
+    fi
+
     # TODO add '--python=${npm_python}' for npm run?
     taito::execute_on_host_fg "
       set -e
       if [[ ${install_all} == \"true\" ]]; then
         echo \"Running 'npm run ${task_postinstall}'\"
-        npm run ${task_postinstall}
+        npm run ${npmopts} ${task_postinstall}
       fi
     "
   fi
