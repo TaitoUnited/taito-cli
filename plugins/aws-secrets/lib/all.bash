@@ -109,5 +109,5 @@ function aws-secrets::delete_secret_value () {
 
   aws::expose_aws_options
   key=$(get_key "${taito_provider_secrets_location:?}" "${namespace}" "${name}")
-  aws ${aws_options} secretsmanager delete-parameter --secret-id "${key}"
+  aws ${aws_options} secretsmanager delete-secret --secret-id "${key}"
 }
