@@ -62,7 +62,10 @@ function docker::push () {
 
   # For non-containers we push only the builder image
   local push_only_builder=false
-  if ! taito::is_current_target_of_type container; then
+  if taito::is_current_target_of_type container; then
+    echo "Target is a container. Pushing all images."
+  else
+    echo "Target is not a container. Pushing only the builder image."
     push_only_builder=true
   fi
 
