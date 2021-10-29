@@ -22,16 +22,15 @@ function get_secret_value () {
   if [[ ${key} == ".METHOD" ]]; then
     # Try to read METHOD from tags
     value=$(
-      aws ${aws_options} secretsmanager describe-secret \
+      aws ${aws_options} secretsmanager describe-secret --output json \
         --secret-id "${key}" 2> /dev/null | \
           jq -r -e ".Tags[] | first(select(.Key == \"METHOD\")) | .Value"
     ) || value=""
   fi
 
   if [[ ! ${value} ]]; then
-    # Read the secret value
     value=$(
-      aws ${aws_options} secretsmanager get-secret-value \
+      aws ${aws_options} secretsmanager get-secret-value --output json \
         --secret-id "${key}" 2> /dev/null | \
           jq -r -e '.SecretString'
     ) || value=""
