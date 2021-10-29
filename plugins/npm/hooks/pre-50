@@ -94,7 +94,7 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
     running_ci_test="true"
 
     # TODO: can we avoid using --unsafe-perm?
-    if [[ $(whoami) == "root" ]]; then
+    if [[ $(whoami) == "root" ]]; then
       npmopts="${npmopts} --unsafe-perm"
     fi
   fi
