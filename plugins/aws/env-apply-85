@@ -3,17 +3,8 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_env:?}"
 
-default=
-if [[ ${kubernetes_name} ]] &&
-   [[ ${taito_env} != "dev" ]] &&
-   [[ ${taito_ci_provider:-} != "aws" ]]; then
-  echo "NOTE: You most likely already have configured the AWS credentials."
-  default=no
-fi
-
-( [[ ${kubernetes_name} ]] && \
-    [[ ${taito_ci_provider:-} != "aws" ]] && \
-    taito::confirm "Configure AWS credentials for CI/CD pipeline" "${default}"
+( [[ ${taito_ci_provider:-} != "aws" ]] && \
+    taito::confirm "Configure AWS credentials for CI/CD pipeline"
 ) || taito::skip_to_next "${@}"
 
 echo
