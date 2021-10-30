@@ -162,7 +162,7 @@ function docker::package () {
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "ERROR: ${name} not included in taito_targets"
     exit 1
-  else
+  elif [[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_build:-} == "true" ]]; then
     # Copy and package files
     (
       echo "Packaging ./tmp/${taito_target}.zip for deployment"
