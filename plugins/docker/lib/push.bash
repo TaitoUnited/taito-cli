@@ -204,6 +204,10 @@ function docker::package () {
       find . -name 'manifest.json' -exec sed -i -e \
         "/start_url/d" {} \;
 
+      # Double ASSETS_PATH quick fix
+      find . -name '*.html' -exec sed -i -e \
+        's|//assets|/assets|g' {} \;
+
       # Create zip package
       zipopts="-rq"
       if [[ ${taito_verbose:?} == "true" ]]; then
