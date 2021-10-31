@@ -29,7 +29,7 @@ if [[ -f ./taitoflag_images_exist ]]; then
 elif [[ ${taito_targets:-} != *"${name}"* ]]; then
   echo "ERROR: Artifact ${name} not included in taito_targets."
   exit 1
-elif [[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_build:-} == "true" ]]; then
+elif taito::is_current_target_of_type container; then
   if [[ -f "${name}.docker" ]]; then
     echo "Load ${name}.docker"
     (taito::executing_start; docker load --input "${name}.docker")
