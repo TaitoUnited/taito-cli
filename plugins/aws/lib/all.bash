@@ -141,17 +141,19 @@ function aws::restart_all_functions () {
 
 function aws::print_cloudfront_distribution_by_alias () {
   local alias=$1
-  aws --output text cloudfront list-distributions \
+  aws::expose_aws_options
+  aws ${aws_options} --output text cloudfront list-distributions \
     --query "DistributionList.Items[?Aliases.Items!=null] | [?contains(Aliases.Items, '${alias}')] | [0].Id"
 }
 
 function aws::invalidate_cloudfront_distribution_paths () {
   local distribution=$1
-  local paths=$2
+  local invalidation_paths=$2
+  aws::expose_aws_options
   (
     taito::executing_start
-    aws cloudfront create-invalidation \
+    aws ${aws_options} cloudfront create-invalidation \
       --distribution-id "${distribution}" \
-      --paths "${paths}"
+      --paths ${invalidation_paths}
   )
 }
