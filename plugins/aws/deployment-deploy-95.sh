@@ -1,0 +1,20 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ -n ${taito_cdn_invalidation_paths} ]]; then
+  distribution=$(aws::print_cloudfront_distribution_by_alias "${taito_cdn_domain}")
+  if [[ -n ${distribution} ]]; then
+    distribution=$(aws::print_cloudfront_distribution_by_alias "${taito_domain}")
+  fi
+fi
+
+if [[ -n ${distribution} ]]; then
+  echo "Invalidating the following CDN resources: ${distribution}"
+  aws::invalidate_cloudfront_distribution_paths \
+    "${distribution}" "${taito_cdn_invalidation_paths}"
+else
+  echo "CDN needs no invalidation."
+fi
+
+taito::call_next "${@}"
