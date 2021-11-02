@@ -303,6 +303,8 @@ if [[ ${taito_project:-} ]]; then
           done
         done
       fi
+
+      echo "cdn invalidate${param} PATHS"
     fi
 
     # Stack component commands

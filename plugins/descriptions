@@ -461,6 +461,9 @@ if [[ ${taito_project:-} ]]; then
           done
         done
       fi
+
+      echo "cdn invalidate${param} PATHS    " \
+        "# Invalidate CDN objects from ${env} environment"
     fi
 
     # Stack component commands

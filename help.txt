@@ -129,6 +129,9 @@ QUICK EXAMPLES
     storage sync from:dev /sour dest   # Sync files from dev bucket
     storage sync to:dev sour /dest     # Sync files to dev bucket
 
+  CDN
+    cdn invalidate /index.html         # Invalidate objects stored in CDN.
+
   MESSAGE QUEUES
     topic list:dev                     # List all topics in dev environment
     topic publish:dev my-topic         # Publish a message to a topic
@@ -878,6 +881,11 @@ PROJECT: STORAGE OPERATIONS
 
   storage sync to[:TARGET]:ENV SOURCE DEST
     Sync files from local disk to storage bucket
+
+PROJECT: CDN OPERATIONS
+
+  cdn invalidate [PATHS...]
+    Invalidate objects stored in CDN.
 
 PROJECT: DEPLOYMENT OPERATIONS
 

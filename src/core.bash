@@ -123,7 +123,7 @@ function taito::core::print_command_with_internal_syntax () {
   # Verbs that typically end a taito command
   # TODO: The following should also be added, but requires command name refactoring:
   # build, check, commit, link, open
-  local end_verbs=" add apply auth authenticate cancel change check clean connect continue copy copyquick quickcopy crawl create deploy develop destroy dump export forward generate get install import kill lint list ls merge migrate mount pause prepare publish rebase recreate release revert rotate run save scan set start stop subscribe sync synchronize tag untag upgrade verify wait "
+  local end_verbs=" add apply auth authenticate cancel change check clean connect continue copy copyquick quickcopy crawl create deploy develop destroy dump export forward generate get install import invalidate kill lint list ls merge migrate mount pause prepare publish rebase recreate release revert rotate run save scan set start stop subscribe sync synchronize tag untag upgrade verify wait "
 
   local end_prepositions=" continue between to from "
 
