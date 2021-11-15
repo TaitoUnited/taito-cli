@@ -442,38 +442,22 @@ if [[ ${command} == "storage"* ]]; then
 fi
 
 # Basic mounts
+# TODO: separate .ssh for admin?
 basic_mount_options="
-  -v ${taito_home_path}/.taito:${taito_container_home}/.taito
   -v ${taito_home_path}/.ssh:${taito_container_home}/.ssh
+  -v ${taito_home_path}/.taito:${taito_container_home}/.taito
   -v ${taito_home_path}/.terraform.d:${taito_container_home}/.terraform.d
   -v $(pwd):/project
 "
-
-if [[ ${taito_save_credentials_on_host} == "true" ]]; then
-  if [[ -d ${taito_home_path}/.aws ]]; then
-    basic_mount_options="
-      ${basic_mount_options}
-      -v ${taito_home_path}/.aws:${taito_container_home}/.aws
-    "
-  fi
-  if [[ -d ${taito_home_path}/.azure ]]; then
-    basic_mount_options="
-      ${basic_mount_options}
-      -v ${taito_home_path}/.azure:${taito_container_home}/.azure
-    "
-  fi
-  if [[ -d ${taito_home_path}/.config/gcloud ]]; then
-    basic_mount_options="
-      ${basic_mount_options}
-      -v ${taito_home_path}/.config/gcloud:${taito_container_home}/.config/gcloud
-    "
-  fi
-  if [[ -d ${taito_home_path}/.kube ]]; then
-    basic_mount_options="
-      ${basic_mount_options}
-      -v ${taito_home_path}/.kube:${taito_container_home}/.kube
-    "
-  fi
+if [[ ${admin} != true ]]; then
+  basic_mount_options="
+    ${basic_mount_options}
+    -v ${taito_home_path}/.aws:${taito_container_home}/.aws
+    -v ${taito_home_path}/.azure:${taito_container_home}/.azure
+    -v ${taito_home_path}/.config/doctl:${taito_container_home}/.config/doctl
+    -v ${taito_home_path}/.config/gcloud:${taito_container_home}/.config/gcloud
+    -v ${taito_home_path}/.kube:${taito_container_home}/.kube
+  "
 fi
 
 # Use winpty only with the -it switch

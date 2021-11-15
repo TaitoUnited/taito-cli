@@ -211,7 +211,7 @@ Currently this mechanism is used e.g. for executing docker commands on host and 
 
 #### Committing changes to the Taito CLI container image
 
-If your plugin needs to save some data permanently on the container image, execute `taito::commit_changes`. This asks host to commit changes permanently on the container image. Currently this mechanism is used e.g. in authentication to save credentials on the image.
+If your plugin needs to save some data permanently on the container image, execute `taito::commit_changes`. This asks host to commit changes permanently on the container image.
 
 #### Overriding existing commands
 

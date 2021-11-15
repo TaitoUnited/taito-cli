@@ -7,7 +7,7 @@ function toggl::authenticate () {
   done
   mkdir -p ~/.toggl
   echo "${token}" > ~/.toggl/api-token
-  taito::commit_changes
+  # TODO: ~/.toggl not mounted be default!
 }
 
 function toggl::expose_api_token () {

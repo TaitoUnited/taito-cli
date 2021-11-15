@@ -807,21 +807,17 @@ if [[ ${taito_admin_key} ]]; then
     exit 1
   fi
 
-  if [[ ! -f ~/admin_creds.enc ]] && [[ ${command} != "auth" ]]; then
+  if [[ ! -f ~/.taito/admin_creds.enc ]] && [[ ${command} != "auth" ]]; then
     echo
     echo "ERROR: Admin credentials file missing. Authenticate as admin first."
     exit 1
   fi
 
-  # Move normal user credentials elsewehere
-  mv ~/.config ~/.config_normal
-  mv ~/.kube ~/.kube_normal
-
   if [[ ${command} != "auth" ]]; then
     # Decrypt admin credentials
     # TODO use something else than openssl:
     # https://cryptosense.com/weak-key-derivation-in-openssl/
-    if ! openssl aes-256-cbc -d -salt -in ~/admin_creds.enc \
+    if ! openssl aes-256-cbc -d -salt -in ~/.taito/admin_creds.enc \
       -out ~/admin_creds.tar.gz -pass env:taito_admin_key; then
       echo
       echo "ERROR: Decrypting admin credentials failed"
@@ -899,19 +895,6 @@ else
   elif [[ ${exit_code} -gt 0 ]]; then
     echo "ERROR! Command failed."
   fi
-fi
-
-# Admin credentials post-handling (just in case)
-# NOTE: In case of auth command this was already run before docker commit
-if [[ ${taito_admin_key_orig} ]] && [[ ${command} != "auth" ]]; then
-  # Delete admin credentials
-  rm -rf ~/.config ~/.kube
-  # Move normal user credentials back
-  mv ~/.config_normal ~/.config
-  mv ~/.kube_normal ~/.kube
-  echo
-  echo "---------------- ADMIN END ----------------"
-  echo "Normal user credentials restored"
 fi
 
 exit ${exit_code}

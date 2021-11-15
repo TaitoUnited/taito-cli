@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.296.0
+
+- Store credentials on host (encrypted on admin mode).
+
 ## 0.295.0
 
 - Now aws-secrets plugin uses AWS Secrets Manager to store secrets. Use

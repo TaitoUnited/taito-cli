@@ -6,7 +6,7 @@ Taito CLI is configured with a `taito-config.sh` file placed at your project roo
 
 Run `taito -h` to show a list of all predefined commands of Taito CLI and additional custom commands provided by currently enabled plugins. Run `taito COMMAND -h` to search for a command help; try for example `taito db -h`, `taito feat -h` or `taito env -h`. Write `taito` and hit tab, and you'll get autocompletion for taito commands.
 
-Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito auth:dev`). Note that your credentials are saved on the Taito CLI container image, as you don't need them laying on your host file system anymore. Alternatively you can save them on host if you just set `taito_save_credentials_on_host` to `true` and create the appropriate directories on your home directory, for example: `mkdir -p ~/.aws ~/.azure ~/.config/gcloud ~/.kube`.
+Some of the plugins require authentication. If you encounter a connection or authorization error, run `taito auth:ENV` inside a project directory to authenticate in the context of a project environment (for example `taito auth:dev`).
 
 [Taito CLI tutorial](https://taitounited.github.io/taito-cli/tutorial/) guides you through common software development scenarios in a chronological order. You may consider it as a chronological Taito CLI manual.
 

@@ -253,13 +253,27 @@ function taito::core::download () {
   fi
 }
 
+function taito::core::ensure_mount_dir () {
+  local dir=$1
+  if [[ ! -d ${dir} ]]; then
+    mkdir -p ${dir}
+    chmod go-rwx ${dir}
+  fi
+}
+
 function taito::core::upgrade () {
   set +e
   # Make sure that mounted directories exist
   echo "Checking mount directories"
-  mkdir -p "${taito_home_path}/.taito"
-  mkdir -p "${taito_home_path}/.ssh"
-  mkdir -p "${taito_home_path}/.terraform.d"
+  taito::core::ensure_mount_dir "${taito_home_path}/.aws"
+  taito::core::ensure_mount_dir "${taito_home_path}/.azure"
+  taito::core::ensure_mount_dir "${taito_home_path}/.config"
+  taito::core::ensure_mount_dir "${taito_home_path}/.config/doctl"
+  taito::core::ensure_mount_dir "${taito_home_path}/.config/gcloud"
+  taito::core::ensure_mount_dir "${taito_home_path}/.kube"
+  taito::core::ensure_mount_dir "${taito_home_path}/.ssh"
+  taito::core::ensure_mount_dir "${taito_home_path}/.taito"
+  taito::core::ensure_mount_dir "${taito_home_path}/.terraform.d"
 
   # Pull latest version of taito bash script
   echo "Pulling taito-cli directory from git: ${taito_cli_path}"

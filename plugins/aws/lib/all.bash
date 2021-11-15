@@ -36,8 +36,6 @@ function aws::authenticate () {
     taito::open_browser "https://console.aws.amazon.com/iam/home?#users"
     echo
     aws configure ${aws_options}
-    # TODO: docker-commit is called twice on 'taito auth'
-    taito::commit_changes
   else
     echo "Already authenticated with profile '$profile'."
     echo "You can reauthenticate with 'taito auth --reset'."
@@ -78,14 +76,7 @@ function aws::authenticate_on_kubernetes () {
     --name "${kubernetes_name}" \
     --alias "${kubernetes_name}" > "${taito_vout:-}" || (
     echo
-    echo "TIP: If you got 'NoneType object is not iterable' error, try deleting ~/.kube/config"
-    echo "from Taito CLI container:"
-    echo
-    echo "taito shell"
-    echo "> rm ~/.kube/config"
-    echo "> taito util commit"
-    echo "> exit"
-    echo
+    echo "TIP: If you got 'NoneType object is not iterable' error, try deleting ~/.kube/config."
     echo "More info: https://github.com/aws/aws-cli/issues/4843"
     exit 1
   )

@@ -109,6 +109,9 @@ function terraform::run_zone () {
     trap "rm -f ./*.json.tmp" RETURN
     if [[ "${command}" != "" ]]; then
       while true; do
+        # terraform plan ${apply_options} -target=module.network -out=plan
+        # terraform "${command}" ${apply_options} plan && exit $?
+        # rf -f plan # TODO: trap
         terraform "${command}" ${apply_options} && exit $?
         echo
         echo "Terraform execution failed. Sometimes you can resolve problems just"

@@ -79,12 +79,7 @@ EOL
 fi
 
 echo
-echo "[5. Make sure all Taito CLI mount directories exist]"
-mkdir -p ~/.ssh
-mkdir -p ~/.terraform.d
-
-echo
-echo "[6. Add autocomplete support for bash]"
+echo "[5. Add autocomplete support for bash]"
 if ! grep "$TAITO_INSTALL_DIR/support" ~/.bashrc &> /dev/null; then
   echo "" >> ~/.bashrc
   echo "# Taito CLI" >> ~/.bashrc
@@ -109,7 +104,7 @@ if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
 fi
 
 echo
-echo "[7. Add autocomplete support for zsh]"
+echo "[6. Add autocomplete support for zsh]"
 if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
   echo "" >> ~/.zshrc
   echo "# Taito CLI" >> ~/.zshrc
@@ -121,7 +116,7 @@ if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
 fi
 
 echo
-echo "[8. Almost finished]"
+echo "[7. Almost finished]"
 echo
 echo "Finalize the installation with the following steps:"
 echo

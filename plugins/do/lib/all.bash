@@ -16,8 +16,6 @@ function do::authenticate () {
     echo
     rm -f ~/.config/doctl/config.yaml &> /dev/null || :
     doctl auth init
-    # TODO: docker-commit is called twice on 'taito auth'
-    taito::commit_changes
   else
     echo "Already authenticated."
     echo "You can reauthenticate with 'taito auth --reset'."

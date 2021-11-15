@@ -9,6 +9,5 @@
 ) || taito::skip_to_next "${@}"
 
 gcp::authenticate_on_kubernetes
-taito::commit_changes
 
 taito::call_next "${@}"
