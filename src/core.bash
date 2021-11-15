@@ -333,25 +333,6 @@ function taito::core::upgrade () {
       fi
   "
 
-  # Copy credentials from old image
-  if docker create --name taito-save "${taito_image}save" &> /dev/null; then
-    echo "Copying settings from the old taito-cli image"
-    rm -rf ~/.taito/save &> /dev/null
-    mkdir -p ~/.taito/save &> /dev/null
-
-    docker cp taito-save:/home/taito ~/.taito/save &> /dev/null
-    docker cp taito-save:/root ~/.taito/save &> /dev/null
-
-    # a quick fix to preserve repositories installed in user-init
-    rm -f ~/.taito/save/taito/.helm/repository/repositories.yaml
-    rm -f ~/.taito/save/root/.helm/repository/repositories.yaml
-
-    docker cp ~/.taito/save/taito taito-new:/home &> /dev/null
-    docker cp ~/.taito/save/root taito-new:/ &> /dev/null
-
-    rm -rf ~/.taito/save
-  fi
-
   echo "Committing changes to taito-cli image"
   docker commit taito-new "${taito_image}" &> /dev/null
   docker stop taito-new &> /dev/null
