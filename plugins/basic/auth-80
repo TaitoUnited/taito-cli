@@ -2,10 +2,11 @@
 
 if [[ ${taito_admin_key} ]]; then
   echo "Encrypting admin credentials and saving them to local disk"
-  (cd ~ && tar -zcvf admin_creds.tar.gz $(ls -d .aws .azure .config .kube 2>/dev/null))
+  (cd ~ && tar -zcvf admin_creds.tar.gz $(ls -d .aws .azure .config .kube 2>/dev/null) > "${taito_vout}")
   openssl \
     aes-256-cbc \
     -salt \
+    -pbkdf2 \
     -in ~/admin_creds.tar.gz \
     -out ~/.taito/admin_creds.enc \
     -pass env:taito_admin_key

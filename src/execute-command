@@ -817,7 +817,8 @@ if [[ ${taito_admin_key} ]]; then
     # Decrypt admin credentials
     # TODO use something else than openssl:
     # https://cryptosense.com/weak-key-derivation-in-openssl/
-    if ! openssl aes-256-cbc -d -salt -in ~/.taito/admin_creds.enc \
+    # -> no longer an issue?
+    if ! openssl aes-256-cbc -d -salt -pbkdf2 -in ~/.taito/admin_creds.enc \
       -out ~/admin_creds.tar.gz -pass env:taito_admin_key; then
       echo
       echo "ERROR: Decrypting admin credentials failed"
@@ -825,15 +826,12 @@ if [[ ${taito_admin_key} ]]; then
     fi
     (cd ~ && tar -xf admin_creds.tar.gz)
     rm -f ~/admin_creds.tar.gz
-    echo
-    echo "Decrypted admin credentials"
-    echo "---------------- ADMIN START ----------------"
-    echo
+    # Hide admin key from plugins
+    taito_admin_key_orig="${taito_admin_key}"
+    export taito_admin_key="-"
+    echo "Decrypted admin credentials. Executing as admin."
   fi
 
-  # Hide admin key from plugins
-  taito_admin_key_orig="${taito_admin_key}"
-  export taito_admin_key="-"
   export taito_is_admin=true
 fi
 
