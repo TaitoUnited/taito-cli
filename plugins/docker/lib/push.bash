@@ -94,11 +94,11 @@ function docker::push () {
        ([[ ${taito_mode:-} != "ci" ]] || [[ ${ci_exec_build:-} == "true" ]])
     then
       echo "- Pushing images"
-      if [[ ${push_only_builder} == false ]]; then
+      if [[ ${push_only_builder} == false ]]; then
         docker::image_push "${image_untested}"
       fi
       if [[ ${taito_container_registry_provider:-} != "local" ]]; then
-        if [[ ${push_only_builder} == false ]]; then
+        if [[ ${push_only_builder} == false ]]; then
           docker::image_push "${image_latest}"
         fi
         docker::image_push "${image_builder}"
