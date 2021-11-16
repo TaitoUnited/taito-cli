@@ -34,9 +34,7 @@ function taito::execute_on_host () {
 
   # Use docker-compose on host (backwards compatibility until installed everywhere)
   # TODO: remove
-  if [[ ${taito_mode:-} != "ci" ]]; then
-    commands="${commands//docker compose/docker-compose}"
-  fi
+  commands="${commands//docker compose/docker-compose}"
 
   echo "+ ${commands}" > "${taito_vout}"
 
@@ -75,9 +73,7 @@ function taito::execute_on_host_fg () {
 
   # Use docker-compose on host (backwards compatibility until installed everywhere)
   # TODO: remove
-  if [[ ${taito_mode:-} != "ci" ]]; then
-    commands="${commands//docker compose/docker-compose}"
-  fi
+  commands="${commands//docker compose/docker-compose}"
 
   echo "+ ${commands}" > "${taito_vout}"
 
