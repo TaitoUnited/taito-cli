@@ -287,7 +287,7 @@ fi
 export taito_container_home
 docker_user_opts="--user $taito_host_user"
 taito_container_home="/home/taito"
-if [[ ${admin} == true ]] || [[ ${root} == true ]]; then
+if [[ ${root} == true ]]; then
   docker_user_opts="--user 0:0"
   taito_container_home="/root"
 fi
