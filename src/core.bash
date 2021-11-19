@@ -274,6 +274,7 @@ function taito::core::upgrade () {
   taito::core::ensure_mount_dir "${taito_home_path}/.ssh"
   taito::core::ensure_mount_dir "${taito_home_path}/.taito"
   taito::core::ensure_mount_dir "${taito_home_path}/.terraform.d"
+  taito::core::ensure_mount_dir "${taito_home_path}/.terraform.d/plugin-cache"
 
   # Pull latest version of taito bash script
   echo "Pulling taito-cli directory from git: ${taito_cli_path}"
