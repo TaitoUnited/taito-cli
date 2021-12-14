@@ -313,13 +313,17 @@ export default () => (
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                -- gcloud dns managed-zones list
+                -- aws ec2 describe-instances
               </Terminal.LineSuffix>,
             ],
             [
               <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
+              <Terminal.LineSuffix>-- az network nic list</Terminal.LineSuffix>,
+            ],
+            [
+              <Terminal.LinePrefix>taito</Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                -- aws ec2 describe-instances
+                -- gcloud dns managed-zones list
               </Terminal.LineSuffix>,
             ],
           ]}
@@ -412,7 +416,7 @@ const Hero = styled.div`
   justify-content: center;
   align-items: center;
   height: 400px;
-  background-color: ${props => props.theme.primary[500]};
+  background-color: ${(props) => props.theme.primary[500]};
 
   ${media.sm`
     height: auto;
@@ -451,8 +455,8 @@ const Actions = styled.div`
 
 const Button = styled(Link)`
   padding: 8px 24px;
-  background-color: ${props => props.theme.primary[300]};
-  color: ${props => props.theme.primary[900]};
+  background-color: ${(props) => props.theme.primary[300]};
+  color: ${(props) => props.theme.primary[900]};
   text-align: center;
   text-decoration: none;
   border: none;
@@ -460,11 +464,11 @@ const Button = styled(Link)`
   font-weight: 500;
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.2);
 
-  ${props =>
+  ${(props) =>
     props.variant === 'light' &&
     css`
       background-color: #fff;
-      color: ${props => props.theme.primary[500]};
+      color: ${(props) => props.theme.primary[500]};
     `}
 `;
 
@@ -498,7 +502,7 @@ const Section = styled.section`
 `;
 
 const Divider = styled.div`
-  background-color: ${props => props.theme.grey[200]};
+  background-color: ${(props) => props.theme.grey[200]};
   height: 1px;
   width: 100%;
   margin: 64px 0px;
@@ -512,7 +516,7 @@ const SectionTitle = styled.h3`
   font-size: 24px;
   margin-top: 0px;
   margin-bottom: 16px;
-  color: ${props => props.theme.black};
+  color: ${(props) => props.theme.black};
 `;
 
 const SectionText = styled.div`
@@ -521,8 +525,8 @@ const SectionText = styled.div`
 
 const InlineCode = styled.div`
   border-radius: 6px;
-  background-color: ${props => props.theme.grey[200]};
-  color: ${props => props.theme.grey[700]};
+  background-color: ${(props) => props.theme.grey[200]};
+  color: ${(props) => props.theme.grey[700]};
   padding: 8px 12px;
   font-family: Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono',
     'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
