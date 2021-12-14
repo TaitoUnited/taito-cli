@@ -14,6 +14,7 @@
    cp -r taito-cli/examples/zones/gcp my-zone
    cd my-zone
    EDIT taito-config.sh
+   EDIT *.yaml
    taito zone apply
    ```
 
