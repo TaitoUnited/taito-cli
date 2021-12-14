@@ -1,7 +1,7 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { BREAKPOINTS } from './constants';
 
-export const slugify = text => {
+export const slugify = (text) => {
   return text
     .toString()
     .toLowerCase()
@@ -51,7 +51,7 @@ export const media = {
   `,
   md: (first, ...args) => css`
     @media screen and (min-width: ${BREAKPOINTS.sm +
-        1}px) and (max-width: ${BREAKPOINTS.lg - 1}px) {
+      1}px) and (max-width: ${BREAKPOINTS.lg - 1}px) {
       ${css(first, ...args)}
     }
   `,
@@ -64,8 +64,8 @@ export const media = {
 
 const hasSizeProp = (obj, p, size) => !!(obj[p] && obj[p][size] !== undefined);
 
-export const responsivify = (prop, cssProp, valueMap) => props => {
-  const getValue = v => (valueMap ? valueMap[v] : v);
+export const responsivify = (prop, cssProp, valueMap) => (props) => {
+  const getValue = (v) => (valueMap ? valueMap[v] : v);
 
   if (typeof props[prop] === 'string') {
     return `${cssProp}: ${getValue(props[prop])};`;
@@ -73,10 +73,10 @@ export const responsivify = (prop, cssProp, valueMap) => props => {
 
   return css`
     ${hasSizeProp(props, prop, 'lg') &&
-      media.lg`${cssProp}: ${getValue(props[prop].lg)}`}
+    media.lg`${cssProp}: ${getValue(props[prop].lg)}`}
     ${hasSizeProp(props, prop, 'md') &&
-      media.md`${cssProp}: ${getValue(props[prop].md)}`}
+    media.md`${cssProp}: ${getValue(props[prop].md)}`}
     ${hasSizeProp(props, prop, 'sm') &&
-      media.sm`${cssProp}: ${getValue(props[prop].sm)}`}
+    media.sm`${cssProp}: ${getValue(props[prop].sm)}`}
   `;
 };
