@@ -85,10 +85,10 @@ taito::execute_on_host_fg "
     echo Press enter to try again.
     read -r
   done
-  git tag v0.0.0
-  git push -q origin v0.0.0
+  git tag v0.0.0 || :
+  git push -q origin v0.0.0 || :
   git checkout -q -b dev
-  git push -q -u origin dev &> /dev/null
+  git push --force -q -u origin dev &> /dev/null
   echo
   echo Created directory: ${taito_vc_repository}
   echo Press enter to open configuration instructions.
