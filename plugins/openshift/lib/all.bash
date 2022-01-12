@@ -10,16 +10,23 @@ function openshift::authenticate () {
   if [[ ${options} == *" --reset "* ]] || \
      ! oc status | grep "${url:?}" &> /dev/null;
   then
-    if [[ ${openshift_certificate_file:-} ]]; then
+    local token="${openshift_token}"
+    if [[ ! ${openshift_certificate_file} ]] && [[ ! ${openshift_password} ]]; then
+      echo "OPTIONAL: Enter token for token based login."
+      read -s token
+      echo
+    fi
+
+    if [[ ${openshift_certificate_file} ]]; then
       (
         taito::executing_start
         oc login "${url:?}" \
           --certificate-authority="${openshift_certificate_file}"
       )
-    elif [[ ${openshift_token:-} ]]; then
+    elif [[ ${token:-} ]]; then
       (
         taito::executing_start
-        oc login "${url:?}" --token="${openshift_token}"
+        oc login "${url:?}" --token="${token}"
       )
     else
       (
