@@ -16,17 +16,20 @@ function openshift::authenticate () {
         oc login "${url:?}" \
           --certificate-authority="${openshift_certificate_file}"
       )
-    elif [[ ${openshift_token:-} ]]; then
-      (
-        taito::executing_start
-        oc login "${url:?}" --token="${openshift_token}"
-      )
-    else
+    elif [[ ${openshift_username} ]]; then
       (
         taito::executing_start
         oc login "${url:?}" \
           --username="${openshift_username:-}" \
           --password="${openshift_password:-}"
+      )
+    else
+      (
+        if [[ ! ${openshift_token:-} ]]; then
+          read openshift_token
+        fi
+        taito::executing_start
+        echo oc login "${url:?}" --token="${openshift_token}"
       )
     fi
   fi
