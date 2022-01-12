@@ -150,27 +150,6 @@ function helm::deploy () {
           echo "------------------------------------------------------------------------"
           echo
         fi
-        echo "------------------------------------------------------------------------"
-        echo "NOTE: Taito CLI is now using Helm v3. If the application was previously"
-        echo "deployed with Helm v2, you can convert it to Helm v3 by running"
-        echo "'taito helm2 convert:${taito_target_env}'. Alternatively you can delete the old Helm v2"
-        echo "deployment with 'taito helm2 down:${taito_target_env}'. If you are using a persistent volume"
-        echo "claim, you should backup your volume data before the operation."
-        echo
-        echo "TIP: If you get permissions errors on your CI/CD build after you have"
-        echo "upgraded to Helm v3, either try to give your CI/CD user the appropriate"
-        echo "user rights or disable the following settings from your helm chart:"
-        echo
-        echo "  rbacCreate: false"
-        echo "  serviceAccountCreate: false"
-        echo "  networkPolicyEnabled: false"
-        echo "  podSecurityPolicyEnabled: false"
-        echo
-        echo "TIP: Once you have converted ALL deployments in your Kubernetes cluster"
-        echo "to Helm v3 (including NGINX ingress), you may remove ALL Helm v2 data from"
-        echo "Kubernetes cluster with 'taito helm2 dangerous cleanup everything:${taito_target_env}'."
-        echo "WARNING: This operation cannot be reverted!"
-        echo "------------------------------------------------------------------------"
       fi
 
       exit $exit_code
