@@ -330,6 +330,7 @@ if [[ ${taito_project:-} ]]; then
       echo "copy to:${stack}${param} SOURCE_PATH DESTINATION_PATH"
       echo "copy from:${stack}${param} SOURCE_PATH DESTINATION_PATH"
       echo "kill:${stack}${suffix}"
+      echo "show:${stack}${suffix}"
       echo "edit:${stack}${suffix}"
       echo "scale:${stack}${suffix} REPLICAS"
       echo "deployment build:${stack}${suffix}"

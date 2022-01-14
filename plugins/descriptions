@@ -503,6 +503,8 @@ if [[ ${taito_project:-} ]]; then
         "# Copy a file to the ${stack} container running on ${env} environment"
       echo "kill:${stack}${suffix}                                  " \
         "# Kill the ${stack} container running on ${env} environment"
+      echo "show:${stack}${suffix}                                  " \
+        "# Show the ${stack} deployment of ${env} environment"
       echo "edit:${stack}${suffix}                                  " \
         "# Edit the ${stack} deployment of ${env} environment"
       echo "scale:${stack}${suffix} REPLICAS                        " \
