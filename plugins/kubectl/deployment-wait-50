@@ -19,7 +19,7 @@ sleep 15
 
 # Wait even longer in case of a temporary error
 error_count=0
-until [[ $error_count -ge 6 ]]; do
+until [[ $error_count -ge 8 ]]; do
   pods=$(kubectl get pods)
   if echo "${pods}" | grep "BackOff\|Error\|Init" &> /dev/null; then
     echo "Some errors during deployment:"
