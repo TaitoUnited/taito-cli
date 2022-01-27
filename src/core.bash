@@ -262,6 +262,8 @@ function taito::core::ensure_mount_dir () {
 }
 
 function taito::core::upgrade () {
+  docker_platform=$1
+
   set +e
   # Make sure that mounted directories exist
   echo "Checking mount directories"
@@ -306,7 +308,7 @@ function taito::core::upgrade () {
 
   # Pull taito-cli docker image
   echo "Pulling taito-cli docker image from registry: ${taito_image}"
-  docker pull "${taito_image}"
+  docker pull ${docker_platform} "${taito_image}"
 
   # Prepare taito-new image for modificaions
   docker rm taito-save taito-new &> /dev/null

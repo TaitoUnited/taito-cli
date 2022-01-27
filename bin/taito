@@ -45,6 +45,7 @@ skip_rest=false
 taito_organization_param=""
 project=""
 user_mount_options=""
+docker_platform=""
 options=()
 args=()
 while [[ $# -gt 0 ]]
@@ -94,6 +95,14 @@ do
         ;;
         -r|--root)
         root=true
+        shift
+        ;;
+        --amd64)
+        docker_platform="--platform linux/amd64"
+        shift
+        ;;
+        --arm64)
+        docker_platform="--platform linux/arm64/v8"
         shift
         ;;
         upgrade)
@@ -279,7 +288,7 @@ if [[ ${mode} == "autocomplete" ]] || [[ ${mode} == "descriptions" ]]; then
   exit 0
 fi
 if [[ ${upgrade} == true ]]; then
-  taito::core::upgrade
+  taito::core::upgrade "${docker_platform}"
   exit 0
 fi
 
@@ -492,7 +501,8 @@ fi
 
 # TODO do not pass taito_admin_key as command line argument
 docker_command=$(echo "
-  ${docker_winpty} docker run ${docker_it}
+  ${docker_winpty} docker run
+    ${docker_it}
     ${docker_user_opts}
     ${proxy_flags}
     -w ${winptyprefix}/project

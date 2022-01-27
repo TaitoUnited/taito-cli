@@ -44,6 +44,11 @@ TAITO CLI TROUBLESHOOTING
   Docker issues on non-Linux systems (macOS, Windows)
   ---------------------------------------------------
 
+  An error related to "qemu"
+    Are you running the command on a Apple Silicon (M1) mac? You can try
+    to change between amd64 and arm64 images with `taito --amd64 upgrade`
+    and `taito --arm64 upgrade`.
+
   Taito CLI immediately freezes before displaying anything or your application
   hangs on "taito develop" or "taito start"
     Your Docker daemon is probably stuck. First try restarting your Docker
@@ -56,7 +61,7 @@ TAITO CLI TROUBLESHOOTING
     This error occurs sometimes on WSL. Rebooting your computer usually
     resolves the issue.
 
-  Read timeout on "taito develop" or "taito start --clean":
+  Read timeout on "taito develop" or "taito start --clean"
     If the develop command fails with Docker Compose read timeout error, stop it
     with ctrl+c, start it again with "taito start", and then run "taito init".
     For more info, see https://github.com/docker/compose/issues/3927

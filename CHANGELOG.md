@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.296.0
+
+- Switch between arm64 and amd64 images on Apple Silicon (m1) mac by running
+  `taito --amd64 upgrade` and `taito --arm64 upgrade`.
+
 ## 0.295.0
 
 - Now aws-secrets plugin uses AWS Secrets Manager to store secrets. Use
