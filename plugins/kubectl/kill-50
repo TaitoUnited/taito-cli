@@ -11,8 +11,17 @@ if [[ $pod_index ]]; then
   kubectl::expose_pod_and_container false "${pod_index}"
   (taito::executing_start; kubectl delete pod "${pod:?}")
 else
+  sleep=false
   kubectl::expose_pods
-  (taito::executing_start; kubectl delete pod ${pods})
+  pods=(${pods})
+  for pod in ${pods[@]}; do
+    if [[ ${sleep} == "true" ]]; then
+      echo "sleeping 30 seconds..."
+      sleep 30
+    fi
+    (taito::executing_start; kubectl delete pod ${pod})
+    sleep=true
+  done
 fi
 
 taito::call_next "${@}"

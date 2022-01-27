@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.297.0
+
+- Rolling restart with 30 second sleep on `taito kill`.
+
 ## 0.296.0
 
 - Switch between arm64 and amd64 images on Apple Silicon (m1) mac by running
