@@ -6,19 +6,21 @@ Officially recommended project templates are listed below. All of them include t
 
 > Run `taito [-o ORG] project create TEMPLATE` to create a project (e.g `taito project create full-stack-template`).
 
-* [full-stack-template](https://github.com/TaitoUnited/full-stack-template): Template for cloud-native applications and microservices running on Kubernetes, Docker Compose, serverless (FaaS), or virtual machine. You can choose the stack during project creation.
+- [full-stack-template](https://github.com/TaitoUnited/full-stack-template): Template for cloud-native applications and microservices running on Kubernetes, Docker Compose, serverless (FaaS), or virtual machine. You can choose the stack during project creation.
 
-* [website-template](https://github.com/TaitoUnited/website-template): Template for websites generated with a static site generator (e.g. Gatsby, Hugo or Jekyll), and running on CDN, Kubernetes, Docker Compose, or virtual machine. Supports an automated multistage publishing process integrated with any CMS (e.g. Strapi, Netlify CMS, WordPress). TIP: You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic functionality for your website.
+- [website-template](https://github.com/TaitoUnited/website-template): Template for websites generated with a static site generator (e.g. Gatsby, Hugo or Jekyll), and running on CDN, Kubernetes, Docker Compose, or virtual machine. Supports an automated multistage publishing process integrated with any CMS (e.g. Strapi, Netlify CMS, WordPress). TIP: You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic functionality for your website.
 
-* [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Template for WordPress sites running on Kubernetes, Docker Compose, or virtual machine. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic non-PHP functionality for your website.
+- [strapi-template](https://github.com/TaitoUnited/strapi-template): Template for Strapi CMS running as container on Kubernetes, Docker Compose, or cloud. Use this together with the [website-template](https://github.com/TaitoUnited/website-template) to provide CMS for your website.
 
-* [react-native-template](https://github.com/TaitoUnited/react-native-template): Template for React Native applications. Visual Studio App Center for CI/CD and monitoring.
+- [wordpress-template](https://github.com/TaitoUnited/wordpress-template): Template for WordPress sites running on Kubernetes, Docker Compose, or virtual machine. You can easily run the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) alongside with this template to implement dynamic non-PHP functionality for your website.
 
-* [minimal-template](https://github.com/TaitoUnited/minimal-template): Minimal project template for Taito CLI. It includes support for version control, code quality checking, links, and npm. It also provides CI/CD templates for multiple providers, and some documentation templates.
+- [react-native-template](https://github.com/TaitoUnited/react-native-template): Template for React Native applications. Visual Studio App Center for CI/CD and monitoring.
 
-* [npm-template](https://github.com/TaitoUnited/npm-template): Template for npm libraries. Includes monorepo support.
+- [minimal-template](https://github.com/TaitoUnited/minimal-template): Minimal project template for Taito CLI. It includes support for version control, code quality checking, links, and npm. It also provides CI/CD templates for multiple providers, and some documentation templates.
 
-* TODO: Data warehouse, analytics, machine learning
+- [npm-template](https://github.com/TaitoUnited/npm-template): Template for npm libraries. Includes monorepo support.
+
+- TODO: Data warehouse, analytics, machine learning
 
 ## Infrastructure templates
 
@@ -32,18 +34,18 @@ Use one of the **Managed Kubernetes** infrastructure templates, but do not insta
 
 ### Managed Kubernetes
 
-* [alibaba](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/alibaba): Alibaba Cloud (TODO)
-* [aws](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/aws): Amazon Web Services (Work in progress)
-* [azure](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/azure): Microsoft Azure (Work in progress)
-* [do](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/do): Digital Ocean (Work in progress)
-* [gcp](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/gcp): Google Cloud Platform
-* [openshift](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/openshift): OpenShift (TODO)
-* [scaleway](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/scaleway): Scaleway (TODO)
-* [vmware](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/vmware): VMWare Cloud (TODO)
+- [alibaba](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/alibaba): Alibaba Cloud (TODO)
+- [aws](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/aws): Amazon Web Services (Work in progress)
+- [azure](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/azure): Microsoft Azure (Work in progress)
+- [do](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/do): Digital Ocean (Work in progress)
+- [gcp](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/gcp): Google Cloud Platform
+- [openshift](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/openshift): OpenShift (TODO)
+- [scaleway](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/scaleway): Scaleway (TODO)
+- [vmware](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/vmware): VMWare Cloud (TODO)
 
 ### Kubernetes distributions for cloud and on-premises
 
-* [kubespray](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/kubespray): Kubespray (TODO)
+- [kubespray](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/kubespray): Kubespray (TODO)
 
 [kubernetes.io: pick-right-solution](https://kubernetes.io/docs/setup/pick-right-solution/)
 
@@ -51,7 +53,7 @@ Use one of the **Managed Kubernetes** infrastructure templates, but do not insta
 
 Infrastructure based on Linux virtual machines or dedicated servers.
 
-* [linux](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/linux): Any Linux servers (Work in progress)
+- [linux](https://github.com/TaitoUnited/taito-templates/tree/master/infrastructure/linux): Any Linux servers (Work in progress)
 
 ### Additional security steps
 
