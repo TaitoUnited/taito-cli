@@ -2,7 +2,7 @@
 
 ### Modular structure
 
-Many tutorials introduce you a monolithic application structure: put all application state in this directory, put all application actions into another directory. This is easy to understand and works ok for a small application, but it starts to become problematic once the codebase grows larger. Another approach would be to split the frontend into separate micro frontends and the backend into separate microservices. But this can be a bit overkill approach for most applications. When in doubt, a monolithic implementation with a modular structure is often the best approach for quickly building the first MVP or prototype. When done correctly, the modular structure can easily be split into separate micro frontends and microservices later once required.
+Many tutorials introduce you a monolithic application structure: _put all application state in this directory, put all application actions into this another directory_. This is easy to understand and works ok for a small application, but it starts to become problematic once the codebase grows larger. Another approach would be to split the frontend into separate micro frontends and the backend into separate microservices. But this can be a bit overkill approach for most applications. When in doubt, a monolithic implementation with a modular structure is often the best approach for quickly building the first MVP or prototype. When done correctly, the modular structure can easily be split into separate micro frontends and microservices later if required.
 
 Whether you are building a monolithic implementation or separate micro frontends and microservices, an application or API codebase should always be divided into loosely coupled highly cohesive parts by using a modular structure. Even if the monolithic implementation is not going to be split into micro frontends and microservices later, the modular structure provides many benefits, for example:
 
@@ -21,7 +21,7 @@ Think about the following concepts while you are working with your project:
 
 - **Loose coupling:** Aim for loose coupling between different parts by defining a clear contract between the parts, minimizing the number of dependencies and avoiding circular dependencies altogether.
 - **High cohesion:** Aim for high cohesion by putting closely related logic in the same place.
-- **Responsibility:** Name the part according to its responsibility. The part should implement only such logic that it's responsible for and nothing else!
+- **Responsibility:** Name the part according to its responsibility. The part should implement only such logic that it's responsible for and nothing else.
 
 TODO: DRY, KISS, YAGNI, GRASP, SOLID
 TODO: https://jaxenter.com/promising-new-metric-track-maintainability-154195.html
@@ -29,7 +29,7 @@ TODO: https://www.tutorialspoint.com/software_engineering/software_design_basics
 
 ### API design
 
-REST and GraphQL API implementations should be stateless. Stateless means that a service does not keep any state in memory or on local disk between requests. That is, all state resides either on UI, on database, or on some other external system. Services should be stateless because multiple instances of the same service will be run in parallel, and the request that an UI or 3rd party system makes, may be forwarded to any them. In addition, you should be able to publish a new version of the service any time without causing interruptions, which is harder to do if service is stateful. A stateless service should not:
+GraphQL and REST API implementations should be stateless. Stateless means that a service does not keep any state in memory or on local disk between requests. That is, all state resides either on UI, on database, or on some other external system. Services should be stateless because multiple instances of the same service will be run in parallel, and the request that an UI or 3rd party system makes, may be forwarded to any them. In addition, you should be able to publish a new version of the service any time without causing interruptions, which is harder to do if service is stateful. A stateless service should not:
 
 - Cache data in local memory (tip: use Redis as cache, or keep state in UI and use JWT tokens if necessary)
 - Use local disk for permanent data (tip: use object storage buckets)
