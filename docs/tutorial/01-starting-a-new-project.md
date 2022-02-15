@@ -18,7 +18,7 @@ Since this is a tutorial, we can skip all preliminary planning and design, and j
 
 ### 1.3. Creating a new project based on a project template
 
-> Instead of creating a new project, you can alternatively use an existing playground project provided by your organization. You can list all playground projects with `taito open playgrounds` or `taito -o ORGANIZATION open playgrounds`. Choose the one that has been created based on the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) and seems to be up-to-date.
+> Instead of creating a new project, you can alternatively use an existing playground project provided by your organization. Try if you can list all playground projects with `taito open playgrounds` or `taito -o ORGANIZATION open playgrounds`. Choose the one that has been created based on the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) and seems to be up-to-date.
 
 Create a new project based on the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) by running one of the following commands (**a** or **b**). In most cases you should choose the option **a**. If, however, you work for multiple organizations, you can use the option **b** to define the organization in question.
 
