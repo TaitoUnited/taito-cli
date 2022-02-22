@@ -108,7 +108,7 @@ echo "[6. Add autocomplete support for zsh]"
 if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
   echo "" >> ~/.zshrc
   echo "# Taito CLI" >> ~/.zshrc
-  echo 'fpath=(/Users/jj/projects/taito-cli/support/zsh-completion $fpath)' >> ~/.zshrc
+  echo "fpath=($TAITO_INSTALL_DIR/support/zsh-completion \$fpath)" >> ~/.zshrc
   echo 'autoload -U compinit' >> ~/.zshrc
   echo 'compinit' >> ~/.zshrc
   echo "" >> ~/.zshrc
