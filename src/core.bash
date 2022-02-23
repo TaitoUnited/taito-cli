@@ -324,10 +324,6 @@ function taito::core::upgrade () {
     ${docker_run_flags} "${taito_image}" -c "
       /taito-cli-deps/tools/user-create.sh taito $(id -u) $(id -g)
       /taito-cli-deps/tools/user-init.sh taito
-
-      # TODO: remove this quick fix (already in user-init.sh)
-      sqitch config --user user.name taito
-
       if [[ -f /taitoinstall ]]; then
         echo
         echo --- Executing \~/.taito/install ---
