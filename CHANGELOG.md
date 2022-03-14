@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.298.0
+
+- Remove duplicate content from serverless function zip package.
+
 ## 0.297.0
 
 - Rolling restart with 30 second sleep on `taito kill`.
