@@ -215,7 +215,7 @@ function docker::package () {
       fi
       echo > "${taito_vout}"
       echo "Creating ${taito_target}.zip" > "${taito_vout}"
-      zip ${zipopts} "../../${taito_target}.zip" .* *
+      zip ${zipopts} "../../${taito_target}.zip" .
     )
   fi
 }
