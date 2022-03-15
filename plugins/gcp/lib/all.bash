@@ -3,7 +3,7 @@
 function gcp::authenticate () {
   local type="${1//--/}"
   local account
-  account=$(gcloud config get-value account 2> /dev/null)
+  account=$(gcloud config get-value account 2> /dev/null || :)
 
   if [[ ${account} ]]; then
     echo "You are already authenticated as ${account}."

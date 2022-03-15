@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.298.0
 
+Fixes:
+
 - Remove duplicate content from serverless function zip package.
 
 ## 0.297.0
