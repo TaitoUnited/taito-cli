@@ -145,6 +145,18 @@ function generate-secrets::generate_by_type () {
           echo
           echo "[${title}]"
         fi
+        if [[ ${taito_provider:-} == "gcp" ]] && \
+           [[ ${secret_name} == *"storage"* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "You most likely can find the security credentials from the following webpage."
+          echo "Look for 'Access keys for service accounts' and create access keys for an"
+          echo "appropriate service account."
+          echo
+          echo "https://console.cloud.google.com/storage/settings;tab=interoperability?project=${taito_resource_namespace_id}"
+          echo ------------------------------------------------------------------------------
+          echo
+          echo "[${title}]"
+        fi
         if [[ ${secret_name} == *"version-control-buildbot"* ]]; then
           echo ------------------------------------------------------------------------------
           echo "This is most likely a secret token used for tagging git repository and"
