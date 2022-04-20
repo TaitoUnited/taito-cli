@@ -11,6 +11,8 @@ QUICK EXAMPLES
     info                               # Show info required for signing in to the application
     open client                        # Open application GUI on browser
     open admin                         # Open admin GUI on browser
+    open graphql                       # Open GraphQL playground on browser
+    open bucket                        # Open storage bucket named 'bucket' on browser
     db connect                         # Access default database from command line
     db add article                     # Add a new migration for default database
     db deploy                          # Deploy migrations to default database
@@ -33,10 +35,11 @@ QUICK EXAMPLES
     open client:dev                    # Open application GUI on browser
     open admin:dev                     # Open admin GUI on browser
     open server:dev                    # Open server API endpoint on browser
+    open graphql                       # Open GraphQL playground on browser
+    open bucket                        # Open storage bucket named 'bucket' on browser
     open builds:dev                    # Open build logs on browser
     open logs:dev                      # Open logs on browser (e.g. Stackdriver or Kibana)
     open errors:dev                    # Open error tracking on browser
-    open storage:dev                   # Open storage bucket on browser
     open uptime:prod                   # Open uptime monitoring on browser
     open tracing:prod                  # Open distributed tracing on browser
     open performance:prod              # Open performace monitoring
@@ -606,7 +609,7 @@ PROJECT: LINKS
   >
   > open client[:ENV] - Application GUI
   > open admin[:ENV] - Admin GUI
-  > open storage - Storage bucket used by the app
+  > open bucket - Storage bucket named 'bucket' used by the app
   > open docs - Built docs
   > open project - Project management
   > open git - Git repository (e.g. GitHub)
