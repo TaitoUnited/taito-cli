@@ -19,7 +19,7 @@ else
       echo "sleeping 30 seconds..."
       sleep 30
     fi
-    (taito::executing_start; kubectl delete pod ${pod})
+    (taito::executing_start; kubectl delete pod ${pod}) || :
     sleep=true
   done
 fi
