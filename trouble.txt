@@ -1,16 +1,25 @@
 TAITO CLI TROUBLESHOOTING
 
+  TLDR
+  ----
+
+  These resolve most problems:
+    - Restart Docker or the whole operating system.
+    - Upgrade and reinitialize Taito CLI with "taito upgrade".
+
   General
   -------
 
   Common tips for any problem
-    Restarting Docker often resolves many problems - at least on non-Linux
-    systems. You should also try to upgrade Taito CLI to the latest version
-    with "taito upgrade". You can use taito trouble or taito help to solve many
-    problems: "taito trouble", "taito -h", "taito db -h", etc. You can also run
-    a problematic taito command with the verbose "-v" flag to see the commands
+    Restarting Docker or the whole operating system often resolves many
+    problems - at least on non-Linux systems. You should also try to upgrade
+    Taito CLI to the latest version with "taito upgrade". This also
+    reinitializes Taito CLI docker image in case you had removed it from
+    docker. You can use taito trouble or taito help to solve many problems:
+    "taito trouble", "taito -h", "taito db -h", etc. You can also run a
+    problematic taito command with the verbose "-v" flag to see the commands
     that plugins run during command execution. If you want to see even more
-    output, use the "--debug" flag. For example: "taito --debug db connect:dev".
+    output, use the "--debug" flag. For example: taito --debug db connect:dev
 
   "Unknown command"
     Did you execute the command in a project directory that contains
