@@ -42,7 +42,7 @@ function gcp::authenticate () {
   then
     echo "gcloud auth application-default login"
     # TODO run 'gcloud auth revoke ${account}' ?
-    (taito::executing_start; gcloud auth application-default login)
+    (taito::executing_start; gcloud auth application-default login --no-launch-browser)
   fi
 
   if [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
