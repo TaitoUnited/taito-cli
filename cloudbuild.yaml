@@ -1,46 +1,44 @@
-images: [
-  'eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:$_IMAGE_TAG'
-]
+images: ["eu.gcr.io/$PROJECT_ID/$REPO_NAME/cli:$_IMAGE_TAG"]
 
 substitutions:
   _DOCKERFILE: Dockerfile
   _IMAGE_TAG:
 
 steps:
-- id: install
-  name: 'node:lts'
-  entrypoint: 'npm'
-  args: ['install']
+  - id: install
+    name: "node:lts"
+    entrypoint: "npm"
+    args: ["install"]
 
-- id: build
-  name: 'gcr.io/cloud-builders/docker'
-  env:
-    - project_id=$PROJECT_ID
-    - repo_name=$REPO_NAME
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
-      -f docker/${_DOCKERFILE} .
+  - id: build
+    name: "gcr.io/cloud-builders/docker"
+    env:
+      - project_id=$PROJECT_ID
+      - repo_name=$REPO_NAME
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker build -t eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
+          -f docker/${_DOCKERFILE} .
 
-- id: test
-  name: 'node:lts'
-  entrypoint: 'npm'
-  args: ['run', 'test']
+  - id: test
+    name: "node:lts"
+    entrypoint: "npm"
+    args: ["run", "test"]
 
-# TODO: remove once all image references have been updated
-- id: alt-push
-  name: 'gcr.io/cloud-builders/docker'
-  env:
-    - project_id=$PROJECT_ID
-    - repo_name=$REPO_NAME
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    alt_reponame=$${repo_name}
-    alt_reponame=${alt_reponame/_taitounited_/-taitounited-}
-    docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
-       eu.gcr.io/$${project_id}/${alt_reponame}/cli:${_IMAGE_TAG}
-    docker push eu.gcr.io/$${project_id}/${alt_reponame}/cli:${_IMAGE_TAG}
+  # TODO: remove once all image references have been updated
+  - id: alt-push
+    name: "gcr.io/cloud-builders/docker"
+    env:
+      - project_id=$PROJECT_ID
+      - repo_name=$REPO_NAME
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        alt_reponame=$${repo_name}
+        alt_reponame=${alt_reponame/_taitounited_/-taitounited-}
+        docker image tag eu.gcr.io/$${project_id}/$${repo_name}/cli:${_IMAGE_TAG} \
+           eu.gcr.io/$${project_id}/${alt_reponame}/cli:${_IMAGE_TAG}
+        docker push eu.gcr.io/$${project_id}/${alt_reponame}/cli:${_IMAGE_TAG}
