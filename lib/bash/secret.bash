@@ -415,7 +415,8 @@ function taito::export_secrets () {
         else
           echo -n "${secret_value}" > "${file}"
         fi
-        chmod 0600 "${file}"
+        chmod 640 "${file}"
+        chown taito:root "${file}" || :
       fi
 
       set +x
