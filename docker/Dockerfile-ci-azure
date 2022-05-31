@@ -10,4 +10,4 @@ RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
 # RUN npm run verify
 
 # NOTE: Using root user as docker.sock access is often required on CI/CD
-ENTRYPOINT [] # TODO: why not "taito" ?
+ENTRYPOINT ["taito"]
