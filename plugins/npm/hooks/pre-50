@@ -92,11 +92,6 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
        [[ ${taitonpm_command%%:*} == "taito-test" ]] \
      ); then
     running_ci_test="true"
-
-    # TODO: can we avoid using --unsafe-perm?
-    if [[ $(whoami) == "root" ]]; then
-      npmopts="${npmopts} --unsafe-perm"
-    fi
   fi
 
   # TODO: should be in taito-cli core only?
