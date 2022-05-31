@@ -92,6 +92,8 @@ function terraform::run_zone () {
   local init_options="${terraform_init_options:-}"
   local apply_options="${terraform_apply_options:-} ${command_options}"
 
+  trap "rm -f *.tmp" RETURN
+
   echo "Substituting variables in *.yaml" > "${taito_vout}"
   for yaml_file in $(ls *.yaml); do
     terraform::yaml2json "${yaml_file}"
@@ -106,7 +108,6 @@ function terraform::run_zone () {
     if [[ -f import_state ]]; then
       ./import_state
     fi
-    trap "rm -f ./*.json.tmp" RETURN
     if [[ "${command}" != "" ]]; then
       while true; do
         # terraform plan ${apply_options} -target=module.network -out=plan
