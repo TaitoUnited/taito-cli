@@ -10,7 +10,7 @@ if [[ ${taito_command:?} == "env-apply" ]] && [[ ${taito_mode:-} != "ci" ]]; the
 fi
 
 # Authentication for CI
-if [[ ${taito_mode:-} == "ci" ]] || [[ "${AZURE_CLIENT_ID}" ]]; then
+if ( [[ ${taito_mode:-} == "ci" ]] || [[ "${AZURE_CLIENT_ID}" ]] ) && [[ ${taito_command} != "util-test" ]]; then
   # Ensure that AWS credentials exist
   if [[ ! "${AZURE_CLIENT_ID}" ]] || [[ ! "${AZURE_CLIENT_SECRET}" ]]; then
     taito::print_plugin_title
