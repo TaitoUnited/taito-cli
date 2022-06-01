@@ -416,7 +416,11 @@ function taito::export_secrets () {
           echo -n "${secret_value}" > "${file}"
         fi
         chmod 640 "${file}"
-        chown taito:root "${file}" || :
+
+        # Give permissions for taito user to the file
+        if [[ "$(whoami)" == "root" ]]; then
+          chown taito:root "${file}" > /dev/null
+        fi
       fi
 
       set +x
