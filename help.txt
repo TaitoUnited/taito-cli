@@ -3,6 +3,10 @@ TAITO CLI
 
 QUICK EXAMPLES
 
+  TROUBLESHOOTING
+    taito trouble                      # Show troubleshooting
+    taito upgrade                      # Upgrade and reinitialize Taito CLI.
+
   LOCAL DEVELOPMENT BASICS
     develop                            # Quick start (runs: env apply, start --clean --init)
     env apply                          # Configure local environment and install some libs
@@ -17,8 +21,12 @@ QUICK EXAMPLES
     db add article                     # Add a new migration for default database
     db deploy                          # Deploy migrations to default database
     db import file.sql                 # Import a file to default database
+    generate                           # Generate schemas or some other stuff. Also run on 'init'.
+    code generate NAME                 # Generate code for NAME.
+    manage COMMAND                     # Run a tech specific cli command (e.g. Django command)
     secret rotate my-secret            # Set value for secret (restart all containers after)
     install                            # Install newly added libraries (restart container after)
+    clean:server                       # Clean build server container
     restart:server                     # Restart server container
     restart                            # Restart all containers
     shell:server                       # Start shell on the server container
@@ -46,6 +54,11 @@ QUICK EXAMPLES
     open feedback:prod                 # Open user feedback management
     open analytics:prod                # Open usage analytics
     open -h                            # List all links
+
+  CODE
+    generate                           # Generate schemas or some other stuff. Also run on 'init'.
+    code generate NAME                 # Generate code for NAME.
+    manage COMMAND                     # Run a tech specific cli command (e.g. Django command)
 
   QUALITY CONTROL
     lint                               # Lint code
@@ -441,6 +454,15 @@ PROJECT: BASIC OPERATIONS
     accounts that you can use to log in).
     TIP: Enable the 'make' or 'npm' plugin and implement info[:ENV] script
     in your makefile/package.json.
+
+  generate[:TARGET]
+    Generate schemas or some other stuff. Also run on 'init'.
+
+  code generate[:TARGET] NAME
+    Generate code for NAME.
+
+  manage[:TARGET] COMMAND
+    Run a tech specific cli command (e.g. Django command).
 
   unit[:TARGET] [TEST]
     Run unit tests.
