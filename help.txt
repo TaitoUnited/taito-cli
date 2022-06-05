@@ -176,6 +176,7 @@ QUICK EXAMPLES
     commit revert                      # Revert the latest commit by creating a new commit
     commit undo                        # Undo latest commit from local and remote branch
     commit erase                       # Erase latest commit from loc/rem branch and files
+    commit empty                       # Add an empty commit
     tag 1.2.3                          # Create tag
     untag 1.2.3                        # Delete tag
 
@@ -801,6 +802,9 @@ PROJECT: VERSION CONTROL OPERATIONS
     Erase the latest commit from local and remote repository, and remove the
     changes also from local files. The command will fail if your local branch
     is not up-to-date with the remote repository.
+
+  commit empty
+    Add an empty commit. You can use this for example to trigger CI/CD builds.
 
   tag TAG [COMMENT]
     Create tag
