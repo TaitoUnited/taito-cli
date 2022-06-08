@@ -15,8 +15,11 @@ function azure::authenticate () {
     echo "This'll open the authentication page automatically."
     read -r
     taito::open_browser "https://microsoft.com/devicelogin"
-    az login --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
-    az account set --subscription "${taito_provider_billing_account_id:?}"
+    (
+      taito::executing_start
+      az login --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
+      az account set --subscription "${taito_provider_billing_account_id:?}"
+    )
   else
     echo "Already authenticated."
     echo "You can reauthenticate with 'taito auth --reset'."
