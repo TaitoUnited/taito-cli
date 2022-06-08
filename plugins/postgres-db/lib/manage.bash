@@ -22,6 +22,8 @@ function postgres::create_database () {
         -U "${database_username}" \
         -f "$(sql_file_path create.sql)" \
         -v "database=${database_name}" \
+        -v "collate='${database_collate:-fi_FI.UTF-8}'" \
+        -v "template=${database_template:-template0}" \
         -v "dbusermaster=${database_master_username_internal:-postgres}" \
         -v "dbuserapp=${database_app_username_internal}" \
         -v "dbuserviewer=${database_viewer_username_internal}" > "${taito_vout}"

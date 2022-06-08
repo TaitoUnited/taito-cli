@@ -67,6 +67,14 @@ function taito::export_database_config () {
     export database_name="${!env_var_name:-$db_database_name}"
     echo "- database_name: ${database_name}" > "${taito_dout:-/dev/null}"
 
+    env_var_name="db_${target}_collate"
+    export database_collate="${!env_var_name:-$db_database_collate}"
+    echo "- database_collate: ${database_collate}" > "${taito_dout:-/dev/null}"
+
+    env_var_name="db_${target}_template"
+    export database_template="${!env_var_name:-$db_database_template}"
+    echo "- database_template: ${database_template}" > "${taito_dout:-/dev/null}"
+
     env_var_name="db_${target}_username_suffix"
     export database_username_suffix="${!env_var_name:-$db_database_username_suffix}"
     echo "- database_username_suffix: ${database_username_suffix}" > "${taito_dout:-/dev/null}"

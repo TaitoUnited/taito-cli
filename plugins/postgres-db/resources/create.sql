@@ -1,6 +1,6 @@
 -- used by: create
 
-CREATE DATABASE :database;
+CREATE DATABASE :database ENCODING 'UTF8' LC_COLLATE = :collate LC_CTYPE = :collate TEMPLATE :template;
 
 GRANT ALL PRIVILEGES ON DATABASE :database TO
   :dbusermaster, :database;
