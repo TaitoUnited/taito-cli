@@ -170,10 +170,8 @@ function taito::expose_secret_by_name () {
     secret_index=$((${secret_index}+1))
   done
 
-  if [[ ${found_index} != "-1" ]]; then
-    secret_index=${found_index}
-    taito::expose_secret_by_index ${secret_index}
-  fi
+  secret_index=${found_index/-1/notfound}
+  taito::expose_secret_by_index ${secret_index}
 
   if [[ ${print_creds} == true ]]; then
     echo "TODO print secret details"
