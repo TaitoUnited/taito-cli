@@ -14,20 +14,25 @@ if ( [[ ${taito_mode:-} == "ci" ]] || [[ "${AZURE_CLIENT_ID}" ]] ) && \
     # Do not execute on util-test or secret-export as user may have been switched
     [[ ${taito_command} != "util-test" ]] && \
     [[ ${taito_command} != "secret-export" ]]; then
-  # Ensure that AWS credentials exist
-  if [[ ! "${AZURE_CLIENT_ID}" ]] || [[ ! "${AZURE_CLIENT_SECRET}" ]]; then
+  # Ensure that AZURE credentials exist
+  if ( [[ ! "${AZURE_CLIENT_ID}" ]] || [[ ! "${AZURE_CLIENT_SECRET}" ]] ) && [[ ! "${taito_auth_id_token}" ]]; then
     taito::print_plugin_title
     echo
-    echo "ERROR: AZURE_CLIENT_ID and AZURE_CLIENT_SECRET environment variables not set."
-    echo "Configure them in your CI/CD settings."
+    echo "ERROR: Either configure AZURE_CLIENT_ID and AZURE_CLIENT_SECRET environment variables"
+    echo "or OIDC token federation on your CI/CD settings."
     exit 1
   fi
 
+  # TODO: What are these used for? Are they obsolete?
   export AAD_SERVICE_PRINCIPAL_CLIENT_ID="${AZURE_CLIENT_ID}"
   export AAD_SERVICE_PRINCIPAL_CLIENT_SECRET="${AZURE_CLIENT_SECRET}"
 
   if ! az account show &> /dev/null; then
-    az login --service-principal -u "${AZURE_CLIENT_ID}" -p "${AZURE_CLIENT_SECRET}" --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
+    azure_auth_opts="-u ${AZURE_CLIENT_ID} -p ${AZURE_CLIENT_SECRET}"
+    if [[  "${taito_auth_id_token}" ]]; then
+      azure_auth_opts="--federated-token ${taito_auth_id_token}"
+    fi
+    az login --service-principal ${azure_auth_opts} --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
     az account set --subscription "${taito_provider_billing_account_id}"
 
     # Container registry (ACR) authentication
