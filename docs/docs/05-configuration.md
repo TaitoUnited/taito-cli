@@ -283,6 +283,7 @@ You can use the following methods in your secret definition:
 - `htpasswd`: htpasswd file that contains 1-N user credentials. User credentials are entered manually.
 - `htpasswd-plain`: htpasswd file that contains 1-N user credentials. Passwords are stored in plain text. User credentials are entered manually.
 - `csrkey`: Secret key generated for certificate signing request (CSR).
+- `provided`: Secret that is provided by one of the plugins. For example `azure-access-token.ossRdbms:provided`.
 
 See the [secret management](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md#secret-management) section of the plugins page for more information. [6.4. Define a secret](https://taitounited.github.io/taito-cli/tutorial/06-env-variables-and-secrets#64-define-a-secret) chapter of Taito CLI tutorial may also be useful.
 

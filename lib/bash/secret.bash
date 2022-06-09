@@ -82,6 +82,7 @@ export -f taito::expose_db_user_credentials
 function taito::get_secret_value_format () {
   if [[ $1 == "random"* ]] ||
      [[ $1 == "manual"* ]] ||
+     [[ $1 == "provided" ]] ||
      [[ ! $1 ]]
   then
     echo "literal"
@@ -186,7 +187,9 @@ function taito::validate_secret_values () {
   do
     taito::expose_secret_by_index ${secret_index}
     if [[ ${secret_value:-} ]] && [[ ${#secret_value} -lt 8 ]] && \
-       [[ ${secret_orig_method} != "copy/"* ]] && [[ ${secret_orig_method} != "read/"* ]]; then
+       [[ ${secret_orig_method} != "copy/"* ]] && \
+       [[ ${secret_orig_method} != "read/"* ]] && \
+       [[ ${secret_orig_method} != "provided" ]]; then
       echo "ERROR: secret ${secret_namespace}/${secret_name} too short or not set"
       exit 1
     fi
@@ -313,7 +316,7 @@ function taito::save_secrets () {
         fi
       fi
 
-      if [[ ${secret_orig_method} != "read/"* ]]; then
+      if [[ ${secret_orig_method} != "read/"* ]] && [[ ${secret_orig_method} != "provided" ]]; then
         echo "Save secret ${secret_name}" > "${taito_vout:-}"
         if [[ ! ${secret_value} ]] || (
            [[ ${secret_value_format} == "file" ]] && [[ ! -f ${secret_filename} ]]
@@ -451,7 +454,8 @@ function taito::delete_secrets () {
   for secret_name in "${secret_names[@]}"
   do
     taito::expose_secret_by_index ${secret_index}
-    if [[ ${secret_orig_method:?} != "read/"* ]]; then
+    if [[ ${secret_orig_method:?} != "read/"* ]] && \
+       [[ ${secret_orig_method:?} != "provided" ]]; then
       "${delete_secret_func}" \
         "${taito_zone:-}" \
         "${secret_namespace}" \

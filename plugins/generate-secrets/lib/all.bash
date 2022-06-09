@@ -12,7 +12,8 @@ function generate-secrets::create_and_export () {
 
   for secret_name in ${secret_names[@]}; do
     taito::expose_secret_by_index ${secret_index}
-    if [[ ${secret_orig_method} != "read/"* ]] && (
+    if [[ ${secret_orig_method} != "read/"* ]] && \
+       [[ ${secret_orig_method} != "provided" ]] && (
          [[ -z "${name_filter}" ]] ||
          [[ ${secret_name} == *"${name_filter}"* ]]
        ) && (
@@ -83,6 +84,7 @@ function generate-secrets::generate_by_type () {
      [[ ${secret_method} != "random"* ]] &&
      [[ ${secret_orig_method} != "copy/"* ]] &&
      [[ ${secret_orig_method} != "read/"* ]] &&
+     [[ ${secret_method} != "provided" ]] &&
      [[ ${secret_name} != *"serviceaccount"* ]] &&
      taito::confirm \
        "Default value exists. Use the default value for ${taito_env} environment?"
@@ -92,6 +94,9 @@ function generate-secrets::generate_by_type () {
 
   if [[ -z "${secret_value}" ]]; then
     case "${method%%-*}" in
+      provided)
+        # skip: provided by some plugin
+        ;;
       random)
         length=${secret_method##*-}
         if [[ ${length} == "random" ]]; then
