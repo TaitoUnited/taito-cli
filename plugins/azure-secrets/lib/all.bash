@@ -45,7 +45,7 @@ function azure-secrets::get_secret_value () {
   local name=$3
   local key
 
-  if [[ ${name} == "azure-token.ossRdbms" ]]; then
+  if [[ ${name} == "azure-access-token.ossRdbms" ]]; then
     value=$(az account get-access-token --resource-type oss-rdbms | jq -r .accessToken)
   fi
 
