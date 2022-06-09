@@ -1,0 +1,14 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ${taito_provider_secrets_location:-} ]]; then
+  taito::confirm "Save changed secrets to Azure Key Vault" ||
+    taito::skip_to_next "${@}"
+
+  taito::save_secrets \
+    azure-secrets::get_secret_value \
+    azure-secrets::put_secret_value
+fi
+
+taito::call_next "${@}"

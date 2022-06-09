@@ -1,0 +1,27 @@
+#!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_command:?}"
+: "${taito_mode:?}"
+: "${taito_env:?}"
+
+# Fetch required secrets from Azure
+taito::expose_required_secrets_filter
+if [[ ${fetch_secrets:?} == "true" ]]; then
+  taito::print_plugin_title
+  echo "Getting secrets from Azure Key Vault (${taito_env}) for ${secret_purpose:?}"
+
+  taito::export_secrets \
+    azure-secrets::get_secret_value \
+    "${save_secrets_to_disk:-}" \
+    "${secret_filter}"
+
+  export taito_secrets_retrieved=true
+fi
+
+# Save database proxy secret to disk for running tests
+if [[ ${taito_command} == "test" ]] && [[ ${taito_mode} == "ci" ]]; then
+  taito::save_proxy_secret_to_disk azure-secrets::get_secret_value
+fi
+
+taito::call_next "${@}"
