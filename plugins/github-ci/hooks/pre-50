@@ -1,7 +1,10 @@
 #!/bin/bash -e
 
 if [[ ${taito_mode:-} == "ci" ]] && [[ -n ${ACTIONS_ID_TOKEN_REQUEST_URL} ]] && [[ -n ${ACTIONS_ID_TOKEN_REQUEST_TOKEN} ]]; then
-  # Retrieve fererated token from the id token request url
+  taito::print_plugin_title
+  echo
+  echo "Retrieving ID token from ${ACTIONS_ID_TOKEN_REQUEST_URL}"
+  
   OIDC_TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${ACTIONS_ID_TOKEN_AUDIENCE}" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN")
   export taito_auth_id_token=$(echo $OIDC_TOKEN | jq -j '.value')
 fi
