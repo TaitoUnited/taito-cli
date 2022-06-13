@@ -39,7 +39,7 @@ if ( [[ ${taito_mode:-} == "ci" ]] || [[ "${AZURE_CLIENT_ID}" ]] ) && \
     azure_auth_opts="-u ${AZURE_CLIENT_ID}"
     if [[ "${taito_auth_id_token}" ]]; then
       azure_auth_opts="${azure_auth_opts} --federated-token ${taito_auth_id_token}"
-    else if [[ "${AZURE_CLIENT_SECRET}" ]]; then
+    elif [[ "${AZURE_CLIENT_SECRET}" ]]; then
       azure_auth_opts="${azure_auth_opts} -p ${AZURE_CLIENT_SECRET}"
     fi
 
