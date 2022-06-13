@@ -14,12 +14,19 @@ if ( [[ ${taito_mode:-} == "ci" ]] || [[ "${AZURE_CLIENT_ID}" ]] ) && \
     # Do not execute on util-test or secret-export as user may have been switched
     [[ ${taito_command} != "util-test" ]] && \
     [[ ${taito_command} != "secret-export" ]]; then
+
   # Ensure that AZURE credentials exist
-  if ( [[ ! "${AZURE_CLIENT_ID}" ]] || [[ ! "${AZURE_CLIENT_SECRET}" ]] ) && [[ ! "${taito_auth_id_token}" ]]; then
+  if [[ ! "${AZURE_CLIENT_ID}" ]]; then
     taito::print_plugin_title
     echo
-    echo "ERROR: Either configure AZURE_CLIENT_ID and AZURE_CLIENT_SECRET environment variables"
-    echo "or OIDC token federation on your CI/CD settings."
+    echo "ERROR: Configure AZURE_CLIENT_ID environment variable on your CI/CD settings."
+    exit 1
+  fi
+  if [[ ! "${AZURE_CLIENT_SECRET}" ]] ) && [[ ! "${taito_auth_id_token}" ]] ); then
+    taito::print_plugin_title
+    echo
+    echo "ERROR: Configure either AZURE_CLIENT_SECRET environment variable or OIDC token"
+    echo "federation on your CI/CD settings."
     exit 1
   fi
 
@@ -28,11 +35,17 @@ if ( [[ ${taito_mode:-} == "ci" ]] || [[ "${AZURE_CLIENT_ID}" ]] ) && \
   export AAD_SERVICE_PRINCIPAL_CLIENT_SECRET="${AZURE_CLIENT_SECRET}"
 
   if ! az account show &> /dev/null; then
-    azure_auth_opts="-u ${AZURE_CLIENT_ID} -p ${AZURE_CLIENT_SECRET}"
-    if [[  "${taito_auth_id_token}" ]]; then
-      azure_auth_opts="--federated-token ${taito_auth_id_token}"
+
+    azure_auth_opts="-u ${AZURE_CLIENT_ID}"
+    if [[ "${taito_auth_id_token}" ]]; then
+      azure_auth_opts="${azure_auth_opts} --federated-token ${taito_auth_id_token}"
+    else if [[ "${AZURE_CLIENT_SECRET}" ]]; then
+      azure_auth_opts="${azure_auth_opts} -p ${AZURE_CLIENT_SECRET}"
     fi
-    az login --service-principal ${azure_auth_opts} --tenant "${taito_provider_tenant:-$taito_provider_org_id}"
+
+    az login ${azure_auth_opts} \
+      --tenant "${taito_provider_tenant:-$taito_provider_org_id}" \
+      --service-principal
     az account set --subscription "${taito_provider_billing_account_id}"
 
     # Container registry (ACR) authentication
