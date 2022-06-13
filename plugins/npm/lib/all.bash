@@ -70,7 +70,7 @@ function npm::install () {
   "
 
   if [[ ${task_postinstall} ]]; then
-    npmopts="-s"
+    npmopts=""
     # TODO: can we avoid using --unsafe-perm?
     if [[ ${taito_mode:-} == "ci" ]] && [[ $(whoami) == "root" ]]; then
       npmopts="${npmopts} --unsafe-perm"
