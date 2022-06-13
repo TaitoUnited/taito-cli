@@ -22,7 +22,7 @@ if ( [[ ${taito_mode:-} == "ci" ]] || [[ "${AZURE_CLIENT_ID}" ]] ) && \
     echo "ERROR: Configure AZURE_CLIENT_ID environment variable on your CI/CD settings."
     exit 1
   fi
-  if [[ ! "${AZURE_CLIENT_SECRET}" ]] ) && [[ ! "${taito_auth_id_token}" ]] ); then
+  if [[ ! "${AZURE_CLIENT_SECRET}" ]] && [[ ! "${taito_auth_id_token}" ]]; then
     taito::print_plugin_title
     echo
     echo "ERROR: Configure either AZURE_CLIENT_SECRET environment variable or OIDC token"
