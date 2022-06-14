@@ -1,0 +1,12 @@
+#!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+
+if taito::confirm "Create common namespace"; then
+  kubectl::use_context
+  if ! kubectl get namespace common &> /dev/null; then
+    kubectl create namespace common
+  fi
+fi
+
+taito::call_next "${@}"
