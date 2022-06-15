@@ -4,8 +4,13 @@ function get_secret_value () {
   local namespace=$1
   local secret_name=$2
   local secret_property=$3
+
+  if [[ ${taito_verbose:-} == "true" ]]; then
+    echo "getting secret value from kubernetes: namespace ${namespace}, secret ${secret_name}, property ${secret_property}" > /dev/stderr
+  fi
+
   kubectl get secret "${secret_name}" -o yaml \
-    --namespace="${namespace}" 2> /dev/null |
+    --namespace="${namespace}" |
       grep "^  ${secret_property}:" |
       sed -e "s/^.*: //"
 }
