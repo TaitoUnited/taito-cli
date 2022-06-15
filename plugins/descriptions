@@ -196,7 +196,9 @@ if [[ ${taito_project:-} ]]; then
     "# Undo the latest commit from local and remote branch. Leave local files untouched."
   echo "commit erase                     " \
     "# Erase the latest commit from local and remote branch."
-  echo "tag TAG                         " \
+  echo "commit empty MESSAGE             " \
+    "# Make an empty commit."
+  echo "tag TAG                          " \
     "# Create tag"
   echo "untag TAG                         " \
     "# Delete tag"

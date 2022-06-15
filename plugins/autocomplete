@@ -125,6 +125,7 @@ if [[ ${taito_project:-} ]]; then
   echo "commit revert"
   echo "commit undo"
   echo "commit erase"
+  echo "commit empty MESSAGE"
   echo "tag TAG"
   echo "untag TAG"
   if [[ ${cprefix} == "feat"* ]]; then
