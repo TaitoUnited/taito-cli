@@ -364,6 +364,8 @@ function taito::export_secrets () {
       continue
     fi
 
+    echo "Exporting secret ${secret_name}" > "${taito_vout:-}"
+
     local real_method="${secret_orig_method:-$secret_method}"
     if [[ ${real_method} == "copy/"* ]] || [[ ${real_method} == "read/"* ]]; then
       real_method=$(
@@ -386,6 +388,8 @@ function taito::export_secrets () {
       echo 1>&2
     fi
 
+    echo "Secret details: ${taito_zone:-} ${secret_source_namespace} ${secret_name} ${real_method}" > "${taito_vout:-}"
+
     local secret_value
     secret_value=$(
       "${get_secret_func}" \
@@ -395,7 +399,11 @@ function taito::export_secrets () {
         "${real_method}"
     )
 
-    if [[ ${secret_value} ]]; then
+    if [[ -z "${secret_value}" ]]; then
+      echo "Secret value not found" > "${taito_vout:-}"
+    else
+      echo "Secret value found" > "${taito_vout:-}"
+
       local secret_value_format
       secret_value_format=$(taito::get_secret_value_format "${real_method}")
 
