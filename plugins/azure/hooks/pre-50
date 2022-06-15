@@ -11,9 +11,8 @@ fi
 
 # Authentication for CI
 if ( [[ ${taito_mode:-} == "ci" ]] || [[ "${AZURE_CLIENT_ID}" ]] ) && \
-    # Do not execute on util-test or secret-export as user may have been switched
-    [[ ${taito_command} != "util-test" ]] && \
-    [[ ${taito_command} != "secret-export" ]]; then
+    # Do not execute on util-test as user may have been switched
+    [[ ${taito_command} != "util-test" ]]; then
 
   # Ensure that AZURE credentials exist
   if [[ ! "${AZURE_CLIENT_ID}" ]]; then
