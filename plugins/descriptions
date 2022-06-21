@@ -287,6 +287,8 @@ if [[ ${taito_project:-} ]]; then
       "# Restart app / watch on ${env} environment"
     echo "stop${suffix}                            " \
       "# Stop app / watch on ${env} environment"
+    echo "down${suffix}                            " \
+      "# Stop app on ${env} environment, and remove data and resources."
     # TODO run:ios run:android # Run the application
     echo "init${suffix}                            " \
       "# Initialize database and storage buckets on ${env} environment"

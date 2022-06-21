@@ -93,7 +93,7 @@ QUICK EXAMPLES
     start:dev                          # Start application
     restart:dev                        # Restart application
     stop:dev                           # Stop application
-    down:dev                           # Remove application
+    down:dev                           # Stop and remove application
     init:dev                           # Initialize DB, storages, etc. Add --clean for clean init.
 
   CONTAINERS
@@ -446,8 +446,7 @@ PROJECT: BASIC OPERATIONS
     or 'taito stop:dev'.
 
   down[:ENV]
-    Stops the application in the defined environment e.g 'taito down'
-    or 'taito down:dev'. Take stop even further by removing some data and
+    Stops the application in the defined environment, and removes data and
     resources.
 
   info[:ENV]
