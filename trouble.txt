@@ -149,6 +149,11 @@ TAITO CLI TROUBLESHOOTING
     authenticated or your authentication has expired. In such case, run
     "taito auth:ENV" or "taito auth:ENV reset" to authenticate.
 
+  "Token has expired"
+    Try to reauthenticated with "taito auth:ENV --reset". On WSL this may also
+    be caused by clock not being in sync. In such case rebooting computer usually
+    resolves the issue.
+
   SSL certificates (cert-manager)
   -------------------------------
 
