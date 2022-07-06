@@ -51,11 +51,11 @@ function docker::push () {
   local name=${taito_target:?Target not given}
   local image_tag=${1:?Image tag not given}
   if [[ ${taito_docker_new_params:-} == "true" ]]; then
-    local save_image=${2}
-    local build_context=${3}
-    local service_dir=${4}
-    local dockerfile=${5}
-    local image_path=${6}
+    local save_image=${3}
+    local build_context=${4}
+    local service_dir=${5}
+    local dockerfile=${6}
+    local image_path=${7}
   else
     local image_path=${2}
   fi
@@ -124,11 +124,11 @@ function docker::package () {
   local name=${taito_target:?Target not given}
   local image_tag=${1:?Image tag not given}
   if [[ ${taito_docker_new_params:-} == "true" ]]; then
-    local save_image=${2}
-    local build_context=${3}
-    local service_dir=${4}
-    local dockerfile=${5}
-    local image_path=${6}
+    local save_image=${3}
+    local build_context=${4}
+    local service_dir=${5}
+    local dockerfile=${6}
+    local image_path=${7}
   else
     local image_path=${2}
   fi

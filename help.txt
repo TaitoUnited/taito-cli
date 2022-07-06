@@ -965,7 +965,7 @@ PROJECT: BUILDS (mainly for CI/CD)
     been built, and the new version number for the release by the type of
     commits (feature, fix, etc).
 
-  artifact prepare:TARGET[:ENV] IMAGE_TAG
+  artifact prepare:TARGET[:ENV] IMAGE_TAG [IMAGE_TARGET]
     Prepares artifact for deployment.
 
   artifact release:TARGET[:ENV] IMAGE_TAG

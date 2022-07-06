@@ -9,11 +9,12 @@ function docker::build () {
   local name=${taito_target:?Target not given}
   local image_tag=${1:-dry-run}
   if [[ ${taito_docker_new_params:-} == "true" ]]; then
-    local save_image=${2}
-    local build_context=${3}
-    local service_dir=${4}
-    local dockerfile=${5}
-    local image_path=${6}
+    local dockertarget=${2}
+    local save_image=${3}
+    local build_context=${4}
+    local service_dir=${5}
+    local dockerfile=${6}
+    local image_path=${7}
   else
     local build_context=${2}
     local service_dir=${3}
@@ -27,6 +28,10 @@ function docker::build () {
 
   if [[ ${service_dir} == "" ]]; then
     local service_dir="./${name}"
+  fi
+
+  if [[ ${dockertarget} ]]; then
+    local dockertarget_option="--target ${dockertarget}"
   fi
 
   if [[ ${image_path} == "" ]]; then
@@ -153,6 +158,7 @@ function docker::build () {
         # Build the production runtime
         # TODO use also latest production container as cache?
         docker build \
+          ${dockertarget_option} \
           -f "${service_dir}/${dockerfile}" \
           --cache-from "${image_builder}" \
           --cache-from "${image_latest}" \
