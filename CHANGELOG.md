@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.299.0
+
+- BREAKING CHANGE: Added IMAGE_TARGET parameter on 'taito artifact prepare'.
+  This allows you to build a specific build stage of a dockerfile.
+
 ## 0.298.0
 
 Fixes:
