@@ -104,7 +104,7 @@ function gcp::db_proxy_start () {
       if [[ ${taito_verbose:?} == "true" ]] || \
          [[ ${taito_mode:-} == "ci" ]]
       then
-        sleep 2
+        sleep 3
         cat /tmp/proxy-out.tmp
       fi
     else
