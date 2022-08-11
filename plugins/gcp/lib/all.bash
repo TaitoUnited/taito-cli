@@ -99,13 +99,21 @@ function gcp::db_proxy_start () {
           "-instances=${database_id}=tcp:${taito_db_proxy_bind_address}:${database_port:?}" \
           &> /tmp/proxy-out.tmp &
       )
-      # TODO: Implement robust wait for 'ready for connections' status
-      sleep 1
-      if [[ ${taito_verbose:?} == "true" ]] || \
-         [[ ${taito_mode:-} == "ci" ]]
-      then
-        sleep 3
+
+      proxy_wait_count=0
+      while [[ $proxy_wait_count -le 10 ]] && ! grep "Ready for new connections" /tmp/proxy-out.tmp &> /dev/null; do
+        sleep 1
+        proxy_wait_count=$(( $proxy_wait_count + 1 ))
+      done
+
+      if [[ ${taito_verbose:?} == "true" ]] || [[ ${taito_mode:-} == "ci" ]]; then
         cat /tmp/proxy-out.tmp
+      fi
+
+      if ! grep "Ready for new connections" /tmp/proxy-out.tmp &> /dev/null; then
+        echo "ERROR: Failed to start db proxy"
+        cat /tmp/proxy-out.tmp
+        exit 1
       fi
     else
       (
