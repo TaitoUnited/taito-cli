@@ -101,7 +101,7 @@ function gcp::db_proxy_start () {
       )
 
       proxy_wait_count=0
-      while [[ $proxy_wait_count -le 10 ]] && ! grep "Ready for new connections" /tmp/proxy-out.tmp &> /dev/null; do
+      while [[ $proxy_wait_count -le 15 ]] && ! grep "Ready for new connections" /tmp/proxy-out.tmp &> /dev/null; do
         sleep 1
         proxy_wait_count=$(( $proxy_wait_count + 1 ))
       done
