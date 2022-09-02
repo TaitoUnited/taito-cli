@@ -842,7 +842,7 @@ PROJECT: DATABASE OPERATIONS
     Examples:
     taito db dump:dev dump.sql
     taito db dump:dev dump.sql -- --data-only
-    taito db dump:dev dump.sql admin -- --schema=public --clean
+    taito db dump:dev dump.sql admin -- --schema=public --blobs --clean
 
   db import[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Import a file to database. DB proxy connection and secrets are

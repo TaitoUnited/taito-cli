@@ -22,7 +22,7 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   # work correctly with empty columns
   postgres::connect \
     "${username}" \
-    " ${tool_options} --no-owner --no-privileges --blobs --inserts -f ${dump_file}" \
+    " ${tool_options} --no-owner --no-privileges -f ${dump_file}" \
     "pg_dump"
   echo "Done"
 fi
