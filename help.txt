@@ -124,8 +124,9 @@ QUICK EXAMPLES
     db connect:dev                     # Access default database on command line
     db connect:reportdb:dev            # Access report database on command line
     db proxy:dev                       # Start a database proxy for a GUI tool access
-    db import:dev file.sql             # Import a file to default database
     db dump:dev dump.sql               # Dump default database to a file
+    db import:dev file.sql             # Import a file to default database
+    db restore:dev file.tar.gz         # Restore default database from an archive file
     db log:dev                         # View change log of default database
     db recreate:dev                    # Recreate the default database
     db add article                     # Add a new migration for default database
@@ -848,6 +849,14 @@ PROJECT: DATABASE OPERATIONS
     Import a file to database. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
     Example: taito db import:dev database/my-file.sql
+
+  db restore[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
+    Restore database from an archive file. DB proxy connection and secrets are
+    handled automatically. Always give file path relative to the project root.
+    Examples:
+    taito db import:dev database/dump.tar.gz
+    taito db import:dev database/dump.tar.gz -- --data-only
+    taito db import:dev database/dump -- --data-only --format=directory
 
   db deploy[:TARGET][:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled

@@ -1,0 +1,28 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
+  dump_file="${1:?}"
+  username=$2
+
+  # REFACTOR: args handling
+  if [[ ${username} == "--" ]]; then
+    username=
+  fi
+  tool_options="${*}"
+  if [[ ${tool_options} == *" -- "* ]]; then
+    tool_options="${tool_options##* -- }"
+  else
+    tool_options=""
+  fi
+
+  echo "Restoring database ${database_name:?} from ${dump_file}. Please wait."
+  postgres::connect \
+    "${username}" \
+    " ${tool_options} -f ${dump_file}" \
+    "pg_restore"
+  echo "Done"
+fi
+
+taito::call_next "${@}"

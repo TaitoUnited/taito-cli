@@ -338,10 +338,12 @@ if [[ ${taito_project:-} ]]; then
           "# Show db conn details and credentials for ${env} environment and start a proxy if required"
         echo "db connect${db}${suffix}             &focus" \
           "# Open database client for ${env} environment from command line"
-        echo "db import${db}${param} FILE                " \
-          "# Import a file to database on ${env} environment"
         echo "db dump${db}${suffix} FILE                 " \
           "# Dump database of ${env} environment to a file"
+        echo "db import${db}${param} FILE                " \
+          "# Import a file to database on ${env} environment"
+        echo "db restore${db}${param} FILE               " \
+          "# Restore a file to database on ${env} environment"
         echo "db log${db}${suffix}                       " \
           "# View change log of ${env} environment database"
         echo "db recreate${db}${suffix}                  " \
