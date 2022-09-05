@@ -20,7 +20,7 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
   echo "Restoring database ${database_name:?} from ${dump_file}. Please wait."
   postgres::connect \
     "${username}" \
-    " ${tool_options} -f ${dump_file}" \
+    " ${tool_options} ${dump_file}" \
     "pg_restore"
   echo "Done"
 fi

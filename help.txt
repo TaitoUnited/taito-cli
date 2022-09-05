@@ -126,7 +126,7 @@ QUICK EXAMPLES
     db proxy:dev                       # Start a database proxy for a GUI tool access
     db dump:dev dump.sql               # Dump default database to a file
     db import:dev file.sql             # Import a file to default database
-    db restore:dev file.tar.gz         # Restore default database from an archive file
+    db restore:dev archive             # Restore default database from an archive file
     db log:dev                         # View change log of default database
     db recreate:dev                    # Recreate the default database
     db add article                     # Add a new migration for default database
@@ -840,23 +840,25 @@ PROJECT: DATABASE OPERATIONS
   db dump[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Take a database dump. DB proxy connection and secrets are handled
     automatically. You can pass tool specific options with TOOL_OPTIONS.
-    Examples:
+    Examples (with pg_dump tool options):
     taito db dump:dev dump.sql
     taito db dump:dev dump.sql -- --data-only
     taito db dump:dev dump.sql admin -- --schema=public --blobs --clean
+    taito db dump:dev archive -- -Fc
+    taito db dump:dev archive -- -Fd
 
   db import[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Import a file to database. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
-    Example: taito db import:dev database/my-file.sql
+    Example: taito db import:dev file.sql
 
   db restore[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Restore database from an archive file. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
-    Examples:
-    taito db restore:dev database/dump.tar.gz
-    taito db restore:dev database/dump.tar.gz -- --data-only
-    taito db restore:dev database/dump -- --format=directory --jobs=4
+    Examples (with pg_restore tool options):
+    taito db restore:dev archive
+    taito db restore:dev archive -- --data-only
+    taito db restore:dev archive -- --format=directory --jobs=4
 
   db deploy[:TARGET][:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled
