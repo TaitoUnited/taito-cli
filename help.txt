@@ -854,9 +854,9 @@ PROJECT: DATABASE OPERATIONS
     Restore database from an archive file. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
     Examples:
-    taito db import:dev database/dump.tar.gz
-    taito db import:dev database/dump.tar.gz -- --data-only
-    taito db import:dev database/dump -- --data-only --format=directory
+    taito db restore:dev database/dump.tar.gz
+    taito db restore:dev database/dump.tar.gz -- --data-only
+    taito db restore:dev database/dump -- --format=directory --jobs=4
 
   db deploy[:TARGET][:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled
