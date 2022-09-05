@@ -270,11 +270,15 @@ OPTIONS
     Show help.txt of current project and a list of all Taito CLI commands.
     Run 'taito COMMAND -h' to get help for a specific command or
     'taito PREFIX -h' to get help for a specific set of commands.
+    ---
+    Examples:
+      taito -h
+      taito db -h
+      taito db dump -h
 
   --search, -s
     Same as '--help' but executes a wider search by including also command
-    descriptions in search.
-    TODO implement
+    descriptions in search. TODO implement
 
   --dev, -d
     Run in development mode. In the development mode your local Taito CLI
@@ -294,16 +298,19 @@ OPTIONS
   --project PROJECT, -p PROJECT
     Execute command in the context of given project. This command allows
     you to execute a Taito CLI command without cloning the project repository
-    to your local disk. Examples:
+    to your local disk.
+    ---
+    Examples:
       taito -p my-project open client:dev
       taito -p org@another-project open info:prod
-      TODO implement
 
   --organization ORG, -o ORG
     Use taito configuration overrides defined in '~/.taito/taito-config-ORG.sh'.
 
   --mount HOST_PATH:CONTAINER_PATH, -m HOST_PATH:CONTAINER_PATH
-    Mount directory inside Taito CLI container. For example:
+    Mount directory inside Taito CLI container.
+    ---
+    Examples:
       taito -m ~/myfolder:/myfolder shell
 
   --verbose, -v
@@ -326,17 +333,21 @@ OPTIONS
 
 ARGUMENTS
 
-  Target pod (TARGET) and environment (ENV) are included in the command itself.
-  Colon is used as delimiter. ENV is local by default if omitted. For example:
-    $ taito shell:worker
-    $ taito shell:worker:dev
-    $ taito status:dev
-    $ taito open client:dev
+  Target (TARGET) and environment (ENV) are included in the command itself.
+  Colon is used as delimiter. ENV is local by default if omitted.
+  ---
+  Examples:
+    taito shell:worker
+    taito shell:worker:dev
+    taito status:dev
+    taito open client:dev
 
-  All other arguments are given after the command. For example:
-    $ taito exec:worker:dev echo jee
-    $ taito db import:dev file.sql
-    $ taito hours add 6.5
+  All other arguments are given after the command.
+  ---
+  Examples:
+    taito exec:worker:dev echo jee
+    taito db import:dev file.sql
+    taito hours add 6.5
 
   ENV
     Environment: For example 'local', 'feat-orders', 'demo', 'dev', 'test',
@@ -346,10 +357,6 @@ ARGUMENTS
   TARGET
     Depending on the environment, TARGET may reference to a Kubernetes pod,
     a Docker container, a function, a database or some other module.
-
-ALTERNATIVE HYPHEN SYNTAX
-
-  You can also use hyphen instead of space e.g. `taito db-connect:dev`
 
 TAITO: BASIC OPERATIONS
 
@@ -413,30 +420,30 @@ PROJECT: BASIC OPERATIONS
 
   start[:TARGET][:ENV] [--background] [--clean] [--init] [--prod] [ARGS]
     Starts the defined environment e.g 'taito start' or 'taito start:dev'.
-    Optional arguments for local environment:
-    .
-    --backgroud: Run in background.
-    --clean: Clean everything before start.
-    --init: Run 'taito init' after start.
-    --prod: Run production build instead of development build.
-    TARGET: Start only the given pod/container/function/module/program
-    ARGS: Additional arguments
+    ---
+    Arguments (mostly for local development):
+      --backgroud: Run in background.
+      --clean: Clean everything before start.
+      --init: Run 'taito init' after start.
+      --prod: Run production build instead of development build.
+      TARGET: Start only the given pod/container/function/module/program
+      ARGS: Additional arguments
 
   restart[:TARGET][:ENV] [INDEX]
     Starts the defined environment e.g 'taito restart' or 'taito restart:dev'.
-    Optional arguments:
-    .
-    TARGET: Restart only the given pod/container/function/module/program
-    INDEX: Restart only the specific instance (0-N)
+    ---
+    Arguments:
+      TARGET: Restart only the given pod/container/function/module/program
+      INDEX: Restart only the specific instance (0-N)
 
   run[:TARGET]:ENV [--no-deps] [-d,--device] [ARGS]
     Runs the application in the defined environment e.g 'taito run:ios'.
-    Optional arguments for running in local environment:
-    .
-    -d,--device: Run on a real device instead of emulator.
-    --no-deps: TODO Do not run dependencies (e.g linked services)
-    TARGET: Run only the given pod/container/function/module/program
-    ARGS: Additional arguments
+    ---
+    Arguments (mostly for local development):
+      -d,--device: Run on a real device instead of emulator.
+      --no-deps: TODO Do not run dependencies (e.g linked services)
+      TARGET: Run only the given pod/container/function/module/program
+      ARGS: Additional arguments
 
   init[:ENV] [--clean]
     Make sure that everything has been initialized after start (database, etc.).
@@ -511,98 +518,128 @@ PROJECT: BASIC OPERATIONS
     Show more details with '--all'. Show all namespaces with '--all-namespaces'.
 
   logs[:TARGET][:ENV] [INDEX]
-    Follow logs of a pod. Examples:
-    $ taito logs:client
-    $ taito logs:client:dev
-    $ taito logs:client:dev 1
-    $ taito logs:my-app-client-3034393823-2f5jf:dev
-    .
-    INDEX: Show logs of a specific instance (0-N)
+    Follow logs of a pod.
+    ---
+    Arguments:
+      INDEX: Show logs of a specific instance (0-N)
+    ---
+    Examples:
+      taito logs:client
+      taito logs:client:dev
+      taito logs:client:dev 1
+      taito logs:my-app-client-3034393823-2f5jf:dev
 
   shell[:TARGET][:ENV]
-    Start a shell on a container. Examples:
-    $ taito shell:client
-    $ taito shell:client:dev
-    $ taito shell:client:dev 1
-    $ taito shell:client:dev my-app-client-3034393823-2f5jf
-    .
-    INDEX: Start shell on a specific instance (0-N)
+    Start a shell on a container.
+    ---
+    Arguments:
+      INDEX: Start shell on a specific instance (0-N)
+    ---
+    Examples:
+      taito shell:client
+      taito shell:client:dev
+      taito shell:client:dev 1
+      taito shell:client:dev my-app-client-3034393823-2f5jf
 
   exec[:TARGET][:ENV] [INDEX] COMMAND
     Execute command in container.
+    ---
+    Arguments:
+      INDEX: Execute on a specific instance (0-N)
+    ---
     Examples:
-    $ taito exec:client echo "taito!"
-    $ taito exec:client:dev echo "taito!"
-    $ taito exec:client:dev 1 echo "taito!"
-    $ taito exec:my-app-client-3034393823-2f5jf:dev echo "taito!"
-    .
-    INDEX: Execute on a specific instance (0-N)
+      taito exec:client echo "taito!"
+      taito exec:client:dev echo "taito!"
+      taito exec:client:dev 1 echo "taito!"
+      taito exec:my-app-client-3034393823-2f5jf:dev echo "taito!"
 
   forward:TARGET[:ENV] [INDEX] LOCAL_PORT [REMOTE_PORT]
     Forward local port to remote container port
+    ---
+    Arguments:
+      INDEX: Forward to a specific instance (0-N)
+    ---
     Examples:
-    $ taito forward:redis:dev 6379
-    $ taito forward:redis:dev 6000 6379
-    .
-    INDEX: Forward to a specific instance (0-N)
+      taito forward:redis:dev 6379
+      taito forward:redis:dev 6000 6379
 
   copy to:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
-    Copy a file or folder. Examples:
-    $ taito copy to:client foo.txt /client/foo.txt
-    $ taito copy to:client:dev foo.txt client:/client/foo.txt
-    $ taito copy to:client:dev 1 foo.txt client:/client/foo.txt
-    .
-    INDEX: Copy to a specific instance (0-N)
+    Copy a file or folder.
+    ---
+    Arguments:
+      INDEX: Copy to a specific instance (0-N)
+    ---
+    Examples:
+      taito copy to:client foo.txt /client/foo.txt
+      taito copy to:client:dev foo.txt client:/client/foo.txt
+      taito copy to:client:dev 1 foo.txt client:/client/foo.txt
 
   copy from:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
-    Copy a file or folder. Examples:
-    $ taito copy from:client /client/foo.txt .
-    $ taito copy from:client:dev /client/foo.txt .
-    $ taito copy from:client:dev 1 /client/foo.txt .
-    .
-    INDEX: Copy to a specific instance (0-N)
+    Copy a file or folder.
+    ---
+    Arguments:
+      INDEX: Copy to a specific instance (0-N)
+    ---
+    Examples:
+      taito copy from:client /client/foo.txt .
+      taito copy from:client:dev /client/foo.txt .
+      taito copy from:client:dev 1 /client/foo.txt .
 
   sync to:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
-    Sync a folder. Examples:
-    $ taito sync to:client foo /foo
-    $ taito sync to:client:dev foo /foo
-    $ taito sync to:client:dev 1 foo /foo
-    TODO IMPLEMENT
-    .
-    INDEX: Sync to a specific instance (0-N)
+    Sync a folder. TODO IMPLEMENT
+    ---
+    Arguments:
+      INDEX: Sync to a specific instance (0-N)
+    ---
+    Examples:
+      taito sync to:client foo /foo
+      taito sync to:client:dev foo /foo
+      taito sync to:client:dev 1 foo /foo
 
   sync from:TARGET[:ENV] [INDEX] SOURCE_PATH DESTINATION_PATH
-    Sync a folder. Examples:
-    $ taito sync from:client /foo foo
-    $ taito sync from:client:dev /foo foo
-    $ taito sync from:client:dev 1 /foo foo
-    TODO IMPLEMENT
-    .
-    INDEX: Sync from a specific instance (0-N)
+    Sync a folder. TODO IMPLEMENT.
+    ---
+    Arguments:
+      INDEX: Sync from a specific instance (0-N)
+    ---
+    Examples:
+      taito sync from:client /foo foo
+      taito sync from:client:dev /foo foo
+      taito sync from:client:dev 1 /foo foo
 
   kill:TARGET[:ENV] [INDEX]
-    Kill a container. Examples:
-    $ taito kill:client
-    $ taito kill:client:dev
-    $ taito kill:client:dev 1
-    $ taito kill:my-app-client-3034393823-2f5jf:dev
-    .
-    INDEX: Kill a specific instance (0-N)
+    Kill a container.
+    ---
+    Arguments:
+      INDEX: Kill a specific instance (0-N)
+    ---
+    Examples:
+      taito kill:client
+      taito kill:client:dev
+      taito kill:client:dev 1
+      taito kill:my-app-client-3034393823-2f5jf:dev
 
   show:TARGET[:ENV]
-    Show deployment. Examples:
-    $ taito show:server:dev
+    Show deployment.
+    ---
+    Examples:
+      taito show:server:dev
 
   edit:TARGET[:ENV]
-    Edit deployment. Examples:
-    $ taito edit:server:dev
+    Edit deployment.
+    ---
+    Examples:
+      taito edit:server:dev
 
   scale:TARGET[:ENV] REPLICAS
-    Scale deployment. Examples:
-    $ taito scale:server:dev 0
-    $ taito scale:server:dev 2
-    .
-    REPLICAS: Number of replicas
+    Scale deployment.
+    ---
+    Arguments:
+      REPLICAS: Number of replicas
+    ---
+    Examples:
+      taito scale:server:dev 0
+      taito scale:server:dev 2
 
   save:TARGET
     Save changes to a container
@@ -694,10 +731,11 @@ PROJECT: HOUR REPORTING
     Add an hour entry. You'll be asked for a description once you run the
     command. If hour reporting system has multiple tasks configured for the
     project in question, you also need to choose one of the tasks.
-    For example:
-    $ taito hours add 6.5
-    $ taito hours add 5,5 yesterday
-    $ taito hours add 4,5 tue
+    ---
+    Examples:
+      taito hours add 6.5
+      taito hours add 5,5 yesterday
+      taito hours add 4,5 tue
 
   hours list [all]
     List all hour entries for this month. By default lists only for current
@@ -834,31 +872,41 @@ PROJECT: DATABASE OPERATIONS
 
   db connect[:TARGET][:ENV] [USERNAME]
     Access database from command line. DB proxy connection and secrets are
-    handled automatically. NOTE: If you want to access database using a GUI
-    tool, use the db proxy:ENV command instead.
+    handled automatically.
+    ---
+    Tips:
+      - If you want to access database using a GUI tool, use the db proxy:ENV
+      command instead.
+      - On PostgreSQL, you can access your local files using the client based
+      backslash commands, for example:
+        \\copy my_table FROM `my_table.csv` delimiter `|` csv
 
   db dump[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Take a database dump. DB proxy connection and secrets are handled
     automatically. You can pass tool specific options with TOOL_OPTIONS.
+    ---
     Examples (with pg_dump tool options):
-    taito db dump:dev dump.sql
-    taito db dump:dev dump.sql -- --data-only
-    taito db dump:dev dump.sql admin -- --schema=public --blobs --clean
-    taito db dump:dev archive -- --format=custom
-    taito db dump:dev archive -- --format=directory --jobs=4
+      taito db dump:dev dump.sql
+      taito db dump:dev dump.sql -- --data-only
+      taito db dump:dev dump.sql admin -- --schema=public --blobs --clean
+      taito db dump:dev archive -- --format=custom
+      taito db dump:dev archive -- --format=directory --jobs=4
 
   db import[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Import a file to database. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
-    Example: taito db import:dev file.sql
+    ---
+    Examples:
+      taito db import:dev file.sql
 
   db restore[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Restore database from an archive file. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
+    ---
     Examples (with pg_restore tool options):
-    taito db restore:dev archive
-    taito db restore:dev archive -- --data-only
-    taito db restore:dev archive -- --format=directory --jobs=4
+      taito db restore:dev archive
+      taito db restore:dev archive -- --data-only
+      taito db restore:dev archive -- --format=directory --jobs=4
 
   db deploy[:TARGET][:ENV]
     Deploy changes to database. DB proxy connection and secrets are handled
