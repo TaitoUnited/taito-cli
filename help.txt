@@ -418,11 +418,11 @@ PROJECT: BASIC OPERATIONS
     be compiled or built before application can be started.
     TIP: Enable the 'make' plugin and implement the script in your makefile.
 
-  start[:TARGET][:ENV] [--background] [--clean] [--init] [--prod] [ARGS]
+  start[:TARGET][:ENV] [--background -b] [--clean] [--init] [--prod] [ARGS]
     Starts the defined environment e.g 'taito start' or 'taito start:dev'.
     ---
     Arguments (mostly for local development):
-      --backgroud: Run in background.
+      --backgroud(-b): Run in background.
       --clean: Clean everything before start.
       --init: Run 'taito init' after start.
       --prod: Run production build instead of development build.
