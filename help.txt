@@ -885,26 +885,27 @@ PROJECT: DATABASE OPERATIONS
     Take a database dump. DB proxy connection and secrets are handled
     automatically. You can pass tool specific options with TOOL_OPTIONS.
     ---
-    Examples (with pg_dump tool options):
-      taito db dump:dev dump.sql
-      taito db dump:dev dump.sql -- --data-only
-      taito db dump:dev dump.sql admin -- --schema=public --blobs --clean
+    Examples (with typical pg_dump tool options):
       taito db dump:dev archive -- --format=custom
       taito db dump:dev archive -- --format=directory --jobs=4
+      taito db dump:dev file.sql -- --no-owner --no-privileges
+      taito db dump:dev file.sql -- --data-only
+      taito db dump:dev file.sql -- --schema=public --blobs --clean
 
   db import[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Import a file to database. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
     ---
-    Examples:
+    Examples (with typical pg_dump tool options):
       taito db import:dev file.sql
+      taito db import:dev file.sql -- -v ON_ERROR_STOP=1
 
   db restore[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Restore database from an archive file. DB proxy connection and secrets are
     handled automatically. Always give file path relative to the project root.
     ---
-    Examples (with pg_restore tool options):
-      taito db restore:dev archive
+    Examples (with typical pg_restore tool options):
+      taito db restore:dev archive -- --no-owner --no-privileges --exit-on-error
       taito db restore:dev archive -- --data-only
       taito db restore:dev archive -- --format=directory --jobs=4
 
