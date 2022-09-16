@@ -1,4 +1,7 @@
 #!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
 : "${taito_skip_override:?}"
 : "${taito_command:?}"
 : "${taito_env:?}"
@@ -129,7 +132,7 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
       taito::execute_on_host_fg "
         export taito_command_root_context='${taito_command_root_context}'
         export taito_command_context='npm ${taitonpm_command}'
-        npm run ${npmopts} ${taitonpm_command}${params}
+        $(npm::bin) run ${npmopts} ${taitonpm_command}${params}
       "
       exit_code=0
     else
@@ -137,7 +140,7 @@ if [[ -f "./package.json" ]] || [[ ${taito_testing:-} ]]; then
         export taito_command_root_context="${taito_command_root_context}"
         export taito_command_context="npm ${taitonpm_command}"
         taito::executing_start
-        npm run ${npmopts} ${taitonpm_command}${params}
+        $(npm::bin) run ${npmopts} ${taitonpm_command}${params}
       )
       exit_code=$?
     fi

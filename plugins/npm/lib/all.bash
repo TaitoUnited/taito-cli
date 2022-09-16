@@ -1,11 +1,19 @@
 #!/bin/bash
 
+function npm::bin () {
+  local npm_bin=npm
+  if [[ ${taito_npm_use_yarn} == "true" ]]; then
+    npm_bin=yarn
+  fi
+  echo ${npm_bin}
+}
+
 function npm::clean () {
   if npm run | grep 'install-clean$' &> /dev/null; then
     taito::execute_on_host_fg "
       set -e
-      echo \"Running 'npm run install-clean'\"
-      npm run install-clean
+      echo \"Running '$(npm::bin) run install-clean'\"
+      $(npm::bin) run install-clean
     "
   fi
 
@@ -65,14 +73,14 @@ function npm::install () {
   # TODO add '--python=${npm_python}' for npm install?
   taito::execute_on_host_fg "
     set -e
-    echo \"Running 'npm ${npm_command}'\"
-    npm ${npm_command}
+    echo \"Running '$(npm::bin) ${npm_command}'\"
+    $(npm::bin) ${npm_command}
   "
 
   if [[ ${task_postinstall} ]]; then
     npmopts=""
     # TODO: can we avoid using --unsafe-perm?
-    if [[ ${taito_mode:-} == "ci" ]] && [[ $(whoami) == "root" ]]; then
+    if [[ ${taito_mode:-} == "ci" ]] && [[ $(whoami) == "root" ]] && [[ $(npm::bin) == "npm" ]]; then
       npmopts="${npmopts} --unsafe-perm"
     fi
 
@@ -80,8 +88,8 @@ function npm::install () {
     taito::execute_on_host_fg "
       set -e
       if [[ ${install_all} == \"true\" ]]; then
-        echo \"Running 'npm run ${task_postinstall}'\"
-        npm run ${npmopts} ${task_postinstall}
+        echo \"Running '$(npm::bin) run ${task_postinstall}'\"
+        $(npm::bin) run ${npmopts} ${task_postinstall}
       fi
     "
   fi
