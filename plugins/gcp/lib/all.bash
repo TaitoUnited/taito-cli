@@ -70,12 +70,6 @@ function gcp::authenticate_on_kubernetes () {
       gopts="--region ${taito_provider_region:?}"
     fi
 
-    # Use the new gke-gcloud-auth-plugin only if it has been installed.
-    # It may not be installed as it is currently not available for ARM.
-    if gcloud components list --only-local-state --filter=ID:gke-gcloud-auth-plugin 2> /dev/null | grep gke-gcloud-auth-plugin &> /dev/null; then
-      export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-    fi
-
     taito::executing_start
     gcloud container clusters get-credentials \
       "${kubernetes_name}" \
