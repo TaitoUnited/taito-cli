@@ -264,6 +264,11 @@ function taito::print_random_uuid () {
 }
 export -f taito::print_random_uuid
 
+function taito::print_jwt_decoded () {
+  jq -R 'split(".") |.[0:2] | map(@base64d) | map(fromjson)' <<< $1
+}
+export -f taito::print_jwt_decoded
+
 function taito::save_secrets () {
   local get_secret_func="${1}"
   local put_secret_func="${2}"

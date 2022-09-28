@@ -60,6 +60,10 @@ echo "random uuid                     " \
 # echo "passwd rotate FILTER    &focus" \
 #   "# Rotate some passwords"
 
+# Tokens
+echo "jwt decode TOKEN            " \
+  "# Decode jwt contents"
+
 # Project management
 echo "issue auth                       " \
   "# Authenticate to the issue management system"

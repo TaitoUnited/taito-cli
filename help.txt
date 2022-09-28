@@ -1134,6 +1134,11 @@ GLOBAL: PASSWORDS
     An interactive command for rotating passwords of a collection one by one.
     TODO implement.
 
+GLOBAL: ENCODING
+
+  jwt decode TOKEN
+    Decodes jwt contents
+
 UTILS
 
   util browser URL

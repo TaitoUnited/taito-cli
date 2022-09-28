@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+taito::print_jwt_decoded "$@"
+taito::call_next "${@}"

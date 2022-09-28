@@ -37,6 +37,9 @@ echo "random uuid"
 # echo "passwd rotate"
 # echo "passwd rotate FILTER"
 
+# Tokens
+echo "jwt decode TOKEN"
+
 # Project management
 echo "issue auth"
 echo "issue add TITLE LABELS"
