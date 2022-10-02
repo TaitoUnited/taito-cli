@@ -25,7 +25,8 @@ _taito ()
   export taito_full="${COMP_WORDS[@]:1:$COMP_CWORD}"
 
   if [[ ${taito_prefix} == *"db import:"* ]] || \
-     [[ ${taito_prefix} == *"db dump:"* ]]; then
+     [[ ${taito_prefix} == *"db dump:"* ]] || \
+     [[ ${taito_prefix} == *"db restore:"* ]]; then
     # Autocomplete using filenames
     COMPREPLY=( $( compgen -f -- "${cur}" ) )
   else

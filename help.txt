@@ -905,7 +905,7 @@ PROJECT: DATABASE OPERATIONS
     handled automatically. Always give file path relative to the project root.
     ---
     Examples (with typical pg_restore tool options):
-      taito db restore:dev archive -- --no-owner --no-privileges --exit-on-error
+      taito db restore:dev archive -- --no-owner --no-privileges
       taito db restore:dev archive -- --data-only
       taito db restore:dev archive -- --format=directory --jobs=4
 
