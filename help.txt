@@ -4,8 +4,9 @@ TAITO CLI
 QUICK EXAMPLES
 
   TROUBLESHOOTING
-    taito trouble                      # Show troubleshooting
-    taito upgrade                      # Upgrade and reinitialize Taito CLI.
+    trouble                            # Show troubleshooting
+    upgrade                            # Upgrade and reinitialize Taito CLI
+    version --notes                    # Show Taito CLI release notes
 
   LOCAL DEVELOPMENT BASICS
     develop                            # Quick start (runs: env apply, start --clean --init)
