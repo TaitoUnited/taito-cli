@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.300.0
+
+- Add 'db restore' command
+- Add 'jwt decode' command
+- Add 'taito_npm_use_yarn=true/false' option for the npm plugin
+- Small fixes
+
 ## 0.299.0
 
 - BREAKING CHANGE: Added IMAGE_TARGET parameter on 'taito artifact prepare'.
