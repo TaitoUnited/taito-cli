@@ -74,7 +74,7 @@ taito::execute_on_host_fg "
   read -r
   echo Please wait.
   export GIT_PAGER=''
-  git init -q
+  git init -q -b master
   git add .
   git commit -q -m 'First commit'
   git remote add origin ${template_dest_git}/${taito_vc_repository}.git
