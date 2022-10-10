@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.301.0
+
+- Refetch secrets from Kubernetes even if they have already been
+  fetched from cloud.
+
 ## 0.300.0
 
 - Add 'db restore' command
