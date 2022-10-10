@@ -38,7 +38,7 @@ if [[ ${kubernetes_db_proxy_enabled:-} == "true" ]] && \
 fi
 
 # Fetch required secrets from Kubernetes
-taito::expose_required_secrets_filter
+taito::expose_required_secrets_filter true
 if [[ ${fetch_secrets:?} == "true" ]]; then
   taito::print_plugin_title
   echo "Getting secrets from Kubernetes (${taito_env}) for ${secret_purpose:?}"

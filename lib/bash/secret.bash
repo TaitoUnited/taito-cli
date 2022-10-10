@@ -526,6 +526,8 @@ function taito::save_proxy_secret_to_disk () {
 export -f taito::save_proxy_secret_to_disk
 
 function taito::expose_required_secrets_filter () {
+  local refetch=${1:-false}
+  
   # Determine which secrets should be fetched from AWS
   # TODO: tighter secret filter for running tests
   # TODO: not always necessary to save to disk?
@@ -534,7 +536,7 @@ function taito::expose_required_secrets_filter () {
   secret_purpose=
   secret_filter=
   if [[ ${taito_command_requires_secrets:-} == true ]] && \
-     [[ $taito_secrets_retrieved != true ]]; then
+     ([[ $taito_secrets_retrieved != true ]] ||[[ ${refetch} == true ]]); then
     if [[ ${taito_command} == "build-prepare" ]] || \
        [[ ${taito_command} == "build-release" ]]; then
       fetch_secrets="true"
