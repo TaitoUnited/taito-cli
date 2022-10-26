@@ -11,8 +11,11 @@ while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready
   echo "Waiting until all containers have been deployed"
   echo
   echo "TIP: If this takes a long time, perhaps you have forgotten to set value of some"
-  echo "newly added secret? You can investigate more with 'taito status:${taito_target_env}'"
-  echo "and 'taito logs:TARGET:${taito_target_env}' commands."
+  echo "newly added secret? You can investigate more with 'taito status:${taito_target_env}',"
+  echo "'taito logs:TARGET:${taito_target_env}', and 'taito open logs:${taito_target_env}' commands."
+  echo
+  kubectl get pods
+  echo
   sleep 5
 done
 sleep 15
@@ -40,5 +43,12 @@ if kubectl get pods | grep "BackOff\|Error\|Init" &> /dev/null; then
   kubectl get pods
   exit 1
 fi
+
+echo
+kubectl get pods
+
+echo
+echo "Images:"
+kubectl get pods -o 'jsonpath={.items[*].spec.containers[*].image}' | tr -s '[[:space:]]' '\n' | sort | uniq
 
 taito::call_next "${@}"
