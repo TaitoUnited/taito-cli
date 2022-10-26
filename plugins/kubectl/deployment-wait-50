@@ -7,7 +7,7 @@ kubectl::use_context
 
 # Wait until all containers have been deployed
 sleep 5
-while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason | grep '<none>' | grep false &> /dev/null; do
+while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason | grep -v 'Completed' | grep false &> /dev/null; do
   echo "Waiting until all containers have been deployed"
   echo
   echo "TIP: If this takes a long time, perhaps you have forgotten to set value of some"
