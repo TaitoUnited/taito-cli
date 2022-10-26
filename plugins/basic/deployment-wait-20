@@ -4,7 +4,7 @@
 
 # Wait for deployment only if tests are executed after
 if [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_test:-} != "true" ]]; then
-  echo "Skipping deployment wait because ci_exec_test != true"
+  echo "Shortened deployment wait sleep because ci_exec_test != true"
   echo
   echo
   taito::print_note_start
@@ -12,12 +12,13 @@ if [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_test:-} != "true" ]]; then
   taito::print_note_end
   echo
   echo
+  sleep 10
 else
   extra_sleep_secs=${ci_test_wait:-35}
   echo
   echo
   taito::print_note_start
-  echo "NOTE: Your application is now running at ${taito_target_env}!"
+  echo "NOTE: Your application is now starting up at ${taito_target_env}!"
   echo "Waiting extra ${extra_sleep_secs}s to make sure full container rotate."
   echo "You can configure sleep seconds with the ci_test_wait environment variable."
   taito::print_note_end
