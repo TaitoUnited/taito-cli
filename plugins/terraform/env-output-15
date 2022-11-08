@@ -1,0 +1,13 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# Cloud provider
+[[ ${taito_provider:-} ]] && \
+  terraform::run output "${taito_provider:-}" "${taito_env:?}" scripts/terraform/$taito_provider "$@"
+
+# Auth provider
+[[ ${taito_auth_provider:-} ]] && \
+  terraform::run output "${taito_auth_provider}-auth" "${taito_env}" scripts/terraform/$taito_provider "$@"
+
+taito::call_next "${@}"

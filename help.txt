@@ -214,6 +214,7 @@ QUICK EXAMPLES
     env info:dev                       # Show environment information
     env init:dev                       # Initialize configuration with new dependencies
     env apply:dev                      # Apply project specific changes to dev env
+    env output:dev                     # Display output values of dev env
     env destroy:dev                    # Destroy dev environment of the current project
 
   ZONE INFRASTRUCTURE MANAGEMENT
@@ -1072,6 +1073,9 @@ PROJECT: ENVIRONMENT SETUP
 
   env apply:ENV [NAME]
     Migrate environment to the latest configuration.
+
+  env output:ENV [NAME]
+    Display output values of an environment.
 
   env destroy:ENV [NAME]
     Destroy an environment.

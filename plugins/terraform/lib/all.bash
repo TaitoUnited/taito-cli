@@ -17,6 +17,7 @@ function terraform::run () {
   local name=${2}
   local env=${3}
   local scripts_path=${4:-scripts/terraform/$name}
+  local rest="${@:5}"
 
   local init_options="${terraform_init_options:-}"
   local apply_options="${terraform_apply_options:-}"
@@ -63,7 +64,7 @@ function terraform::run () {
         ./import_state
       fi
       if [[ "${command}" != "" ]]; then
-        terraform "${command}" ${apply_options} -state=${env}/terraform.tfstate
+        terraform "${command}" ${apply_options} -state=${env}/terraform.tfstate $rest
       fi
     )
   fi

@@ -282,6 +282,8 @@ if [[ ${taito_project:-} ]]; then
       echo "env apply${suffix} --start --init               " \
         "# Apply changes to ${env}, start and initialize"
     fi
+    echo "env output${suffix}               &focus" \
+      "# Display outpu values og ${env} environment"
     echo "env destroy${suffix}               &focus" \
       "# Destroy the ${env} environment of the current project"
 

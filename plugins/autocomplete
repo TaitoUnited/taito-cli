@@ -189,6 +189,7 @@ if [[ ${taito_project:-} ]]; then
       echo "env apply${suffix} --init --start"
       echo "env apply${suffix} --init --start --clean"
     fi
+    echo "env output${suffix}"
     echo "env destroy${suffix}"
 
     echo "start${suffix}"
