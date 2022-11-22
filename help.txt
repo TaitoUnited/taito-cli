@@ -80,6 +80,7 @@ QUICK EXAMPLES
   INFORMATION
     info:dev                           # Show information required for signing in
     status:dev                         # Show application status
+    dash:dev                           # Show application status on terminal dashboard
 
   SECRETS
     secret show:dev                    # Show all secrets
@@ -518,6 +519,9 @@ PROJECT: BASIC OPERATIONS
   status[:ENV] [--all] [--all-namespaces]
     Show status summary of environment (status of services, pods, etc.).
     Show more details with '--all'. Show all namespaces with '--all-namespaces'.
+
+  dash[:ENV]
+    Display status on a terminal based dashboard.
 
   logs[:TARGET][:ENV] [INDEX]
     Follow logs of a pod.

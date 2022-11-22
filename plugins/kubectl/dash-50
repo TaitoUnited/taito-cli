@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+kubectl::use_context
+k9s
+
+taito::call_next "${args[@]}"

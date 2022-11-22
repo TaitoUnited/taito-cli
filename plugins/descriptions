@@ -306,6 +306,8 @@ if [[ ${taito_project:-} ]]; then
       "# Run integration and e2e tests on ${env} environment"
     echo "status${suffix}                          " \
       "# Show application status of ${env} environment"
+    echo "dash${suffix}                          " \
+      "# Show application status of ${env} environment on a terminal based dashboard"
 
     # Secrets
     echo "secret show${suffix}                     " \
