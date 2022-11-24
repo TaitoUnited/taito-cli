@@ -9,19 +9,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.301.0
 
-- Refetch secrets from Kubernetes even if they have already been
-  fetched from cloud.
+- Refetch secrets from Kubernetes even if they have already been fetched from
+  cloud.
 
 ## 0.300.0
 
-- Add 'db restore' command
-- Add 'jwt decode' command
-- Add 'taito_npm_use_yarn=true/false' option for the npm plugin
+- Add `db restore` command
+- Add `jwt decode` command
+- Add `taito_npm_use_yarn=true/false` option for the npm plugin
 - Small fixes
 
 ## 0.299.0
 
-- BREAKING CHANGE: Added IMAGE_TARGET parameter on 'taito artifact prepare'.
+- **BREAKING CHANGE:** Added IMAGE_TARGET parameter on `taito artifact prepare`.
   This allows you to build a specific build stage of a dockerfile.
 
 ## 0.298.0
@@ -36,7 +36,7 @@ Fixes:
 
 ## 0.296.0
 
-- Switch between arm64 and amd64 images on Apple Silicon (m1) mac by running
+- Switch between arm64 and amd64 images on Apple Silicon mac by running
   `taito --amd64 upgrade` and `taito --arm64 upgrade`.
 
 ## 0.295.0
@@ -51,7 +51,7 @@ Fixes:
 - Use taito user by default on CI/CD images.
 - Added taito_save_credentials_on_host setting for saving Kubernetes and cloud
   provider credentials on host.
-- Added 'taito env init' and 'taito zone init' commands for updating Terraform
+- Added `taito env init` and `taito zone init` commands for updating Terraform
   lock files.
 
 ## 0.293.1
@@ -65,11 +65,11 @@ Fixes:
 - Added taito-cli:ci-deploy and taito-cli:ci-dockerd docker images.
 - Added possibility to alternatively save cloud provider and kube credentials
   on host.
-- Improve info output for 'commit Taito CLI changes'.
-- Test command execution on host during 'taito check'.
-- Add 'crawl' to the list of Taito CLI command verbs.
+- Improve info output for `commit Taito CLI changes`.
+- Test command execution on host during `taito check`.
+- Add `crawl` to the list of Taito CLI command verbs.
 
 ## 0.292.0
 
 - Moved Taito CLI docker images to GitHub container registry (ghcr.io)
-- Added 'taito version' command.
+- Added `taito version` command.
