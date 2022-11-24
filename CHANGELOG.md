@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.302.0
+
+- Run `taito dash:ENV` to launch terminal based Kubernetes UI (k9s).
+
 ## 0.301.0
 
 - Refetch secrets from Kubernetes even if they have already been
