@@ -86,7 +86,7 @@ CI/CD deploys database migrations automatically, but not any data. You can manua
 
 ### 5.4. Create production environment
 
-Configure domain name for prod environment in `scripts/taito/prod-env.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
+Configure domain name for prod environment in `scripts/taito/env-prod.sh`. If you want to go with the default domain name, just copy the `taito_default_domain` to `taito_domain`.
 
 ```shell
 # Production domain name (e.g. mydomain.com)
@@ -98,7 +98,7 @@ taito_default_domain=$taito_project-$taito_target_env.mydomain.com
 
 OPTIONAL: Configure DNS for your non-default domain name. You can display the default IP address with `taito env info:prod`.
 
-OPTIONAL: Disable basic authentication for production environment in `scripts/taito/prod-env.sh`:
+OPTIONAL: Disable basic authentication for production environment in `scripts/taito/env-prod.sh`:
 
 ```shell
 # Disable production environment basic auth by setting this to false
