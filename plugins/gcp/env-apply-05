@@ -4,7 +4,7 @@
 
 # Ensure Google project exists (not created with terraform)
 if [[ ${taito_commands_only_chain:-} == *"terraform/"* ]]; then
-  echo "Ensuring required GCP projects exist"
+  echo "Ensuring required GCP projects exist ${taito_resource_namespace_id:?} ${taito_provider_org_id}"
   # if [[ ${taito_provider:?} == "gcp" ]] && \
   #    [[ ${taito_provider_org_id:-} ]] && \
   #    [[ ${taito_zone:-} ]]; then
