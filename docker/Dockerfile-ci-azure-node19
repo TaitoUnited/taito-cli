@@ -10,8 +10,7 @@ RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
 # RUN npm run verify
 
 ENV NODEJS_VERSION=19.x
-RUN sed -i '/spin=false/d' /taito-cli-deps/tools/install-nodejs.sh && \
-    /taito-cli-deps/tools/install-nodejs.sh
+RUN /taito-cli-deps/tools/install-nodejs.sh
 
 # NOTE: Using root user as docker.sock access is often required on CI/CD
 ENTRYPOINT ["taito"]
