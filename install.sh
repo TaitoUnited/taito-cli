@@ -116,7 +116,26 @@ if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
 fi
 
 echo
-echo "[7. Almost finished]"
+echo "[7. Creating empty mount directories]"
+function ensure_mount_dir () {
+  local dir=$1
+  if [[ ! -d ${dir} ]]; then
+    mkdir -p ${dir}
+    chmod go-rwx ${dir}
+  fi
+}
+ensure_mount_dir "${HOME}/.aws"
+ensure_mount_dir "${HOME}/.azure"
+ensure_mount_dir "${HOME}/.config"
+ensure_mount_dir "${HOME}/.config/doctl"
+ensure_mount_dir "${HOME}/.config/gcloud"
+ensure_mount_dir "${HOME}/.kube"
+ensure_mount_dir "${HOME}/.ssh"
+ensure_mount_dir "${HOME}/.terraform.d"
+ensure_mount_dir "${HOME}/.terraform.d/plugin-cache"
+
+echo
+echo "[8. Almost finished]"
 echo
 echo "Finalize the installation with the following steps:"
 echo
