@@ -79,7 +79,26 @@ EOL
 fi
 
 echo
-echo "[5. Add autocomplete support for bash]"
+echo "[5. Create empty DevOps config directories]"
+function ensure_mount_dir () {
+  local dir=$1
+  if [[ ! -d ${dir} ]]; then
+    mkdir -p ${dir}
+    chmod go-rwx ${dir}
+  fi
+}
+ensure_mount_dir "${HOME}/.aws"
+ensure_mount_dir "${HOME}/.azure"
+ensure_mount_dir "${HOME}/.config"
+ensure_mount_dir "${HOME}/.config/doctl"
+ensure_mount_dir "${HOME}/.config/gcloud"
+ensure_mount_dir "${HOME}/.kube"
+ensure_mount_dir "${HOME}/.ssh"
+ensure_mount_dir "${HOME}/.terraform.d"
+ensure_mount_dir "${HOME}/.terraform.d/plugin-cache"
+
+echo
+echo "[6. Add autocomplete support for bash]"
 if ! grep "$TAITO_INSTALL_DIR/support" ~/.bashrc &> /dev/null; then
   echo "" >> ~/.bashrc
   echo "# Taito CLI" >> ~/.bashrc
@@ -104,7 +123,7 @@ if ! grep "set show-all-if-ambiguous on" ~/.inputrc &> /dev/null; then
 fi
 
 echo
-echo "[6. Add autocomplete support for zsh]"
+echo "[7. Add autocomplete support for zsh]"
 if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
   echo "" >> ~/.zshrc
   echo "# Taito CLI" >> ~/.zshrc
@@ -114,25 +133,6 @@ if ! grep "$TAITO_INSTALL_DIR/support" ~/.zshrc &> /dev/null; then
   echo "" >> ~/.zshrc
   echo "modified ~/.zshrc"
 fi
-
-echo
-echo "[7. Creating empty mount directories]"
-function ensure_mount_dir () {
-  local dir=$1
-  if [[ ! -d ${dir} ]]; then
-    mkdir -p ${dir}
-    chmod go-rwx ${dir}
-  fi
-}
-ensure_mount_dir "${HOME}/.aws"
-ensure_mount_dir "${HOME}/.azure"
-ensure_mount_dir "${HOME}/.config"
-ensure_mount_dir "${HOME}/.config/doctl"
-ensure_mount_dir "${HOME}/.config/gcloud"
-ensure_mount_dir "${HOME}/.kube"
-ensure_mount_dir "${HOME}/.ssh"
-ensure_mount_dir "${HOME}/.terraform.d"
-ensure_mount_dir "${HOME}/.terraform.d/plugin-cache"
 
 echo
 echo "[8. Almost finished]"
