@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.303.0
+
+- postgres-db: Viewer user is optional.
+
 ## 0.302.0
 
 - Run `taito dash:ENV` to launch terminal based Kubernetes UI (k9s).

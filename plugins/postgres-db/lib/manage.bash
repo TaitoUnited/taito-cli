@@ -1,11 +1,11 @@
 #!/bin/bash
 
-function sql_file_path () {
+function sql_file_flag () {
   local name=$1
   if [[ -f "./${taito_target:?}/${name}" ]]; then
-    echo "./${taito_target:?}/${name}"
+    echo "-f ./${taito_target:?}/${name}"
   elif [[ -f "${taito_plugin_path:?}/resources/${name}" ]]; then
-    echo "${taito_plugin_path:?}/resources/${name}"
+    echo "-f ${taito_plugin_path:?}/resources/${name}"
   fi
 }
 
@@ -20,7 +20,8 @@ function postgres::create_database () {
         -p "${database_port}" \
         -d postgres \
         -U "${database_username}" \
-        -f "$(sql_file_path create.sql)" \
+        $(sql_file_flag create.sql) \
+        $([[ "${database_viewer_username_internal}" ]] && sql_file_flag create-viewer.sql) \
         -v "database=${database_name}" \
         -v "collate='${database_collate:-fi_FI.UTF-8}'" \
         -v "template=${database_template:-template0}" \
@@ -31,8 +32,8 @@ function postgres::create_database () {
       :
     done
 
-    db_file_path="$(sql_file_path db.sql)"
-    if [[ ${db_file_path} ]]; then
+    db_file_flag="$(sql_file_flag db.sql)"
+    if [[ ${db_file_flag} ]]; then
       echo
       echo "Initializing database"
       until (
@@ -41,7 +42,8 @@ function postgres::create_database () {
           -p "${database_port}" \
           -d "${database_name}" \
           -U "${database_username}" \
-          < "${db_file_path}" > "${taito_vout}"
+          ${db_file_flag} \
+          > "${taito_vout}"
       ) do
         :
       done
@@ -61,7 +63,8 @@ function postgres::create_database () {
       -p "${database_port}" \
       -d "${database_name}" \
       -U "${database_build_username}" \
-      -f "$(sql_file_path grant-users.sql)" \
+      $(sql_file_flag grant-users.sql) \
+      $([[ "${database_viewer_username_internal}" ]] && sql_file_flag grant-users-viewer.sql) \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
       -v "dbuserapp=${database_app_username_internal}" \
@@ -80,7 +83,7 @@ function postgres::drop_database () {
       -p "${database_port}" \
       -d postgres \
       -U "${database_username}" \
-      -f "$(sql_file_path drop.sql)" \
+      $(sql_file_flag drop.sql) \
       -v "database=${database_name}" \
       -v "databaseold=${database_name}_old" > "${taito_vout}" 2>&1
   ) do
@@ -105,7 +108,7 @@ function postgres::create_users () {
     exit 1
   fi
 
-  if [[ ${#database_viewer_password} -lt 20 ]]; then
+  if [[ ! -z "${database_viewer_username_internal}" ]] && [[ ${#database_viewer_password} -lt 20 ]]; then
     echo "ERROR: database_viewer_password too short or not set"
     exit 1
   fi
@@ -117,14 +120,15 @@ function postgres::create_users () {
     psql -h "${database_host}" -p "${database_port}" \
       -d postgres \
       -U "${database_username}" \
-      -f "$(sql_file_path create-users.sql)" \
+      $(sql_file_flag create-users.sql) \
+      $([[ "${database_viewer_username_internal}" ]] && sql_file_flag create-users-viewer.sql) \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
       -v "dbuserapp=${database_app_username_internal}" \
       -v "dbuserviewer=${database_viewer_username_internal}" \
       -v "passwordapp=${database_app_password:?}" \
       -v "passwordbuild=${database_build_password:?}" \
-      -v "passwordviewer=${database_viewer_password:?}" \
+      -v "passwordviewer=${database_viewer_password:-}" \
       > "${taito_vout}" 2>&1
   ) do
     :
@@ -141,7 +145,8 @@ function postgres::drop_users () {
       -p "${database_port}" \
       -d postgres \
       -U "${database_username}" \
-      -f "$(sql_file_path drop-users.sql)" \
+      $(sql_file_flag drop-users.sql) \
+      $([[ "${database_viewer_username_internal}" ]] && sql_file_flag drop-users-viewer.sql) \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
       -v "dbuserapp=${database_app_username_internal}" \

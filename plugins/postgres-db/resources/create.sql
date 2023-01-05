@@ -5,7 +5,7 @@ CREATE DATABASE :database ENCODING 'UTF8' LC_COLLATE = :collate LC_CTYPE = :coll
 GRANT ALL PRIVILEGES ON DATABASE :database TO
   :dbusermaster, :database;
 GRANT CONNECT, TEMPORARY ON DATABASE :database TO
-  :dbuserapp, :dbuserviewer;
+  :dbuserapp;
 
 -- Revoke connect permission from PUBLIC role
 REVOKE CONNECT ON DATABASE :database FROM PUBLIC;
@@ -20,4 +20,4 @@ REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM PUBLIC;
 
 -- Allow public schema for specific users
 GRANT USAGE, CREATE ON SCHEMA public TO :dbusermaster, :database;
-GRANT USAGE ON SCHEMA public TO :dbuserapp, :dbuserviewer;
+GRANT USAGE ON SCHEMA public TO :dbuserapp;
