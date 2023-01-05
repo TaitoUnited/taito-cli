@@ -70,6 +70,12 @@ TAITO CLI TROUBLESHOOTING
     This error occurs sometimes on WSL. Rebooting your computer usually
     resolves the issue.
 
+  "Error response from daemon: failed to create shim task: OCI runtime ..."
+    This error occurs sometimes on WSL. Rebooting your computer may resolve the
+    issue. Check also that secrets mounted on docker-compose.yaml are not owned
+    by root (usually located under ./secrets). If they are, remove them and set
+    them with `taito secret rotate`.
+
   Read timeout on "taito develop" or "taito start --clean"
     If the develop command fails with Docker Compose read timeout error, stop it
     with ctrl+c, start it again with "taito start", and then run "taito init".
