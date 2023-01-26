@@ -4,7 +4,7 @@
 : "${taito_branch:?}"
 
 if [[ -z $1 ]]; then
-  echo "Fetching latest image tag from build history."
+  echo "Image tag was not specified. Trying to fetch latest image tag from build history."
   # Detetermine target image automatically
   export taito_target_image
   taito::executing_start
@@ -18,7 +18,7 @@ if [[ -z $1 ]]; then
         substitutions.BRANCH_NAME='${taito_branch}'" | \
       head -1
   )
-  echo "Using tag: ${taito_target_image}"
+  taito::confirm "Deploying with tag ${taito_target_image}. Is this correct?" || exit
 fi
 
 taito::call_next "${@}"
