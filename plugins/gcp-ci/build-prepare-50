@@ -8,8 +8,9 @@ builds also"
 
 check=$(
   gcloud -q --project "${taito_zone:?}" builds list \
+  --limit=1 \
   --filter="status:SUCCESS AND \
-            createTime>=$(date '+%Y-%m-%d' --date='4 months ago') AND \
+            createTime>=$(date '+%Y-%m-%d' --date='2 months ago') AND \
             substitutions._REPO_NAME='${taito_vc_repository:?}' AND \
             substitutions.COMMIT_SHA='${image_tag}'"
 )
