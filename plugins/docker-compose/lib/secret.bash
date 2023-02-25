@@ -21,7 +21,7 @@ function docker-compose::get_secret_value () {
   if [[ ${taito_env} != "local" ]] && [[ ${taito_host:-} ]]; then
     remote_file="${taito_host_dir:?}/secrets/${taito_env}/${secret_name}.${secret_property:?}"
     taito::expose_ssh_opts
-    ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
+    ssh -t ${ssh_opts} "${taito_ssh_username:?}@${taito_host}" \
       "bash -c 'cat ${remote_file} 2> /dev/null'" 2> /dev/null > "${file}"
   fi
 

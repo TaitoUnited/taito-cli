@@ -28,10 +28,10 @@ function docker::image_push () {
       if [[ ${image_tag} == *"-untested" ]]; then
         echo 1 $image_tag
         docker save "${image_tag}" | \
-          ssh ${ssh_opts} -C "${taito_ssh_user:?}@${taito_host:?}" ${LINUX_SUDO} docker load
+          ssh ${ssh_opts} -C "${taito_ssh_username:?}@${taito_host:?}" ${LINUX_SUDO} docker load
       else
         echo 2 $image_tag
-        ssh ${ssh_opts} "${taito_ssh_user}@${taito_host}" "
+        ssh ${ssh_opts} "${taito_ssh_username}@${taito_host}" "
           ${LINUX_SUDO} bash -c '
             set -e
             ${taito_setv:-}

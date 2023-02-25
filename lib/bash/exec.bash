@@ -46,7 +46,7 @@ function taito::execute_on_host () {
      [[ ${taito_env} != "local" ]] && \
      [[ ${commands} == *"docker"* ]]; then
     taito::expose_ssh_opts
-    ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
+    ssh -t ${ssh_opts} "${taito_ssh_username:?}@${taito_host}" \
       "bash -c 'cd ${taito_host_dir:?}; if [[ -f taito-config.sh ]]; then . taito-config.sh; fi ; ${commands}'"
   elif [[ ${taito_mode:-} == "ci" ]]; then
     eval "${commands}"
@@ -85,7 +85,7 @@ function taito::execute_on_host_fg () {
      [[ ${taito_env} != "local" ]] && \
      [[ ${commands} == *"docker"* ]]; then
     taito::expose_ssh_opts
-    ssh -t ${ssh_opts} "${taito_ssh_user:?}@${taito_host}" \
+    ssh -t ${ssh_opts} "${taito_ssh_username:?}@${taito_host}" \
       "bash -c 'cd ${taito_host_dir:?}; if [[ -f taito-config.sh ]]; then . taito-config.sh; fi ; (${commands})'"
   elif [[ ${taito_mode:-} == "ci" ]]; then
     eval "(${commands})"
