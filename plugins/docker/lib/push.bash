@@ -191,32 +191,34 @@ function docker::package () {
       echo "Directory contents" > "${taito_vout}"
       ls -laF > "${taito_vout}"
 
-      # Replace BASE_PATH, ASSETS_DOMAIN, and ASSETS_PATH in source files
-      find . -name '*.html' -exec sed -i -e \
-        "s/BASE_PATH/${basePath//\//\\/}/g" {} \;
-      find . -name '*.html' -exec sed -i -e \
-        "s/ASSETS_DOMAIN/${assetsDomain//\//\\/}/g" {} \;
-      find . -name '*.html' -exec sed -i -e \
-        "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
-      find . -name 'runtime.*.js' -exec sed -i -e \
-        "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
-      find . -name 'manifest.json' -exec sed -i -e \
-        "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
-      find . -name 'manifest.json' -exec sed -i -e \
-        "/start_url/d" {} \;
+      if [[ "$(ls -A)" ]]; then
+        # Replace BASE_PATH, ASSETS_DOMAIN, and ASSETS_PATH in source files
+        find . -name '*.html' -exec sed -i -e \
+          "s/BASE_PATH/${basePath//\//\\/}/g" {} \;
+        find . -name '*.html' -exec sed -i -e \
+          "s/ASSETS_DOMAIN/${assetsDomain//\//\\/}/g" {} \;
+        find . -name '*.html' -exec sed -i -e \
+          "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
+        find . -name 'runtime.*.js' -exec sed -i -e \
+          "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
+        find . -name 'manifest.json' -exec sed -i -e \
+          "s/ASSETS_PATH/${assetsPath//\//\\/}/g" {} \;
+        find . -name 'manifest.json' -exec sed -i -e \
+          "/start_url/d" {} \;
 
-      # Double ASSETS_PATH quick fix
-      find . -name '*.html' -exec sed -i -e \
-        's|//assets|/assets|g' {} \;
+        # Double ASSETS_PATH quick fix
+        find . -name '*.html' -exec sed -i -e \
+          's|//assets|/assets|g' {} \;
 
-      # Create zip package
-      zipopts="-rq"
-      if [[ ${taito_verbose:?} == "true" ]]; then
-        zipopts="-r"
+        # Create zip package
+        zipopts="-rq"
+        if [[ ${taito_verbose:?} == "true" ]]; then
+          zipopts="-r"
+        fi
+        echo > "${taito_vout}"
+        echo "Creating ${taito_target}.zip" > "${taito_vout}"
+        zip ${zipopts} "../../${taito_target}.zip" .
       fi
-      echo > "${taito_vout}"
-      echo "Creating ${taito_target}.zip" > "${taito_vout}"
-      zip ${zipopts} "../../${taito_target}.zip" .
     )
   fi
 }
