@@ -4,7 +4,17 @@
 
 taito::skip_if_not container "${@}"
 
-docker-compose::expose_pod_and_container
-taito::execute_on_host_fg "docker kill ${pod:?}"
+if [[ ${taito_env} != 'local' ]]; then
+  echo "Please use restart instead of kill"
+  exit 0
+fi
+
+pod_index="${1}"
+
+docker-compose::expose_pod_and_container false "${pod_index}"
+taito::execute_on_host_fg "
+  pod=${get_pod_command}
+  docker kill \${pod:?}
+"
 
 taito::call_next "${@}"

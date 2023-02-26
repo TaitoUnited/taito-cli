@@ -1,36 +1,48 @@
 #!/bin/bash
 
 function docker-compose::exec () {
+  if [[ $1 =~ ^[0-9]+$ ]]; then
+    pod_index="${1}"
+    shift
+  fi
+
   local commands
   commands=$(printf '"%s" ' "${@}")
-  docker-compose::expose_pod_and_container
+  docker-compose::expose_pod_and_container false "${pod_index}"
 
   if [[ ${docker_run:-} ]]; then
     # Using run mode instead of up
     # TODO take --no-deps as param
     compose_file=$(docker-compose::prepare_docker_compose_yaml)
-    taito::execute_on_host_fg \
-      "docker compose -f $compose_file run --no-deps --entrypoint ${commands} ${pod}"
+    taito::execute_on_host_fg "
+      docker compose -f $compose_file run --no-deps --entrypoint ${commands} ${docker_service:?}
+    "
   else
-    taito::execute_on_host_fg "\
+    taito::execute_on_host_fg "
       exec_opts=
       if [ -t 1 ]; then
         exec_opts="-it"
       fi
-      docker exec \${exec_opts} ${pod} ${commands}
+      pod=${get_pod_command}
+      docker exec \${exec_opts} \${pod} ${commands}
     "
   fi
 }
 
 function docker-compose::expose_pod_and_container () {
-  pod="${taito_target:?}"
-  if [[ ${pod} != "${taito_project}-"* ]]; then
+  prefer_failed_pod=${1}
+  pod_index=${2}
+  docker_service="${taito_target:?}"
+
+  if [[ ${docker_service} != "${taito_project}-"* ]]; then
     if [[ ${taito_env} != "local" ]]; then
-      pod="${taito_project}-${taito_env}-${pod}"
+      docker_service="${taito_project}-${taito_env}-${docker_service}"
     else
-      pod="${taito_project}-${pod}"
+      docker_service="${taito_project}-${docker_service}"
     fi
   fi
+
+  get_pod_command="\$(docker container ls --format \"table {{.Names}}\" | grep '${docker_service:?}' | grep \"\-${pod_index}\" | head -n1)"
 }
 
 function docker-compose::restart_all () {
