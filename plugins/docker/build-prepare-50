@@ -11,7 +11,7 @@ if [[ ${taito_container_registry_provider:-} == "local" ]]; then
       bash -c '
         docker images | grep ${taito_container_registry} | grep [[:space:]]${image_tag}[[:space:]]
       '
-    "
+    " 2> /dev/null || :
   )
 
   if [[ ${images} ]]; then
