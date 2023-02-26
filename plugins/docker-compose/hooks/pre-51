@@ -5,7 +5,15 @@
 : "${taito_mode:?}"
 : "${taito_env:?}"
 
-# Fetch required secrets from Kubernetes
+function docker-compose::cleanup {
+  if [[ ${taito_env} != "local" ]]; then
+    rm -rf "${taito_project_path}/secrets/${taito_env}"
+  fi
+  rm -rf "${taito_project_path}/secrets/changed/${taito_env}"
+}
+trap docker-compose::cleanup EXIT
+
+# Fetch required secrets from local disk
 taito::expose_required_secrets_filter
 if [[ ${fetch_secrets:?} == "true" ]]; then
   taito::print_plugin_title
