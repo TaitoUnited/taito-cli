@@ -178,9 +178,10 @@ function docker::package () {
 
       taito::executing_start
       mkdir -p "./tmp/${taito_target}/service"
+      default_docker_host_path="${taito_host_project_path:-$PWD}"
       docker run \
         --user 0:0 \
-        -v "${DOCKER_HOST_PATH:-$PWD}/tmp/${taito_target}:/tmp/${taito_target}" \
+        -v "${DOCKER_HOST_PATH:-$default_docker_host_path}/tmp/${taito_target}:/tmp/${taito_target}" \
         --entrypoint /bin/sh \
         "${image_untested}" \
         -c "cp -r /service /tmp/${taito_target}"
