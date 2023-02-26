@@ -38,14 +38,8 @@ taito::confirm "Apply changes by running ansible scripts" || \
     ansible_options="${ansible_options} --limit ${limit}"
   fi
 
-  echo "Enter SSH username or leave empty to use the default [${taito_ssh_username}]:"
-  read -r username
-  ansible_options="$ansible_options -u ${username:-$taito_ssh_username}"
-
-  if [[ $username == "root" ]]; then
-    if taito::confirm "Log in with password"; then
-      ansible_options="$ansible_options --ask-pass"
-    fi
+  if taito::confirm "Log in with password"; then
+    ansible_options="$ansible_options --ask-pass"
   fi
 
   if [[ -f "${HOME}/.ssh/config.taito" ]]; then
@@ -66,9 +60,8 @@ taito::confirm "Apply changes by running ansible scripts" || \
     # running ssh-add before ansible-playbook is required because otherwise
     # ansible parallel execution asks for keyphrase for multiple servers at
     # once and only one of them succeeds
-    echo "Enter SSH key name or leave empty to use the default [${taito_ssh_keyname:-id_rsa}]:"
+    echo "Enter SSH key name or leave empty to use the default [id_rsa}]:"
     read -r keyname
-    keyname=${keyname:-$taito_ssh_keyname}
     keyname=${keyname:-id_rsa}
   fi
 

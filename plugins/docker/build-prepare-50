@@ -7,7 +7,7 @@ if [[ ${taito_container_registry_provider:-} == "local" ]]; then
   taito::expose_ssh_opts
 
   images=$(
-    ssh ${ssh_opts} "${taito_ssh_username:?}@${taito_host}" "
+    ssh ${ssh_opts} "${taito_host}" "
       bash -c '
         docker images | grep ${taito_container_registry} | grep [[:space:]]${image_tag}[[:space:]]
       '

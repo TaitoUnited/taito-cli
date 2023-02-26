@@ -10,16 +10,6 @@ function taito::expose_ssh_opts () {
     echo "fail if your ~/.ssh/config file contains any macOS specific properties"
     echo "(e.g. UseKeyChain)."
   fi
-
-  read -t 1 -n 10000 || :
-  if [[ ! ${taito_ssh_username} ]]; then
-    echo
-    echo "SSH username has not been set. Set taito_ssh_username environment variable"
-    echo "in ./taito-user-config.sh or ~/.taito/taito-config.sh to avoid prompt."
-    echo "SSH username:"
-    read -r taito_ssh_username
-    export taito_ssh_username=${taito_ssh_username}
-  fi
 }
 export -f taito::expose_ssh_opts
 
