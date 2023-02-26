@@ -98,7 +98,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_cdn_domain=$taito_default_cdn_domain"
   echo "template_default_bastion_public_ip=$taito_bastion_public_ip"
   if [[ $taito_provider == "linux" ]]; then
-    echo "template_default_host=x.$taito_default_domain"
+    echo "template_default_host=$taito_default_domain"
   else
     echo "template_default_host="
   fi
@@ -238,7 +238,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_cdn_domain_prod=${taito_default_cdn_domain_prod:-$taito_default_cdn_domain}"
   echo "template_default_bastion_public_ip_prod=${taito_bastion_public_ip_prod:-$taito_bastion_public_ip}"
   if [[ $taito_provider == "linux" ]]; then
-    echo "template_default_host_prod=x.${taito_default_domain_prod:-$taito_default_domain}"
+    echo "template_default_host_prod=${taito_default_domain_prod:-$taito_default_domain}"
   else
     echo "template_default_host_prod="
   fi
