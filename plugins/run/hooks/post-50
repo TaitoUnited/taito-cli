@@ -7,9 +7,9 @@ script="${run_scripts_location:?}/taito-${taito_command:?}#post.sh"
 if [[ -f ${script} ]]; then
   export taito_hook_command_executed=true
   taito::print_plugin_title
-  if taito::confirm "Run script ${script}?" yes yes; then
-    taito::execute_with_ssh_agent "${script}" "${@}"
-  fi
+  echo "Running script ${script}:"
+  echo
+  taito::execute_with_ssh_agent "${script}" "${@}"
 fi
 
 # Runs a process if run_after_for_XXX setting is set for one of the
