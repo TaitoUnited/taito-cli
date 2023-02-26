@@ -8,10 +8,9 @@ if [[ ${fetch_secrets:?} == "true" ]]; then
   script="${run_scripts_location:?}/taito-prehook-fetch-secrets.sh"
   if [[ -f ${script} ]]; then
     taito::print_plugin_title
-    if taito::confirm "Get secrets with script ${script}?" yes yes; then
-      echo
-      taito::execute_with_ssh_agent "${script}" "${secret_filter}"
-    fi
+    echo "Getting secrects by running script ${script}:"
+    echo
+    taito::execute_with_ssh_agent "${script}" "${secret_filter}"
   fi
 fi
 
