@@ -286,7 +286,7 @@ if [[ ${taito_project:-} ]]; then
       echo "ci run${suffix}"
       echo "build prepare${suffix}"
       echo "build publish${suffix}"
-      if [[ ${env} == "prod" ]]; then
+      if [[ ${env%%-*}} == "prod" ]]; then
         echo "build release${suffix}"
       fi
 

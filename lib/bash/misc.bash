@@ -151,7 +151,7 @@ function taito::print_variable () {
 
   if [[ ! ${suffix} ]] && \
      [[ ${determine_suffix} == "true" ]] && \
-     [[ " prod canary stag " == *"${taito_target_env}"* ]]; then
+     [[ " prod canary stag " == *" ${taito_target_env%%-*} "* ]]; then
     suffix="_prod"
   fi
 

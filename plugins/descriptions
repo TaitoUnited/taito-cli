@@ -441,7 +441,7 @@ if [[ ${taito_project:-} ]]; then
         "# Prepare artifacts for ${env} environment"
       echo "build publish${suffix}                 " \
         "# Publish artifacts for ${env} environment"
-      if [[ ${env} == "prod" ]]; then
+      if [[ ${env%%-*}} == "prod" ]]; then
         echo "build release${suffix}               " \
           "# Release artifacts for ${env} environment"
       fi

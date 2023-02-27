@@ -9,7 +9,7 @@ function default-secrets::fetch_default_secrets () {
     echo "Not fetching secret defaults. Secret defaults already exist."
   else
     source_env=
-    case ${taito_env:?} in
+    case ${taito_env%%-*} in
       prod)
         source_env=stag
         ;;

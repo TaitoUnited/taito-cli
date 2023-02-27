@@ -201,7 +201,7 @@ if [[ ${command} == *":"* ]] && [[ ${command} != *":" ]]; then
   elif [[ -f taito-config.sh ]]; then
     . taito-config.sh
   fi
-  if [[ " zone local demo dev test uat qa stag canary prod master ${taito_environments:-} " == *" ${sect} "* ]] || \
+  if [[ " zone local demo dev test uat qa stag staging cana canary prod master " == *" ${sect%%-*} "* ]] || \
      [[ ${sect} == "feat-"* ]]; then
     taito_target_env="${sect}"
   fi

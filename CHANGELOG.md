@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.304.0
+
+- You can now have multiple environments of the same type by using environment type as prefix (e.g. `prod-us`, `prod-eu`).
+
 ## 0.303.0
 
 - postgres-db: Viewer user is optional.
