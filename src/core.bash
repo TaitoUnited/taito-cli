@@ -272,6 +272,7 @@ function taito::core::upgrade () {
   taito::core::ensure_mount_dir "${taito_home_path}/.config"
   taito::core::ensure_mount_dir "${taito_home_path}/.config/doctl"
   taito::core::ensure_mount_dir "${taito_home_path}/.config/gcloud"
+  taito::core::ensure_mount_dir "${taito_home_path}/.taito/.docker"
   taito::core::ensure_mount_dir "${taito_home_path}/.kube"
   taito::core::ensure_mount_dir "${taito_home_path}/.ssh"
   taito::core::ensure_mount_dir "${taito_home_path}/.taito"

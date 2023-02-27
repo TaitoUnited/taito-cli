@@ -465,6 +465,7 @@ if [[ ${admin} != true ]]; then
     -v ${taito_home_path}/.azure:${taito_container_home}/.azure
     -v ${taito_home_path}/.config/doctl:${taito_container_home}/.config/doctl
     -v ${taito_home_path}/.config/gcloud:${taito_container_home}/.config/gcloud
+    -v ${taito_home_path}/.taito/.docker:${taito_container_home}/.docker
     -v ${taito_home_path}/.kube:${taito_container_home}/.kube
   "
 fi

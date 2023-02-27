@@ -1,0 +1,16 @@
+#!/bin/bash -e
+: "${taito_container_registry:?}"
+
+dockerreg=$(echo "${taito_container_registry}" | cut -d "/" -f 1  )
+
+# When running CI/CD locally, we might need to relogin to container registry
+if [[ ${taito_command_root_context} == "ci-run"* ]] && \
+   [[ "${dockerreg}" != "" ]] && \
+   taito::confirm "Reset docker login credentials for ${dockerreg}" no; then
+  
+  echo "NOTE: In most cases you should use a limited access token instead of your real password."
+  docker logout "${dockerreg}" || :
+  docker login "${dockerreg}"
+fi
+
+taito::call_next "${@}"
