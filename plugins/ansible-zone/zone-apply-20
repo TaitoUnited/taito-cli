@@ -40,6 +40,12 @@ taito::confirm "Apply changes by running ansible scripts" || \
 
   if taito::confirm "Log in with password" no; then
     ansible_options="$ansible_options --ask-pass"
+
+    echo "Enter SSH username or leave empty to use the default:"
+    read -r username
+    if [[ "${username}" ]]; then
+      ansible_options="$ansible_options -u ${username}"
+    fi
   fi
 
   if [[ -f "${HOME}/.ssh/config.taito" ]]; then
