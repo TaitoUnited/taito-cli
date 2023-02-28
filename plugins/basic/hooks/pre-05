@@ -17,7 +17,7 @@ if [[ ${taito_command} == "db-deploy" ]] ||
       export taito_command_root_context="${taito_command_root_context}"
       export taito_command_context="${taito_command}"
       echo "Exporting secret ${secret%:*}"
-      taito -q -c ${taito_options:-} secret export:$taito_env ${secret%:*}
+      taito -q -c ${taito_options:-} secret-export:$taito_env ${secret%:*}
     )
   done
 fi
