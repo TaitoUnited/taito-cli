@@ -591,7 +591,10 @@ if [[ ${taito_command} == "env-merge" ]]; then
   for param in ${params[@]}
   do
     if [[ ${param} != "-"* ]] && [[ ! ${dest} ]]; then
-      dest=${param/prod/master}
+      dest=${param}
+      if [[ ${dest} == "prod" ]]; then
+        dest=master
+      fi
     else
       echo "ERROR: Invalid parameter ${param}"
       exit 1
@@ -604,7 +607,9 @@ if [[ ${taito_command} == "env-merge" ]]; then
   prev_env=""
   for env in ${taito_environments}
   do
-    env="${env/prod/master}"
+    if [[ ${env} == "prod" ]]; then
+      env=master
+    fi
     if [[ ${env} != "feat"* ]]; then
       if [[ ${prev_env} ]]; then
         merges="${merges} ${prev_env}->${env} "
