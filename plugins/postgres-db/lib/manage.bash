@@ -18,7 +18,7 @@ function postgres::create_database () {
       taito::executing_start
       psql -h "${database_host}" \
         -p "${database_port}" \
-        -d postgres \
+        -d "${database_master_database:-postgres}" \
         -U "${database_username}" \
         $(sql_file_flag create.sql) \
         $([[ "${database_viewer_username_internal}" ]] && sql_file_flag create-viewer.sql) \
@@ -81,7 +81,7 @@ function postgres::drop_database () {
     taito::executing_start
     psql -h "${database_host}" \
       -p "${database_port}" \
-      -d postgres \
+      -d "${database_master_database:-postgres}" \
       -U "${database_username}" \
       $(sql_file_flag drop.sql) \
       -v "database=${database_name}" \
@@ -118,7 +118,7 @@ function postgres::create_users () {
   until (
     taito::executing_start
     psql -h "${database_host}" -p "${database_port}" \
-      -d postgres \
+      -d "${database_master_database:-postgres}" \
       -U "${database_username}" \
       $(sql_file_flag create-users.sql) \
       $([[ "${database_viewer_username_internal}" ]] && sql_file_flag create-users-viewer.sql) \
@@ -143,7 +143,7 @@ function postgres::drop_users () {
     taito::executing_start
     psql -h "${database_host}" \
       -p "${database_port}" \
-      -d postgres \
+      -d "${database_master_database:-postgres}" \
       -U "${database_username}" \
       $(sql_file_flag drop-users.sql) \
       $([[ "${database_viewer_username_internal}" ]] && sql_file_flag drop-users-viewer.sql) \

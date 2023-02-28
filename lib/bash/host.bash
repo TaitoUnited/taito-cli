@@ -124,6 +124,10 @@ function taito::export_database_config () {
     export database_master_password_hint="${!env_var_name:-$db_database_master_password_hint}"
     echo "- database_master_password_hint: ${database_master_password_hint}" > "${taito_dout:-/dev/null}"
 
+    env_var_name="db_${target}_master_database"
+    export database_master_database="${!env_var_name:-$db_database_master_database}"
+    echo "- database_master_database: ${database_master_database}" > "${taito_dout:-/dev/null}"
+
     env_var_name="db_${target}_app_username"
     export database_app_username="${!env_var_name:-$db_database_app_username}"
     echo "- database_app_username: ${database_app_username}" > "${taito_dout:-/dev/null}"

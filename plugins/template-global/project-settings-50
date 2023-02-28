@@ -187,6 +187,7 @@ if [[ ${taito_type:-} == "zone" ]]; then
   echo "template_default_postgres_host=\"${postgres_host}\""
   echo "template_default_postgres_port=\"${postgres_port}\""
   echo "template_default_postgres_master_username=${postgres_admin}"
+  echo "template_default_postgres_master_database=postgres"
   echo "template_default_postgres_master_password_hint=\"Hint where to get the password\""
   echo "template_default_postgres_username_suffix=${postgres_username_suffix}"
   echo "template_default_postgres_ssl_enabled=${postgres_ssl_enabled:-true}"
