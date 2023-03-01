@@ -5,6 +5,10 @@ function taito::is_target_of_type () {
   local target_types=$1
   local target=$2
 
+  if [[ ! "${target}" ]]; then
+    return false
+  fi
+
   local found=false
   for type in ${target_types[@]}; do
     local type_variable_name="taito_${type}s"
@@ -18,6 +22,6 @@ function taito::is_target_of_type () {
 export -f taito::is_target_of_type
 
 function taito::is_current_target_of_type () {
-  taito::is_target_of_type "${1}" "${taito_target:?}"
+  taito::is_target_of_type "${1}" "${taito_target:-}"
 }
 export -f taito::is_current_target_of_type
