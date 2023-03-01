@@ -78,7 +78,8 @@ taito::confirm "Apply changes by running ansible scripts" || \
     fi
     echo
     echo Executing ansible playbooks...
-    ansible-playbook ${ansible_options:-} site.yml
+    echo NOTE: Just enter a random password if you do not have any encrypted files yet.
+    ansible-playbook ${ansible_options:-} --ask-vault-pass site.yml
   "
 )
 
