@@ -6,7 +6,7 @@ function taito::is_target_of_type () {
   local target=$2
 
   if [[ ! "${target}" ]]; then
-    return false
+    return 1
   fi
 
   local found=false
