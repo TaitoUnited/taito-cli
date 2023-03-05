@@ -26,10 +26,10 @@ else
 
       compose_file=$(docker-compose::prepare_docker_compose_yaml false)
       taito::execute_on_host_fg "
-        docker compose -f $compose_file stop ${pod:?}
-        docker compose -f $compose_file rm --force ${pod:?}
-        docker compose -f $compose_file up --force-recreate --build --no-start ${pod:?}
-        docker compose -f $compose_file start ${pod:?}
+        docker compose -f $compose_file stop ${docker_service:?}
+        docker compose -f $compose_file rm --force ${docker_service:?}
+        docker compose -f $compose_file up --force-recreate --build --no-start ${docker_service:?}
+        docker compose -f $compose_file start ${docker_service:?}
       "
     done
   )

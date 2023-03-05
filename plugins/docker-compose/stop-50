@@ -17,6 +17,6 @@ fi
 
 compose_file=$(docker-compose::prepare_docker_compose_yaml false)
 taito::execute_on_host_fg \
-  "docker compose -f $compose_file stop ${pod:-}"
+  "docker compose -f $compose_file stop ${docker_service:-}"
 
 taito::call_next "${@}"
