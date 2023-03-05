@@ -69,7 +69,7 @@ function docker-compose::start () {
   local compose_cmd="up"
   if [[ ${taito_target:-} ]]; then
     docker-compose::expose_pod_and_container
-    compose_cmd="run ${docker_service}"
+    compose_cmd="start ${docker_service}"
   fi
 
   local flags=""
