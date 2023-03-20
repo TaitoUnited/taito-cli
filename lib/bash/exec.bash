@@ -71,10 +71,6 @@ export -f taito::execute_on_host
 function taito::execute_on_host_fg () {
   local commands="${*:1}"
 
-  # Use docker-compose on host (backwards compatibility until installed everywhere)
-  # TODO: remove
-  commands="${commands//docker compose/docker-compose}"
-
   echo "+ ${commands}" > "${taito_vout}"
 
   # TODO: clean up this hack (for running docker commands on remote host)
