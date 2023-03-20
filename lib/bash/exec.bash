@@ -32,9 +32,11 @@ function taito::execute_on_host () {
   local commands="${*:1}"
   local sleep_seconds="${2}"
 
-  # Use docker-compose on host (backwards compatibility until installed everywhere)
-  # TODO: remove
-  commands="${commands//docker compose/docker-compose}"
+  if [[ -z "${taito_run:-}" ]]; then
+    # Use docker-compose on host (backwards compatibility until installed everywhere)
+    # TODO: remove
+    commands="${commands//docker compose/docker-compose}"
+  fi
 
   echo "+ ${commands}" > "${taito_vout}"
 
@@ -70,6 +72,12 @@ export -f taito::execute_on_host
 # NOTE: executes in container if ci mode is enabled.
 function taito::execute_on_host_fg () {
   local commands="${*:1}"
+
+  if [[ -z "${taito_run_fg:-}" ]]; then
+    # Use docker-compose on host (backwards compatibility until installed everywhere)
+    # TODO: remove
+    commands="${commands//docker compose/docker-compose}"
+  fi
 
   echo "+ ${commands}" > "${taito_vout}"
 
