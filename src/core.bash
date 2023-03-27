@@ -142,7 +142,7 @@ function taito::core::print_command_with_internal_syntax () {
       arg="${!i}"
       next_arg="${!j}"
 
-      if [[ ! ${arg} =~ ^[a-zA-Z][0-9a-zA-Z:]+$ ]] ||
+      if [[ ! ${arg} =~ ^[a-zA-Z][0-9a-zA-Z:-]+$ ]] ||
          [[ ${mark_found} == "true" ]]; then
         mark_found="true"
         space_args+=("${arg}")
