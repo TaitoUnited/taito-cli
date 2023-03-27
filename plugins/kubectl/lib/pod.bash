@@ -30,7 +30,7 @@ function kubectl::expose_pod_and_container () {
   if [[ ${taito_target} != *"-"* ]]; then
     # Short pod name was given. Determine the full pod name.
     if [[ ${determine_failed_pod} == "true" ]] && [[ ! ${pod_index} ]]; then
-      pod=$(kubectl::get_pods "grep -v Running")
+      pod=$(kubectl::get_pods "grep -v 'Running\|NotReady'")
     else
       pod=$(
         kubectl::get_pods \
