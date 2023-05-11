@@ -1,0 +1,30 @@
+#!/bin/bash -e
+
+format=${1:-bcrypt}
+content=${2}
+
+format_opt=""
+case $format in
+  bcrypt)
+    format_opt="-B"
+    ;;
+  md5)
+    format_opt="-m"
+    ;;
+  sha)
+    format_opt="-s"
+    ;;
+  *)
+    echo "ERROR: Select valid format (bcrypt, md5, sha)" 1>&2
+    exit 1
+    ;;
+esac
+
+if [[ ! "${content}" ]]; then
+  echo "Enter content (e.g. password):"
+  read -r content
+fi
+
+htpasswd ${format_opt} -bnC 10 "" "${content}" | tr -d ':'
+
+taito::call_next "${@}"

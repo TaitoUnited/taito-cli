@@ -37,7 +37,8 @@ echo "random uuid"
 # echo "passwd rotate"
 # echo "passwd rotate FILTER"
 
-# Tokens
+# Encryption
+echo "hash generate FORMAT CONTENT"
 echo "jwt decode TOKEN"
 
 # Project management

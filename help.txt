@@ -1143,7 +1143,10 @@ GLOBAL: PASSWORDS
     An interactive command for rotating passwords of a collection one by one.
     TODO implement.
 
-GLOBAL: ENCODING
+GLOBAL: ENCRYPTION
+
+  hash generate [FORMAT] [CONTENT]
+    Generates hash from the given content. Uses bcrypt by default.
 
   jwt decode TOKEN
     Decodes jwt contents

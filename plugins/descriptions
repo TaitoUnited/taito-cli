@@ -60,7 +60,9 @@ echo "random uuid                     " \
 # echo "passwd rotate FILTER    &focus" \
 #   "# Rotate some passwords"
 
-# Tokens
+# Encryption
+echo "hash generate FORMAT CONTENT    " \
+  "# Generate hash from content"
 echo "jwt decode TOKEN            " \
   "# Decode jwt contents"
 
