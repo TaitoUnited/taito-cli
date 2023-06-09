@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
 taito::expose_ssh_opts
-ssh "${ssh_opts:?}" "${@}"
+ssh "${ssh_opts}" "${@}"
 
 taito::call_next "${@}"
