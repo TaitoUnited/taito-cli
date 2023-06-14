@@ -4,8 +4,9 @@
 image_tag=${1}
 
 if [[ ${taito_container_registry_provider:-} == "local" ]]; then
-  taito::expose_ssh_opts
+  echo "Checking if images exist on local container registry of host ${taito_host}"
 
+  taito::expose_ssh_opts
   images=$(
     ssh ${ssh_opts} "${taito_host}" "
       bash -c '
@@ -18,6 +19,8 @@ if [[ ${taito_container_registry_provider:-} == "local" ]]; then
     echo "exist" > ./taitoflag_images_exist
     echo "Images already exist on host:"
     echo "${images}"
+  else
+    echo "Images do not exist on host"
   fi
 fi
 
