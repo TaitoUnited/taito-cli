@@ -48,14 +48,6 @@ taito::confirm "Apply changes by running ansible scripts" || \
     fi
   fi
 
-  echo "TIP: If you get 'Bad configuration option' error, you can either create a separate"
-  echo "~/.ssh/config.taito file to be used with Taito CLI, or you can ignore the errors with"
-  echo "the IgnoreUnknown directive on your current ~/.ssh/config file. For example:"
-  echo
-  echo "Host *"
-  echo "  IgnoreUnknown UseKeychain"
-  echo
-
   if [[ -f "${HOME}/.ssh/config.taito" ]]; then
     taito::executing_start
     printf "[ssh_connection]\nssh_args = -F${HOME}/.ssh/config.taito\n" \

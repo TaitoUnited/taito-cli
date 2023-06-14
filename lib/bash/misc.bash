@@ -2,13 +2,6 @@
 
 function taito::expose_ssh_opts () {
   ssh_opts=""
-  echo "TIP: If you get 'Bad configuration option' error, you can either create a separate"
-  echo "~/.ssh/config.taito file to be used with Taito CLI, or you can ignore the errors with"
-  echo "the IgnoreUnknown directive on your current ~/.ssh/config file. For example:"
-  echo
-  echo "Host *"
-  echo "  IgnoreUnknown UseKeychain"
-  echo
   if [[ -f "${HOME}/.ssh/config.taito" ]]; then
     ssh_opts="-F${HOME}/.ssh/config.taito"
   fi

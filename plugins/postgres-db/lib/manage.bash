@@ -129,7 +129,7 @@ function postgres::create_users () {
       -v "passwordapp=${database_app_password:?}" \
       -v "passwordbuild=${database_build_password:?}" \
       -v "passwordviewer=${database_viewer_password:-}" \
-      > "${taito_vout}" 2>&1
+      > "${taito_vout}"
   ) do
     :
   done
