@@ -3,25 +3,27 @@
 
 image_tag=${1}
 
-if [[ ${taito_container_registry_provider:-} == "local" ]]; then
-  echo "Checking if images exist on local container registry of host ${taito_host}"
+# NOTE: Disabled because local images are not pulled by CI/CD
 
-  taito::expose_ssh_opts
-  images=$(
-    ssh ${ssh_opts} "${taito_host}" "
-      bash -c '
-        docker images | grep ${taito_container_registry} | grep [[:space:]]${image_tag}[[:space:]]
-      '
-    " 2> /dev/null || :
-  )
-
-  if [[ ${images} ]]; then
-    echo "exist" > ./taitoflag_images_exist
-    echo "Images already exist on host:"
-    echo "${images}"
-  else
-    echo "Images do not exist on host"
-  fi
-fi
+# if [[ ${taito_container_registry_provider:-} == "local" ]]; then
+#   echo "Checking if images exist on local container registry of host ${taito_host}"
+#
+#   taito::expose_ssh_opts
+#   images=$(
+#     ssh ${ssh_opts} "${taito_host}" "
+#       bash -c '
+#         docker images | grep ${taito_container_registry} | grep [[:space:]]${image_tag}[[:space:]]
+#       '
+#     " 2> /dev/null || :
+#   )
+#
+#   if [[ ${images} ]]; then
+#     echo "exist" > ./taitoflag_images_exist
+#     echo "Images already exist on host:"
+#     echo "${images}"
+#   else
+#     echo "Images do not exist on host"
+#   fi
+# fi
 
 taito::call_next "${@}"
