@@ -309,7 +309,7 @@ function taito::core::upgrade () {
 
   # Pull taito-cli docker image
   echo "Pulling taito-cli docker image from registry: ${taito_image}"
-  docker pull ${docker_platform} "${taito_image}"
+  docker pull ${docker_platform} "${taito_image}" || exit 1
 
   # Prepare taito-new image for modificaions
   docker rm taito-save taito-new &> /dev/null
