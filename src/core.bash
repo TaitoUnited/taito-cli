@@ -308,7 +308,9 @@ function taito::core::upgrade () {
   done
 
   # Pull taito-cli docker image
+  echo
   echo "Pulling taito-cli docker image from registry: ${taito_image}"
+  echo "TIP: If you get permission denied, run 'docker logout ghcr.io'."
   docker pull ${docker_platform} "${taito_image}" || exit 1
 
   # Prepare taito-new image for modificaions
