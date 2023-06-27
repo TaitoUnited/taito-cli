@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.306.0
+
+- docker-compose: Read default secret values from remote server.
+
+## 0.305.0
+
+- Small improvements
+
 ## 0.304.0
 
 - Add `hash generate` command
