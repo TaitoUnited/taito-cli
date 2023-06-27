@@ -118,10 +118,13 @@ function taito::add_ssh_key () {
 
   if [[ ${force_add} != 'true' ]] && (
       [[ ${taito_env:-} == "local" ]] ||
-      [[ ${taito_quiet:-} == "true" ]] ||
-      [[ ! ${taito_host:-} ]]
+      [[ ${taito_quiet:-} == "true" ]]
      ); then
-    return;
+    return
+  fi
+
+  if [[ ! ${taito_host:-} ]]; then
+    return
   fi
 
   echo "Enter SSH key name or leave empty to use the default [id_ed25519]:"
