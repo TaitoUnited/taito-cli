@@ -28,6 +28,7 @@ function default-secrets::fetch_default_secrets () {
     then
       echo "Getting default secret values from ${source_env} environment"
       rm -f "${taito_secrets_path}" &> /dev/null || :
+      taito::add_ssh_key true
       yes | taito_command_context="default-secrets" \
         taito -q secret-show:${source_env} --save-as-taito-secrets
 

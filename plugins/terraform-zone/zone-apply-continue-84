@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+# TODO: use id_ed25519
+
 ( [[ -f terraform/id_rsa ]] &&
   [[ -f terraform/id_rsa.pub ]] &&
   taito::confirm "Move bastion host SSH keys from ./terraform to ~/.ssh?"

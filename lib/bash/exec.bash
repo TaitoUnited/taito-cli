@@ -113,6 +113,30 @@ function taito::execute_with_ssh_agent () {
 }
 export -f taito::execute_with_ssh_agent
 
+function taito::add_ssh_key () {
+  local force_add=$1
+
+  if [[ ${force_add} != 'true' ]] && (
+      [[ ${taito_env:-} == "local" ]] ||
+      [[ ${taito_quiet:-} == "true" ]] ||
+      [[ ! ${taito_host:-} ]]
+     ); then
+    return;
+  fi
+
+  echo "Enter SSH key name or leave empty to use the default [id_ed25519]:"
+  read -r keyname
+  keyname=${keyname:-id_ed25519}
+
+  taito::execute_with_ssh_agent "
+    taito::executing_start
+    if [[ \"${keyname}\" ]]; then
+      ssh-add "${HOME}/.ssh/${keyname:-id_ed25519}";
+    fi
+  "
+}
+export -f taito::add_ssh_key
+
 function taito::skip_to_next () {
   taito::call_next "${@}"
   exit $?

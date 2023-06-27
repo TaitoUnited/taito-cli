@@ -61,15 +61,15 @@ taito::confirm "Apply changes by running ansible scripts" || \
     # running ssh-add before ansible-playbook is required because otherwise
     # ansible parallel execution asks for keyphrase for multiple servers at
     # once and only one of them succeeds
-    echo "Enter SSH key name or leave empty to use the default [id_rsa]:"
+    echo "Enter SSH key name or leave empty to use the default [id_ed25519]:"
     read -r keyname
-    keyname=${keyname:-id_rsa}
+    keyname=${keyname:-id_ed25519}
   fi
 
   taito::execute_with_ssh_agent "
     taito::executing_start
     if [[ \"${keyname}\" ]]; then
-      ssh-add "${HOME}/.ssh/${keyname:-id_rsa}";
+      ssh-add "${HOME}/.ssh/${keyname:-id_ed25519}";
     fi
     echo
     echo Executing ansible playbooks...
