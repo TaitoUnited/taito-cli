@@ -18,7 +18,7 @@ fi
 echo "Deleting... This may take a while..."
 (
   taito::executing_start
-  helm::run delete ${helm2opts} "${taito_project}-${taito_target_env}" || :
+  helm::run delete --debug ${helm2opts} "${taito_project}-${taito_target_env}" || :
 )
 
 taito::call_next "${@}"
