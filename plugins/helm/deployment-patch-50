@@ -6,12 +6,11 @@
 
 kubectl::use_context
 
-secret_names=($(kubectl get secrets -n ${taito_namespace} | grep sh.helm.release | grep -v namespace | cut -d " " -f1))
-for secret_name in "${secret_names[@]}"
-do
-  kubectl get secrets -n ${taito_namespace} $secret_name -o json | jq .data.release -r | base64 --decode | base64 --decode | gunzip -)
-  data=$(kubectl get secrets -n ${taito_namespace} $secret_name -o json | jq .data.release -r | base64 --decode | base64 --decode | gunzip - | sed "s|batch/v1beta1|batch/v1|g" | gzip -c | base64 -w 0 | base64 -w 0)
-  kubectl patch secret -n ${taito_namespace} ${secret_name} --type='json' -p="[{\"op\":\"replace\",\"path\":\"/data/release\",\"value\":\"$data\"}]"
-done
+# secret_names=($(kubectl get secrets -n ${taito_namespace} | grep sh.helm.release | grep -v namespace | cut -d " " -f1))
+# for secret_name in "${secret_names[@]}"
+# do
+#   data=$(kubectl get secrets -n ${taito_namespace} $secret_name -o json | jq .data.release -r | base64 --decode | base64 --decode | gunzip - | sed "s|batch/v1beta1|batch/v1|g" | gzip -c | base64 -w 0 | base64 -w 0)
+#   kubectl patch secret -n ${taito_namespace} ${secret_name} --type='json' -p="[{\"op\":\"replace\",\"path\":\"/data/release\",\"value\":\"$data\"}]"
+# done
 
 taito::call_next "${@}"
