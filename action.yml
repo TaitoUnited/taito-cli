@@ -1,0 +1,11 @@
+name: "Taito CLI"
+description: "Run Taito CLI commands on GitHub Actions"
+inputs:
+  args:
+    description: "Taito CLI arguments to run"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.args }}
