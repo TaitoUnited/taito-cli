@@ -26,7 +26,23 @@ The following software needs to be installed on your computer before you can ins
    curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash
    ```
 
-2. Optional: Install Taito CLI plugin for your [Visual Studio Code](https://github.com/TaitoUnited/vscode-taito-cli) or [Atom](https://atom.io/packages/atom-taito-cli) editor.
+2. Finalize the installation by running commands the aforementioned install.sh script displayed at the end:
+
+   ```
+   [8. Almost finished]
+
+   Finalize the installation with the following steps:
+
+     1. Execute final installation steps by running 'taito upgrade'
+     2. Check the installation by running 'taito check'
+     3. Show taito commands with 'taito -h'
+
+   If you have problems, run 'taito trouble' to display troubleshooting.
+   You can read troubleshooting also at GitHub:
+   https://github.com/TaitoUnited/taito-cli/blob/master/trouble.txt
+   ```
+
+3. Optional: Install Taito CLI plugin for your [Visual Studio Code](https://github.com/TaitoUnited/vscode-taito-cli) or [Atom](https://atom.io/packages/atom-taito-cli) editor.
 
 ### Manual installation
 

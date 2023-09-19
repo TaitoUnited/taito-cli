@@ -140,7 +140,7 @@ echo "[8. Almost finished]"
 echo
 echo "Finalize the installation with the following steps:"
 echo
-echo "  1. Download the latest Taito CLI container image by running 'taito upgrade'"
+echo "  1. Execute final installation steps by running 'taito upgrade'"
 echo "  2. Check the installation by running 'taito check'"
 echo "  3. Show taito commands with 'taito -h'"
 echo
