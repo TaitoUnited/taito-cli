@@ -53,6 +53,12 @@ TAITO CLI TROUBLESHOOTING
   Docker issues on non-Linux systems (macOS, Windows)
   ---------------------------------------------------
 
+  "permission denied" related to corrupted file permissions
+    The new VirtioFS file sharing implementation currently has some issues
+    with file permissions on newly created files. Switch back to gRPC FUSE
+    and fix invalid file permissions of the newly created files. Reference:
+    https://github.com/docker/for-mac/issues/6614#issuecomment-1720189733
+
   An error related to "qemu"
     Are you running the command on a Apple Silicon (M1) mac? You can try
     to change between amd64 and arm64 images with `taito --amd64 upgrade`
