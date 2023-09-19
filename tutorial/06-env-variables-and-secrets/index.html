@@ -96,6 +96,7 @@ taito deployment deploy:prod</code></pre></div>
 <li><code class="language-text">htpasswd</code>: htpasswd file that contains 1-N user credentials. User credentials are entered manually.</li>
 <li><code class="language-text">htpasswd-plain</code>: htpasswd file that contains 1-N user credentials. Passwords are stored in plain text. User credentials are entered manually.</li>
 <li><code class="language-text">csrkey</code>: Secret key generated for certificate signing request (CSR).</li>
+<li><code class="language-text">provided</code>: Secret that is provided by one of the plugins. For example <code class="language-text">azure-access-token.ossRdbms:provided</code>.</li>
 </ul>
 <p>Add secret reference for Kubernetes service in <code class="language-text">helm.yaml</code>:</p>
 <div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell">  server:

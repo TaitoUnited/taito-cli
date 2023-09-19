@@ -100,7 +100,7 @@
 </ul>
 <p>Environments:</p>
 <ul>
-<li><strong>taito_environments:</strong> Environments (e.g <code class="language-text">demo</code>, <code class="language-text">dev</code>, <code class="language-text">test</code>, <code class="language-text">uat</code>, <code class="language-text">stag</code>, <code class="language-text">canary</code>, <code class="language-text">prod</code>). You can also define feature environments using <code class="language-text">f-</code> as prefix (e.g. <code class="language-text">f-create-user</code>).</li>
+<li><strong>taito_environments:</strong> Environments (e.g <code class="language-text">demo</code>, <code class="language-text">dev</code>, <code class="language-text">test</code>, <code class="language-text">uat</code>, <code class="language-text">stag</code>, <code class="language-text">canary</code>, <code class="language-text">prod</code>). You also can multiple environments of the same type by using environment type as prefix (e.g. <code class="language-text">prod-us</code>, <code class="language-text">prod-eu</code>). You can also define feature environments using <code class="language-text">f-</code> as prefix (e.g. <code class="language-text">f-create-user</code>).</li>
 </ul>
 <p>URLs:</p>
 <ul>
@@ -279,6 +279,7 @@
 <li><code class="language-text">htpasswd</code>: htpasswd file that contains 1-N user credentials. User credentials are entered manually.</li>
 <li><code class="language-text">htpasswd-plain</code>: htpasswd file that contains 1-N user credentials. Passwords are stored in plain text. User credentials are entered manually.</li>
 <li><code class="language-text">csrkey</code>: Secret key generated for certificate signing request (CSR).</li>
+<li><code class="language-text">provided</code>: Secret that is provided by one of the plugins. For example <code class="language-text">azure-access-token.ossRdbms:provided</code>.</li>
 </ul>
 <p>See the <a href="https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md#secret-management">secret management</a> section of the plugins page for more information. <a href="https://taitounited.github.io/taito-cli/tutorial/06-env-variables-and-secrets#64-define-a-secret">6.4. Define a secret</a> chapter of Taito CLI tutorial may also be useful.</p>
 <hr>
