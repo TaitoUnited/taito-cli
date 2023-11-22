@@ -11,7 +11,7 @@ QUICK EXAMPLES
   LOCAL DEVELOPMENT BASICS
     develop                            # Quick start (runs: env apply, start --clean --init)
     env apply                          # Configure local environment and install some libs
-    start                              # Start the application. Add --clean for clean start.
+    start                              # Start the application. Add --clean --init for clean start.
     init                               # Initialize DB, storages, etc. Add --clean for clean init.
     info                               # Show info required for signing in to the application
     open client                        # Open application GUI on browser
