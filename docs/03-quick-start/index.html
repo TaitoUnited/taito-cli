@@ -145,7 +145,7 @@ taito zone apply</code></pre></div>
 <div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell">taito auth:dev</code></pre></div>
 </li>
 <li>
-<p>Create dev environment with the following command. This typically creates a database and some cloud resources (e.g. storage buckets), initializes secrets, and sets up the CI/CD pipeline.</p>
+<p>Create dev environment with the following command. This typically creates a database and some cloud resources (e.g. storage buckets), initializes secrets, and sets up the CI/CD pipeline. Note that if you are not the one who created the infrastructure, you might not have enough permissions to create new environments in it, unless you were given such permissions separately.</p>
 <div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell">taito <span class="token function">env</span> apply:dev</code></pre></div>
 </li>
 <li>
