@@ -21,6 +21,8 @@ TODO existing playground project -> destroy environments first.
 
 ### 5.1. Create dev environment
 
+> Note that if you are not the one who created the infrastructure, you might not have enough permissions to create new environments in it, unless you were given such permissions separately.
+
 Make sure your authentication is in effect (just in case):
 
 ```shell

@@ -106,7 +106,7 @@ You can create a new zone with the following steps:
    taito auth:dev
    ```
 
-2. Create dev environment with the following command. This typically creates a database and some cloud resources (e.g. storage buckets), initializes secrets, and sets up the CI/CD pipeline.
+2. Create dev environment with the following command. This typically creates a database and some cloud resources (e.g. storage buckets), initializes secrets, and sets up the CI/CD pipeline. Note that if you are not the one who created the infrastructure, you might not have enough permissions to create new environments in it, unless you were given such permissions separately.
 
    ```shell
    taito env apply:dev
