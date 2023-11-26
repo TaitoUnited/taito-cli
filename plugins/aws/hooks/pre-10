@@ -2,9 +2,11 @@
 # shellcheck source=../lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
-# Set default region just in case
-export AWS_PROFILE="${taito_provider_user_profile:-$taito_organization}"
+# Set defaults
 export AWS_DEFAULT_REGION="${taito_provider_region:?}"
+if [[ ! "${AWS_ACCESS_KEY_ID}" ]]; then
+  export AWS_PROFILE="${taito_provider_user_profile:-$taito_organization}"
+fi
 
 # Authentication
 if [[ ${taito_command:?} == "env-apply" ]] && [[ ${taito_mode:-} != "ci" ]]; then
