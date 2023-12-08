@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.307.2
+
+- Revert to kubectl 1.26 and gcloud sdk 420 because of gcp auth slowness.
+
 ## 0.307.1
 
 - Execute 'kubectl cp' with '--retries=5'.
