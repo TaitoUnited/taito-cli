@@ -15,6 +15,6 @@ fi
 
 kubectl::use_context
 kubectl::expose_pod_and_container false "${pod_index}"
-(taito::executing_start; kubectl cp "${source}" "${pod}:${dest}" -c "${container}")
+(taito::executing_start; kubectl cp --retries=5 "${source}" "${pod}:${dest}" -c "${container}")
 
 taito::call_next "${@}"
