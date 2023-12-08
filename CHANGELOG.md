@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.307.0
 
 - Set AWS_PROFILE environment variable based on taito_provider_user_profile or taito_organization env variables.
+- Update dependencies.
 
 ## 0.306.1
 
