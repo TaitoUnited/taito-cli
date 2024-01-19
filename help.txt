@@ -31,6 +31,7 @@ QUICK EXAMPLES
     restart:server                     # Restart server container
     restart                            # Restart all containers
     shell:server                       # Start shell on the server container
+    logs:server                        # Show logs of the server container
     workspace kill                     # Kill all running processes (e.g. containers)
     workspace clean                    # Remove all unused build artifacts (e.g. images)
 
