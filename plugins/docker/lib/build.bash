@@ -89,6 +89,7 @@ function docker::build () {
       # Skip pulling if there is no need to pull the image and
       # `docker manifest inspect` works ok with this container registry
       if [[ ${taito_mode:-} == "ci" ]] && \
+         [[ ${taito_ci_pull_always:-} != "true" ]] && \
          [[ ${ci_exec_build:-} == "false" ]] && \
          [[ ${ci_exec_test:-} == "false" ]] && \
          docker manifest inspect "${image}" &> /dev/null; then
