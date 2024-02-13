@@ -203,8 +203,8 @@ QUICK EXAMPLES
     build release:prod                 # Release build for prod environment
 
   PROJECT TEMPLATES
-    project create my-template         # Create a project based on template
-    project upgrade                    # Upgrade project using template
+    project create my-template         # Create a project based on "my-template"
+    project upgrade                    # Upgrade project using the original template
 
   PROJECT CONFIGURATION
     project apply                      # Migrate project to the latest configuration
@@ -1047,7 +1047,13 @@ PROJECT: BUILDS (mainly for CI/CD)
 PROJECT: TEMPLATES
 
   project create TEMPLATE [BRANCH]
-    Create a new project using a template.
+    Create a new project using a template. TEMPLATE is the name of the template.
+    By default the command uses the master branch of the template, but you can
+    override this with BRANCH.
+    ---
+    Examples:
+      taito project create full-stack-template
+      taito project create react-native-template
 
   project migrate TEMPLATE [BRANCH]
     Migrate an old project to use the given template.

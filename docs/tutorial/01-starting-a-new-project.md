@@ -22,13 +22,13 @@ Since this is a tutorial, we can skip all preliminary planning and design, and j
 
 Create a new project based on the [full-stack-template](https://github.com/TaitoUnited/full-stack-template) by running one of the following commands (**a** or **b**). In most cases you should choose the option **a**. If, however, you work for multiple organizations, you can use the option **b** to define the organization in question.
 
-**a) Create the project using your default settings**
+**a) Create the project based on the full-stack-template using your default settings**
 
 ```shell
 taito project create full-stack-template
 ```
 
-**b) Create the project using default settings of an organization**
+**b) Create the project based on the full-stack-template using default settings of a specific organization**
 
 ```shell
 taito -o ORGANIZATION project create full-stack-template
