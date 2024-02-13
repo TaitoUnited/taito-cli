@@ -1054,6 +1054,7 @@ PROJECT: TEMPLATES
     Examples:
       taito project create full-stack-template
       taito project create react-native-template
+      taito project create react-native-template dev
 
   project migrate TEMPLATE [BRANCH]
     Migrate an old project to use the given template.
