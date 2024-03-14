@@ -4,7 +4,7 @@
 \set qpasswordbuild '\'' :passwordbuild '\''
 
 CREATE USER :dbuserapp PASSWORD :qpasswordapp
-  NOSUPERUSER NOCREATEDB NOCREATEROLE CONNECTION LIMIT 20;
+  NOSUPERUSER NOCREATEDB NOCREATEROLE CONNECTION LIMIT 40;
 ALTER USER :dbuserapp WITH PASSWORD :qpasswordapp;
 
 CREATE USER :database PASSWORD :qpasswordbuild
