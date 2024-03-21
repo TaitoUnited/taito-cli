@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.308.2
+
+- Show 'git rev-parse --is-inside-work-tree' error message on all git related taito commands.
+
 ## 0.308.1
 
 - Show git error message on 'taito env merge'.

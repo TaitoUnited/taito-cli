@@ -3,7 +3,7 @@
 tag="${1}"
 
 taito::execute_on_host_fg "
-if git rev-parse --is-inside-work-tree &> /dev/null; then
+if git rev-parse --is-inside-work-tree > /dev/null; then
   set -e
   git tag -d ${tag}
   git push origin :refs/tags/${tag}

@@ -3,7 +3,7 @@
 commit_message="${1:-chore: empty commit}"
 
 taito::execute_on_host_fg "
-if git rev-parse --is-inside-work-tree &> /dev/null; then
+if git rev-parse --is-inside-work-tree > /dev/null; then
   git commit -m '${commit_message}' --allow-empty
 fi
 "

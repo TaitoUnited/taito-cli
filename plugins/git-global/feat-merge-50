@@ -5,7 +5,7 @@ dest="${taito_branch:-dev}"
 
 # diff-index -> Commit only if there is something to commit
 taito::execute_on_host_fg "
-if git rev-parse --is-inside-work-tree &> /dev/null; then
+if git rev-parse --is-inside-work-tree > /dev/null; then
   set -e
   if [[ \"${1}\" ]]; then
     feature=\"feat/${1}\"
