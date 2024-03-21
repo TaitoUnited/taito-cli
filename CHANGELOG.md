@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.308.1
+
+- Show git error message on 'taito env merge'.
+
 ## 0.308.0
 
 - With `taito_ci_pull_always=true` environment variable, you can make CI/CD always pull a specific build target image, in case you need it to run database migrations, for example.
