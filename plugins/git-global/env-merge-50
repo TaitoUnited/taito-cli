@@ -3,13 +3,6 @@
 : "${taito_env_merge_dest:?}"
 : "${taito_env_merges:?}"
 
-if ! git rev-parse --is-inside-work-tree > /dev/null; then
-  # Not a git repository -> call next command on command chain and exit
-  echo "Skipping: Not a proper git repository"
-  taito::call_next "${@}"
-  exit
-fi
-
 # Parse arguments
 git_push_options=""
 while [[ $# -gt 0 ]]
