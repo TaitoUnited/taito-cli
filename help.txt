@@ -22,6 +22,7 @@ QUICK EXAMPLES
     db add article                     # Add a new migration for default database
     db deploy                          # Deploy migrations to default database
     db import file.sql                 # Import a file to default database
+    db recreate                        # Recreate the database
     generate                           # Generate schemas or some other stuff. Also run on 'init'.
     code generate NAME                 # Generate code for NAME.
     manage COMMAND                     # Run a tech specific cli command (e.g. Django command)
