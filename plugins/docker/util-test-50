@@ -144,11 +144,13 @@ if [[ ! -z ${commands} ]]; then
     echo "-----------------"
   fi
 
-  taito::execute_on_host_fg "${compose_pre_cmd}${commands}"
-  
-  if [[ ${taito_verbose:-} == true ]]; then
-    taito::execute_on_host_fg "echo --- ALL CONTAINER LOGS ---; docker compose -f ./${docker_compose_test_file} logs"
-  fi
+  taito::execute_on_host_fg "${compose_pre_cmd}${commands}" ||
+    if [[ ${taito_verbose:-} == true ]]; then
+      taito::execute_on_host_fg "echo --- ALL CONTAINER LOGS ---; docker compose -f ./${docker_compose_test_file} logs"
+      exit 1
+    else
+      exit 1
+    fi
 fi
 
 # Stop all test containers started by docker-compose
