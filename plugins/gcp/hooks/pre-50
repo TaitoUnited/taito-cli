@@ -17,6 +17,7 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
     gcloud auth activate-service-account \
       "--key-file=$GOOGLE_APPLICATION_CREDENTIALS" # --project=...
+    echo "Authenticated"
     if [[ ${gcp_kubernetes_enabled:-} != "false" ]]; then
       # Force kube login on test proxy port forwarding
       force_kube_login_hack="true"
