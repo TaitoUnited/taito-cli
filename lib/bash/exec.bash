@@ -67,7 +67,7 @@ export -f taito::execute_on_host
 function taito::execute_on_host_fg () {
   local commands="${*:1}"
 
-  echo "+ ${commands}" > "${taito_vout}"
+  echo "+ ${commands}" > "${taito_vout}" || :
 
   # TODO: clean up this hack (for running docker commands on remote host)
   if [[ ${taito_host:-} ]] && \
