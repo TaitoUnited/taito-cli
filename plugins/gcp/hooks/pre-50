@@ -15,8 +15,9 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   if [[ ! $account ]]; then
     taito::print_plugin_title
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
+    cat "$GOOGLE_APPLICATION_CREDENTIALS"
     gcloud auth activate-service-account \
-      "--key-file=$GOOGLE_APPLICATION_CREDENTIALS" # --project=...
+      "--key-file=$GOOGLE_APPLICATION_CREDENTIALS" || echo "FAILED" # --project=...
     echo "Authenticated"
     if [[ ${gcp_kubernetes_enabled:-} != "false" ]]; then
       # Force kube login on test proxy port forwarding
