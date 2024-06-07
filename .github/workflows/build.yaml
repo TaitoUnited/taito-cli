@@ -128,16 +128,6 @@ jobs:
           push: true
           tags: ghcr.io/taitounited/taito-cli:ci-azure${{ env.SUFFIX }}
 
-      - name: Build ci-azure-node19
-        uses: docker/build-push-action@v2
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          context: .
-          file: ./docker/Dockerfile-ci-azure-node19
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ghcr.io/taitounited/taito-cli:ci-azure-node19${{ env.SUFFIX }}
-
       - name: Build ci-do
         uses: docker/build-push-action@v2
         with:
