@@ -1,5 +1,4 @@
 FROM ghcr.io/taitounited/taito-cli-deps:ci-openshift
-MAINTAINER Taito United <support@taitounited.fi>
 LABEL fi.taitounited.taito-cli="true"
 
 USER root
