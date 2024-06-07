@@ -43,7 +43,7 @@ fi
 # Start database proxy
 if [[ ${gcp_db_proxy_enabled:-} != "false" ]] &&
    [[ ${taito_command_requires_db_proxy:-} == "true" ]]; then
-  proxy_running=$(pgrep "cloud_sql_proxy" || :)
+  proxy_running=$(pgrep "cloud-sql-proxy" || :)
   taito::print_plugin_title
   if [[ ${proxy_running} == "" ]]; then
     echo "Starting db proxy"

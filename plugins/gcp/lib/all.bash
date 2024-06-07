@@ -85,17 +85,20 @@ function gcp::db_proxy_start () {
 
     echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
 
+    sql_proxy_opts="--address ${taito_db_proxy_bind_address} --port ${database_port:?} ${database_id}"
+    if [[ $GOOGLE_SQL_PROXY_CREDENTIALS ]]; then
+      sql_proxy_opts="${sql_proxy_opts} --credentials-file $GOOGLE_SQL_PROXY_CREDENTIALS"
+    fi
+
     if [[ $1 == "true" ]]; then
       # Run in background
       (
         taito::executing_start
-        cloud_sql_proxy \
-          "-instances=${database_id}=tcp:${taito_db_proxy_bind_address}:${database_port:?}" \
-          &> /tmp/proxy-out.tmp &
+        cloud-sql-proxy ${sql_proxy_opts} &> /tmp/proxy-out.tmp &
       )
 
       proxy_wait_count=0
-      while [[ $proxy_wait_count -le 20 ]] && ! grep "Ready for new connections" /tmp/proxy-out.tmp &> /dev/null; do
+      while [[ $proxy_wait_count -le 20 ]] && ! grep "ready for new connections" /tmp/proxy-out.tmp &> /dev/null; do
         sleep 1
         proxy_wait_count=$(( $proxy_wait_count + 1 ))
       done
@@ -104,7 +107,7 @@ function gcp::db_proxy_start () {
         cat /tmp/proxy-out.tmp
       fi
 
-      if ! grep "Ready for new connections" /tmp/proxy-out.tmp &> /dev/null; then
+      if ! grep "ready for new connections" /tmp/proxy-out.tmp &> /dev/null; then
         echo "ERROR: Failed to start db proxy"
         cat /tmp/proxy-out.tmp
         exit 1
@@ -112,8 +115,7 @@ function gcp::db_proxy_start () {
     else
       (
         taito::executing_start
-        cloud_sql_proxy \
-          "-instances=${database_id}=tcp:${taito_db_proxy_bind_address}:${database_port}"
+        cloud-sql-proxy ${sql_proxy_opts}
       )
     fi
 
@@ -122,8 +124,8 @@ function gcp::db_proxy_start () {
 
 function gcp::db_proxy_stop () {
   if [[ ${gcp_db_proxy_enabled:-} != "false" ]]; then
-    # kill cloud_sql_proxy
-    (taito::executing_start; pgrep cloud_sql_proxy | xargs kill)
+    # kill cloud-sql-proxy
+    (taito::executing_start; pgrep cloud-sql-proxy | xargs kill)
   fi
 }
 

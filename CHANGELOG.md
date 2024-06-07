@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.309.0
+
+- Use Cloud SQL Auth Proxy v2 instead of v1.
+- Instead of using the GOOGLE_APPLICATION_CREDENTIALS environment variable, you can pass separate credentials file only for Cloud SQL Auth Proxy to use with GOOGLE_SQL_PROXY_CREDENTIALS.
+
 ## 0.308.3
 
 - Remove obsolete 'git rev-parse --is-inside-work-tree' check from 'taito env merge'.

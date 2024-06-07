@@ -163,10 +163,10 @@ export default () => (
             ],
             [
               <Terminal.LinePrefix color={theme.info}>
-                cloud_sql_proxy
+                cloud-sql-proxy
               </Terminal.LinePrefix>,
               <Terminal.LineSuffix>
-                -instances=acme-zone:europe-west1:acme-postgres=tcp:127.0.0.1:5001
+                --address 127.0.0.1 --port 5001 acme-zone:europe-west1:acme-postgres
               </Terminal.LineSuffix>,
             ],
             [
