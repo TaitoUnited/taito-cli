@@ -35,9 +35,12 @@ if [[ $force_kube_login_hack == "true" ]] || ( \
      [[ ! -d "${HOME}/.kube" ]] && \
      [[ ! -d "/root/.kube" ]] \
    ); then
-  taito::print_plugin_title
-  echo "Getting GCP credentials for Kubernetes access"
-  gcp::authenticate_on_kubernetes
+  account=$(gcloud config get-value account 2> /dev/null)
+  if [[ $account ]]; then
+    taito::print_plugin_title
+    echo "Getting GCP credentials for Kubernetes access"
+    gcp::authenticate_on_kubernetes
+  fi
 fi
 
 # Start database proxy
