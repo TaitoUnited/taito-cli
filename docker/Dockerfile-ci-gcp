@@ -1,4 +1,6 @@
-FROM ghcr.io/taitounited/taito-cli-deps:ci-gcp
+# TODO: Back to ci-gcp once gcloud auth works properly on CI/CD test db proxy
+# or once all projects have been updated to use GOOGLE_SQL_PROXY_CREDENTIALS.
+FROM ghcr.io/taitounited/taito-cli-deps:ci-gcp-gcloud457
 LABEL fi.taitounited.taito-cli="true"
 
 USER root
