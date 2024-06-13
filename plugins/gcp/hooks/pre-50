@@ -29,6 +29,9 @@ fi
 
 # Authenticate on Kubernetes
 if [[ $force_kube_login_hack == "true" ]] || ( \
+     # We skip gcloud auth when GOOGLE_SQL_PROXY_CREDENTIALS is set
+     # to mitigate gcloud IPv6 connection problems
+     [[ ! "${GOOGLE_SQL_PROXY_CREDENTIALS}" ]] && \
      [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
      [[ ${taito_mode:-} == "ci" ]] && \
      [[ ${kubernetes_name:-} ]] && \
