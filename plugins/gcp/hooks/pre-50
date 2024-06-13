@@ -27,6 +27,10 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   fi
 fi
 
+echo force_kube_login_hack: $force_kube_login_hack
+echo gcp_kubernetes_enabled: $gcp_kubernetes_enabled
+echo kubernetes_name: $kubernetes_name
+
 # Authenticate on Kubernetes
 if [[ $force_kube_login_hack == "true" ]] || ( \
      [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
@@ -42,6 +46,9 @@ if [[ $force_kube_login_hack == "true" ]] || ( \
     gcp::authenticate_on_kubernetes
   fi
 fi
+
+echo gcp_db_proxy_enabled: $gcp_db_proxy_enabled
+echo taito_command_requires_db_proxy: $taito_command_requires_db_proxy
 
 # Start database proxy
 if [[ ${gcp_db_proxy_enabled:-} != "false" ]] &&
