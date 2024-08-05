@@ -6,6 +6,7 @@ TAITO CLI TROUBLESHOOTING
   These resolve most problems:
     - Restart Docker or the whole operating system.
     - Upgrade and reinitialize Taito CLI with "taito upgrade".
+    - Reset your authentication tokens with "taito auth:ENV --reset".
 
   General
   -------
