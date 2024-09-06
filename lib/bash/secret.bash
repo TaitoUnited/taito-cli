@@ -429,7 +429,7 @@ function taito::export_secrets () {
         else
           echo -n "${secret_value}" > "${file}"
         fi
-        chmod 640 "${file}"
+        chmod 600 "${file}"
 
         # Give permissions for taito user to the file
         if [[ "$(whoami)" == "root" ]]; then
@@ -520,6 +520,15 @@ function taito::save_proxy_secret_to_disk () {
 
     if [[ ! -s "$taito_proxy_credentials_local_file" ]]; then
       echo "WARNING: Proxy secret not set (${namespace}/${taito_proxy_secret_name})"
+    else
+      # REFACTOR: duplicate chmod/chown logic -->
+      chmod 600 "${taito_proxy_credentials_local_file}"
+
+      # Give permissions for taito user to the file
+      if [[ "$(whoami)" == "root" ]]; then
+        chown taito:root "${file}" > /dev/null
+      fi
+      
     fi
   fi
 }
