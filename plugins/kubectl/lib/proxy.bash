@@ -24,7 +24,7 @@ function kubectl::db_proxy_start () {
           fi
         fi
       )
-    else
+    elif [[ "${database_instance}" ]]; then
       proxy_namespace="db-proxy"
       proxy_instance="${database_instance:?}"
 
@@ -59,6 +59,8 @@ function kubectl::db_proxy_start () {
           fi
         )
       fi
+    else
+      echo "Database details not known. Skipping database proxy."
     fi
   fi
 }
@@ -69,7 +71,7 @@ function kubectl::db_proxy_stop () {
     (
       taito::executing_start
       pgrep kubectl | xargs kill &> "${taito_vout:-}" || \
-        echo "WARNING: Database proxy was not stopped. Database proxy is not running?"
+        echo "Database proxy was not stopped as no database proxy was running."
     )
   fi
 }
