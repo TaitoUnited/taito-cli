@@ -12,6 +12,7 @@ if [[ ${taito_command} == "db-deploy" ]] ||
    [[ ${taito_command} == "test" ]]; then
   # NOTE: taito_testing_secrets for backwards compatibility
   cicd_secrets=("${taito_cicd_secrets} ${taito_testing_secrets}")
+  echo "Exporting ci/cd secrets: ${cicd_secrets}" > "${taito_vout:-}"
   for secret in ${cicd_secrets[@]}; do
     (
       export taito_command_root_context="${taito_command_root_context}"
