@@ -526,7 +526,7 @@ function taito::save_proxy_secret_to_disk () {
 
       # Give permissions for taito user to the file
       if [[ "$(whoami)" == "root" ]]; then
-        chown taito:root "${file}" > /dev/null
+        chown taito:root "${taito_proxy_credentials_local_file}" > /dev/null
       fi
       
     fi
