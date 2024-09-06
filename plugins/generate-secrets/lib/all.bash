@@ -220,8 +220,9 @@ function generate-secrets::generate_by_type () {
            [[ ${secret_name} == *"-db-ssl."* ]]; then
           echo ------------------------------------------------------------------------------
           echo "You most likely can download the database SSL certificates from"
-          echo "the following web page by selecting connections tab of the correct"
-          echo "database and then downloading server CA, client cert, and client key."
+          echo "the following web page by navigating to the Connections -> Security page of"
+          echo "the correct database instance and then by creating a new client certificate"
+          echo "that will include the server CA, client cert, and client key."
           echo
           echo "https://console.cloud.google.com/sql/instances?${opts}project=${taito_zone:?}"
           echo ------------------------------------------------------------------------------
