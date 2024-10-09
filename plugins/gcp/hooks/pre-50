@@ -17,6 +17,10 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   if [[ ! $account ]]; then
     taito::print_plugin_title
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
+    if [[ ${taito_verbose:-} == true ]]; then
+      echo "GOOGLE_APPLICATION_CREDENTIALS contents:"
+      cat "$GOOGLE_APPLICATION_CREDENTIALS"
+    fi
     gcloud auth activate-service-account \
       "--key-file=$GOOGLE_APPLICATION_CREDENTIALS" # --project=...
     echo "Authenticated"
