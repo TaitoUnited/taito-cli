@@ -3,13 +3,16 @@
 function postgres::export_pgsslmode () {
   # Set PGSSLMODE
   # TODO: Add support for verify-full
-  if (
-       [[ ${taito_command_requires_db_proxy:-} == "false" ]] &&
-       [[ ${database_ssl_enabled:-} == "false" ]]
-     ) || (
-       [[ ${taito_command_requires_db_proxy:-} == "true" ]] &&
-       [[ ${database_proxy_ssl_enabled:-} == "false" ]]
-     ); then
+
+  if [[ ${taito_env:-} == "local" ]]; then
+    export PGSSLMODE="prefer"
+  elif (
+      [[ ${taito_command_requires_db_proxy:-} == "false" ]] &&
+      [[ ${database_ssl_enabled:-} == "false" ]]
+    ) || (
+      [[ ${taito_command_requires_db_proxy:-} == "true" ]] &&
+      [[ ${database_proxy_ssl_enabled:-} == "false" ]]
+    ); then
     export PGSSLMODE="prefer"
   else
     taito::expose_db_ssl_credentials
