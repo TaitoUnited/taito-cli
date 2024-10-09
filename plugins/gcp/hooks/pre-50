@@ -28,6 +28,10 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
       # Force kube login on test proxy port forwarding
       force_kube_login_hack="true"
     fi
+
+    # TODO: remove europe hard coding and skip if not needed
+    echo "Configure docker for GCP"
+    gcloud auth configure-docker europe-west1-docker.pkg.dev
   fi
 fi
 
