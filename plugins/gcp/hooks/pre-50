@@ -31,7 +31,7 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
 
     # TODO: remove europe hard coding and skip if not needed
     echo "Configure docker for GCP"
-    gcloud auth configure-docker europe-west1-docker.pkg.dev
+    gcloud auth configure-docker europe-north1-docker.pkg.dev
   fi
 fi
 
