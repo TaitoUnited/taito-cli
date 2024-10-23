@@ -1,3 +1,4 @@
+# TODO: Move to a separate repository and then publish to GitHub Marketplace?
 name: "Taito CLI"
 description: "Run Taito CLI commands on GitHub Actions"
 inputs:

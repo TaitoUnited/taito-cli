@@ -1,3 +1,5 @@
+# NOTE: This is for GitHub Actions plugin
+# TODO: Move to a separate repository and then publish to GitHub Marketplace?
 FROM ghcr.io/taitounited/taito-cli-deps:ci
 MAINTAINER Taito United <support@taitounited.fi>
 LABEL fi.taitounited.taito-cli="true"
