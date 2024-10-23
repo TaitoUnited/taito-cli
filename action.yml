@@ -1,4 +1,4 @@
-# TODO: Move to a separate repository and then publish to GitHub Marketplace?
+# Provides GitHub Actions support for running Taito CLI commands on GA.
 name: "Taito CLI"
 description: "Run Taito CLI commands on GitHub Actions"
 inputs:
@@ -7,6 +7,6 @@ inputs:
     required: true
 runs:
   using: "docker"
-  image: "Dockerfile"
+  image: "./docker/Dockerfile-ci"
   args:
     - ${{ inputs.args }}
