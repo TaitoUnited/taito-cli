@@ -7,6 +7,6 @@ inputs:
     required: true
 runs:
   using: "docker"
-  image: "docker/Dockerfile-ci"
+  image: "docker://ghcr.io/taitounited/taito-cli:ci"
   args:
     - ${{ inputs.args }}
