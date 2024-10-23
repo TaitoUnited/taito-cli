@@ -24,15 +24,11 @@
     "dep-check:www": "cd www && npm-check",
     "precommit:branch": "if git-branch-is -q test || git-branch-is -q stag || git-branch-is -q master; then echo 'ERROR: You cannot commit changes directly to this environment branch. Only fast-forward merge is allowed.' && echo && exit 1; fi",
     "precommit:lint": "npm run lint",
+    "husky:commit-msg": "commitlint --edit",
+    "husky:pre-commit": "if [[ $taito_mode != 'ci' ]]; then npm run precommit:branch && npm run precommit:lint; fi",
+    "husky:pre-push": "if [[ $taito_mode != 'ci' ]]; then echo npm run verify; fi",
     "release-pre:prod": "semantic-release --dry-run",
     "release-post:prod": "semantic-release --no-ci"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "if [[ $taito_mode != 'ci' ]]; then npm run precommit:branch && npm run precommit:lint; fi",
-      "pre-push": "if [[ $taito_mode != 'ci' ]]; then echo npm run verify; fi"
-    }
   },
   "commitlint": {
     "extends": [
@@ -119,10 +115,10 @@
     "url": "https://github.com/TaitoUnited/taito-cli/issues"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
-    "@commitlint/config-conventional": "^13.1.0",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "git-branch-is": "^4.0.0",
-    "husky": "^7.0.2",
-    "semantic-release": "^17.4.7"
+    "husky": "^9.1.6",
+    "semantic-release": "^24.1.3"
   }
 }

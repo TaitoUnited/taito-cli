@@ -1,0 +1,29 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+: "${taito_env:?}"
+
+( [[ ${taito_ci_provider:-} != "gcp" ]] && \
+    taito::confirm "Configure Google credentials for CI/CD pipeline"
+) || taito::skip_to_next "${@}"
+
+echo "TODO: link and instructions"
+
+# echo
+# echo "Press enter to open the AWS IAM console for retrieving the access keys"
+# echo "of the CI/CD user."
+# read -r
+# taito::open_browser "https://console.aws.amazon.com/iam/home?#users"
+
+# echo
+# echo "Now add AWS credentials (${taito_branch^^}_AWS_ACCESS_KEY_ID, ${taito_branch^^}_AWS_SECRET_ACCESS_KEY)"
+# echo "to your CI/CD pipeline according to your CI/CD provider instructions. If you"
+# echo "configure them on organization/account level, you don't have to configure"
+# echo "them for each project separately. You should mask and encrypt the"
+# echo "AWS_SECRET_ACCESS_KEY value if your CI/CD provides such an option."
+# echo
+# echo "Press enter when done."
+# read -r
+# echo
+
+taito::call_next "${@}"
