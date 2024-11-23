@@ -14,10 +14,17 @@ function docker::image_push () {
   echo
   if [[ ${taito_container_registry_provider:-} != "local" ]]; then
     echo "Pushing image $1 to registry. This may take some time. Please be patient."
-    (
-      taito::executing_start
-      docker push "$1"
-    )
+    if [[ ${1} == *":latest" ]]; then
+      (
+        taito::executing_start
+        docker push "$1" || echo "WARNING: Pushing latest tag failed. Tag immutability enabled on image repository?"
+      )
+    else
+      (
+        taito::executing_start
+        docker push "$1"
+      )
+    fi
   else
     taito::expose_ssh_opts
     echo "Pushing image $1 to registry. This may take some time. Please be patient."

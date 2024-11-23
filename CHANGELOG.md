@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.310.0
+
+- Display warning only if pushing latest tag fails, as container image repository may have immutability enabled.
+
 ## 0.309.0
 
 - Use Cloud SQL Auth Proxy v2 instead of v1.
