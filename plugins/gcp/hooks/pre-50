@@ -12,8 +12,17 @@ fi
 
 # Authenticate automatically if $GOOGLE_APPLICATION_CREDENTIALS has been set
 if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
+  if [[ ${taito_verbose:-} == true ]]; then
+    echo "GOOGLE_APPLICATION_CREDENTIALS: $GOOGLE_APPLICATION_CREDENTIALS"
+  fi
+
   gcloud config set disable_usage_reporting True
   account=$(gcloud config get-value account 2> /dev/null)
+
+  if [[ ${taito_verbose:-} == true ]]; then
+    echo "gcloud account: $account"
+  fi
+
   if [[ ! $account ]]; then
     taito::print_plugin_title
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
