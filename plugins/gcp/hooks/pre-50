@@ -23,7 +23,10 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
     echo "gcloud account: $account"
   fi
 
-  if [[ ! $account ]]; then
+  # Ignore *.svc.id.goog because it causes trouble with running GitHub Actions
+  # runner on GKE.
+  # TODO: remove *.svc.id.goog ignore
+  if [[ ! $account ]] || [[ $account == *".svc.id.goog" ]]; then
     taito::print_plugin_title
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
     if [[ ${taito_verbose:-} == true ]]; then
