@@ -15,4 +15,4 @@ ENV taito_mode ci
 ENTRYPOINT ["taito"]
 
 # TODO: remove
-USER 1006:1003
+USER root:1003
