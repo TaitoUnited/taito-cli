@@ -13,3 +13,6 @@ RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
 # NOTE: Using root user as docker.sock access is often required on CI/CD
 ENV taito_mode ci
 ENTRYPOINT ["taito"]
+
+# TODO: remove
+USER 1006:1003
