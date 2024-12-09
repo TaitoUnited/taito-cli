@@ -489,13 +489,14 @@ function taito::save_proxy_secret_to_disk () {
   export taito_proxy_credentials_file=/project/tmp/secrets/proxy_credentials.json
   export taito_proxy_credentials_local_file="$taito_project_path/tmp/secrets/proxy_credentials.json"
 
-  local namespace=devops
+  local namespace=common
   taito_proxy_secret_name=cicd-proxy-serviceaccount
   taito_proxy_secret_key=key
   taito_proxy_secret_method="file"
 
   # TODO: remove
   if [[ ${taito_zone:-} == "gcloud-temp1" ]]; then
+    namespace=devops
     taito_proxy_secret_name=gcp-proxy-gserviceaccount
     taito_proxy_secret_key=key
     taito_proxy_secret_method="file"
