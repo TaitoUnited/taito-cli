@@ -118,6 +118,7 @@ if [[ ${taito_mode} == "ci" ]] && [[ ${quiet} == "false" ]]; then
   echo "HOME: ${HOME}"
   echo "PWD: ${PWD}"
   echo "taito_project_path: ${taito_project_path}"
+  echo "DOCKER_HOST_PATH $DOCKER_HOST_PATH"
   echo
 fi
 
