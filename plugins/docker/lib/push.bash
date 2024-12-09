@@ -108,7 +108,9 @@ function docker::push () {
         if [[ ${push_only_builder} == false ]]; then
           docker::image_push "${image_latest}"
         fi
-        docker::image_push "${image_builder}"
+        if [[ $taito_ci_pull_docker_cache != "false" ]]; then
+          docker::image_push "${image_builder}"
+        fi
       fi
     else
       echo "- Image ${image_tag} already exists. Skipping push."

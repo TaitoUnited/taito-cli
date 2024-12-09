@@ -138,8 +138,15 @@ function docker::build () {
 
       (
         # Pull latest builder and production image to be used as cache
-        docker::image_pull "${image_builder}" || :
-        docker::image_pull "${image_latest}" || :
+        cache_from_builder=""
+        cache_from_latest=""
+        if [[ $taito_ci_pull_docker_cache != "false" ]]; then
+          docker::image_pull "${image_builder}" || :
+          docker::image_pull "${image_latest}" || :
+          cache_from_builder="--cache-from ${image_builder}"
+          cache_from_latest="--cache-from ${image_latest}"
+        fi
+
         # Build the build stage container separately so that it can be used as:
         # 1) Build cache for later builds using --cache-from
         # 2) Integration and e2e test executioner
@@ -151,7 +158,7 @@ function docker::build () {
           --build-arg BUILD_VERSION="UNKNOWN" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
           --build-arg BUILD_STATIC_ASSETS_LOCATION="${taito_static_assets_location:-}" \
-          --cache-from "${image_builder}" \
+          ${cache_from_builder} \
           --tag "${image_builder}" \
           --tag "${image_builder_local}" \
           --tag "${image_tester}" \
@@ -161,8 +168,8 @@ function docker::build () {
         docker build \
           ${dockertarget_option} \
           -f "${service_dir}/${dockerfile}" \
-          --cache-from "${image_builder}" \
-          --cache-from "${image_latest}" \
+          ${cache_from_builder} \
+          ${cache_from_latest} \
           --build-arg BUILD_TARGET="${name}" \
           --build-arg BUILD_VERSION="UNKNOWN" \
           --build-arg BUILD_IMAGE_TAG="${image_tag}" \
