@@ -6,7 +6,7 @@
 
 kubectl::use_context
 
-echo -e "Deleting ${taito_project}-${taito_target_env} helm app." \
+echo -e "Deleting ${taito_project}-${taito_deployment_suffix} helm app." \
   "This may also delete data that\\nhas been stored on a persistent volume."
 taito::confirm "Do you really want to delete the helm app?" no || \
   taito::skip_to_next "${@}"
@@ -18,7 +18,7 @@ fi
 echo "Deleting... This may take a while..."
 (
   taito::executing_start
-  helm::run delete --debug ${helm2opts} "${taito_project}-${taito_target_env}" || :
+  helm::run delete --debug ${helm2opts} "${taito_project}-${taito_deployment_suffix}" || :
 )
 
 taito::call_next "${@}"

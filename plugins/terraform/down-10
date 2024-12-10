@@ -5,6 +5,8 @@
 # Cloud provider
 if [[ ! ${taito_deployment_platforms:-} ]] || \
    [[ ${taito_deployment_platforms} == *"terraform"* ]]; then
+
+  # TODO: Add PR environment support by passing also ${taito_deployment_suffix}
   taito_build_image_tag="destroy" \
     terraform::run destroy "${taito_provider:-}-deploy" "${taito_target_env:?}"
 fi

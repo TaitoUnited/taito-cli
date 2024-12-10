@@ -7,7 +7,7 @@
 kubectl::use_context
 (
   taito::executing_start
-  helm::run history "${taito_project}-${taito_target_env}"
+  helm::run history "${taito_project}-${taito_deployment_suffix}"
 )
 
 taito::call_next "${@}"

@@ -9,7 +9,7 @@ revision="${1:-0}"
 kubectl::use_context
 (
   taito::executing_start
-  helm::run rollback "${taito_project}-${taito_target_env}" "${revision}"
+  helm::run rollback "${taito_project}-${taito_deployment_suffix}" "${revision}"
 )
 
 taito::call_next "${@}"

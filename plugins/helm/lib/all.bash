@@ -73,7 +73,7 @@ function helm::deploy () {
       export HELM_HOME="/root/.helm"
     fi
 
-    echo "Deploying ${image} of ${taito_project}-${taito_target_env} using Helm"
+    echo "Deploying ${image} of ${taito_project}-${taito_deployment_suffix} using Helm"
     echo
     echo > "${taito_vout}"
     cat ./scripts/helm.yaml.tmp > "${taito_vout}"
@@ -129,7 +129,7 @@ function helm::deploy () {
         --set build.commit="TODO" \
         -f scripts/helm.yaml.tmp \
         ${helm_deploy_options:-} \
-        "${taito_project}-${taito_target_env}" "./scripts/helm"
+        "${taito_project}-${taito_deployment_suffix}" "./scripts/helm"
       exit_code=$?
 
       if [[ $exit_code != 0 ]] &&

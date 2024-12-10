@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.310.0
 
 - Display warning only if pushing latest tag fails, as container image repository may have immutability enabled.
+- Taito CLI now supports PR environments when using Helm. That is, you can use `pr-NUMBER` as ENV to deploy pull-request version aside your dev version.
 
 ## 0.309.0
 
