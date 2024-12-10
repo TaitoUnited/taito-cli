@@ -2,7 +2,8 @@
 
 function helm::deploy () {
   local image="${1:-$taito_target_image}"
-  local options=("${@:2}")
+  local config_name="${2}"
+  local options=("${@:3}")
 
   # Determine image
   # TODO: this is a quick hack
@@ -144,7 +145,7 @@ function helm::deploy () {
           echo "your CI/CD might not have enough privileges to deploy all the changes."
           echo "Try to deploy the changes manually with:"
           echo
-          echo "   taito deployment deploy:${taito_target_env} ${image}"
+          echo "   taito deployment deploy:${taito_deployment_suffix} ${image}"
           echo
           echo "...and trigger the CI/CD build again."
           echo "------------------------------------------------------------------------"

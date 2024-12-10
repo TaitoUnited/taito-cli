@@ -33,31 +33,31 @@ if [ $all = true ]; then
   taito::print_title "Ingress"
   (
     taito::executing_start
-    kubectl get ingress $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
+    kubectl get ingress $kubernetes_params | grep -e "${taito_deployment_suffix}\\|NAME"
   ) || :
 
   taito::print_title "Jobs"
   (
     taito::executing_start
-    kubectl get jobs $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
+    kubectl get jobs $kubernetes_params | grep -e "${taito_deployment_suffix}\\|NAME"
   ) || :
 fi
 
 taito::print_title "Cron jobs"
 (
   taito::executing_start
-  kubectl get cronjobs $kubernetes_params | grep -e "${taito_target_env}\\|NAME"
+  kubectl get cronjobs $kubernetes_params | grep -e "${taito_deployment_suffix}\\|NAME"
 ) || :
 
 if [ "${taito_version:-}" -ge "1" ]; then
   taito::print_title "Pods"
   (
     taito::executing_start
-    kubectl get pods $kubernetes_params $pod_params | grep -e "${taito_target_env}\\|NAME"
+    kubectl get pods $kubernetes_params $pod_params | grep -e "${taito_deployment_suffix}\\|NAME"
   ) || :
 
   unready_pods=$(
-    kubectl get pods $kubernetes_params -o go-template='{{ range  $item := .items }}{{ range .status.conditions }}{{ if (or (and (eq .type "PodScheduled") (eq .status "False")) (and (eq .type "Ready") (eq .status "False") (ne (or .reason "") "PodCompleted"))) }}{{ $item.metadata.name}} {{ end }}{{ end }}{{ end }}' | tr ' ' '\n' | grep -e "${taito_target_env}\\|NAME"
+    kubectl get pods $kubernetes_params -o go-template='{{ range  $item := .items }}{{ range .status.conditions }}{{ if (or (and (eq .type "PodScheduled") (eq .status "False")) (and (eq .type "Ready") (eq .status "False") (ne (or .reason "") "PodCompleted"))) }}{{ $item.metadata.name}} {{ end }}{{ end }}{{ end }}' | tr ' ' '\n' | grep -e "${taito_deployment_suffix}\\|NAME"
   ) || :
   if [[ ${unready_pods} ]]; then
     taito::print_title "Pods not ready"
@@ -69,7 +69,7 @@ if [ "${taito_version:-}" -ge "1" ]; then
   fi
 
   taito::print_title "Resource usage"
-  (taito::executing_start; kubectl top pod $kubernetes_params 2> /dev/null | grep -e "${taito_target_env}\\|NAME") || :
+  (taito::executing_start; kubectl top pod $kubernetes_params 2> /dev/null | grep -e "${taito_deployment_suffix}\\|NAME") || :
 
   taito::print_title "Images"
   (
