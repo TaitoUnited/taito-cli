@@ -947,6 +947,12 @@ PROJECT: DATABASE OPERATIONS
     will be run from the beginning. DB proxy connection and secrets are handled
     automatically.
 
+  db create[:TARGET][:ENV]
+    Creates the database.
+
+  db drop[:TARGET][:ENV]
+    Drops the database.
+
   db copy between[:TARGET]:SOURCE_ENV:DEST_ENV
     Copy database from one environment to another. For example
     `db copy between:prod:stag` or `db copy between:dev:local`. If you do not

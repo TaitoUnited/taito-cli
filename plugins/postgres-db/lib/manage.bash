@@ -2,8 +2,8 @@
 
 function sql_file_flag () {
   local name=$1
-  if [[ -f "./${taito_target:?}/${name}" ]]; then
-    echo "-f ./${taito_target:?}/${name}"
+  if [[ -f "./${taito_target:-database}/${name}" ]]; then
+    echo "-f ./${taito_target:-database}/${name}"
   elif [[ -f "${taito_plugin_path:?}/resources/${name}" ]]; then
     echo "-f ${taito_plugin_path:?}/resources/${name}"
   fi
@@ -13,13 +13,27 @@ function postgres::create_database () {
   (
     echo
     echo "Creating database"
+
     postgres::export_pgsslmode
+
+    taito::expose_db_user_credentials
+    export PGPASSWORD
+    PGPASSWORD="${database_build_password}"
+
+    # Skip if database already exists
+    psql -h "${database_host}" \
+      -p "${database_port}" \
+      -d "${database_name}" \
+      -U "${database_build_username}" \
+      -c "SELECT version();" >/dev/null 2>&1 && \
+        echo "SKIPPING: Database ${database_name} already exists" && return
+
     until (
       taito::executing_start
       psql -h "${database_host}" \
         -p "${database_port}" \
         -d "${database_master_database:-postgres}" \
-        -U "${database_username}" \
+        -U "${database_build_username}" \
         $(sql_file_flag create.sql) \
         $([[ "${database_viewer_username_internal}" ]] && sql_file_flag create-viewer.sql) \
         -v "database=${database_name}" \
@@ -41,7 +55,7 @@ function postgres::create_database () {
         psql -h "${database_host}" \
           -p "${database_port}" \
           -d "${database_name}" \
-          -U "${database_username}" \
+          -U "${database_build_username}" \
           ${db_file_flag} \
           > "${taito_vout}"
       ) do
@@ -51,12 +65,8 @@ function postgres::create_database () {
       echo "WARNING: File ./${taito_target}/db.sql does not exist"
     fi
 
-    taito::expose_db_user_credentials
-
     echo
     echo "Granting user access"
-    export PGPASSWORD
-    PGPASSWORD="${database_build_password}"
     (
       taito::executing_start
       psql -h "${database_host}" \
@@ -74,21 +84,29 @@ function postgres::create_database () {
 }
 
 function postgres::drop_database () {
-  echo
-  echo "Dropping database"
-  postgres::export_pgsslmode
-  until (
-    taito::executing_start
-    psql -h "${database_host}" \
-      -p "${database_port}" \
-      -d "${database_master_database:-postgres}" \
-      -U "${database_username}" \
-      $(sql_file_flag drop.sql) \
-      -v "database=${database_name}" \
-      -v "databaseold=${database_name}_old" > "${taito_vout}" 2>&1
-  ) do
-    :
-  done
+  (
+    echo
+    echo "Dropping database"
+
+    postgres::export_pgsslmode
+
+    taito::expose_db_user_credentials
+    export PGPASSWORD
+    PGPASSWORD="${database_build_password}"
+
+    until (
+      taito::executing_start
+      psql -h "${database_host}" \
+        -p "${database_port}" \
+        -d "${database_master_database:-postgres}" \
+        -U "${database_build_username}" \
+        $(sql_file_flag drop.sql) \
+        -v "database=${database_name}" \
+        -v "databaseold=${database_name}_old" > "${taito_vout}" 2>&1
+    ) do
+      :
+    done
+  )
 }
 
 function postgres::create_users () {

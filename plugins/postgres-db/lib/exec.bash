@@ -1,5 +1,45 @@
 #!/bin/bash
 
+function postgres::export_pguser () {
+  local username=$1
+
+  export psql_username
+  export psql_password
+
+  # TODO: duplicate logic with mysql and mysqldump
+  # TODO: needs refactoring
+
+  psql_username="${database_name}_app"
+  if [[ ${database_username:-} ]]; then
+    psql_username="${database_username}"
+  fi
+  psql_password="${database_password:-$taito_default_password}"
+
+  if [[ ${username} != "" ]]; then
+    psql_username="${username}"
+    psql_password=""
+  else
+    taito::expose_db_user_credentials
+    if [[ ${database_default_username} ]] &&
+       [[ ${database_default_password} ]]; then
+      psql_username="${database_default_username}"
+      psql_password="${database_default_password}"
+    elif [[ ${database_build_username} ]] &&
+       [[ ${database_build_password} ]]; then
+      psql_username="${database_build_username}"
+      psql_password="${database_build_password}"
+    elif [[ ${database_app_username} ]] &&
+       [[ ${database_app_password} ]] &&
+       [[ ${psql_password} == ${taito_default_password} ]]; then
+      psql_username="${database_app_username}"
+      psql_password="${database_app_password}"
+    elif [[ ${database_build_username} ]]; then
+      psql_username="${database_build_username}"
+      psql_password="${database_build_password}"
+    fi
+  fi
+}
+
 function postgres::export_pgsslmode () {
   # Set PGSSLMODE
   # TODO: Add support for verify-full
@@ -51,43 +91,8 @@ function postgres::connect () {
   local flags="${2}"
   local command="${3:-psql}"
 
-  local psql_username
-  local psql_password
-
-  # TODO: duplicate logic with mysql and mysqldump
-  # TODO: needs refactoring
-
-  psql_username="${database_name}_app"
-  if [[ ${database_username:-} ]]; then
-    psql_username="${database_username}"
-  fi
-  psql_password="${database_password:-$taito_default_password}"
-
-  if [[ ${username} != "" ]]; then
-    psql_username="${username}"
-    psql_password=""
-  else
-    taito::expose_db_user_credentials
-    if [[ ${database_default_username} ]] &&
-       [[ ${database_default_password} ]]; then
-      psql_username="${database_default_username}"
-      psql_password="${database_default_password}"
-    elif [[ ${database_build_username} ]] &&
-       [[ ${database_build_password} ]]; then
-      psql_username="${database_build_username}"
-      psql_password="${database_build_password}"
-    elif [[ ${database_app_username} ]] &&
-       [[ ${database_app_password} ]] &&
-       [[ ${psql_password} == ${taito_default_password} ]]; then
-      psql_username="${database_app_username}"
-      psql_password="${database_app_password}"
-    elif [[ ${database_build_username} ]]; then
-      psql_username="${database_build_username}"
-      psql_password="${database_build_password}"
-    fi
-  fi
-
   (
+    postgres::export_pguser "${username}"
     postgres::export_pgsslmode
     export PGPASSWORD="${psql_password}"
     taito::executing_start

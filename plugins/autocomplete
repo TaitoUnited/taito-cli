@@ -233,6 +233,8 @@ if [[ ${taito_project:-} ]]; then
         echo "db restore${db}${suffix}"
         echo "db log${db}${suffix}"
         echo "db recreate${db}${suffix}"
+        echo "db create${db}${suffix}"
+        echo "db drop${db}${suffix}"
         echo "db deploy${db}${suffix}"
         echo "db rebase${db}${suffix}"
         echo "db rebase${db}${param} CHANGE"

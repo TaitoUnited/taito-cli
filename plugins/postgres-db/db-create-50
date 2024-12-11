@@ -3,8 +3,7 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
-  if taito::confirm "Recreate postgres database ${database_name}" no; then
-    postgres::drop_database
+  if taito::confirm "Create postgres database ${database_name}"; then
     postgres::create_database
   fi
 fi

@@ -358,6 +358,10 @@ if [[ ${taito_project:-} ]]; then
           "# View change log of ${env} environment database"
         echo "db recreate${db}${suffix}                  " \
           "# Recreates the ${env} environment database"
+        echo "db create${db}${suffix}                  " \
+          "# Creates the ${env} environment database"
+        echo "db drop${db}${suffix}                  " \
+          "# Drops the ${env} environment database"
         echo "db deploy${db}${suffix}                    " \
           "# Deploy changes to ${env} environment database"
         echo "db rebase${db}${suffix}                    " \
