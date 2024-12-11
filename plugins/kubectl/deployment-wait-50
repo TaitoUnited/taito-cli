@@ -6,7 +6,7 @@ echo "Checking application status"
 kubectl::use_context
 
 # Wait until all containers have been deployed
-sleep 5
+# sleep 5
 while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason,NAME:metadata.name | grep "\-${taito_deployment_suffix}-" | grep -v 'Completed' | grep false &> /dev/null; do
   echo "Waiting until all containers have been deployed"
   echo
@@ -18,7 +18,7 @@ while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready
   echo
   sleep 5
 done
-sleep 15
+# sleep 15
 
 # Wait even longer in case of a temporary error
 error_count=0
@@ -37,7 +37,7 @@ until [[ $error_count -ge 8 ]]; do
   ((error_count=error_count+1))
 done
 
-if kubectl get pods | grep "BackOff\|Error\|Init" &> /dev/null; then
+if kubectl get pods | grep "\-${taito_deployment_suffix}-" | grep "BackOff\|Error\|Init" &> /dev/null; then
   echo "ERROR: Some of the containers failed to start"
   echo
   kubectl get pods | grep "\-${taito_deployment_suffix}-"
