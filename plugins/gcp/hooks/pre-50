@@ -11,7 +11,9 @@ if [[ ${taito_command:?} == "env-apply" ]] && [[ ${taito_mode:-} != "ci" ]]; the
 fi
 
 # Authenticate automatically if $GOOGLE_APPLICATION_CREDENTIALS has been set
-if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
+# But skip when there is no environment
+if [[ $GOOGLE_APPLICATION_CREDENTIALS ]] &&
+    ! ([[ ${taito_mode:-} == "ci" ]] && [[ ${taito_ci_no_env:-} == "true" ]]); then
   if [[ ${taito_verbose:-} == true ]]; then
     echo "GOOGLE_APPLICATION_CREDENTIALS: $GOOGLE_APPLICATION_CREDENTIALS"
   fi
@@ -26,9 +28,7 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   # Ignore *.svc.id.goog because it causes trouble with running GitHub Actions
   # runner on GKE.
   # TODO: remove *.svc.id.goog ignore
-  if ( [[ ! $account ]] || [[ $account == *".svc.id.goog" ]] ) &&
-     # Skip auth when there is no environment
-     ! ([[ ${taito_mode:-} == "ci" ]] && [[ ${taito_ci_no_env:-} == "true" ]]); then
+  if [[ ! $account ]] || [[ $account == *".svc.id.goog" ]]; then
     taito::print_plugin_title
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
     if [[ ${taito_verbose:-} == true ]]; then
