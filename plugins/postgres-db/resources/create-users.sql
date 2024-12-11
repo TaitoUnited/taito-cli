@@ -7,6 +7,6 @@ CREATE USER :dbuserapp PASSWORD :qpasswordapp
   NOSUPERUSER NOCREATEDB NOCREATEROLE CONNECTION LIMIT 40;
 ALTER USER :dbuserapp WITH PASSWORD :qpasswordapp;
 
-CREATE USER :database PASSWORD :qpasswordbuild
+CREATE USER :dbusermgr PASSWORD :qpasswordbuild
   NOSUPERUSER CREATEDB NOCREATEROLE CONNECTION LIMIT 20;
-ALTER USER :database WITH PASSWORD :qpasswordbuild;
+ALTER USER :dbusermgr WITH PASSWORD :qpasswordbuild;

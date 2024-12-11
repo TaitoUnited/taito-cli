@@ -1,4 +1,4 @@
 -- used by: delete
 
-DROP USER :database;
+DROP USER :dbusermgr;
 DROP USER :dbuserapp;

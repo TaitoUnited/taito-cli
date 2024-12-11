@@ -40,6 +40,7 @@ function postgres::create_database () {
         -v "collate='${database_collate:-fi_FI.UTF-8}'" \
         -v "template=${database_template:-template0}" \
         -v "dbusermaster=${database_master_username_internal:-postgres}" \
+        -v "dbusermgr=${database_mgr_username_internal}" \
         -v "dbuserapp=${database_app_username_internal}" \
         -v "dbuserviewer=${database_viewer_username_internal}" > "${taito_vout}"
     ) do
@@ -77,6 +78,7 @@ function postgres::create_database () {
       $([[ "${database_viewer_username_internal}" ]] && sql_file_flag grant-users-viewer.sql) \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
+      -v "dbusermgr=${database_mgr_username_internal}" \
       -v "dbuserapp=${database_app_username_internal}" \
       -v "dbuserviewer=${database_viewer_username_internal}" > "${taito_vout}"
     )
@@ -142,6 +144,7 @@ function postgres::create_users () {
       $([[ "${database_viewer_username_internal}" ]] && sql_file_flag create-users-viewer.sql) \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
+      -v "dbusermgr=${database_mgr_username_internal}" \
       -v "dbuserapp=${database_app_username_internal}" \
       -v "dbuserviewer=${database_viewer_username_internal}" \
       -v "passwordapp=${database_app_password:?}" \
@@ -167,6 +170,7 @@ function postgres::drop_users () {
       $([[ "${database_viewer_username_internal}" ]] && sql_file_flag drop-users-viewer.sql) \
       -v "database=${database_name}" \
       -v "dbusermaster=${database_master_username_internal:-postgres}" \
+      -v "dbusermgr=${database_mgr_username_internal}" \
       -v "dbuserapp=${database_app_username_internal}" \
       -v "dbuserviewer=${database_viewer_username_internal}" > "${taito_vout}"
   ) do

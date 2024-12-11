@@ -3,7 +3,7 @@
 -- Tables
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON TABLES TO
-    :dbusermaster, :database;
+    :dbusermaster, :dbusermgr;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO
     :dbuserapp;
@@ -11,7 +11,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 -- Sequences
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON SEQUENCES TO
-    :dbusermaster, :database;
+    :dbusermaster, :dbusermgr;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT USAGE, SELECT ON SEQUENCES TO
     :dbuserapp;
@@ -19,7 +19,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 -- Functions
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT ALL PRIVILEGES ON FUNCTIONS TO
-    :dbusermaster, :database;
+    :dbusermaster, :dbusermgr;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT EXECUTE ON FUNCTIONS TO
     :dbuserapp;
