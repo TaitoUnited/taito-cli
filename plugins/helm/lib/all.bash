@@ -1,8 +1,19 @@
 #!/bin/bash
 
+function helm::substitute () {
+  local override_file=$1
+
+  echo > "${taito_vout}"
+  echo "Helm does not support environment variables" > "${taito_vout}"
+  echo "-> Substituting all environment variables in ${override_file}" > "${taito_vout}"
+  sed 's/\$\$/%%-_-%%/g' "${override_file}" | envsubst | sed 's/%%-_-%%/$/g' > "${override_file}.tmp" || :
+  echo "Substitution DONE" > "${taito_vout}"
+  echo > "${taito_vout}"
+}
+
 function helm::deploy () {
   local image="${1:-$taito_target_image}"
-  local config_name="${2}"
+  local branch_name="${2}"
   local options=("${@:3}")
 
   # Determine image
@@ -45,28 +56,38 @@ function helm::deploy () {
 
     local helm_deploy_options="${helm_deploy_options:-}"
 
-    echo > "${taito_vout:-}"
-    echo "Helm does not support environment variables" > "${taito_vout}"
-    echo "-> Substituting all environment variables in scripts/helm.yaml" > "${taito_vout}"
-    sed 's/\$\$/%%-_-%%/g' scripts/helm.yaml | envsubst | sed 's/%%-_-%%/$/g' > scripts/helm.yaml.tmp || :
-    echo "Substitution DONE" > "${taito_vout}"
-    echo > "${taito_vout}"
+    # helm.yaml
+    helm::substitute scripts/helm.yaml
+    helm_deploy_options="${helm_deploy_options} -f scripts/helm.yaml.tmp"
 
     # helm-ENV.yaml overrides default settings of helm.yaml
-    local override_file=""
+    local override_file_for_env=""
     if [[ -f "scripts/helm-${taito_target_env}.yaml" ]]; then
-      override_file="scripts/helm-${taito_target_env}.yaml"
+      override_file_for_env="scripts/helm-${taito_target_env}.yaml"
     elif [[ -f "scripts/helm-${taito_env}.yaml" ]]; then
-      override_file="scripts/helm-${taito_env}.yaml"
+      override_file_for_env="scripts/helm-${taito_env}.yaml"
     fi
-    if [[ ${override_file} ]]; then
-      echo > "${taito_vout}"
-      echo "Helm does not support environment variables" > "${taito_vout}"
-      echo "-> Substituting all environment variables in ${override_file}" > "${taito_vout}"
-      sed 's/\$\$/%%-_-%%/g' "${override_file}" | envsubst | sed 's/%%-_-%%/$/g' > "${override_file}.tmp" || :
-      helm_deploy_options="${helm_deploy_options} -f ${override_file}.tmp"
-      echo "Substitution DONE" > "${taito_vout}"
-      echo > "${taito_vout}"
+    if [[ ${override_file_for_env} ]]; then
+      helm::substitute "${override_file_for_env}"
+      helm_deploy_options="${helm_deploy_options} -f ${override_file_for_env}.tmp"
+    fi
+
+    if [[ "${taito_deployment_suffix}" != "${taito_target_env}" ]]; then
+      # helm-pr.yaml overrides
+      local override_file_for_suffix="scripts/helm-${taito_deployment_suffix%%-*}.yaml"
+      echo override_file_for_suffix $override_file_for_suffix
+      if [[ -f "${override_file_for_suffix}" ]]; then
+        helm::substitute "${override_file_for_suffix}"
+        helm_deploy_options="${helm_deploy_options} -f ${override_file_for_suffix}.tmp"
+      fi
+
+      # helm-pr-db.yaml overrides based on branch name suffic
+      local override_file_for_branch="scripts/helm-${taito_deployment_suffix%%-*}-${branch_name##*-}.yaml"
+      echo override_file_for_branch $override_file_for_branch
+      if [[ -f "${override_file_for_branch}" ]]; then
+        helm::substitute "${override_file_for_branch}"
+        helm_deploy_options="${helm_deploy_options} -f ${override_file_for_branch}.tmp"
+      fi
     fi
 
     # For Google Cloud builder
@@ -128,7 +149,6 @@ function helm::deploy () {
         --set build.imageTag="${image}" \
         --set build.version="${version}" \
         --set build.commit="TODO" \
-        -f scripts/helm.yaml.tmp \
         ${helm_deploy_options:-} \
         "${taito_project}-${taito_deployment_suffix}" "./scripts/helm"
       exit_code=$?
