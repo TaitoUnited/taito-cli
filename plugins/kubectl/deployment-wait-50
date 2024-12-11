@@ -7,14 +7,14 @@ kubectl::use_context
 
 # Wait until all containers have been deployed
 sleep 5
-while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason | grep -v 'Completed' | grep false &> /dev/null; do
+while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason,NAME:metadata.name | grep "\-${taito_deployment_suffix}-" | grep -v 'Completed' | grep false &> /dev/null; do
   echo "Waiting until all containers have been deployed"
   echo
   echo "TIP: If this takes a long time, perhaps you have forgotten to set value of some"
   echo "newly added secret? You can investigate more with 'taito status:${taito_target_env}',"
   echo "'taito logs:TARGET:${taito_target_env}', and 'taito open logs:${taito_target_env}' commands."
   echo
-  kubectl get pods
+  kubectl get pods | grep "\-${taito_deployment_suffix}-"
   echo
   sleep 5
 done
@@ -23,7 +23,7 @@ sleep 15
 # Wait even longer in case of a temporary error
 error_count=0
 until [[ $error_count -ge 8 ]]; do
-  pods=$(kubectl get pods)
+  pods=$(kubectl get pods | grep "\-${taito_deployment_suffix}-")
   if echo "${pods}" | grep "BackOff\|Error\|Init" &> /dev/null; then
     echo "Some errors during deployment:"
     echo
@@ -40,15 +40,11 @@ done
 if kubectl get pods | grep "BackOff\|Error\|Init" &> /dev/null; then
   echo "ERROR: Some of the containers failed to start"
   echo
-  kubectl get pods
+  kubectl get pods | grep "\-${taito_deployment_suffix}-"
   exit 1
 fi
 
 echo
-kubectl get pods
-
-echo
-echo "Images:"
-kubectl get pods -o 'jsonpath={.items[*].spec.containers[*].image}' | tr -s '[[:space:]]' '\n' | sort | uniq
+kubectl get pods | grep "\-${taito_deployment_suffix}-"
 
 taito::call_next "${@}"
