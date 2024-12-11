@@ -90,7 +90,6 @@ function docker::push () {
   local prefix="${image_path}${path_suffix}"
   local image="${prefix}:${image_tag}"
   local image_untested="${image}-untested"
-  local image_latest="${prefix}:latest"
   local image_builder="${prefix}-builder:latest"
 
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
@@ -105,9 +104,6 @@ function docker::push () {
         docker::image_push "${image_untested}"
       fi
       if [[ ${taito_container_registry_provider:-} != "local" ]]; then
-        if [[ ${push_only_builder} == false ]]; then
-          docker::image_push "${image_latest}"
-        fi
         if [[ $taito_ci_pull_docker_cache != "false" ]]; then
           docker::image_push "${image_builder}"
         fi
