@@ -26,7 +26,9 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]]; then
   # Ignore *.svc.id.goog because it causes trouble with running GitHub Actions
   # runner on GKE.
   # TODO: remove *.svc.id.goog ignore
-  if [[ ! $account ]] || [[ $account == *".svc.id.goog" ]]; then
+  if ( [[ ! $account ]] || [[ $account == *".svc.id.goog" ]] ) &&
+     # Skip auth when there is no environment
+     ! ([[ ${taito_mode:-} == "ci" ]] && [[ ${taito_ci_no_env:-} == "true" ]]); then
     taito::print_plugin_title
     echo "Authenticating with key $GOOGLE_APPLICATION_CREDENTIALS"
     if [[ ${taito_verbose:-} == true ]]; then
@@ -53,6 +55,9 @@ if [[ $force_kube_login_hack == "true" ]] || ( \
      # We skip gcloud auth when GOOGLE_SQL_PROXY_CREDENTIALS is set
      # to mitigate gcloud IPv6 connection problems
      [[ ! "${GOOGLE_SQL_PROXY_CREDENTIALS}" ]] && \
+     # Skip auth when there is no environment
+     ! ([[ ${taito_mode:-} == "ci" ]] && [[ ${taito_ci_no_env:-} == "true" ]]) && \
+
      [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
      [[ ${taito_mode:-} == "ci" ]] && \
      [[ ${kubernetes_name:-} ]] && \
