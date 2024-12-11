@@ -6,9 +6,11 @@
 
 kubectl::use_context
 
+confirm_default=$([[ $taito_mode == "ci2" ]] && echo 'yes' || echo 'no')
+
 echo -e "Deleting ${taito_project}-${taito_deployment_suffix} helm app." \
   "This may also delete data that\\nhas been stored on a persistent volume."
-taito::confirm "Do you really want to delete the helm app?" no || \
+taito::confirm "Do you really want to delete the helm app?" $confirm_default || \
   taito::skip_to_next "${@}"
 
 if helm version | grep "SemVer:\"v2." > /dev/null; then
