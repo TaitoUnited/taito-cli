@@ -5,8 +5,12 @@
 echo "Checking application status"
 kubectl::use_context
 
+function check_status () {
+  kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason,NAME:metadata.name | grep "\-${taito_deployment_suffix}-" | grep -v 'Completed' | grep false &> /dev/null
+}
+
 # Wait until all containers have been deployed
-while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason,NAME:metadata.name | grep "\-${taito_deployment_suffix}-" | grep -v 'Completed' | grep false &> /dev/null; do
+while check_status || (sleep 2 && check_status); do
   echo "Waiting until all containers have been deployed"
   echo
   echo "TIP: If this takes a long time, perhaps you have forgotten to set value of some"
@@ -15,7 +19,7 @@ while kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready
   echo
   kubectl get pods | grep "\-${taito_deployment_suffix}-"
   echo
-  sleep 5
+  sleep 3
 done
 
 # Wait even longer in case of a temporary error
