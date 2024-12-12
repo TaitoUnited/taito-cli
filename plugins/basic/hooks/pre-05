@@ -8,8 +8,10 @@ if [[ ${taito_mode:?} == "ci" ]] && \
   /taito-cli-deps/tools/user-init.sh
 fi
 
-if [[ ${taito_command} == "db-deploy" ]] ||
-   [[ ${taito_command} == "test" ]]; then
+if [[ ${basic_cicd_secrets_already_fetched} != "true" ]] && (
+     [[ ${taito_command} == "db-deploy" ]] ||
+     [[ ${taito_command} == "test" ]]
+   ); then
   # NOTE: taito_testing_secrets for backwards compatibility
   cicd_secrets=("${taito_cicd_secrets} ${taito_testing_secrets}")
   echo "Exporting ci/cd secrets: ${cicd_secrets}" > "${taito_vout:-}"
@@ -21,6 +23,8 @@ if [[ ${taito_command} == "db-deploy" ]] ||
       taito -q -c ${taito_options:-} secret-export:$taito_env ${secret%:*}
     )
   done
+
+  export basic_cicd_secrets_already_fetched=true
 fi
 
 taito::call_next "${@}"
