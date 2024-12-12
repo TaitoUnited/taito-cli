@@ -139,6 +139,9 @@ done
 if [[ ! -z ${commands} ]]; then
   commands=": ${commands} && :"
   if [[ ${taito_verbose:-} == true ]]; then
+    echo "--- ENV ---"
+    echo "COMPOSE_PROJECT_NAME $COMPOSE_PROJECT_NAME"
+    echo
     echo "--- EXECUTING ---"
     echo "${compose_pre_cmd}${commands}"
     echo "-----------------"
