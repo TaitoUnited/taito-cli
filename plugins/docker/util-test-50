@@ -104,7 +104,7 @@ if [[ ${taito_env} != "local" ]]; then
   if [[ -f "./${docker_compose_test_file}" ]] && \
      [[ $(grep "${container_test}" "./${docker_compose_test_file}") ]]; then
     docker_compose="true"
-    compose_cmd="COMPOSE_HTTP_TIMEOUT=90 DOCKER_HOST_PATH=${DOCKER_HOST_PATH:-.} docker compose -f ./${docker_compose_test_file} run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ${test_executable} SUITE ${test_filter}'"
+    compose_cmd="COMPOSE_HTTP_TIMEOUT=90 DOCKER_HOST_PATH=${DOCKER_HOST_PATH:-.} COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-} docker compose -f ./${docker_compose_test_file} run --rm ${docker_env_vars} ${container_test} sh -c 'sleep 5 && ${test_executable} SUITE ${test_filter}'"
 
     # On CI mode we might use root user
     if [[ ${taito_mode:-} == "ci" ]] && [[ $(whoami) != "taito" ]]; then
