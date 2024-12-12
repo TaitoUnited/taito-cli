@@ -26,7 +26,7 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]] &&
     echo "GOOGLE_APPLICATION_CREDENTIALS: $GOOGLE_APPLICATION_CREDENTIALS"
   fi
 
-  gcloud config set disable_usage_reporting True
+  gcloud config set disable_usage_reporting True > /dev/null
   account=$(gcloud config get-value account 2> /dev/null)
 
   if [[ ${taito_verbose:-} == true ]]; then
