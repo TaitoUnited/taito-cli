@@ -4,6 +4,12 @@
 
 [[ $gcp_auth_already_done != "true" ]] || taito::skip_to_next "${@}"
 
+if [[ ${taito_verbose:-} == true ]]; then
+  echo "gcp_auth_already_done: $gcp_auth_already_done"
+fi
+
+export gcp_auth_already_done=true
+
 # Authentication
 if [[ ${taito_command:?} == "env-apply" ]] && [[ ${taito_mode:-} != "ci" ]]; then
   taito::print_plugin_title
@@ -73,7 +79,5 @@ if [[ $force_kube_login_hack == "true" ]] || ( \
     gcp::authenticate_on_kubernetes
   fi
 fi
-
-export gcp_auth_already_done=true
 
 taito::call_next "${@}"
