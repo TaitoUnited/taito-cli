@@ -13,7 +13,6 @@ fi
 # Authenticate automatically if $GOOGLE_APPLICATION_CREDENTIALS has been set
 # But skip when there is no environment
 if [[ $GOOGLE_APPLICATION_CREDENTIALS ]] &&
-   [[ $taito_continue != "true" ]] &&
     ! ([[ ${taito_mode:-} == "ci" ]] && [[ ${taito_ci_no_env:-} == "true" ]]); then
   if [[ ${taito_verbose:-} == true ]]; then
     echo "GOOGLE_APPLICATION_CREDENTIALS: $GOOGLE_APPLICATION_CREDENTIALS"
@@ -53,7 +52,6 @@ fi
 
 # Authenticate on Kubernetes
 if [[ $force_kube_login_hack == "true" ]] || ( \
-     [[ $taito_continue != "true" ]] && \
      # We skip gcloud auth when GOOGLE_SQL_PROXY_CREDENTIALS is set
      # to mitigate gcloud IPv6 connection problems
      [[ ! "${GOOGLE_SQL_PROXY_CREDENTIALS}" ]] && \
