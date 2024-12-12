@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Display warning only if pushing latest tag fails, as container image repository may have immutability enabled.
 - Taito CLI now supports PR environments when using Helm. That is, you can use `pr-NUMBER` as ENV to deploy pull-request version aside your dev version.
 - Postgres plugin now supports "db create" and "db drop" commands and database are create with the app specific database mgr user by default.
+- Default deployment wait time was shortened to 15 seconds. Note that you can configure sleep seconds with the ci_test_wait environment variable.
 
 ## 0.309.0
 
