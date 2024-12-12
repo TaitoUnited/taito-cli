@@ -68,6 +68,7 @@ do
         ;;
         -c|--continue)
         continue=true
+        taito_continue=true
         shift || :
         ;;
         -v|--verbose)
@@ -208,7 +209,7 @@ fi
 
 # Export some variables to be used in configs and command execution
 export taito_default_password="${taito_default_password}"
-export taito_continue="true"
+export taito_continue="${taito_continue:-false}"
 export taito_skip_override="${skip_override}"
 export taito_command="${command}"
 export taito_orig_command="${orig_command}"
