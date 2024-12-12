@@ -1,0 +1,22 @@
+#!/bin/bash -e
+
+if [[ ${basic_cicd_secrets_already_fetched} != "true" ]] && (
+     [[ ${taito_command} == "db-deploy" ]] ||
+     [[ ${taito_command} == "test" ]]
+   ); then
+  # NOTE: taito_testing_secrets for backwards compatibility
+  cicd_secrets=("${taito_cicd_secrets} ${taito_testing_secrets}")
+  echo "Exporting ci/cd secrets: ${cicd_secrets}" > "${taito_vout:-}"
+  for secret in ${cicd_secrets[@]}; do
+    (
+      export taito_command_root_context="${taito_command_root_context}"
+      export taito_command_context="${taito_command}"
+      echo "Exporting secret ${secret%:*}"
+      taito -q -c ${taito_options:-} secret-export:$taito_env ${secret%:*}
+    )
+  done
+
+  export basic_cicd_secrets_already_fetched=true
+fi
+
+taito::call_next "${@}"
