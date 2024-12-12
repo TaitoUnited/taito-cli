@@ -2,6 +2,8 @@
 # shellcheck source=../lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+[[ $gcp_auth_already_done != "true" ]] || taito::skip_to_next "${@}"
+
 # Authentication
 if [[ ${taito_command:?} == "env-apply" ]] && [[ ${taito_mode:-} != "ci" ]]; then
   taito::print_plugin_title
@@ -72,17 +74,6 @@ if [[ $force_kube_login_hack == "true" ]] || ( \
   fi
 fi
 
-# Start database proxy
-if [[ ${gcp_db_proxy_enabled:-} != "false" ]] &&
-   [[ ${taito_command_requires_db_proxy:-} == "true" ]]; then
-  proxy_running=$(pgrep "cloud-sql-proxy" || :)
-  taito::print_plugin_title
-  if [[ ${proxy_running} == "" ]]; then
-    echo "Starting db proxy"
-    gcp::db_proxy_start true
-  else
-    echo "Not Starting db proxy. It is already running."
-  fi
-fi
+export gcp_auth_already_done=true
 
 taito::call_next "${@}"

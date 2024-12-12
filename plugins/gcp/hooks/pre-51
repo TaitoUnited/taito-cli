@@ -1,0 +1,18 @@
+#!/bin/bash -e
+# shellcheck source=../lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+# Start database proxy
+if [[ ${gcp_db_proxy_enabled:-} != "false" ]] &&
+   [[ ${taito_command_requires_db_proxy:-} == "true" ]]; then
+  proxy_running=$(pgrep "cloud-sql-proxy" || :)
+  taito::print_plugin_title
+  if [[ ${proxy_running} == "" ]]; then
+    echo "Starting db proxy"
+    gcp::db_proxy_start true
+  else
+    echo "Not Starting db proxy. It is already running."
+  fi
+fi
+
+taito::call_next "${@}"
