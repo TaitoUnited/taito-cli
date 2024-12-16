@@ -13,8 +13,7 @@ function helm::substitute () {
 
 function helm::deploy () {
   local image="${1:-$taito_target_image}"
-  local branch_name="${2}"
-  local options=("${@:3}")
+  local labels=("${@:2}")
 
   # Determine image
   # TODO: this is a quick hack
@@ -24,7 +23,6 @@ function helm::deploy () {
      [[ ! -f ./taitoflag_images_exist ]]; then
     image="${image}-untested"
   elif [[ ${image} == "--dry-run" ]]; then
-    options=("${@:1}")
     image="DRY_RUN"
   elif [[ -z "${image}" ]]; then
     # Image not given as param and using 'latest' causes problems
@@ -72,23 +70,29 @@ function helm::deploy () {
       helm_deploy_options="${helm_deploy_options} -f ${override_file_for_env}.tmp"
     fi
 
+    # apply helm-pr.yaml overrides
     if [[ "${taito_deployment_suffix}" != "${taito_target_env}" ]]; then
-      # helm-pr.yaml overrides
       local override_file_for_suffix="scripts/helm-${taito_deployment_suffix%%-*}.yaml"
-      echo override_file_for_suffix $override_file_for_suffix
       if [[ -f "${override_file_for_suffix}" ]]; then
         helm::substitute "${override_file_for_suffix}"
         helm_deploy_options="${helm_deploy_options} -f ${override_file_for_suffix}.tmp"
       fi
-
-      # helm-pr-db.yaml overrides based on branch name suffic
-      local override_file_for_branch="scripts/helm-${taito_deployment_suffix%%-*}-${branch_name##*-}.yaml"
-      echo override_file_for_branch $override_file_for_branch
-      if [[ -f "${override_file_for_branch}" ]]; then
-        helm::substitute "${override_file_for_branch}"
-        helm_deploy_options="${helm_deploy_options} -f ${override_file_for_branch}.tmp"
-      fi
     fi
+
+    # helm-LABEL.yaml overrides
+    local formatted_labels=
+    for label in "${labels[@]}"
+    do
+      # Lower-case, replace space with -, squeeze multiple - into one
+      formatted_label=$(echo "${label,,}" | tr ' ' '-' | tr -s '-')
+      local override_file_for_label="scripts/helm-${formatted_label}.yaml"
+      if [[ -f "${override_file_for_label}" ]]; then
+        helm::substitute "${override_file_for_label}"
+        helm_deploy_options="${helm_deploy_options} -f ${override_file_for_label}.tmp"
+      fi
+
+      formatted_labels="${formatted_labels} ${label}"
+    done
 
     # For Google Cloud builder
     if [[ ${taito_mode:-} == "ci" ]] && [[ ${HOME} == "/builder/home" ]]; then
@@ -116,7 +120,7 @@ function helm::deploy () {
       # TODO remove non-globals
 
       set +e
-      helm upgrade "${options[@]}" --debug --install \
+      helm upgrade --debug --install \
         --skip-crds \
         --namespace "${taito_namespace}" \
         --set global.env="${taito_target_env}" \
@@ -165,7 +169,7 @@ function helm::deploy () {
           echo "your CI/CD might not have enough privileges to deploy all the changes."
           echo "Try to deploy the changes manually with:"
           echo
-          echo "   taito deployment deploy:${taito_deployment_suffix} ${image} ${branch_name}"
+          echo "   taito deployment deploy:${taito_deployment_suffix} ${image} ${formatted_labels}"
           echo
           echo "...and trigger the CI/CD build again."
           echo "------------------------------------------------------------------------"
