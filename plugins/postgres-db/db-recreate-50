@@ -2,8 +2,10 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+confirm_default=$([[ $taito_mode == "ci" ]] && echo 'yes' || echo 'no')
+
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
-  if taito::confirm "Recreate postgres database ${database_name}" no; then
+  if taito::confirm "Recreate postgres database ${database_name}" ${confirm_default}; then
     postgres::drop_database
     postgres::create_database
   fi
