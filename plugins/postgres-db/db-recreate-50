@@ -2,6 +2,9 @@
 # shellcheck source=lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+# On local environment we skip postgres plugin command, as database container is just deleted
+[[ ${taito_env} != "local" ]] || taito::skip_to_next "${@}"
+
 confirm_default=$([[ $taito_mode == "ci" ]] && echo 'yes' || echo 'no')
 
 if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
