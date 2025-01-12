@@ -73,11 +73,13 @@ export_env_vars="\
 # Determine pod
 docker-compose::expose_pod_and_container
 
-docker_compose_test_file=docker-compose-cicd.yaml
-docker_compose_test_suffix="-cicd"
 if [[ -f "./docker-compose-test.yaml" ]]; then
   docker_compose_test_file=docker-compose-test.yaml
   docker_compose_test_suffix="-test"
+fi
+if [[ -f "./docker-compose-cicd.yaml" ]]; then
+  docker_compose_test_file=docker-compose-cicd.yaml
+  docker_compose_test_suffix="-cicd"
 fi
 if [[ -f "./docker-compose-cicd-${taito_ci_provider:-}.yaml" ]]; then
   docker_compose_test_file="docker-compose-cicd-${taito_ci_provider}.yaml"
