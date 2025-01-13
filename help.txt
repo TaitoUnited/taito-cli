@@ -19,7 +19,7 @@ QUICK EXAMPLES
     open graphql                       # Open GraphQL playground on browser
     open bucket                        # Open storage bucket named 'bucket' on browser
     link client                        # Show application GUI link on command line
-    curl client                        # Show application GUI url content on command line
+    curl server                        # Show server uptimez endpoint contents on command line
     db connect                         # Access default database from command line
     db add article                     # Add a new migration for default database
     db deploy                          # Deploy migrations to default database
@@ -60,7 +60,8 @@ QUICK EXAMPLES
     open analytics:prod                # Open usage analytics
     open -h                            # List all links
     link client:dev                    # Show application GUI link on command line
-    curl client:dev                    # Show application GUI contents on command line
+    curl server:dev                    # Show server uptimez endpoint contents on command line
+    curl server:dev 10                 # Call server uptimez endpoint 10 times in parallel 
 
   CODE
     generate                           # Generate schemas or some other stuff. Also run on 'init'.

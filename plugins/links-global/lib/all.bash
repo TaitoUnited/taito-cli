@@ -110,10 +110,11 @@ function links-global::show_help () {
 function links-global::open_link () {
   link_name=${1}
   mode=${2:-open}
-  open_command=${3:-taito::open_browser_fg}
-  echo_command=${4:-echo}
-  curl_command=${4:-curl}
-    
+  concurrency=${3:-1}
+  open_command=${4:-taito::open_browser_fg}
+  echo_command=${5:-echo}
+  curl_command=${6:-"curl -s"}
+  
   found=$(echo "${link_global_urls:-}${link_urls:-}" | grep "${link_name}[\[\:\=\#]")
   if [[ ${found} == "" ]]; then
     if [[ ${taito_quiet:-} != "true" ]]; then
@@ -155,7 +156,10 @@ function links-global::open_link () {
                 ${echo_command} Getting "${url}"
                 echo
               fi
-              ${curl_command} "${url}"
+              for (( i = 0; $i < $concurrency; i++ )); do
+                ${curl_command} "${url}" &
+              done
+              wait
             else
               echo "Unknown link mode: ${mode}"
               exit 1

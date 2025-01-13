@@ -3,6 +3,8 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 : "${taito_command:?}"
 
+concurrency="${1:-1}"
+
 if [[ ${taito_command} == "open-"* ]]; then
   link_mode="open"
 elif [[ ${taito_command} == "link-"* ]]; then
@@ -13,7 +15,7 @@ fi
 link_name=${taito_command:5:99}
 
 if [[ ! -z ${link_mode} ]]; then
-  if links-global::open_link "${link_name}" "${link_mode}"; then
+  if links-global::open_link "${link_name}" "${link_mode}" "${concurrency}"; then
     export taito_hook_command_executed="true"
   fi
 fi
