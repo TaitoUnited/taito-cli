@@ -51,4 +51,9 @@ sleep 2
 echo
 kubectl get pods | grep "\-${taito_target_env}-"
 
+sleep 2
+
+echo
+kubectl get pods | grep "\-${taito_target_env}-"
+
 taito::call_next "${@}"
