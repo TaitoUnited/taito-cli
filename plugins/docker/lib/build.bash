@@ -69,6 +69,7 @@ function docker::build () {
   local image_untested="${image}-untested"
   local image_latest="${prefix}:latest"
   local image_builder="${prefix}-builder:latest"
+  local image_builder_tagged="${prefix}-builder:${image_tag}"
   local image_builder_local="${taito_project}-${name}-builder:latest"
   local image_tester="${taito_project}-${name}-tester:latest"
 
@@ -107,6 +108,8 @@ function docker::build () {
           docker::image_pull "${image_builder}" && \
           docker image tag "${image_builder}" "${image_builder_local}"
           docker image tag "${image_builder}" "${image_tester}"
+          # TODO: we should pull/push the tagged image instead
+          docker image tag "${image_builder}" "${image_builder_tagged}"
         ) && pulled="true"
         if [[ $pulled == "true" ]]; then
           break
@@ -160,6 +163,7 @@ function docker::build () {
           --build-arg BUILD_STATIC_ASSETS_LOCATION="${taito_static_assets_location:-}" \
           ${cache_from_builder} \
           --tag "${image_builder}" \
+          --tag "${image_builder_tagged}" \
           --tag "${image_builder_local}" \
           --tag "${image_tester}" \
           "${build_context}"
