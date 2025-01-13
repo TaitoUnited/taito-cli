@@ -71,6 +71,7 @@ function docker::build () {
   local image_builder="${prefix}-builder:latest"
   local image_builder_tagged="${prefix}-builder:${image_tag}"
   local image_builder_local="${taito_project}-${name}-builder:latest"
+  local image_builder_local_tagged="${taito_project}-${name}-builder:${image_tag}"
   local image_tester="${taito_project}-${name}-tester:latest"
 
   # REFACTOR: clean up this mess !!
@@ -110,6 +111,7 @@ function docker::build () {
           docker image tag "${image_builder}" "${image_tester}"
           # TODO: we should pull/push the tagged image instead
           docker image tag "${image_builder}" "${image_builder_tagged}"
+          docker image tag "${image_builder}" "${image_builder_local_tagged}"
         ) && pulled="true"
         if [[ $pulled == "true" ]]; then
           break
@@ -165,6 +167,7 @@ function docker::build () {
           --tag "${image_builder}" \
           --tag "${image_builder_tagged}" \
           --tag "${image_builder_local}" \
+          --tag "${image_builder_local_tagged}" \
           --tag "${image_tester}" \
           "${build_context}"
         # Build the production runtime
