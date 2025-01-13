@@ -46,13 +46,6 @@ if kubectl get pods | grep "\-${taito_target_env}-" | grep "BackOff\|Error\|Init
   exit 1
 fi
 
-sleep 2
-
-echo
-kubectl get pods | grep "\-${taito_target_env}-"
-
-sleep 2
-
 echo
 kubectl get pods | grep "\-${taito_target_env}-"
 
