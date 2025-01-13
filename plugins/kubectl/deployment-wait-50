@@ -6,7 +6,7 @@ echo "Checking application status"
 kubectl::use_context
 
 function check_status () {
-  kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason,NAME:metadata.name | grep "\-${taito_deployment_suffix}-" | grep -v 'Completed' | grep false &> /dev/null
+  kubectl get pods -o custom-columns=READY:status.containerStatuses[*].ready,TERMINATED:status.containerStatuses[*].state.terminated.reason,NAME:metadata.name | grep "\-${taito_target_env}-" | grep -v 'Completed' | grep false &> /dev/null
 }
 
 # Wait until all containers have been deployed
@@ -17,7 +17,7 @@ while check_status || (sleep 2 && check_status); do
   echo "newly added secret? You can investigate more with 'taito status:${taito_target_env}',"
   echo "'taito logs:TARGET:${taito_target_env}', and 'taito open logs:${taito_target_env}' commands."
   echo
-  kubectl get pods | grep "\-${taito_deployment_suffix}-"
+  kubectl get pods | grep "\-${taito_target_env}-"
   echo
   sleep 3
 done
@@ -25,7 +25,7 @@ done
 # Wait even longer in case of a temporary error
 error_count=0
 until [[ $error_count -ge 8 ]]; do
-  pods=$(kubectl get pods | grep "\-${taito_deployment_suffix}-")
+  pods=$(kubectl get pods | grep "\-${taito_target_env}-")
   if echo "${pods}" | grep "BackOff\|Error\|Init" &> /dev/null; then
     echo "Some errors during deployment:"
     echo
@@ -39,14 +39,14 @@ until [[ $error_count -ge 8 ]]; do
   ((error_count=error_count+1))
 done
 
-if kubectl get pods | grep "\-${taito_deployment_suffix}-" | grep "BackOff\|Error\|Init" &> /dev/null; then
+if kubectl get pods | grep "\-${taito_target_env}-" | grep "BackOff\|Error\|Init" &> /dev/null; then
   echo "ERROR: Some of the containers failed to start"
   echo
-  kubectl get pods | grep "\-${taito_deployment_suffix}-"
+  kubectl get pods | grep "\-${taito_target_env}-"
   exit 1
 fi
 
 echo
-kubectl get pods | grep "\-${taito_deployment_suffix}-"
+kubectl get pods | grep "\-${taito_target_env}-"
 
 taito::call_next "${@}"

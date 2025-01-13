@@ -60,9 +60,7 @@ function helm::deploy () {
 
     # helm-ENV.yaml overrides default settings of helm.yaml
     local override_file_for_env=""
-    if [[ -f "scripts/helm-${taito_target_env}.yaml" ]]; then
-      override_file_for_env="scripts/helm-${taito_target_env}.yaml"
-    elif [[ -f "scripts/helm-${taito_env}.yaml" ]]; then
+    if [[ -f "scripts/helm-${taito_env}.yaml" ]]; then
       override_file_for_env="scripts/helm-${taito_env}.yaml"
     fi
     if [[ ${override_file_for_env} ]]; then
@@ -70,9 +68,9 @@ function helm::deploy () {
       helm_deploy_options="${helm_deploy_options} -f ${override_file_for_env}.tmp"
     fi
 
-    # apply helm-pr.yaml overrides
-    if [[ "${taito_deployment_suffix}" != "${taito_target_env}" ]]; then
-      local override_file_for_suffix="scripts/helm-${taito_deployment_suffix%%-*}.yaml"
+    # apply helm-pr.yaml / helm-canary.yaml overrides
+    if [[ "${taito_target_env}" != "${taito_target_env}" ]]; then
+      local override_file_for_suffix="scripts/helm-${taito_target_env%%-*}.yaml"
       if [[ -f "${override_file_for_suffix}" ]]; then
         helm::substitute "${override_file_for_suffix}"
         helm_deploy_options="${helm_deploy_options} -f ${override_file_for_suffix}.tmp"
@@ -99,7 +97,7 @@ function helm::deploy () {
       export HELM_HOME="/root/.helm"
     fi
 
-    echo "Deploying ${image} of ${taito_project}-${taito_deployment_suffix} using Helm"
+    echo "Deploying ${image} of ${taito_project}-${taito_target_env} using Helm"
     echo
     echo > "${taito_vout}"
     cat ./scripts/helm.yaml.tmp > "${taito_vout}"
@@ -154,7 +152,7 @@ function helm::deploy () {
         --set build.version="${version}" \
         --set build.commit="TODO" \
         ${helm_deploy_options:-} \
-        "${taito_project}-${taito_deployment_suffix}" "./scripts/helm"
+        "${taito_project}-${taito_target_env}" "./scripts/helm"
       exit_code=$?
 
       if [[ $exit_code != 0 ]] &&
@@ -169,7 +167,7 @@ function helm::deploy () {
           echo "your CI/CD might not have enough privileges to deploy all the changes."
           echo "Try to deploy the changes manually with:"
           echo
-          echo "   taito deployment deploy:${taito_deployment_suffix} ${image} ${formatted_labels}"
+          echo "   taito deployment deploy:${taito_target_env} ${image} ${formatted_labels}"
           echo
           echo "...and trigger the CI/CD build again."
           echo "------------------------------------------------------------------------"

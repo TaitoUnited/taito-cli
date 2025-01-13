@@ -26,7 +26,7 @@ if [[ ! ${taito_deployment_platforms:-} ]] || \
 fi
 
 # Modules with deploy prefix
-# TODO: Add PR environment support by passing also ${taito_deployment_suffix}
+# TODO: Add PR environment support by passing also ${taito_target_env}
 terraform::run_all_by_prefix deploy apply "${taito_env:?}"
 
 taito::call_next "${@}"

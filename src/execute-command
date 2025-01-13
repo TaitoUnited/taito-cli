@@ -179,11 +179,6 @@ if [[ ${dest_env} == "master" ]]; then
   # branch name given instead of env
   dest_env="prod"
 fi
-if [[ ${env} == "pr-"* ]]; then
-  # For PRs we use dev environment and use the pr-XX only as a deployment suffix
-  deployment_suffix="${env}"
-  env="dev"
-fi
 
 # Handle 'taito -h'
 if [[ ${command} == "-h" ]]; then
@@ -217,7 +212,6 @@ export taito_command_root_context="${taito_command_root_context:-$taito_command}
 export taito_env="${env}"
 export taito_dest_env="${dest_env}"
 export taito_target_env="${env}"
-export taito_deployment_suffix="${deployment_suffix:-$env}"
 export taito_target="${target}"
 export taito_verbose=false
 export taito_debug=false
@@ -404,12 +398,6 @@ if (( RANDOM % 4 == 0 ))
 fi
 
 # Validate args
-if [[ " zone local ${taito_environments:-} " != *" ${taito_target_env} "* ]]; then
-  echo
-  echo "ERROR: Unknown environment '${taito_target_env}'"
-  echo "Valid environments: local ${taito_environments}"
-  exit 1
-fi
 if [[ " zone local ${taito_environments:-} " != *" ${taito_env} "* ]]; then
   echo
   echo "ERROR: Unknown environment '${taito_env}'"

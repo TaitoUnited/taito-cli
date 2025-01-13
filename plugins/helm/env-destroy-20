@@ -5,7 +5,7 @@
 . "${taito_plugin_path:?}/../kubectl/lib/context.bash"
 
 taito::confirm \
-  "Delete and purge helm release ${taito_project}-${taito_deployment_suffix}" || \
+  "Delete and purge helm release ${taito_project}-${taito_target_env}" || \
   taito::skip_to_next "${@}"
 
 if helm version | grep "SemVer:\"v2." > /dev/null; then
@@ -15,7 +15,7 @@ fi
 kubectl::use_context
 (
   taito::executing_start
-  helm::run delete ${helm2opts} "${taito_project}-${taito_deployment_suffix}"
+  helm::run delete ${helm2opts} "${taito_project}-${taito_target_env}"
 ) || echo "WARNING: Deleting helm release failed. Have you ever deployed?"
 
 taito::call_next "${@}"
