@@ -7,6 +7,8 @@ if [[ ${taito_command} == "open-"* ]]; then
   link_mode="open"
 elif [[ ${taito_command} == "link-"* ]]; then
   link_mode="link"
+elif [[ ${taito_command} == "curl-"* ]]; then
+  link_mode="curl"
 fi
 link_name=${taito_command:5:99}
 

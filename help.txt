@@ -18,6 +18,8 @@ QUICK EXAMPLES
     open admin                         # Open admin GUI on browser
     open graphql                       # Open GraphQL playground on browser
     open bucket                        # Open storage bucket named 'bucket' on browser
+    link client                        # Show application GUI link on command line
+    curl client                        # Show application GUI url content on command line
     db connect                         # Access default database from command line
     db add article                     # Add a new migration for default database
     db deploy                          # Deploy migrations to default database
@@ -57,6 +59,8 @@ QUICK EXAMPLES
     open feedback:prod                 # Open user feedback management
     open analytics:prod                # Open usage analytics
     open -h                            # List all links
+    link client:dev                    # Show application GUI link on command line
+    curl client:dev                    # Show application GUI contents on command line
 
   CODE
     generate                           # Generate schemas or some other stuff. Also run on 'init'.

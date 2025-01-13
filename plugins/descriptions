@@ -538,7 +538,7 @@ if [[ ${taito_project:-} ]]; then
     done
 
     # Links
-    if [[ ${cprefix} == "open"* || "${cprefix}" == "*" ]]; then
+    if [[ ${cprefix} == "open"* || ${cprefix} == "link"* || ${cprefix} == "curl"* || "${cprefix}" == "*" ]]; then
       while IFS='*' read -ra items; do
         for item in "${items[@]}"; do
           words=(${item})
@@ -551,15 +551,27 @@ if [[ ${taito_project:-} ]]; then
               command_env=${command/\[:ENV\]/$suffix}
               echo "open ${command_env}                     " \
                 "# Open ${env} environment ${name} in browser"
+              echo "link ${command_env}                     " \
+                "# Show ${env} environment ${name} link on command line"
+              echo "curl ${command_env}                     " \
+                "# Show ${env} environment ${name} contents on command line"
             elif [[ ${command} == *":ENV"* ]] && \
                  [[ ${env_orig} != "loc" ]]; then
               command_env=${command/:ENV/$suffix}
               echo "open ${command_env}                     " \
                 "# Open ${env} environment ${name} in browser"
+              echo "link ${command_env}                     " \
+                "# Show ${env} environment ${name} link on command line"
+              echo "curl ${command_env}                     " \
+                "# Show ${env} environment ${name} contents on command line"
             elif [[ ${command} != *":ENV"* ]] && \
                  [[ ${env_orig} == "loc" ]]; then
               echo "open ${command}                         " \
                 "# Open ${name} in browser"
+              echo "link ${command}                         " \
+                "# Show ${name} link on command line"
+              echo "curl ${command}                         " \
+                "# Show ${name} contents on command line"
             fi
           fi
         done

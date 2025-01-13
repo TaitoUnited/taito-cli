@@ -112,7 +112,8 @@ function links-global::open_link () {
   mode=${2:-open}
   open_command=${3:-taito::open_browser_fg}
   echo_command=${4:-echo}
-
+  curl_command=${4:-curl}
+    
   found=$(echo "${link_global_urls:-}${link_urls:-}" | grep "${link_name}[\[\:\=\#]")
   if [[ ${found} == "" ]]; then
     if [[ ${taito_quiet:-} != "true" ]]; then
@@ -142,12 +143,22 @@ function links-global::open_link () {
                 ${echo_command} Opening link "${url}"
               fi
               "${open_command}" "${url}"
-            else
+            elif [[ ${mode} == "link" ]]; then
               if [[ ${taito_quiet:-} != "true" ]]; then
                 ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
                 ${echo_command} "Showing link ${name}"
               fi
               ${echo_command} "${url}"
+            elif [[ ${mode} == "curl" ]]; then
+              if [[ ${taito_quiet:-} != "true" ]]; then
+                ${echo_command} -e "${taito_command_context_prefix:-}${H1s}links-global${H1e}"
+                ${echo_command} Getting "${url}"
+                echo
+              fi
+              ${curl_command} "${url}"
+            else
+              echo "Unknown link mode: ${mode}"
+              exit 1
             fi
             exit 0
           fi
