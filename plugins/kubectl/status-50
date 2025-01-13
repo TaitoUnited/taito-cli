@@ -74,9 +74,8 @@ if [ "${taito_version:-}" -ge "1" ]; then
   taito::print_title "Images"
   (
     taito::executing_start
-    # TODO: filter by "\-${taito_target_env}-"
-    kubectl get pods $kubernetes_params -o jsonpath="{.items[*].spec.containers[*].image}" | \
-      tr -s '[[:space:]]' '\n' | sort | uniq
+    kubectl get pods $kubernetes_params -o jsonpath='{range .items[*]}{.metadata.labels.fullname}{"\t"}{"\t"}{.spec.containers[*].image}{"\n"}{end}' \
+      | grep -e "\-${taito_target_env}" | sort | uniq
   ) || :
 else
   taito::print_title "Pods"
