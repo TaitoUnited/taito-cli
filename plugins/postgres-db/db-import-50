@@ -22,7 +22,7 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
     # TODO: change to current path (subdir where user was located on host)
     # cd "${taito_current_path:?}"
     flags="-f ${filename} ${tool_options}"
-    postgres::connect "${username}" "${flags}"
+    postgres::connect "${username}" "${flags}" psql
   )
   echo "Done"
 fi

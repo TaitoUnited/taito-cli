@@ -27,7 +27,7 @@ if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
     -v dest_app=${db_prefix}_${dest}_app"
   echo 'TODO implement: dest is ${database_name}, source is something else'
   exit 1
-  postgres::connect "${username}" "${flags}"
+  postgres::connect "${username}" "${flags}" psql
 fi
 
 taito::call_next "${@}"

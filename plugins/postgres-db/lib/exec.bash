@@ -85,12 +85,13 @@ function postgres::ask_and_expose_password () {
 }
 
 function postgres::connect () {
-  # TODO clean this mess. duplicate code in clean, psql and sqitch
+  # Use pgcli by default, if it's been installed
+  local default_command=$(which pgcli || echo "psql")
 
+  # TODO clean this mess. duplicate code in clean, psql and sqitch
   local username="${1}"
   local flags="${2}"
-  local command="${3:-psql}"
-
+  local command="${3:-$default_command}"
   (
     postgres::export_pguser "${username}"
     postgres::export_pgsslmode
