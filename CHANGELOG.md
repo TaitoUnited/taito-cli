@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.312.0
+
+- Now `pgcli` is used instead of `psql` on `taito db connect:ENV`.
+
 ## 0.311.0
 
 - Added support for `taito curl LINK:ENV` command. You can use it similar way as `taito open LINK:ENV` and `taito link LINK:ENV`.
