@@ -8,4 +8,4 @@ WHERE pid <> pg_backend_pid( ) AND datname = :qdatabase;
 
 DROP DATABASE :database;
 
-DROP DATABASE :databaseold;
+DROP DATABASE IF EXISTS :databaseold;
