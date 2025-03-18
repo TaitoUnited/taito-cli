@@ -1,0 +1,12 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ${database_type:-} == "pg" ]] || [[ -z "${database_type}" ]]; then
+  username="${1}"
+  postgres::connect "${username}" \
+    "-c 'SELECT usename, pid, state, backend_start, (now() - pg_stat_activity.query_start) query_duration FROM pg_stat_activity WHERE datname = '\''${database_name}'\'''" \
+    psql
+fi
+
+taito::call_next "${@}"

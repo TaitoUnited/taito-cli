@@ -348,6 +348,16 @@ if [[ ${taito_project:-} ]]; then
           "# Show db conn details and credentials for ${env} environment and start a proxy if required"
         echo "db connect${db}${suffix}             &focus" \
           "# Open database client for ${env} environment from command line"
+        echo "db connect${db}${suffix} USERNAME             &focus" \
+          "# Open database client for ${env} environment from command line"
+        echo "db status${db}${suffix}             &focus" \
+          "# Show database status for ${env} environment from command line"
+        echo "db status${db}${suffix} USERNAME             &focus" \
+          "# Show database status for ${env} environment from command line"
+        echo "db kill${db}${suffix}             &focus" \
+          "# Kill database connections for ${env} environment from command line"
+        echo "db kill${db}${suffix} USERNAME             &focus" \
+          "# Kill database connections for ${env} environment from command line"
         echo "db dump${db}${suffix} FILE                 " \
           "# Dump database of ${env} environment to a file"
         echo "db import${db}${param} FILE                " \

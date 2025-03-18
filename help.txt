@@ -133,6 +133,8 @@ QUICK EXAMPLES
     db connect:dev                     # Access default database on command line
     db connect:reportdb:dev            # Access report database on command line
     db proxy:dev                       # Start a database proxy for a GUI tool access
+    db status:dev                      # Show status (db connections, etc)
+    db kill:dev postgres               # Kill database connections using postgres superuser
     db dump:dev dump.sql               # Dump default database to a file
     db import:dev file.sql             # Import a file to default database
     db restore:dev archive             # Restore default database from an archive file
@@ -893,6 +895,13 @@ PROJECT: DATABASE OPERATIONS
       - On PostgreSQL, you can access your local files using the client based
       backslash commands, for example:
         \\copy my_table FROM `my_table.csv` delimiter `|` csv
+
+  db status[:TARGET][:ENV] [USERNAME]
+    Shows status of the database (database connections, etc)
+
+  db kill[:TARGET][:ENV] [USERNAME]
+    Kills database connections. NOTE: Dails if the given user doesn't have
+    permissions to kill the connections.
 
   db dump[:TARGET][:ENV] FILE [USERNAME] [--] [TOOL_OPTIONS]
     Take a database dump. DB proxy connection and secrets are handled

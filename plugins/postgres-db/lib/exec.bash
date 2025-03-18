@@ -97,10 +97,11 @@ function postgres::connect () {
     postgres::export_pgsslmode
     export PGPASSWORD="${psql_password}"
     taito::executing_start
-    ${command} -h "${database_host}" \
-    -p "${database_port}" \
-    -d "${database_name}" \
-    -U "${psql_username}" \
-    ${flags}
+    eval \
+      ${command} -h "${database_host}" \
+      -p "${database_port}" \
+      -d "${database_name}" \
+      -U "${psql_username}" \
+      ${flags}
   )
 }
