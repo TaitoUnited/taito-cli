@@ -1,6 +1,7 @@
 -- used by: create
 
 CREATE DATABASE :database ENCODING 'UTF8' LC_COLLATE = :collate LC_CTYPE = :collate TEMPLATE :template;
+ALTER DATABASE :database SET statement_timeout = '60s';
 
 GRANT ALL PRIVILEGES ON DATABASE :database TO
   :dbusermaster, :dbusermgr;
