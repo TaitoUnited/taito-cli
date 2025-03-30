@@ -48,9 +48,17 @@ function kubectl::expose_pod_and_container () {
      [[ ${container} == "--" ]] || \
      [[ ${container} == "-" ]]; then
     # No container name was given. Determine container name.
-    container=$(echo "${pod}" | \
+    containers=$(kubectl get pods "${pod}" -o jsonpath='{.spec.containers[*].name}' | tr ' ' '\n')
+
+    expected_container_name=$(echo "${pod}" | \
       sed -e 's/\([^0-9]*\)*/\1/;s/-[a-z0-9]*-[a-z0-9]*$//' | \
       sed -e "s/\\(.*\\)-${taito_target_env}\\(.*\\)/\\1\\2/")
+
+    # Take the matching container, or the first container if no match was found
+    container=$(
+      echo "$containers" | grep "$expected_container_name" ||
+      echo "$containers" | head -n 1
+    )
   fi
 }
 
