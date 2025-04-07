@@ -50,19 +50,26 @@ For website development, see the [www/README.md](www/README.md).
 
 ### Taito CLI development
 
-Install Taito CLI normally using the [installation instructions](https://taitounited.github.io/taito-cli/docs/02-installation/). You can run a taito command in development mode by using the `-d, --dev` flag (e.g. `taito -d status`). In the development mode your local taito-cli directory is mounted in the Taito CLI container. If you are working with your own fork, update your PATH or taito symlink so that it points to your forked version of the Taito CLI.
+Install Taito CLI normally using the [installation instructions](https://taitounited.github.io/taito-cli/docs/02-installation/). The installation clones this github repository to your local disk and you can run a taito command in development mode by using the `-d, --dev` flag (e.g. `taito -d status`). In the development mode your local taito-cli directory is mounted in the Taito CLI container. If you are unsure of the installation location, you can check it with `which taito`.
 
 How to implement a command:
 
-1. Fork taito-cli repository.
-2. Add a new bash(.sh), python(.py) or javascript(.js) file to one of the plugin folders and make it executable with `chmod +x FILE`. Try to implement one of the Taito CLI prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
-3. Add unit tests for your command. You can execute a single unit test by executing the corresponding bats file. All unit tests are run automatically on git push and during CI build, but you can also run them manually with the `taito unit` command.
+1. Either fork the taito-cli repository or just create a new branch for your changes, if you have permissions to do so. Note that if you are working with your own fork, you need to update your PATH or taito symlink so that it points to your forked version of the Taito CLI.
+2. Add a new bash(.sh), ~python(.py)~ or ~javascript(.js)~ file to one of the plugin folders and make it executable with `chmod +x FILE`. Try to implement one of the Taito CLI prefined commands if it suits your purpose (see the [help.txt](https://github.com/TaitoUnited/taito-cli/blob/master/help.txt)).
+3. ~Add unit tests for your command. You can execute a single unit test by executing the corresponding bats file. All unit tests are run automatically on git push and during CI build, but you can also run them manually with the `taito unit` command.~
 4. Make sure that the plugin description written in plugin README.md is up-to-date.
-5. If you implemented some new plugin specific commands, add the command descriptions to the help.txt file of your plugin. Also, add the plugin specific commands to `autocomplete.sh` and `descriptions.sh` files located in root of plugins directory.
+5. Documentation:
+   - If you introduced new commands for the Taito CLI standard command set, add the new commands to the `help.txt`, `plugins/autocomplete`, and `plugins/descriptions` files.
+   - If you introduced plugin specific commands, add the new commands to the `plugins/myplugin/README.md`, `plugins/autocomplete`, and `plugins/descriptions` files. Note that plugin specific commands should be avoided, as it's best to use the same standard command set on all plugins.
 6. Add the plugin to [plugins.md](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) file if it is not there already.
 7. Make a pull request.
 
-For detailed instructions, see plugin development instructions on the [docs](https://taitounited.github.io/taito-cli/docs) and on the [tutorial](https://taitounited.github.io/taito-cli/tutorial).
+Links:
+
+- [Example](https://github.com/TaitoUnited/taito-cli/tree/master/examples/project-and-extension/extension): Example extension with simple command examples.
+- [Taito CLI library](https://taitounited.github.io/taito-cli/docs/10-custom-plugins#taito-cli-library): Most common reusable functions.
+- [Taito CLI docs](https://taitounited.github.io/taito-cli/docs)
+- [Taito CLI tutorial](https://taitounited.github.io/taito-cli/tutorial)
 
 ## License
 
