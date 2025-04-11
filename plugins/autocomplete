@@ -203,6 +203,9 @@ if [[ ${taito_project:-} ]]; then
     echo "test${suffix}"
     echo "status${suffix}"
     echo "dash${suffix}"
+    echo "top${suffix}"
+    echo "top${suffix} RESOURCE"
+    echo "top${suffix} RESOURCE NAME"
 
     # Secrets
     echo "secret show${suffix}"

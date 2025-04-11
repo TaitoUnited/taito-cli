@@ -88,6 +88,7 @@ QUICK EXAMPLES
     info:dev                           # Show information required for signing in
     status:dev                         # Show application status
     dash:dev                           # Show application status on terminal dashboard
+    top:dev cpu my-app-dev             # Show application/namespace/node resource usage
 
   SECRETS
     secret show:dev                    # Show all secrets
@@ -531,6 +532,17 @@ PROJECT: BASIC OPERATIONS
 
   dash[:ENV]
     Display status on a terminal based dashboard.
+
+  top[:ENV] [RESOURCE] [NAME]
+    Display resource usage.
+    ---
+    Arguments:
+      RESOURCE: cpu or mem
+      NAME: e.g. node, namespace, or pod.
+    ---
+    Examples:
+      taito top:dev cpu gke-kube1-pool-1-b6988570-eado
+      taito top:dev mem my-app-dev
 
   logs[:TARGET][:ENV] [INDEX]
     Follow logs of a pod.

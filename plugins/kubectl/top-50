@@ -1,0 +1,26 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+resource=${1}   # cpu or mem (cpu by default)
+name=${2}       # e.g. node, namespace, or pod
+
+sort_key=2 # cpu
+if [[ ${resource} == "mem" ]]; then
+  sort_key=3
+fi
+
+filter_cmd="cat"
+if [[ ${name} ]]; then
+  filter_cmd="grep ${name}"
+fi
+
+echo "Fetching and sorting. This may take a while..."
+kubectl::use_context
+kubectl get pods -o wide --no-headers -A \
+  | ${filter_cmd} \
+  | awk '{print $1" "$2}' \
+  | xargs -n2 kubectl top pods --no-headers --namespace \
+  | sort --key ${sort_key} --numeric --reverse
+
+taito::call_next "${@}"

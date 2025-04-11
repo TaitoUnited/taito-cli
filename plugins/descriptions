@@ -310,6 +310,12 @@ if [[ ${taito_project:-} ]]; then
       "# Show application status of ${env} environment"
     echo "dash${suffix}                          " \
       "# Show application status of ${env} environment on a terminal based dashboard"
+    echo "top${suffix}                          " \
+      "# Show resource usage."
+    echo "top${suffix} RESOURCE                 " \
+      "# Show resource usage."
+    echo "top${suffix} RESOURCE NAME            " \
+      "# Show resource usage."
 
     # Secrets
     echo "secret show${suffix}                     " \
