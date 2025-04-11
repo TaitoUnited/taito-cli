@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.313.0
+
+- Implemented top command on `kubectl` plugin.
+
 ## 0.312.0
 
 - Now `pgcli` is used instead of `psql` on `taito db connect:ENV`.
