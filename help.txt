@@ -538,11 +538,13 @@ PROJECT: BASIC OPERATIONS
     ---
     Arguments:
       RESOURCE: cpu or mem
-      NAME: e.g. node, namespace, or pod.
+      NAME: Full or partial name of node, namespace, or pod.
     ---
     Examples:
+      taito top:dev cpu
+      taito top:dev mem my-app
+      taito top:dev mem pool-1
       taito top:dev cpu gke-kube1-pool-1-b6988570-eado
-      taito top:dev mem my-app-dev
 
   logs[:TARGET][:ENV] [INDEX]
     Follow logs of a pod.

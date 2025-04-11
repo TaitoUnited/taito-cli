@@ -10,17 +10,24 @@ if [[ ${resource} == "mem" ]]; then
   sort_key=3
 fi
 
-filter_cmd="cat"
-if [[ ${name} ]]; then
-  filter_cmd="grep ${name}"
-fi
-
-echo "Fetching and sorting. This may take a while..."
+echo "This may take a while..."
+echo
 kubectl::use_context
-kubectl get pods -o wide --no-headers -A \
-  | ${filter_cmd} \
+
+if [[ ${name} ]]; then
+  # Do not filter by namespace if name was given
+  kubectl get pods -o wide --no-headers -A \
+  | grep "${name}" \
   | awk '{print $1" "$2}' \
   | xargs -n2 kubectl top pods --no-headers --namespace \
-  | sort --key ${sort_key} --numeric --reverse
+  | sort --key ${sort_key} --numeric --reverse \
+  | xargs printf '%-60s %-6s %-6s\n'
+else
+  kubectl get pods -o wide --no-headers \
+  | awk '{print $1}' \
+  | xargs -n1 kubectl top pods --no-headers \
+  | sort --key ${sort_key} --numeric --reverse \
+  | xargs printf '%-60s %-6s %-6s\n'
+fi
 
 taito::call_next "${@}"
