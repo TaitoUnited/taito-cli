@@ -1,0 +1,71 @@
+#!/bin/bash -e
+
+
+# TODO: optional build image flag
+
+config_path=$1
+
+if [[ ! -f "$config_path" ]]; then
+	echo "Could not find job config for path $config_path" >&2
+	exit 1
+fi
+
+# source config file to get variables
+. $config_path
+
+project=$taito_resource_namespace
+location=$taito_provider_region
+
+supported_machine_types="
+	g2-standard-4
+	n1-standard-2
+"
+
+selected_machine=$machine_type
+
+if [[ -z ${selected_machine} ]]; then
+	echo "No selected machine type, defaulting to g2-standard-4"
+	selected_machine=g2-standard-4
+fi
+
+if [[ $supported_machine_types != *"$selected_machine"* ]]; then
+	echo "Given machine type $selected_machine is not supported. Please use one of the following: $supported_machine_types" >&2
+	exit 1;
+fi
+
+image_tag=eu.gcr.io/$project/$taito_repository/$image_name:latest
+
+# assign to self for clarity, loaded from given config
+build_context=$build_context
+
+# echo "$image_tag"
+# docker build --tag "$image_tag" "$build_context"
+#
+# echo "$image_tag"
+# docker push "$image_tag"
+
+
+# Require variables for config builder
+MACHINE_TYPE=$selected_machine
+CPU_MILLI=2000
+MEMORY_MIB=8192
+IMAGE_URI=$image_tag
+
+# Get the directory where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# generate job config
+source "$SCRIPT_DIR/util/build_config.bash"
+
+echo "$BATCH_JOB_CONFIG"
+
+
+# generate name based on container image and current epoch seconds
+job_name="$image_name"-$(date +%s)
+
+tmp_config_path="/tmp/${job_name}.json"
+echo "$BATCH_JOB_CONFIG" > "$tmp_config_path"
+
+echo ">>> Running job"
+gcloud batch jobs submit "$job_name" --config="$tmp_config_path" --location="$location" --project="$project"
+
