@@ -538,7 +538,7 @@ PROJECT: BASIC OPERATIONS
     ---
     Arguments:
       RESOURCE: cpu or mem
-      NAME: Full or partial name of node, namespace, or pod.
+      NAME: Full or partial name of pool, node, namespace, or pod.
     ---
     Examples:
       taito top:dev cpu
