@@ -9,7 +9,6 @@ if [[ ! -f "$config_path" ]]; then
 fi
 
 # loop over any given params
-build_image=false
 while [[ $# -gt 0 ]]
 do
 	key="$1"
@@ -23,6 +22,12 @@ do
 		;;
 	esac
 done
+
+# if build_image is set, make sure taito is running as root
+if [[ "${build_image:-}" == "true" && "${root:-}" != "true" ]]; then
+	echo "If you want to --build image, you must run taito as root (-r/--root flag)" >&2
+	exit 1;
+fi
 
 # shellcheck disable=SC1090
 source "$config_path" # job config variables from project
@@ -38,7 +43,7 @@ fi
 
 project=${taito_resource_namespace:?}
 location=${taito_provider_region:?}
-repository=$taito_repository:?}
+repository=${taito_repository:?}
 
 : "${project:?You need to set taito_resource_namespace in taito-config.sh}"
 : "${location:?You need to set taito_provider_region in taito-config.sh}"
