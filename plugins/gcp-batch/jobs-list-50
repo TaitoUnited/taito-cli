@@ -1,14 +1,14 @@
 #!/bin/bash -e
 
-project=$taito_resource_namespace
+project=${taito_resource_namespace:?}
 
 if [[ -z ${project} ]]; then
-	echo "ERROR: GCP project variable not set" >&2
-	exit 1
+  echo "ERROR: GCP project variable not set" >&2
+  exit 1
 fi;
 
 gcloud batch jobs list --project="$project" --limit=10 \
-	| sed 's|projects/.*/locations/.*/||g'
+  | sed 's|projects/.*/locations/.*/||g'
 
 
 taito::call_next "${@}"

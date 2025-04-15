@@ -4,29 +4,29 @@
 config_path=${!#}
 
 if [[ ! -f "$config_path" ]]; then
-	echo "Could not find job config for path $config_path" >&2
-	exit 1
+  echo "Could not find job config for path $config_path" >&2
+  exit 1
 fi
 
 # loop over any given params
 while [[ $# -gt 0 ]]
 do
-	key="$1"
-	case $key in
-		--build)
-		build_image=true
-		shift
-		;;
-		*)
-		shift
-		;;
-	esac
+  key="$1"
+  case $key in
+    --build)
+    build_image=true
+    shift
+    ;;
+    *)
+    shift
+    ;;
+  esac
 done
 
 # if build_image is set, make sure taito is running as root
 if [[ "${build_image:-}" == "true" && "${root:-}" != "true" ]]; then
-	echo "If you want to --build image, you must run taito as root (-r/--root flag)" >&2
-	exit 1;
+  echo "If you want to --build image, you must run taito as root (-r/--root flag)" >&2
+  exit 1;
 fi
 
 # shellcheck disable=SC1090
@@ -49,30 +49,31 @@ repository=${taito_repository:?}
 : "${location:?You need to set taito_provider_region in taito-config.sh}"
 
 supported_machine_types="
-	g2-standard-4
-	n1-standard-2
+  g2-standard-4
+  n1-standard-2
 "
 
 if [[ -z ${machine_type} ]]; then
-	echo "No selected machine type, defaulting to g2-standard-4"
-	machine_type=g2-standard-4
+  echo "No selected machine type, defaulting to g2-standard-4"
+  machine_type=g2-standard-4
 fi
 
 if [[ $supported_machine_types != *"$machine_type"* ]]; then
-	echo "Given machine type $machine_type is not supported. \
-		Please use one of the following: $supported_machine_types" >&2
-	exit 1;
+  echo "Given machine type $machine_type is not supported. \
+    Please use one of the following: $supported_machine_types" >&2
+  exit 1;
 fi
 
 image_tag=eu.gcr.io/$project/$repository/$image_name:latest
 
 if [[ "$build_image" == "true" ]]; then
-	docker build --tag "$image_tag" "$build_context"
-	docker push "$image_tag"
+  docker build --tag "$image_tag" "$build_context"
+  docker push "$image_tag"
 fi
 
 cpu_milli=${cpu_milli:-2000}
 memory_mib=${memory_mib:-8192}
+volumes=${volumes:-""}
 
 
 # generate name based on container image and current epoch seconds
@@ -80,11 +81,12 @@ job_name="$image_name"-$(date +%s)
 tmp_config_path="/tmp/${job_name}.json"
 
 gcp_batch::build_config \
-	"$machine_type" \
-	"$image_tag" \
-	"$cpu_milli" \
-	"$memory_mib" \
-	> "$tmp_config_path"
+  "$machine_type" \
+  "$image_tag" \
+  "$cpu_milli" \
+  "$memory_mib" \
+  "$volumes" \
+  > "$tmp_config_path"
 
 echo ">>> Running job"
 gcloud batch jobs submit "$job_name" --config="$tmp_config_path" --location="$location" --project="$project"
