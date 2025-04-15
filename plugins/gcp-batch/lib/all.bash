@@ -1,63 +1,7 @@
 #!/bin/bash
 
-# Helper function to transform multiline volumes string to list of json objects
-function gcp_batch::generate_volume_definitions() {
-  local volumes_str=${1:?}
 
-  # Split multiline volumes string into single elements with in:out pairs
-  read -ra volume_pairs <<< "$(echo "$volumes_str" | tr '\n' ' ')"
-
-  local volume_json_objects=()
-  local pair gcs_path container_path remote_path last_component local_mount vol_obj
-
-  for pair in "${volume_pairs[@]}"; do
-    # Validate format: must contain gs:// and a colon followed by an absolute path (/ prefix)
-    if [[ ! "$pair" =~ ^gs://.+:/.+ ]]; then
-      echo "Invalid volume format: '$pair'. Expected 'gs://bucket/path:/container/path'" >&2
-      return 1
-    fi
-
-    # Split at the last colon
-    gcs_path="${pair%:*}"
-    container_path="${pair##*:}"
-
-    # Extract remote path (part after gs://bucket/)
-    if [[ "$gcs_path" =~ ^gs://[^/]+/(.+)$ ]]; then
-        remote_path="${BASH_REMATCH[1]}"
-    elif [[ "$gcs_path" =~ ^gs://[^/]+/?$ ]]; then
-        # Handle case like gs://bucket or gs://bucket/ where there's no real path part
-         echo "GCS path '$gcs_path' must specify a path within the bucket (e.g., gs://bucket/data)." >&2
-         return 1
-    else
-        # Should not happen due to initial regex check, but good for safety
-        echo "Could not parse GCS remote path from '$gcs_path'." >&2
-        return 1
-    fi
-
-    # Define local mount path based on the *last component* of the GCS path
-    # Handle potential trailing slash in remote_path before getting basename
-    last_component=$(basename "${remote_path%/}")
-    if [[ -z "$last_component" || "$last_component" == "." || "$last_component" == "/" ]]; then
-       echo "Cannot determine a valid local mount name from GCS path '$gcs_path' (basename is empty or '.')." >&2
-       return 1
-    fi
-    # Standard mount point prefix used by Batch GCS mounts
-    local_mount="/mnt/disks/gcs/${last_component}"
-
-    # Create a JSON object for this volume using jq for safety
-    vol_obj=$(jq -cn \
-      --arg rp "$remote_path" \
-      --arg mp "$local_mount" \
-      --arg cp "$container_path" \
-      '{remotePath: $rp, mountPath: $mp, containerPath: $cp}')
-    volume_json_objects+=("$vol_obj")
-  done
-
-  # Combine individual JSON objects into a single JSON array string using jq
-  printf '%s\n' "${volume_json_objects[@]}" | jq -sc '.'
-}
-
-
+# Configuration builder for Google Batch Job configuration JSON
 function gcp_batch::build_config() {
   if [[ $# -lt 4 || $# -gt 5 ]]; then
     echo "Usage: gcp_batch::build_config <machine_type> <image_tag> <cpu_milli> <memory_mib> <volumes_str>" >&2
@@ -140,4 +84,62 @@ function gcp_batch::build_config() {
       }
     }
     '
+}
+
+
+# Helper function to transform multiline volumes string to list of json objects
+function gcp_batch::generate_volume_definitions() {
+  local volumes_str=${1:?}
+
+  # Split multiline volumes string into single elements with in:out pairs
+  read -ra volume_pairs <<< "$(echo "$volumes_str" | tr '\n' ' ')"
+
+  local volume_json_objects=()
+  local pair gcs_path container_path remote_path last_component local_mount vol_obj
+
+  for pair in "${volume_pairs[@]}"; do
+    # Validate format: must contain gs:// and a colon followed by an absolute path (/ prefix)
+    if [[ ! "$pair" =~ ^gs://.+:/.+ ]]; then
+      echo "Invalid volume format: '$pair'. Expected 'gs://bucket/path:/container/path'" >&2
+      return 1
+    fi
+
+    # Split at the last colon
+    gcs_path="${pair%:*}"
+    container_path="${pair##*:}"
+
+    # Extract remote path (part after gs://bucket/)
+    if [[ "$gcs_path" =~ ^gs://[^/]+/(.+)$ ]]; then
+        remote_path="${BASH_REMATCH[1]}"
+    elif [[ "$gcs_path" =~ ^gs://[^/]+/?$ ]]; then
+        # Handle case like gs://bucket or gs://bucket/ where there's no real path part
+         echo "GCS path '$gcs_path' must specify a path within the bucket (e.g., gs://bucket/data)." >&2
+         return 1
+    else
+        # Should not happen due to initial regex check, but good for safety
+        echo "Could not parse GCS remote path from '$gcs_path'." >&2
+        return 1
+    fi
+
+    # Define local mount path based on the *last component* of the GCS path
+    # Handle potential trailing slash in remote_path before getting basename
+    last_component=$(basename "${remote_path%/}")
+    if [[ -z "$last_component" || "$last_component" == "." || "$last_component" == "/" ]]; then
+       echo "Cannot determine a valid local mount name from GCS path '$gcs_path' (basename is empty or '.')." >&2
+       return 1
+    fi
+    # Standard mount point prefix used by Batch GCS mounts
+    local_mount="/mnt/disks/gcs/${last_component}"
+
+    # Create a JSON object for this volume using jq for safety
+    vol_obj=$(jq -cn \
+      --arg rp "$remote_path" \
+      --arg mp "$local_mount" \
+      --arg cp "$container_path" \
+      '{remotePath: $rp, mountPath: $mp, containerPath: $cp}')
+    volume_json_objects+=("$vol_obj")
+  done
+
+  # Combine individual JSON objects into a single JSON array string using jq
+  printf '%s\n' "${volume_json_objects[@]}" | jq -sc '.'
 }
