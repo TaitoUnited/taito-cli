@@ -13,6 +13,10 @@ while [[ $# -gt 0 ]]
 do
   key="$1"
   case $key in
+    --show-config)
+    show_config=true
+    shift
+    ;;
     --build)
     build_image=true
     shift
@@ -87,6 +91,10 @@ gcp_batch::build_config \
   "$memory_mib" \
   "$volumes" \
   > "$tmp_config_path"
+
+if [[ "$show_config" == "true" ]]; then
+  cat "$tmp_config_path"
+fi
 
 echo ">>> Running job"
 gcloud batch jobs submit "$job_name" --config="$tmp_config_path" --location="$location" --project="$project"
