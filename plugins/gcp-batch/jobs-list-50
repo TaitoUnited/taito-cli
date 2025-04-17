@@ -7,8 +7,11 @@ if [[ -z ${project} ]]; then
   exit 1
 fi;
 
-gcloud batch jobs list --project="$project" --limit=10 \
-  | sed 's|projects/.*/locations/.*/||g'
-
+# There's ongoing issue with --limit being applied before --sort-by
+gcloud batch jobs list \
+  --project="$project" \
+  --sort-by="~createTime" \
+  --format="table(name.basename():label=JOB_ID, status.state:label=STATUS, createTime.date():label=CREATED)" \
+  | head -n 15
 
 taito::call_next "${@}"
