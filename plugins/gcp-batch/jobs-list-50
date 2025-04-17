@@ -1,13 +1,14 @@
 #!/bin/bash -e
 
-project=${taito_resource_namespace:?}
+project=${taito_resource_namespace:-}
 
 if [[ -z ${project} ]]; then
-  echo "ERROR: GCP project variable not set" >&2
+  echo "Could not find your project id. \
+    Make sure taito-config.sh includes taito_resource_namespace" >&2
   exit 1
 fi;
 
-# There's ongoing issue with --limit being applied before --sort-by
+# There's ongoing issue with --limit being applied before --sort-by, use head
 gcloud batch jobs list \
   --project="$project" \
   --sort-by="~createTime" \
