@@ -28,7 +28,7 @@ do
 done
 
 # if build_image is set, make sure taito is running as root
-if [[ "${build_image:-}" == "true" && "${root:-}" != "true" ]]; then
+if [[ "${build_image:-}" == "true" && $(whoami) != "root" ]]; then
   echo "If you want to --build image, you must run taito as root (-r/--root flag)" >&2
   exit 1;
 fi
