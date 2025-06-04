@@ -64,6 +64,13 @@ How to implement a command:
 6. Add the plugin to [plugins.md](https://github.com/TaitoUnited/taito-cli/blob/dev/docs/plugins.md) file if it is not there already.
 7. Make a pull request.
 
+How to run a command in a feature branch:
+
+1. Check out your local `.taito-cli` repository to the feature branch.
+2. Make sure the new commands are executable (check step 2. in "How to implement a command").
+3. Add the plugin with the new command to the projects' taito-cli config by adding the plugin name to taito_plugins in `<project-root>/scripts/taito/project.sh`.
+4. Run the command with the `-d` flag.
+
 Links:
 
 - [Example](https://github.com/TaitoUnited/taito-cli/tree/master/examples/project-and-extension/extension): Example extension with simple command examples.
