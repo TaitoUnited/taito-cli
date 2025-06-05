@@ -68,7 +68,7 @@ if [[ $supported_machine_types != *"$machine_type"* ]]; then
   exit 1;
 fi
 
-image_tag=eu.gcr.io/$project/$repository/$image_name:latest
+image_tag=eu.gcr.io/$project/$repository/$image_name
 
 if [[ "$build_image" == "true" ]]; then
   docker build --tag "$image_tag" "$build_context"
@@ -80,8 +80,8 @@ memory_mib=${memory_mib:-8192}
 volumes=${volumes:-""}
 
 
-# generate name based on container image and current epoch seconds
-job_name="$image_name"-$(date +%s)
+# generate name based on container image (remove tag) and current epoch seconds
+job_name="$(echo "$image_name" | cut -d':' -f1)-$(date +%s)"
 tmp_config_path="/tmp/${job_name}.json"
 
 gcp_batch::build_config \
