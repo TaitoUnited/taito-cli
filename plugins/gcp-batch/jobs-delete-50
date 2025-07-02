@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+job_id=$1
+
+if [[ -z $job_id ]]; then
+  echo "No job id given" >&2
+fi;
+
+project=${taito_resource_namespace:?}
+location=${taito_provider_region:?}
+
+# Check if job_id is valid by describing it silently
+if ! gcloud batch jobs describe "$job_id" \
+  --location="$location" --project="$project" \
+  1> /dev/null 2> /dev/null; then
+    echo "Command failed"
+fi
+
+read -rp "Are you sure you want to delete job $job_id? [y/N]" answer
+answer=${answer:-n}  # default to 'n' if empty
+if [[ "$answer" =~ ^[Yy]$ ]]; then
+  gcloud batch jobs delete "$job_id" --location="$location" --project="$project"
+fi
+
+taito::call_next "${@}"
