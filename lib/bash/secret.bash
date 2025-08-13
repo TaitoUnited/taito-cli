@@ -221,7 +221,9 @@ function taito::print_secret_values () {
 
     if [[ ${save_to_disk} == "true" ]]; then
       if [[ ${secret_value} ]]; then
-        echo "export ${secret_value_var}=\"${secret_value}\"; " >> "${taito_secrets_path}"
+        # TODO: rewrite secret handling in python to avoid hacky value passing and escaping
+        secret_value_escaped=$(printf "%s" "$secret_value" | sed "s/'/'\\\\''/g")
+        echo "export ${secret_value_var}='${secret_value_escaped}'; " >> "${taito_secrets_path}"
       fi
     elif [[ ${secret_value} ]]; then
       if [[ ${taito_quiet} != "true" ]]; then

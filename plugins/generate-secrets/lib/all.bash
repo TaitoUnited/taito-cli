@@ -340,5 +340,7 @@ function generate-secrets::generate_by_type () {
     esac
   fi
 
-  exports="${exports}export ${secret_value_var}=\"${secret_value}\"; export ${secret_changed_var}=\"true\"; "
+  # TODO: rewrite secret handling in python to avoid hacky value passing and escaping
+  secret_value_escaped=$(printf "%s" "$secret_value" | sed "s/'/'\\\\''/g")
+  exports="${exports}export ${secret_value_var}='${secret_value_escaped}'; export ${secret_changed_var}=\"true\"; "
 }
