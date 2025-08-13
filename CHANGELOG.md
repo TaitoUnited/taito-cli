@@ -3,14 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 0.313.1
-
-- Fixed special character escaping when reading secret values.
-
 ## 0.313.0
 
 - Implemented top command on `kubectl` plugin.
 - Added `cert` and `audit` to the list of valid environment names.
+- Fixed special character escaping when reading secret values.
 
 ## 0.312.0
 
