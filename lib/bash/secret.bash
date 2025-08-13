@@ -442,12 +442,14 @@ function taito::export_secrets () {
       if [[ $? -gt 0 ]]; then
         exit 1
       fi
-      exports="${exports}export ${secret_value_var}=\"${secret_value}\"; "
-      exports="${exports}export ${secret_value_var2}=\"${secret_value}\"; "
-      exports="${exports}export ${secret_method_var}=\"${real_method}\"; "
-      exports="${exports}export ${secret_method_var2}=\"${real_method}\"; "
-      exports="${exports}export ${secret_orig_method_var}=\"${secret_method}\"; "
-      exports="${exports}export ${secret_orig_method_var2}=\"${secret_method}\"; "
+      # TODO: rewrite secret handling in python to avoid hacky value passing and escaping
+      secret_value_escaped=$(printf "%s" "$secret_value" | sed "s/'/'\\\\''/g")
+      exports="${exports}export ${secret_value_var}='${secret_value_escaped}'; "
+      exports="${exports}export ${secret_value_var2}='${secret_value_escaped}'; "
+      exports="${exports}export ${secret_method_var}='${real_method}'; "
+      exports="${exports}export ${secret_method_var2}='${real_method}'; "
+      exports="${exports}export ${secret_orig_method_var}='${secret_method}'; "
+      exports="${exports}export ${secret_orig_method_var2}='${secret_method}'; "
     fi
 
     secret_index=$((${secret_index}+1))
