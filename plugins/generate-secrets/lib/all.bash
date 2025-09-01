@@ -24,7 +24,7 @@ function generate-secrets::create_and_export () {
              echo "${secret_hint}"
            fi
            taito::confirm \
-             "Create new value for '${secret_name/$prefix/}' with method ${secret_orig_method:-$secret_method:-}"
+             "Update value for '${secret_name/$prefix/}' with method ${secret_orig_method:-$secret_method:-}"
          )
        )
     then

@@ -28,7 +28,7 @@ QUICK EXAMPLES
     generate                           # Generate schemas or some other stuff. Also run on 'init'.
     code generate NAME                 # Generate code for NAME.
     manage COMMAND                     # Run a tech specific cli command (e.g. Django command)
-    secret rotate my-secret            # Set value for secret (restart all containers after)
+    secret update my-secret            # Set value for secret (restart all containers after)
     install                            # Install newly added libraries (restart container after)
     clean:server                       # Clean build server container
     restart:server                     # Restart server container
@@ -95,6 +95,8 @@ QUICK EXAMPLES
     secret show:dev jwt                # Show jwt secret
     secret export:dev                  # Export all secrets to local disk
     secret export:dev jwt              # Export jwt secret to local disk
+    secret update:dev                  # Update all secrets. Alias for secret rotate.
+    secret update:dev jwt              # Update jwt secret. Alias for secret rotate.
     secret rotate:dev                  # Rotate all secrets
     secret rotate:dev jwt              # Rotate jwt secret
     secret copy between:dev:test jwt   # Copy jwt secret from dev to test
@@ -242,6 +244,7 @@ QUICK EXAMPLES
     passwd list movie                  # List all movie passwords
     passwd get movie-key               # Get movie-key passwd
     passwd set movie-key               # Set movie-key passwd
+    passwd update movie                # Update all movie passwords. Alias for passwd rotate.
     passwd rotate movie                # Rotate all movie passwords
 
   PROJECT MANAGEMENT:
@@ -683,6 +686,9 @@ PROJECT: SECRETS
 
   secret export[:ENV] [NAMES...]
     Export project specific secrets.
+
+  secret update[:ENV] [NAME]
+    Update project specific secrets. Alias for secret rotate.
 
   secret rotate[:ENV] [NAME]
     Rotate project specific secrets.
@@ -1181,6 +1187,10 @@ GLOBAL: PASSWORDS
     Save password to a secret collection. Takes a backup of the old secret
     if it exists.
     TODO implement.
+
+  passwd update [-c COLLECTION] [NAME_FILTER]
+    An interactive command for update passwords of a collection one by one.
+    Alias for secret rotate. TODO implement.
 
   passwd rotate [-c COLLECTION] [NAME_FILTER]
     An interactive command for rotating passwords of a collection one by one.

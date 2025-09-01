@@ -55,6 +55,10 @@ echo "random uuid                     " \
 #   "# Get a password"
 # echo "passwd set NAME               " \
 #   "# Set a password"
+# echo "passwd update            &focus" \
+#   "# Update all passwords"
+# echo "passwd update FILTER    &focus" \
+#   "# Update some passwords"
 # echo "passwd rotate            &focus" \
 #   "# Rotate all passwords"
 # echo "passwd rotate FILTER    &focus" \
@@ -326,6 +330,10 @@ if [[ ${taito_project:-} ]]; then
       "# Export project specific secrets of ${env} environment to local disk"
     echo "secret export${param} NAME                 " \
       "# Export project specific secrets of ${env} environment to local disk"
+    echo "secret update${suffix}             &focus" \
+      "# Update project specific secrets of ${env} environment"
+    echo "secret update${param} NAME               " \
+      "# Update project specific secrets of ${env} environment"
     echo "secret rotate${suffix}             &focus" \
       "# Rotate project specific secrets of ${env} environment"
     echo "secret rotate${param} NAME               " \

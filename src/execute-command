@@ -161,6 +161,13 @@ else
   command=${env_command}
 fi
 
+# Handle command aliases
+case $command in
+  secret-update)
+  command="secret-rotate"
+  ;;
+esac
+
 # TODO can be removed? was used for oper-
 orig_command=${command}
 

@@ -34,6 +34,8 @@ echo "random uuid"
 # echo "passwd list FILTER"
 # echo "passwd get NAME"
 # echo "passwd set NAME"
+# echo "passwd update"
+# echo "passwd update FILTER"
 # echo "passwd rotate"
 # echo "passwd rotate FILTER"
 
@@ -212,6 +214,8 @@ if [[ ${taito_project:-} ]]; then
     echo "secret show${param} NAME"
     echo "secret export${suffix}"
     echo "secret export${param} NAME"
+    echo "secret update${suffix}"
+    echo "secret update${param} NAME"
     echo "secret rotate${suffix}"
     echo "secret rotate${param} NAME"
     for dest_env in ${taito_environments/$env/}; do
