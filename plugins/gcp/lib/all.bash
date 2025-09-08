@@ -5,7 +5,12 @@ function gcp::authenticate () {
   local account
   account=$(gcloud config get-value account 2> /dev/null || :)
 
-  if [[ ${account} ]]; then
+
+  if [[ ${type} == "reset" ]]; then
+    echo "Revoking all old gcloud credentials"
+    gcloud auth application-default revoke || :
+    gcloud auth revoke --all || :
+  elif [[ ${account} ]]; then
     echo "You are already authenticated as ${account}."
     echo "You can reauthenticate with 'taito auth:${taito_target_env:?} --reset'."
     echo

@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.314.0
 
 - Added 'taito secret update' command as an alias for 'taito secret rotate'.
+- Now 'taito auth:ENV --reset' revokes gcloud credentials.
 
 ## 0.313.1
 
