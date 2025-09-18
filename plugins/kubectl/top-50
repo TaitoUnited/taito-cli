@@ -17,6 +17,7 @@ kubectl::use_context
 if [[ ${name} ]]; then
   # Do not filter by namespace if name was given
   kubectl get pods -o wide --no-headers -A \
+  | grep -v "Evicted\|Error\|ContainerStatusUnknown" \
   | grep "${name}" \
   | awk '{print $1" "$2}' \
   | xargs -n2 kubectl top pods --no-headers --namespace \
@@ -24,6 +25,7 @@ if [[ ${name} ]]; then
   | xargs printf '%-60s %-6s %-6s\n'
 else
   kubectl get pods -o wide --no-headers \
+  | grep -v "Evicted\|Error\|ContainerStatusUnknown" \
   | awk '{print $1}' \
   | xargs -n1 kubectl top pods --no-headers \
   | sort --key ${sort_key} --numeric --reverse \
