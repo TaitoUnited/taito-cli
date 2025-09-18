@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Added 'taito secret update' command as an alias for 'taito secret rotate'.
 - Now 'taito auth:ENV --reset' revokes gcloud credentials.
 - Ignore erroneous Kubernetes pods on 'taito top' command.
+- Ignore erroneous Kubernetes jobs on 'taito deployment wait' command.
 
 ## 0.313.1
 
