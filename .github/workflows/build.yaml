@@ -70,7 +70,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-cli
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:cli${{ env.SUFFIX }}
@@ -82,7 +82,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci${{ env.SUFFIX }}
@@ -94,7 +94,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci-deploy
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-deploy${{ env.SUFFIX }}
@@ -106,7 +106,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci-dockerd
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-dockerd${{ env.SUFFIX }}
@@ -118,7 +118,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci-all
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-all${{ env.SUFFIX }}
@@ -130,7 +130,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci-aws
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-aws${{ env.SUFFIX }}
@@ -142,7 +142,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci-azure
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-azure${{ env.SUFFIX }}
@@ -154,7 +154,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci-do
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-do${{ env.SUFFIX }}
@@ -166,7 +166,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci-gcp
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-gcp${{ env.SUFFIX }}
@@ -178,7 +178,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-ci-openshift
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-openshift${{ env.SUFFIX }}
@@ -190,7 +190,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./docker/Dockerfile-all
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64 # ,linux/arm64
           push: true
           tags: |
             ghcr.io/taitounited/taito-cli:ci-all${{ env.SUFFIX }}
