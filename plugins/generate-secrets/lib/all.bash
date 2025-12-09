@@ -100,7 +100,7 @@ function generate-secrets::generate_by_type () {
       random)
         length=${secret_method##*-}
         if [[ ${length} == "random" ]]; then
-          length=42
+          length=48
         elif [[ ${length} == "words" ]]; then
           length=6
         fi

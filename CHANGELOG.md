@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.315.0
 
-- Increase default random secret size to 42.
+- Increase default random secret size to 48.
 
 ## 0.314.0
 
