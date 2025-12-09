@@ -271,7 +271,7 @@ Secret naming convention is **name.property[/namespace]:method**. You should avo
 
 You can use the following methods in your secret definition:
 
-- `random`: Randomly generated string (30 characters).
+- `random`: Randomly generated string (42 characters).
 - `random-N`: Randomly generated string (N characters).
 - `random-words`: Randomly generated words (6 words).
 - `random-words-N`: Randomly generated words (N words).

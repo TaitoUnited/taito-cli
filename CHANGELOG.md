@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.315.0
+
+- Increase default random secret size to 42.
+
 ## 0.314.0
 
 - Added 'taito secret update' command as an alias for 'taito secret rotate'.
