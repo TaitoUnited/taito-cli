@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.316.0
+
+- Add gcp_db_proxy_opts for specifying extra flags to cloud sql proxy.
+
 ## 0.315.0
 
 - Increase default random secret size to 48.

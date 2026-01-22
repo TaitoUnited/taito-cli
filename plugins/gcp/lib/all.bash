@@ -90,7 +90,7 @@ function gcp::db_proxy_start () {
 
     echo "BIND ADDRESS: ${taito_db_proxy_bind_address:?}" > "${taito_vout:-}"
 
-    sql_proxy_opts="--address ${taito_db_proxy_bind_address} --port ${database_port:?} ${database_id}"
+    sql_proxy_opts="${gcp_db_proxy_opts} --address ${taito_db_proxy_bind_address} --port ${database_port:?} ${database_id}"
     if [[ $GOOGLE_SQL_PROXY_CREDENTIALS ]]; then
       sql_proxy_opts="${sql_proxy_opts} --credentials-file $GOOGLE_SQL_PROXY_CREDENTIALS"
     fi
