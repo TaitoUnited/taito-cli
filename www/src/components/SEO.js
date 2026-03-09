@@ -31,6 +31,12 @@ const SEO = ({ title, description }) => (
           {seo.description && (
             <meta name="twitter:description" content={seo.description} />
           )}
+
+          <link
+            rel="icon"
+            type="image/png"
+            href="https://www.taitounited.fi/favicon-32x32.png"
+          />
         </Helmet>
       );
     }}
