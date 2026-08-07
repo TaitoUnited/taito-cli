@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.317.0
+
+- Improve 'taito auth' flow for gcp.
+
 ## 0.316.0
 
 - Add gcp_db_proxy_opts for specifying extra flags to cloud sql proxy.

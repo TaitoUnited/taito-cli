@@ -3,24 +3,21 @@
 function gcp::authenticate () {
   local type="${1//--/}"
   local account
-  account=$(gcloud config get-value account 2> /dev/null || :)
-
 
   if [[ ${type} == "reset" ]]; then
     echo "Revoking all old gcloud credentials"
     gcloud auth application-default revoke || :
     gcloud auth revoke --all || :
-  elif [[ ${account} ]]; then
-    echo "You are already authenticated as ${account}."
-    echo "You can reauthenticate with 'taito auth:${taito_target_env:?} --reset'."
+  fi
+
+  account=$(gcloud config get-value account 2> /dev/null || :)
+  if [[ ${account} ]]; then
+    echo "gcloud already initialized for account ${account}."
+    echo "You can reset gcloud configuration with 'taito auth:${taito_target_env:?} --reset'."
     echo
   fi
 
-  if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || \
-     [[ ${type} == "init" ]] || [[ ${type} == "reset" ]]
-  then
-    echo "gcloud init"
-    echo
+  if [[ ! ${account} ]]; then
     taito::print_note_start
     echo "---------------------------------------------------------------"
     echo "You can select anything as your default GCP project and region."
@@ -38,16 +35,21 @@ function gcp::authenticate () {
     read -r
     echo "Did you really read the message? Press enter once you have read it."
     read -r
-    # TODO run 'gcloud auth revoke ${account}' ?
-    (taito::executing_start; gcloud init --console-only)
+    echo "Running 'gcloud init'"
+    echo
+    (taito::executing_start; gcloud init --no-launch-browser)
   fi
 
-  if ( [[ ${type} == "" ]] && [[ ! ${account} ]] ) || \
-     [[ ${type} == "login" ]] || [[ ${type} == "reset" ]]
-  then
-    echo "gcloud auth application-default login"
-    # TODO run 'gcloud auth revoke ${account}' ?
-    (taito::executing_start; gcloud auth application-default login --no-launch-browser)
+  if ! gcloud auth print-access-token >/dev/null 2>&1; then
+    echo "Running 'gcloud auth login'"
+    echo
+    (taito::executing_start; gcloud auth login --no-launch-browser)
+  fi
+  
+  if ! gcloud auth print-access-token >/dev/null 2>&1; then
+    echo "Running 'gcloud auth application-default login'"
+    echo
+    (taito::executing_start; gcloud auth application-default login --no-launch-browser --brief)
   fi
 
   if [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
