@@ -10,7 +10,7 @@ function gcp::authenticate () {
     gcloud auth revoke --all || :
   fi
 
-  account=$(gcloud config get-value account 2> /dev/null || :)
+  account=$(gcloud config get-value account --project "${taito_zone:?}" 2> /dev/null || :)
   if [[ ${account} ]]; then
     echo "gcloud already initialized for account ${account}."
     echo "You can reset gcloud configuration with 'taito auth:${taito_target_env:?} --reset'."
@@ -37,19 +37,19 @@ function gcp::authenticate () {
     read -r
     echo "Running 'gcloud init'"
     echo
-    (taito::executing_start; gcloud init --no-launch-browser)
+    (taito::executing_start; gcloud init --no-launch-browser --project "${taito_zone}")
   fi
 
-  if ! gcloud auth print-access-token >/dev/null 2>&1; then
+  if ! gcloud auth print-access-token --project "${taito_zone}" >/dev/null 2>&1; then
     echo "Running 'gcloud auth login'"
     echo
-    (taito::executing_start; gcloud auth login --no-launch-browser)
+    (taito::executing_start; gcloud auth login --no-launch-browser --project "${taito_zone}")
   fi
   
   if ! gcloud auth application-default print-access-token --project "${taito_zone}" >/dev/null 2>&1; then
     echo "Running 'gcloud auth application-default login'"
     echo
-    (taito::executing_start; gcloud auth application-default login --no-launch-browser --brief)
+    (taito::executing_start; gcloud auth application-default login --no-launch-browser --project "${taito_zone}")
   fi
 
   if [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
