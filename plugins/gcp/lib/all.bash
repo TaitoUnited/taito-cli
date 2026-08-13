@@ -46,7 +46,7 @@ function gcp::authenticate () {
     (taito::executing_start; gcloud auth login --no-launch-browser)
   fi
   
-  if ! gcloud auth print-access-token >/dev/null 2>&1; then
+  if ! gcloud auth application-default print-access-token --project "${taito_zone}" >/dev/null 2>&1; then
     echo "Running 'gcloud auth application-default login'"
     echo
     (taito::executing_start; gcloud auth application-default login --no-launch-browser --brief)
