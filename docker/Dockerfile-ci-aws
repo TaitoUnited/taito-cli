@@ -3,18 +3,6 @@ LABEL fi.taitounited.taito-cli="true"
 
 USER root
 
-# Reinstall the Docker CLI to ensure it matches the daemon version and is not
-# UPX-compressed, which can segfault in some CI environments (e.g. GitHub Actions).
-ARG TARGETARCH
-RUN set -eux; \
-    DOCKER_VERSION=29.7.1; \
-    case "${TARGETARCH:-amd64}" in \
-      amd64) DOCKER_ARCH="x86_64" ;; \
-      arm64) DOCKER_ARCH="aarch64" ;; \
-    esac; \
-    curl -fsSL "https://download.docker.com/linux/static/stable/${DOCKER_ARCH}/docker-${DOCKER_VERSION}.tgz" \
-      | tar -xz --strip-components=1 -C /usr/bin docker/docker
-
 COPY . /taito-cli
 WORKDIR /taito-cli
 RUN ln -s /taito-cli/src/execute-command /usr/local/bin/taito
