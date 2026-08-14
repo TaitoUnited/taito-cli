@@ -61,9 +61,23 @@ function aws::authenticate () {
 function aws::authenticate_on_ecr () {
   aws::expose_aws_options
   taito::executing_start
-  local registry_url
+  local registry_url registry_password docker_status
   registry_url="$(aws $aws_options sts get-caller-identity --query Account --output text).dkr.ecr.${taito_provider_region}.amazonaws.com"
-  aws $aws_options ecr get-login-password --region "${taito_provider_region}" | docker login --username AWS --password-stdin "${registry_url}"
+
+  # Do not pipe directly to docker: if docker exits before consuming stdin,
+  # the AWS CLI reports a misleading BrokenPipeError.
+  if ! registry_password="$(aws $aws_options ecr get-login-password --region "${taito_provider_region}")"; then
+    echo "Failed to retrieve the ECR login password." >&2
+    return 1
+  fi
+
+  if docker login --username AWS --password-stdin "${registry_url}" <<< "${registry_password}"; then
+    docker_status=0
+  else
+    docker_status=$?
+  fi
+  unset registry_password
+  return "${docker_status}"
 }
 
 function aws::authenticate_on_kubernetes () {
