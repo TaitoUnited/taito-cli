@@ -61,21 +61,8 @@ function aws::authenticate () {
 function aws::authenticate_on_ecr () {
   aws::expose_aws_options
   taito::executing_start
-  local registry_url registry_password auth
-
-  registry_url="$(aws $aws_options sts get-caller-identity --query Account --output text).dkr.ecr.${taito_provider_region}.amazonaws.com"
-
-  if ! registry_password="$(aws $aws_options ecr get-login-password --region "${taito_provider_region}")"; then
-    echo "Failed to retrieve the ECR login password." >&2
-    return 1
-  fi
-
-  # Write credentials directly to avoid docker login segfault on some CI environments
-  auth="$(printf 'AWS:%s' "${registry_password}" | base64 | tr -d '\n')"
-  unset registry_password
-  mkdir -p "${HOME}/.docker"
-  printf '{"auths":{"%s":{"auth":"%s"}}}\n' "${registry_url}" "${auth}" \
-    > "${HOME}/.docker/config.json"
+  aws $aws_options ecr get-login-password --region "${taito_provider_region}" \
+    | docker login --username AWS --password-stdin "${taito_container_registry%%/*}"
 }
 
 function aws::authenticate_on_kubernetes () {
