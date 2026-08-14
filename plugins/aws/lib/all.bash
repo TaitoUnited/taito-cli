@@ -60,11 +60,8 @@ function aws::authenticate () {
 
 function aws::authenticate_on_ecr () {
   aws::expose_aws_options
-
-  # NOTE: one-liner login to avoid passing password via CLI:
-  # https://github.com/aws/aws-cli/issues/2875#issuecomment-487244855
   taito::executing_start
-  aws $aws_options ecr get-login --no-include-email --region "${taito_provider_region}" | awk '{print $6}' | docker login -u AWS --password-stdin $(aws $aws_options ecr get-login --no-include-email --region "${taito_provider_region}" | awk '{print $7}')
+  aws $aws_options ecr get-login-password --region "${taito_provider_region}" | docker login --username AWS --password-stdin "${taito_container_registry%%/*}"
 }
 
 function aws::authenticate_on_kubernetes () {
