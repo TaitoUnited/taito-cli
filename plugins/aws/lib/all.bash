@@ -71,7 +71,7 @@ function aws::authenticate_on_ecr () {
     return 1
   fi
 
-  if docker login --username AWS --password-stdin "${registry_url}" <<< "${registry_password}"; then
+  if printf '%s\n' "${registry_password}" | docker login --username AWS --password-stdin "${registry_url}"; then
     docker_status=0
   else
     docker_status=$?
