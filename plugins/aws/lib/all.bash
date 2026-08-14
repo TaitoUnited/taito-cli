@@ -61,7 +61,9 @@ function aws::authenticate () {
 function aws::authenticate_on_ecr () {
   aws::expose_aws_options
   taito::executing_start
-  aws $aws_options ecr get-login-password --region "${taito_provider_region}" | docker login --username AWS --password-stdin "${taito_container_registry%%/*}"
+  local registry_url
+  registry_url="$(aws $aws_options sts get-caller-identity --query Account --output text).dkr.ecr.${taito_provider_region}.amazonaws.com"
+  aws $aws_options ecr get-login-password --region "${taito_provider_region}" | docker login --username AWS --password-stdin "${registry_url}"
 }
 
 function aws::authenticate_on_kubernetes () {
