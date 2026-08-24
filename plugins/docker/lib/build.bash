@@ -156,7 +156,8 @@ function docker::build () {
         # 1) Build cache for later builds using --cache-from
         # 2) Integration and e2e test executioner
         taito::executing_start
-        docker build \
+        docker buildx build \
+          --load \
           --target builder \
           -f "${service_dir}/${dockerfile}" \
           --build-arg BUILD_TARGET="${name}" \
@@ -172,7 +173,8 @@ function docker::build () {
           "${build_context}"
         # Build the production runtime
         # TODO use also latest production container as cache?
-        docker build \
+        docker buildx build \
+          --load \
           ${dockertarget_option} \
           -f "${service_dir}/${dockerfile}" \
           ${cache_from_builder} \
