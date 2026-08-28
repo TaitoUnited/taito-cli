@@ -59,13 +59,17 @@ kubectl::use_context
 taito::confirm "Configure DNS for Kubernetes" || \
   taito::skip_to_next "${@}"
 
-taito::print_title "LOAD BALANCER ADDRESSES"
-lb_ips="$(kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.status.loadBalancer.ingress[0].ip,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
-  --no-headers --all-namespaces 2> /dev/null | grep -v "<none>.*<none>" | sed s/\\s*\<none\>\\s*//g)"
+taito::print_title "GATEWAY OR LOAD BALANCER ADDRESSES"
+lb_ips="$(kubectl get gateway -A -o jsonpath='{range .items[*]}{.status.addresses[0].value}{"\n"}{end}')"
+if [[ ! ${lb_ips} ]]; then
+  lb_ips="$(kubectl get services -o=custom-columns=LOAD_BALANCER_IP:.status.loadBalancer.ingress[0].ip,LOAD_BALANCER_AP:.status.loadBalancer.ingress[0].hostname \
+    --no-headers --all-namespaces 2> /dev/null | grep -v "<none>.*<none>" | sed s/\\s*\<none\>\\s*//g)"
+fi
+
 if [[ ${lb_ips} ]]; then
   echo "${lb_ips}"
   echo
-  echo "Your load balancer addresses are presented above. You should configure"
+  echo "Your gateway or load balancer addresses are presented above. You should configure"
   echo "DNS for them, and also set 'taito_default_domain' in taito-config.sh,"
   echo "if you have not done so already. Example DNS entry:"
   echo
