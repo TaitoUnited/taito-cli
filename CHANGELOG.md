@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.319.0
+
+- Use safe random symbol on generated random string.
+- Fix db proxy halting on CI/CD during gcp auth.
+- Show gateway IP on `taito zone apply continue`.
+- Disable Argo Events and Argo Workflows install from `taito zone apply`.
+
 ## 0.318.0
 
 - Use 'docker buildx' to build docker images.
