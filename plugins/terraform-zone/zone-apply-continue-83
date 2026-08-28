@@ -12,7 +12,8 @@ then
   rm -rf ./terraform/terraform.tfstate
   rm -rf ./terraform/terraform.tfstate.backup
 else
-  echo "Remote state already enabled."
+  taito::confirm "Apply changes by running terraform scripts" || \
+    taito::skip_to_next "${@}"
   (set -e; terraform::run_zone apply)
 fi
 
