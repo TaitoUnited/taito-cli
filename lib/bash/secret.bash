@@ -250,8 +250,11 @@ function taito::print_secret_values () {
 export -f taito::print_secret_values
 
 function taito::print_random_string () {
-  local length=$1
-  pwgen -sB "${length:-40}" 1
+  local length=$((${1:-40} - 1))
+  p=$(pwgen -sB "${length}" 1)
+  s=$(printf '%s' '!@#$%^&*_-+=' | fold -w1 | shuf -n1)
+  i=$(shuf -i "0-${length}" -n 1)
+  printf '%s%s%s\n' "${p:0:i}" "$s" "${p:i}"
 }
 export -f taito::print_random_string
 
