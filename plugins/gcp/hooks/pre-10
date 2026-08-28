@@ -27,7 +27,7 @@ if [[ $GOOGLE_APPLICATION_CREDENTIALS ]] &&
   fi
 
   gcloud config set disable_usage_reporting True > /dev/null
-  account=$(gcloud config get-value account 2> /dev/null)
+  account=$(gcloud config get-value account --quiet 2> /dev/null)
 
   if [[ ${taito_verbose:-} == true ]]; then
     echo "gcloud account: $account"
@@ -72,7 +72,7 @@ if [[ $force_kube_login_hack == "true" ]] || ( \
      [[ ! -d "${HOME}/.kube" ]] && \
      [[ ! -d "/root/.kube" ]] \
    ); then
-  account=$(gcloud config get-value account 2> /dev/null)
+  account=$(gcloud config get-value account --quiet 2> /dev/null)
   if [[ $account ]]; then
     taito::print_plugin_title
     echo "Getting GCP credentials for Kubernetes access"

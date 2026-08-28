@@ -10,7 +10,7 @@ function gcp::authenticate () {
     gcloud auth revoke --all || :
   fi
 
-  account=$(gcloud config get-value account --project "${taito_zone:?}" 2> /dev/null || :)
+  account=$(gcloud config get-value account --quiet --project "${taito_zone:?}" 2> /dev/null || :)
   if [[ ${account} ]]; then
     echo "gcloud already initialized for account ${account}."
     echo "You can reset gcloud configuration with 'taito auth:${taito_target_env:?} --reset'."
