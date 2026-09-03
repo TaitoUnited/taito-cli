@@ -20,7 +20,6 @@ const Navigation = ({ isHome }) => (
       <Drawer.Item to="/tutorial">Tutorial</Drawer.Item>
       <Drawer.Item to="/plugins">Plugins</Drawer.Item>
       <Drawer.Item to="/templates">Templates</Drawer.Item>
-      <Drawer.Item to="/extensions">Extensions</Drawer.Item>
     </Drawer>
   </>
 );
