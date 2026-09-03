@@ -23,7 +23,7 @@ The following software needs to be installed on your computer before you can ins
    ```shell
    export TAITO_INSTALL_DIR=~/.taito-cli && \
    export TAITO_GIT_CLONE_METHOD=ssh && \
-   curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash
+   curl -fsSL https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash
    ```
 
 2. The install script adds Taito CLI on your `PATH` by modifying your shell startup files (`~/.bashrc`, `~/.bash_profile`, `~/.zshrc`). Restart your shell or open a new terminal so that the `taito` command becomes available.
