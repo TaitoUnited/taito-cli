@@ -18,29 +18,35 @@ The following software needs to be installed on your computer before you can ins
 
 ### Automatic installation
 
-1. Install Taito CLI by running the following commands on your unix-like shell (e.g. bash):
+1. Install Taito CLI by running the following command on your unix-like shell (e.g. bash or zsh). The git clone method is either `https` or `ssh`:
 
    ```shell
-   export TAITO_INSTALL_DIR=~/.taito-cli
-   export TAITO_GIT_CLONE_METHOD=ssh  # https or ssh
+   export TAITO_INSTALL_DIR=~/.taito-cli && \
+   export TAITO_GIT_CLONE_METHOD=ssh && \
    curl -s https://raw.githubusercontent.com/TaitoUnited/taito-cli/master/install.sh | bash
    ```
 
-2. Finalize the installation by running commands the aforementioned install.sh script displayed at the end:
+2. The install script adds Taito CLI on your `PATH` by modifying your shell startup files (`~/.bashrc`, `~/.bash_profile`, `~/.zshrc`). Restart your shell or open a new terminal so that the `taito` command becomes available.
 
+3. Execute the final installation steps:
+
+   ```shell
+   taito upgrade
    ```
-   [8. Almost finished]
 
-   Finalize the installation with the following steps:
+4. Check the installation:
 
-     1. Execute final installation steps by running 'taito upgrade'
-     2. Check the installation by running 'taito check'
-     3. Show taito commands with 'taito -h'
-
-   If you have problems, run 'taito trouble' to display troubleshooting.
-   You can read troubleshooting also at GitHub:
-   https://github.com/TaitoUnited/taito-cli/blob/master/trouble.txt
+   ```shell
+   taito check
    ```
+
+5. Show the available taito commands:
+
+   ```shell
+   taito -h
+   ```
+
+> If you have problems, run `taito trouble` to display troubleshooting. You can read the troubleshooting instructions also at [GitHub](https://github.com/TaitoUnited/taito-cli/blob/master/trouble.txt).
 
 ### Manual installation
 
