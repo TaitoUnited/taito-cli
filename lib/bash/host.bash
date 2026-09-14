@@ -341,7 +341,11 @@ function taito::print_targets_of_type_deprecated () {
   targets=""
   for target in ${taito_targets:-}
   do
-    type_variable_name="taito_target_type_$target"
+    # A target name may contain characters that are not valid in a shell identifier, e.g. the
+    # hyphen in "mock-database". Indirect expansion of such a name fails with "invalid
+    # variable name" on bash 4.4+, so map them to underscores the way the variable that holds
+    # the type has to be written anyway.
+    type_variable_name="taito_target_type_${target//[^a-zA-Z0-9_]/_}"
     if [[ ${!type_variable_name} == "$target_type" ]] || ( \
          [[ ! ${!type_variable_name} ]] && \
          [[ $target_type == "container" ]] \
