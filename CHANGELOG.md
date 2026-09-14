@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.319.0
+
+- Remove `--credentials` option from db proxy and db details commands. The db proxy command no longers shows credentials at all, as you can use db details command for that.
+
 ## 0.318.0
 
 - Use safe random symbol on generated random string.

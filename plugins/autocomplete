@@ -230,10 +230,7 @@ if [[ ${taito_project:-} ]]; then
           db=":${database}"
         fi
         echo "db details${db}${suffix}"
-        echo "db details${db}${suffix} --credentials"
         echo "db proxy${db}${suffix}"
-        echo "db proxy${db}${suffix} --credentials"
-        echo "db proxy${db}${suffix} PORT --credentials"
         echo "db connect${db}${suffix}"
         echo "db connect${db}${suffix} USERNAME"
         echo "db status${db}${suffix}"

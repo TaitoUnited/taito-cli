@@ -113,13 +113,7 @@ function taito::show_db_details () {
   fi
   echo "- name: ${database_name:-}"
 
-  if [[ " ${*} " == *" --credentials "* ]]; then
-    taito::show_db_credentials
-  else
-    echo
-    echo "TIP: You can see database credentials with --credentials, for example:"
-    echo "taito db proxy:${taito_env:-dev} --credentials"
-  fi
+  taito::show_db_credentials
 }
 export -f taito::show_db_details
 
@@ -128,14 +122,6 @@ function taito::show_db_proxy_details () {
   echo "- host: 127.0.0.1"
   echo "- port: ${db_database_external_port:-$database_port}"
   echo "- database: ${database_name:-}"
-
-  if [[ ${1:-} == "true" ]]; then
-    taito::show_db_credentials
-  else
-    echo
-    echo "TIP: You can see database credentials with --credentials, for example:"
-    echo "taito db proxy:${taito_env:-dev} --credentials"
-  fi
 }
 export -f taito::show_db_proxy_details
 
