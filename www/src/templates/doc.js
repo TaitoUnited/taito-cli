@@ -6,6 +6,7 @@ import { flattenListData } from '../utils';
 import { IS_BROWSER } from '../constants';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
+import MarkdownContent from '../components/MarkdownContent';
 import Text from '../components/Text';
 import Spacing from '../components/Spacing';
 import Sidemenu from '../components/Sidemenu';
@@ -43,7 +44,7 @@ export default function DocTemplate({ data }) {
       }
     >
       <SEO />
-      <div dangerouslySetInnerHTML={{ __html: data.doc.html }} />
+      <MarkdownContent html={data.doc.html} />
 
       <Spacing dir="y" amount={20} />
       

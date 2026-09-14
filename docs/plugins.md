@@ -1,6 +1,6 @@
 # Plugins
 
-This page describes all the plugins that are bundled with Taito CLI by default. You may find more plugins by browsing Taito CLI [extensions](extensions).
+This page describes all the plugins that are bundled with Taito CLI by default.
 
 ## Application control
 

@@ -6,6 +6,7 @@ import { flattenListData } from '../utils';
 import { IS_BROWSER } from '../constants';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
+import MarkdownContent from '../components/MarkdownContent';
 import Text from '../components/Text';
 import Spacing from '../components/Spacing';
 import Sidemenu from '../components/Sidemenu';
@@ -42,7 +43,7 @@ export default function TutorialItemTemplate({ data }) {
       }
     >
       <SEO />
-      <div dangerouslySetInnerHTML={{ __html: data.tutorial.html }} />
+      <MarkdownContent html={data.tutorial.html} />
 
       <Spacing dir="y" amount={20} />
 
