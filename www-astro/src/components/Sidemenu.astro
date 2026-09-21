@@ -1,0 +1,111 @@
+---
+import { theme } from '../theme';
+import { withBase } from '../utils/withBase';
+import type { MenuItem } from '../utils/buildMenu';
+
+interface Props {
+  title: string;
+  items: MenuItem[];
+  currentId: string;
+}
+
+const { title, items, currentId } = Astro.props;
+---
+
+<div class="sidemenu">
+  <span class="caption">{title}</span>
+
+  {items.map((item) => (
+    <a
+      href={withBase(item.slug)}
+      class="item"
+      class:list={{ active: item.id === currentId }}
+    >
+      {item.label}
+    </a>
+  ))}
+</div>
+
+<style
+  define:vars={{
+    borderColor: theme.grey[300],
+    pillColor: theme.primary[500],
+    hoverBg: theme.primary[100],
+    hoverColor: theme.primary[700],
+  }}
+>
+  .sidemenu {
+    width: 320px;
+    height: 100%;
+    border-right: 1px solid var(--borderColor);
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0px 16px 24px;
+    flex: none;
+  }
+
+  @media (max-width: 820px) {
+    .sidemenu {
+      display: none;
+    }
+  }
+
+  .caption {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 200;
+    color: #222;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .item {
+    margin-left: -24px;
+    padding: 8px 16px 8px 24px;
+    text-decoration: none;
+    color: #222;
+    position: relative;
+  }
+
+  .item::before {
+    content: '';
+    display: none;
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 8px;
+    background-color: var(--pillColor);
+    border-radius: 99px;
+  }
+
+  .item.active::before {
+    display: block;
+  }
+
+  .item::after {
+    display: block;
+    font-size: 16px;
+    color: var(--pillColor);
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .item.active::after {
+    display: none;
+  }
+
+  .item:hover {
+    background-color: var(--hoverBg);
+    color: var(--hoverColor);
+  }
+
+  .item:hover::after {
+    content: '›';
+  }
+</style>

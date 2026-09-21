@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from 'astro:content';
+import CollectionPage from '../../layouts/CollectionPage.astro';
+import { buildMenu } from '../../utils/buildMenu';
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    'tutorial',
+    (entry) => entry.id !== 'README'
+  );
+  const menu = await buildMenu('tutorial', '/tutorial');
+
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry, menu },
+  }));
+}
+
+const { entry, menu } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<CollectionPage
+  sidebarTitle="TUTORIAL"
+  menu={menu}
+  currentId={entry.id}
+  editPath={`/tutorial/${entry.id}`}
+>
+  <Content />
+</CollectionPage>
