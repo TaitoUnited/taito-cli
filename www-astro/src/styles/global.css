@@ -61,3 +61,10 @@ pre[class*='language-'] {
   padding: 4px 6px !important;
   border-radius: 2px !important;
 }
+
+/* No crossfade animation on page transitions - instant swap instead */
+::view-transition-old(root),
+::view-transition-new(root),
+::view-transition-group(root) {
+  animation: none;
+}

@@ -1,15 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
+import { CacheProvider } from '@emotion/react';
 import { animated, useTrail } from '@react-spring/web';
 import taitoCharacterImg from '../../assets/taito_char_white.png';
 import { useOnScreen } from '../../hooks/useOnScreen';
 import { theme } from '../../theme';
+import { createIslandCache } from '../../utils/emotionIslandCache';
 
 const trailConfig = {
   mass: 5,
   tension: 3000,
   friction: 500,
 };
+
+const emotionCache = createIslandCache('emotion-insertion-point-terminal');
 
 export type TerminalLine =
   { prefix: string; prefixColor?: string; suffix?: string } | { text: string };
@@ -41,49 +45,51 @@ export default function Terminal({ lines }: Props) {
   }, [isOnScreen, shouldAnimate]);
 
   return (
-    <Wrapper ref={ref}>
-      <Header>
-        <HeaderLogo>
-          <Logo src={taitoCharacterImg.src} alt="" />
-        </HeaderLogo>
+    <CacheProvider value={emotionCache}>
+      <Wrapper ref={ref}>
+        <Header>
+          <HeaderLogo>
+            <Logo src={taitoCharacterImg.src} alt="" />
+          </HeaderLogo>
 
-        <HeaderButtons>
-          <HeaderButton color="#ff5f56" />
-          <HeaderButton color="#ffbd2e" />
-          <HeaderButton color="#27c93f" />
-        </HeaderButtons>
-      </Header>
+          <HeaderButtons>
+            <HeaderButton color="#ff5f56" />
+            <HeaderButton color="#ffbd2e" />
+            <HeaderButton color="#27c93f" />
+          </HeaderButtons>
+        </Header>
 
-      <Content>
-        {trail.map(({ x, ...rest }, index) => {
-          const line = lines[index];
-          return (
-            <LineWrapper key={lineKey(line)}>
-              <LineSymbol style={{ ...rest }} />
-              <Line
-                style={{
-                  ...rest,
-                  transform: x.to((v) => `translate3d(${v}px,0,0)`),
-                }}
-              >
-                {'prefix' in line ? (
-                  <>
-                    <LinePrefix color={line.prefixColor}>
-                      {line.prefix}
-                    </LinePrefix>
-                    {line.suffix !== undefined && (
-                      <LineSuffix>{line.suffix}</LineSuffix>
-                    )}
-                  </>
-                ) : (
-                  <span>{line.text}</span>
-                )}
-              </Line>
-            </LineWrapper>
-          );
-        })}
-      </Content>
-    </Wrapper>
+        <Content>
+          {trail.map(({ x, ...rest }, index) => {
+            const line = lines[index];
+            return (
+              <LineWrapper key={lineKey(line)}>
+                <LineSymbol style={{ ...rest }} />
+                <Line
+                  style={{
+                    ...rest,
+                    transform: x.to((v) => `translate3d(${v}px,0,0)`),
+                  }}
+                >
+                  {'prefix' in line ? (
+                    <>
+                      <LinePrefix color={line.prefixColor}>
+                        {line.prefix}
+                      </LinePrefix>
+                      {line.suffix !== undefined && (
+                        <LineSuffix>{line.suffix}</LineSuffix>
+                      )}
+                    </>
+                  ) : (
+                    <span>{line.text}</span>
+                  )}
+                </Line>
+              </LineWrapper>
+            );
+          })}
+        </Content>
+      </Wrapper>
+    </CacheProvider>
   );
 }
 

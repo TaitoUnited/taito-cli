@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
+import { CacheProvider } from '@emotion/react';
 import { FiMenu, FiBookOpen } from 'react-icons/fi';
 import { navigate } from 'astro:transitions/client';
 import { theme } from '../../theme';
 import { withBase } from '../../utils/withBase';
 import { BREAKPOINTS } from '../../constants/site';
+import { createIslandCache } from '../../utils/emotionIslandCache';
 
 const IS_BROWSER = typeof window !== 'undefined';
 const MENU_WIDTH = IS_BROWSER ? Math.min(360, window.innerWidth * 0.8) : 360;
 const MENU_CLOSE_MS = 400;
 const ELEVATIONS = { menu: 3, backdrop: 2, button: 1 };
+const emotionCache = createIslandCache('emotion-insertion-point-drawer');
 
 export interface DrawerItemData {
   to: string;
@@ -41,7 +44,7 @@ export default function Drawer({
   };
 
   return (
-    <>
+    <CacheProvider value={emotionCache}>
       <MenuButton
         position={buttonPosition}
         onClick={() => setIsOpen(true)}
@@ -63,7 +66,7 @@ export default function Drawer({
           </MenuItem>
         ))}
       </Menu>
-    </>
+    </CacheProvider>
   );
 }
 

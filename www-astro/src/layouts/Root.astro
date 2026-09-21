@@ -21,6 +21,18 @@ const { title, description } = Astro.props;
     <ClientRouter />
   </head>
   <body>
+    <!-- Persisted Emotion style containers, see emotionIslandCache.ts -->
+    <div
+      id="emotion-insertion-point-drawer"
+      transition:persist
+      style="display: none"
+    ></div>
+    <div
+      id="emotion-insertion-point-terminal"
+      transition:persist
+      style="display: none"
+    ></div>
+
     <slot />
   </body>
 </html>
