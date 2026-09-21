@@ -13,7 +13,7 @@ export default defineConfig(
   tseslint.configs.recommended,
   eslintPluginAstro.configs.recommended,
   eslintPluginImportX.configs['flat/recommended'],
-  eslintPluginReact.configs.recommended,
+  { files: ['**/*.{jsx,tsx}'], ...eslintPluginReact.configs.recommended },
   {
     settings: {
       'import-x/resolver': {

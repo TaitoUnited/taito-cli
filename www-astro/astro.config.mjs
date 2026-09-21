@@ -8,6 +8,7 @@ import rehypeSlug from 'rehype-slug';
 
 import remarkLinksBase from './src/remark/remark-links-base.mjs';
 import remarkShAsBash from './src/remark/remark-sh-as-bash.mjs';
+import rehypeInlineCodeLanguage from './src/rehype/rehype-inline-code-language.mjs';
 
 //GitHub Pages project-site path taito-cli is served
 export const BASE = '/taito-cli';
@@ -28,8 +29,9 @@ export default defineConfig({
         [
           rehypeAutolinkHeadings,
           // className for CSS targeting
-          { behavior: 'wrap', properties: { className: ['autolink-a'] } },
+          { behavior: 'prepend', properties: { className: ['autolink-a'] } },
         ],
+        rehypeInlineCodeLanguage,
       ],
     }),
   },
