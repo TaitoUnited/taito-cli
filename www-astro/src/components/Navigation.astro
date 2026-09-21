@@ -1,0 +1,57 @@
+---
+import Navbar from './Navbar.astro';
+import Drawer from './react/Drawer.tsx';
+import { isActive as isActiveSection } from '../utils/isActive';
+import type { DrawerItemData } from './react/Drawer.tsx';
+
+interface Props {
+  isHome?: boolean;
+}
+
+const { isHome = false } = Astro.props;
+const { pathname } = Astro.url;
+
+const isActive = (to: string) => isActiveSection(pathname, to);
+
+const items: DrawerItemData[] = [
+  { to: '/', label: 'Home' },
+  { to: '/docs', label: 'Docs', active: isActive('/docs') },
+  { to: '/tutorial', label: 'Tutorial', active: isActive('/tutorial') },
+  { to: '/plugins', label: 'Plugins', active: isActive('/plugins') },
+  { to: '/templates', label: 'Templates', active: isActive('/templates') },
+  { to: '/extensions', label: 'Extensions', active: isActive('/extensions') },
+];
+---
+
+<Navbar />
+
+<div class="mobile-search" class:list={{ transparent: isHome }}>
+  <div class="search-slot"><!-- TODO: Algolia search--></div>
+</div>
+
+<Drawer client:idle items={items} />
+
+<style>
+  .mobile-search {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: none;
+    align-items: center;
+    z-index: 1;
+    padding: 0px 64px 0px 16px;
+    background-color: #fff;
+  }
+
+  .mobile-search.transparent {
+    background-color: transparent;
+  }
+
+  @media (max-width: 820px) {
+    .mobile-search {
+      display: flex;
+    }
+  }
+</style>
