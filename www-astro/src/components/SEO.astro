@@ -1,0 +1,23 @@
+---
+import { SITE } from '../constants/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = SITE.title, description = SITE.description } = Astro.props;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={SITE.author} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<link
+  rel="icon"
+  type="image/png"
+  href="https://www.taitounited.fi/favicon-32x32.png"
+/>

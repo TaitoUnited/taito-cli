@@ -15,8 +15,14 @@ export default defineConfig(
   eslintPluginImportX.configs['flat/recommended'],
   eslintPluginReact.configs.recommended,
   {
+    settings: {
+      'import-x/resolver': {
+        typescript: true,
+      },
+    },
     rules: {
       'no-var': 'error',
+      'import-x/no-unresolved': ['error', { ignore: ['^astro:'] }],
       'import-x/order': [
         'error',
         {

@@ -1,0 +1,142 @@
+---
+import { FaGithub } from 'react-icons/fa';
+import Spacing from './Spacing.astro';
+import { theme } from '../theme';
+import { withBase } from '../utils/withBase';
+import { isActive as isActiveSection } from '../utils/isActive';
+
+const { pathname } = Astro.url;
+
+const isActive = (to: string) => isActiveSection(pathname, to);
+---
+
+<nav class="nav">
+  <nav class="nav-links">
+    <a class="nav-link" href={withBase('/')}>
+      <strong>Taito</strong>&nbsp;CLI
+    </a>
+
+    <Spacing amount={64} />
+
+    <a
+      class="nav-link"
+      class:list={{ active: isActive('/docs') }}
+      href={withBase('/docs')}
+    >
+      Docs
+    </a>
+
+    <Spacing amount={32} />
+
+    <a
+      class="nav-link"
+      class:list={{ active: isActive('/tutorial') }}
+      href={withBase('/tutorial')}
+    >
+      Tutorial
+    </a>
+
+    <Spacing amount={32} />
+
+    <a
+      class="nav-link"
+      class:list={{ active: isActive('/plugins') }}
+      href={withBase('/plugins')}
+    >
+      Plugins
+    </a>
+
+    <Spacing amount={32} />
+
+    <a
+      class="nav-link"
+      class:list={{ active: isActive('/templates') }}
+      href={withBase('/templates')}
+    >
+      Templates
+    </a>
+
+    <Spacing amount={32} />
+
+    <a
+      class="nav-link"
+      class:list={{ active: isActive('/extensions') }}
+      href={withBase('/extensions')}
+    >
+      Extensions
+    </a>
+
+    <div class="nav-spacer"></div>
+
+    <div class="search-slot"><!-- TODO: algolia search--></div>
+
+    <Spacing />
+
+    <a
+      href="https://github.com/TaitoUnited/taito-cli"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Taito CLI on GitHub"
+    >
+      <FaGithub color="#fff" size={24} />
+    </a>
+  </nav>
+</nav>
+
+<style
+  define:vars={{
+    navBg: theme.primary[700],
+    activeColor: theme.primary[500],
+    hoverColor: theme.primary[900],
+  }}
+>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--navBg);
+    z-index: 1;
+  }
+
+  @media (max-width: 820px) {
+    .nav {
+      display: none;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 16px;
+  }
+
+  .nav-spacer {
+    flex: 1;
+  }
+
+  .search-slot {
+    display: flex;
+  }
+
+  .nav-link {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    border-bottom: 4px solid var(--navBg);
+    position: relative;
+  }
+
+  .nav-link:hover {
+    border-bottom: 4px solid var(--hoverColor);
+  }
+
+  .nav-link.active {
+    font-weight: 500;
+    border-bottom-color: var(--activeColor);
+  }
+</style>
