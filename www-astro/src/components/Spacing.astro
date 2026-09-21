@@ -1,0 +1,68 @@
+---
+interface BreakpointOverride {
+  dir?: 'x' | 'y';
+  amount?: number;
+}
+
+interface Props {
+  dir?: 'x' | 'y';
+  amount?: number;
+  sm?: BreakpointOverride;
+  md?: BreakpointOverride;
+  lg?: BreakpointOverride;
+}
+
+const DEFAULT_PAD = 16;
+const { dir = 'x', amount = DEFAULT_PAD, sm, md, lg } = Astro.props;
+
+const dims = (d: 'x' | 'y', amt: number) => ({
+  width: d === 'x' ? `${amt}px` : 'auto',
+  height: d === 'y' ? `${amt}px` : '0px',
+});
+
+const base = dims(dir, amount);
+const smDims = sm ? dims(sm.dir ?? dir, sm.amount ?? amount) : base;
+const mdDims = md ? dims(md.dir ?? dir, md.amount ?? amount) : base;
+const lgDims = lg ? dims(lg.dir ?? dir, lg.amount ?? amount) : base;
+---
+
+<div class="spacing" />
+
+<style
+  define:vars={{
+    width: base.width,
+    height: base.height,
+    smWidth: smDims.width,
+    smHeight: smDims.height,
+    mdWidth: mdDims.width,
+    mdHeight: mdDims.height,
+    lgWidth: lgDims.width,
+    lgHeight: lgDims.height,
+  }}
+>
+  .spacing {
+    width: var(--width);
+    height: var(--height);
+  }
+
+  @media (max-width: 820px) {
+    .spacing {
+      width: var(--smWidth);
+      height: var(--smHeight);
+    }
+  }
+
+  @media (min-width: 821px) and (max-width: 1024px) {
+    .spacing {
+      width: var(--mdWidth);
+      height: var(--mdHeight);
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .spacing {
+      width: var(--lgWidth);
+      height: var(--lgHeight);
+    }
+  }
+</style>
