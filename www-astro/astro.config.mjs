@@ -9,6 +9,7 @@ import rehypeSlug from 'rehype-slug';
 import remarkLinksBase from './src/remark/remark-links-base.mjs';
 import remarkShAsBash from './src/remark/remark-sh-as-bash.mjs';
 import rehypeHeadingAnchors from './src/rehype/rehype-heading-anchors.mjs';
+import rehypeIgnoreNextLinks from './src/rehype/rehype-ignore-next-links.mjs';
 import rehypeInlineCodeLanguage from './src/rehype/rehype-inline-code-language.mjs';
 
 //GitHub Pages project-site path taito-cli is served
@@ -30,6 +31,7 @@ export default defineConfig({
         rehypeSlug,
         rehypeHeadingAnchors,
         rehypeInlineCodeLanguage,
+        rehypeIgnoreNextLinks,
       ],
     }),
   },

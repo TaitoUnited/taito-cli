@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import CollectionPage from '../../layouts/CollectionPage.astro';
-import { buildMenu } from '../../utils/buildMenu';
+import { buildMenu, getEntryTitle } from '../../utils/buildMenu';
 
 export async function getStaticPaths() {
   const entries = await getCollection('docs', (entry) => entry.id !== 'README');
@@ -14,10 +14,11 @@ export async function getStaticPaths() {
 }
 
 const { entry, menu } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 ---
 
 <CollectionPage
+  title={getEntryTitle(headings) ?? 'Documentation'}
   sidebarTitle="DOCUMENTATION"
   menu={menu}
   currentId={entry.id}
