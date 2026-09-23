@@ -1,9 +1,15 @@
+import type { MarkdownHeading } from 'astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 
 export interface MenuItem {
   id: string;
   slug: string;
   label: string;
+}
+
+// Chapter title is the document's `##` heading (`#` is used for tutorial PART headings)
+export function getEntryTitle(headings: MarkdownHeading[]) {
+  return headings.find((heading) => heading.depth === 2)?.text;
 }
 
 export async function buildMenu<C extends 'docs' | 'tutorial'>(
@@ -19,11 +25,10 @@ export async function buildMenu<C extends 'docs' | 'tutorial'>(
   return Promise.all(
     entries.map(async (entry) => {
       const { headings } = await render(entry as CollectionEntry<C>);
-      const h2 = headings.find((heading) => heading.depth === 2);
       return {
         id: entry.id,
         slug: `${basePath}/${entry.id}`,
-        label: h2 ? h2.text : 'Missing heading!',
+        label: getEntryTitle(headings) ?? 'Missing heading!',
       };
     })
   );

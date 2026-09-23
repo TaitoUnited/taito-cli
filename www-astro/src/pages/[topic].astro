@@ -11,9 +11,9 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 ---
 
-<StandalonePage editPath={`/${entry.id}`}>
+<StandalonePage title={headings[0]?.text} editPath={`/${entry.id}`}>
   <Content />
 </StandalonePage>
