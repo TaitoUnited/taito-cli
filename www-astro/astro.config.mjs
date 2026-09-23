@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
+import pagefind from 'astro-pagefind';
 import { unified } from '@astrojs/markdown-remark';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
@@ -18,7 +19,7 @@ export default defineConfig({
   base: BASE,
   trailingSlash: 'always',
 
-  integrations: [react()],
+  integrations: [react(), pagefind()],
 
   markdown: {
     syntaxHighlight: 'prism',

@@ -26,7 +26,12 @@ const items: DrawerItemData[] = [
 <Navbar />
 
 <div class="mobile-search" class:list={{ transparent: isHome }}>
-  <div class="search-slot"><!-- TODO: Algolia search--></div>
+  <div class="search-slot">
+    <pagefind-modal-trigger
+      placeholder="Search docs"
+      hide-shortcut
+    ></pagefind-modal-trigger>
+  </div>
 </div>
 
 <Drawer client:idle items={items} />
@@ -47,6 +52,16 @@ const items: DrawerItemData[] = [
 
   .mobile-search.transparent {
     background-color: transparent;
+  }
+
+  .search-slot {
+    display: flex;
+    flex: 1;
+    --pf-input-height: 44px;
+  }
+
+  .search-slot pagefind-modal-trigger {
+    flex: 1;
   }
 
   @media (max-width: 820px) {
