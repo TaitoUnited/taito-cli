@@ -1,5 +1,6 @@
 ---
 import { FaGithub } from 'react-icons/fa';
+import SearchTrigger from './SearchTrigger.astro';
 import Spacing from './Spacing.astro';
 import { theme } from '../theme';
 import { withBase } from '../utils/withBase';
@@ -69,7 +70,7 @@ const isActive = (to: string) => isActiveSection(pathname, to);
     <div class="nav-spacer"></div>
 
     <div class="search-slot">
-      <pagefind-modal-trigger placeholder="Search docs"></pagefind-modal-trigger>
+      <SearchTrigger />
     </div>
 
     <Spacing />
