@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions';
 import PagefindConfig from 'astro-pagefind/components/PagefindConfig.astro';
 import '../styles/global.css';
 import '../styles/typography.css';
@@ -19,30 +18,11 @@ const { title, description } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO title={title} description={description} />
-    <ClientRouter />
+    <PagefindConfig />
   </head>
   <body>
-    <!-- In body so it re-registers on the fresh instance after each navigation -->
-    <PagefindConfig />
-    <!-- Not persisted: Pagefind re-renders into itself on reattach, nesting dialogs -->
-    <pagefind-modal>
-      <pagefind-modal-header>
-        <pagefind-input placeholder="Search docs" autofocus></pagefind-input>
-      </pagefind-modal-header>
-      <pagefind-modal-body>
-        <pagefind-results></pagefind-results>
-      </pagefind-modal-body>
-    </pagefind-modal>
+    <pagefind-modal></pagefind-modal>
 
     <slot />
   </body>
 </html>
-
-<script>
-  import { getInstanceManager } from '@pagefind/component-ui';
-
-  // Pagefind never deregisters detached components, so reset its instance on each navigation
-  document.addEventListener('astro:before-swap', () => {
-    getInstanceManager().removeInstance('default');
-  });
-</script>

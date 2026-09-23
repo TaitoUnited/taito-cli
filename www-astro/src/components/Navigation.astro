@@ -1,5 +1,6 @@
 ---
 import Navbar from './Navbar.astro';
+import SearchTrigger from './SearchTrigger.astro';
 import Drawer from './react/Drawer.tsx';
 import { isActive as isActiveSection } from '../utils/isActive';
 import type { DrawerItemData } from './react/Drawer.tsx';
@@ -27,10 +28,7 @@ const items: DrawerItemData[] = [
 
 <div class="mobile-search" class:list={{ transparent: isHome }}>
   <div class="search-slot">
-    <pagefind-modal-trigger
-      placeholder="Search docs"
-      hide-shortcut
-    ></pagefind-modal-trigger>
+    <SearchTrigger hideShortcut />
   </div>
 </div>
 
@@ -60,7 +58,7 @@ const items: DrawerItemData[] = [
     --pf-input-height: 44px;
   }
 
-  .search-slot pagefind-modal-trigger {
+  .search-slot :global(pagefind-modal-trigger) {
     flex: 1;
   }
 

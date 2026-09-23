@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { FiMenu, FiBookOpen } from 'react-icons/fi';
-import { navigate } from 'astro:transitions/client';
 import { theme } from '../../theme';
 import { withBase } from '../../utils/withBase';
 import { BREAKPOINTS } from '../../constants/site';
 
-const IS_BROWSER = typeof window !== 'undefined';
-const MENU_WIDTH = IS_BROWSER ? Math.min(360, window.innerWidth * 0.8) : 360;
+const MENU_WIDTH = 'min(360px, 80vw)';
 const MENU_CLOSE_MS = 400;
 const ELEVATIONS = { menu: 3, backdrop: 2, button: 1 };
 
@@ -33,13 +31,6 @@ export default function Drawer({
   const [isOpen, setIsOpen] = useState(false);
   const Icon = ICONS[buttonIcon];
 
-  const navigateDelayed = (to: string) => {
-    setIsOpen(false);
-    setTimeout(() => {
-      navigate(withBase(to));
-    }, MENU_CLOSE_MS);
-  };
-
   return (
     <>
       <MenuButton
@@ -56,8 +47,8 @@ export default function Drawer({
         {items.map((item) => (
           <MenuItem
             key={item.to}
+            href={withBase(item.to)}
             isActive={!!item.active}
-            onClick={() => navigateDelayed(item.to)}
           >
             {item.label}
           </MenuItem>
@@ -94,20 +85,24 @@ const Menu = styled.div<{ isOpen: boolean }>`
   bottom: 0;
   left: 0;
   overflow-y: auto;
-  width: ${MENU_WIDTH}px;
+  width: ${MENU_WIDTH};
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
   will-change: transform;
-  transform: translateX(${(props) => (props.isOpen ? 0 : -MENU_WIDTH - 10)}px);
+  transform: translateX(
+    ${(props) => (props.isOpen ? '0' : 'calc(-100% - 10px)')}
+  );
   transition: transform ${MENU_CLOSE_MS}ms cubic-bezier(0.2, 0.71, 0.14, 0.91);
   background-color: #fff;
   ${mobileOnly}
 `;
 
-const MenuItem = styled.div<{ isActive: boolean }>`
+const MenuItem = styled.a<{ isActive: boolean }>`
   padding: 16px;
   position: relative;
+  color: inherit;
+  text-decoration: none;
 
   &:active {
     background-color: ${theme.primary[100]};

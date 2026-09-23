@@ -52,6 +52,28 @@ a {
   color: #009a48;
 }
 
+/* Heading anchor links (rehype-autolink-headings), shown on hover */
+:is(h1, h2, h3, h4, h5, h6):has(> .autolink-a) {
+  position: relative;
+  scroll-margin-top: 70px;
+}
+
+.autolink-a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  padding-right: 4px;
+}
+
+.autolink-a svg {
+  visibility: hidden;
+}
+
+:is(h1, h2, h3, h4, h5, h6):hover .autolink-a svg {
+  visibility: visible;
+}
+
 /* Code syntax highlight */
 pre[class*='language-'] {
   border-radius: 2px !important;

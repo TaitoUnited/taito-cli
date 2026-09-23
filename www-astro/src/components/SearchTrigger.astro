@@ -1,0 +1,32 @@
+---
+interface Props {
+  hideShortcut?: boolean;
+}
+
+const { hideShortcut = false } = Astro.props;
+const placeholder = 'Search docs';
+
+// Pre-render Pagefind's own button markup so it doesn't pop in once the script loads
+---
+
+<pagefind-modal-trigger
+  placeholder={placeholder}
+  hide-shortcut={hideShortcut || undefined}
+>
+  <button
+    class="pf-trigger-btn"
+    type="button"
+    aria-haspopup="dialog"
+    aria-expanded="false"
+    aria-label={placeholder}
+  >
+    <span class="pf-trigger-icon" aria-hidden="true"></span>
+    <span class="pf-trigger-text">{placeholder}</span>
+    {!hideShortcut && (
+      <span class="pf-trigger-shortcut" aria-hidden="true">
+        <span class="pf-trigger-key">⌘</span>
+        <span class="pf-trigger-key">K</span>
+      </span>
+    )}
+  </button>
+</pagefind-modal-trigger>
