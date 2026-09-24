@@ -1,4 +1,3 @@
-// Same formatting rules as the old www/.prettierrc (Gatsby site).
 /** @type {import("prettier").Config} */
 export default {
   trailingComma: 'es5',
