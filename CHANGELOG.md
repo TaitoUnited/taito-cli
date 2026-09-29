@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.319.0
 
 - Remove `--credentials` option from db proxy and db details commands. The db proxy command no longers shows credentials at all, as you can use db details command for that.
+- Push also production container images with the latest tag when `taito_ci_pull_docker_cache` has been set to `true`.
 
 ## 0.318.0
 
