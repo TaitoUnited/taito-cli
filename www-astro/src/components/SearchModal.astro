@@ -1,0 +1,54 @@
+<pagefind-modal></pagefind-modal>
+
+<script>
+  import type {
+    PagefindResultData,
+    PagefindResults,
+  } from '@pagefind/component-ui';
+
+  const escape = (text: string) =>
+    text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
+  function renderResult(results: PagefindResults, result: PagefindResultData) {
+    const title = result.meta.title ?? '';
+    const subResults = (
+      results.instance?.getDisplaySubResults(result) ?? []
+    ).filter((sub) => sub.title !== title);
+
+    const excerpt = subResults.length
+      ? ''
+      : `<p class="pf-result-excerpt">${result.excerpt}</p>`;
+
+    const subs = subResults.length
+      ? `<ul class="pf-heading-chips">${subResults
+          .map(
+            (sub) => `<li class="pf-heading-chip">
+              <a class="pf-heading-link" href="${escape(sub.url)}">${escape(sub.title)}</a>
+              <p class="pf-heading-excerpt">${sub.excerpt}</p>
+            </li>`
+          )
+          .join('')}</ul>`
+      : '';
+
+    return `<li class="pf-result">
+      <div class="pf-result-card">
+        <div class="pf-result-content">
+          <p class="pf-result-title">
+            <a class="pf-result-link" href="${escape(result.meta.url ?? result.url)}">${escape(title)}</a>
+          </p>
+          ${excerpt}
+        </div>
+      </div>
+      ${subs}
+    </li>`;
+  }
+
+  // <pagefind-modal> creates its <pagefind-results> when it's defined
+  customElements.whenDefined('pagefind-modal').then(() => {
+    document
+      .querySelectorAll<PagefindResults>('pagefind-results')
+      .forEach((results) => {
+        results.resultTemplate = (result) => renderResult(results, result);
+      });
+  });
+</script>

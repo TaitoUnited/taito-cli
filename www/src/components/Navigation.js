@@ -35,7 +35,7 @@ const MobileSearch = styled.div`
   align-items: center;
   z-index: 1;
   padding: 0px 64px 0px 16px;
-  background-color: ${props => (props.transparent ? 'transparent' : '#fff')};
+  background-color: ${(props) => (props.transparent ? 'transparent' : '#fff')};
   ${mobileOnly}
 `;
 

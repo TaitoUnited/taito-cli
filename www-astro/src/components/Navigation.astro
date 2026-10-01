@@ -1,5 +1,6 @@
 ---
 import Navbar from './Navbar.astro';
+import SearchTrigger from './SearchTrigger.astro';
 import Drawer from './react/Drawer.tsx';
 import { isActive as isActiveSection } from '../utils/isActive';
 import type { DrawerItemData } from './react/Drawer.tsx';
@@ -26,7 +27,9 @@ const items: DrawerItemData[] = [
 <Navbar />
 
 <div class="mobile-search" class:list={{ transparent: isHome }}>
-  <div class="search-slot"><!-- TODO: Algolia search--></div>
+  <div class="search-slot">
+    <SearchTrigger hideShortcut />
+  </div>
 </div>
 
 <Drawer client:idle items={items} />
@@ -47,6 +50,16 @@ const items: DrawerItemData[] = [
 
   .mobile-search.transparent {
     background-color: transparent;
+  }
+
+  .search-slot {
+    display: flex;
+    flex: 1;
+    --pf-input-height: 44px;
+  }
+
+  .search-slot :global(pagefind-modal-trigger) {
+    flex: 1;
   }
 
   @media (max-width: 820px) {

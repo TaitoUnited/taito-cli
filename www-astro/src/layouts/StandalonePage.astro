@@ -14,7 +14,13 @@ const { title, editPath } = Astro.props;
 
 <Root title={title}>
   <Page>
-    <slot />
+    <div
+      data-pagefind-body
+      data-pagefind-meta={title ? 'title[data-title]' : undefined}
+      data-title={title}
+    >
+      <slot />
+    </div>
 
     <Spacing dir="y" amount={20} />
 

@@ -1,9 +1,10 @@
 ---
-import { ClientRouter } from 'astro:transitions';
+import PagefindConfig from 'astro-pagefind/components/PagefindConfig.astro';
 import '../styles/global.css';
 import '../styles/typography.css';
 import 'prism-themes/themes/prism-base16-ateliersulphurpool.light.css';
 import SEO from '../components/SEO.astro';
+import SearchModal from '../components/SearchModal.astro';
 
 interface Props {
   title?: string;
@@ -18,9 +19,11 @@ const { title, description } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO title={title} description={description} />
-    <ClientRouter />
+    <PagefindConfig />
   </head>
   <body>
+    <SearchModal />
+
     <slot />
   </body>
 </html>
