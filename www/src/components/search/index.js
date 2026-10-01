@@ -14,12 +14,14 @@ import Spacing from '../Spacing';
 import SearchInput from './SearchInput';
 import SearchHit from './SearchHit';
 
-const searchClient = algoliasearch(
-  process.env.GATSBY_ALGOLIA_APP_ID,
-  process.env.GATSBY_ALGOLIA_SEARCH_KEY
-);
+const APP_ID = process.env.GATSBY_ALGOLIA_APP_ID;
+const SEARCH_KEY = process.env.GATSBY_ALGOLIA_SEARCH_KEY;
 
-const Search = () => {
+// algoliasearch throws without an app id, and the keys are optional locally
+const searchClient =
+  APP_ID && SEARCH_KEY ? algoliasearch(APP_ID, SEARCH_KEY) : null;
+
+const AlgoliaSearch = () => {
   const wrapperRef = React.useRef();
   const [focused, setFocused] = React.useState(false);
   const [query, setQuery] = React.useState('');
@@ -67,6 +69,8 @@ const Search = () => {
     </InstantSearch>
   );
 };
+
+const Search = () => (searchClient ? <AlgoliaSearch /> : null);
 
 const HitResults = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>

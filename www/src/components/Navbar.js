@@ -45,12 +45,6 @@ const Navbar = () => {
           Templates
         </NavLink>
 
-        <Spacing amount={32} />
-
-        <NavLink to="/extensions" activeStyle={activeStyle}>
-          Extensions
-        </NavLink>
-
         <div style={{ flex: 1 }} />
 
         <Search />

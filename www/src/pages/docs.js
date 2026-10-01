@@ -4,6 +4,7 @@ import { graphql } from 'gatsby';
 import { flattenListData } from '../utils';
 import Page from '../components/Page';
 import SEO from '../components/SEO';
+import MarkdownContent from '../components/MarkdownContent';
 import GitHubEditLink from '../components/GitHubEditLink';
 import Spacing from '../components/Spacing';
 
@@ -13,7 +14,7 @@ export default ({ data }) => {
   return (
     <Page>
       <SEO />
-      <div dangerouslySetInnerHTML={{ __html: pageData.html }} />
+      <MarkdownContent html={pageData.html} />
 
       <Spacing dir="y" amount={20} />
       <GitHubEditLink path="/docs/README" />
