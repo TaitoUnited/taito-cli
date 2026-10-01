@@ -1,16 +1,435 @@
 ---
+import Root from '../layouts/Root.astro';
+import Page from '../components/Page.astro';
+import Spacing from '../components/Spacing.astro';
+import Terminal from '../components/react/Terminal.tsx';
+import type { TerminalLine } from '../components/react/Terminal.tsx';
+import { theme } from '../theme';
+import { withBase } from '../utils/withBase';
+
+const standardCommandSetLines: TerminalLine[] = [
+  { prefix: 'taito', suffix: 'open client:test' },
+  { prefix: 'taito', suffix: 'status:test' },
+  { prefix: 'taito', suffix: 'logs:server:test' },
+  { prefix: 'taito', suffix: 'db copy:dev test' },
+  { prefix: 'taito', suffix: 'db connect:test' },
+];
+
+const anyCloudLines: TerminalLine[] = [
+  { prefix: 'taito', suffix: 'zone create gcp' },
+  { prefix: 'taito', suffix: 'zone create vmware' },
+  { prefix: 'taito', suffix: 'project create full-stack-template' },
+  { prefix: 'taito', suffix: 'env apply:dev' },
+  { prefix: 'taito', suffix: 'env apply:test' },
+  { prefix: 'taito', suffix: 'env apply:canary' },
+  { prefix: 'taito', suffix: 'env apply:prod' },
+  { prefix: 'taito', suffix: 'env merge:dev canary' },
+];
+
+const simpleToUseLines: TerminalLine[] = [
+  { prefix: 'taito', suffix: 'db connect:test' },
+  { prefix: '#', prefixColor: theme.grey[500], suffix: 'Without Taito CLI:' },
+  {
+    prefix: 'cloud-sql-proxy',
+    prefixColor: theme.info,
+    suffix:
+      '--address 127.0.0.1 --port 5001 acme-zone:europe-west1:acme-postgres',
+  },
+  {
+    prefix: 'psql',
+    prefixColor: theme.info,
+    suffix: 'psql -h 127.0.0.1 -p 5001 -d acme_chat_test -U acme_chat_test',
+  },
+  {
+    prefix: 'Password:',
+    prefixColor: theme.info,
+    suffix: '******************',
+  },
+];
+
+const noLockInLines: TerminalLine[] = [
+  { prefix: 'taito', suffix: '--verbose status:dev' },
+  { prefix: '[kubectl]', prefixColor: theme.info },
+  {
+    prefix: 'kubectl',
+    prefixColor: theme.info,
+    suffix:
+      'config set-context acme-chat-dev --cluster=gke_my-gcp_europe-west1-c_my-kube1 --user=gke_my-gcp_europe-west1-c_my-kube1 --namespace=acme-chat-dev',
+  },
+  {
+    prefix: 'kubectl',
+    prefixColor: theme.info,
+    suffix: 'config use-context acme-chat-dev',
+  },
+  { prefix: 'kubectl', prefixColor: theme.info, suffix: 'get cronjobs' },
+  { prefix: 'kubectl', prefixColor: theme.info, suffix: 'get pods' },
+  { prefix: 'kubectl', prefixColor: theme.info, suffix: 'top pod' },
+  {
+    prefix: 'kubectl',
+    prefixColor: theme.info,
+    suffix:
+      "get pods -o jsonpath=\"{.items[*].spec.containers[*].image}\" | tr -s '[[:space:]]' '\n' | sort | uniq",
+  },
+  { prefix: '[helm]', prefixColor: theme.info },
+  {
+    prefix: 'helm',
+    prefixColor: theme.info,
+    suffix: 'list --namespace acme-chat-dev',
+  },
+];
+
+const allToolsIncludedLines: TerminalLine[] = [
+  { prefix: 'taito', suffix: '-- terraform apply' },
+  { prefix: 'taito', suffix: '-- kubectl get pods --namespace acme-chat-dev' },
+  { prefix: 'taito', suffix: '-- aws ec2 describe-instances' },
+  { prefix: 'taito', suffix: '-- az network nic list' },
+  { prefix: 'taito', suffix: '-- gcloud dns managed-zones list' },
+];
+
+const extensibleLines: TerminalLine[] = [
+  { prefix: 'taito', suffix: 'basket add pizza margherita' },
+  { prefix: 'taito', suffix: 'hours add 6.5' },
+];
+
+const uniformConventionsLines: TerminalLine[] = [
+  {
+    prefix: 'nano',
+    prefixColor: theme.info,
+    suffix: '~/.taito/taito-config.sh',
+  },
+  {
+    text: 'taito_global_extensions="git@github.com:MyOrg/myorg-extension.git"',
+  },
+  { text: 'taito_global_plugins="myorg-git-global ..."' },
+];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<Root>
+  <Page isHome bare>
+    <div class="home">
+      <div class="hero">
+        <h1 class="title">
+          <strong>Taito</strong>&nbsp;CLI
+        </h1>
+
+        <Spacing dir="y" />
+        <h2 class="slogan">An extensible toolkit for DevOps and NoOps.</h2>
+        <Spacing dir="y" amount={24} />
+
+        <div class="actions">
+          <a class="button" href={withBase('/docs')}>
+            Get started
+          </a>
+          <Spacing amount={32} sm={{ amount: 16 }} />
+          <a class="button light" href={withBase('/tutorial')}>
+            See the tutorial
+          </a>
+        </div>
+      </div>
+
+      <div class="content">
+        <section class="section">
+          <div class="section-text">
+            <h3 class="section-title">Standard command set</h3>
+            <p>
+              Use the same simple command set from project to project no matter
+              the technology or infrastructure. Easily manage your containers,
+              functions, databases, object storages, and legacy applications
+              wherever they are deployed. Just add a taito configuration file to
+              your project, and you're good to go.
+            </p>
+          </div>
+
+          <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
+
+          <Terminal client:visible lines={standardCommandSetLines} />
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+          <div class="section-text">
+            <h3 class="section-title">Any cloud, hybrid cloud, multicloud</h3>
+            <p>
+              Deploy your applications to multiple platforms without any extra
+              hassle. Leverage public cloud for fluent collaboration between
+              in-house and external personnel during development. Deploy to
+              on-premises to meet the extra security requirements of a
+              production environment.
+            </p>
+          </div>
+
+          <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
+
+          <Terminal client:visible lines={anyCloudLines} />
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+          <div class="section-text">
+            <h3 class="section-title">Simple to use</h3>
+            <p>
+              Many daily tasks, such as connecting to a database, can be
+              extremely tedious. Before actually connecting to the database, you
+              have to locate the correct database cluster, the correct database
+              in it, and the credentials for database access. You may also have
+              to establish a secure tunnel by using a proxy.
+            </p>
+            <p>
+              With Taito CLI you achieve all this with a one simple command.
+            </p>
+          </div>
+
+          <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
+
+          <Terminal client:visible lines={simpleToUseLines} />
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+          <div class="section-text">
+            <h3 class="section-title">No lock-in</h3>
+            <p>
+              Taito CLI is a lightweight wrapper that reduces technology and
+              vendor lock-in by providing a standard command set on top of
+              various platform specific tools. You just run a simple taito
+              command, and Taito CLI runs a number of platform or technology
+              specific commands under the hood based on your configuration.
+            </p>
+            <p>
+              However, you can use all the tools also directly without Taito
+              CLI. Therefore you can stop using Taito CLI at any time, if you
+              like. There is no lock-in with Taito CLI.
+            </p>
+          </div>
+
+          <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
+
+          <Terminal client:visible lines={noLockInLines} />
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+          <div class="section-text">
+            <h3 class="section-title">All tools included</h3>
+            <p>
+              Working with modern hybrid cloud environments requires lots of
+              tools. Taito CLI Docker container image contains all the tools you
+              need, and you can upgrade it anytime by running:
+            </p>
+            <div class="inline-code">taito upgrade</div>
+            <p>
+              And if you need something special, it is very easy to customize
+              the Taito CLI image with your own requirements.
+            </p>
+          </div>
+
+          <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
+
+          <Terminal client:visible lines={allToolsIncludedLines} />
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+          <div class="section-text">
+            <h3 class="section-title">Extensible</h3>
+            <p>
+              Add Taito CLI support for any technology by implementing a Taito
+              CLI plugin. Create custom commands and share them with your
+              colleagues as Taito CLI extensions. Implement project specific
+              Taito CLI commands with npm or make.
+            </p>
+          </div>
+
+          <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
+
+          <Terminal client:visible lines={extensibleLines} />
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+          <div class="section-text">
+            <h3 class="section-title">Uniform conventions</h3>
+            <p>
+              Maintain good and uniform conventions by providing reusable
+              infrastructure templates and project templates. Use the same
+              conventions no matter the technology or infrastructure.
+            </p>
+            <p>
+              Customize software development workflows for your organization
+              with custom Taito CLI extensions.
+            </p>
+          </div>
+
+          <Spacing amount={24} sm={{ dir: 'y', amount: 32 }} />
+
+          <Terminal client:visible lines={uniformConventionsLines} />
+        </section>
+      </div>
+    </div>
+  </Page>
+</Root>
+
+<style
+  define:vars={{
+    heroBg: theme.primary[500],
+    buttonBg: theme.primary[300],
+    buttonColor: theme.primary[900],
+    buttonLightColor: theme.primary[500],
+    dividerBg: theme.grey[200],
+    sectionTitleColor: theme.black,
+    inlineCodeBg: theme.grey[200],
+    inlineCodeColor: theme.grey[700],
+  }}
+>
+  .home {
+    width: 100%;
+    height: 100%;
+  }
+
+  .home :global(p) {
+    line-height: 1.5;
+  }
+
+  .hero {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    background-color: var(--heroBg);
+  }
+
+  @media (max-width: 820px) {
+    .hero {
+      height: auto;
+      padding: 88px 16px 32px 16px;
+      justify-content: flex-end;
+      text-align: center;
+    }
+  }
+
+  .title {
+    font-size: 48px;
+    font-weight: 200;
+    color: #fff;
+    margin: 0px;
+  }
+
+  @media (max-width: 820px) {
+    .title {
+      font-size: 32px;
+    }
+  }
+
+  .slogan {
+    font-size: 20px;
+    font-weight: 400;
+    color: #fff;
+    margin: 0;
+  }
+
+  @media (max-width: 820px) {
+    .slogan {
+      font-size: 18px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .button {
+    padding: 8px 24px;
+    background-color: var(--buttonBg);
+    color: var(--buttonColor);
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 99px;
+    font-weight: 500;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .button.light {
+    background-color: #fff;
+    color: var(--buttonLightColor);
+  }
+
+  .content {
+    max-width: 1100px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 23px;
+    min-height: 100vh;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.2);
+    margin-top: -48px;
+    margin-bottom: 32px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  @media (max-width: 820px) {
+    .content {
+      padding: 16px;
+      margin-top: 0px;
+      box-shadow: none;
+    }
+  }
+
+  .section {
+    display: flex;
+    flex-direction: row;
+  }
+
+  @media (max-width: 820px) {
+    .section {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .divider {
+    background-color: var(--dividerBg);
+    height: 1px;
+    width: 100%;
+    margin: 64px 0px;
+  }
+
+  @media (max-width: 820px) {
+    .divider {
+      margin: 32px 0px;
+    }
+  }
+
+  .section-title {
+    font-size: 24px;
+    margin-top: 0px;
+    margin-bottom: 16px;
+    color: var(--sectionTitleColor);
+  }
+
+  .section-text {
+    flex: 1;
+  }
+
+  .inline-code {
+    border-radius: 6px;
+    background-color: var(--inlineCodeBg);
+    color: var(--inlineCodeColor);
+    padding: 8px 12px;
+    font-family:
+      Consolas, Menlo, Monaco, 'Andale Mono WT', 'Andale Mono',
+      'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono',
+      'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L',
+      'Courier New', Courier, monospace;
+    font-size: 14px;
+  }
+</style>
