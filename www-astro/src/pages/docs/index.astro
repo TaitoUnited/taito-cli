@@ -1,0 +1,12 @@
+---
+import { getEntry, render } from 'astro:content';
+import StandalonePage from '../../layouts/StandalonePage.astro';
+
+const entry = await getEntry('docs', 'README');
+if (!entry) throw new Error('docs/docs/README.md not found');
+const { Content } = await render(entry);
+---
+
+<StandalonePage editPath="/docs/README">
+  <Content />
+</StandalonePage>

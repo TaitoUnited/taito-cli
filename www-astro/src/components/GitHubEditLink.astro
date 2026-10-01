@@ -1,0 +1,21 @@
+---
+import { MdModeEdit } from 'react-icons/md';
+
+interface Props {
+  path: string;
+}
+
+const { path } = Astro.props;
+const url = `https://github.com/TaitoUnited/taito-cli/edit/dev/docs${path}.md`;
+---
+
+<div class="wrapper">
+  <MdModeEdit />
+  <a href={url}>Edit this page on GitHub</a>
+</div>
+
+<style>
+  .wrapper {
+    display: flex;
+  }
+</style>
