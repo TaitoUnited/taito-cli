@@ -57,16 +57,6 @@ const isActive = (to: string) => isActiveSection(pathname, to);
       Templates
     </a>
 
-    <Spacing amount={32} />
-
-    <a
-      class="nav-link"
-      class:list={{ active: isActive('/extensions') }}
-      href={withBase('/extensions')}
-    >
-      Extensions
-    </a>
-
     <div class="nav-spacer"></div>
 
     <div class="search-slot">
