@@ -1,13 +1,15 @@
 import { visit } from 'unist-util-visit';
 
-const MD_LINK = /^(.*?)\.md(#.*)?$/;
+// Some docs put the hash before the extension (`page#anchor.md`), which the old Gatsby plugin supported.
+const MD_LINK = /^([^#]*?)(#.*)?\.md(#.*)?$/;
 
 // Turns a `.md` link into a real route, e.g. `01-quick-start.md` -> `/docs/01-quick-start/`.
 function resolveMdLink(url, sourceDir) {
   const match = url.match(MD_LINK);
   if (!match) return url;
 
-  const [, target, hash = ''] = match;
+  const [, target, hashBeforeMd, hashAfterMd] = match;
+  const hash = hashBeforeMd ?? hashAfterMd ?? '';
   const fullPath = url.startsWith('/') ? target : `${sourceDir}${target}`;
   const segments = fullPath.split('/').filter(Boolean);
   const filename = segments.pop() ?? '';
