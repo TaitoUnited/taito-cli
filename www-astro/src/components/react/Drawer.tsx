@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { FiMenu } from 'react-icons/fi';
+import { FiMenu, FiBookOpen } from 'react-icons/fi';
 import { navigate } from 'astro:transitions/client';
 import { theme } from '../../theme';
 import { withBase } from '../../utils/withBase';
@@ -17,12 +17,21 @@ export interface DrawerItemData {
   active?: boolean;
 }
 
+const ICONS = { menu: FiMenu, book: FiBookOpen };
+
 interface Props {
   items: DrawerItemData[];
+  buttonPosition?: 'top-right' | 'bottom-right';
+  buttonIcon?: keyof typeof ICONS;
 }
 
-export default function Drawer({ items }: Props) {
+export default function Drawer({
+  items,
+  buttonPosition = 'top-right',
+  buttonIcon = 'menu',
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const Icon = ICONS[buttonIcon];
 
   const navigateDelayed = (to: string) => {
     setIsOpen(false);
@@ -33,8 +42,12 @@ export default function Drawer({ items }: Props) {
 
   return (
     <>
-      <MenuButton onClick={() => setIsOpen(true)} aria-label="Open menu">
-        <FiMenu />
+      <MenuButton
+        position={buttonPosition}
+        onClick={() => setIsOpen(true)}
+        aria-label="Open menu"
+      >
+        <Icon />
       </MenuButton>
 
       <Backdrop isVisible={isOpen} onClick={() => setIsOpen(false)} />
@@ -114,7 +127,7 @@ const MenuItem = styled.div<{ isActive: boolean }>`
   }
 `;
 
-const MenuButton = styled.button`
+const MenuButton = styled.button<{ position: 'top-right' | 'bottom-right' }>`
   position: fixed;
   z-index: ${ELEVATIONS.button};
   border: none;
@@ -132,8 +145,10 @@ const MenuButton = styled.button`
   transition: opacity 0.2s ease;
   font-size: 24px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
-  top: 8px;
-  right: 8px;
+  ${(props) =>
+    props.position === 'bottom-right'
+      ? 'bottom: 24px; right: 8px;'
+      : 'top: 8px; right: 8px;'}
 
   &:active {
     opacity: 0.7;

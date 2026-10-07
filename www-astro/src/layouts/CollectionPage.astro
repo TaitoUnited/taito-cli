@@ -1,0 +1,46 @@
+---
+import Root from '../layouts/Root.astro';
+import Page from '../components/Page.astro';
+import Sidemenu from '../components/Sidemenu.astro';
+import Spacing from '../components/Spacing.astro';
+import GitHubEditLink from '../components/GitHubEditLink.astro';
+import Drawer from '../components/react/Drawer.tsx';
+import type { MenuItem } from '../utils/buildMenu';
+
+interface Props {
+  title?: string;
+  sidebarTitle: string;
+  menu: MenuItem[];
+  currentId: string;
+  editPath: string;
+}
+
+const { title, sidebarTitle, menu, currentId, editPath } = Astro.props;
+
+const drawerItems = menu.map((item) => ({
+  to: item.slug,
+  label: item.label,
+  active: item.id === currentId,
+}));
+---
+
+<Root title={title}>
+  <Page>
+    <Fragment slot="menu">
+      <Sidemenu title={sidebarTitle} items={menu} currentId={currentId} />
+    </Fragment>
+
+    <slot />
+
+    <Spacing dir="y" amount={20} />
+
+    <GitHubEditLink path={editPath} />
+
+    <Drawer
+      client:idle
+      items={drawerItems}
+      buttonPosition="bottom-right"
+      buttonIcon="book"
+    />
+  </Page>
+</Root>

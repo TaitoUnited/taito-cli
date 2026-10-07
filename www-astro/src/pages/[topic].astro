@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from 'astro:content';
+import StandalonePage from '../layouts/StandalonePage.astro';
+
+export async function getStaticPaths() {
+  const topics = await getCollection('topics');
+  return topics.map((entry) => ({
+    params: { topic: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<StandalonePage editPath={`/${entry.id}`}>
+  <Content />
+</StandalonePage>

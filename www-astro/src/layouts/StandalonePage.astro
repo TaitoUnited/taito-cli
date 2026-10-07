@@ -1,0 +1,23 @@
+---
+import Root from '../layouts/Root.astro';
+import Page from '../components/Page.astro';
+import Spacing from '../components/Spacing.astro';
+import GitHubEditLink from '../components/GitHubEditLink.astro';
+
+interface Props {
+  title?: string;
+  editPath: string;
+}
+
+const { title, editPath } = Astro.props;
+---
+
+<Root title={title}>
+  <Page>
+    <slot />
+
+    <Spacing dir="y" amount={20} />
+
+    <GitHubEditLink path={editPath} />
+  </Page>
+</Root>
