@@ -82,8 +82,8 @@ if [[ ${lb_ips} ]]; then
   echo "Press enter once you have configured DNS."
   read -r
 else
-  echo "Your Kubernetes cluster does not seem to contain any load balancer IP"
-  echo "addresses. If you already installed the ingress controller a moment ago,"
+  echo "Your Kubernetes cluster does not seem to contain any Gateway or load balancer"
+  echo "IP addresses. If you already installed the ingress controller a moment ago,"
   echo "wait for a couple of minutes and then run 'taito zone status' to see if"
   echo "your Kubernetes cluster has received a load balancer IP. Then configure"
   echo "DNS for the load balancer IP according to instructions given by"
