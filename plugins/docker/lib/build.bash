@@ -101,6 +101,7 @@ function docker::build () {
 
       while [[ $pulled == "false" ]]
       do
+        count=$((count + 1))
         echo "- Pulling the existing image ${image_tag}."
         (
           set +e
@@ -158,6 +159,7 @@ function docker::build () {
         taito::executing_start
         docker buildx build \
           --load \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
           --target builder \
           -f "${service_dir}/${dockerfile}" \
           --build-arg BUILD_TARGET="${name}" \
@@ -175,6 +177,7 @@ function docker::build () {
         # TODO use also latest production container as cache?
         docker buildx build \
           --load \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
           ${dockertarget_option} \
           -f "${service_dir}/${dockerfile}" \
           ${cache_from_builder} \

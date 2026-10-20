@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.319.1
+
+- Fix docker image caching by enabling BUILDKIT_INLINE_CACHE.
+- Fix docker image pull retry limit so that it's no longer infinite.
+
 ## 0.319.0
 
 - Remove `--credentials` option from db proxy and db details commands. The db proxy command no longers shows credentials at all, as you can use db details command for that.
