@@ -112,6 +112,14 @@ prepare_images() {
   grep -Fx 'docker push registry.example/project/server:latest' "$docker_log"
 }
 
+@test "docker: non-container publication only pushes builder artifacts" {
+  mock_container=false
+  run push_images
+  [ "$status" -eq 0 ]
+  grep -Fx 'docker push registry.example/project/server-builder:revision-A' "$docker_log"
+  grep -Fx 'docker push registry.example/project/server-builder:latest' "$docker_log"
+  refute_log 'docker push registry.example/project/server:' "$docker_log"
+}
 
 @test "docker: missing optional caches permit a cold build" {
   mock_missing=cache

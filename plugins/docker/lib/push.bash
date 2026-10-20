@@ -111,7 +111,9 @@ function docker::push () {
         docker::image_push "${image_builder_tagged}" || return $?
         if [[ $taito_ci_pull_docker_cache != "false" ]]; then
           docker::image_push "${image_builder}"
-          docker::image_push "${image_latest}"
+          if [[ ${push_only_builder} == false ]]; then
+            docker::image_push "${image_latest}"
+          fi
         fi
       fi
     else
