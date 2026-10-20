@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.319.1
+
+- Export inline BuildKit cache metadata in builder and runtime images so fresh CI builders can reuse Docker layers.
+- Publish revision-specific builder artifacts independently of cache settings and use them when reusing an existing build.
+- Bound retries for missing required Docker artifacts and preserve build failures.
+
 ## 0.319.0
 
 - Remove `--credentials` option from db proxy and db details commands. The db proxy command no longers shows credentials at all, as you can use db details command for that.
