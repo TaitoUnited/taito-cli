@@ -101,6 +101,7 @@ function docker::build () {
 
       while [[ $pulled == "false" ]]
       do
+        count=$((count + 1))
         echo "- Pulling the existing image ${image_tag}."
         (
           set +e
