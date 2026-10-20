@@ -155,9 +155,11 @@ function docker::build () {
         # Build the build stage container separately so that it can be used as:
         # 1) Build cache for later builds using --cache-from
         # 2) Integration and e2e test executioner
+        # Embed BuildKit cache metadata in both images for reuse by fresh CI builders.
         taito::executing_start
         docker buildx build \
           --load \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
           --target builder \
           -f "${service_dir}/${dockerfile}" \
           --build-arg BUILD_TARGET="${name}" \
@@ -172,9 +174,9 @@ function docker::build () {
           --tag "${image_tester}" \
           "${build_context}"
         # Build the production runtime
-        # TODO use also latest production container as cache?
         docker buildx build \
           --load \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
           ${dockertarget_option} \
           -f "${service_dir}/${dockerfile}" \
           ${cache_from_builder} \
