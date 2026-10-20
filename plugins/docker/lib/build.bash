@@ -101,6 +101,7 @@ function docker::build () {
 
       while [[ $pulled == "false" ]]
       do
+        count=$((count + 1))
         echo "- Pulling the existing image ${image_tag}."
         (
           taito::executing_start
@@ -114,11 +115,11 @@ function docker::build () {
         ) && pulled="true"
         if [[ $pulled == "true" ]]; then
           break
-        elif [[ $count -gt 80 ]]; then
-          echo "- ERROR: Image ${image_tag} not found from registry even after multiple retries. Not building a new image because ci_exec_build is set to '${ci_exec_build}' for '${taito_target_env}' environment."
-          exit 1
+        elif [[ $count -ge 80 ]]; then
+          echo "- ERROR: Could not pull or tag required artifacts ${image} and ${image_builder_tagged} after ${count} attempts. Refusing to substitute a different revision or build new images during artifact reuse."
+          return 1
         else
-          echo "- WARNING: Image ${image_tag} not found from registry. Not building a new image because ci_exec_build is set to '${ci_exec_build}' for '${taito_target_env}' environment. Retry in 30 secs."
+          echo "- WARNING: Could not pull or tag required artifacts ${image} and ${image_builder_tagged}. Retry in 30 secs."
           sleep 30
         fi
       done

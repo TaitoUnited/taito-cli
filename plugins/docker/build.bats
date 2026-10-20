@@ -145,8 +145,36 @@ prepare_images() {
   refute_log 'docker pull .*:latest' "$docker_log"
 }
 
+@test "docker: missing required runtime fails after 80 attempts without retagging" {
+  ci_exec_build=false
+  mock_missing=runtime
+  run build_images
+  [ "$status" -eq 1 ]
+  [[ $output == *'after 80 attempts'* ]]
+  [ "$(grep -c 'docker pull .*server:revision-A$' "$docker_log")" -eq 80 ]
+  [ "$(grep -c '^sleep 30$' "$docker_log")" -eq 79 ]
+  refute_log 'docker image tag' "$docker_log"
+  refute_log 'docker buildx build' "$docker_log"
+}
 
+@test "docker: missing revision builder never falls back to latest" {
+  ci_exec_build=false
+  mock_missing=builder
+  run build_images
+  [ "$status" -eq 1 ]
+  [ "$(grep -c 'docker pull .*server-builder:revision-A$' "$docker_log")" -eq 80 ]
+  refute_log 'docker pull .*:latest' "$docker_log"
+  refute_log 'docker image tag' "$docker_log"
+}
 
+@test "docker: any required tag failure is retried and cannot be masked by later tags" {
+  ci_exec_build=false
+  mock_tag_failure=server-tester
+  run build_images
+  [ "$status" -eq 1 ]
+  [ "$(grep -c 'docker image tag .*project-server-tester:latest$' "$docker_log")" -eq 80 ]
+  refute_log 'docker image tag .*project-server-builder:revision-A$' "$docker_log"
+}
 
 
 bash_conditional_build() {
