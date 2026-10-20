@@ -103,7 +103,7 @@ function docker::push () {
     then
       echo "- Pushing images"
       if [[ ${push_only_builder} == false ]]; then
-        docker::image_push "${image_untested}"
+        docker::image_push "${image_untested}" || return $?
       fi
       if [[ ${taito_container_registry_provider:-} != "local" ]]; then
         # Revision-specific builders are required test/build artifacts, even

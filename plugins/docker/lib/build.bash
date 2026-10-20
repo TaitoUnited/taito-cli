@@ -172,7 +172,7 @@ function docker::build () {
           --tag "${image_builder_local}" \
           --tag "${image_builder_local_tagged}" \
           --tag "${image_tester}" \
-          "${build_context}"
+          "${build_context}" || exit $?
         # Build the production runtime
         docker buildx build \
           --load \
@@ -188,8 +188,8 @@ function docker::build () {
           --tag "${image}" \
           --tag "${image_untested}" \
           --tag "${image_latest}" \
-          "${build_context}"
-      )
+          "${build_context}" || exit $?
+      ) || return $?
     fi
     if [[ ${save_image} == "true" ]]; then
       (

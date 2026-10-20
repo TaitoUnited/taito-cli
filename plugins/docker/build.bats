@@ -184,7 +184,18 @@ prepare_images() {
   refute_log 'docker image tag .*project-server-builder:revision-A$' "$docker_log"
 }
 
+@test "docker: builder failure stops runtime build and preserves exit status" {
+  mock_build_failure=builder
+  run build_images
+  [ "$status" -eq 23 ]
+  [ "$(grep -c 'docker buildx build' "$docker_log")" -eq 1 ]
+}
 
+@test "docker: runtime failure preserves exit status even in conditional callers" {
+  mock_build_failure=runtime
+  run bash_conditional_build
+  [ "$status" -eq 24 ]
+}
 bash_conditional_build() {
   if build_images; then return 0; else return $?; fi
 }
@@ -231,4 +242,11 @@ bash_conditional_build() {
   grep -Fx 'docker push registry.example/project/server-builder:revision-A' "$docker_log"
   refute_log 'docker push registry.example/project/server:' "$docker_log"
   refute_log 'docker push .*:latest' "$docker_log"
+}
+
+@test "docker: runtime publication failure cannot be masked by builder pushes" {
+  mock_push_failure=server:revision-A-untested
+  run push_images
+  [ "$status" -ne 0 ]
+  refute_log 'docker push .*server-builder' "$docker_log"
 }
