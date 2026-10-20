@@ -267,3 +267,10 @@ bash_conditional_build() {
   [ "$status" -ne 0 ]
   refute_log 'docker push .*server-builder' "$docker_log"
 }
+
+@test "docker: saving images preserves failures instead of reporting success" {
+  mock_save_failure=true
+  run build_images true
+  [ "$status" -eq 25 ]
+  refute_log 'docker save --output server.docker' "$docker_log"
+}

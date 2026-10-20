@@ -196,11 +196,11 @@ function docker::build () {
       (
         taito::executing_start
         # TODO: rename tester -> builder everywhere (also bitbucket cicd scripts)
-        docker save --output "${name}-tester.docker" "${image_tester}"
-        docker save --output "${name}.docker" "${image}"
+        docker save --output "${name}-tester.docker" "${image_tester}" || exit $?
+        docker save --output "${name}.docker" "${image}" || exit $?
         pwd
         ls *.docker
-      )
+      ) || return $?
     fi
   fi
 }
