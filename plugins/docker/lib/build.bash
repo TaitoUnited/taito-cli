@@ -103,15 +103,14 @@ function docker::build () {
       do
         echo "- Pulling the existing image ${image_tag}."
         (
-          set +e
-          taito::executing_start;
+          taito::executing_start
+          # Required artifacts must come from the requested revision. Mutable
+          # latest images are only optional build caches.
           docker::image_pull "${image}" && \
-          docker::image_pull "${image_builder}" && \
-          docker image tag "${image_builder}" "${image_builder_local}"
-          docker image tag "${image_builder}" "${image_tester}"
-          # TODO: we should pull/push the tagged image instead
-          docker image tag "${image_builder}" "${image_builder_tagged}"
-          docker image tag "${image_builder}" "${image_builder_local_tagged}"
+          docker::image_pull "${image_builder_tagged}" && \
+          docker image tag "${image_builder_tagged}" "${image_builder_local}" && \
+          docker image tag "${image_builder_tagged}" "${image_tester}" && \
+          docker image tag "${image_builder_tagged}" "${image_builder_local_tagged}"
         ) && pulled="true"
         if [[ $pulled == "true" ]]; then
           break

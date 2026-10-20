@@ -92,6 +92,7 @@ function docker::push () {
   local image_untested="${image}-untested"
   local image_latest="${prefix}:latest"
   local image_builder="${prefix}-builder:latest"
+  local image_builder_tagged="${prefix}-builder:${image_tag}"
 
   if [[ ${taito_targets:-} != *"${name}"* ]]; then
     echo "ERROR: ${name} not included in taito_targets"
@@ -105,6 +106,9 @@ function docker::push () {
         docker::image_push "${image_untested}"
       fi
       if [[ ${taito_container_registry_provider:-} != "local" ]]; then
+        # Revision-specific builders are required test/build artifacts, even
+        # when optional cache pulls and publication are disabled.
+        docker::image_push "${image_builder_tagged}" || return $?
         if [[ $taito_ci_pull_docker_cache != "false" ]]; then
           docker::image_push "${image_builder}"
           docker::image_push "${image_latest}"

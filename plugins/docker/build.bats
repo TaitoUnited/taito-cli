@@ -92,7 +92,25 @@ prepare_images() {
   refute_log -E 'docker buildx (create|use)|--push' "$docker_log"
 }
 
+@test "docker: cache disabled still builds and publishes revision-specific artifacts" {
+  taito_ci_pull_docker_cache=false
+  run build_images
+  [ "$status" -eq 0 ]
+  refute_log -E 'docker pull|--cache-from' "$docker_log"
+  run push_images
+  [ "$status" -eq 0 ]
+  grep -Fx 'docker push registry.example/project/server:revision-A-untested' "$docker_log"
+  grep -Fx 'docker push registry.example/project/server-builder:revision-A' "$docker_log"
+  refute_log 'docker push .*:latest' "$docker_log"
+}
 
+@test "docker: enabled caching publishes revision builder and both optional cache images" {
+  run push_images
+  [ "$status" -eq 0 ]
+  grep -Fx 'docker push registry.example/project/server-builder:revision-A' "$docker_log"
+  grep -Fx 'docker push registry.example/project/server-builder:latest' "$docker_log"
+  grep -Fx 'docker push registry.example/project/server:latest' "$docker_log"
+}
 
 
 @test "docker: missing optional caches permit a cold build" {
@@ -103,7 +121,29 @@ prepare_images() {
   refute_log '^sleep ' "$docker_log"
 }
 
+@test "docker: reuse selects requested revision A even when latest builder is B" {
+  ci_exec_build=false
+  taito_ci_pull_docker_cache=false
+  echo revision-B > "$docker_state/registry.example_project_server-builder:latest"
+  run build_images
+  [ "$status" -eq 0 ]
+  grep -Fx 'docker pull registry.example/project/server:revision-A' "$docker_log"
+  grep -Fx 'docker pull registry.example/project/server-builder:revision-A' "$docker_log"
+  refute_log -E 'docker (pull|image tag) [^ ]*:latest( |$)' "$docker_log"
+  for alias in project-server-builder:latest project-server-builder:revision-A project-server-tester:latest; do
+    [ "$(cat "$docker_state/$alias")" = revision-A ]
+  done
+  [ "$(cat "$docker_state/registry.example_project_server-builder:latest")" = revision-B ]
+  refute_log 'docker buildx build' "$docker_log"
+}
 
+@test "docker: images-exist flag also reuses the revision-specific builder" {
+  touch taitoflag_images_exist
+  run build_images
+  [ "$status" -eq 0 ]
+  grep -Fx 'docker pull registry.example/project/server-builder:revision-A' "$docker_log"
+  refute_log 'docker pull .*:latest' "$docker_log"
+}
 
 
 
@@ -113,6 +153,12 @@ bash_conditional_build() {
   if build_images; then return 0; else return $?; fi
 }
 
+@test "docker: required revision builder publication failure is fatal" {
+  mock_push_failure=server-builder:revision-A
+  run push_images
+  [ "$status" -ne 0 ]
+  refute_log 'docker push .*:latest' "$docker_log"
+}
 
 
 
@@ -134,4 +180,19 @@ bash_conditional_build() {
   [ "$status" -eq 0 ]
   grep 'docker buildx build .*--cache-from registry.example/project/client-builder:latest .*--tag registry.example/project/client-builder:latest' "$docker_log"
   grep 'docker buildx build .*--cache-from registry.example/project/client:latest .*--tag registry.example/project/client:latest' "$docker_log"
+}
+
+@test "docker: non-container publication flag is separate from cache switch" {
+  mock_container=false
+  taito_ci_pull_docker_cache=false
+  taito_ci_cache_all_targets_with_docker=false
+  run prepare_images
+  [ "$status" -eq 0 ]
+  refute_log 'docker push' "$docker_log"
+  taito_ci_cache_all_targets_with_docker=true
+  run prepare_images
+  [ "$status" -eq 0 ]
+  grep -Fx 'docker push registry.example/project/server-builder:revision-A' "$docker_log"
+  refute_log 'docker push registry.example/project/server:' "$docker_log"
+  refute_log 'docker push .*:latest' "$docker_log"
 }
