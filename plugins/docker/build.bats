@@ -207,7 +207,24 @@ bash_conditional_build() {
   refute_log 'docker push .*:latest' "$docker_log"
 }
 
+@test "docker: deployment-only reuse can inspect the runtime without pulling" {
+  ci_exec_build=false
+  ci_exec_test=false
+  run build_images
+  [ "$status" -eq 0 ]
+  grep 'docker manifest inspect' "$docker_log"
+  refute_log 'docker pull' "$docker_log"
+}
 
+@test "docker: saving reused images requires local builder and runtime despite manifest shortcut" {
+  ci_exec_build=false
+  ci_exec_test=false
+  run build_images true
+  [ "$status" -eq 0 ]
+  grep -Fx 'docker pull registry.example/project/server-builder:revision-A' "$docker_log"
+  grep -Fx 'docker save --output server-tester.docker project-server-tester:latest' "$docker_log"
+  grep -Fx 'docker save --output server.docker registry.example/project/server:revision-A' "$docker_log"
+}
 
 @test "docker: legacy arguments still build with inline metadata and custom image path" {
   taito_docker_new_params=false

@@ -94,6 +94,7 @@ function docker::build () {
          [[ ${taito_ci_pull_always:-} != "true" ]] && \
          [[ ${ci_exec_build:-} == "false" ]] && \
          [[ ${ci_exec_test:-} == "false" ]] && \
+         [[ ${save_image:-} != "true" ]] && \
          docker manifest inspect "${image}" &> /dev/null; then
         pulled="true"
         echo "exist" > ./taitoflag_images_exist
