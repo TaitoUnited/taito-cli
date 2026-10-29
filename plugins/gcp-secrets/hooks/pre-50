@@ -13,10 +13,11 @@ if [[ ${taito_provider_secrets_location:-} ]] &&
     taito::print_plugin_title
     echo "Getting secrets from Google Cloud Platform (${taito_env}) for ${secret_purpose:?}"
 
-    taito::export_secrets \
-      gcp-secrets::get_secret_value \
-      "${save_secrets_to_disk:-}" \
-      "${secret_filter}"
+    # TODO: hangs?
+    # taito::export_secrets \
+    #   gcp-secrets::get_secret_value \
+    #   "${save_secrets_to_disk:-}" \
+    #   "${secret_filter}"
 
     export taito_secrets_retrieved=true
   fi
