@@ -6,7 +6,7 @@ function get_secret_value () {
   local secret_property=$3
 
   gcloud --project "${taito_provider_secrets_location:?}" secrets versions access latest \
-    --secret="${namespace}_${secret_name}_${secret_property}" 2> /dev/null
+    --secret="${namespace}_${secret_name}_${secret_property}" 2> /dev/null || :
 }
 
 function gcp-secrets::get_secret_value () {
