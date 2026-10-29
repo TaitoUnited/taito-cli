@@ -14,6 +14,7 @@ echo "Connect to repository with these settings if not already connected:"
 echo
 echo "- Source: ${taito_vc_provider:-GitHub}"
 echo "- Repository: ${taito_vc_repository}"
+echo "- Region: ${taito_provider_region}"
 echo
 if [[ -f scripts/terraform.yaml ]]; then
   echo "NOTE: Connect only to repository. Do not create trigger, as it will be created"

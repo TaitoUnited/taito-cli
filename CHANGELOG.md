@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.320.0
 
 - Add pull-request environment support on terraform plugin.
+- Display region for connecting Google Cloud to git repository.
 
 ## 0.319.1
 
