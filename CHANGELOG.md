@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add pull-request environment support on terraform plugin.
 - Display region for connecting Google Cloud to git repository.
+- Set GCP quota project on auth.
+- Temporarily disable fetching db secrets from GCP secrets.
 
 ## 0.319.1
 
