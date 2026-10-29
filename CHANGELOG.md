@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.320.0
+
+- Add pull-request environment support on terraform plugin.
+
 ## 0.319.1
 
 - Fix docker image caching by enabling BUILDKIT_INLINE_CACHE.
