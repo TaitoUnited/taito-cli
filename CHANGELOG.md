@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.321.0
+
+- Add untested suffix on image tag also on terraform deploy.
+
 ## 0.320.0
 
 - Add pull-request environment support on terraform plugin.

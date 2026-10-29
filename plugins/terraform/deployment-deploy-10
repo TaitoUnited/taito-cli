@@ -5,7 +5,24 @@
 # Cloud provider
 if [[ ! ${taito_deployment_platforms:-} ]] || \
    [[ ${taito_deployment_platforms} == *"terraform"* ]]; then
-  taito_build_image_tag="${1:-taito_target_image}" \
+  image="${1:-taito_target_image}"
+
+  # Determine image
+  # TODO: this is a quick hack (same on helm plugin)
+  if [[ ${taito_mode:-} == "ci" ]] && \
+     [[ ${ci_exec_build:-} == "true" ]] && \
+     [[ ${image} != *"-untested" ]] && \
+     [[ ! -f ./taitoflag_images_exist ]]; then
+    image="${image}-untested"
+  elif [[ ${image} == "--dry-run" ]]; then
+    image="DRY_RUN"
+  elif [[ -z "${image}" ]]; then
+    # Image not given as param and using 'latest' causes problems
+    echo "ERROR: image tag not given"
+    exit 1
+  fi
+  
+  taito_build_image_tag="${image}" \
     terraform::run apply "${taito_provider:-}-deploy" "${taito_target_env:-$taito_env}" || (
       if [[ ${taito_mode:-} == "ci" ]]; then
         taito::print_note_start
