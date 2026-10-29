@@ -52,6 +52,10 @@ function gcp::authenticate () {
     (taito::executing_start; gcloud auth application-default login --no-launch-browser --project "${taito_zone}")
   fi
 
+  echo "Running 'gcloud auth application-default set-quota-project ${taito_zone}'"
+  echo
+  gcloud auth application-default set-quota-project "${taito_zone}"
+
   if [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
      [[ ${kubernetes_name:-} ]]; then
     if [[ ${type} == "" ]] || \
