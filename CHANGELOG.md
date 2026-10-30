@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.321.0
 
 - Add untested suffix on image tag also on terraform deploy.
+- determine existence of images with `docker manifest inspect` on artifact prepare.
 
 ## 0.320.0
 
