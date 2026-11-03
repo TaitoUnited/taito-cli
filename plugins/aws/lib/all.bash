@@ -92,7 +92,8 @@ function aws::publish_current_target_assets () {
   if taito::is_current_target_of_type "function"; then
     # Publish function zip package to projects bucket
     source="./tmp/${taito_target:?}.zip"
-    dest="s3://${taito_functions_bucket:?}/${taito_functions_path:?}/${image_tag}/${taito_target}.zip"
+    dest_base="s3://${taito_functions_bucket:?}/${taito_functions_path:?}"
+    dest_name="${taito_target}.zip"
     options=""
   elif taito::is_current_target_of_type "static_content" && (
          ! taito::is_current_target_of_type "container" || (
@@ -108,17 +109,27 @@ function aws::publish_current_target_assets () {
     fi
     # Publish static assets to assets bucket
     source="./tmp/${taito_target}/service"
-    dest="s3://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${image_tag}/${taito_target}"
+    dest_base="s3://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}"
+    dest_name="${taito_target}"
     options="--recursive"
   else
     echo "No need for copying assets to storage bucket"
   fi
 
   if [[ ${source} ]]; then
-    echo "Copying ${taito_target} assets to ${dest}"
     aws::expose_aws_options
-    taito::executing_start
-    aws $aws_options s3 cp "${source}" "${dest}" ${options}
+    # The terraform deployment-deploy uses the -untested tag on CI builds
+    local tags=("${image_tag}")
+    if [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "true" ]] && \
+       [[ ${image_tag} != *"-untested" ]]; then
+      tags+=("${image_tag}-untested")
+    fi
+    for tag in "${tags[@]}"; do
+      dest="${dest_base}/${tag}/${dest_name}"
+      echo "Copying ${taito_target} assets to ${dest}"
+      taito::executing_start
+      aws $aws_options s3 cp "${source}" "${dest}" ${options}
+    done
   fi
 }
 
