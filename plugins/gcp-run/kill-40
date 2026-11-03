@@ -1,0 +1,13 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ! ${taito_target:-} || $# != 0 ]]; then
+  echo "ERROR: Use 'taito kill:TARGET:ENV' without instance indexes." >&2
+  exit 1
+fi
+gcp-run::select_services
+
+echo "ERROR: Cloud Run service instances cannot be killed through this command." >&2
+echo "Use 'taito restart:${taito_target}:${taito_target_env:?}' to replace the service revision." >&2
+exit 1
