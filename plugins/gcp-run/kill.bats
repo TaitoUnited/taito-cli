@@ -44,14 +44,21 @@ load test-helper
   assert_equal "$(cat "${GCLOUD_CALLS}")" ""
 }
 
-@test "gcp-run: dispatcher rejects PR kill without cloud calls" {
+@test "gcp-run: dispatcher skips GCP authentication only for Cloud Run kill" {
   mkdir -p "${BATS_TEST_TMPDIR}/project" "${BATS_TEST_TMPDIR}/home"
   export TAITO_HOME="${BATS_TEST_TMPDIR}/home"
-  printf '%s\n' 'taito_plugins=gcp-run:-local' 'taito_env=dev' 'taito_environments=dev' \
+  export GOOGLE_APPLICATION_CREDENTIALS="${BATS_TEST_TMPDIR}/credentials.json"
+  export GCLOUD_FAIL='config set'
+  unset gcp_auth_already_done
+  printf '%s\n' 'taito_plugins="gcp gcp-run:-local"' 'taito_env=dev' 'taito_environments=dev' \
     > "${BATS_TEST_TMPDIR}/project/taito-config.sh"
   cd "${BATS_TEST_TMPDIR}/project"
   run "${taito_cli_path}/src/execute-command" -q kill:server:pr-123
   assert_status 1
   assert_output --partial 'taito restart:server:pr-123'
   assert_equal "$(cat "${GCLOUD_CALLS}")" ""
+
+  run "${taito_cli_path}/src/execute-command" -q status:dev
+  assert_status 1
+  assert_equal "$(cat "${GCLOUD_CALLS}")" 'config set disable_usage_reporting True'
 }
