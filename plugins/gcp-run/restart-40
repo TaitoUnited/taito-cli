@@ -1,0 +1,40 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+# shellcheck source=lib/restart.bash
+. "${taito_plugin_path:?}/lib/restart.bash"
+
+if [[ $# != 0 ]]; then
+  echo "ERROR: Cloud Run restart does not accept arguments or instance indexes." >&2
+  exit 1
+fi
+gcp-run::select_services
+
+echo "PROJECT: ${taito_zone:?} REGION: ${taito_provider_region:?}"
+descriptions=()
+images=()
+for service in "${gcp_run_services[@]:?}"; do
+  description=$(gcp-run::describe_service "${service}")
+  if ! image=$(gcp-run::restart_image "${service}" "${description}"); then
+    echo "ERROR: ${service}: restart preflight failed; no services updated." >&2
+    exit 1
+  fi
+  descriptions+=("${description}")
+  images+=("${image}")
+done
+
+nonce=$(openssl rand -hex 16)
+completed=()
+for (( i=0; i<${#gcp_run_services[@]}; i++ )); do
+  service=${gcp_run_services[$i]}
+  if ! gcp-run::restart_service "${service}" "${descriptions[$i]}" "${images[$i]}" "${nonce}"; then
+    echo "Completed: ${completed[*]:-none}" >&2
+    echo "Failed: ${service} (replacement ${service}-r${nonce:0:12})" >&2
+    remaining=("${gcp_run_services[@]:$((i+1))}")
+    echo "Unattempted: ${remaining[*]:-none}" >&2
+    exit 1
+  fi
+  completed+=("${service}")
+done
+
+taito::call_next "${@}"

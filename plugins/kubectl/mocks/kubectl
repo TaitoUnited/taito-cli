@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+case ${*} in
+  'get pods '*'-o jsonpath='*) echo chat-server ;;
+  'get pods '*) echo 'chat-dev-server-123-abc 1/1 Running 0' ;;
+  *) echo "executed: kubectl ${*} :" ;;
+esac
