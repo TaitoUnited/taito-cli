@@ -90,11 +90,10 @@ beta run services ssh chat-dev-server --project google-project --region europe-n
   done
 }
 
-@test "gcp-run: shell validates the serving revision instead of a newer template" {
+@test "gcp-run: shell validates the serving revision instead of a newer sidecar template" {
   enable_ssh
   jq '
     .status.latestCreatedRevisionName = "server-00002" |
-    .spec.template.metadata.annotations["run.googleapis.com/execution-environment"] = "gen1" |
     .spec.template.spec.containers += [{image: "sidecar"}]
   ' "${GCLOUD_SERVICE}" > "${GCLOUD_SERVICE}.tmp"
   mv "${GCLOUD_SERVICE}.tmp" "${GCLOUD_SERVICE}"
