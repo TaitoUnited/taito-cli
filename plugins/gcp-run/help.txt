@@ -9,3 +9,6 @@ CLOUD RUN
 
   logs:TARGET[:ENV]
     Follow Cloud Run service logs. Instance indexes are unsupported.
+
+  shell:TARGET[:ENV]
+    Connect using preview Cloud Run SSH (must be enabled). No instance indexes.
