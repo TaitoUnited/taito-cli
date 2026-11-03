@@ -1,0 +1,6 @@
+{
+  "status": {
+    "conditions": [{"type": "Ready", "status": "True"}],
+    "imageDigest": "registry/server@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+}
