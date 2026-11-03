@@ -271,8 +271,16 @@ function gcp::publish_current_target_assets () {
   fi
 
   if [[ ${source} ]]; then
-    echo "Copying ${taito_target} assets to ${dest}"
-    taito::executing_start
-    gsutil cp ${options} "${source}" "${dest}"
+    # The terraform deployment-deploy uses the -untested tag on CI builds
+    local dests=("${dest}")
+    if [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "true" ]] && \
+       [[ ${image_tag} != *"-untested" ]]; then
+      dests+=("${dest/\/${image_tag}\//\/${image_tag}-untested\/}")
+    fi
+    for d in "${dests[@]}"; do
+      echo "Copying ${taito_target} assets to ${d}"
+      taito::executing_start
+      gsutil cp ${options} "${source}" "${d}"
+    done
   fi
 }
