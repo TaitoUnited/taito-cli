@@ -17,6 +17,7 @@ enable_ssh() {
   assert_output --partial 'SSH session'
   assert_executed call-next
   assert_equal "$(cat "${GCLOUD_CALLS}")" "run services describe chat-dev-server --project google-project --region europe-north1 --format=json
+run revisions describe server-00001 --project google-project --region europe-north1 --format=json
 beta run services ssh chat-dev-server --project google-project --region europe-north1 --revision server-00001"
 }
 
@@ -60,10 +61,12 @@ beta run services ssh chat-dev-server --project google-project --region europe-n
 
 @test "gcp-run: shell reports missing service or permission failures" {
   enable_ssh
-  export GCLOUD_FAIL='services describe'
-  test shell-40
-  assert_status 1
-  ! grep -q 'services ssh' "${GCLOUD_CALLS}"
+  for failure in 'services describe' 'revisions describe'; do
+    export GCLOUD_FAIL=${failure}
+    test shell-40
+    assert_status 1
+    ! grep -q 'services ssh' "${GCLOUD_CALLS}"
+  done
 }
 
 @test "gcp-run: shell does not enable SSH automatically" {
@@ -74,17 +77,42 @@ beta run services ssh chat-dev-server --project google-project --region europe-n
   assert_equal "$(wc -l < "${GCLOUD_CALLS}" | xargs)" 1
 }
 
-@test "gcp-run: shell rejects unsupported or ambiguous services" {
+@test "gcp-run: shell rejects ambiguous services" {
   enable_ssh
   cp "${GCLOUD_SERVICE}" "${GCLOUD_SERVICE}.base"
   for change in \
-    '.spec.template.metadata.annotations["run.googleapis.com/execution-environment"] = "gen1"' \
-    '.spec.template.spec.containers += [{image: "sidecar"}]' \
     '.status.traffic += [{revisionName: "other", percent: 10}]' \
     '.status.traffic = []'; do
     jq "${change}" "${GCLOUD_SERVICE}.base" > "${GCLOUD_SERVICE}"
     test shell-40
     assert_status 1
+    ! grep -q 'services ssh' "${GCLOUD_CALLS}"
+  done
+}
+
+@test "gcp-run: shell validates the serving revision instead of a newer template" {
+  enable_ssh
+  jq '
+    .status.latestCreatedRevisionName = "server-00002" |
+    .spec.template.metadata.annotations["run.googleapis.com/execution-environment"] = "gen1" |
+    .spec.template.spec.containers += [{image: "sidecar"}]
+  ' "${GCLOUD_SERVICE}" > "${GCLOUD_SERVICE}.tmp"
+  mv "${GCLOUD_SERVICE}.tmp" "${GCLOUD_SERVICE}"
+  test shell-40
+  assert_status 0
+  [[ $(cat "${GCLOUD_CALLS}") == *'--revision server-00001'* ]]
+}
+
+@test "gcp-run: shell rejects unsupported serving revisions despite a supported template" {
+  enable_ssh
+  cp "${GCLOUD_REVISION}" "${GCLOUD_REVISION}.base"
+  for change in \
+    '.metadata.annotations["run.googleapis.com/execution-environment"] = "gen1"' \
+    '.spec.containers += [{image: "sidecar"}]'; do
+    jq "${change}" "${GCLOUD_REVISION}.base" > "${GCLOUD_REVISION}"
+    test shell-40
+    assert_status 1
+    assert_output --partial 'server-00001: shell requires a second-generation, single-container revision'
     ! grep -q 'services ssh' "${GCLOUD_CALLS}"
   done
 }

@@ -16,12 +16,19 @@ if ! jq -e '.metadata.annotations["run.googleapis.com/ssh-enabled"] == "true"' \
   exit 1
 fi
 if ! revision=$(jq -er '
-  select(.spec.template.metadata.annotations["run.googleapis.com/execution-environment"] != "gen1") |
-  select(.spec.template.spec.containers | length == 1) |
   [.status.traffic[]? | select((.percent // 0) > 0) | .revisionName] |
   unique | select(length == 1) | .[0] | select(type == "string" and length > 0)
 ' <<< "${description}"); then
-  echo "ERROR: ${service}: shell requires a second-generation, single-container service with one serving revision." >&2
+  echo "ERROR: ${service}: shell requires one serving revision." >&2
+  exit 1
+fi
+revision_description=$(gcloud run revisions describe "${revision}" \
+  --project "${taito_zone:?}" --region "${taito_provider_region:?}" --format=json)
+if ! jq -e '
+  (.metadata.annotations["run.googleapis.com/execution-environment"] != "gen1") and
+  (.spec.containers | length == 1)
+' <<< "${revision_description}" > /dev/null; then
+  echo "ERROR: ${revision}: shell requires a second-generation, single-container revision." >&2
   exit 1
 fi
 
