@@ -564,6 +564,7 @@ PROJECT: BASIC OPERATIONS
 
   shell[:TARGET][:ENV]
     Start a shell on a container.
+    Cloud Run requires SSH enabled and TARGET; instance indexes are unsupported.
     ---
     Arguments:
       INDEX: Start shell on a specific instance (0-N)
