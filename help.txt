@@ -551,7 +551,7 @@ PROJECT: BASIC OPERATIONS
       taito top:dev cpu gke-kube1-pool-1-b6988570-eado
 
   logs[:TARGET][:ENV] [INDEX]
-    Follow logs of a pod.
+    Follow logs of a pod or Cloud Run service (Cloud Run requires TARGET, no INDEX).
     ---
     Arguments:
       INDEX: Show logs of a specific instance (0-N)
