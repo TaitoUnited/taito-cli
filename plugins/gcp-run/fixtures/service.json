@@ -1,0 +1,14 @@
+{
+  "metadata": {"name": "chat-dev-server", "generation": 1},
+  "spec": {
+    "template": {"spec": {"containers": [{"image": "registry/server:latest"}]}},
+    "traffic": [{"latestRevision": true, "percent": 100}]
+  },
+  "status": {
+    "observedGeneration": 1,
+    "conditions": [{"type": "Ready", "status": "True"}],
+    "latestCreatedRevisionName": "server-00001",
+    "latestReadyRevisionName": "server-00001",
+    "traffic": [{"revisionName": "server-00001", "percent": 100, "latestRevision": true}]
+  }
+}

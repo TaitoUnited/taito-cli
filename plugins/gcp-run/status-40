@@ -1,0 +1,29 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ $# != 0 ]]; then
+  echo "ERROR: Cloud Run status does not accept arguments." >&2
+  exit 1
+fi
+gcp-run::select_services
+
+echo "PROJECT: ${taito_zone:?} REGION: ${taito_provider_region:?}"
+printf 'SERVICE\tREADY\tREVISION\n'
+failed=false
+for service in "${gcp_run_services[@]:?}"; do
+  if description=$(gcp-run::describe_service "${service}"); then
+    if ! jq -er --arg service "${service}" '
+      [$service,
+       ([.status.conditions[]? | select(.type == "Ready") | .status][0] // "Unknown"),
+       (.status.latestReadyRevisionName // "-")] | @tsv
+    ' <<< "${description}"; then
+      failed=true
+    fi
+  else
+    failed=true
+  fi
+done
+[[ ${failed} == false ]] || exit 1
+
+taito::call_next "${@}"
