@@ -1,0 +1,4 @@
+CLOUD RUN
+
+  status[:ENV]
+    Show readiness and current revision of configured Cloud Run services.

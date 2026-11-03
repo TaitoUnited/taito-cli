@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+printf '%s\n' "${*}" >> "${GCLOUD_CALLS:?}"
+if [[ ${*} == *"${GCLOUD_FAIL:-never-match}"* ]]; then
+  echo "Permission denied" >&2
+  exit 1
+fi
+if [[ ${1} == run && ${2} == services && ${3} == describe ]]; then
+  cat "${GCLOUD_SERVICE:?}"
+else
+  echo "Unexpected gcloud command: ${*}" >&2
+  exit 1
+fi
