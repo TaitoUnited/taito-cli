@@ -256,7 +256,8 @@ function gcp::publish_current_target_assets () {
     # Publish function zip package to projects bucket
     # TODO: not tested at all
     source="./tmp/${taito_target:?}.zip"
-    dest="gs://${taito_functions_bucket:?}/${taito_functions_path:?}/${image_tag}/${taito_target}.zip"
+    dest_base="gs://${taito_functions_bucket:?}/${taito_functions_path:?}"
+    dest_name="${taito_target}.zip"
     options=""
   elif taito::is_current_target_of_type "static_content" &&
        [[ ${taito_cdn_project_path:-} ]] &&
@@ -264,7 +265,8 @@ function gcp::publish_current_target_assets () {
   then
     # Publish static assets to assets bucket
     source="./tmp/${taito_target}/service"
-    dest="gs://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}/${image_tag}/${taito_target}"
+    dest_base="gs://${taito_static_assets_bucket:?}/${taito_static_assets_path:?}"
+    dest_name="${taito_target}"
     options="-r"
   else
     echo "No need for copying assets to storage bucket"
@@ -272,15 +274,16 @@ function gcp::publish_current_target_assets () {
 
   if [[ ${source} ]]; then
     # The terraform deployment-deploy uses the -untested tag on CI builds
-    local dests=("${dest}")
+    local tags=("${image_tag}")
     if [[ ${taito_mode:-} == "ci" ]] && [[ ${ci_exec_build:-} == "true" ]] && \
        [[ ${image_tag} != *"-untested" ]]; then
-      dests+=("${dest/\/${image_tag}\//\/${image_tag}-untested\/}")
+      tags+=("${image_tag}-untested")
     fi
-    for d in "${dests[@]}"; do
-      echo "Copying ${taito_target} assets to ${d}"
+    for tag in "${tags[@]}"; do
+      dest="${dest_base}/${tag}/${dest_name}"
+      echo "Copying ${taito_target} assets to ${dest}"
       taito::executing_start
-      gsutil cp ${options} "${source}" "${d}"
+      gsutil cp ${options} "${source}" "${dest}"
     done
   fi
 }
