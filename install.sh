@@ -87,11 +87,19 @@ function ensure_mount_dir () {
     chmod go-rwx ${dir}
   fi
 }
+function ensure_mount_file () {
+  local file=$1
+  if [[ ! -d ${file} ]]; then
+    echo > ${file}
+    chmod go-rwx ${dir}
+  fi
+}
 ensure_mount_dir "${HOME}/.aws"
 ensure_mount_dir "${HOME}/.azure"
 ensure_mount_dir "${HOME}/.config"
 ensure_mount_dir "${HOME}/.config/doctl"
 ensure_mount_dir "${HOME}/.config/gcloud"
+ensure_mount_file "${HOME}/.config/upctl.yaml"
 ensure_mount_dir "${HOME}/.taito/.docker"
 ensure_mount_dir "${HOME}/.kube"
 ensure_mount_dir "${HOME}/.ssh"

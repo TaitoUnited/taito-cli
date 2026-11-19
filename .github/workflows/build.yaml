@@ -157,6 +157,17 @@ jobs:
           tags: |
             ghcr.io/taitounited/taito-cli:ci-gcp${{ env.SUFFIX }}
 
+      - name: Build ci-upcloud
+        uses: docker/build-push-action@v6
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          file: ./docker/Dockerfile-ci-upcloud
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/taitounited/taito-cli:ci-upcloud${{ env.SUFFIX }}
+
       - name: Build ci-openshift
         uses: docker/build-push-action@v6
         with:
