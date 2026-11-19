@@ -91,7 +91,7 @@ function ensure_mount_file () {
   local file=$1
   if [[ ! -d ${file} ]]; then
     echo > ${file}
-    chmod go-rwx ${dir}
+    chmod go-rwx ${file}
   fi
 }
 ensure_mount_dir "${HOME}/.aws"
