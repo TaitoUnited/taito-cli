@@ -261,6 +261,14 @@ function taito::core::ensure_mount_dir () {
   fi
 }
 
+function taito::core::ensure_mount_file () {
+  local file=$1
+  if [[ ! -d ${file} ]]; then
+    echo > ${file}
+    chmod go-rwx ${dir}
+  fi
+}
+
 function taito::core::upgrade () {
   docker_platform=$1
 
