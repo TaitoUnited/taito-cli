@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Publish function packages and static assets also with the untested suffix on CI builds, as terraform deploy now uses it.
 - Set quota project not mandatory for gcp auth.
 - Add basic upcloud support.
+- Use Node.js 26 LTS.
+- Update dependencies.
 
 ## 0.320.0
 
