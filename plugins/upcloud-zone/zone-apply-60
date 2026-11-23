@@ -1,0 +1,17 @@
+#!/bin/bash -e
+# shellcheck source=../upcloud/lib/all.bash
+. "${taito_plugin_path:?}/../upcloud/lib/all.bash"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+( [[ ${kubernetes_name:-} ]] && \
+  taito::confirm "Install Cilium Gateway API CRDs on ${kubernetes_name:-}"
+) || taito::skip_to_next "${@}"
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_grpcroutes.yaml
+
+taito::call_next "${@}"

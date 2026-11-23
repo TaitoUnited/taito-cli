@@ -1,0 +1,32 @@
+#!/bin/bash -e
+# shellcheck source=../upcloud/lib/all.bash
+. "${taito_plugin_path:?}/../upcloud/lib/all.bash"
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+( [[ ${kubernetes_name:-} ]] && \
+  taito::confirm "Enabled Cilium Gateway API on ${kubernetes_name:-}"
+) || taito::skip_to_next "${@}"
+
+echo
+echo "Backing up old values to cilium_values_backup.yaml.tmp"
+helm get values cilium -n kube-system > cilium_values_backup.yaml.tmp
+
+echo
+echo "Getting cilium helm charts from registry"
+helm repo add cilium https://helm.cilium.io
+helm repo update
+
+export CILIUM_CHART_VERSION=$(helm list -n kube-system --filter '^cilium$' -o json | jq -r '.[0].chart' | sed 's/^cilium-//')
+echo
+echo "Determined currently installed cilium helm chart version: ${CILIUM_CHART_VERSION}"
+
+echo
+echo "Setting gatewayAPI.enabled=true for already installed cilium helm chart version ${CILIUM_CHART_VERSION}"
+helm upgrade cilium cilium/cilium \
+  --version ${CILIUM_CHART_VERSION} \
+  --namespace kube-system \
+  --reset-then-reuse-values \
+  --set gatewayAPI.enabled=true
+
+taito::call_next "${@}"

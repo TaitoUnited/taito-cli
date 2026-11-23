@@ -1,0 +1,7 @@
+#!/bin/bash -e
+# shellcheck source=../upcloud/lib/all.bash
+. "${taito_cli_path:?}/plugins/upcloud/lib/all.bash"
+
+upcloud::authenticate "${@}"
+
+taito::call_next "${@}"
