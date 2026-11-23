@@ -89,7 +89,7 @@ function ensure_mount_dir () {
 }
 function ensure_mount_file () {
   local file=$1
-  if [[ ! -d ${file} ]]; then
+  if [[ ! -f ${file} ]]; then
     echo > ${file}
     chmod go-rwx ${file}
   fi
