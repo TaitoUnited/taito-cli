@@ -8,7 +8,9 @@ function upcloud::authenticate () {
 
     echo "If you plan to execute Terraform, enter your UpCloud API token. Otherwise leave it empty."
     echo "Prefer a short lived API token limited to your current IP address ${current_public_ip}."
-    read -r UPCLOUD_TOKEN
+    echo
+    echo "UpCloud API token:"
+    read -r -s UPCLOUD_TOKEN
     export UPCLOUD_TOKEN
   fi
 
@@ -35,4 +37,5 @@ function upcloud::authenticate_on_kubernetes () {
   #   echo "TODO: Authenticate to UpCloud Managed Kubernetes"
   #   read -r
   # )
+  return;
 }

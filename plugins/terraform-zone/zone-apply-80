@@ -7,10 +7,11 @@ taito::confirm \
 function replace_with_terraform_variable () {
   local placeholder=$1
   local variable=$2
-  local trim=${3:-true}
+  local file=${3:-taito-config.sh}
+  local trim=${4:-true}
   local value
 
-  if grep "${placeholder}" ../taito-config.sh; then
+  if grep "${placeholder}" ../${file}; then
     echo "Determining ${variable}"
     # Parse array
     value=$(
@@ -30,7 +31,7 @@ function replace_with_terraform_variable () {
     # Replace
     if [[ ${value} ]]; then
       echo "${placeholder}"
-      sed -i "s/$placeholder/$value/g" ../taito-config.sh
+      sed -i "s/$placeholder/$value/g" ../${file}
     fi
   fi
 }
@@ -102,7 +103,9 @@ function replace_with_terraform_variable () {
 
   replace_with_terraform_variable TAITO_BASTION_PUBLIC_IP bastion_public_ip
   replace_with_terraform_variable POSTGRES_HOST postgres_hosts
+  replace_with_terraform_variable POSTGRES_HOST postgres_hosts databases.yaml
   replace_with_terraform_variable MYSQL_HOST mysql_hosts
+  replace_with_terraform_variable MYSQL_HOST mysql_hosts databases.yaml
   replace_with_terraform_variable POSTGRES_HOSTS postgres_hosts
   replace_with_terraform_variable MYSQL_HOSTS mysql_hosts
 
