@@ -261,14 +261,6 @@ function taito::core::ensure_mount_dir () {
   fi
 }
 
-function taito::core::ensure_mount_file () {
-  local file=$1
-  if [[ ! -f ${file} ]]; then
-    echo > ${file}
-    chmod go-rwx ${file}
-  fi
-}
-
 function taito::core::upgrade () {
   docker_platform=$1
 
@@ -280,7 +272,6 @@ function taito::core::upgrade () {
   taito::core::ensure_mount_dir "${taito_home_path}/.config"
   taito::core::ensure_mount_dir "${taito_home_path}/.config/doctl"
   taito::core::ensure_mount_dir "${taito_home_path}/.config/gcloud"
-  taito::core::ensure_mount_file "${taito_home_path}/.config/upctl.yaml"
   taito::core::ensure_mount_dir "${taito_home_path}/.taito/.docker"
   taito::core::ensure_mount_dir "${taito_home_path}/.kube"
   taito::core::ensure_mount_dir "${taito_home_path}/.ssh"
