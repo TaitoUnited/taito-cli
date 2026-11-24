@@ -5,9 +5,10 @@
 . "${taito_plugin_path:?}/lib/all.bash"
 
 ( [[ ${kubernetes_name:-} ]] && \
-  taito::confirm "Authenticate to Kubernetes ${kubernetes_name:-}"
+  [ -f terraform/kubeconfig.yaml ] && \
+  taito::confirm "Move terraform/kubeconfig.yaml to ~/.kube/config"
 ) || taito::skip_to_next "${@}"
 
-upcloud::authenticate_on_kubernetes
+mv -f terraform/kubeconfig.yaml ~/.kube/config
 
 taito::call_next "${@}"
