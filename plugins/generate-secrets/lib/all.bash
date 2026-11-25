@@ -228,6 +228,18 @@ function generate-secrets::generate_by_type () {
           echo ------------------------------------------------------------------------------
           echo
           echo "[${title}]"
+        elif [[ ${taito_provider:-} == "upcloud" ]] &&
+           [[ ${taito_type:-} == "zone" ]] &&
+           [[ ${secret_name} == *"-db-ssl."* ]]; then
+          echo ------------------------------------------------------------------------------
+          echo "You most likely can download the database SSL certificates from"
+          echo "the following web page by navigating to the correct database"
+          echo "and downloading the certificate from the Auth section of the overview page."
+          echo
+          echo "https://hub.upcloud.com/database"
+          echo ------------------------------------------------------------------------------
+          echo
+          echo "[${title}]"
         elif [[ ${taito_provider:-} == "aws" ]] &&
              [[ ${taito_type:-} == "zone" ]] &&
              [[ ${secret_name} == *"-ssl.ca"* ]]; then

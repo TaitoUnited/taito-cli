@@ -7,7 +7,8 @@ function upcloud::authenticate () {
     current_public_ip=$(curl -s https://ifconfig.me)
 
     echo "If you plan to execute Terraform, enter your UpCloud API token. Otherwise leave it empty."
-    echo "Prefer a short lived API token limited to your current IP address ${current_public_ip}."
+    echo "You can retrieve a new API token from UpCloud web console. Prefer a short lived API token"
+    echo "limited to your current IP address ${current_public_ip}."
     echo
     echo "UpCloud API token:"
     read -r -s UPCLOUD_TOKEN
