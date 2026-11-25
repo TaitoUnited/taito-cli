@@ -29,4 +29,9 @@ helm upgrade cilium cilium/cilium \
   --reset-then-reuse-values \
   --set gatewayAPI.enabled=true
 
+echo
+echo "Restarting cilium"
+kubectl -n kube-system rollout restart deployment/cilium-operator
+kubectl -n kube-system rollout restart ds/cilium
+
 taito::call_next "${@}"
