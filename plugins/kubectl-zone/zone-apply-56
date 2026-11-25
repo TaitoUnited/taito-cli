@@ -1,0 +1,25 @@
+#!/bin/bash -e
+# shellcheck source=../kubectl/lib/context.bash
+. "${taito_plugin_path:?}/../kubectl/lib/context.bash"
+# shellcheck source=../kubectl/lib/secret.bash
+. "${taito_plugin_path:?}/../kubectl/lib/secret.bash"
+
+taito::confirm "Create dummy default SSL certificate for Gateway" ||
+  taito::skip_to_next "${@}"
+
+openssl req -x509 -nodes -days 365 \
+  -newkey rsa:2048 \
+  -keyout dummy.key.tmp \
+  -out dummy.crt.tmp \
+  -subj "/CN=default.invalid"
+
+kubectl::use_context
+kubectl get namespace gateway-infra >/dev/null 2>&1 || kubectl create namespace gateway-infra
+kubectl create secret tls default-dummy-tls \
+  --cert=dummy.crt.tmp \
+  --key=dummy.key.tmp \
+  -n gateway-infra
+
+rm -f dummy.crt.tmp dummy.key.tmp
+
+taito::call_next "${@}"
