@@ -34,7 +34,7 @@ function upcloud::authenticate () {
 }
 
 function upcloud::authenticate_on_kubernetes () {
-  (
+  if [[ -n $UPCLOUD_TOKEN ]]; then
     upctl kubernetes config ${kubernetes_id} --write ~/.kube/config      
-  )
+  fi
 }

@@ -4,6 +4,11 @@ function gcp::authenticate () {
   local type="${1//--/}"
   local account
 
+  if [[ ${taito_provider} != "gcp" ]]; then
+    echo "Skipping authentication because taito_provider = ${taito_provider}"
+    return;
+  fi
+
   if [[ ${type} == "reset" ]]; then
     echo "Revoking all old gcloud credentials"
     gcloud auth application-default revoke || :
@@ -52,9 +57,9 @@ function gcp::authenticate () {
     (taito::executing_start; gcloud auth application-default login --no-launch-browser --project "${taito_zone}")
   fi
 
-  echo "Running 'gcloud auth application-default set-quota-project ${taito_zone}'" || :
+  echo "Running 'gcloud auth application-default set-quota-project ${taito_zone}'"
   echo
-  gcloud auth application-default set-quota-project "${taito_zone}"
+  gcloud auth application-default set-quota-project "${taito_zone}" || :
 
   if [[ ${gcp_kubernetes_enabled:-} != "false" ]] && \
      [[ ${kubernetes_name:-} ]]; then
