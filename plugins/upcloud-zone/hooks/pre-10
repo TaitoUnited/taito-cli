@@ -2,7 +2,9 @@
 # shellcheck source=../../upcloud/lib/all.bash
 . "${taito_cli_path:?}/plugins/upcloud/lib/all.bash"
 
-taito::print_plugin_title
-upcloud::authenticate
+if [[ ${taito_command:?} == "zone-"* ]]; then
+  taito::print_plugin_title
+  upcloud::authenticate
+fi
 
 taito::call_next "${@}"

@@ -3,12 +3,12 @@
 function upcloud::authenticate () {
   local type="${1//--/}"
 
-  if [[ ${taito_commands_only_chain:-} == *"terraform/"* ]] || [[ ${taito_commands_only_chain:-} == *"terraform-zone/"* ]]; then
+  if [[ ${taito_command} == "auth" ]] || [[ ${taito_commands_only_chain:-} == *"terraform/"* ]] || [[ ${taito_commands_only_chain:-} == *"terraform-zone/"* ]]; then
     current_public_ip=$(curl -s https://ifconfig.me)
 
-    echo "If you plan to execute Terraform, enter your UpCloud API token. Otherwise leave it empty."
-    echo "You can retrieve a new API token from UpCloud web console. Prefer a short lived API token"
-    echo "limited to your current IP address ${current_public_ip}."
+    echo "If you plan to execute Terraform or authenticate to Kubernetes, enter your UpCloud API token."
+    echo "Otherwise leave it empty. You can retrieve a new API token from UpCloud web console."
+    echo "Prefer a short lived API token limited to your current IP address ${current_public_ip}."
     echo
     echo "UpCloud API token:"
     read -r -s UPCLOUD_TOKEN
@@ -34,9 +34,7 @@ function upcloud::authenticate () {
 }
 
 function upcloud::authenticate_on_kubernetes () {
-  # (
-  #   echo "TODO: Authenticate to UpCloud Managed Kubernetes"
-  #   read -r
-  # )
-  return;
+  (
+    upctl kubernetes config ${kubernetes_id} --write ~/.kube/config      
+  )
 }

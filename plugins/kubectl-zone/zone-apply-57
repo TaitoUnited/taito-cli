@@ -4,10 +4,24 @@
 # shellcheck source=../kubectl/lib/secret.bash
 . "${taito_plugin_path:?}/../kubectl/lib/secret.bash"
 
-taito::confirm "Add labels for kube-system namespace" ||
-  taito::skip_to_next "${@}"
+( [[ ${taito_container_registry_host:-} ]] && \
+  taito::confirm "Create common container-registry-dockerconfigjson secret for pulling images from registry"
+) || taito::skip_to_next "${@}"
+
+echo "Give username (e.g _json_key):"
+read -r docker_username
+
+echo "Save password or json key to a file and give filename:"
+read -r docker_password_file
 
 kubectl::use_context
-kubectl label namespace kube-system networking/namespace=kube-system
+kubectl create secret docker-registry container-registry-dockerconfigjson \
+  --namespace common \
+  --docker-server=${taito_container_registry_host} \
+  --docker-username=${docker_username} \
+  --docker-password="$(cat ${docker_password_file})"
+
+rm -f ${docker_password_file}
+echo "Secret saved and file ${docker_password_file} deleted"
 
 taito::call_next "${@}"
