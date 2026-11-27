@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+project=${taito_resource_namespace:-}
+
+if [[ -z ${project} ]]; then
+  echo "Could not find your project id. \
+    Make sure taito-config.sh includes taito_resource_namespace" >&2
+  exit 1
+fi;
+
+# There's ongoing issue with --limit being applied before --sort-by, use head
+gcloud batch jobs list \
+  --project="$project" \
+  --sort-by="~createTime" \
+  --format="table(name.basename():label=JOB_ID, status.state:label=STATUS, createTime.date():label=CREATED)" \
+  | head -n 15
+
+taito::call_next "${@}"
