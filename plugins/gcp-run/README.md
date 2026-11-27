@@ -35,3 +35,12 @@ Rerunning GitHub Actions only restarts the app if the workflow deploys or restar
 Restart requires Cloud Run deployment permissions, access to the image, and
 permission to act as the runtime service account. The runtime account retains its
 existing Secret Manager access; the CLI does not read secret values.
+
+```sh
+taito logs:server:dev
+taito logs:server:pr-123
+```
+
+Logs follow the selected service until interrupted. Instance indexes are not
+supported. This uses Google's beta log tail command and requires Logs Viewer
+permissions and the `log-streaming` component (included in GCP-capable images).

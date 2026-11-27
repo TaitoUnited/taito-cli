@@ -6,3 +6,6 @@ CLOUD RUN
   restart[:TARGET][:ENV]
     Create a ready revision using the deployed image. No build or Terraform apply.
     Requires single-container services with 100% untagged traffic following latest.
+
+  logs:TARGET[:ENV]
+    Follow Cloud Run service logs. Instance indexes are unsupported.

@@ -1,0 +1,20 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ! ${taito_target:-} || $# != 0 ]]; then
+  echo "ERROR: Use 'taito logs:TARGET:ENV' without instance indexes." >&2
+  exit 1
+fi
+gcp-run::select_services
+service=${gcp_run_services[0]:?}
+gcp-run::describe_service "${service}" > /dev/null
+
+echo "PROJECT: ${taito_zone:?} REGION: ${taito_provider_region:?} SERVICE: ${service}"
+(
+  taito::executing_start
+  gcloud beta run services logs tail "${service}" \
+    --project "${taito_zone}" --region "${taito_provider_region}"
+)
+
+taito::call_next "${@}"

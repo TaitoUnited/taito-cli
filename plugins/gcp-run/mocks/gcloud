@@ -37,6 +37,8 @@ elif [[ ${1} == run && ${2} == services && ${3} == update ]]; then
     jq "${GCLOUD_AFTER_UPDATE}" "${GCLOUD_CALLS}.${service}" > "${GCLOUD_CALLS}.tmp"
     mv "${GCLOUD_CALLS}.tmp" "${GCLOUD_CALLS}.${service}"
   fi
+elif [[ ${1} == beta && ${2} == run && ${3} == services && ${4} == logs && ${5} == tail ]]; then
+  echo 'Application log line'
 else
   echo "Unexpected gcloud command: ${*}" >&2
   exit 1
