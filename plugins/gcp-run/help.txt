@@ -12,3 +12,6 @@ CLOUD RUN
 
   shell:TARGET[:ENV]
     Connect using preview Cloud Run SSH (must be enabled). No instance indexes.
+
+  kill:TARGET[:ENV]
+    Unsupported on Cloud Run; use restart:TARGET:ENV to replace the revision.

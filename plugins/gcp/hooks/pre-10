@@ -2,6 +2,11 @@
 # shellcheck source=../lib/all.bash
 . "${taito_plugin_path:?}/lib/all.bash"
 
+# Cloud Run kill only reports that the operation is unsupported.
+if [[ ${taito_command:-} == "kill" && ${taito_commands_only_chain:-} == *"/gcp-run/kill-"* ]]; then
+  taito::skip_to_next "${@}"
+fi
+
 [[ $gcp_auth_already_done != "true" ]] || taito::skip_to_next "${@}"
 
 if [[ ${taito_verbose:-} == true ]]; then

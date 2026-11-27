@@ -58,3 +58,6 @@ infrastructure configuration so Terraform does not undo them.
 Only single-container services with one serving revision are supported; instance
 indexes are unsupported. Google selects an instance and may start one if needed.
 Exit the shell to disconnect; the instance may continue running.
+
+`taito kill:server:dev` is unsupported and exits with an error. Use
+`taito restart:server:dev` to replace the service revision instead.
