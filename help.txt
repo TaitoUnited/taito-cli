@@ -446,7 +446,8 @@ PROJECT: BASIC OPERATIONS
       ARGS: Additional arguments
 
   restart[:TARGET][:ENV] [INDEX]
-    Starts the defined environment e.g 'taito restart' or 'taito restart:dev'.
+    Restart a container or environment, e.g. 'taito restart:server:dev'.
+    Cloud Run creates a revision using the deployed image; INDEX is unsupported.
     ---
     Arguments:
       TARGET: Restart only the given pod/container/function/module/program

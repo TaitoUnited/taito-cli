@@ -16,3 +16,22 @@ taito status:dev
 Status shows readiness and the latest ready revision for each configured service.
 Authenticate with `taito auth:dev`; service inspection requires Cloud Run Viewer
 permissions.
+
+```sh
+taito restart:server:dev
+taito restart:server:pr-123
+taito restart:dev
+```
+
+Restart creates a ready revision using the deployed image digest, without a build
+or Terraform apply. It reserves `TAITO_RESTART_NONCE`; a later Terraform apply may
+remove it. Only ready, single-container services with 100% untagged traffic
+following latest are supported. Services restart sequentially and stop on failure.
+Avoid concurrent deployments. Old requests may finish on the previous revision.
+
+Secret environment references to `latest` refresh on startup; numbered versions
+stay pinned. Mounted secrets refresh on reads, but applications may cache them.
+Rerunning GitHub Actions only restarts the app if the workflow deploys or restarts it.
+Restart requires Cloud Run deployment permissions, access to the image, and
+permission to act as the runtime service account. The runtime account retains its
+existing Secret Manager access; the CLI does not read secret values.

@@ -14,6 +14,8 @@ setup() {
   export taito_commands_only_chain="${taito_plugin_path}/status-40"
   export GCLOUD_CALLS="${BATS_TEST_TMPDIR}/gcloud.calls"
   export GCLOUD_SERVICE="${BATS_TEST_TMPDIR}/service.json"
+  export GCLOUD_REVISION="${BATS_TEST_TMPDIR}/revision.json"
   cp "${taito_plugin_path}/fixtures/service.json" "${GCLOUD_SERVICE}"
+  cp "${taito_plugin_path}/fixtures/revision.json" "${GCLOUD_REVISION}"
   touch "${GCLOUD_CALLS}"
 }

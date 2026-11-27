@@ -6,7 +6,37 @@ if [[ ${*} == *"${GCLOUD_FAIL:-never-match}"* ]]; then
   exit 1
 fi
 if [[ ${1} == run && ${2} == services && ${3} == describe ]]; then
-  cat "${GCLOUD_SERVICE:?}"
+  if [[ ${GCLOUD_CHANGED:-} && $(grep -c "^run services describe ${4} " "${GCLOUD_CALLS}") -gt 1 ]]; then
+    jq '.metadata.generation += 1' "${GCLOUD_SERVICE:?}"
+  elif [[ -f ${GCLOUD_CALLS}.${4} ]]; then
+    cat "${GCLOUD_CALLS}.${4}"
+  else
+    cat "${GCLOUD_SERVICE:?}"
+  fi
+elif [[ ${1} == run && ${2} == revisions && ${3} == describe ]]; then
+  cat "${GCLOUD_REVISION:?}"
+elif [[ ${1} == run && ${2} == services && ${3} == update ]]; then
+  service=${4}
+  shift 4
+  while [[ $# -gt 0 ]]; do
+    case ${1} in
+      --image) image=${2}; shift ;;
+      --revision-suffix) revision="${service}-${2}"; shift ;;
+      --update-env-vars) nonce=${2#TAITO_RESTART_NONCE=}; shift ;;
+    esac
+    shift
+  done
+  jq --arg revision "${revision:?}" --arg nonce "${nonce:?}" --arg image "${image:?}" '
+    .status.latestCreatedRevisionName = $revision |
+    .status.latestReadyRevisionName = $revision |
+    .status.traffic[0].revisionName = $revision |
+    .spec.template.spec.containers[0].image = $image |
+    .spec.template.spec.containers[0].env = [{name: "TAITO_RESTART_NONCE", value: $nonce}]
+  ' "${GCLOUD_SERVICE:?}" > "${GCLOUD_CALLS}.${service}"
+  if [[ ${GCLOUD_AFTER_UPDATE:-} ]]; then
+    jq "${GCLOUD_AFTER_UPDATE}" "${GCLOUD_CALLS}.${service}" > "${GCLOUD_CALLS}.tmp"
+    mv "${GCLOUD_CALLS}.tmp" "${GCLOUD_CALLS}.${service}"
+  fi
 else
   echo "Unexpected gcloud command: ${*}" >&2
   exit 1
