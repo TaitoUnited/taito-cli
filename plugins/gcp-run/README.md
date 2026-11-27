@@ -44,3 +44,17 @@ taito logs:server:pr-123
 Logs follow the selected service until interrupted. Instance indexes are not
 supported. This uses Google's beta log tail command and requires Logs Viewer
 permissions and the `log-streaming` component (included in GCP-capable images).
+
+```sh
+taito shell:server:dev
+taito shell:server:pr-123
+```
+
+Shell uses Google's preview SSH support. Configure a second-generation service,
+enable SSH, and grant the required API/IAM access as described in
+[Cloud Run SSH setup](https://docs.cloud.google.com/run/docs/troubleshooting/ssh).
+Taito does not enable SSH or change permissions. Keep SSH settings in your
+infrastructure configuration so Terraform does not undo them.
+Only single-container services with one serving revision are supported; instance
+indexes are unsupported. Google selects an instance and may start one if needed.
+Exit the shell to disconnect; the instance may continue running.

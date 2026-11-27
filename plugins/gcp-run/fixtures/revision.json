@@ -1,4 +1,6 @@
 {
+  "metadata": {"annotations": {"run.googleapis.com/execution-environment": "gen2"}},
+  "spec": {"containers": [{"image": "registry/server:latest"}]},
   "status": {
     "conditions": [{"type": "Ready", "status": "True"}],
     "imageDigest": "registry/server@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

@@ -1,0 +1,43 @@
+#!/bin/bash -e
+# shellcheck source=lib/all.bash
+. "${taito_plugin_path:?}/lib/all.bash"
+
+if [[ ! ${taito_target:-} || $# != 0 ]]; then
+  echo "ERROR: Use 'taito shell:TARGET:ENV' without instance indexes." >&2
+  exit 1
+fi
+gcp-run::select_services
+service=${gcp_run_services[0]:?}
+description=$(gcp-run::describe_service "${service}")
+
+if ! jq -e '.metadata.annotations["run.googleapis.com/ssh-enabled"] == "true"' \
+     <<< "${description}" > /dev/null; then
+  echo "ERROR: ${service}: enable Cloud Run SSH before connecting (see gcp-run README)." >&2
+  exit 1
+fi
+if ! revision=$(jq -er '
+  [.status.traffic[]? | select((.percent // 0) > 0) | .revisionName] |
+  unique | select(length == 1) | .[0] | select(type == "string" and length > 0)
+' <<< "${description}"); then
+  echo "ERROR: ${service}: shell requires one serving revision." >&2
+  exit 1
+fi
+revision_description=$(gcloud run revisions describe "${revision}" \
+  --project "${taito_zone:?}" --region "${taito_provider_region:?}" --format=json)
+if ! jq -e '
+  (.metadata.annotations["run.googleapis.com/execution-environment"] != "gen1") and
+  (.spec.containers | length == 1)
+' <<< "${revision_description}" > /dev/null; then
+  echo "ERROR: ${revision}: shell requires a second-generation, single-container revision." >&2
+  exit 1
+fi
+
+echo "PROJECT: ${taito_zone:?} REGION: ${taito_provider_region:?} SERVICE: ${service}"
+(
+  taito::executing_start
+  gcloud beta run services ssh "${service}" \
+    --project "${taito_zone}" --region "${taito_provider_region}" \
+    --revision "${revision}"
+)
+
+taito::call_next "${@}"

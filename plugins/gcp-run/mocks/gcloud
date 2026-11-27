@@ -39,6 +39,10 @@ elif [[ ${1} == run && ${2} == services && ${3} == update ]]; then
   fi
 elif [[ ${1} == beta && ${2} == run && ${3} == services && ${4} == logs && ${5} == tail ]]; then
   echo 'Application log line'
+elif [[ ${1} == beta && ${2} == run && ${3} == services && ${4} == ssh ]]; then
+  echo 'SSH session'
+  if [[ ${GCLOUD_READ_STDIN:-} ]]; then cat; fi
+  exit "${GCLOUD_SSH_EXIT:-0}"
 else
   echo "Unexpected gcloud command: ${*}" >&2
   exit 1
